@@ -12,7 +12,20 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
+
+  <build>
+        <defaultGoal>package</defaultGoal>
+        <sourceDirectory>/src/main/java/</sourceDirectory>
+        <directory>output</directory>
+        <resources>
+          <resource>
+            <directory>/src/main/resources/</directory>
+          </resource>
+        </resources>
+  </build>
 
   <repositories>
       <!--Spigot API-->
@@ -44,11 +57,5 @@
               <scope>provided</scope>
       </dependency>
   </dependencies>
-
-  <build>
-        <defaultGoal>package</defaultGoal>
-        <sourceDirectory>src</sourceDirectory>
-        <directory>output</directory>
-  </build>
 
 </project>
