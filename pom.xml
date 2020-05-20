@@ -18,11 +18,11 @@
 
   <build>
         <defaultGoal>package</defaultGoal>
-        <sourceDirectory>/src/main/java/</sourceDirectory>
-        <directory>output</directory>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <directory>target</directory>
         <resources>
           <resource>
-            <directory>/src/main/resources/</directory>
+            <directory>src/main/resources</directory>
           </resource>
         </resources>
   </build>
