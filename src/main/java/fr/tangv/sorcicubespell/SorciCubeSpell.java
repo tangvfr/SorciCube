@@ -15,7 +15,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		//test
 		try {
 			//init Config
 			this.message = new Config(this, "message.yml");
