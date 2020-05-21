@@ -7,7 +7,7 @@ public class CartEntity extends Cart {
 	protected int health;
 	//protected ? skin;
 	
-	public CartEntity(int id,
+	public CartEntity(String id,
 			MaterialData material,
 			String name,
 			String[] description,

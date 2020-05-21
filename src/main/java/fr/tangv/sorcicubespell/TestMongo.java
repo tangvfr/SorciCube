@@ -8,6 +8,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.CreateCollectionOptions;
 
 public class TestMongo {
 
@@ -29,9 +30,10 @@ public class TestMongo {
 				break;
 			}	
 		}
-		if (!hasCarts)
+		if (!hasCarts) {
 			database.createCollection(colCartsName);
-		MongoCollection<Document> col = database.getCollection(colCartsName);
+		}
+		MongoCollection<Document> carts = database.getCollection(colCartsName);
 		
 	}
 	

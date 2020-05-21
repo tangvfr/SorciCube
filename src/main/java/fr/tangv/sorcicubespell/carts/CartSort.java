@@ -8,7 +8,7 @@ public class CartSort extends Cart {
 	protected int giveMana;
 	protected CartCible cible;
 	
-	public CartSort(int id,
+	public CartSort(String id,
 			MaterialData material,
 			String name,
 			String[] description,

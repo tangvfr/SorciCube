@@ -4,7 +4,7 @@ import org.bukkit.material.MaterialData;
 
 public abstract class Cart {
 	
-	protected int id;
+	protected String id;
 	protected MaterialData material;
 	protected String name;
 	protected String[] description;
@@ -14,7 +14,7 @@ public abstract class Cart {
 	protected CartRarity rarity;
 	protected CartFaction faction;
 	
-	public Cart(int id,
+	public Cart(String id,
 			MaterialData material,
 			String name,
 			String[] description,
@@ -34,7 +34,7 @@ public abstract class Cart {
 		this.faction = faction;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
