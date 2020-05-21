@@ -14,7 +14,7 @@ public abstract class Cart {
 	protected CartRarity rarity;
 	protected CartFaction faction;
 	
-	public Cart(String id,
+	protected Cart(String id,
 			MaterialData material,
 			String name,
 			String[] description,
@@ -68,6 +68,13 @@ public abstract class Cart {
 	
 	public CartFaction getFaction() {
 		return this.faction;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Cart)
+			return ((Cart) obj).getId().equals(this.id);
+		return false;
 	}
 	
 }
