@@ -30,9 +30,8 @@ public class TestMongo {
 				break;
 			}	
 		}
-		if (!hasCarts) {
+		if (!hasCarts)
 			database.createCollection(colCartsName);
-		}
 		MongoCollection<Document> carts = database.getCollection(colCartsName);
 		
 	}

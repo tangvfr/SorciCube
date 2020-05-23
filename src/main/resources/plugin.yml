@@ -6,4 +6,8 @@ api-version: 1.9.4
 author: Tangv
 website: www.tangv.fr
 main: fr.tangv.sorcicubespell.SorciCubeSpell
-commands: []
+commands:
+  editcarts:
+    usage: /editcarts
+    description: Open gui for edit carts.
+    permission: sorcicubespell.editcarts

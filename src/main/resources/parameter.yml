@@ -1,0 +1,6 @@
+//mongodb
+user: "Plugin"
+password: "r5thihj4k5eh78r1"
+host: "sorcicube.fr:27017"
+database: "plugin"
+//next

@@ -7,18 +7,19 @@ import org.bukkit.entity.Player;
 
 public class CommandEditCartsGui implements CommandExecutor {
 
-	private EditCartsGui gui;
+	private EditCartsGui ec;
 	
-	public CommandEditCartsGui(EditCartsGui gui) {
-		this.gui = gui;
+	public CommandEditCartsGui(EditCartsGui ec) {
+		this.ec = ec;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		if (sender instanceof Player) {
-			
+			Player player = (Player) sender;
+			ec.guiEditList.open(player);
 		} else {
-			sender.sendMessage(gui.sorci.getMessage().getString("message_no_player"));
+			sender.sendMessage(ec.sorci.getMessage().getString("message_no_player"));
 		}
 		return false;
 	}
