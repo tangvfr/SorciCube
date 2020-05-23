@@ -26,4 +26,12 @@ public class SorciCubeSpell extends JavaPlugin {
 		}
 	}
 	
+	public Config getMessage() {
+		return message;
+	}
+	
+	public Config getParameter() {
+		return parameter;
+	}
+	
 }
