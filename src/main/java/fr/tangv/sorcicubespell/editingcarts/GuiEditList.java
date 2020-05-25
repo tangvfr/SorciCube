@@ -74,7 +74,41 @@ public class GuiEditList extends GuiEdit {
 
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
-		
+		int raw = e.getRawSlot();
+		if (raw < 45) {
+			
+		} else {
+			int page = e.getInventory().getItem(49).getAmount();
+			switch (raw) {
+				//previous
+				case 48:
+					player.openInventory(this.getInventory(player, page-1));
+					break;
+				//page
+				case 49:
+					player.openInventory(this.getInventory(player, page));
+					break;
+				//next
+				case 50:
+					player.openInventory(this.getInventory(player, page+1));
+					break;
+				//create sort
+				case 51:
+					
+					break;
+				//create entity
+				case 52:
+					
+					break;
+				//close
+				case 53:
+					player.closeInventory();
+					break;
+				//default
+				default:
+					break;
+			}
+		}
 		e.setCancelled(true);
 	}
 	
