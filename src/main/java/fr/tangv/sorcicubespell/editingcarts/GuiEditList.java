@@ -55,7 +55,7 @@ public class GuiEditList extends GuiEdit {
 				inv.setItem(i, carts.get(i+decal).toItem());
 			}
 		//init paper
-		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page, (short) 0, (byte) 0, 
+		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 
 				config.getString("item_name.page")
 					.replace("{page}", ""+page)
 					.replace("{max}", ""+(max+1))
@@ -83,15 +83,15 @@ public class GuiEditList extends GuiEdit {
 			switch (raw) {
 				//previous
 				case 48:
-					player.openInventory(this.getInventory(player, page-1));
+					player.openInventory(this.getInventory(player, page-2));
 					break;
 				//page
 				case 49:
-					player.openInventory(this.getInventory(player, page));
+					player.openInventory(this.getInventory(player, page-1));
 					break;
 				//next
 				case 50:
-					player.openInventory(this.getInventory(player, page+1));
+					player.openInventory(this.getInventory(player, page));
 					break;
 				//create sort
 				case 51:
