@@ -57,7 +57,7 @@ public class GuiEditList extends GuiEdit {
 		//init paper
 		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 
 				config.getString("item_name.page")
-					.replace("{page}", ""+page)
+					.replace("{page}", ""+(page+1))
 					.replace("{max}", ""+(max+1))
 				, null, false);
 		//set tool bar
