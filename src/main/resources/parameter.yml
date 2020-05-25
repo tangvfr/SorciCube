@@ -1,5 +1,5 @@
 #mongodb
-user: "Plugin"
+user: "admin"
 password: "hj4k5ehr5th78r1"
 host: "sorcicube.fr:27017"
 databaseAuth: "admin"
