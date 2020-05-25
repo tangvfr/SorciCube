@@ -14,11 +14,13 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import fr.tangv.sorcicubespell.carts.Carts;
+import fr.tangv.sorcicubespell.editingcarts.EditCartsGui;
 import fr.tangv.sorcicubespell.util.Config;
 
 public class SorciCubeSpell extends JavaPlugin {
 
 	private MongoDatabase database;
+	private EditCartsGui editCartsGui;
 	private Carts carts;
 	private Config message;
 	private Config parameter;
@@ -43,7 +45,6 @@ public class SorciCubeSpell extends JavaPlugin {
 			boolean hasCarts = false;
 			while (listCol.hasNext()) {
 				String name = listCol.next();
-				System.out.println(name);
 				if (name.equals(colCartsName)) {
 					hasCarts = true;
 					break;
@@ -53,8 +54,8 @@ public class SorciCubeSpell extends JavaPlugin {
 				database.createCollection(colCartsName);
 			MongoCollection<Document> carts = database.getCollection(colCartsName);
 			this.carts = new Carts(carts);
-			//next
-			
+			//gui edit menu
+			this.editCartsGui = new EditCartsGui(this);
 		} catch (IOException | InvalidConfigurationException e) {
 			Bukkit.getLogger().warning(e.getMessage());
 			Bukkit.getPluginManager().disablePlugin(this);
@@ -79,6 +80,10 @@ public class SorciCubeSpell extends JavaPlugin {
 
 	public MongoDatabase getMongoDatabase() {
 		return database;
+	}
+	
+	public EditCartsGui getEditCartsGui() {
+		return editCartsGui;
 	}
 	
 }

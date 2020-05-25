@@ -50,9 +50,10 @@ public class GuiEditList extends GuiEdit {
 		page = page > max ? max : (page < 0 ? 0 : page);
 		//set carts item
 		int decal = page*45;
-		for (int i = 0; i < 45; i++) {
-			inv.setItem(i, carts.get(i+decal).toItem());
-		}
+		if (carts.size() > 0)
+			for (int i = 0; i < 45; i++) {
+				inv.setItem(i, carts.get(i+decal).toItem());
+			}
 		//init paper
 		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page, (short) 0, (byte) 0, 
 				config.getString("item_name.page")
