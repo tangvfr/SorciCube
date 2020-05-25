@@ -27,14 +27,6 @@
         </resources>
   </build>
 
-  <repositories>
-      <!--Spigot API-->
-      <repository>
-          <id>spigot-repo</id>
-          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-      </repository>
-  </repositories>
-
   <dependencies>
       <!--MongoDB API-->
       <dependency>
@@ -44,17 +36,11 @@
       </dependency>
       <!--Spigot API-->
       <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.9.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-      </dependency>
-      <!--Bukkit API-->
-      <dependency>
-              <groupId>org.bukkit</groupId>
-              <artifactId>bukkit</artifactId>
-              <version>1.9.4-R0.1-SNAPSHOT</version>
-              <scope>provided</scope>
+         <groupId>spigot</groupId>
+         <artifactId>spigot</artifactId>
+         <scope>system</scope>
+         <version>1.9.4</version>
+         <systemPath>${basedir}/src/lib/spigot-1.9.4.jar</systemPath>
       </dependency>
   </dependencies>
 

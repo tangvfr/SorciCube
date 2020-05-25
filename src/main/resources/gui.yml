@@ -1,3 +1,12 @@
 #Gui Edit List
 gui_edit_list:
-  name: "§cGui Edit Carts"
+  name: "§cGui List Carts"
+  item_name:
+    sort: "§aTrier"
+	  previous: "§aPrécedant"
+	  next: "§aSuivant"
+	  close: "§cFermer"
+    page: "§8Actualisé la page {page}/{max}"
+		deco: ""
+		create_sort: "§6Crée un sort"
+		create_entity: "§6Crée un serviteur"

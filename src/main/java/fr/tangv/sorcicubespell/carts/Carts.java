@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.carts;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,6 +30,10 @@ public class Carts {
 			if (cart != null)
 				carts.put(cart.id, cart);
 		}
+	}
+	
+	public Collection<Cart> getCarts() {
+		return carts.values();
 	}
 	
 	public Cart getCart(String id) {
