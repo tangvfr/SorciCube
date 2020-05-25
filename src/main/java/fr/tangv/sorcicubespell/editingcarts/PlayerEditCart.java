@@ -9,11 +9,13 @@ public class PlayerEditCart {
 
 	private Player player;
 	private Cart cart;
+	private Gui guiOpened;
 	private Gui gui;
 	
 	public PlayerEditCart(Player player) {
 		this.player = player;
 		this.cart = null;
+		this.guiOpened = null;
 		this.gui = null;
 	}
 	
@@ -25,16 +27,24 @@ public class PlayerEditCart {
 		return cart;
 	}
 	
-	public Gui getGui() {
-		return gui;
-	}
-	
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
 	
+	public Gui getGui() {
+		return gui;
+	}
+	
 	public void setGui(Gui gui) {
 		this.gui = gui;
+	}
+
+	public Gui getGuiOpened() {
+		return guiOpened;
+	}
+
+	public void setGuiOpened(Gui guiOpened) {
+		this.guiOpened = guiOpened;
 	}
 	
 }

@@ -18,7 +18,7 @@ public abstract class GuiEdit implements Gui {
 
 	@Override
 	public void open(Player player) {
-		ec.editingCarts.get(player).setGui(this);
+		ec.editingCarts.get(player).setGuiOpened(this);
 		player.openInventory(this.getInventory(player));
 	}
 	
@@ -28,7 +28,10 @@ public abstract class GuiEdit implements Gui {
 	}
 
 	@Override
-	public void onOpen(Player player, InventoryOpenEvent e) {}
+	public void onOpen(Player player, InventoryOpenEvent e) {
+		PlayerEditCart p = ec.editingCarts.get(player);
+		p.setGui(p.getGuiOpened());
+	}
 	
 	@Override
 	public String getName() {

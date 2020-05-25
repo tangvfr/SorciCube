@@ -67,7 +67,7 @@ public class EventEditCartsGui implements Listener{
 	public void onOpen(InventoryOpenEvent e) {
 		if (e.getPlayer() instanceof Player) {
 			PlayerEditCart player = this.ec.editingCarts.get((Player) e.getPlayer());
-			Gui gui = player.getGui();
+			Gui gui = player.getGuiOpened();
 			if (gui != null && e.getInventory().getName().equals(gui.getName()))
 				gui.onOpen(player.getPlayer(), e);
 		}

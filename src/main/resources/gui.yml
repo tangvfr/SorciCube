@@ -7,6 +7,6 @@ gui_edit_list:
     next: "§aSuivant"
     close: "§cFermer"
     page: "§8Actualisé la page {page}/{max}"
-    deco: ""
+    deco: " "
     create_sort: "§6Crée un sort"
     create_entity: "§6Crée un serviteur"
