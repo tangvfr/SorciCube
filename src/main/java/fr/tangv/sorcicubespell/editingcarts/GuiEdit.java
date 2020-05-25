@@ -17,6 +17,12 @@ public abstract class GuiEdit implements Gui {
 	}
 
 	@Override
+	public void open(Player player) {
+		ec.editingCarts.get(player).setGui(this);
+		player.openInventory(this.getInventory(player));
+	}
+	
+	@Override
 	public void onClose(Player player, InventoryCloseEvent e) {
 		ec.editingCarts.get(player).setGui(null);
 	}

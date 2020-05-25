@@ -17,7 +17,8 @@ public class CommandEditCartsGui implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
-			ec.guiEditList.open(player);
+			this.ec.guiEditList.open(player);
+			return true;
 		} else {
 			sender.sendMessage(ec.sorci.getMessage().getString("message_no_player"));
 		}
