@@ -9,4 +9,4 @@ gui_edit_list:
     page: "§8Actualisé la page {page}/{max}"
     deco: " "
     create_sort: "§6Crée un sort"
-    create_entity: "§6Crée un serviteur"
+    create_entity: "§9Crée un serviteur"
