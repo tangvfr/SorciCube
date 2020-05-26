@@ -13,3 +13,7 @@ gui_edit_list:
 # Gui Edit Cart
 gui_edit_cart:
   name: "§cGui Edit Cart"
+  item_name:
+    deco: " "
+    back: "§cBack"
+    remove: "§4Remove"
