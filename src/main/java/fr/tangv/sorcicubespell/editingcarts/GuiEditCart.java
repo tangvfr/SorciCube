@@ -37,17 +37,32 @@ public class GuiEditCart extends GuiEdit {
 			inv.setItem(i, deco);
 			inv.setItem(27+i, deco);
 		}
-		//remove
-		
 		//back
-		
+		inv.setItem(38, back);
+		//remove
+		inv.setItem(42, remove);
+		//param
 		
 		return inv;
 	}
 	
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
-		
+		int raw = e.getRawSlot();
+		switch (raw) {
+			//back
+			case 38:
+				
+				break;
+			//remove
+			case 42:
+				
+				break;
+			//default
+			default:
+				break;
+		}
+		e.setCancelled(true);
 	}
 	
 	@Override

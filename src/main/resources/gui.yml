@@ -3,8 +3,8 @@ gui_edit_list:
   name: "§cGui List Carts"
   item_name:
     sort: "§aTrier"
-    previous: "§aPrécedant"
-    next: "§aSuivant"
+    previous: "§aPage précedant"
+    next: "§aPage suivant"
     close: "§cFermer"
     page: "§8Actualisé la page {page}/{max}"
     deco: " "

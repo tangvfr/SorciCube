@@ -59,13 +59,9 @@ public class Carts {
 			int giveMana = doc.getInteger("giveMana");
 			CartCible cible = CartCible.valueOf(doc.getString("cible"));
 			cart = new CartSort(id, material, name, description, countMana, damage, rarity, faction, heal, giveMana, cible);
-			System.out.println("Cart sort: "+id);
 		} else if (type == CartType.ENTITY) {
 			int health = doc.getInteger("health");
 			cart = new CartEntity(id, material, name, description, countMana, damage, rarity, faction, health);
-			System.out.println("Cart entity: "+id);
-		} else {
-			System.out.println("Cart invalid: "+id);
 		}
 		return cart;
 	}

@@ -44,12 +44,15 @@ public class GuiEditList extends GuiEdit {
 	public Inventory getInventory(Player player, int page) {
 		Inventory inv = Bukkit.createInventory(null, 54, this.name);
 		ArrayList<Cart> carts = new ArrayList<Cart>(ec.sorci.getCarts().getCarts());
-		int max = carts.size() < 1 ? 0 : carts.size()-1/45;
+		int max = carts.size() < 1 ? 0 : (carts.size()-1)/45;
 		page = page > max ? max : (page < 0 ? 0 : page);
 		//set carts item
 		int decal = page*45;
+		int num = carts.size()-decal;
+		if (num > 45)
+			num = 45;
 		if (carts.size() > 0)
-			for (int i = 0; i < 45; i++) {
+			for (int i = 0; i < num; i++) {
 				inv.setItem(i, carts.get(i+decal).toItem());
 			}
 		//init paper

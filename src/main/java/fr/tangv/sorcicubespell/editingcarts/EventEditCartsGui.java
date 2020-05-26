@@ -8,8 +8,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerEditBookEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 
 import fr.tangv.sorcicubespell.util.Gui;
 
@@ -21,6 +25,17 @@ public class EventEditCartsGui implements Listener{
 		this.ec = ec;
 		for (Player player : Bukkit.getOnlinePlayers())
 			this.ec.editingCarts.put(player, new PlayerEditCart(player));
+	}
+	
+	@EventHandler
+	public void onBook(PlayerEditBookEvent e) {
+		Bukkit.broadcastMessage("edit book");
+		BookMeta meta = e.getNewBookMeta();
+		Bukkit.broadcastMessage("sign: "+e.isSigning());
+		Bukkit.broadcastMessage("text: ");
+		for (String s : meta.getPages()) {
+			Bukkit.broadcastMessage(s);
+		}
 	}
 	
 	@EventHandler
@@ -46,10 +61,17 @@ public class EventEditCartsGui implements Listener{
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
-			PlayerEditCart player = this.ec.editingCarts.get((Player) e.getWhoClicked());
-			Gui gui = player.getGui();
-			if (gui != null && e.getInventory().getName().equals(gui.getName()))
-				gui.onClick(player.getPlayer(), e);
+			if (e.getInventory().getType() == InventoryType.ANVIL) {
+				Bukkit.broadcastMessage("Inv: "+e.getInventory().getName());
+				ItemStack result = e.getCurrentItem();
+				if (result.hasItemMeta() && result.getItemMeta().hasDisplayName())
+					Bukkit.broadcastMessage("Text: "+result.getItemMeta().getDisplayName());
+			} else {
+				PlayerEditCart player = this.ec.editingCarts.get((Player) e.getWhoClicked());
+				Gui gui = player.getGui();
+				if (gui != null && e.getInventory().getName().equals(gui.getName()))
+					gui.onClick(player.getPlayer(), e);
+			}
 		}
 	}
 
