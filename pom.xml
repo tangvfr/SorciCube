@@ -39,8 +39,8 @@
          <groupId>spigot</groupId>
          <artifactId>spigot</artifactId>
          <scope>system</scope>
-         <version>1.9.4</version>
-         <systemPath>${basedir}/src/lib/spigot-1.9.4.jar</systemPath>
+         <version>1.12.2</version>
+         <systemPath>${basedir}/src/lib/spigot-1.12.2.jar</systemPath>
       </dependency>
   </dependencies>
 
