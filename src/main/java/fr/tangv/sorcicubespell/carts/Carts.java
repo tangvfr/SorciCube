@@ -96,8 +96,8 @@ public class Carts {
 		return doc;
 	}
 	
-	public Cart newCart() {
-		Cart cart = new CartSort(
+	public CartSort newCartSort() {
+		CartSort cart = new CartSort(
 				new ObjectId().toHexString(),
 				new MaterialData(Material.STONE),
 				"§4NoName",
@@ -111,6 +111,24 @@ public class Carts {
 				CartCible.ONE_ENTITY_ENEMIE
 			);
 		cartsCol.insertOne(cartToDocument(cart));
+		carts.put(cart.id, cart);
+		return cart;
+	}
+	
+	public CartEntity newCartEntity() {
+		CartEntity cart = new CartEntity(
+				new ObjectId().toHexString(),
+				new MaterialData(Material.STONE),
+				"§4NoName",
+				new String[0],
+				2,
+				3,
+				CartRarity.COMMUN,
+				CartFaction.LIGHT,
+				-1
+			);
+		cartsCol.insertOne(cartToDocument(cart));
+		carts.put(cart.id, cart);
 		return cart;
 	}
 	

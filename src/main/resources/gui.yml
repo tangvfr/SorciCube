@@ -10,3 +10,6 @@ gui_edit_list:
     deco: " "
     create_sort: "§6Crée un sort"
     create_entity: "§9Crée un serviteur"
+# Gui Edit Cart
+gui_edit_cart:
+  name: "§cGui Edit Cart"

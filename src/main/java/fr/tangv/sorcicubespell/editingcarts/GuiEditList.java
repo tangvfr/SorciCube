@@ -17,7 +17,6 @@ import fr.tangv.sorcicubespell.util.SkullUrl;
 
 public class GuiEditList extends GuiEdit {
 
-	private ConfigurationSection config;
 	private ItemStack sort;
 	private ItemStack previous;
 	private ItemStack next;
@@ -27,8 +26,7 @@ public class GuiEditList extends GuiEdit {
 	private ItemStack createEntity;
 	
 	public GuiEditList(EditCartsGui ec, ConfigurationSection config) {
-		super(ec, config.getString("name"));
-		this.config = config;
+		super(ec, config);
 		this.sort = ItemBuild.buildSkull(SkullUrl.HOPPER, 1, config.getString("item_name.sort"), null, false);
 		this.previous = ItemBuild.buildSkull(SkullUrl.BACK_GRAY, 1, config.getString("item_name.previous"), null, false);
 		this.next = ItemBuild.buildSkull(SkullUrl.FORWARD_GRAY, 1, config.getString("item_name.next"), null, false);
@@ -95,11 +93,13 @@ public class GuiEditList extends GuiEdit {
 					break;
 				//create sort
 				case 51:
-					
+					ec.sorci.getCarts().newCartSort();
+					player.openInventory(this.getInventory(player, page-1));//menu edit cart
 					break;
 				//create entity
 				case 52:
-					
+					ec.sorci.getCarts().newCartEntity();
+					player.openInventory(this.getInventory(player, page-1));//menu edit cart
 					break;
 				//close
 				case 53:
