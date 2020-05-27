@@ -1,31 +1,30 @@
 package fr.tangv.sorcicubespell.editingcarts;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerEditBookEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
-import fr.tangv.sorcicubespell.util.BookUtil;
 import fr.tangv.sorcicubespell.util.Gui;
-import io.netty.buffer.Unpooled;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.EnumHand;
-import net.minecraft.server.v1_12_R1.PacketDataSerializer;
-import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload;
 
 public class EventEditCartsGui implements Listener{
 
@@ -37,27 +36,73 @@ public class EventEditCartsGui implements Listener{
 			this.ec.editingCarts.put(player, new PlayerEditCart(player));
 	}
 	
+	private Map<Player, ItemStack> itemOld = new ConcurrentHashMap<Player, ItemStack>();
+	
+	private boolean isBookEdit(ItemStack item) {
+		if (item.getType() == Material.BOOK_AND_QUILL && item.hasItemMeta()) {
+			BookMeta meta = (BookMeta) item.getItemMeta();
+			return (meta.hasDisplayName() && meta.hasLore() && meta.getDisplayName().equals("§6§k§r§aEdit Cart"));
+		}
+		return false;
+	}
+	
+	private String[] getEdit(ItemStack item) {
+		if (item.getType() == Material.BOOK_AND_QUILL && item.hasItemMeta()) {
+			BookMeta meta = (BookMeta) item.getItemMeta();
+			if (meta.hasDisplayName() && meta.hasLore() && meta.getDisplayName().equals("§6§k§r§aEdit Cart")) {
+				String text = "";
+				for (String page : meta.getPages())
+					text += page.replace("\n", "\n§8");
+				return new String[] {meta.getLore().get(0), text};
+			}
+		}
+		return null;
+	}
+	
 	@EventHandler
-	public void onBook(PlayerEditBookEvent e) {
-		Bukkit.broadcastMessage("edit book");
-		BookMeta meta = e.getNewBookMeta();
-		Bukkit.broadcastMessage("sign: "+e.isSigning());
-		Bukkit.broadcastMessage("text: ");
-		for (String s : meta.getPages()) {
-			Bukkit.broadcastMessage(s);
+	public void onClick(PlayerInteractEvent e) {
+		if (e.getHand() == EquipmentSlot.HAND &&
+				e.hasItem()) {
+			ItemStack item = e.getItem();
+			if (isBookEdit(item)) {
+				if (e.getPlayer().isSneaking()) {
+					String[] sc = getEdit(item);
+					Bukkit.broadcastMessage("id: "+sc[0]);
+					Bukkit.broadcastMessage("text: "+sc[1]);
+					e.getPlayer().getInventory().setItemInMainHand(itemOld.get(e.getPlayer()));
+				} else {
+					if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) {
+						e.getPlayer().getInventory().setItemInMainHand(itemOld.get(e.getPlayer()));
+					}
+				}
+			}
 		}
 	}
 	
 	@EventHandler
-	public void onSneak(AsyncPlayerChatEvent e) {
+	public void onDrop(PlayerDropItemEvent e) {
+		if (isBookEdit(e.getItemDrop().getItemStack())) {
+			e.getPlayer().getInventory().setItemInMainHand(itemOld.get(e.getPlayer()));
+			e.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent e) {
 		if (e.getMessage().equalsIgnoreCase("tangv is the best ever time !")) {
 			Player player = e.getPlayer();
-			ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
+			ItemStack book = new ItemStack(Material.BOOK_AND_QUILL, 1);
 			BookMeta meta = (BookMeta) book.getItemMeta();
 			meta.addPage("Insert your text deal "+player.getName()+":\n");
+			meta.setDisplayName("§6§k§r§aEdit Cart");
+			meta.setLore(Arrays.asList("proute caca"));
 			book.setItemMeta(meta);
-			BookUtil.openBook(book, player);
-			
+			ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+			if (itemOld.containsKey(player))
+				itemOld.replace(player, item);
+			else
+				itemOld.put(player, item);
+			player.getInventory().setItemInMainHand(book);
 		}
 	}
 	
@@ -84,7 +129,11 @@ public class EventEditCartsGui implements Listener{
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
-			if (e.getInventory().getType() == InventoryType.ANVIL) {
+			if (isBookEdit(e.getCurrentItem())) {
+				e.setCurrentItem(itemOld.get((Player) e.getWhoClicked()));
+				e.setCancelled(true);
+				return;
+			} else if (e.getInventory().getType() == InventoryType.ANVIL) {
 				Bukkit.broadcastMessage("Inv: "+e.getInventory().getName());
 				ItemStack result = e.getCurrentItem();
 				if (result.hasItemMeta() && result.getItemMeta().hasDisplayName())
