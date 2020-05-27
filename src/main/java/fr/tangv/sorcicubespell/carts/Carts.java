@@ -37,6 +37,13 @@ public class Carts {
 	}
 	
 	public Cart getCart(String id) {
+		if (carts.containsKey(id))
+			return carts.get(id);
+		else
+			return null;
+	}
+	
+	public Cart importCart(String id) {
 		Iterator<Document> rep = cartsCol.find(new Document("_id", new ObjectId(id))).iterator();
 		return rep.hasNext() ? this.documentToCart(rep.next()) : null;
 	}
@@ -95,7 +102,7 @@ public class Carts {
 	public CartSort newCartSort() {
 		CartSort cart = new CartSort(
 				new ObjectId().toHexString(),
-				new MaterialData(Material.STONE),
+				new MaterialData(Material.BLAZE_POWDER),
 				"§4NoName",
 				new String[0],
 				2,
@@ -114,7 +121,7 @@ public class Carts {
 	public CartEntity newCartEntity() {
 		CartEntity cart = new CartEntity(
 				new ObjectId().toHexString(),
-				new MaterialData(Material.STONE),
+				new MaterialData(Material.ROTTEN_FLESH),
 				"§4NoName",
 				new String[0],
 				2,

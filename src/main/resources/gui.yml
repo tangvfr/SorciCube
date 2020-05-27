@@ -11,9 +11,7 @@ gui_edit_list:
     create_sort: "§6Crée un sort"
     create_entity: "§9Crée un serviteur"
 # Gui Edit Cart
-gui_edit_cart:
-  name: "§cGui Edit Cart"
-  item_name:
-    deco: " "
-    back: "§cBack"
-    remove: "§4Remove"
+name_book_desc: "§6Edit Desc Cart"
+#Book Gui
+book_gui:
+  editcart:
