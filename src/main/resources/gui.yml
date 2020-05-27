@@ -15,3 +15,15 @@ name_book_desc: "§6Edit Desc Cart"
 #Book Gui
 book_gui:
   editcart:
+    id: "§cId§7: §9{value}"
+    material: "§cMaterial§7: §9{value}"
+    name: "§cName§7: §9{value}"
+    description: "§cDescription§7: \n§9{value}"
+    count_mana: "§Count Mana§7: §9{value}"
+    damage: "§cDamage§7: §9{value}"
+    rarity: "§cRarity§7: §9{value}"
+    faction: "§cFaction§7: §9{value}"
+    health: "§cHealth§7: §9{value}"
+    heal: "§cHeal§7: §9{value}"
+    give_mana: "§cGive Mana§7: §9{value}"
+    cible: "§cCible§7: §9{value}"

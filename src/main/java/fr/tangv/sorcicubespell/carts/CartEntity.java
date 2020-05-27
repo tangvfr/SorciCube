@@ -37,6 +37,7 @@ public class CartEntity extends Cart {
 		lore.add("");
 		lore.add("§7"+this.type.name());
 		lore.add("");
+		lore.add("§7Id: "+id);
 		//lore
 		for (int i = 0; i < this.description.length; i++)
 			lore.add(this.description[i]);

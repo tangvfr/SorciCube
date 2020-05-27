@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.editingcarts;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -78,7 +79,15 @@ public class GuiEditList extends GuiEdit {
 	public void onClick(Player player, InventoryClickEvent e) {
 		int raw = e.getRawSlot();
 		if (raw < 45) {
-			
+			List<String> lore = e.getCurrentItem().getItemMeta().getLore();
+			String id = lore.get(lore.size()-1).replaceFirst("§7Id: ", "");
+			Cart cart = this.ec.sorci.getCarts().getCart(id);
+			if (cart != null) {
+				player.closeInventory();
+				PlayerEditCart p = this.ec.editingCarts.get(player);
+				p.setCart(cart);
+				this.ec.guiBooks.get("editcart").open(p);
+			}
 		} else {
 			int page = e.getInventory().getItem(49).getAmount();
 			switch (raw) {
