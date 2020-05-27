@@ -1,6 +1,9 @@
 package fr.tangv.sorcicubespell.editingcarts;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,13 +12,20 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerEditBookEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
+import fr.tangv.sorcicubespell.util.BookUtil;
 import fr.tangv.sorcicubespell.util.Gui;
+import io.netty.buffer.Unpooled;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.EnumHand;
+import net.minecraft.server.v1_12_R1.PacketDataSerializer;
+import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload;
 
 public class EventEditCartsGui implements Listener{
 
@@ -35,6 +45,19 @@ public class EventEditCartsGui implements Listener{
 		Bukkit.broadcastMessage("text: ");
 		for (String s : meta.getPages()) {
 			Bukkit.broadcastMessage(s);
+		}
+	}
+	
+	@EventHandler
+	public void onSneak(AsyncPlayerChatEvent e) {
+		if (e.getMessage().equalsIgnoreCase("tangv is the best ever time !")) {
+			Player player = e.getPlayer();
+			ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
+			BookMeta meta = (BookMeta) book.getItemMeta();
+			meta.addPage("Insert your text deal "+player.getName()+":\n");
+			book.setItemMeta(meta);
+			BookUtil.openBook(book, player);
+			
 		}
 	}
 	
