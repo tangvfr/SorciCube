@@ -4,15 +4,15 @@ import org.bukkit.material.MaterialData;
 
 public abstract class Cart {
 	
-	protected String id;
-	protected MaterialData material;
-	protected String name;
-	protected String[] description;
-	protected int countMana;
-	protected int damage;
-	protected CartType type;
-	protected CartRarity rarity;
-	protected CartFaction faction;
+	private String id;
+	private MaterialData material;
+	private String name;
+	private String[] description;
+	private int countMana;
+	private int damage;
+	private CartType type;
+	private CartRarity rarity;
+	private CartFaction faction;
 	
 	protected Cart(String id,
 			MaterialData material,
@@ -24,56 +24,88 @@ public abstract class Cart {
 			CartRarity rarity,
 			CartFaction faction) {
 		this.id = id;
-		this.material = material;
-		this.name = name;
-		this.description = description;
-		this.countMana = countMana;
-		this.damage = damage;
-		this.type = type;
-		this.rarity = rarity;
-		this.faction = faction;
+		this.setMaterial(material);
+		this.setName(name);
+		this.setDescription(description);
+		this.setCountMana(countMana);
+		this.setDamage(damage);
+		this.setType(type);
+		this.setRarity(rarity);
+		this.setFaction(faction);
 	}
-	
+
 	public String getId() {
 		return id;
 	}
-	
-	public MaterialData getMaterial () {
-		return this.material;
+
+	public MaterialData getMaterial() {
+		return material;
 	}
-	
+
+	public void setMaterial(MaterialData material) {
+		this.material = material;
+	}
+
 	public String getName() {
-		return this.name;
+		return name;
 	}
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String[] getDescription() {
-		return this.description;
+		return description;
 	}
-	
+
+	public void setDescription(String[] description) {
+		this.description = description;
+	}
+
 	public int getCountMana() {
-		return this.countMana;
+		return countMana;
 	}
-	
+
+	public void setCountMana(int countMana) {
+		this.countMana = countMana;
+	}
+
 	public int getDamage() {
-		return this.damage;
+		return damage;
 	}
-	
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
 	public CartType getType() {
-		return this.type;
+		return type;
 	}
-	
+
+	public void setType(CartType type) {
+		this.type = type;
+	}
+
 	public CartRarity getRarity() {
-		return this.rarity;
+		return rarity;
 	}
-	
+
+	public void setRarity(CartRarity rarity) {
+		this.rarity = rarity;
+	}
+
 	public CartFaction getFaction() {
-		return this.faction;
+		return faction;
+	}
+
+	public void setFaction(CartFaction faction) {
+		this.faction = faction;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Cart)
-			return ((Cart) obj).getId().equals(this.id);
+			return ((Cart) obj).getId().equals(this.getId());
 		return false;
 	}
 	

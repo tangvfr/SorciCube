@@ -12,11 +12,6 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.carts.Cart;
-import fr.tangv.sorcicubespell.carts.CartEntity;
-import fr.tangv.sorcicubespell.carts.CartSort;
-import fr.tangv.sorcicubespell.carts.CartType;
-import fr.tangv.sorcicubespell.carts.EditCartEntity;
-import fr.tangv.sorcicubespell.carts.EditCartSort;
 
 public class EditCartsGui {
 	
@@ -40,7 +35,7 @@ public class EditCartsGui {
 	}
 	
 	protected String[] getEditBook(ItemStack item) {
-		if (item.getType() == Material.BOOK_AND_QUILL && item.hasItemMeta()) {
+		if ((item.getType() == Material.BOOK_AND_QUILL || item.getType() == Material.WRITTEN_BOOK) && item.hasItemMeta()) {
 			BookMeta meta = (BookMeta) item.getItemMeta();
 			if (meta.hasDisplayName() && meta.hasLore() 
 					&& meta.getDisplayName().equals(this.sorci.getGui().getString("name_book_desc"))) {
@@ -72,13 +67,7 @@ public class EditCartsGui {
 	protected Cart setDescCartByBook(String id, String text) {
 		Cart cart = this.sorci.getCarts().getCart(id);
 		if (cart == null) return null;
-		if (cart.getType() == CartType.ENTITY) {
-			EditCartEntity edit = new EditCartEntity((CartEntity) cart);
-			edit.setDescription(text.split("\n"));
-		} else {
-			EditCartSort edit = new EditCartSort((CartSort) cart);
-			edit.setDescription(text.split("\n"));
-		}
+		cart.setDescription(text.split("\n"));
 		this.sorci.getCarts().update(cart);
 		return cart;
 	}

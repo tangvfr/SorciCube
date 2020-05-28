@@ -17,7 +17,7 @@ book_gui:
   editcart:
     #page1
     title: "§2Edit Carts§8:"
-    name: "\n§9Name§8: \n§c{value}"
+    name: "\n§9Name§8: §c{value}"
     material: "\n§9Material§8: §c{value}"
     type: "\n§9Type§8: §c{value}"
     count_mana: "\n§9Count Mana§8: §c{value}"
@@ -27,7 +27,7 @@ book_gui:
     health: "\n§3Health§8: §4{value}"
     heal: "\n§3Heal§8: §4{value}"
     give_mana: "\n§3Give Mana§8: §4{value}"
-    cible: "\n§3Cible§8:\n§4{value}"
+    cible: "\n§3Cible§8: §4{value}"
     #page2
     description: "\n§9Description§8:\n{value}"
     #page3

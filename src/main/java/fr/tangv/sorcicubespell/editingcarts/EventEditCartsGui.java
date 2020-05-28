@@ -13,7 +13,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.carts.Cart;
 import fr.tangv.sorcicubespell.util.Gui;
@@ -32,10 +31,9 @@ public class EventEditCartsGui implements Listener{
 	public void onClick(PlayerInteractEvent e) {
 		if (e.hasItem() && e.getHand() == EquipmentSlot.HAND &&
 				(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)) {
-			ItemStack item = e.getItem();
-			String[] sc = this.ec.getEditBook(item);
+			Player player = e.getPlayer();
+			String[] sc = this.ec.getEditBook(player.getInventory().getItemInMainHand());
 			if (sc != null) {
-				Player player = e.getPlayer();
 				if (player.hasPermission(ec.sorci.getParameter().getString("permission.editdesc"))) {
 					Cart cart = this.ec.setDescCartByBook(sc[0], sc[1]);
 					if (cart != null) {
@@ -43,6 +41,7 @@ public class EventEditCartsGui implements Listener{
 						p.setCart(cart);
 						this.ec.guiBooks.get("editcart").open(p, cart);
 					}
+					player.sendMessage(cart.toString());
 				} else {
 					player.sendMessage(ec.sorci.getMessage().getString("message_no_perm_editdesc"));
 				}

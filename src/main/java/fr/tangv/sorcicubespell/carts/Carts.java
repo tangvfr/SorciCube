@@ -35,7 +35,7 @@ public class Carts {
 		for(Document doc : cartsCol.find()) {
 			Cart cart = documentToCart(doc);
 			if (cart != null)
-				carts.put(cart.id, cart);
+				carts.put(cart.getId(), cart);
 		}
 	}
 	
@@ -59,20 +59,20 @@ public class Carts {
 		ArrayList<String> lore = new ArrayList<String>();
 		//type
 		lore.add("");
-		lore.add("§7"+this.sorci.getEnumTool().typeToString(cart.type));
-		lore.add("§7"+this.sorci.getEnumTool().rarityToString(cart.rarity));
-		lore.add("§7"+this.sorci.getEnumTool().factionToString(cart.faction));
+		lore.add("§7"+this.sorci.getEnumTool().typeToString(cart.getType()));
+		lore.add("§7"+this.sorci.getEnumTool().rarityToString(cart.getRarity()));
+		lore.add("§7"+this.sorci.getEnumTool().factionToString(cart.getFaction()));
 		lore.add("");
-		lore.add("§8Id: "+cart.id);
+		lore.add("§8Id: "+cart.getId());
 		//lore
-		for (int i = 0; i < cart.description.length; i++)
-			lore.add(cart.description[i]);
+		for (int i = 0; i < cart.getDescription().length; i++)
+			lore.add(cart.getDescription()[i]);
 		//return item
-		return ItemBuild.buildItem(cart.material.getItemType(),
+		return ItemBuild.buildItem(cart.getMaterial().getItemType(),
 				amount,
 				(short) 0,
-				cart.material.getData(),
-				cart.name,
+				cart.getMaterial().getData(),
+				cart.getName(),
 				lore,
 				ench);
 	}
@@ -143,7 +143,7 @@ public class Carts {
 				CartCible.ONE_ENTITY_ENEMIE
 			);
 		cartsCol.insertOne(cartToDocument(cart));
-		carts.put(cart.id, cart);
+		carts.put(cart.getId(), cart);
 		return cart;
 	}
 	
@@ -160,20 +160,20 @@ public class Carts {
 				4
 			);
 		cartsCol.insertOne(cartToDocument(cart));
-		carts.put(cart.id, cart);
+		carts.put(cart.getId(), cart);
 		return cart;
 	}
 	
 	public void update(Cart cart) {
 		Document doc = new Document("_id", new ObjectId(cart.getId()));
 		cartsCol.findOneAndReplace(doc, cartToDocument(cart));
-		carts.replace(cart.id, cart);
+		carts.replace(cart.getId(), cart);
 	}
 	
 	public void delete(Cart cart) {
-		if (carts.containsKey(cart.id))
-			carts.remove(cart.id);
-		Document doc = new Document("_id", new ObjectId(cart.id));
+		if (carts.containsKey(cart.getId()))
+			carts.remove(cart.getId());
+		Document doc = new Document("_id", new ObjectId(cart.getId()));
 		Iterator<Document> rep = cartsCol.find(doc).iterator();
 		if (rep.hasNext())
 			cartsCol.deleteOne(doc);

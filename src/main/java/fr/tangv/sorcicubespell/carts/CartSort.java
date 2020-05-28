@@ -4,9 +4,9 @@ import org.bukkit.material.MaterialData;
 
 public class CartSort extends Cart {
 
-	protected int heal;
-	protected int giveMana;
-	protected CartCible cible;
+	private int heal;
+	private int giveMana;
+	private CartCible cible;
 	
 	public CartSort(String id,
 			MaterialData material,
@@ -20,21 +20,33 @@ public class CartSort extends Cart {
 			int giveMana,
 			CartCible cible) {
 		super(id, material, name, description, countMana, damage, CartType.SORT, rarity, faction);
-		this.heal = heal;
-		this.giveMana = giveMana;
-		this.cible = cible;
+		this.setHeal(heal);
+		this.setGiveMana(giveMana);
+		this.setCible(cible);
 	}
-	
+
 	public int getHeal() {
-		return this.heal;
+		return heal;
 	}
-	
+
+	public void setHeal(int heal) {
+		this.heal = heal;
+	}
+
 	public int getGiveMana() {
-		return this.giveMana;
+		return giveMana;
 	}
-	
+
+	public void setGiveMana(int giveMana) {
+		this.giveMana = giveMana;
+	}
+
 	public CartCible getCible() {
-		return this.cible;
+		return cible;
+	}
+
+	public void setCible(CartCible cible) {
+		this.cible = cible;
 	}
 	
 }

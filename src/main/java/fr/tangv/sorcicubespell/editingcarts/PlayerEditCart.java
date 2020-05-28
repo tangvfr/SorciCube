@@ -21,7 +21,7 @@ public class PlayerEditCart {
 		this.guiOpened = null;
 		this.gui = null;
 		this.cartComparator = CartComparator.BY_ID;
-		this.setPageEditGui(0);
+		this.pageEditGui = 0;
 	}
 	
 	public Player getPlayer() {
