@@ -39,7 +39,7 @@ public class EditCartsGui {
 			BookMeta meta = (BookMeta) item.getItemMeta();
 			if (meta.hasDisplayName() && meta.hasLore() 
 					&& meta.getDisplayName().equals(this.sorci.getGui().getString("name_book_desc"))) {
-				String id = meta.getLore().get(1).replaceFirst("§8Id: ", "");
+				String id = meta.getLore().get(meta.getLore().size()-1).replaceFirst("§8Id: ", "");
 				String lore = "";
 				if (meta.getPageCount() > 0)
 					lore = meta.getPages().get(0);
@@ -59,7 +59,11 @@ public class EditCartsGui {
 			text += "\n"+desc[i].replace("§", "&");
 		meta.addPage(text);
 		meta.setDisplayName(this.sorci.getGui().getString("name_book_desc"));
-		meta.setLore(Arrays.asList(("§7Name: "+cart.getName()), ("§8Id: "+cart.getId())));
+		meta.setLore(Arrays.asList(("§7Name: "+cart.getName()), 
+				this.sorci.getGui().getString("edit_book_desc"),
+				this.sorci.getGui().getString("valid_book_desc"),
+				this.sorci.getGui().getString("cancel_book_desc"),
+				("§8Id: "+cart.getId())));
 		book.setItemMeta(meta);
 		player.getInventory().setItemInMainHand(book);
 	}

@@ -41,7 +41,6 @@ public class EventEditCartsGui implements Listener{
 						p.setCart(cart);
 						this.ec.guiBooks.get("editcart").open(p, cart);
 					}
-					player.sendMessage(cart.toString());
 				} else {
 					player.sendMessage(ec.sorci.getMessage().getString("message_no_perm_editdesc"));
 				}

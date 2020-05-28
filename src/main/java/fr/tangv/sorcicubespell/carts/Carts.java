@@ -62,11 +62,12 @@ public class Carts {
 		lore.add("§7"+this.sorci.getEnumTool().typeToString(cart.getType()));
 		lore.add("§7"+this.sorci.getEnumTool().rarityToString(cart.getRarity()));
 		lore.add("§7"+this.sorci.getEnumTool().factionToString(cart.getFaction()));
-		lore.add("");
-		lore.add("§8Id: "+cart.getId());
 		//lore
 		for (int i = 0; i < cart.getDescription().length; i++)
 			lore.add(cart.getDescription()[i]);
+		//id
+		lore.add("");
+		lore.add("§8Id: "+cart.getId());
 		//return item
 		return ItemBuild.buildItem(cart.getMaterial().getItemType(),
 				amount,

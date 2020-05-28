@@ -12,6 +12,9 @@ gui_edit_list:
     create_entity: "§9Crée un serviteur"
 # Gui Edit Cart
 name_book_desc: "§6Edit Desc Cart"
+edit_book_desc: "§eRight click for edit"
+valid_book_desc: "§aLeft click for valid"
+cancel_book_desc: "§cDestruct for cancel"
 #Book Gui
 book_gui:
   editcart:
