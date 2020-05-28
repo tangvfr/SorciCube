@@ -32,8 +32,8 @@ book_gui:
     description: "\n§9Description§8:\n{value}"
     #page3
     id: "\n§9Id§8:\n{value}"
-    remove: "\n\n\n\n\n\n   §4§n/!\\ §4[Remove] §n/!\\"
-    back: "\n\n§c        > Back <"
+    remove: "\n\n\n\n\n    §4§n/!\\§r §4[Remove] §n/!\\"
+    back: "\n\n\n\n§c         > Back <"
     #hover
     hover_name: "§d§nEdit Name"
     hover_material: "§d§nEdit Material"

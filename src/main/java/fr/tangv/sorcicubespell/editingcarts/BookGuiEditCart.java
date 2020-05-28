@@ -91,7 +91,19 @@ public class BookGuiEditCart extends BookGui {
 		} else if (args.length == 2) {
 			String action = args[1];
 			player.getPlayer().sendMessage("action: "+action);
+			switch (action) {
+				case "description":
+					this.ec.setBookDesc(player.getPlayer(), cart);
+					break;
 			
+				case "back":
+					this.ec.guiEditList.open(player.getPlayer());
+					break;
+	
+				default:
+					player.getPlayer().sendMessage("undefine !");
+					break;
+			}
 		} else {
 			return false;
 		}

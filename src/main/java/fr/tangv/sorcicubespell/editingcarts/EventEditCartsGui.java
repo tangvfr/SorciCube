@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.carts.Cart;
@@ -29,7 +30,7 @@ public class EventEditCartsGui implements Listener{
 	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
-		if (e.hasItem() &&
+		if (e.hasItem() && e.getHand() == EquipmentSlot.HAND &&
 				(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK)) {
 			ItemStack item = e.getItem();
 			String[] sc = this.ec.getEditBook(item);

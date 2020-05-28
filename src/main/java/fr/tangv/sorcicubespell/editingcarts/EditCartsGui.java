@@ -43,8 +43,14 @@ public class EditCartsGui {
 		if (item.getType() == Material.BOOK_AND_QUILL && item.hasItemMeta()) {
 			BookMeta meta = (BookMeta) item.getItemMeta();
 			if (meta.hasDisplayName() && meta.hasLore() 
-					&& meta.getDisplayName().equals(this.sorci.getGui().getString("name_book_desc")))
-				return new String[] {meta.getLore().get(1).replaceFirst("§8Id: ", ""), meta.getPage(0).replace("&", "§")};
+					&& meta.getDisplayName().equals(this.sorci.getGui().getString("name_book_desc"))) {
+				String id = meta.getLore().get(1).replaceFirst("§8Id: ", "");
+				String lore = "";
+				if (meta.getPageCount() > 0)
+					lore = meta.getPages().get(0);
+				lore = lore.replace("&", "§");
+				return new String[] {id, lore};
+			}
 		}
 		return null;
 	}
