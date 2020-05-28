@@ -63,6 +63,7 @@ public class Carts {
 		lore.add("§7"+this.sorci.getEnumTool().rarityToString(cart.getRarity()));
 		lore.add("§7"+this.sorci.getEnumTool().factionToString(cart.getFaction()));
 		//lore
+		lore.add("");
 		for (int i = 0; i < cart.getDescription().length; i++)
 			lore.add(cart.getDescription()[i]);
 		//id
