@@ -40,17 +40,19 @@ public class GuiEditList extends GuiEdit {
 
 	@Override
 	public Inventory getInventory(Player player) {
-		return this.getInventory(player, 0);
+		return this.getInventory(player, this.ec.editingCarts.get(player).getPageEditGui());
 	}
 	
 	public Inventory getInventory(Player player, int page) {
+		PlayerEditCart playerE = this.ec.editingCarts.get(player);
 		Inventory inv = Bukkit.createInventory(null, 54, this.name);
 		ArrayList<Cart> carts = new ArrayList<Cart>(ec.sorci.getCarts().getCarts());
 		carts.sort(CartComparator.BY_ID);
-		carts.sort(this.ec.editingCarts.get(player).getCartComparator());
+		carts.sort(playerE.getCartComparator());
 		//define max page
 		int max = carts.size() < 1 ? 0 : (carts.size()-1)/45;
 		page = page > max ? max : (page < 0 ? 0 : page);
+		playerE.setPageEditGui(page);
 		//set carts item
 		int decal = page*45;
 		int num = carts.size()-decal;

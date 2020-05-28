@@ -13,6 +13,7 @@ public class PlayerEditCart {
 	private Gui guiOpened;
 	private Gui gui;
 	private CartComparator cartComparator;
+	private int pageEditGui;
 	
 	public PlayerEditCart(Player player) {
 		this.player = player;
@@ -20,6 +21,7 @@ public class PlayerEditCart {
 		this.guiOpened = null;
 		this.gui = null;
 		this.cartComparator = CartComparator.BY_ID;
+		this.setPageEditGui(0);
 	}
 	
 	public Player getPlayer() {
@@ -56,6 +58,14 @@ public class PlayerEditCart {
 
 	public void setCartComparator(CartComparator cartComparator) {
 		this.cartComparator = cartComparator;
+	}
+
+	public int getPageEditGui() {
+		return pageEditGui;
+	}
+
+	public void setPageEditGui(int pageEditGui) {
+		this.pageEditGui = pageEditGui;
 	}
 
 }

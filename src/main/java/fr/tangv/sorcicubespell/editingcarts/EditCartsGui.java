@@ -71,6 +71,7 @@ public class EditCartsGui {
 	
 	protected Cart setDescCartByBook(String id, String text) {
 		Cart cart = this.sorci.getCarts().getCart(id);
+		if (cart == null) return null;
 		if (cart.getType() == CartType.ENTITY) {
 			EditCartEntity edit = new EditCartEntity((CartEntity) cart);
 			edit.setDescription(text.split("\n"));

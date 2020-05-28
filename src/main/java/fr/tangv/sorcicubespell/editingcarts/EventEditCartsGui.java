@@ -38,9 +38,11 @@ public class EventEditCartsGui implements Listener{
 				Player player = e.getPlayer();
 				if (player.hasPermission(ec.sorci.getParameter().getString("permission.editdesc"))) {
 					Cart cart = this.ec.setDescCartByBook(sc[0], sc[1]);
-					PlayerEditCart p = this.ec.editingCarts.get(player);
-					p.setCart(cart);
-					this.ec.guiBooks.get("editcart").open(p, cart);
+					if (cart != null) {
+						PlayerEditCart p = this.ec.editingCarts.get(player);
+						p.setCart(cart);
+						this.ec.guiBooks.get("editcart").open(p, cart);
+					}
 				} else {
 					player.sendMessage(ec.sorci.getMessage().getString("message_no_perm_editdesc"));
 				}
