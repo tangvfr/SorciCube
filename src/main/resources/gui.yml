@@ -15,15 +15,19 @@ name_book_desc: "§6Edit Desc Cart"
 #Book Gui
 book_gui:
   editcart:
-    id: "§cId§7: §9{value}"
-    material: "§cMaterial§7: §9{value}"
-    name: "§cName§7: §9{value}"
-    description: "§cDescription§7: \n§9{value}"
-    count_mana: "§Count Mana§7: §9{value}"
-    damage: "§cDamage§7: §9{value}"
-    rarity: "§cRarity§7: §9{value}"
-    faction: "§cFaction§7: §9{value}"
-    health: "§cHealth§7: §9{value}"
-    heal: "§cHeal§7: §9{value}"
-    give_mana: "§cGive Mana§7: §9{value}"
-    cible: "§cCible§7: §9{value}"
+    #page1
+    title: "§2Edit Carts§8:"
+    name: "\n§9Name§7: \n§c{value}\n"
+    material: "\n§9Material§7: §c{value}"
+    count_mana: "\n§9Count Mana§7: §c{value}"
+    damage: "\n§9Damage§7: §c{value}"
+    rarity: "\n§9Rarity§7: §c{value}"
+    faction: "\n§9Faction§7: §c{value}"
+    health: "\n§9Health§7: §c{value}"
+    heal: "\n§9Heal§7: §c{value}"
+    give_mana: "\n§9Give Mana§7: §c{value}"
+    cible: "\n§9Cible§7: §c{value}"
+    #page2
+    description: "\n§9Description§7:\n{value}"
+    #page13
+    id: "\n§9Id§7:\n{value}"

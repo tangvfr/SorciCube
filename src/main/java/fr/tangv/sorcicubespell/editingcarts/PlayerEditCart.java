@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.editingcarts;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.carts.Cart;
+import fr.tangv.sorcicubespell.carts.CartComparator;
 import fr.tangv.sorcicubespell.util.Gui;
 
 public class PlayerEditCart {
@@ -11,12 +12,14 @@ public class PlayerEditCart {
 	private Cart cart;
 	private Gui guiOpened;
 	private Gui gui;
+	private CartComparator cartComparator;
 	
 	public PlayerEditCart(Player player) {
 		this.player = player;
 		this.cart = null;
 		this.guiOpened = null;
 		this.gui = null;
+		this.cartComparator = CartComparator.BY_ID;
 	}
 	
 	public Player getPlayer() {
@@ -46,5 +49,13 @@ public class PlayerEditCart {
 	public void setGuiOpened(Gui guiOpened) {
 		this.guiOpened = guiOpened;
 	}
-	
+
+	public CartComparator getCartComparator() {
+		return cartComparator;
+	}
+
+	public void setCartComparator(CartComparator cartComparator) {
+		this.cartComparator = cartComparator;
+	}
+
 }

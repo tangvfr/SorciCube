@@ -20,7 +20,7 @@ public class CommandEditCartsGui implements CommandExecutor {
 			if (args.length > 0) {
 				PlayerEditCart p = this.ec.editingCarts.get(player);
 				if (p.getCart() != null && this.ec.guiBooks.containsKey(args[0]))
-					return this.ec.guiBooks.get(args[0]).onCommand(p, args);
+					return this.ec.guiBooks.get(args[0]).onCommand(p, p.getCart(), args);
 				return false;
 			} else {
 				this.ec.guiEditList.open(player);

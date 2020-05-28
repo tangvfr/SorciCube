@@ -1,11 +1,9 @@
 package fr.tangv.sorcicubespell;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mongodb.client.MongoClient;

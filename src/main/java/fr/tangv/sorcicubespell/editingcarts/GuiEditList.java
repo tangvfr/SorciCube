@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.carts.Cart;
+import fr.tangv.sorcicubespell.carts.CartComparator;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
@@ -45,6 +46,9 @@ public class GuiEditList extends GuiEdit {
 	public Inventory getInventory(Player player, int page) {
 		Inventory inv = Bukkit.createInventory(null, 54, this.name);
 		ArrayList<Cart> carts = new ArrayList<Cart>(ec.sorci.getCarts().getCarts());
+		carts.sort(CartComparator.BY_ID);
+		carts.sort(this.ec.editingCarts.get(player).getCartComparator());
+		//define max page
 		int max = carts.size() < 1 ? 0 : (carts.size()-1)/45;
 		page = page > max ? max : (page < 0 ? 0 : page);
 		//set carts item
@@ -75,18 +79,24 @@ public class GuiEditList extends GuiEdit {
 		return inv;
 	}
 
+	/*if (e.getInventory().getType() == InventoryType.ANVIL) {
+	Bukkit.broadcastMessage("Inv: "+e.getInventory().getName());
+	ItemStack result = e.getCurrentItem();
+	if (result.hasItemMeta() && result.getItemMeta().hasDisplayName())
+		Bukkit.broadcastMessage("Text: "+result.getItemMeta().getDisplayName());
+}*/
+	
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
 		int raw = e.getRawSlot();
 		if (raw < 45) {
 			List<String> lore = e.getCurrentItem().getItemMeta().getLore();
-			String id = lore.get(lore.size()-1).replaceFirst("§7Id: ", "");
+			String id = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
 			Cart cart = this.ec.sorci.getCarts().getCart(id);
 			if (cart != null) {
-				player.closeInventory();
 				PlayerEditCart p = this.ec.editingCarts.get(player);
 				p.setCart(cart);
-				this.ec.guiBooks.get("editcart").open(p);
+				this.ec.guiBooks.get("editcart").open(p, cart);
 			}
 		} else {
 			int page = e.getInventory().getItem(49).getAmount();
@@ -106,12 +116,12 @@ public class GuiEditList extends GuiEdit {
 				//create sort
 				case 51:
 					ec.sorci.getCarts().newCartSort();
-					player.openInventory(this.getInventory(player, page-1));//menu edit cart
+					player.openInventory(this.getInventory(player, page-1));
 					break;
 				//create entity
 				case 52:
 					ec.sorci.getCarts().newCartEntity();
-					player.openInventory(this.getInventory(player, page-1));//menu edit cart
+					player.openInventory(this.getInventory(player, page-1));
 					break;
 				//close
 				case 53:
