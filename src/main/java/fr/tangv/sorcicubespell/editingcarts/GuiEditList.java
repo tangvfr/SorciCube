@@ -92,13 +92,18 @@ public class GuiEditList extends GuiEdit {
 	public void onClick(Player player, InventoryClickEvent e) {
 		int raw = e.getRawSlot();
 		if (raw < 45) {
-			List<String> lore = e.getCurrentItem().getItemMeta().getLore();
-			String id = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
-			Cart cart = this.ec.sorci.getCarts().getCart(id);
-			if (cart != null) {
-				PlayerEditCart p = this.ec.editingCarts.get(player);
-				p.setCart(cart);
-				this.ec.guiBooks.get("editcart").open(p, cart);
+			ItemStack item = e.getCurrentItem();
+			if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
+				List<String> lore = item.getItemMeta().getLore();
+				if (lore.size() > 0) {
+					String id = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
+					Cart cart = this.ec.sorci.getCarts().getCart(id);
+					if (cart != null) {
+						PlayerEditCart p = this.ec.editingCarts.get(player);
+						p.setCart(cart);
+						this.ec.guiBooks.get("editcart").open(p, cart);
+					}
+				}
 			}
 		} else {
 			int page = e.getInventory().getItem(49).getAmount();
