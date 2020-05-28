@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.carts;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -9,16 +10,22 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import com.mongodb.client.MongoCollection;
 
+import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.util.ItemBuild;
+
 public class Carts {
 
+	private SorciCubeSpell sorci;
 	private MongoCollection<Document> cartsCol;
 	private Map<String, Cart> carts;
 	
-	public Carts(MongoCollection<Document> cartsCol) {
+	public Carts(SorciCubeSpell sorci, MongoCollection<Document> cartsCol) {
+		this.sorci = sorci;
 		this.cartsCol = cartsCol;
 		reload();
 	}
@@ -43,9 +50,31 @@ public class Carts {
 			return null;
 	}
 	
-	public Cart importCart(String id) {
-		Iterator<Document> rep = cartsCol.find(new Document("_id", new ObjectId(id))).iterator();
-		return rep.hasNext() ? this.documentToCart(rep.next()) : null;
+	public ItemStack cartToItem(Cart cart) {
+		return this.cartToItem(cart, 1, false);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public ItemStack cartToItem(Cart cart, int amount, boolean ench) {
+		ArrayList<String> lore = new ArrayList<String>();
+		//type
+		lore.add("");
+		lore.add("§7"+this.sorci.getEnumTool().typeToString(cart.type));
+		lore.add("§7"+this.sorci.getEnumTool().rarityToString(cart.rarity));
+		lore.add("§7"+this.sorci.getEnumTool().factionToString(cart.faction));
+		lore.add("");
+		lore.add("§8Id: "+cart.id);
+		//lore
+		for (int i = 0; i < cart.description.length; i++)
+			lore.add(cart.description[i]);
+		//return item
+		return ItemBuild.buildItem(cart.material.getItemType(),
+				amount,
+				(short) 0,
+				cart.material.getData(),
+				cart.name,
+				lore,
+				ench);
 	}
 	
 	public Cart documentToCart(Document doc) {
@@ -128,7 +157,7 @@ public class Carts {
 				3,
 				CartRarity.COMMUN,
 				CartFaction.LIGHT,
-				-1
+				4
 			);
 		cartsCol.insertOne(cartToDocument(cart));
 		carts.put(cart.id, cart);

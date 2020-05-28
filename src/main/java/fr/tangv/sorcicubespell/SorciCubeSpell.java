@@ -14,6 +14,7 @@ import com.mongodb.client.MongoDatabase;
 import fr.tangv.sorcicubespell.carts.Carts;
 import fr.tangv.sorcicubespell.editingcarts.EditCartsGui;
 import fr.tangv.sorcicubespell.util.Config;
+import fr.tangv.sorcicubespell.util.EnumTool;
 
 public class SorciCubeSpell extends JavaPlugin {
 
@@ -23,6 +24,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config message;
 	private Config parameter;
 	private Config gui;
+	private EnumTool enumTool;
 	
 	@Override
 	public void onEnable() {
@@ -31,6 +33,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.message = new Config(this, "message.yml");
 			this.parameter = new Config(this, "parameter.yml");
 			this.gui = new Config(this, "gui.yml");
+			this.enumTool = new EnumTool(new Config(this, "enum.yml"));
 			//connect database
 			String user = parameter.getString("user");
 			String password = parameter.getString("password");
@@ -51,7 +54,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			if (!hasCarts)
 				database.createCollection(colCartsName);
 			MongoCollection<Document> carts = database.getCollection(colCartsName);
-			this.carts = new Carts(carts);
+			this.carts = new Carts(this, carts);
 			//gui edit menu
 			this.editCartsGui = new EditCartsGui(this);
 		} catch (Exception e) {
@@ -82,6 +85,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public EditCartsGui getEditCartsGui() {
 		return editCartsGui;
+	}
+
+	public EnumTool getEnumTool() {
+		return enumTool;
 	}
 	
 }

@@ -1,0 +1,32 @@
+#cible
+cible:
+  one: "ONE"
+  one_enemie: "ONE ENEMIE"
+  one_entity_enemie: "ONE ENTITY ENEMIE"
+  hero_enemie: "HERO ENEMIE"
+  all_enemie: "ALL ENEMIE"
+  all_entity_enemie: "ALL ENTITY ENEMIE"
+  one_ally: "ONE ALLY"
+  one_entity_ally: "ONE ENTITY ALLY"
+  hero_ally: "HERO ALLY"
+  all_ally: "ALL ALLY"
+  all_entity_ally: "ALL ENTITY ALLY"
+  one_entity: "ONE ENTITY"
+  all_entity: "ALL ENTITY"
+  all: "ALL"
+#faction
+faction:
+  dark: "DARK"
+  light: "LIGHT"
+  nature: "NATURE"
+  toxic: "TOXIC"
+#rarity
+rarity:
+  commun: "COMMUN"
+  rare: "RARE"
+  epic: "EPIC"
+  legendary: "LEGENDARY"
+#type
+type:
+  sort: "SORT"
+  entity: "ENTITY"

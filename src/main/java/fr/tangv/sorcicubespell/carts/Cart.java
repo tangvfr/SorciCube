@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubespell.carts;
 
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 public abstract class Cart {
@@ -69,12 +68,6 @@ public abstract class Cart {
 	
 	public CartFaction getFaction() {
 		return this.faction;
-	}
-	
-	public abstract ItemStack toItem(int amount, boolean ench);
-	
-	public ItemStack toItem() {
-		return this.toItem(1, false);
 	}
 	
 	@Override

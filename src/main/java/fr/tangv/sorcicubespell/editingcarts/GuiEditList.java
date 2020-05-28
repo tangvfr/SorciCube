@@ -58,7 +58,7 @@ public class GuiEditList extends GuiEdit {
 			num = 45;
 		if (carts.size() > 0)
 			for (int i = 0; i < num; i++) {
-				inv.setItem(i, carts.get(i+decal).toItem());
+				inv.setItem(i, this.ec.sorci.getCarts().cartToItem(carts.get(i+decal)));
 			}
 		//init paper
 		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 

@@ -33,6 +33,7 @@ public class EditCartsGui {
 		this.guiEditList = new GuiEditList(this, sorci.getGui().getConfigurationSection("gui_edit_list"));
 		//init book gui
 		new BookGuiEditCart(this);
+		
 		//spigot init
 		sorci.getCommand("editcarts").setExecutor(new CommandEditCartsGui(this));
 		Bukkit.getPluginManager().registerEvents(new EventEditCartsGui(this), sorci);
