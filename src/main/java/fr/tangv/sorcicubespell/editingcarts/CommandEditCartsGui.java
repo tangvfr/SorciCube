@@ -28,8 +28,8 @@ public class CommandEditCartsGui implements CommandExecutor {
 			}
 		} else {
 			sender.sendMessage(ec.sorci.getMessage().getString("message_no_player"));
+			return true;
 		}
-		return false;
 	}
 	
 }
