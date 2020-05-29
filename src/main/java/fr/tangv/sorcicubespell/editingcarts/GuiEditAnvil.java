@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,7 +24,7 @@ public class GuiEditAnvil extends GuiEdit {
 	public Inventory getInventory(Player player) {
 		AnvilEdit ae = this.ec.editingCarts.get(player).getAnvilEdit();
 		if (ae != null) {
-			AnvilInventory inv = (AnvilInventory) Bukkit.createInventory(null, InventoryType.ANVIL, this.name);
+			Inventory inv = Bukkit.createInventory(null, InventoryType.ANVIL, this.name);
 			List<String> lore = this.config.getStringList("lore_edit");
 			for (int i = 0; i < lore.size(); i++)
 				lore.set(i, 
