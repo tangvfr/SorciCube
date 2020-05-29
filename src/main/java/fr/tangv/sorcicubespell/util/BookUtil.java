@@ -9,13 +9,6 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import fr.tangv.sorcicubespell.util.ReflectionUtils.PackageType;
 
-/**
-* Create a "Virtual" book gui that doesn't require the user to have a book in their hand.
-* Requires ReflectionUtil class.
-* Built for Minecraft 1.9
-* @author Jed
-*
-*/
 public class BookUtil {
 	
    private static boolean initialised = false;
@@ -37,12 +30,7 @@ public class BookUtil {
    public static boolean isInitialised(){
       return initialised;
    }
-   /**
-   * Open a "Virtual" Book ItemStack.
-   * @param i Book ItemStack.
-   * @param p Player that will open the book.
-   * @return
-   */
+
    public static boolean openBook(ItemStack i, Player p) {
       if (!initialised) return false;
       ItemStack held = p.getInventory().getItemInMainHand();
@@ -74,11 +62,6 @@ public class BookUtil {
       return null;
    }
 
-   /**
-   * Set the pages of the book in JSON format.
-   * @param metadata BookMeta of the Book ItemStack.
-   * @param pages Each page to be added to the book.
-   */
    @SuppressWarnings("unchecked")
    public static void setPages(BookMeta metadata, List<String> pages) {
       List<Object> p;
