@@ -19,7 +19,6 @@ public class EditCartsGui {
 	protected Map<Player, PlayerEditCart> editingCarts;
 	protected Map<String, BookGui> guiBooks;
 	protected GuiEditList guiEditList;
-	protected GuiEditAnvil guiEditAnvil;
 	
 	public EditCartsGui(SorciCubeSpell sorci) {
 		this.sorci = sorci;
@@ -27,10 +26,8 @@ public class EditCartsGui {
 		this.guiBooks = new ConcurrentHashMap<String, BookGui>();
 		//init gui
 		this.guiEditList = new GuiEditList(this, sorci.getGui().getConfigurationSection("gui_edit_list"));
-		this.guiEditAnvil = new GuiEditAnvil(this, sorci.getGui().getConfigurationSection("gui_edit_anvil"));
 		//init book gui
 		new BookGuiEditCart(this);
-		
 		//spigot init
 		sorci.getCommand("editcarts").setExecutor(new CommandEditCartsGui(this));
 		Bukkit.getPluginManager().registerEvents(new EventEditCartsGui(this), sorci);

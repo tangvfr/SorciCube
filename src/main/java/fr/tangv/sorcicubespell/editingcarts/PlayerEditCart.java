@@ -14,7 +14,6 @@ public class PlayerEditCart {
 	private Gui gui;
 	private CartComparator cartComparator;
 	private int pageEditGui;
-	private AnvilEdit anvilEdit;
 	
 	public PlayerEditCart(Player player) {
 		this.player = player;
@@ -23,7 +22,6 @@ public class PlayerEditCart {
 		this.gui = null;
 		this.cartComparator = CartComparator.BY_ID;
 		this.pageEditGui = 0;
-		this.anvilEdit = null;
 	}
 	
 	public Player getPlayer() {
@@ -68,14 +66,6 @@ public class PlayerEditCart {
 
 	public void setPageEditGui(int pageEditGui) {
 		this.pageEditGui = pageEditGui;
-	}
-
-	public AnvilEdit getAnvilEdit() {
-		return anvilEdit;
-	}
-
-	public void setAnvilEdit(AnvilEdit anvilEdit) {
-		this.anvilEdit = anvilEdit;
 	}
 
 }

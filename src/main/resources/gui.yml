@@ -14,10 +14,12 @@ gui_edit_list:
 gui_edit_anvil:
   name: "§9Gui Edit Value Cart"
   lore_edit:
-    - "§eEdit: {name}"
-    - "§eValue: {value}"
+    - "§eEdit§7: §d{name}"
+    - "§6Value§7: §d{value}"
+    - "§2Options§7:"
+    - "§c<- Back"
+    - "§9| Reset |"
     - "§aValid ->"
-    - "§c<- Cancel"
 #Gui Edit Cart
 name_book_desc: "§6Edit Desc Cart"
 edit_book_desc: "§eRight click for edit"

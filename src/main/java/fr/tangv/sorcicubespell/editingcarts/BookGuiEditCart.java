@@ -101,28 +101,18 @@ public class BookGuiEditCart extends BookGui {
 					break;
 					
 				case "name":
-					player.setAnvilEdit(new AnvilEdit() {
+					AnvilEdit ae = new AnvilEdit() {
 						@Override
 						public void valid(String string) {
 							cart.setName(string);
+							BookGuiEditCart.this.ec.sorci.getCarts().update(cart);
 						}
-						
 						@Override
-						public void cancel() {
-							open(player, cart);
+						public void back() {
+							BookGuiEditCart.this.open(player, cart);
 						}
-						
-						@Override
-						public String getName() {
-							return action;
-						}
-						
-						@Override
-						public String getValue() {
-							return cart.getName();
-						}
-					});
-					this.ec.guiEditAnvil.open(player.getPlayer());
+					};
+					ae.open(player.getPlayer(), action, cart.getName(), this.ec.sorci);
 					break;
 	
 				default:
