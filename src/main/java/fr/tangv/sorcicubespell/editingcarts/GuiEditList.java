@@ -80,13 +80,6 @@ public class GuiEditList extends GuiEdit {
 		inv.setItem(53, this.close);
 		return inv;
 	}
-
-	/*if (e.getInventory().getType() == InventoryType.ANVIL) {
-	Bukkit.broadcastMessage("Inv: "+e.getInventory().getName());
-	ItemStack result = e.getCurrentItem();
-	if (result.hasItemMeta() && result.getItemMeta().hasDisplayName())
-		Bukkit.broadcastMessage("Text: "+result.getItemMeta().getDisplayName());
-}*/
 	
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {

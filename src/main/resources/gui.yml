@@ -10,7 +10,15 @@ gui_edit_list:
     deco: " "
     create_sort: "§6Crée un sort"
     create_entity: "§9Crée un serviteur"
-# Gui Edit Cart
+#Gui Edit Anvil
+gui_edit_anvil:
+  name: "§9Gui Edit Value Cart"
+  lore_edit:
+    - "§eEdit: {name}"
+    - "§eValue: {value}"
+    - "§aValid ->"
+    - "§c<- Cancel"
+#Gui Edit Cart
 name_book_desc: "§6Edit Desc Cart"
 edit_book_desc: "§eRight click for edit"
 valid_book_desc: "§aLeft click for valid"

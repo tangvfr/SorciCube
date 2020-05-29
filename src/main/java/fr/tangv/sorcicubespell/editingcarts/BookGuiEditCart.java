@@ -99,6 +99,31 @@ public class BookGuiEditCart extends BookGui {
 				case "back":
 					this.ec.guiEditList.open(player.getPlayer());
 					break;
+					
+				case "name":
+					player.setAnvilEdit(new AnvilEdit() {
+						@Override
+						public void valid(String string) {
+							cart.setName(string);
+						}
+						
+						@Override
+						public void cancel() {
+							open(player, cart);
+						}
+						
+						@Override
+						public String getName() {
+							return action;
+						}
+						
+						@Override
+						public String getValue() {
+							return cart.getName();
+						}
+					});
+					this.ec.guiEditAnvil.open(player.getPlayer());
+					break;
 	
 				default:
 					player.getPlayer().sendMessage("undefine !");

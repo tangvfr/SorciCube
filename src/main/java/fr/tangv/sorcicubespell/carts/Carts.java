@@ -2,10 +2,7 @@ package fr.tangv.sorcicubespell.carts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -22,30 +19,26 @@ public class Carts {
 
 	private SorciCubeSpell sorci;
 	private MongoCollection<Document> cartsCol;
-	private Map<String, Cart> carts;
 	
 	public Carts(SorciCubeSpell sorci, MongoCollection<Document> cartsCol) {
 		this.sorci = sorci;
 		this.cartsCol = cartsCol;
-		reload();
 	}
 	
-	public void reload() {
-		this.carts = new ConcurrentHashMap<String, Cart>();
+	public ArrayList<Cart> getCarts() {
+		ArrayList<Cart> list = new ArrayList<Cart>();
 		for(Document doc : cartsCol.find()) {
 			Cart cart = documentToCart(doc);
-			if (cart != null)
-				carts.put(cart.getId(), cart);
+			list.add(cart);
 		}
-	}
-	
-	public Collection<Cart> getCarts() {
-		return carts.values();
+		return list;
 	}
 	
 	public Cart getCart(String id) {
-		if (carts.containsKey(id))
-			return carts.get(id);
+		Document doc = new Document("_id", new ObjectId(id));
+		Iterator<Document> rep = cartsCol.find(doc).iterator();
+		if (rep.hasNext())
+			return documentToCart(rep.next());
 		else
 			return null;
 	}
@@ -121,11 +114,9 @@ public class Carts {
 			doc.append("heal", cartSort.getHeal());
 			doc.append("giveMana", cartSort.getGiveMana());
 			doc.append("cible", cartSort.getCible().name());
-		} else if (cart instanceof CartEntity) {
+		} else {
 			CartEntity cartEntity = (CartEntity) cart;
 			doc.append("health", cartEntity.getHealth());
-		} else {
-			return null;
 		}
 		return doc;
 	}
@@ -145,7 +136,6 @@ public class Carts {
 				CartCible.ONE_ENTITY_ENEMIE
 			);
 		cartsCol.insertOne(cartToDocument(cart));
-		carts.put(cart.getId(), cart);
 		return cart;
 	}
 	
@@ -162,23 +152,21 @@ public class Carts {
 				4
 			);
 		cartsCol.insertOne(cartToDocument(cart));
-		carts.put(cart.getId(), cart);
 		return cart;
 	}
 	
 	public void update(Cart cart) {
 		Document doc = new Document("_id", new ObjectId(cart.getId()));
-		cartsCol.findOneAndReplace(doc, cartToDocument(cart));
-		carts.replace(cart.getId(), cart);
+		Iterator<Document> rep = cartsCol.find(doc).iterator();
+		if (rep.hasNext())
+			cartsCol.replaceOne(rep.next(), cartToDocument(cart));
 	}
 	
 	public void delete(Cart cart) {
-		if (carts.containsKey(cart.getId()))
-			carts.remove(cart.getId());
 		Document doc = new Document("_id", new ObjectId(cart.getId()));
 		Iterator<Document> rep = cartsCol.find(doc).iterator();
 		if (rep.hasNext())
-			cartsCol.deleteOne(doc);
+			cartsCol.deleteOne(rep.next());
 	}
 	
 }
