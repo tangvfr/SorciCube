@@ -14,20 +14,33 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public abstract class AnvilEdit {
 
-	public void open(Player player, String name, String value, SorciCubeSpell sorci) {
+	private Player player;
+	private String name;
+	private String value;
+	private SorciCubeSpell sorci;
+	
+	public AnvilEdit(Player player, String name, String value, SorciCubeSpell sorci) {
+		this.player = player;
+		this.name = name;
+		this.value = value;
+		this.sorci = sorci;
+	}
+	
+	public void open() {
+		this.open(this.player, this.name, this.value, this.sorci);
+	}
+	
+	protected void open(Player player, String name, String value, SorciCubeSpell sorci) {
 		ConfigurationSection config = sorci.getGui().getConfigurationSection("gui_edit_anvil");
 		final AnvilGUI gui = new AnvilGUI(player, new AnvilGUI.AnvilClickEventHandler() {
             @Override
             public void onAnvilClick(AnvilClickEvent e) {
                 if(e.getSlot() == AnvilSlot.OUTPUT && e.hasText()) {
-                    e.setWillClose(true);
                     player.sendMessage("Your Text-Input: " + e.getText());
                     valid(e.getText());
                 } else if(e.getSlot() == AnvilSlot.INPUT_RIGHT) {
-                    e.setWillClose(true);
                     open(player, name, value, sorci);
                 } else if(e.getSlot() == AnvilSlot.INPUT_LEFT) {
-                    e.setWillClose(true);
                     back();
                 }
             }
@@ -44,7 +57,7 @@ public abstract class AnvilEdit {
         gui.open();
 	}
 	
-	public abstract void valid(String text);
-	public abstract void back();
+	protected abstract void valid(String text);
+	protected abstract void back();
 	
 }

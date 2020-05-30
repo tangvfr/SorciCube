@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.editingcarts;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,18 +102,19 @@ public class BookGuiEditCart extends BookGui {
 					break;
 					
 				case "name":
-					AnvilEdit ae = new AnvilEdit() {
+					AnvilEdit ae = new AnvilEdit(player.getPlayer(), action, cart.getName(), this.ec.sorci) {
 						@Override
 						public void valid(String string) {
 							cart.setName(string);
 							BookGuiEditCart.this.ec.sorci.getCarts().update(cart);
+							this.back();
 						}
 						@Override
 						public void back() {
 							BookGuiEditCart.this.open(player, cart);
 						}
 					};
-					ae.open(player.getPlayer(), action, cart.getName(), this.ec.sorci);
+					ae.open();
 					break;
 	
 				default:
