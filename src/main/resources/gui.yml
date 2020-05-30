@@ -27,6 +27,7 @@ valid_book_desc: "§aLeft click for valid"
 cancel_book_desc: "§cDestruct for cancel"
 #Book Gui
 book_gui:
+#main
   editcart:
     #page1
     title: "§2Edit Carts§8:"
@@ -61,4 +62,36 @@ book_gui:
     hover_cible: "§5§nEdit Cible"
     hover_description: "§d§nEdit Description"
     hover_remove: "§4§nRemove Cart"
+    hover_back: "§c§nTo Back"
+#cible
+  cible:
+    title: "§2Edit Cible§8:"
+    select: "\n§2> §7{value}"
+    no_select: "\n§7{value}"
+    hover: "§2Change by §7{value}"
+    back: "\n§c         > Back <"
+    hover_back: "§c§nTo Back"
+#faction
+  faction:
+    title: "§2Edit Faction§8:"
+    select: "\n§2> §7{value}"
+    no_select: "\n§7{value}"
+    hover: "§2Change by §7{value}"
+    back: "\n§c         > Back <"
+    hover_back: "§c§nTo Back"
+#rarity
+  rarity:
+    title: "§2Edit Rarity§8:"
+    select: "\n§2> §7{value}"
+    no_select: "\n§7{value}"
+    hover: "§2Change by §7{value}"
+    back: "\n§c         > Back <"
+    hover_back: "§c§nTo Back"
+#type
+  type:
+    title: "§2Edit Type§8:"
+    select: "\n§2> §7{value}"
+    no_select: "\n§7{value}"
+    hover: "§2Change by §7{value}"
+    back: "\n§c         > Back <"
     hover_back: "§c§nTo Back"

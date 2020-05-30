@@ -24,6 +24,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config message;
 	private Config parameter;
 	private Config gui;
+	private Config enumConfig;
 	private EnumTool enumTool;
 	
 	@Override
@@ -33,7 +34,9 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.message = new Config(this, "message.yml");
 			this.parameter = new Config(this, "parameter.yml");
 			this.gui = new Config(this, "gui.yml");
-			this.enumTool = new EnumTool(new Config(this, "enum.yml"));
+			this.enumConfig = new Config(this, "enum.yml");
+			//init tool
+			this.enumTool = new EnumTool(this.enumConfig);
 			//connect database
 			String user = parameter.getString("user");
 			String password = parameter.getString("password");
@@ -89,6 +92,10 @@ public class SorciCubeSpell extends JavaPlugin {
 
 	public EnumTool getEnumTool() {
 		return enumTool;
+	}
+
+	public Config getEnumConfig() {
+		return enumConfig;
 	}
 	
 }

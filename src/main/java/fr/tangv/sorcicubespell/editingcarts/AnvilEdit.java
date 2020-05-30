@@ -36,7 +36,6 @@ public abstract class AnvilEdit {
             @Override
             public void onAnvilClick(AnvilClickEvent e) {
                 if(e.getSlot() == AnvilSlot.OUTPUT && e.hasText()) {
-                    player.sendMessage("Your Text-Input: " + e.getText());
                     valid(e.getText());
                 } else if(e.getSlot() == AnvilSlot.INPUT_RIGHT) {
                     open(player, name, value, sorci);

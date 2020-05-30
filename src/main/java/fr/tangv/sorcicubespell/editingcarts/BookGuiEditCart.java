@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftMetaBook;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.material.MaterialData;
 
 import fr.tangv.sorcicubespell.carts.Cart;
 import fr.tangv.sorcicubespell.carts.CartEntity;
@@ -85,6 +86,7 @@ public class BookGuiEditCart extends BookGui {
 		page.addExtra(comp);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected boolean onCommand(PlayerEditCart player, Cart cart, String[] args) {
 		if (args.length == 1) {
@@ -92,6 +94,7 @@ public class BookGuiEditCart extends BookGui {
 		} else if (args.length == 2) {
 			String action = args[1];
 			player.getPlayer().sendMessage("action: "+action);
+			AnvilEdit ae;
 			switch (action) {
 				case "description":
 					this.ec.setBookDesc(player.getPlayer(), cart);
@@ -102,12 +105,38 @@ public class BookGuiEditCart extends BookGui {
 					break;
 					
 				case "name":
-					AnvilEdit ae = new AnvilEdit(player.getPlayer(), action, cart.getName(), this.ec.sorci) {
+					ae = new AnvilEdit(player.getPlayer(), action, cart.getName(), this.ec.sorci) {
 						@Override
 						public void valid(String string) {
 							cart.setName(string);
 							BookGuiEditCart.this.ec.sorci.getCarts().update(cart);
 							this.back();
+						}
+						@Override
+						public void back() {
+							BookGuiEditCart.this.open(player, cart);
+						}
+					};
+					ae.open();
+					break;
+					
+				case "material":
+					ae = new AnvilEdit(player.getPlayer(), action, cart.getMaterial().getItemTypeId()+":"+cart.getMaterial().getData(), this.ec.sorci) {
+						@Override
+						public void valid(String string) {
+							String[] mat = string.split(":");
+							if (mat.length == 1 || mat.length == 2) {
+								try {
+									int id = Integer.parseInt(mat[0]);
+									byte data = (mat.length) == 1 ? 0 : Byte.parseByte(mat[1]);
+									MaterialData material = new MaterialData(id, data);
+									cart.setMaterial(material);
+									BookGuiEditCart.this.ec.sorci.getCarts().update(cart);
+									this.back();
+									return;
+								} catch (Exception e) {}
+							}
+							this.open();
 						}
 						@Override
 						public void back() {

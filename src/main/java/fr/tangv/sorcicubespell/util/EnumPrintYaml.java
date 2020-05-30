@@ -20,9 +20,9 @@ public class EnumPrintYaml {
 		System.out.println(name+":");
 		for (Field field : enum1.getClass().getFields()) {
 			try {
-				String named = ((Enum<?>) field.get(enum1)).name().toLowerCase();
+				String named = field.getName().toLowerCase();
 				System.out.println("  "+named+": \""+named.toUpperCase().replace("_", " ")+"\"");
-			} catch (IllegalArgumentException | IllegalAccessException e) {
+			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			}
 		}
