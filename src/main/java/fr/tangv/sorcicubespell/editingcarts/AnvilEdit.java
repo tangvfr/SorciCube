@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.util.AnvilGUI;
@@ -14,12 +13,12 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public abstract class AnvilEdit {
 
-	private Player player;
+	protected PlayerEditCart player;
 	private String name;
 	private String value;
-	private SorciCubeSpell sorci;
+	protected SorciCubeSpell sorci;
 	
-	public AnvilEdit(Player player, String name, String value, SorciCubeSpell sorci) {
+	public AnvilEdit(PlayerEditCart player, String name, String value, SorciCubeSpell sorci) {
 		this.player = player;
 		this.name = name;
 		this.value = value;
@@ -27,18 +26,18 @@ public abstract class AnvilEdit {
 	}
 	
 	public void open() {
-		this.open(this.player, this.name, this.value, this.sorci);
+		this.open(this.name, this.value, this.sorci);
 	}
 	
-	protected void open(Player player, String name, String value, SorciCubeSpell sorci) {
+	protected void open(String name, String value, SorciCubeSpell sorci) {
 		ConfigurationSection config = sorci.getGui().getConfigurationSection("gui_edit_anvil");
-		final AnvilGUI gui = new AnvilGUI(player, new AnvilGUI.AnvilClickEventHandler() {
+		final AnvilGUI gui = new AnvilGUI(this.player.getPlayer(), new AnvilGUI.AnvilClickEventHandler() {
             @Override
             public void onAnvilClick(AnvilClickEvent e) {
                 if(e.getSlot() == AnvilSlot.OUTPUT && e.hasText()) {
                     valid(e.getText());
                 } else if(e.getSlot() == AnvilSlot.INPUT_RIGHT) {
-                    open(player, name, value, sorci);
+                    open(name, value, sorci);
                 } else if(e.getSlot() == AnvilSlot.INPUT_LEFT) {
                     back();
                 }
