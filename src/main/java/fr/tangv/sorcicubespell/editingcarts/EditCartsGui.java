@@ -12,6 +12,10 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.carts.Cart;
+import fr.tangv.sorcicubespell.carts.CartCible;
+import fr.tangv.sorcicubespell.carts.CartFaction;
+import fr.tangv.sorcicubespell.carts.CartRarity;
+import fr.tangv.sorcicubespell.carts.CartSort;
 
 public class EditCartsGui {
 	
@@ -28,6 +32,46 @@ public class EditCartsGui {
 		this.guiEditList = new GuiEditList(this, sorci.getGui().getConfigurationSection("gui_edit_list"));
 		//init book gui
 		new BookGuiEditCart(this);
+		new BookGuiEditEnum<CartCible>(this, CartCible.ALL, BookGuis.CIBLE, 10) {
+			@Override
+			protected String valueEnum(Cart cart) {
+				if (cart instanceof CartSort)
+					return ((CartSort) cart).getCible().name();
+				else
+					return "";
+			}
+			@Override
+			protected void setEnum(Cart cart, CartCible enum1) {
+				if (cart instanceof CartSort)
+					((CartSort) cart).setCible(enum1);
+			}
+		};
+		new BookGuiEditEnum<CartFaction>(this, CartFaction.DARK, BookGuis.FACTION, 10) {
+			@Override
+			protected String valueEnum(Cart cart) {
+				return cart.getFaction().name();
+			}
+			@Override
+			protected void setEnum(Cart cart, CartFaction enum1) {
+				cart.setFaction(enum1);
+			}
+		};
+		new BookGuiEditEnum<CartRarity>(this, CartRarity.COMMUN, BookGuis.RARITY, 10) {
+			@Override
+			protected String valueEnum(Cart cart) {
+				return cart.getRarity().name();
+			}
+			@Override
+			protected void setEnum(Cart cart, CartRarity enum1) {
+				cart.setRarity(enum1);
+			}
+		};
+		/*new BookGuiEditEnum(this, CartType.ENTITY, BookGuis.TYPE, 10) {
+			@Override
+			protected String valueEnum(Cart cart) {
+				return cart.getFaction().name();
+			}
+		};*/
 		//spigot init
 		sorci.getCommand("editcarts").setExecutor(new CommandEditCartsGui(this));
 		Bukkit.getPluginManager().registerEvents(new EventEditCartsGui(this), sorci);

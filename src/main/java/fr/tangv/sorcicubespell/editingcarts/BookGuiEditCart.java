@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubespell.editingcarts;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ import net.minecraft.server.v1_9_R2.IChatBaseComponent;
 public class BookGuiEditCart extends BookGui {
 
 	public BookGuiEditCart(EditCartsGui ec) {
-		super(ec, "editcart");
+		super(ec, BookGuis.MAIN);
 	}
 
 	@SuppressWarnings("deprecation")
