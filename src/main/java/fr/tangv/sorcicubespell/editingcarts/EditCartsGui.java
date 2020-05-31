@@ -13,9 +13,11 @@ import org.bukkit.inventory.meta.BookMeta;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.carts.Cart;
 import fr.tangv.sorcicubespell.carts.CartCible;
+import fr.tangv.sorcicubespell.carts.CartEntity;
 import fr.tangv.sorcicubespell.carts.CartFaction;
 import fr.tangv.sorcicubespell.carts.CartRarity;
 import fr.tangv.sorcicubespell.carts.CartSort;
+import fr.tangv.sorcicubespell.carts.CartType;
 
 public class EditCartsGui {
 	
@@ -73,12 +75,41 @@ public class EditCartsGui {
 				this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
 			}
 		};
-		/*new BookGuiEditEnum(this, CartType.ENTITY, BookGuis.TYPE, 10) {
+		new BookGuiEditEnum<CartType>(this, CartType.ENTITY, BookGuis.TYPE) {
 			@Override
 			protected String valueEnum(Cart cart) {
-				return cart.getFaction().name();
+				return cart.getType().name();
 			}
-		};*/
+			@Override
+			protected void setEnum(Cart cart, CartType enum1, PlayerEditCart player) {
+				Cart newCart;
+				if (enum1 == CartType.ENTITY) {
+					newCart = new CartEntity(cart.getId(),
+							cart.getMaterial(),
+							cart.getName(),
+							cart.getDescription(),
+							cart.getCountMana(),
+							cart.getDamage(),
+							cart.getRarity(),
+							cart.getFaction(),
+							1);
+				} else {
+					newCart = new CartSort(cart.getId(),
+							cart.getMaterial(),
+							cart.getName(),
+							cart.getDescription(),
+							cart.getCountMana(),
+							cart.getDamage(),
+							cart.getRarity(),
+							cart.getFaction(),
+							-1,
+							-1,
+							CartCible.ONE_ENEMIE);
+				}
+				this.ec.sorci.getCarts().update(newCart);
+				this.ec.guiBooks.get(BookGuis.MAIN).open(player, newCart);
+			}
+		};
 		//spigot init
 		sorci.getCommand("editcarts").setExecutor(new CommandEditCartsGui(this));
 		Bukkit.getPluginManager().registerEvents(new EventEditCartsGui(this), sorci);

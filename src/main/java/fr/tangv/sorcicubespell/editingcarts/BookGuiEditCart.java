@@ -157,6 +157,10 @@ public class BookGuiEditCart extends BookGui {
 					this.ec.guiBooks.get(BookGuis.RARITY).open(player, cart);
 					break;
 					
+				case "type":
+					this.ec.guiBooks.get(BookGuis.TYPE).open(player, cart);
+					break;
+					
 				default:
 					player.getPlayer().sendMessage("undefine !");
 					break;
