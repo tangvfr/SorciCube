@@ -18,7 +18,7 @@ cible:
   all: "§6§ltous les serviteurs et héros."
 #faction
 faction:
-  basic: "&7&l&nBasique"
+  basic: "§7§l§nBasique"
   dark: "§8§l§nObscure"
   light: "§6§l§nLumière"
   nature: "§2§l§nNature"
