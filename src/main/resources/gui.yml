@@ -65,6 +65,7 @@ book_gui:
     hover_back: "§c§nTo Back"
 #cible
   cible:
+    number_by_page: 5
     title: "§2Edit Cible§8:"
     select: "\n§2> §7{value}"
     no_select: "\n§7{value}"
@@ -73,6 +74,7 @@ book_gui:
     hover_back: "§c§nTo Back"
 #faction
   faction:
+    number_by_page: 10
     title: "§2Edit Faction§8:"
     select: "\n§2> §7{value}"
     no_select: "\n§7{value}"
@@ -81,6 +83,7 @@ book_gui:
     hover_back: "§c§nTo Back"
 #rarity
   rarity:
+    number_by_page: 10
     title: "§2Edit Rarity§8:"
     select: "\n§2> §7{value}"
     no_select: "\n§7{value}"
@@ -89,6 +92,7 @@ book_gui:
     hover_back: "§c§nTo Back"
 #type
   type:
+    number_by_page: 10
     title: "§2Edit Type§8:"
     select: "\n§2> §7{value}"
     no_select: "\n§7{value}"

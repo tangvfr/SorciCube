@@ -24,14 +24,24 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 		BookGuiEditEnum.maxLine = 14;
 	}
 	
-	public BookGuiEditEnum(EditCartsGui ec, T typeEnum, String name, int numberByPage) {
+	public BookGuiEditEnum(EditCartsGui ec, T typeEnum, String name) {
 		super(ec, name);
 		this.typeEnum = typeEnum;
-		this.numberByPage = numberByPage;
+		this.numberByPage = this.config.getInt("number_by_page");
 	}
 
 	protected abstract String valueEnum(Cart cart);
 	protected abstract void setEnum(Cart cart, T enum1, PlayerEditCart player);
+	
+	protected void endPage (int line, TextComponent page) {
+		for (; line < maxLine-2; line++)
+			page.addExtra("\n");
+		TextComponent comp = new TextComponent(this.config.getString("back"));
+		comp.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/editcarts "+this.name+" back"));
+		comp.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
+				new TextComponent[] {new TextComponent(this.config.getString("hover_back"))}));
+		page.addExtra(comp);
+	}
 	
 	@Override
 	protected BookMeta getBook(PlayerEditCart player, Cart cart, BookMeta meta) {
@@ -43,13 +53,7 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 		for (int i = 0; i < enums.length; i++) {
 			if ((i % this.numberByPage) == 0) {
 				if (page != null) {
-					for (; line < maxLine-2; line++)
-						page.addExtra("\n");
-					TextComponent comp = new TextComponent(this.config.getString("back"));
-					comp.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/editcarts "+this.name+" back"));
-					comp.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
-							new TextComponent[] {new TextComponent(this.config.getString("hover_back"))}));
-					page.addExtra(comp);
+					this.endPage(line, page);
 					book.add(this.toIChatBaseComposent(page));
 				}
 				page = new TextComponent(this.config.getString("title"));
@@ -59,6 +63,7 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 			this.addTextConfig(page, valueEnum(cart).equals(value), value);
 			line++;
 		}
+		this.endPage(line, page);
 		book.add(this.toIChatBaseComposent(page));
 		//set book
 		((CraftMetaBook) meta).pages = book;

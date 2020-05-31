@@ -32,7 +32,7 @@ public class EditCartsGui {
 		this.guiEditList = new GuiEditList(this, sorci.getGui().getConfigurationSection("gui_edit_list"));
 		//init book gui
 		new BookGuiEditCart(this);
-		new BookGuiEditEnum<CartCible>(this, CartCible.ALL, BookGuis.CIBLE, 10) {
+		new BookGuiEditEnum<CartCible>(this, CartCible.ALL, BookGuis.CIBLE) {
 			@Override
 			protected String valueEnum(Cart cart) {
 				if (cart instanceof CartSort)
@@ -49,7 +49,7 @@ public class EditCartsGui {
 				}
 			}
 		};
-		new BookGuiEditEnum<CartFaction>(this, CartFaction.DARK, BookGuis.FACTION, 10) {
+		new BookGuiEditEnum<CartFaction>(this, CartFaction.DARK, BookGuis.FACTION) {
 			@Override
 			protected String valueEnum(Cart cart) {
 				return cart.getFaction().name();
@@ -61,7 +61,7 @@ public class EditCartsGui {
 				this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
 			}
 		};
-		new BookGuiEditEnum<CartRarity>(this, CartRarity.COMMUN, BookGuis.RARITY, 10) {
+		new BookGuiEditEnum<CartRarity>(this, CartRarity.COMMUN, BookGuis.RARITY) {
 			@Override
 			protected String valueEnum(Cart cart) {
 				return cart.getRarity().name();
