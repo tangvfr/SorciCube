@@ -18,11 +18,6 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 
 	private T typeEnum;
 	private int numberByPage;
-	private static int maxLine;
-	
-	static {
-		BookGuiEditEnum.maxLine = 14;
-	}
 	
 	public BookGuiEditEnum(EditCartsGui ec, T typeEnum, String name) {
 		super(ec, name);
@@ -33,9 +28,7 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 	protected abstract String valueEnum(Cart cart);
 	protected abstract void setEnum(Cart cart, T enum1, PlayerEditCart player);
 	
-	protected void endPage (int line, TextComponent page) {
-		for (; line < maxLine-2; line++)
-			page.addExtra("\n");
+	protected void endPage (TextComponent page) {
 		TextComponent comp = new TextComponent(this.config.getString("back"));
 		comp.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/editcarts "+this.name+" back"));
 		comp.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
@@ -47,23 +40,20 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 	protected BookMeta getBook(PlayerEditCart player, Cart cart, BookMeta meta) {
 		List<IChatBaseComponent> book = new ArrayList<IChatBaseComponent>();
 		Field[] enums = this.typeEnum.getClass().getFields();
-		//page1
+		//page
 		TextComponent page = null;
-		int line = 0;
 		for (int i = 0; i < enums.length; i++) {
 			if ((i % this.numberByPage) == 0) {
 				if (page != null) {
-					this.endPage(line, page);
+					this.endPage(page);
 					book.add(this.toIChatBaseComposent(page));
 				}
 				page = new TextComponent(this.config.getString("title"));
-				line = 0;
 			}
 			String value = enums[i].getName();
 			this.addTextConfig(page, valueEnum(cart).equals(value), value);
-			line++;
 		}
-		this.endPage(line, page);
+		this.endPage(page);
 		book.add(this.toIChatBaseComposent(page));
 		//set book
 		((CraftMetaBook) meta).pages = book;

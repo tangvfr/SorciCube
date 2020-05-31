@@ -1,8 +1,8 @@
 #cible
 cible:
-  one_hero: "§f§lun héro."
-  all_hero: "§f§ltous les héros."
-  one: "§f§lun serviteur ou héros."
+  one_hero: "§6§lun héro."
+  all_hero: "§6§ltous les héros."
+  one: "§6§lun serviteur ou héros."
   one_enemie: "§c§lun adversaire."
   one_entity_enemie: "§c§lun serviteur adverse."
   hero_enemie: "§c§ll'héros adverse."
@@ -13,11 +13,12 @@ cible:
   hero_ally: "§a§lvotre héros."
   all_ally: "§a§ltous les alliés."
   all_entity_ally: "§a§ltous les serviteurs alliés."
-  one_entity: "§f§lun serviteur."
-  all_entity: "§f§ltous les serviteurs."
-  all: "§f§ltous les serviteurs et héros."
+  one_entity: "§6§lun serviteur."
+  all_entity: "§6§ltous les serviteurs."
+  all: "§6§ltous les serviteurs et héros."
 #faction
 faction:
+  basic: "&7&l&nBasique"
   dark: "§8§l§nObscure"
   light: "§6§l§nLumière"
   nature: "§2§l§nNature"
