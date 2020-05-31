@@ -94,7 +94,7 @@ public class GuiEditList extends GuiEdit {
 					if (cart != null) {
 						PlayerEditCart p = this.ec.editingCarts.get(player);
 						p.setCart(cart);
-						this.ec.guiBooks.get("editcart").open(p, cart);
+						this.ec.guiBooks.get(BookGuis.MAIN).open(p, cart);
 					}
 				}
 			}

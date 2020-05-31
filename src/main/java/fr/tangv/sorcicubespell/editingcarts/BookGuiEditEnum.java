@@ -31,7 +31,7 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 	}
 
 	protected abstract String valueEnum(Cart cart);
-	protected abstract void setEnum(Cart cart, T enum1);
+	protected abstract void setEnum(Cart cart, T enum1, PlayerEditCart player);
 	
 	@Override
 	protected BookMeta getBook(PlayerEditCart player, Cart cart, BookMeta meta) {
@@ -83,13 +83,13 @@ public abstract class BookGuiEditEnum<T> extends BookGui {
 			String action = args[1];
 			player.getPlayer().sendMessage("action: "+action);
 			if (action.equals("back")) {
-				this.ec.guiEditList.open(player.getPlayer());
+				this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
 			} else {
 				try {
 					Field fe = typeEnum.getClass().getField(action);
 					@SuppressWarnings("unchecked")
 					T enum1 = (T) fe.get(typeEnum);
-					this.setEnum(cart, enum1);
+					this.setEnum(cart, enum1, player);
 				} catch (Exception e) {
 					return false;
 				}

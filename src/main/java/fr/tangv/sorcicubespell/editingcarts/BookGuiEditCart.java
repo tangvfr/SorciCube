@@ -144,7 +144,19 @@ public class BookGuiEditCart extends BookGui {
 					};
 					ae.open();
 					break;
-	
+					
+				case "cible":
+					this.ec.guiBooks.get(BookGuis.CIBLE).open(player, cart);
+					break;
+					
+				case "faction":
+					this.ec.guiBooks.get(BookGuis.FACTION).open(player, cart);
+					break;
+					
+				case "rarity":
+					this.ec.guiBooks.get(BookGuis.RARITY).open(player, cart);
+					break;
+					
 				default:
 					player.getPlayer().sendMessage("undefine !");
 					break;

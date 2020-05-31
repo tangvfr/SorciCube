@@ -41,9 +41,12 @@ public class EditCartsGui {
 					return "";
 			}
 			@Override
-			protected void setEnum(Cart cart, CartCible enum1) {
-				if (cart instanceof CartSort)
+			protected void setEnum(Cart cart, CartCible enum1, PlayerEditCart player) {
+				if (cart instanceof CartSort) {
 					((CartSort) cart).setCible(enum1);
+					this.ec.sorci.getCarts().update(cart);
+					this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
+				}
 			}
 		};
 		new BookGuiEditEnum<CartFaction>(this, CartFaction.DARK, BookGuis.FACTION, 10) {
@@ -52,8 +55,10 @@ public class EditCartsGui {
 				return cart.getFaction().name();
 			}
 			@Override
-			protected void setEnum(Cart cart, CartFaction enum1) {
+			protected void setEnum(Cart cart, CartFaction enum1, PlayerEditCart player) {
 				cart.setFaction(enum1);
+				this.ec.sorci.getCarts().update(cart);
+				this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
 			}
 		};
 		new BookGuiEditEnum<CartRarity>(this, CartRarity.COMMUN, BookGuis.RARITY, 10) {
@@ -62,8 +67,10 @@ public class EditCartsGui {
 				return cart.getRarity().name();
 			}
 			@Override
-			protected void setEnum(Cart cart, CartRarity enum1) {
+			protected void setEnum(Cart cart, CartRarity enum1, PlayerEditCart player) {
 				cart.setRarity(enum1);
+				this.ec.sorci.getCarts().update(cart);
+				this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
 			}
 		};
 		/*new BookGuiEditEnum(this, CartType.ENTITY, BookGuis.TYPE, 10) {
