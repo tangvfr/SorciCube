@@ -1,7 +1,7 @@
 #cible
 cible:
-	one_hero: "§f§lun héro."
-	all_hero: "§f§ltous les héros."
+  one_hero: "§f§lun héro."
+  all_hero: "§f§ltous les héros."
   one: "§f§lun serviteur ou héros."
   one_enemie: "§c§lun adversaire."
   one_entity_enemie: "§c§lun serviteur adverse."
