@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -28,8 +27,8 @@ public class GuiEditList extends GuiEdit {
 	private ItemStack createSort;
 	private ItemStack createEntity;
 	
-	public GuiEditList(EditCartsGui ec, ConfigurationSection config) {
-		super(ec, config);
+	public GuiEditList(EditCartsGui ec) {
+		super(ec, ec.sorci.getGui().getConfigurationSection("gui_edit_list"));
 		this.sort = ItemBuild.buildSkull(SkullUrl.HOPPER, 1, config.getString("item_name.sort"), null, false);
 		this.previous = ItemBuild.buildSkull(SkullUrl.BACK_GRAY, 1, config.getString("item_name.previous"), null, false);
 		this.next = ItemBuild.buildSkull(SkullUrl.FORWARD_GRAY, 1, config.getString("item_name.next"), null, false);

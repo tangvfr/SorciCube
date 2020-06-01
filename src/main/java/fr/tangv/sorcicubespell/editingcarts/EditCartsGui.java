@@ -25,7 +25,7 @@ public class EditCartsGui {
 		this.editingCarts = new ConcurrentHashMap<Player, PlayerEditCart>();
 		this.guiBooks = new ConcurrentHashMap<String, BookGui>();
 		//init gui
-		this.guiEditList = new GuiEditList(this, sorci.getGui().getConfigurationSection("gui_edit_list"));
+		this.guiEditList = new GuiEditList(this);
 		//init book gui
 		new BookGuiEditCart(this);
 		new BookGuiEditCible(this);

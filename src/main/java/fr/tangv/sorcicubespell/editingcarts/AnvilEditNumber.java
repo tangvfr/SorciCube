@@ -31,7 +31,7 @@ public abstract class AnvilEditNumber extends AnvilEdit {
 				else
 					throw new Exception("Is not nonable");
 			//test min
-			else if (number <= min)
+			else if (number < min)
 				throw new Exception("Number lower minimal");
 			//seting
 			this.setNumber(cart, number);

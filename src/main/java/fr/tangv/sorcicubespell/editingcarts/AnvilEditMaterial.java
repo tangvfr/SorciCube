@@ -23,12 +23,8 @@ public class AnvilEditMaterial extends AnvilEdit {
 				int id = Integer.parseInt(mat[0]);
 				byte data = (mat.length) == 1 ? 0 : Byte.parseByte(mat[1]);
 				MaterialData material = new MaterialData(id, data);
-				ItemStack item = material.toItemStack();
-				Inventory inv = Bukkit.createInventory(null, 9);
-				inv.setItem(0, item);
-				Bukkit.broadcastMessage(item.toString());
-				Bukkit.broadcastMessage(inv.getItem(0).toString());
-				//Bukkit.getUnsafe().g
+				if (!this.itemIsValid(material.toItemStack()))
+					throw new Exception("Item invalid");
 				this.cart.setMaterial(material);
 				this.bgec.ec.sorci.getCarts().update(this.cart);
 				this.back();
@@ -36,6 +32,12 @@ public class AnvilEditMaterial extends AnvilEdit {
 			} catch (Exception e) {}
 		}
 		this.open();
+	}
+	
+	private boolean itemIsValid(ItemStack item) {
+		Inventory inv = Bukkit.createInventory(null, 9);
+		inv.setItem(0, item);
+		return inv.getItem(0) != null;
 	}
 	
 }
