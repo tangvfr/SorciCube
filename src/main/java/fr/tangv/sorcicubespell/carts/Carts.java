@@ -7,21 +7,15 @@ import java.util.Iterator;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import com.mongodb.client.MongoCollection;
 
-import fr.tangv.sorcicubespell.SorciCubeSpell;
-import fr.tangv.sorcicubespell.util.ItemBuild;
-
 public class Carts {
 
-	private SorciCubeSpell sorci;
 	private MongoCollection<Document> cartsCol;
 	
-	public Carts(SorciCubeSpell sorci, MongoCollection<Document> cartsCol) {
-		this.sorci = sorci;
+	public Carts(MongoCollection<Document> cartsCol) {
 		this.cartsCol = cartsCol;
 	}
 	
@@ -41,35 +35,6 @@ public class Carts {
 			return documentToCart(rep.next());
 		else
 			return null;
-	}
-	
-	public ItemStack cartToItem(Cart cart) {
-		return this.cartToItem(cart, 1, false);
-	}
-	
-	@SuppressWarnings("deprecation")
-	public ItemStack cartToItem(Cart cart, int amount, boolean ench) {
-		ArrayList<String> lore = new ArrayList<String>();
-		//type
-		lore.add("");
-		lore.add("§7"+this.sorci.getEnumTool().typeToString(cart.getType()));
-		lore.add("§7"+this.sorci.getEnumTool().rarityToString(cart.getRarity()));
-		lore.add("§7"+this.sorci.getEnumTool().factionToString(cart.getFaction()));
-		//lore
-		lore.add("");
-		for (int i = 0; i < cart.getDescription().length; i++)
-			lore.add(cart.getDescription()[i]);
-		//id
-		lore.add("");
-		lore.add("§8Id: "+cart.getId());
-		//return item
-		return ItemBuild.buildItem(cart.getMaterial().getItemType(),
-				amount,
-				(short) 0,
-				cart.getMaterial().getData(),
-				cart.getName(),
-				lore,
-				ench);
 	}
 	
 	public Cart documentToCart(Document doc) {

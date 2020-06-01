@@ -4,15 +4,11 @@ import fr.tangv.sorcicubespell.carts.Cart;
 
 public abstract class AnvilEditNumber extends AnvilEdit {
 
-	private BookGuiEditCart bgec;
-	private Cart cart;
 	private boolean nonable;
 	private int min;
 
 	public AnvilEditNumber(PlayerEditCart player, String name, int value, Cart cart, BookGuiEditCart bgec, boolean nonable, int min) {
-		super(player, name, ""+value, bgec.ec.sorci);
-		this.bgec = bgec;
-		this.cart = cart;
+		super(player, name, ""+value, cart, bgec);
 		this.nonable = nonable;
 		this.min = min;
 	}
@@ -39,16 +35,11 @@ public abstract class AnvilEditNumber extends AnvilEdit {
 				throw new Exception("Number lower minimal");
 			//seting
 			this.setNumber(cart, number);
-			this.sorci.getCarts().update(this.cart);
+			this.bgec.ec.sorci.getCarts().update(this.cart);
 			this.back();
 			return;
 		} catch (Exception e) {}
 		this.open();
-	}
-	
-	@Override
-	public void back() {
-		this.bgec.open(this.player, this.cart);
 	}
 	
 }

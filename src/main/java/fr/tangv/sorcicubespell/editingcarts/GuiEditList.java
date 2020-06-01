@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.carts.Cart;
 import fr.tangv.sorcicubespell.carts.CartComparator;
+import fr.tangv.sorcicubespell.carts.CartRender;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
@@ -60,7 +61,7 @@ public class GuiEditList extends GuiEdit {
 			num = 45;
 		if (carts.size() > 0)
 			for (int i = 0; i < num; i++) {
-				inv.setItem(i, this.ec.sorci.getCarts().cartToItem(carts.get(i+decal)));
+				inv.setItem(i, CartRender.cartToItem(carts.get(i+decal), this.ec.sorci));
 			}
 		//init paper
 		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 
