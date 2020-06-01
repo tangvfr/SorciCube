@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.editingcarts;
 
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
@@ -22,7 +23,11 @@ public class AnvilEditMaterial extends AnvilEdit {
 				int id = Integer.parseInt(mat[0]);
 				byte data = (mat.length) == 1 ? 0 : Byte.parseByte(mat[1]);
 				MaterialData material = new MaterialData(id, data);
-				Bukkit.broadcastMessage(new ItemStack(id, 0, (short) 0, data).toString());
+				ItemStack item = material.toItemStack();
+				Inventory inv = Bukkit.createInventory(null, 9);
+				inv.setItem(0, item);
+				Bukkit.broadcastMessage(item.toString());
+				Bukkit.broadcastMessage(inv.getItem(0).toString());
 				//Bukkit.getUnsafe().g
 				this.cart.setMaterial(material);
 				this.bgec.ec.sorci.getCarts().update(this.cart);

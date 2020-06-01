@@ -2,13 +2,11 @@ package fr.tangv.sorcicubespell;
 
 import java.util.Iterator;
 
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import fr.tangv.sorcicubespell.carts.Carts;
@@ -56,8 +54,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			}
 			if (!hasCarts)
 				database.createCollection(colCartsName);
-			MongoCollection<Document> carts = database.getCollection(colCartsName);
-			this.carts = new Carts(this, carts);
+			this.carts = new Carts(database.getCollection(colCartsName));
 			//gui edit menu
 			this.editCartsGui = new EditCartsGui(this);
 		} catch (Exception e) {
