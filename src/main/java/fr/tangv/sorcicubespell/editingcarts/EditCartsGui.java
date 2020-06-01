@@ -12,12 +12,6 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.carts.Cart;
-import fr.tangv.sorcicubespell.carts.CartCible;
-import fr.tangv.sorcicubespell.carts.CartEntity;
-import fr.tangv.sorcicubespell.carts.CartFaction;
-import fr.tangv.sorcicubespell.carts.CartRarity;
-import fr.tangv.sorcicubespell.carts.CartSort;
-import fr.tangv.sorcicubespell.carts.CartType;
 
 public class EditCartsGui {
 	
@@ -34,82 +28,10 @@ public class EditCartsGui {
 		this.guiEditList = new GuiEditList(this, sorci.getGui().getConfigurationSection("gui_edit_list"));
 		//init book gui
 		new BookGuiEditCart(this);
-		new BookGuiEditEnum<CartCible>(this, CartCible.ALL, BookGuis.CIBLE) {
-			@Override
-			protected String valueEnum(Cart cart) {
-				if (cart instanceof CartSort)
-					return ((CartSort) cart).getCible().name();
-				else
-					return "";
-			}
-			@Override
-			protected void setEnum(Cart cart, CartCible enum1, PlayerEditCart player) {
-				if (cart instanceof CartSort) {
-					((CartSort) cart).setCible(enum1);
-					this.ec.sorci.getCarts().update(cart);
-					this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
-				}
-			}
-		};
-		new BookGuiEditEnum<CartFaction>(this, CartFaction.DARK, BookGuis.FACTION) {
-			@Override
-			protected String valueEnum(Cart cart) {
-				return cart.getFaction().name();
-			}
-			@Override
-			protected void setEnum(Cart cart, CartFaction enum1, PlayerEditCart player) {
-				cart.setFaction(enum1);
-				this.ec.sorci.getCarts().update(cart);
-				this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
-			}
-		};
-		new BookGuiEditEnum<CartRarity>(this, CartRarity.COMMUN, BookGuis.RARITY) {
-			@Override
-			protected String valueEnum(Cart cart) {
-				return cart.getRarity().name();
-			}
-			@Override
-			protected void setEnum(Cart cart, CartRarity enum1, PlayerEditCart player) {
-				cart.setRarity(enum1);
-				this.ec.sorci.getCarts().update(cart);
-				this.ec.guiBooks.get(BookGuis.MAIN).open(player, cart);
-			}
-		};
-		new BookGuiEditEnum<CartType>(this, CartType.ENTITY, BookGuis.TYPE) {
-			@Override
-			protected String valueEnum(Cart cart) {
-				return cart.getType().name();
-			}
-			@Override
-			protected void setEnum(Cart cart, CartType enum1, PlayerEditCart player) {
-				Cart newCart;
-				if (enum1 == CartType.ENTITY) {
-					newCart = new CartEntity(cart.getId(),
-							cart.getMaterial(),
-							cart.getName(),
-							cart.getDescription(),
-							cart.getCountMana(),
-							cart.getDamage(),
-							cart.getRarity(),
-							cart.getFaction(),
-							1);
-				} else {
-					newCart = new CartSort(cart.getId(),
-							cart.getMaterial(),
-							cart.getName(),
-							cart.getDescription(),
-							cart.getCountMana(),
-							cart.getDamage(),
-							cart.getRarity(),
-							cart.getFaction(),
-							-1,
-							-1,
-							CartCible.ONE_ENEMIE);
-				}
-				this.ec.sorci.getCarts().update(newCart);
-				this.ec.guiBooks.get(BookGuis.MAIN).open(player, newCart);
-			}
-		};
+		new BookGuiEditCible(this);
+		new BookGuiEditFaction(this);
+		new BookGuiEditRarity(this);
+		new BookGuiEditType(this);
 		//spigot init
 		sorci.getCommand("editcarts").setExecutor(new CommandEditCartsGui(this));
 		Bukkit.getPluginManager().registerEvents(new EventEditCartsGui(this), sorci);

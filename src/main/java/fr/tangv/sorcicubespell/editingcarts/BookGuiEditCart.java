@@ -91,6 +91,7 @@ public class BookGuiEditCart extends BookGui {
 		} else if (args.length == 2) {
 			String action = args[1];
 			switch (action) {
+				//for all cart
 				case "description":
 					this.ec.setBookDesc(player.getPlayer(), cart);
 					break;
@@ -122,11 +123,31 @@ public class BookGuiEditCart extends BookGui {
 				case "type":
 					this.ec.guiBooks.get(BookGuis.TYPE).open(player, cart);
 					break;
+				
+				case "count_mana":
+					new AnvilEditNumberCart.AnvilEditCountMana(player, cart, this).open();
+					break;
+				
+				case "damage":
+					new AnvilEditNumberCart.AnvilEditDamage(player, cart, this).open();
+					break;
 					
-				/*case "":
+				//for entity cart
+				case "health":
+					new AnvilEditNumberCart.AnvilEditHealth(player, cart, this).open();
+					break;
+				
+				//for sort cart
+				case "heal":
+					new AnvilEditNumberCart.AnvilEditHeal(player, cart, this).open();
+					break;
+				
+				case "give_mana":
+					new AnvilEditNumberCart.AnvilEditGiveMana(player, cart, this).open();
+					break;
 					
-					break;*/
-					
+				//for all cart
+				//	"remove" add confirmation for remove and change type
 				default:
 					player.getPlayer().sendMessage("action: "+action);
 					player.getPlayer().sendMessage("undefine !");
