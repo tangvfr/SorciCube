@@ -121,7 +121,7 @@ public class BookGuiEditCart extends BookGui {
 					break;
 					
 				case "type":
-					this.ec.guiBooks.get(BookGuis.TYPE).open(player, cart);
+					this.ec.guiEditConfirmChangeType.open(player.getPlayer());
 					break;
 				
 				case "count_mana":
@@ -147,7 +147,10 @@ public class BookGuiEditCart extends BookGui {
 					break;
 					
 				//for all cart
-				//	"remove" add confirmation for remove and change type
+				case "remove":
+					this.ec.guiEditConfirmRemove.open(player.getPlayer());
+					break;
+					
 				default:
 					player.getPlayer().sendMessage("action: "+action);
 					player.getPlayer().sendMessage("undefine !");

@@ -19,6 +19,8 @@ public class EditCartsGui {
 	protected Map<Player, PlayerEditCart> editingCarts;
 	protected Map<String, BookGui> guiBooks;
 	protected GuiEditList guiEditList;
+	protected GuiEditConfirmRemove guiEditConfirmRemove;
+	protected GuiEditConfirmChangeType guiEditConfirmChangeType;
 	
 	public EditCartsGui(SorciCubeSpell sorci) {
 		this.sorci = sorci;
@@ -26,6 +28,8 @@ public class EditCartsGui {
 		this.guiBooks = new ConcurrentHashMap<String, BookGui>();
 		//init gui
 		this.guiEditList = new GuiEditList(this);
+		this.guiEditConfirmRemove = new GuiEditConfirmRemove(this);
+		this.guiEditConfirmChangeType = new GuiEditConfirmChangeType(this);
 		//init book gui
 		new BookGuiEditCart(this);
 		new BookGuiEditCible(this);

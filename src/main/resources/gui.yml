@@ -20,6 +20,15 @@ gui_edit_anvil:
     - "§c<- Back"
     - "§9| Reset |"
     - "§aValid ->"
+#Gui Confirm
+gui_edit_confirm:
+  confirm:
+    remove: "§4Remove Cart"
+    change_type: "§3Change Type Cart"
+  name: "§9Gui Edit Cart Confirm"
+  valid: "§aConfirmation"
+  cancel: "§cAnullation"
+  deco: " "
 #Gui Edit Cart
 name_book_desc: "§6Edit Desc Cart"
 edit_book_desc: "§eRight click for edit"
