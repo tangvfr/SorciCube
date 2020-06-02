@@ -10,6 +10,7 @@ public class CartSort extends Cart {
 	
 	public CartSort(String id,
 			MaterialData material,
+			String materialURL,
 			String name,
 			String[] description,
 			int countMana,
@@ -19,7 +20,7 @@ public class CartSort extends Cart {
 			int heal,
 			int giveMana,
 			CartCible cible) {
-		super(id, material, name, description, countMana, damage, CartType.SORT, rarity, faction);
+		super(id, material, materialURL, name, description, countMana, damage, CartType.SORT, rarity, faction);
 		this.setHeal(heal);
 		this.setGiveMana(giveMana);
 		this.setCible(cible);

@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import fr.tangv.sorcicubespell.carts.Cart;
+import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class AnvilEditMaterial extends AnvilEdit {
 	
@@ -17,14 +18,17 @@ public class AnvilEditMaterial extends AnvilEdit {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void valid(String string) {
-		if (string.equalsIgnoreCase("keep")) {
+		if (string.equalsIgnoreCase("take")) {
 			ItemStack item = this.player.getPlayer().getInventory().getItemInMainHand();
 			if (item != null) {
 				MaterialData material = item.getData();
-				this.cart.setMaterial(material);
-				this.bgec.ec.sorci.getCarts().update(this.cart);
-				this.back();
-				return;
+				if (this.itemIsValid(material.toItemStack())) {
+					this.cart.setMaterial(material);
+					this.cart.setMaterialURL(ItemBuild.keepSkull(item));
+					this.bgec.ec.sorci.getCarts().update(this.cart);
+					this.back();
+					return;
+				}
 			}
 		} else {
 			String[] mat = string.split(":");

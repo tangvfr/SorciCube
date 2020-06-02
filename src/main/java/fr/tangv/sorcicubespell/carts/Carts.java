@@ -42,6 +42,7 @@ public class Carts {
 		String[] mat = doc.getString("material").split(":");
 		@SuppressWarnings("deprecation")
 		MaterialData material = new MaterialData(Integer.parseInt(mat[0]), Byte.parseByte(mat[1]));
+		String materialURL = doc.getString("material_url");
 		String name = doc.getString("name");
 		String[] description = doc.getList("description", String.class).toArray(new String[0]);
 		int countMana = doc.getInteger("countMana");
@@ -54,10 +55,10 @@ public class Carts {
 			int heal = doc.getInteger("heal");
 			int giveMana = doc.getInteger("giveMana");
 			CartCible cible = CartCible.valueOf(doc.getString("cible"));
-			cart = new CartSort(id, material, name, description, countMana, damage, rarity, faction, heal, giveMana, cible);
+			cart = new CartSort(id, material, materialURL, name, description, countMana, damage, rarity, faction, heal, giveMana, cible);
 		} else if (type == CartType.ENTITY) {
 			int health = doc.getInteger("health");
-			cart = new CartEntity(id, material, name, description, countMana, damage, rarity, faction, health);
+			cart = new CartEntity(id, material, materialURL, name, description, countMana, damage, rarity, faction, health);
 		}
 		return cart;
 	}
@@ -67,6 +68,7 @@ public class Carts {
 		Document doc = new Document("_id", new ObjectId(cart.getId()));
 		MaterialData mat = cart.getMaterial();
 		doc.append("material", mat.getItemTypeId()+":"+mat.getData());
+		doc.append("material_url", cart.getMaterialURL());
 		doc.append("name", cart.getName());
 		doc.append("description", Arrays.asList(cart.getDescription()));
 		doc.append("countMana", cart.getCountMana());
@@ -90,6 +92,7 @@ public class Carts {
 		CartSort cart = new CartSort(
 				new ObjectId().toHexString(),
 				new MaterialData(Material.BLAZE_POWDER),
+				null,
 				"§4NoName",
 				new String[0],
 				2,
@@ -108,6 +111,7 @@ public class Carts {
 		CartEntity cart = new CartEntity(
 				new ObjectId().toHexString(),
 				new MaterialData(Material.ROTTEN_FLESH),
+				null,
 				"§4NoName",
 				new String[0],
 				2,

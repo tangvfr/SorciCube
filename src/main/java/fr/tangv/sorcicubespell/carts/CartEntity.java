@@ -9,6 +9,7 @@ public class CartEntity extends Cart {
 	
 	public CartEntity(String id,
 			MaterialData material,
+			String materialURL,
 			String name,
 			String[] description,
 			int countMana,
@@ -16,7 +17,7 @@ public class CartEntity extends Cart {
 			CartRarity rarity,
 			CartFaction faction,
 			int health) {
-		super(id, material, name, description, countMana, damage, CartType.ENTITY, rarity, faction);
+		super(id, material, materialURL, name, description, countMana, damage, CartType.ENTITY, rarity, faction);
 		this.setHealth(health);
 	}
 

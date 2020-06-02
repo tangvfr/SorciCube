@@ -11,6 +11,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -64,6 +65,29 @@ public class ItemBuild {
 		//set meta
 		skull.setItemMeta(skullMeta);
 	    return skull;
+	}
+
+	public static String keepSkull(ItemStack item) {
+		if (ItemBuild.isSkull(item.getData())) {
+			try {
+				ItemMeta skullMeta = item.getItemMeta();
+				Field profileField = skullMeta.getClass().getDeclaredField("profile");
+		    	profileField.setAccessible(true);
+		    	GameProfile profile = (GameProfile) profileField.get(skullMeta);
+				String json = new String(Base64.decodeBase64(profile.getProperties().get("textures").iterator().next().getValue()));
+				String ngjson = json.replace("\"", "");
+				String url = ngjson.substring(21, ngjson.length()-3);
+				return url;
+			} catch (Exception e) {
+				return null;
+			}
+		} else
+			return null;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static boolean isSkull(MaterialData material) {
+		return material.equals(new MaterialData(Material.SKULL_ITEM, (byte) 3));
 	}
 	
 }

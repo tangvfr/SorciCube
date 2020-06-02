@@ -6,6 +6,7 @@ public abstract class Cart {
 	
 	private String id;
 	private MaterialData material;
+	private String materialURL;
 	private String name;
 	private String[] description;
 	private int countMana;
@@ -16,6 +17,7 @@ public abstract class Cart {
 	
 	protected Cart(String id,
 			MaterialData material,
+			String materialURL,
 			String name,
 			String[] description,
 			int countMana,
@@ -25,6 +27,7 @@ public abstract class Cart {
 			CartFaction faction) {
 		this.id = id;
 		this.setMaterial(material);
+		this.setMaterialURL(materialURL);
 		this.setName(name);
 		this.setDescription(description);
 		this.setCountMana(countMana);
@@ -44,6 +47,7 @@ public abstract class Cart {
 
 	public void setMaterial(MaterialData material) {
 		this.material = material;
+		this.setMaterialURL(null);
 	}
 
 	public String getName() {
@@ -100,6 +104,14 @@ public abstract class Cart {
 
 	public void setFaction(CartFaction faction) {
 		this.faction = faction;
+	}
+
+	public String getMaterialURL() {
+		return materialURL;
+	}
+
+	public void setMaterialURL(String materialURL) {
+		this.materialURL = materialURL;
 	}
 	
 	@Override

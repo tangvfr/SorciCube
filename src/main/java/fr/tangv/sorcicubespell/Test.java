@@ -3,14 +3,11 @@ package fr.tangv.sorcicubespell;
 public class Test {
 
 	public static void main(String[] args) {
-		System.out.println("Test Start");
-		try {
-			System.out.println("Test Try1");
-			System.out.println("Test Try2");
-		} catch (Exception e) {
-			System.out.println("Test Catch");
-		}
-		System.out.println("Test Finish");
+		String text = "caca proute !";
+		System.out.println(text);
+		String mix = "{textures:{SKIN:{url:\""+text+"\"}}}";
+		System.out.println(mix);
+		System.out.println(mix.substring(22, mix.length()-4));
 	}
 	
 }

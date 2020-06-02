@@ -23,6 +23,7 @@ public class BookGuiEditType extends BookGuiEditEnum<CartType> {
 		if (enum1 == CartType.ENTITY) {
 			newCart = new CartEntity(cart.getId(),
 					cart.getMaterial(),
+					cart.getMaterialURL(),
 					cart.getName(),
 					cart.getDescription(),
 					cart.getCountMana(),
@@ -33,6 +34,7 @@ public class BookGuiEditType extends BookGuiEditEnum<CartType> {
 		} else {
 			newCart = new CartSort(cart.getId(),
 					cart.getMaterial(),
+					cart.getMaterialURL(),
 					cart.getName(),
 					cart.getDescription(),
 					cart.getCountMana(),

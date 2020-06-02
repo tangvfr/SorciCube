@@ -29,13 +29,20 @@ public class CartRender {
 		lore.add("");
 		lore.add("§8Id: "+cart.getId());
 		//return item
-		return ItemBuild.buildItem(cart.getMaterial().getItemType(),
-				amount,
-				(short) 0,
-				cart.getMaterial().getData(),
-				cart.getName(),
-				lore,
-				ench);
+		if (cart.getMaterialURL() != null && ItemBuild.isSkull(cart.getMaterial()))
+			return ItemBuild.buildSkull(cart.getMaterialURL(),
+					amount,
+					cart.getName(),
+					lore,
+					ench);
+		else
+			return ItemBuild.buildItem(cart.getMaterial().getItemType(),
+					amount,
+					(short) 0,
+					cart.getMaterial().getData(),
+					cart.getName(),
+					lore,
+					ench);
 	}
 	
 }
