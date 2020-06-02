@@ -37,7 +37,7 @@ public class AnvilEditMaterial extends AnvilEdit {
 					int id = Integer.parseInt(mat[0]);
 					byte data = (mat.length) == 1 ? 0 : Byte.parseByte(mat[1]);
 					MaterialData material = new MaterialData(id, data);
-					if (!this.itemIsValid(material.toItemStack()))
+					if (id < 1 || data < 0 || !this.itemIsValid(material.toItemStack()))
 						throw new Exception("Item invalid");
 					this.cart.setMaterial(material);
 					this.bgec.ec.sorci.getCarts().update(this.cart);
