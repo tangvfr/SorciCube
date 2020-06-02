@@ -16,8 +16,8 @@ gui_edit_anvil:
   lore_edit:
     - "§eEdit§7: §d{name}"
     - "§6Value§7: §d{value}"
-    - "§5Enter \"take\" for take"
-    - "§5item is in hand of player"
+    - "§5Enter \"take\" for take the"
+    - "§5item in hand of player"
     - "§2Options§7:"
     - "§c<- Back"
     - "§9| Reset |"
