@@ -34,9 +34,9 @@ public class BookGuiEditCart extends BookGui {
 		//type
 		addTextConfig(page, "type", this.ec.sorci.getEnumTool().typeToString(cart.getType()));
 		//count mana
-		addTextConfig(page, "count_mana", ""+cart.getCountMana());
+		addTextConfig(page, "count_mana", cart.getCountMana());
 		//damage
-		addTextConfig(page, "damage", ""+cart.getDamage());
+		addTextConfig(page, "damage", cart.getDamage());
 		//rarity
 		addTextConfig(page, "rarity", this.ec.sorci.getEnumTool().rarityToString(cart.getRarity()));
 		//faction
@@ -44,13 +44,13 @@ public class BookGuiEditCart extends BookGui {
 		if (cart instanceof CartEntity) {
 			CartEntity entity = (CartEntity) cart;
 			//health
-			addTextConfig(page, "health", ""+entity.getHealth());
+			addTextConfig(page, "health", entity.getHealth());
 		} else {
 			CartSort sort = (CartSort) cart;
 			//heal
-			addTextConfig(page, "heal", ""+sort.getHeal());
+			addTextConfig(page, "heal", sort.getHeal());
 			//give_mana
-			addTextConfig(page, "give_mana", ""+sort.getGiveMana());
+			addTextConfig(page, "give_mana", sort.getGiveMana());
 			//cible
 			addTextConfig(page, "cible",  this.ec.sorci.getEnumTool().cibleToString(sort.getCible()));
 		}
@@ -76,6 +76,10 @@ public class BookGuiEditCart extends BookGui {
 		return meta;
 	}
 
+	protected void addTextConfig(TextComponent page, String path, int value) {
+		this.addTextConfig(page, path, (value < 0 ? "none" : ""+value));
+	}
+	
 	protected void addTextConfig(TextComponent page, String path, String value) {
 		TextComponent comp = new TextComponent(this.config.getString(path).replace("{value}", value));
 		comp.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/editcarts "+this.name+" "+path));
