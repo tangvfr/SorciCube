@@ -8,7 +8,7 @@ public abstract class AnvilEditNumber extends AnvilEdit {
 	private int min;
 
 	public AnvilEditNumber(PlayerEditCart player, String name, int value, Cart cart, BookGuiEditCart bgec, boolean nonable, int min) {
-		super(player, name, ""+value, cart, bgec);
+		super(player, name, (value < 0 ? "none" : ""+value), cart, bgec);
 		this.nonable = nonable;
 		this.min = min;
 	}
