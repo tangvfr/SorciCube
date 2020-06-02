@@ -17,19 +17,30 @@ public class AnvilEditMaterial extends AnvilEdit {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void valid(String string) {
-		String[] mat = string.split(":");
-		if (mat.length == 1 || mat.length == 2) {
-			try {
-				int id = Integer.parseInt(mat[0]);
-				byte data = (mat.length) == 1 ? 0 : Byte.parseByte(mat[1]);
-				MaterialData material = new MaterialData(id, data);
-				if (!this.itemIsValid(material.toItemStack()))
-					throw new Exception("Item invalid");
+		if (string.equalsIgnoreCase("keep")) {
+			ItemStack item = this.player.getPlayer().getInventory().getItemInMainHand();
+			if (item != null) {
+				MaterialData material = item.getData();
 				this.cart.setMaterial(material);
 				this.bgec.ec.sorci.getCarts().update(this.cart);
 				this.back();
 				return;
-			} catch (Exception e) {}
+			}
+		} else {
+			String[] mat = string.split(":");
+			if (mat.length == 1 || mat.length == 2) {
+				try {
+					int id = Integer.parseInt(mat[0]);
+					byte data = (mat.length) == 1 ? 0 : Byte.parseByte(mat[1]);
+					MaterialData material = new MaterialData(id, data);
+					if (!this.itemIsValid(material.toItemStack()))
+						throw new Exception("Item invalid");
+					this.cart.setMaterial(material);
+					this.bgec.ec.sorci.getCarts().update(this.cart);
+					this.back();
+					return;
+				} catch (Exception e) {}
+			}
 		}
 		this.open();
 	}
