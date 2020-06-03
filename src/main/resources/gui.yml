@@ -110,3 +110,12 @@ book_gui:
     hover: "§2Change by §7{value}"
     back: "\n\n§c         > Back <"
     hover_back: "§c§nTo Back"
+#sort
+  type:
+    number_by_page: 10
+    title: "§2Change sort cart§8:"
+    select: "\n§2> §7{value}"
+    no_select: "\n§4- §7{value}"
+    hover: "§2Change for §7{value}"
+    back: "\n\n§c         > Back <"
+    hover_back: "§c§nTo Back"

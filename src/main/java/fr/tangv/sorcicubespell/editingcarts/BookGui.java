@@ -20,9 +20,9 @@ public abstract class BookGui {
 
 	public BookGui(EditCartsGui ec, String name) {
 		this.ec = ec;
-		this.config = ec.sorci.getGui().getConfigurationSection("book_gui."+name);
+		this.config = this.ec.sorci.getGui().getConfigurationSection("book_gui."+name);
 		this.name = name;
-		this.ec.guiBooks.put(name, this);
+		this.ec.guiBooks.put(this.name, this);
 	}
 	
 	public void open(PlayerEditCart player, Cart cart) {

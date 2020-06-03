@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell;
 import java.util.Iterator;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mongodb.client.MongoClient;
@@ -27,6 +28,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		//close all inventory of player
+		for (Player player : Bukkit.getOnlinePlayers())
+			player.closeInventory();
+		//try for bug
 		try {
 			//init Config
 			this.message = new Config(this, "message.yml");

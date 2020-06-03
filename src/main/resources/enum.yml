@@ -33,3 +33,6 @@ rarity:
 type:
   sort: "§9Sort"
   entity: "§9Serviteur"
+#sort
+sort:
+  by_id: "§5Sort by id"
