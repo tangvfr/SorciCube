@@ -64,6 +64,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.editCartsGui = new EditCartsGui(this);
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(e.getMessage());
+			e.printStackTrace();
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
 	}
