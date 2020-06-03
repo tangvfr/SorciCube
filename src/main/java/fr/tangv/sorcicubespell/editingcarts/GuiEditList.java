@@ -76,7 +76,7 @@ public class GuiEditList extends GuiEdit {
 		ItemMeta sortMeta = sortItem.getItemMeta();
 		sortMeta.setLore(Arrays.asList(this.ec.sorci.getEnumTool().sortToString(sorted)));
 		sortItem.setItemMeta(sortMeta);
-		inv.setItem(45, this.sort);
+		inv.setItem(45, sortItem);
 		inv.setItem(46, this.deco);
 		inv.setItem(47, this.deco);
 		inv.setItem(48, this.previous);
