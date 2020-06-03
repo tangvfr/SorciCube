@@ -102,6 +102,10 @@ public class GuiEditList extends GuiEdit {
 			int page = e.getInventory().getItem(49).getAmount();
 			switch (raw) {
 				//previous
+				case 45:
+					this.ec.guiBooksEnum.get("sort").open(this.ec.editingCarts.get(player));
+					break;
+				//previous
 				case 48:
 					player.openInventory(this.getInventory(player, page-2));
 					break;
