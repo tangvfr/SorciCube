@@ -111,7 +111,7 @@ book_gui:
     back: "\n\n§c         > Back <"
     hover_back: "§c§nTo Back"
 #sort
-  type:
+  sort:
     number_by_page: 10
     title: "§2Change sort cart§8:"
     select: "\n§2> §7{value}"
