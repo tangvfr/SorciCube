@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.editingcarts;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.tangv.sorcicubespell.carts.Cart;
 import fr.tangv.sorcicubespell.carts.CartComparator;
@@ -47,8 +49,9 @@ public class GuiEditList extends GuiEdit {
 		PlayerEditCart playerE = this.ec.editingCarts.get(player);
 		Inventory inv = Bukkit.createInventory(null, 54, this.name);
 		ArrayList<Cart> carts = new ArrayList<Cart>(ec.sorci.getCarts().getCarts());
+		CartComparator sorted = playerE.getCartComparator();
 		carts.sort(CartComparator.BY_ID);
-		carts.sort(playerE.getCartComparator());
+		carts.sort(sorted);
 		//define max page
 		int max = carts.size() < 1 ? 0 : (carts.size()-1)/45;
 		page = page > max ? max : (page < 0 ? 0 : page);
@@ -69,6 +72,10 @@ public class GuiEditList extends GuiEdit {
 					.replace("{max}", ""+(max+1))
 				, null, false);
 		//set tool bar
+		ItemStack sortItem = this.sort.clone();
+		ItemMeta sortMeta = sortItem.getItemMeta();
+		sortMeta.setLore(Arrays.asList(this.ec.sorci.getEnumTool().sortToString(sorted)));
+		sortItem.setItemMeta(sortMeta);
 		inv.setItem(45, this.sort);
 		inv.setItem(46, this.deco);
 		inv.setItem(47, this.deco);
