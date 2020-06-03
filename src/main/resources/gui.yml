@@ -2,7 +2,7 @@
 gui_edit_list:
   name: "§cGui List Carts"
   item_name:
-    sort: "§aTrier"
+    sort: "§aTriage"
     previous: "§aPage précedant"
     next: "§aPage suivant"
     close: "§cFermer"

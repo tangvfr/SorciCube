@@ -35,4 +35,4 @@ type:
   entity: "§9Serviteur"
 #sort
 sort:
-  by_id: "§5Sort by id"
+  by_id: "§5Trié par id"
