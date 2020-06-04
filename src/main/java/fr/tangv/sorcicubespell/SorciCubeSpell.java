@@ -41,10 +41,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
 			//connect database
-			String user = parameter.getString("user");
-			String password = parameter.getString("password");
-			String host = parameter.getString("host");
-			MongoClient client = MongoClients.create("mongodb://"+user+":"+password+"@"+host+"/?authSource="+parameter.getString("databaseAuth"));
+			MongoClient client = MongoClients.create(parameter.getString("mongodb"));
 			MongoDatabase database = client.getDatabase(parameter.getString("database"));
 			Iterator<String> listCol = database.listCollectionNames().iterator();
 			//init carts
