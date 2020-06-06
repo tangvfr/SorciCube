@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.carts;
 
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 public enum CartComparator implements Comparator<Cart> {
 
@@ -50,6 +51,15 @@ public enum CartComparator implements Comparator<Cart> {
 		@Override
 		public int compare(Cart c1, Cart c2) {
 			return Integer.compare(c2.getCountMana(), c1.getCountMana());
+		}
+	}),
+	BY_NAME(new Comparator<Cart>() {
+		@Override
+		public int compare(Cart c1, Cart c2) {
+			Pattern p = Pattern.compile("§.");
+			String n1 = p.matcher(c1.getName()).replaceAll("");
+			String n2 = p.matcher(c2.getName()).replaceAll("");
+			return n1.compareTo(n2);
 		}
 	});
 	

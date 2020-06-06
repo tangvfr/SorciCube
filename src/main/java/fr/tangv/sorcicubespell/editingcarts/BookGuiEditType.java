@@ -30,7 +30,8 @@ public class BookGuiEditType extends BookGuiEditEnum<CartType> {
 					cart.getDamage(),
 					cart.getRarity(),
 					cart.getFaction(),
-					1);
+					1,
+					null);
 		} else {
 			newCart = new CartSort(cart.getId(),
 					cart.getMaterial(),

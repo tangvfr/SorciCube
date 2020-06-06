@@ -45,6 +45,9 @@ public class BookGuiEditCart extends BookGui {
 			CartEntity entity = (CartEntity) cart;
 			//health
 			addTextConfig(page, "health", entity.getHealth());
+			//skin
+			addTextConfig(page, "change_skin", "");
+			addTextConfig(page, "view_skin", "");
 		} else {
 			CartSort sort = (CartSort) cart;
 			//heal
@@ -141,6 +144,14 @@ public class BookGuiEditCart extends BookGui {
 					new AnvilEditNumberCart.AnvilEditHealth(player, cart, this).open();
 					break;
 				
+				case "change_skin":
+					
+					break;
+					
+				case "view_skin":
+					
+					break;
+					
 				//for sort cart
 				case "heal":
 					new AnvilEditNumberCart.AnvilEditHeal(player, cart, this).open();

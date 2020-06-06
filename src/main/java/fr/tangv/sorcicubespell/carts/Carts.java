@@ -58,7 +58,8 @@ public class Carts {
 			cart = new CartSort(id, material, materialURL, name, description, countMana, damage, rarity, faction, heal, giveMana, cible);
 		} else if (type == CartType.ENTITY) {
 			int health = doc.getInteger("health");
-			cart = new CartEntity(id, material, materialURL, name, description, countMana, damage, rarity, faction, health);
+			String skin = doc.getString("skin");
+			cart = new CartEntity(id, material, materialURL, name, description, countMana, damage, rarity, faction, health, skin);
 		}
 		return cart;
 	}
@@ -84,6 +85,7 @@ public class Carts {
 		} else {
 			CartEntity cartEntity = (CartEntity) cart;
 			doc.append("health", cartEntity.getHealth());
+			doc.append("skin", cartEntity.getSkin());
 		}
 		return doc;
 	}
@@ -118,7 +120,8 @@ public class Carts {
 				3,
 				CartRarity.COMMUN,
 				CartFaction.LIGHT,
-				4
+				4,
+				null
 			);
 		cartsCol.insertOne(cartToDocument(cart));
 		return cart;

@@ -5,7 +5,7 @@ import org.bukkit.material.MaterialData;
 public class CartEntity extends Cart {
 
 	private int health;
-	//protected ? skin;
+	private String skin;
 	
 	public CartEntity(String id,
 			MaterialData material,
@@ -16,9 +16,11 @@ public class CartEntity extends Cart {
 			int damage,
 			CartRarity rarity,
 			CartFaction faction,
-			int health) {
+			int health,
+			String skin) {
 		super(id, material, materialURL, name, description, countMana, damage, CartType.ENTITY, rarity, faction);
 		this.setHealth(health);
+		this.setSkin(skin);
 	}
 
 	public int getHealth() {
@@ -27,6 +29,14 @@ public class CartEntity extends Cart {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public String getSkin() {
+		return skin;
+	}
+
+	public void setSkin(String skin) {
+		this.skin = skin;
 	}
 	
 }
