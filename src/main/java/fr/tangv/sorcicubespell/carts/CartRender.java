@@ -1,20 +1,14 @@
 package fr.tangv.sorcicubespell.carts;
 
-import java.util.ArrayList;
-
-import org.bukkit.inventory.ItemStack;
-
-import fr.tangv.sorcicubespell.SorciCubeSpell;
-import fr.tangv.sorcicubespell.util.ItemBuild;
-
 public class CartRender {
 
-	public static ItemStack cartToItem(Cart cart, SorciCubeSpell sorci) {
+	/*public static ItemStack cartToItem(Cart cart, SorciCubeSpell sorci) {
 		return CartRender.cartToItem(cart, sorci, 1, false);
 	}
 	
 	@SuppressWarnings("deprecation")
 	public static ItemStack cartToItem(Cart cart, SorciCubeSpell sorci, int amount, boolean ench) {
+		//Config config = sorci.get
 		ArrayList<String> lore = new ArrayList<String>();
 		//type
 		lore.add("");
@@ -43,6 +37,6 @@ public class CartRender {
 					cart.getName(),
 					lore,
 					ench);
-	}
+	}*/
 	
 }

@@ -53,8 +53,8 @@ book_gui:
     heal: "\n§3Heal§8: §4{value}"
     give_mana: "\n§3Give Mana§8: §4{value}"
     cible: "\n§3Cible§8: §4{value}"
-    change_skin: "\n§aChange Skin"
-    view_skin: "\n§aView Skin"
+    change_skin: "\n§2Change Skin"
+    view_skin: "\n§2View Skin"
     #page2
     description: "\n§9Description§8:\n{value}"
     #page3
@@ -73,8 +73,8 @@ book_gui:
     hover_heal: "§5§nEdit Heal"
     hover_give_mana: "§5§nEdit Give Mana"
     hover_cible: "§5§nEdit Cible"
-    hover_change_skin: "§aChange Skin"
-    hover_view_skin: "§aView Skin"
+    hover_change_skin: "§2Change Skin"
+    hover_view_skin: "§2View Skin"
     hover_description: "§d§nEdit Description"
     hover_remove: "§4§nRemove Cart"
     hover_back: "§c§nTo Back"

@@ -1,2 +1,5 @@
 message_no_player: "§cVous n'êtes pas un joueur !"
 message_no_perm_editdesc: "§cVous n'avez pas la permission d'édité la description d'une carte !"
+message_for_set_url_skin: "§eEcrivez dans le chat une url \"http...\" pour definir le nouveau skin du serviteur."
+message_set_url_skin: "§aVous venez de définir le nouveaux skin du serviteur !"
+message_cancel_set_url_skin: "§cChangement de skin du serviteur anullé !"

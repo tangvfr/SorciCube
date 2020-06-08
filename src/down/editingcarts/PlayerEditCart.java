@@ -14,6 +14,7 @@ public class PlayerEditCart {
 	private Gui gui;
 	private CartComparator cartComparator;
 	private int pageEditGui;
+	private boolean insertLink;
 	
 	public PlayerEditCart(Player player) {
 		this.player = player;
@@ -22,6 +23,7 @@ public class PlayerEditCart {
 		this.gui = null;
 		this.cartComparator = CartComparator.BY_ID;
 		this.pageEditGui = 0;
+		this.insertLink = false;
 	}
 	
 	public Player getPlayer() {
@@ -34,6 +36,7 @@ public class PlayerEditCart {
 	
 	public void setCart(Cart cart) {
 		this.cart = cart;
+		this.insertLink = false;
 	}
 	
 	public Gui getGui() {
@@ -66,6 +69,14 @@ public class PlayerEditCart {
 
 	public void setPageEditGui(int pageEditGui) {
 		this.pageEditGui = pageEditGui;
+	}
+
+	public boolean isInsertLink() {
+		return insertLink;
+	}
+
+	public void setInsertLink(boolean insertLink) {
+		this.insertLink = insertLink;
 	}
 
 }

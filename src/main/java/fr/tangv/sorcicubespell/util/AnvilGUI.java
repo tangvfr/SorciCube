@@ -21,16 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-/**
- * 
- * Created by chasechocolate
- * 
- * Edited to use NMS by PhilipsNostrum
- * 
- * Cleaned up, Content upgrade & Edited to use in V1_14 by Gecolay
- * 
-**/
-
 public class AnvilGUI {
 	
 	private boolean colorrename = true;

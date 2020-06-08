@@ -47,7 +47,7 @@ public class BookGuiEditCart extends BookGui {
 			addTextConfig(page, "health", entity.getHealth());
 			//skin
 			addTextConfig(page, "change_skin", "");
-			addTextConfig(page, "view_skin", "");
+			addTextConfigUrl(page, "view_skin", entity.getSkinURL());
 		} else {
 			CartSort sort = (CartSort) cart;
 			//heal
@@ -86,6 +86,14 @@ public class BookGuiEditCart extends BookGui {
 	protected void addTextConfig(TextComponent page, String path, String value) {
 		TextComponent comp = new TextComponent(this.config.getString(path).replace("{value}", value));
 		comp.setClickEvent(new ClickEvent(Action.RUN_COMMAND, "/editcarts "+this.name+" "+path));
+		comp.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
+				new TextComponent[] {new TextComponent(this.config.getString("hover_"+path))}));
+		page.addExtra(comp);
+	}
+	
+	protected void addTextConfigUrl(TextComponent page, String path, String url) {
+		TextComponent comp = new TextComponent(this.config.getString(path));
+		comp.setClickEvent(new ClickEvent(Action.OPEN_URL, url));
 		comp.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
 				new TextComponent[] {new TextComponent(this.config.getString("hover_"+path))}));
 		page.addExtra(comp);
@@ -145,11 +153,8 @@ public class BookGuiEditCart extends BookGui {
 					break;
 				
 				case "change_skin":
-					
-					break;
-					
-				case "view_skin":
-					
+					player.getPlayer().sendMessage(this.ec.sorci.getMessage().getString("message_for_set_url_skin"));
+					player.setInsertLink(true);
 					break;
 					
 				//for sort cart

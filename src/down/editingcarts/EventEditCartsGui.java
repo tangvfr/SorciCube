@@ -9,14 +9,17 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import fr.tangv.sorcicubespell.carts.Cart;
+import fr.tangv.sorcicubespell.carts.CartEntity;
 import fr.tangv.sorcicubespell.util.Gui;
 
+@SuppressWarnings("deprecation")
 public class EventEditCartsGui implements Listener{
 
 	private EditCartsGui ec;
@@ -25,6 +28,26 @@ public class EventEditCartsGui implements Listener{
 		this.ec = ec;
 		for (Player player : Bukkit.getOnlinePlayers())
 			this.ec.editingCarts.put(player, new PlayerEditCart(player));
+	}
+	
+	@EventHandler
+	public void onChat(PlayerChatEvent e) {
+		PlayerEditCart player = this.ec.editingCarts.get(e.getPlayer());
+		if (player.isInsertLink()) {
+			String message = e.getMessage();
+			if (message.startsWith("http")) {
+				if (player.getCart() instanceof CartEntity) {
+					((CartEntity) player.getCart()).setSkinURL(message);
+					this.ec.sorci.getCarts().update(player.getCart());
+					player.getPlayer().sendMessage(this.ec.sorci.getMessage().getString("message_set_url_skin"));
+					this.ec.guiBooks.get(BookGuis.MAIN).open(player, player.getCart());
+				}
+				e.setCancelled(true);
+				return;
+			}
+			player.setInsertLink(false);
+			player.getPlayer().sendMessage(this.ec.sorci.getMessage().getString("message_cancel_set_url_skin"));
+		}
 	}
 	
 	@EventHandler

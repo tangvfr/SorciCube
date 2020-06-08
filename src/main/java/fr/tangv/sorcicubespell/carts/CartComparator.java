@@ -8,7 +8,7 @@ public enum CartComparator implements Comparator<Cart> {
 	BY_ID(new Comparator<Cart>() {
 		@Override
 		public int compare(Cart c1, Cart c2) {
-			return c1.getId().compareTo(c2.getId());
+			return c1.getUUID().compareTo(c2.getUUID());
 		}
 	}),
 	BY_FACTION(new Comparator<Cart>() {
@@ -29,28 +29,16 @@ public enum CartComparator implements Comparator<Cart> {
 			return Integer.compare(c1.getType().ordinal(), c2.getType().ordinal());
 		}
 	}),
-	BY_LOW_DAMAGE(new Comparator<Cart>() {
-		@Override
-		public int compare(Cart c1, Cart c2) {
-			return Integer.compare(c1.getDamage(), c2.getDamage());
-		}
-	}),
-	BY_HIGH_DAMAGE(new Comparator<Cart>() {
-		@Override
-		public int compare(Cart c1, Cart c2) {
-			return Integer.compare(c2.getDamage(), c1.getDamage());
-		}
-	}),
 	BY_LOW_MANA(new Comparator<Cart>() {
 		@Override
 		public int compare(Cart c1, Cart c2) {
-			return Integer.compare(c1.getCountMana(), c2.getCountMana());
+			return Integer.compare(c1.getMana(), c2.getMana());
 		}
 	}),
 	BY_HIGH_MANA(new Comparator<Cart>() {
 		@Override
 		public int compare(Cart c1, Cart c2) {
-			return Integer.compare(c2.getCountMana(), c1.getCountMana());
+			return Integer.compare(c2.getMana(), c1.getMana());
 		}
 	}),
 	BY_NAME(new Comparator<Cart>() {
