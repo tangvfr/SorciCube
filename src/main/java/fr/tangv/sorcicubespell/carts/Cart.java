@@ -12,10 +12,10 @@ public class Cart {
 	private CartType type;
 	private CartRarity rarity;
 	private CartFaction faction;
+	private CartCible cible;
+	private CartFaction cibleFaction;
 	private int mana;
 	private CartFeatures features;
-	private int health;
-	private String skin;
 	
 	public Cart(UUID uuid,
 			CartMaterial material,
@@ -23,21 +23,22 @@ public class Cart {
 			CartType type,
 			CartRarity rarity,
 			CartFaction faction,
+			CartCible cible,
+			CartFaction cibleFaction,
 			int mana,
-			CartFeatures features,
-			int health,
-			String skin) {
+			CartFeatures features) {
 		this.uuid = uuid;
 		this.setMaterial(material);
 		this.setName(name);
 		this.setType(type);
 		this.setRarity(rarity);
+		this.setFaction(faction);
+		this.setCible(cible);
+		this.setCibleFaction(cibleFaction);
 		this.setMana(mana);
 		this.setFeatures(features);
-		this.setHealth(health);
-		this.setSkin(skin);
 	}
-
+	
 	public UUID getUUID() {
 		return uuid;
 	}
@@ -82,6 +83,22 @@ public class Cart {
 		this.faction = faction;
 	}
 
+	public CartCible getCible() {
+		return cible;
+	}
+
+	public void setCible(CartCible cible) {
+		this.cible = cible;
+	}
+
+	public CartFaction getCibleFaction() {
+		return cibleFaction;
+	}
+
+	public void setCibleFaction(CartFaction cibleFaction) {
+		this.cibleFaction = cibleFaction;
+	}
+
 	public int getMana() {
 		return mana;
 	}
@@ -96,22 +113,6 @@ public class Cart {
 
 	public void setFeatures(CartFeatures features) {
 		this.features = features;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-	public String getSkin() {
-		return skin;
-	}
-
-	public void setSkin(String skin) {
-		this.skin = skin;
 	}
 
 	@Override
@@ -129,10 +130,10 @@ public class Cart {
 			.append("type", this.type.name())
 			.append("rarity", this.rarity.name())
 			.append("faction", this.faction.name())
+			.append("cible", this.cible.name())
+			.append("ciblefaction", this.cibleFaction.name())
 			.append("mana", this.mana)
-			.append("features", this.features.toDocument())
-			.append("health", this.health)
-			.append("skin", this.skin);
+			.append("features", this.features.toDocument());
 		return document;
 	}
 	
@@ -144,10 +145,10 @@ public class Cart {
 				CartType.valueOf(document.getString("type")),
 				CartRarity.valueOf(document.getString("rarity")),
 				CartFaction.valueOf(document.getString("faction")),
+				CartCible.valueOf(document.getString("cible")),
+				CartFaction.valueOf(document.getString("ciblefaction")),
 				document.getInteger("mana"),
-				CartFeatures.toCartFeatures(document.get("features", Document.class)),
-				document.getInteger("health"),
-				document.getString("skin")
+				CartFeatures.toCartFeatures(document.get("features", Document.class))
 			);
 	}
 	
@@ -158,5 +159,5 @@ public class Cart {
 	public static Document toUUIDDocument(UUID uuid) {
 		return new Document("uuid", uuid.toString());
 	}
-	
+
 }

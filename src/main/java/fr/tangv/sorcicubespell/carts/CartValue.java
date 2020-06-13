@@ -7,10 +7,15 @@ public class CartValue {
 	private Object value;
 	private TypeValue type;
 	
-	/*public CartValue(String value) {
+	public CartValue(String value) {
 		this.value = value;
 		this.type = CartValue.TypeValue.TEXT;
-	}*/
+	}
+	
+	public CartValue() {
+		this.value = null;
+		this.type = CartValue.TypeValue.NONE;
+	}
 	
 	public CartValue(int value) {
 		this.value = value;
@@ -22,9 +27,13 @@ public class CartValue {
 		this.type = CartValue.TypeValue.BOOL;
 	}
 	
-	/*public boolean isString() {
+	public boolean isString() {
 		return this.type == CartValue.TypeValue.TEXT;
-	}*/
+	}
+	
+	public boolean isNone() {
+		return this.type == CartValue.TypeValue.NONE;
+	}
 	
 	public boolean isInt() {
 		return this.type == CartValue.TypeValue.NUMBER;
@@ -34,9 +43,9 @@ public class CartValue {
 		return this.type == CartValue.TypeValue.BOOL;
 	}
 	
-	/*public String asString() {
+	public String asString() {
 		return (String) value;
-	}*/
+	}
 	
 	public int asInt() {
 		return (int) value;
@@ -48,6 +57,8 @@ public class CartValue {
 	
 	@Override
 	public String toString() {
+		if (type == TypeValue.NONE)
+			return "none";
 		return this.value.toString();
 	}
 	
@@ -58,20 +69,23 @@ public class CartValue {
 	public static CartValue toCartValue(Document document) {
 		TypeValue type = TypeValue.valueOf(document.getString("type"));
 		switch (type) {
-			/*case TEXT:
-				return new CartValue(document.getString("value"));*/
+			case TEXT:
+				return new CartValue(document.getString("value"));
 			case NUMBER:
 				return new CartValue(document.getInteger("value"));
 			case BOOL:
 				return new CartValue(document.getBoolean("value"));
+			case NONE:
+				return new CartValue();
 		}
 		return null;
 	}
 	
-	private enum TypeValue {
-		//TEXT(),
+	public enum TypeValue {
+		TEXT(),
 		NUMBER(),
-		BOOL();
+		BOOL(),
+		NONE();
 	}
 	
 }

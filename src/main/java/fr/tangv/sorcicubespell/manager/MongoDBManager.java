@@ -13,13 +13,13 @@ public class MongoDBManager {
 
 	private MongoDatabase database;
 	private MongoCollection<Document> carts;
+	private String uri;
+	private String databaseName;
 	
-	public MongoDBManager(String url, String database) {
-		//init
-		MongoClient client = MongoClients.create(url);
-		this.database = client.getDatabase(database);
-		//init collection
-		this.carts = defineCollection("carts");
+	public MongoDBManager(String uri, String database) throws Exception {
+		this.uri = uri;
+		this.databaseName = database;
+		this.refrech();
 	}
 	
 	private MongoCollection<Document> defineCollection(String collection) {
@@ -39,6 +39,14 @@ public class MongoDBManager {
 
 	public MongoCollection<Document> getCarts() {
 		return carts;
+	}
+	
+	public void refrech() {
+		//init
+		MongoClient client = MongoClients.create(uri);
+		this.database = client.getDatabase(databaseName);
+		//init collection
+		this.carts = defineCollection("carts");
 	}
 	
 }

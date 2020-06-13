@@ -52,4 +52,12 @@ public class CartMaterial {
 			return new CartMaterial(document.getInteger("id"), document.getInteger("data"));
 	}
 	
+	@Override
+	public String toString() {
+		if (hasUrl())
+			return "skull: "+url;
+		else
+			return id+":"+data;
+	}
+	
 }

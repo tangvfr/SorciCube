@@ -6,13 +6,11 @@ public class CartFeature {
 
 	private String name;
 	private CartFeatureType type;
-	private CartCible cible;
 	private CartValue value;
 	
-	public CartFeature(String name, CartFeatureType type, CartCible cible, CartValue value) {
+	public CartFeature(String name, CartFeatureType type, CartValue value) {
 		this.setName(name);
 		this.setType(type);
-		this.setCible(cible);
 		this.setValue(value);
 	}
 	
@@ -32,14 +30,6 @@ public class CartFeature {
 		this.type = type;
 	}
 
-	public CartCible getCible() {
-		return cible;
-	}
-
-	public void setCible(CartCible cible) {
-		this.cible = cible;
-	}
-
 	public CartValue getValue() {
 		return value;
 	}
@@ -52,7 +42,6 @@ public class CartFeature {
 		Document document = new Document()
 				.append("name", name)
 				.append("type", type.name())
-				.append("cible", cible.name())
 				.append("value", value.toDocument());
 		return document;
 	}
@@ -60,7 +49,6 @@ public class CartFeature {
 	public static CartFeature toCartFeature(Document document) {
 		return new CartFeature(document.getString("name"),
 				CartFeatureType.valueOf(document.getString("type")),
-				CartCible.valueOf(document.getString("cible")),		
 				CartValue.toCartValue(document.get("value", Document.class))
 			);
 	}

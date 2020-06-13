@@ -2,6 +2,8 @@ package fr.tangv.sorcicubespell.carts;
 
 public enum CartCible {
 
+	NONE(),
+	ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE(),
 	ONE_HERO(),
 	ALL_HERO(),
 	ONE(),

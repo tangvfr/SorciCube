@@ -12,7 +12,7 @@ public class CartFeatures {
 	public CartFeatures() {
 		this.features = new HashMap<String, CartFeature>();
 	}
-	
+
 	public boolean hasFeature(String name) {
 		return this.features.containsKey(name);
 	}
@@ -37,6 +37,10 @@ public class CartFeatures {
 	
 	public void removeFeature(String name) {
 		this.features.remove(name);
+	}
+	
+	public int size() {
+		return this.features.size();
 	}
 	
 	public Document toDocument() {
