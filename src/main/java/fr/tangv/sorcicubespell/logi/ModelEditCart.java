@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubespell.logi;
 
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import fr.tangv.sorcicubespell.carts.Cart;
@@ -70,19 +69,12 @@ public class ModelEditCart extends AbstractTableModel {
 				default:
 					return null; //not possible
 			}
-			/*private UUID id
-			private String name;
-			private CartType type;
-			private CartMaterial material;
-			
-			private CartRarity rarity;
-			private CartFaction faction;
-			private CartCible cible;
-			private CartFaction cibleFaction;
-			
-			private int mana;
-			private CartFeatures features;*/
 		}
+	}
+	
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return false;
 	}
 	
 }
