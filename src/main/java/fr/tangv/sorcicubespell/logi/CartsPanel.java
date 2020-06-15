@@ -15,13 +15,13 @@ public class CartsPanel extends JPanel {
 	private static final long serialVersionUID = 2411422756632892561L;
 	private MongoDBManager mongo;
 	private Carts carts;
-	private FrameLogi fl;
+	private FrameLogi frameLogi;
 	private PanelNav nav;
 	private JPanel edit;
 	private JTable table;
 	
-	public CartsPanel(MongoDBManager mongo, FrameLogi fl) {
-		this.fl = fl;
+	public CartsPanel(MongoDBManager mongo, FrameLogi frameLogi) {
+		this.frameLogi = frameLogi;
 		this.mongo = mongo;
 		this.carts = new Carts(mongo);
 		//edit
@@ -45,8 +45,8 @@ public class CartsPanel extends JPanel {
 		return mongo;
 	}
 
-	public FrameLogi getFl() {
-		return fl;
+	public FrameLogi getFrameLogi() {
+		return frameLogi;
 	}
 	
 	public Carts getCarts() {
@@ -61,6 +61,8 @@ public class CartsPanel extends JPanel {
 		this.mongo.refrech();
 		this.carts = new Carts(mongo);
 		this.nav.refrech();
+		if (table.getModel() instanceof ModelEditCart)
+			table.setModel(new ModelEditCart(this.carts.getCart(((ModelEditCart) table.getModel()).getCart().getUUID())));
 	}
 
 }

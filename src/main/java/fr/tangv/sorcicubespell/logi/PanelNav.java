@@ -53,7 +53,7 @@ public class PanelNav extends JPanel {
 		disconnect.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cartsPanel.getFl().showConnection();
+				cartsPanel.getFrameLogi().showConnection();
 			}
 		});
 		disconnect.setFocusable(false);
