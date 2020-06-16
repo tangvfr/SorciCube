@@ -32,44 +32,59 @@ public class ModelEditCart extends AbstractTableModel {
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		String text;
 		if (columnIndex == 0) {
-			return nameRow[rowIndex];
+			text = nameRow[rowIndex];
 		} else {
 			switch (rowIndex) {
 				case 0:
-					return cart.getUUID();
+					text = cart.getUUID().toString();
+					break;
 					
 				case 1:
-					return cart.getName();
+					text = cart.getName();
+					break;
 					
 				case 2:
-					return cart.getType();
+					text = cart.getType().name();
+					break;
 					
 				case 3:
-					return cart.getMaterial();
+					text = cart.getMaterial().toString();
+					break;
 					
 				case 4:
-					return cart.getRarity();
+					text = cart.getRarity().name();
+					break;
 					
 				case 5:
-					return cart.getFaction();
+					text = cart.getFaction().name();
+					break;
 					
 				case 6:
-					return cart.getCible();
+					text = cart.getCible().name();
+					break;
 					
 				case 7:
-					return cart.getCibleFaction();
+					text = cart.getCibleFaction().name();
+					break;
 					
 				case 8:
-					return cart.getMana();
+					text = ""+cart.getMana();
+					break;
 					
 				case 9:
-					return cart.getFeatures().size();
+					text = ""+cart.getFeatures().size();
+					break;
 						
 				default:
-					return null; //not possible
+					text = null; //not possible
 			}
 		}
+		if (rowIndex == 0 || rowIndex == 2)
+			return "<html><body><span color='#5555FF'>"+text+"</span></body></html>";
+		else
+			return text;
 	}
 	
 	@Override

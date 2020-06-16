@@ -33,6 +33,8 @@ public class MouseTable extends ClickListener {
 		if (table.getModel() instanceof ModelEditCart && col == 1) {
 			ModelEditCart edit = (ModelEditCart) table.getModel();
 			Cart cart = edit.getCart();
+			if (row == 0 || row == 2)
+				return;
 			switch (row) {
 				case 1:
 					new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Name", new JTextField(cart.getName())) {
@@ -145,8 +147,18 @@ public class MouseTable extends ClickListener {
 					};
 					break;
 					
-				/*case 9:
-					return cart.getFeatures().size();*/
+				case 9:
+					/*new DialogBase<JTable>(cartsPanel.getFrameLogi(), "Features", )) {
+						private static final long serialVersionUID = -4613024932048272120L;
+
+						@Override
+						public void eventOk(JTable comp) {
+							cart.se
+							cartsPanel.getCarts().update(cart);
+							cartsPanel.refrech();
+						}
+					};*/
+					break;
 						
 				default:
 					Object ob = edit.getValueAt(row, col);
