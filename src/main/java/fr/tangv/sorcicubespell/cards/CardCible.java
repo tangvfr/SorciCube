@@ -1,6 +1,6 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
-public enum CartCible {
+public enum CardCible {
 
 	NONE(),
 	ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE(),

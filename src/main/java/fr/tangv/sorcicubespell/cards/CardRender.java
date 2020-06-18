@@ -1,6 +1,6 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
-public class CartRender {
+public class CardRender {
 
 	/*public static ItemStack cartToItem(Cart cart, SorciCubeSpell sorci) {
 		return CartRender.cartToItem(cart, sorci, 1, false);

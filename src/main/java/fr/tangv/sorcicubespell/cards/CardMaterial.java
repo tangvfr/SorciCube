@@ -1,20 +1,20 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
 import org.bson.Document;
 
-public class CartMaterial {
+public class CardMaterial {
 
 	private int id;
 	private int data;
 	private String url;
 	
-	public CartMaterial(String url) {
+	public CardMaterial(String url) {
 		this.url = url;
 		this.id = 397;
 		this.data = (int) 3;
 	}
 	
-	public CartMaterial(int id, int data) {
+	public CardMaterial(int id, int data) {
 		this.url = null;
 		this.id = id;
 		this.data = data;
@@ -44,12 +44,12 @@ public class CartMaterial {
 		return document;
 	}
 	
-	public static CartMaterial toCartMaterial(Document document) {
+	public static CardMaterial toCartMaterial(Document document) {
 		String url = document.getString("url");
 		if (url != null && !url.isEmpty())
-			return new CartMaterial(url);
+			return new CardMaterial(url);
 		else
-			return new CartMaterial(document.getInteger("id"), document.getInteger("data"));
+			return new CardMaterial(document.getInteger("id"), document.getInteger("data"));
 	}
 	
 	@Override

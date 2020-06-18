@@ -1,49 +1,49 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-public enum CartComparator implements Comparator<Cart> {
+public enum CardComparator implements Comparator<Card> {
 
-	BY_ID(new Comparator<Cart>() {
+	BY_ID(new Comparator<Card>() {
 		@Override
-		public int compare(Cart c1, Cart c2) {
+		public int compare(Card c1, Card c2) {
 			return c1.getUUID().compareTo(c2.getUUID());
 		}
 	}),
-	BY_FACTION(new Comparator<Cart>() {
+	BY_FACTION(new Comparator<Card>() {
 		@Override
-		public int compare(Cart c1, Cart c2) {
+		public int compare(Card c1, Card c2) {
 			return Integer.compare(c1.getFaction().ordinal(), c2.getFaction().ordinal());
 		}
 	}),
-	BY_RARITY(new Comparator<Cart>() {
+	BY_RARITY(new Comparator<Card>() {
 		@Override
-		public int compare(Cart c1, Cart c2) {
+		public int compare(Card c1, Card c2) {
 			return Integer.compare(c1.getRarity().ordinal(), c2.getRarity().ordinal());
 		}
 	}),
-	BY_TYPE(new Comparator<Cart>() {
+	BY_TYPE(new Comparator<Card>() {
 		@Override
-		public int compare(Cart c1, Cart c2) {
+		public int compare(Card c1, Card c2) {
 			return Integer.compare(c1.getType().ordinal(), c2.getType().ordinal());
 		}
 	}),
-	BY_LOW_MANA(new Comparator<Cart>() {
+	BY_LOW_MANA(new Comparator<Card>() {
 		@Override
-		public int compare(Cart c1, Cart c2) {
+		public int compare(Card c1, Card c2) {
 			return Integer.compare(c1.getMana(), c2.getMana());
 		}
 	}),
-	BY_HIGH_MANA(new Comparator<Cart>() {
+	BY_HIGH_MANA(new Comparator<Card>() {
 		@Override
-		public int compare(Cart c1, Cart c2) {
+		public int compare(Card c1, Card c2) {
 			return Integer.compare(c2.getMana(), c1.getMana());
 		}
 	}),
-	BY_NAME(new Comparator<Cart>() {
+	BY_NAME(new Comparator<Card>() {
 		@Override
-		public int compare(Cart c1, Cart c2) {
+		public int compare(Card c1, Card c2) {
 			Pattern p = Pattern.compile("§.");
 			String n1 = p.matcher(c1.getName()).replaceAll("");
 			String n2 = p.matcher(c2.getName()).replaceAll("");
@@ -51,14 +51,14 @@ public enum CartComparator implements Comparator<Cart> {
 		}
 	});
 	
-	private Comparator<Cart> comparatorCart;
+	private Comparator<Card> comparatorCart;
 	
-	private CartComparator(Comparator<Cart> comparatorCart) {
+	private CardComparator(Comparator<Card> comparatorCart) {
 		this.comparatorCart = comparatorCart;
 	}
 
 	@Override
-	public int compare(Cart c1, Cart c2) {
+	public int compare(Card c1, Card c2) {
 		return this.comparatorCart.compare(c1, c2);
 	}
 	

@@ -2,19 +2,19 @@ package fr.tangv.sorcicubespell.logi;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.tangv.sorcicubespell.carts.Cart;
+import fr.tangv.sorcicubespell.cards.Card;
 
 public class ModelEditCart extends AbstractTableModel {
 
 	private static final long serialVersionUID = -3498539069595000083L;
-	private Cart cart;
+	private Card cart;
 	
-	public ModelEditCart(Cart cart) {
+	public ModelEditCart(Card cart) {
 		super();
 		this.cart = cart;
 	}
 	
-	public Cart getCart() {
+	public Card getCart() {
 		return cart;
 	}
 
@@ -28,7 +28,7 @@ public class ModelEditCart extends AbstractTableModel {
 		return 2;
 	}
 
-	public static final String[] nameRow = {"id", "name", "type", "material", "rarity", "faction", "cible", "cible_faction", "mana", "features"};
+	public static final String[] nameRow = {"ID", "Name", "Type", "Material", "Rarity", "Faction", "Cible", "Cible Faction", "Mana", "Features"};
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {

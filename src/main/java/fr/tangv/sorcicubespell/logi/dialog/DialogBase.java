@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.logi.dialog;
 
+import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
@@ -44,9 +45,9 @@ public abstract class DialogBase<T extends JComponent> extends JDialog {
 		this.setTitle("Edit Cart "+label);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		JPanel panUp = new JPanel();
-		panUp.setLayout(new BoxLayout(panUp, BoxLayout.X_AXIS));
-		panUp.add(new JLabel(label+": "));
-		panUp.add(comp);
+		panUp.setLayout(new BorderLayout());
+		panUp.add(new JLabel(label+": "), BorderLayout.WEST);
+		panUp.add(comp, BorderLayout.CENTER);
 		panUp.setBorder(new EmptyBorder(10, 10, 10, 10));
 		this.add(panUp);
 		JPanel panDown = new JPanel();

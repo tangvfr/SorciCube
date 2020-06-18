@@ -2,11 +2,11 @@ package fr.tangv.sorcicubespell.util;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import fr.tangv.sorcicubespell.carts.CartCible;
-import fr.tangv.sorcicubespell.carts.CartComparator;
-import fr.tangv.sorcicubespell.carts.CartFaction;
-import fr.tangv.sorcicubespell.carts.CartRarity;
-import fr.tangv.sorcicubespell.carts.CartType;
+import fr.tangv.sorcicubespell.cards.CardCible;
+import fr.tangv.sorcicubespell.cards.CardComparator;
+import fr.tangv.sorcicubespell.cards.CardFaction;
+import fr.tangv.sorcicubespell.cards.CardRarity;
+import fr.tangv.sorcicubespell.cards.CardType;
 
 public class EnumTool {
 
@@ -24,23 +24,23 @@ public class EnumTool {
 		this.sort = config.getConfigurationSection("sort");
 	}
 	
-	public String cibleToString(CartCible cible) {
+	public String cibleToString(CardCible cible) {
 		return this.enumToString(cible, this.cible);
 	}
 	
-	public String factionToString(CartFaction faction) {
+	public String factionToString(CardFaction faction) {
 		return this.enumToString(faction, this.faction);
 	}
 	
-	public String rarityToString(CartRarity rarity) {
+	public String rarityToString(CardRarity rarity) {
 		return this.enumToString(rarity, this.rarity);
 	}
 	
-	public String typeToString(CartType type) {
+	public String typeToString(CardType type) {
 		return this.enumToString(type, this.type);
 	}
 	
-	public String sortToString(CartComparator sort) {
+	public String sortToString(CardComparator sort) {
 		return this.enumToString(sort, this.sort);
 	}
 	

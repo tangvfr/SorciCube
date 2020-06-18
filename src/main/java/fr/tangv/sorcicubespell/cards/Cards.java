@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,40 +9,40 @@ import com.mongodb.client.MongoCollection;
 
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 
-public class Carts {
+public class Cards {
 
 	private MongoCollection<Document> carts;
 	
-	public Carts(MongoDBManager manager) {
+	public Cards(MongoDBManager manager) {
 		this.carts = manager.getCarts();
 	}
 	
-	public ArrayList<Cart> getCarts() {
-		ArrayList<Cart> list = new ArrayList<Cart>();
+	public ArrayList<Card> getCarts() {
+		ArrayList<Card> list = new ArrayList<Card>();
 		for(Document doc : carts.find()) {
-			Cart cart = Cart.toCart(doc);
+			Card cart = Card.toCart(doc);
 			list.add(cart);
 		}
 		return list;
 	}
 	
-	public Cart getCart(UUID uuid) {
-		Iterator<Document> rep = carts.find(Cart.toUUIDDocument(uuid)).iterator();
+	public Card getCart(UUID uuid) {
+		Iterator<Document> rep = carts.find(Card.toUUIDDocument(uuid)).iterator();
 		if (rep.hasNext())
-			return Cart.toCart(rep.next());
+			return Card.toCart(rep.next());
 		else
 			return null;
 	}
 	
-	public void insert(Cart cart) {
+	public void insert(Card cart) {
 		carts.insertOne(cart.toDocument());
 	}
 	
-	public void update(Cart cart) {
+	public void update(Card cart) {
 		carts.findOneAndReplace(cart.toUUIDDocument(), cart.toDocument());
 	}
 	
-	public void delete(Cart cart) {
+	public void delete(Card cart) {
 		carts.findOneAndDelete(cart.toUUIDDocument());
 	}
 	

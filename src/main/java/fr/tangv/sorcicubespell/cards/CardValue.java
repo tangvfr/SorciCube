@@ -1,46 +1,46 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
 import org.bson.Document;
 
-public class CartValue {
+public class CardValue {
 
 	private Object value;
 	private TypeValue type;
 	
-	public CartValue(String value) {
+	public CardValue(String value) {
 		this.value = value;
-		this.type = CartValue.TypeValue.TEXT;
+		this.type = CardValue.TypeValue.TEXT;
 	}
 	
-	public CartValue() {
+	public CardValue() {
 		this.value = null;
-		this.type = CartValue.TypeValue.NONE;
+		this.type = CardValue.TypeValue.NONE;
 	}
 	
-	public CartValue(int value) {
+	public CardValue(int value) {
 		this.value = value;
-		this.type = CartValue.TypeValue.NUMBER;
+		this.type = CardValue.TypeValue.NUMBER;
 	}
 
-	public CartValue(boolean value) {
+	public CardValue(boolean value) {
 		this.value = value;
-		this.type = CartValue.TypeValue.BOOL;
+		this.type = CardValue.TypeValue.BOOL;
 	}
 	
 	public boolean isString() {
-		return this.type == CartValue.TypeValue.TEXT;
+		return this.type == CardValue.TypeValue.TEXT;
 	}
 	
 	public boolean isNone() {
-		return this.type == CartValue.TypeValue.NONE;
+		return this.type == CardValue.TypeValue.NONE;
 	}
 	
 	public boolean isInt() {
-		return this.type == CartValue.TypeValue.NUMBER;
+		return this.type == CardValue.TypeValue.NUMBER;
 	}
 	
 	public boolean isBoolean() {
-		return this.type == CartValue.TypeValue.BOOL;
+		return this.type == CardValue.TypeValue.BOOL;
 	}
 	
 	public String asString() {
@@ -55,6 +55,10 @@ public class CartValue {
 		return (boolean) value;
 	}
 	
+	public TypeValue getType() {
+		return type;
+	}
+	
 	@Override
 	public String toString() {
 		if (type == TypeValue.NONE)
@@ -66,17 +70,17 @@ public class CartValue {
 		return new Document("type", this.type.name()).append("value", this.value);
 	}
 	
-	public static CartValue toCartValue(Document document) {
+	public static CardValue toCartValue(Document document) {
 		TypeValue type = TypeValue.valueOf(document.getString("type"));
 		switch (type) {
 			case TEXT:
-				return new CartValue(document.getString("value"));
+				return new CardValue(document.getString("value"));
 			case NUMBER:
-				return new CartValue(document.getInteger("value"));
+				return new CardValue(document.getInteger("value"));
 			case BOOL:
-				return new CartValue(document.getBoolean("value"));
+				return new CardValue(document.getBoolean("value"));
 			case NONE:
-				return new CartValue();
+				return new CardValue();
 		}
 		return null;
 	}

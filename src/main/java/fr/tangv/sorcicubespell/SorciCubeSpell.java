@@ -3,7 +3,7 @@ package fr.tangv.sorcicubespell;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.tangv.sorcicubespell.carts.Carts;
+import fr.tangv.sorcicubespell.cards.Cards;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
@@ -11,7 +11,7 @@ import fr.tangv.sorcicubespell.util.EnumTool;
 public class SorciCubeSpell extends JavaPlugin {
 
 	private MongoDBManager mongo;
-	private Carts carts;
+	private Cards carts;
 	private Config message;
 	private Config parameter;
 	private Config enumConfig;
@@ -31,7 +31,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.enumTool = new EnumTool(this.enumConfig);
 			//connect database
 			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("database"));
-			this.carts = new Carts(this.mongo);
+			this.carts = new Cards(this.mongo);
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(e.getMessage());
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return parameter;
 	}
 	
-	public Carts getCarts() {
+	public Cards getCarts() {
 		return carts;
 	}
 

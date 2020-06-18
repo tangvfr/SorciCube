@@ -1,8 +1,8 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
-import fr.tangv.sorcicubespell.carts.CartValue.TypeValue;
+import fr.tangv.sorcicubespell.cards.CardValue.TypeValue;
 
-public enum CartFeatureType {
+public enum CardFeatureType {
 	
 	SKIN(TypeValue.TEXT),
 	HEALTH(TypeValue.NUMBER),
@@ -27,7 +27,7 @@ public enum CartFeatureType {
 	
 	private TypeValue typeValue;
 	
-	private CartFeatureType(TypeValue typeValue) {
+	private CardFeatureType(TypeValue typeValue) {
 		this.typeValue = typeValue;
 	}
 	

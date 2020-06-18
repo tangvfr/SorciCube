@@ -1,32 +1,32 @@
-package fr.tangv.sorcicubespell.carts;
+package fr.tangv.sorcicubespell.cards;
 
 import java.util.UUID;
 
 import org.bson.Document;
 
-public class Cart {
+public class Card {
 	
 	private UUID uuid;
-	private CartMaterial material;
+	private CardMaterial material;
 	private String name;
-	private CartType type;
-	private CartRarity rarity;
-	private CartFaction faction;
-	private CartCible cible;
-	private CartFaction cibleFaction;
+	private CardType type;
+	private CardRarity rarity;
+	private CardFaction faction;
+	private CardCible cible;
+	private CardFaction cibleFaction;
 	private int mana;
-	private CartFeatures features;
+	private CardFeatures features;
 	
-	public Cart(UUID uuid,
-			CartMaterial material,
+	public Card(UUID uuid,
+			CardMaterial material,
 			String name,
-			CartType type,
-			CartRarity rarity,
-			CartFaction faction,
-			CartCible cible,
-			CartFaction cibleFaction,
+			CardType type,
+			CardRarity rarity,
+			CardFaction faction,
+			CardCible cible,
+			CardFaction cibleFaction,
 			int mana,
-			CartFeatures features) {
+			CardFeatures features) {
 		this.uuid = uuid;
 		this.setMaterial(material);
 		this.setName(name);
@@ -43,11 +43,11 @@ public class Cart {
 		return uuid;
 	}
 	
-	public CartMaterial getMaterial() {
+	public CardMaterial getMaterial() {
 		return material;
 	}
 
-	public void setMaterial(CartMaterial material) {
+	public void setMaterial(CardMaterial material) {
 		this.material = material;
 	}
 
@@ -59,43 +59,43 @@ public class Cart {
 		this.name = name;
 	}
 
-	public CartType getType() {
+	public CardType getType() {
 		return type;
 	}
 
-	public void setType(CartType type) {
+	public void setType(CardType type) {
 		this.type = type;
 	}
 
-	public CartRarity getRarity() {
+	public CardRarity getRarity() {
 		return rarity;
 	}
 
-	public void setRarity(CartRarity rarity) {
+	public void setRarity(CardRarity rarity) {
 		this.rarity = rarity;
 	}
 
-	public CartFaction getFaction() {
+	public CardFaction getFaction() {
 		return faction;
 	}
 
-	public void setFaction(CartFaction faction) {
+	public void setFaction(CardFaction faction) {
 		this.faction = faction;
 	}
 
-	public CartCible getCible() {
+	public CardCible getCible() {
 		return cible;
 	}
 
-	public void setCible(CartCible cible) {
+	public void setCible(CardCible cible) {
 		this.cible = cible;
 	}
 
-	public CartFaction getCibleFaction() {
+	public CardFaction getCibleFaction() {
 		return cibleFaction;
 	}
 
-	public void setCibleFaction(CartFaction cibleFaction) {
+	public void setCibleFaction(CardFaction cibleFaction) {
 		this.cibleFaction = cibleFaction;
 	}
 
@@ -107,21 +107,25 @@ public class Cart {
 		this.mana = mana;
 	}
 
-	public CartFeatures getFeatures() {
+	public CardFeatures getFeatures() {
 		return features;
 	}
 
-	public void setFeatures(CartFeatures features) {
+	public void setFeatures(CardFeatures features) {
 		this.features = features;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Cart)
-			return ((Cart) obj).getUUID().equals(this.getUUID());
+		if (obj instanceof Card)
+			return ((Card) obj).getUUID().equals(this.getUUID());
 		return false;
 	}
 
+	public Card clone() {
+		return Card.toCart(this.toDocument());
+	}
+	
 	public Document toDocument() {
 		Document document = new Document()
 			.append("uuid", this.uuid.toString())
@@ -137,23 +141,23 @@ public class Cart {
 		return document;
 	}
 	
-	public static Cart toCart(Document document) {
-		return new Cart(
+	public static Card toCart(Document document) {
+		return new Card(
 				UUID.fromString(document.getString("uuid")),
-				CartMaterial.toCartMaterial(document.get("material", Document.class)),
+				CardMaterial.toCartMaterial(document.get("material", Document.class)),
 				document.getString("name"),
-				CartType.valueOf(document.getString("type")),
-				CartRarity.valueOf(document.getString("rarity")),
-				CartFaction.valueOf(document.getString("faction")),
-				CartCible.valueOf(document.getString("cible")),
-				CartFaction.valueOf(document.getString("ciblefaction")),
+				CardType.valueOf(document.getString("type")),
+				CardRarity.valueOf(document.getString("rarity")),
+				CardFaction.valueOf(document.getString("faction")),
+				CardCible.valueOf(document.getString("cible")),
+				CardFaction.valueOf(document.getString("ciblefaction")),
 				document.getInteger("mana"),
-				CartFeatures.toCartFeatures(document.get("features", Document.class))
+				CardFeatures.toCartFeatures(document.get("features", Document.class))
 			);
 	}
 	
 	public Document toUUIDDocument() {
-		return Cart.toUUIDDocument(this.uuid);
+		return Card.toUUIDDocument(this.uuid);
 	}
 	
 	public static Document toUUIDDocument(UUID uuid) {

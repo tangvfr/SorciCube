@@ -2,20 +2,20 @@ package fr.tangv.sorcicubespell.util;
 
 import java.lang.reflect.Field;
 
-import fr.tangv.sorcicubespell.carts.CartCible;
-import fr.tangv.sorcicubespell.carts.CartComparator;
-import fr.tangv.sorcicubespell.carts.CartFaction;
-import fr.tangv.sorcicubespell.carts.CartRarity;
-import fr.tangv.sorcicubespell.carts.CartType;
+import fr.tangv.sorcicubespell.cards.CardCible;
+import fr.tangv.sorcicubespell.cards.CardComparator;
+import fr.tangv.sorcicubespell.cards.CardFaction;
+import fr.tangv.sorcicubespell.cards.CardRarity;
+import fr.tangv.sorcicubespell.cards.CardType;
 
 public class EnumPrintYaml {
 
 	public static void main(String[] args) {
-		list(CartCible.ALL, "cible");
-		list(CartFaction.DARK, "faction");
-		list(CartRarity.COMMUN, "rarity");
-		list(CartType.ENTITY, "type");
-		list(CartComparator.BY_ID, "sort");
+		list(CardCible.ALL, "cible");
+		list(CardFaction.DARK, "faction");
+		list(CardRarity.COMMUN, "rarity");
+		list(CardType.ENTITY, "type");
+		list(CardComparator.BY_ID, "sort");
 	}
 	
 	public static void list(Enum<?> enum1, String name) {
