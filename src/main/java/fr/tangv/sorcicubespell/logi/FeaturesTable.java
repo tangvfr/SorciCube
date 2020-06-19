@@ -116,6 +116,8 @@ public class FeaturesTable extends JTable {
 					int id = getSelectedRow()-1;
 					if (id >= 0) {
 						String name = mapName.get(id);
+						if (isEntity && (name.equals("Health") || name.equals("AttackDamage")))
+							return;
 						if (cardFeatures.hasFeature(name)) {
 							CardFeature feature = cardFeatures.getFeature(name);
 							new DialogBase<JTextField>(window, "Rename Feature", new JTextField(feature.getName())) {
