@@ -168,7 +168,7 @@ public class MouseTable extends ClickListener {
 					
 				case 9:
 					Card cardC = card.clone();
-					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features", new FeaturesTable(cartsPanel.getFrameLogi() ,cardC.getFeatures(), cardC.getType() == CardType.ENTITY)) {
+					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features", new FeaturesTable(card.getFeatures(), cardC.getType() == CardType.ENTITY)) {
 						private static final long serialVersionUID = -4613024932048272120L;
 
 						@Override
@@ -177,6 +177,12 @@ public class MouseTable extends ClickListener {
 							cartsPanel.getCarts().update(card);
 							cartsPanel.refrech();
 						}
+						
+						@Override
+						protected void initComp(FeaturesTable comp) {
+							comp.init(this);
+						}
+						
 					};
 					dialog.setResizable(true);
 					break;

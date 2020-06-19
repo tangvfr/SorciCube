@@ -1,13 +1,14 @@
 package fr.tangv.sorcicubespell.logi.dialog;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,10 +16,21 @@ import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubespell.logi.ClickListener;
 
-public abstract class DialogBase<T extends JComponent> extends JDialog {
+public abstract class DialogBase<T extends Component> extends JDialog {
 
 	private static final long serialVersionUID = -5728665688478855133L;
 	private Window frameLogi;
+	
+	public static Window returnWindowdParent(Container owner) {
+		Window win = null;
+		while (owner.getParent() != null) {
+			if (owner.getParent() instanceof Window) {
+				win = (Window) owner.getParent();
+			} else
+				owner = owner.getParent();
+		}
+		return win;
+	}
 	
 	public DialogBase(Window owner, String label, T comp) {
 		super(owner);
@@ -47,6 +59,7 @@ public abstract class DialogBase<T extends JComponent> extends JDialog {
 		JPanel panUp = new JPanel();
 		panUp.setLayout(new BorderLayout());
 		panUp.add(new JLabel(label+": "), BorderLayout.WEST);
+		this.initComp(comp);
 		panUp.add(comp, BorderLayout.CENTER);
 		panUp.setBorder(new EmptyBorder(10, 10, 10, 10));
 		this.add(panUp);
@@ -70,5 +83,7 @@ public abstract class DialogBase<T extends JComponent> extends JDialog {
 	}
 	
 	public abstract void eventOk(T comp);
+	
+	protected void initComp(T comp) {};
 	
 }

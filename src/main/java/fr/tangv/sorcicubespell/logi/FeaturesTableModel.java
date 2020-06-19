@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.table.AbstractTableModel;
 
 import fr.tangv.sorcicubespell.cards.CardFeature;
+import fr.tangv.sorcicubespell.cards.CardValue.TypeValue;
 
 public class FeaturesTableModel extends AbstractTableModel implements MouseListener {
 
@@ -56,7 +57,7 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 				default://default not possible
 					break;
 			}
-			lock = featuresTable.isEntity() && (feature.getName().equals("Health") || feature.getName().equals("AttackDamage"));
+			lock = (column == 2 && feature.getType().getTypeValue() == TypeValue.NONE) || (column != 2 && featuresTable.isEntity() && (feature.getName().equals("Health") || feature.getName().equals("AttackDamage")));
 		}
 		if (column == 1 || column == 3 || lock)
 			return "<html><body><span color='#5555FF'>"+text+"</span></body></html>";

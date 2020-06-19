@@ -65,7 +65,7 @@ public class PanelNav extends JPanel {
 		list.setCellRenderer(new ListCellRenderer<Card>() {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card cart, int index, boolean isSelected, boolean cellHasFocus) {
-				String prefix = (isSelected ? ">" : "");
+				String prefix = (isSelected ? ">" : "") + (cart.getType() == CardType.ENTITY ? "[E]" : "[S]");
 				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(cart.getName())+"</body></html>");
 			}
 		});
