@@ -1,11 +1,10 @@
 package fr.tangv.sorcicubespell.logi.dialog;
 
+import java.awt.Window;
 import java.lang.reflect.Field;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
-
-import fr.tangv.sorcicubespell.logi.FrameLogi;
 
 public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBox<String>> {
 
@@ -21,7 +20,7 @@ public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBo
 		return combo;
 	}
 	
-	public DialogCombo(FrameLogi owner, String label, T enumCombo) {
+	public DialogCombo(Window owner, String label, T enumCombo) {
 		super(owner, label, generatedCombo(enumCombo));
 		this.enumCombo = enumCombo;
 	}

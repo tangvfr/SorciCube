@@ -13,7 +13,6 @@ import fr.tangv.sorcicubespell.cards.CardCible;
 import fr.tangv.sorcicubespell.cards.CardFaction;
 import fr.tangv.sorcicubespell.cards.CardRarity;
 import fr.tangv.sorcicubespell.cards.CardType;
-import fr.tangv.sorcicubespell.cards.FeaturesTable;
 import fr.tangv.sorcicubespell.cards.CardMaterial;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
@@ -169,14 +168,14 @@ public class MouseTable extends ClickListener {
 					
 				case 9:
 					Card cardC = card.clone();
-					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features", new FeaturesTable(cardC.getFeatures(), cardC.getType() == CardType.ENTITY)) {
+					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features", new FeaturesTable(cartsPanel.getFrameLogi() ,cardC.getFeatures(), cardC.getType() == CardType.ENTITY)) {
 						private static final long serialVersionUID = -4613024932048272120L;
 
 						@Override
 						public void eventOk(FeaturesTable comp) {
-							/*cart.se
-							cartsPanel.getCarts().update(cart);
-							cartsPanel.refrech();*/
+							card.setFeatures(comp.getCardFeatures());
+							cartsPanel.getCarts().update(card);
+							cartsPanel.refrech();
 						}
 					};
 					dialog.setResizable(true);

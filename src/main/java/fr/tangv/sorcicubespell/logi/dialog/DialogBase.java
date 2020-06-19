@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.logi.dialog;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
@@ -13,14 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubespell.logi.ClickListener;
-import fr.tangv.sorcicubespell.logi.FrameLogi;
 
 public abstract class DialogBase<T extends JComponent> extends JDialog {
 
 	private static final long serialVersionUID = -5728665688478855133L;
-	private FrameLogi frameLogi;
+	private Window frameLogi;
 	
-	public DialogBase(FrameLogi owner, String label, T comp) {
+	public DialogBase(Window owner, String label, T comp) {
 		super(owner);
 		this.frameLogi = owner;
 		owner.setEnabled(false);

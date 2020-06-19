@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.cards;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -40,8 +41,12 @@ public class CardFeatures {
 		this.features.remove(name);
 	}
 	
-	public Set<String> list() {
+	public Set<String> keySet() {
 		return this.features.keySet();
+	}
+	
+	public Collection<CardFeature> values() {
+		return this.features.values();
 	}
 	
 	public int size() {

@@ -7,6 +7,20 @@ public class CardValue {
 	private Object value;
 	private TypeValue type;
 	
+	public static CardValue createCardValue(TypeValue type) {
+		switch (type) {
+			case TEXT:
+				return new CardValue("");
+			case NUMBER:
+				return new CardValue(0);
+			case BOOL:
+				return new CardValue(false);
+			case NONE:
+				return new CardValue();
+		}
+		return new CardValue();
+	}
+	
 	public CardValue(String value) {
 		this.value = value;
 		this.type = CardValue.TypeValue.TEXT;

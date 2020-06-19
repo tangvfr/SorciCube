@@ -2,30 +2,18 @@ package fr.tangv.sorcicubespell.logi;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
 import fr.tangv.sorcicubespell.cards.CardFeature;
-import fr.tangv.sorcicubespell.cards.CardFeatures;
 
 public class FeaturesTableModel extends AbstractTableModel implements MouseListener {
 
 	private static final long serialVersionUID = 506002420552780083L;
-	private CardFeatures cardFeatures;
-	//private boolean locked;
-	private Map<Integer, String> mapName;
+	private FeaturesTable featuresTable;
 	
-	public FeaturesTableModel(CardFeatures cardFeatures, boolean locked) {
-		this.cardFeatures = cardFeatures;
-		//this.locked = locked;
-		this.mapName = new HashMap<Integer, String>();
-		int i = 0;
-		for (String name : cardFeatures.list()) {
-			mapName.put(i, name);
-			i++;
-		}
+	public FeaturesTableModel(FeaturesTable featuresTable) {
+		this.featuresTable = featuresTable;
 	}
 	
 	@Override
@@ -35,17 +23,19 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 	
 	@Override
 	public int getRowCount() {
-		return 1+cardFeatures.size();
+		return 1+featuresTable.getCardFeatures().size();
 	}
 	
 	private static final String[] names = {"Name", "Type", "Value", "Type Value"};
 	@Override
 	public Object getValueAt(int row, int column) {
 		String text = null;
+		boolean lock;
 		if (row == 0) {
 			text = names[column];
+			lock = false;
 		} else {
-			CardFeature feature = cardFeatures.getFeature(mapName.get(row-1));
+			CardFeature feature = featuresTable.getCardFeatures().getFeature(featuresTable.getName(row-1));
 			switch (column) {
 				case 0://name
 					text = feature.getName();
@@ -66,8 +56,9 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 				default://default not possible
 					break;
 			}
+			lock = featuresTable.isEntity() && (feature.getName().equals("Health") || feature.getName().equals("AttackDamage"));
 		}
-		if (column == 1 || column == 3)
+		if (column == 1 || column == 3 || lock)
 			return "<html><body><span color='#5555FF'>"+text+"</span></body></html>";
 		return text;
 	}
