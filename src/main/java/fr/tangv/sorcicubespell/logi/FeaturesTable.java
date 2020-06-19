@@ -26,12 +26,12 @@ public class FeaturesTable extends JTable {
 
 	private static final long serialVersionUID = 3573798367579198241L;
 	private CardFeatures cardFeatures;
-	private boolean entity;
+	private boolean isEntity;
 	private Map<Integer, String> mapName;
 	
-	public FeaturesTable(Window window, CardFeatures cardFeatures, boolean entity) {
+	public FeaturesTable(Window window, CardFeatures cardFeatures, boolean isEntity) {
 		this.cardFeatures = cardFeatures;
-		this.entity = entity;
+		this.isEntity = isEntity;
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.init(window);
 	}
@@ -92,6 +92,8 @@ public class FeaturesTable extends JTable {
 					int id = getSelectedRow()-1;
 					if (id >= 0) {
 						String name = mapName.get(id);
+						if (isEntity && (name.equals("Health") || name.equals("AttackDamage")))
+							return;
 						if (cardFeatures.hasFeature(name)) {
 							if (0 == JOptionPane.showConfirmDialog(FeaturesTable.this, "Are you sure to delete this feature !", "Remove Feature", JOptionPane.WARNING_MESSAGE)) {
 								cardFeatures.removeFeature(name);
@@ -152,7 +154,7 @@ public class FeaturesTable extends JTable {
 	}
 	
 	public boolean isEntity() {
-		return entity;
+		return isEntity;
 	}
 	
 }
