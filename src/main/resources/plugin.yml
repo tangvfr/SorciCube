@@ -7,7 +7,7 @@ author: Tangv
 website: www.tangv.fr
 main: fr.tangv.sorcicubespell.SorciCubeSpell
 commands:
-  editcarts:
-    usage: /editcarts
-    description: Open gui for edit carts.
-    permission: sorcicubespell.editcarts
+  viewcards:
+    usage: /viewcards
+    description: Open gui with the list of the cards.
+    permission: sorcicubespell.viewcards

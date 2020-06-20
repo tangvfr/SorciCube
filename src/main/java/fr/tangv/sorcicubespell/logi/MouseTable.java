@@ -85,7 +85,7 @@ public class MouseTable extends ClickListener {
 										int id = Integer.parseInt(split[0]);
 										int data = 0;
 										if (split.length == 2)
-											data = Integer.parseInt(split[1]);
+											data = Byte.parseByte(split[1]);
 										material = new CardMaterial(id, data);
 									} catch (Exception e) {}
 								}

@@ -1,42 +1,51 @@
 package fr.tangv.sorcicubespell.cards;
 
+import java.util.ArrayList;
+
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.util.ItemBuild;
+
 public class CardRender {
 
-	/*public static ItemStack cartToItem(Cart cart, SorciCubeSpell sorci) {
-		return CartRender.cartToItem(cart, sorci, 1, false);
+	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci) {
+		return CardRender.cardToItem(card, sorci, 1, false);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static ItemStack cartToItem(Cart cart, SorciCubeSpell sorci, int amount, boolean ench) {
+	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, int amount, boolean ench) {
 		//Config config = sorci.get
 		ArrayList<String> lore = new ArrayList<String>();
 		//type
 		lore.add("");
-		lore.add("§7"+sorci.getEnumTool().typeToString(cart.getType()));
-		lore.add("§7"+sorci.getEnumTool().rarityToString(cart.getRarity()));
-		lore.add("§7"+sorci.getEnumTool().factionToString(cart.getFaction()));
+		lore.add("§7"+sorci.getEnumTool().typeToString(card.getType()));
+		lore.add("§7"+sorci.getEnumTool().rarityToString(card.getRarity()));
+		lore.add("§7"+sorci.getEnumTool().factionToString(card.getFaction()));
 		//lore
 		lore.add("");
-		for (int i = 0; i < cart.getDescription().length; i++)
-			lore.add(cart.getDescription()[i]);
+		/*for (int i = 0; i < card.getde.length; i++)
+			lore.add(card.getDescription()[i]);*/
 		//id
 		lore.add("");
-		lore.add("§8Id: "+cart.getId());
+		lore.add("§8Id: "+card.getUUID());
 		//return item
-		if (cart.getMaterialURL() != null && ItemBuild.isSkull(cart.getMaterial()))
-			return ItemBuild.buildSkull(cart.getMaterialURL(),
+		CardMaterial material = card.getMaterial();
+		if (material.hasUrl())
+			return ItemBuild.buildSkull(material.getUrl(),
 					amount,
-					cart.getName(),
+					card.getName(),
 					lore,
 					ench);
 		else
-			return ItemBuild.buildItem(cart.getMaterial().getItemType(),
+			return ItemBuild.buildItem(Material.getMaterial(material.getId()),
 					amount,
 					(short) 0,
-					cart.getMaterial().getData(),
-					cart.getName(),
+					(byte) material.getData(),
+					card.getName(),
 					lore,
 					ench);
-	}*/
+	}
 	
 }
