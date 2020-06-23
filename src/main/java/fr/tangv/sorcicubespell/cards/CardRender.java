@@ -25,8 +25,8 @@ public class CardRender {
 		lore.add("§7"+sorci.getEnumTool().factionToString(card.getFaction()));
 		//lore
 		lore.add("");
-		/*for (int i = 0; i < card.getde.length; i++)
-			lore.add(card.getDescription()[i]);*/
+		for (int i = 0; i < card.getDescription().size(); i++)
+			lore.add(card.getDescription().get(i));
 		//id
 		lore.add("");
 		lore.add("§8Id: "+card.getUUID());

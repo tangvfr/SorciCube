@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.cards;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.bson.Document;
@@ -16,6 +17,7 @@ public class Card {
 	private CardFaction cibleFaction;
 	private int mana;
 	private CardFeatures features;
+	private List<String> description;
 	
 	public Card(UUID uuid,
 			CardMaterial material,
@@ -26,7 +28,8 @@ public class Card {
 			CardCible cible,
 			CardFaction cibleFaction,
 			int mana,
-			CardFeatures features) {
+			CardFeatures features,
+			List<String> description) {
 		this.uuid = uuid;
 		this.setMaterial(material);
 		this.setName(name);
@@ -37,6 +40,7 @@ public class Card {
 		this.setCibleFaction(cibleFaction);
 		this.setMana(mana);
 		this.setFeatures(features);
+		this.setDescription(description);
 	}
 	
 	public UUID getUUID() {
@@ -115,6 +119,14 @@ public class Card {
 		this.features = features;
 	}
 
+	public List<String> getDescription() {
+		return description;
+	}
+
+	public void setDescription(List<String> description) {
+		this.description = description;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Card)
@@ -137,7 +149,8 @@ public class Card {
 			.append("cible", this.cible.name())
 			.append("ciblefaction", this.cibleFaction.name())
 			.append("mana", this.mana)
-			.append("features", this.features.toDocument());
+			.append("features", this.features.toDocument())
+			.append("description", description);
 		return document;
 	}
 	
@@ -152,7 +165,8 @@ public class Card {
 				CardCible.valueOf(document.getString("cible")),
 				CardFaction.valueOf(document.getString("ciblefaction")),
 				document.getInteger("mana"),
-				CardFeatures.toCartFeatures(document.get("features", Document.class))
+				CardFeatures.toCartFeatures(document.get("features", Document.class)),
+				document.getList("description", String.class)
 			);
 	}
 	

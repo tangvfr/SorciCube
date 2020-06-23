@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -113,7 +114,8 @@ public class PanelNav extends JPanel {
 								CardCible.ONE_ENTITY_ENEMIE,
 								CardFaction.BASIC,
 								1,
-								new CardFeatures())
+								new CardFeatures(),
+								new ArrayList<String>())
 							);
 						refrech();
 						list.setSelectedValue(cart, true);
@@ -140,7 +142,8 @@ public class PanelNav extends JPanel {
 								CardCible.ONE_ENTITY_ENEMIE,
 								CardFaction.BASIC,
 								1,
-								features
+								features,
+								new ArrayList<String>()
 							));
 						refrech();
 						list.setSelectedValue(cart, true);

@@ -3,24 +3,25 @@ package fr.tangv.sorcicubespell.logi;
 import javax.swing.table.AbstractTableModel;
 
 import fr.tangv.sorcicubespell.cards.Card;
+import fr.tangv.sorcicubespell.util.TextList;
 
 public class ModelEditCart extends AbstractTableModel {
 
 	private static final long serialVersionUID = -3498539069595000083L;
-	private Card cart;
+	private Card card;
 	
 	public ModelEditCart(Card cart) {
 		super();
-		this.cart = cart;
+		this.card = cart;
 	}
 	
 	public Card getCart() {
-		return cart;
+		return card;
 	}
 
 	@Override
 	public int getRowCount() {
-		return 10;
+		return 11;
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class ModelEditCart extends AbstractTableModel {
 		return 2;
 	}
 
-	public static final String[] nameRow = {"ID", "Name", "Type", "Material", "Rarity", "Faction", "Cible", "Cible Faction", "Mana", "Features"};
+	public static final String[] nameRow = {"ID", "Name", "Type", "Material", "Rarity", "Faction", "Cible", "Cible Faction", "Mana", "Features", "Description"};
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -38,43 +39,47 @@ public class ModelEditCart extends AbstractTableModel {
 		} else {
 			switch (rowIndex) {
 				case 0:
-					text = cart.getUUID().toString();
+					text = card.getUUID().toString();
 					break;
 					
 				case 1:
-					text = cart.getName();
+					text = card.getName();
 					break;
 					
 				case 2:
-					text = cart.getType().name();
+					text = card.getType().name();
 					break;
 					
 				case 3:
-					text = cart.getMaterial().toString();
+					text = card.getMaterial().toString();
 					break;
 					
 				case 4:
-					text = cart.getRarity().name();
+					text = card.getRarity().name();
 					break;
 					
 				case 5:
-					text = cart.getFaction().name();
+					text = card.getFaction().name();
 					break;
 					
 				case 6:
-					text = cart.getCible().name();
+					text = card.getCible().name();
 					break;
 					
 				case 7:
-					text = cart.getCibleFaction().name();
+					text = card.getCibleFaction().name();
 					break;
 					
 				case 8:
-					text = ""+cart.getMana();
+					text = ""+card.getMana();
 					break;
 					
 				case 9:
-					text = ""+cart.getFeatures().size();
+					text = ""+card.getFeatures().size();
+					break;
+
+				case 10:
+					text = TextList.listToText(card.getDescription());
 					break;
 						
 				default:

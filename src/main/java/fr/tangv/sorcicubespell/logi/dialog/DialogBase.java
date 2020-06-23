@@ -2,7 +2,7 @@ package fr.tangv.sorcicubespell.logi.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -21,18 +21,11 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 	private static final long serialVersionUID = -5728665688478855133L;
 	private Window frameLogi;
 	
-	public static Window returnWindowdParent(Container owner) {
-		Window win = null;
-		while (owner.getParent() != null) {
-			if (owner.getParent() instanceof Window) {
-				win = (Window) owner.getParent();
-			} else
-				owner = owner.getParent();
-		}
-		return win;
+	public DialogBase(Window owner, String label, T comp) {
+		this(owner, label, comp, null);
 	}
 	
-	public DialogBase(Window owner, String label, T comp) {
+	public DialogBase(Window owner, String label, T comp, Dimension minDim) {
 		super(owner);
 		this.frameLogi = owner;
 		owner.setEnabled(false);
@@ -51,7 +44,6 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 				DialogBase.this.processWindowEvent(new WindowEvent(DialogBase.this, WindowEvent.WINDOW_CLOSING));
 			}
 		});
-		this.setLocationRelativeTo(owner);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setTitle("Edit Cart "+label);
@@ -70,6 +62,9 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		panDown.add(btnOk);
 		panDown.setBorder(new EmptyBorder(0, 10, 10, 10));
 		this.add(panDown);
+		if (minDim != null)
+			this.setMinimumSize(minDim);
+		this.setLocationRelativeTo(owner);
 		this.pack();
 		this.setVisible(true);
 	}

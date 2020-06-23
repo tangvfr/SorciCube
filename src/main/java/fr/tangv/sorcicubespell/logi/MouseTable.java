@@ -1,10 +1,12 @@
 package fr.tangv.sorcicubespell.logi;
 
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
@@ -16,6 +18,7 @@ import fr.tangv.sorcicubespell.cards.CardType;
 import fr.tangv.sorcicubespell.cards.CardMaterial;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
+import fr.tangv.sorcicubespell.util.TextList;
 
 public class MouseTable extends ClickListener {
 
@@ -168,7 +171,8 @@ public class MouseTable extends ClickListener {
 					
 				case 9:
 					Card cardC = card.clone();
-					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features", new FeaturesTable(card.getFeatures(), cardC.getType() == CardType.ENTITY)) {
+					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features",
+							new FeaturesTable(cardC.getFeatures(), cardC.getType() == CardType.ENTITY), new Dimension(500, 300)) {
 						private static final long serialVersionUID = -4613024932048272120L;
 
 						@Override
@@ -182,9 +186,23 @@ public class MouseTable extends ClickListener {
 						protected void initComp(FeaturesTable comp) {
 							comp.init(this);
 						}
-						
 					};
 					dialog.setResizable(true);
+					break;
+					
+				case 10:
+					DialogBase<JTextArea> dialogTextArea = new DialogBase<JTextArea>(cartsPanel.getFrameLogi(), "Description",
+							new JTextArea(TextList.listToText(card.getDescription())), new Dimension(500, 300)) {
+						private static final long serialVersionUID = 6649269953841487465L;
+
+						@Override
+						public void eventOk(JTextArea comp) {
+							card.setDescription(TextList.textToList(comp.getText()));
+							cartsPanel.getCarts().update(card);
+							cartsPanel.refrech();
+						}
+					};
+					dialogTextArea.setResizable(true);
 					break;
 						
 				default:
