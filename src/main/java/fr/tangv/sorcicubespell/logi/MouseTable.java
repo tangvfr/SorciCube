@@ -10,12 +10,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import fr.tangv.sorcicubespell.cards.Card;
-import fr.tangv.sorcicubespell.cards.CardCible;
-import fr.tangv.sorcicubespell.cards.CardFaction;
-import fr.tangv.sorcicubespell.cards.CardRarity;
-import fr.tangv.sorcicubespell.cards.CardType;
-import fr.tangv.sorcicubespell.cards.CardMaterial;
+import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.card.CardMaterial;
+import fr.tangv.sorcicubespell.card.CardRarity;
+import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
 import fr.tangv.sorcicubespell.util.TextList;

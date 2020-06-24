@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.gui.admin;
+package fr.tangv.sorcicubespell.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,19 +7,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.tangv.sorcicubespell.cards.Card;
-import fr.tangv.sorcicubespell.cards.CardComparator;
-import fr.tangv.sorcicubespell.cards.CardRender;
-import fr.tangv.sorcicubespell.manager.ManagerGuiAdmin;
+import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardComparator;
+import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiAdminViewCards extends AbstractGuiAdmin {
+public class GuiAdminViewCards extends AbstractGui {
 
 	private ItemStack sort;
 	private ItemStack previous;
@@ -27,7 +26,7 @@ public class GuiAdminViewCards extends AbstractGuiAdmin {
 	private ItemStack close;
 	private ItemStack deco;
 	
-	public GuiAdminViewCards(ManagerGuiAdmin manager) {
+	public GuiAdminViewCards(ManagerGui manager) {
 		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_admin_view_cards"));
 		this.sort = ItemBuild.buildSkull(SkullUrl.HOPPER, 1, config.getString("item_name.sort"), null, false);
 		this.previous = ItemBuild.buildSkull(SkullUrl.BACK_GRAY, 1, config.getString("item_name.previous"), null, false);
@@ -38,12 +37,12 @@ public class GuiAdminViewCards extends AbstractGuiAdmin {
 
 	@Override
 	public Inventory getInventory(Player player) {
-		return this.getInventory(player, getPlayerGuiAdmin(player).getPageEditGui());
+		return this.getInventory(player, getPlayerGui(player).getPageEditGui());
 	}
 	
 	public Inventory getInventory(Player player, int page) {
-		PlayerGuiAdmin playerGA = getPlayerGuiAdmin(player);
-		ArrayList<Card> carts = new ArrayList<Card>(manager.getSorci().getCarts().getCarts());
+		PlayerGui playerGA = getPlayerGui(player);
+		ArrayList<Card> carts = new ArrayList<Card>(manager.getSorci().getCarts().getCarts().values());
 		CardComparator sorted = playerGA.getCardComparator();
 		carts.sort(CardComparator.BY_ID);
 		carts.sort(sorted);
@@ -122,8 +121,5 @@ public class GuiAdminViewCards extends AbstractGuiAdmin {
 		}
 		e.setCancelled(true);
 	}
-	
-	@Override
-	public void onDrag(Player player, InventoryDragEvent e) {}
 	
 }

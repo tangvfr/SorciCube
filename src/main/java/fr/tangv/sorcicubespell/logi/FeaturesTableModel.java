@@ -5,8 +5,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.tangv.sorcicubespell.cards.CardFeature;
-import fr.tangv.sorcicubespell.cards.CardValue.TypeValue;
+import fr.tangv.sorcicubespell.card.CardFeature;
+import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 
 public class FeaturesTableModel extends AbstractTableModel implements MouseListener {
 

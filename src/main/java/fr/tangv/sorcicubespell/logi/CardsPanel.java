@@ -7,14 +7,14 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import fr.tangv.sorcicubespell.cards.Cards;
+import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 
 public class CardsPanel extends JPanel {
 	
 	private static final long serialVersionUID = 2411422756632892561L;
 	private MongoDBManager mongo;
-	private Cards carts;
+	private ManagerCards carts;
 	private FrameLogi frameLogi;
 	private PanelNav nav;
 	private JPanel edit;
@@ -23,7 +23,7 @@ public class CardsPanel extends JPanel {
 	public CardsPanel(MongoDBManager mongo, FrameLogi frameLogi) {
 		this.frameLogi = frameLogi;
 		this.mongo = mongo;
-		this.carts = new Cards(mongo);
+		this.carts = new ManagerCards(mongo);
 		//edit
 		this.edit = new JPanel();
 		this.table = new JTable();
@@ -49,7 +49,7 @@ public class CardsPanel extends JPanel {
 		return frameLogi;
 	}
 	
-	public Cards getCarts() {
+	public ManagerCards getCarts() {
 		return carts;
 	}
 	
@@ -59,7 +59,7 @@ public class CardsPanel extends JPanel {
 	
 	public void refrech() {
 		this.mongo.refrech();
-		this.carts = new Cards(mongo);
+		this.carts = new ManagerCards(mongo);
 		this.nav.refrech();
 		if (table.getModel() instanceof ModelEditCart)
 			table.setModel(new ModelEditCart(this.carts.getCart(((ModelEditCart) table.getModel()).getCart().getUUID())));

@@ -1,17 +1,17 @@
-package fr.tangv.sorcicubespell.gui.admin;
+package fr.tangv.sorcicubespell.gui;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.tangv.sorcicubespell.manager.ManagerGuiAdmin;
+import fr.tangv.sorcicubespell.manager.ManagerGui;
 
 public class CommandGuiAdminViewCards implements CommandExecutor {
 
-	private ManagerGuiAdmin manager;
+	private ManagerGui manager;
 	
-	public CommandGuiAdminViewCards(ManagerGuiAdmin manager) {
+	public CommandGuiAdminViewCards(ManagerGui manager) {
 		this.manager = manager;
 	}
 

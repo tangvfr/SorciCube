@@ -12,7 +12,8 @@ import com.mongodb.client.MongoDatabase;
 public class MongoDBManager {
 
 	private MongoDatabase database;
-	private MongoCollection<Document> carts;
+	private MongoCollection<Document> cards;
+	private MongoCollection<Document> players;
 	private String uri;
 	private String databaseName;
 	
@@ -37,8 +38,12 @@ public class MongoDBManager {
 		return database.getCollection(collection);
 	}
 
-	public MongoCollection<Document> getCarts() {
-		return carts;
+	public MongoCollection<Document> getCards() {
+		return cards;
+	}
+	
+	public MongoCollection<Document> getPlayers() {
+		return players;
 	}
 	
 	public void refrech() {
@@ -46,7 +51,8 @@ public class MongoDBManager {
 		MongoClient client = MongoClients.create(uri);
 		this.database = client.getDatabase(databaseName);
 		//init collection
-		this.carts = defineCollection("carts");
+		this.cards = defineCollection("cards");
+		this.players = defineCollection("players");
 	}
 	
 }

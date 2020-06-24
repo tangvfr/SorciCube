@@ -1,33 +1,34 @@
-package fr.tangv.sorcicubespell.gui.admin;
+package fr.tangv.sorcicubespell.gui;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
-import fr.tangv.sorcicubespell.manager.ManagerGuiAdmin;
+import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.Gui;
 
-public abstract class AbstractGuiAdmin implements Gui {
+public abstract class AbstractGui implements Gui {
 
-	protected ManagerGuiAdmin manager;
+	protected ManagerGui manager;
 	protected ConfigurationSection config;
 	protected String name;
 	
-	public AbstractGuiAdmin(ManagerGuiAdmin manager, ConfigurationSection config) {
+	public AbstractGui(ManagerGui manager, ConfigurationSection config) {
 		this.manager = manager;
 		this.name = config.getString("name");
 		this.config = config;
 	}
 
-	public PlayerGuiAdmin getPlayerGuiAdmin(Player player) {
-		return manager.getPlayerGuiAdmins().get(player);
+	public PlayerGui getPlayerGui(Player player) {
+		return manager.getPlayerGuis().get(player);
 	}
 	
 	@Override
 	public void open(Player player) {
-		PlayerGuiAdmin playerGA = getPlayerGuiAdmin(player);
+		PlayerGui playerGA = getPlayerGui(player);
 		playerGA.setGuiAdmin(this);
 		Inventory inv = this.getInventory(player);
 		playerGA.setInvOfGui(inv);
@@ -35,8 +36,11 @@ public abstract class AbstractGuiAdmin implements Gui {
 	}
 	
 	@Override
+	public void onDrag(Player player, InventoryDragEvent e) {}
+	
+	@Override
 	public void onClose(Player player, InventoryCloseEvent e) {
-		PlayerGuiAdmin playerGA = getPlayerGuiAdmin(player);
+		PlayerGui playerGA = getPlayerGui(player);
 		playerGA.setGuiAdmin(null);
 	}
 

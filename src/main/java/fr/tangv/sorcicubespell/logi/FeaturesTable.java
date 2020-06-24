@@ -19,11 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 
-import fr.tangv.sorcicubespell.cards.CardFeature;
-import fr.tangv.sorcicubespell.cards.CardFeatureType;
-import fr.tangv.sorcicubespell.cards.CardFeatures;
-import fr.tangv.sorcicubespell.cards.CardValue;
-import fr.tangv.sorcicubespell.cards.CardValue.TypeValue;
+import fr.tangv.sorcicubespell.card.CardFeature;
+import fr.tangv.sorcicubespell.card.CardFeatureType;
+import fr.tangv.sorcicubespell.card.CardFeatures;
+import fr.tangv.sorcicubespell.card.CardValue;
+import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
 

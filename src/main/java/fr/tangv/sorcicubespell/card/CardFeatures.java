@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.cards;
+package fr.tangv.sorcicubespell.card;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -2,11 +2,11 @@ package fr.tangv.sorcicubespell.util;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import fr.tangv.sorcicubespell.cards.CardCible;
-import fr.tangv.sorcicubespell.cards.CardComparator;
-import fr.tangv.sorcicubespell.cards.CardFaction;
-import fr.tangv.sorcicubespell.cards.CardRarity;
-import fr.tangv.sorcicubespell.cards.CardType;
+import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubespell.card.CardComparator;
+import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.card.CardRarity;
+import fr.tangv.sorcicubespell.card.CardType;
 
 public class EnumTool {
 

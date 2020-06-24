@@ -3,8 +3,9 @@ package fr.tangv.sorcicubespell;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.tangv.sorcicubespell.cards.Cards;
-import fr.tangv.sorcicubespell.manager.ManagerGuiAdmin;
+import fr.tangv.sorcicubespell.manager.ManagerCards;
+import fr.tangv.sorcicubespell.manager.ManagerGui;
+import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
@@ -12,14 +13,15 @@ import fr.tangv.sorcicubespell.util.EnumTool;
 public class SorciCubeSpell extends JavaPlugin {
 
 	private MongoDBManager mongo;
-	private Cards carts;
+	private ManagerCards carts;
 	private Config message;
 	private Config parameter;
 	private Config enumConfig;
 	private Config cartConfig;
 	private Config guiConfig;
 	private EnumTool enumTool;
-	private ManagerGuiAdmin managerGuiAdmin;
+	private ManagerGui managerGuiAdmin;
+	private ManagerPlayers managerPlayers;
 	
 	@Override
 	public void onEnable() {
@@ -33,11 +35,11 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.guiConfig = new Config(this, "gui.yml");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
-			//connect database
-			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("database"));
-			this.carts = new Cards(this.mongo);
 			//init manager
-			this.managerGuiAdmin = new ManagerGuiAdmin(this);
+			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("database"));
+			this.carts = new ManagerCards(this.mongo);
+			this.managerGuiAdmin = new ManagerGui(this);
+			this.managerPlayers = new ManagerPlayers(this.mongo, this.carts);
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(e.getMessage());
 			e.printStackTrace();
@@ -53,7 +55,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return parameter;
 	}
 	
-	public Cards getCarts() {
+	public ManagerCards getCarts() {
 		return carts;
 	}
 
@@ -77,8 +79,12 @@ public class SorciCubeSpell extends JavaPlugin {
 		return mongo;
 	}
 	
-	public ManagerGuiAdmin getManagerGuiAdmin() {
+	public ManagerGui getManagerGuiAdmin() {
 		return managerGuiAdmin;
+	}
+	
+	public ManagerPlayers getManagerPlayers() {
+		return managerPlayers;
 	}
 	
 }

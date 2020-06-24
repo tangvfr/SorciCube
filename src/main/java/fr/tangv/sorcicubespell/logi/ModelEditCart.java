@@ -2,7 +2,7 @@ package fr.tangv.sorcicubespell.logi;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.tangv.sorcicubespell.cards.Card;
+import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.util.TextList;
 
 public class ModelEditCart extends AbstractTableModel {

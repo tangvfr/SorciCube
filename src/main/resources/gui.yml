@@ -10,3 +10,8 @@ gui_admin_view_cards:
     deco: " "
     create_sort: "§6Crée un sort"
     create_entity: "§9Crée un serviteur"
+#Gui select deck default
+gui_select_deck_default:
+  name: "§aChoisi ton premier deck"
+  lore_select: "§2Prendre un deck de type {faction}§2 pour commencé."
+  command_then_select: "none"

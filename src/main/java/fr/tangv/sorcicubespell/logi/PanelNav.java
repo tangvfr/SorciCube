@@ -20,16 +20,16 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import fr.tangv.sorcicubespell.cards.Card;
-import fr.tangv.sorcicubespell.cards.CardCible;
-import fr.tangv.sorcicubespell.cards.CardFaction;
-import fr.tangv.sorcicubespell.cards.CardFeature;
-import fr.tangv.sorcicubespell.cards.CardFeatureType;
-import fr.tangv.sorcicubespell.cards.CardFeatures;
-import fr.tangv.sorcicubespell.cards.CardRarity;
-import fr.tangv.sorcicubespell.cards.CardType;
-import fr.tangv.sorcicubespell.cards.CardValue;
-import fr.tangv.sorcicubespell.cards.CardMaterial;
+import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.card.CardFeature;
+import fr.tangv.sorcicubespell.card.CardFeatureType;
+import fr.tangv.sorcicubespell.card.CardFeatures;
+import fr.tangv.sorcicubespell.card.CardMaterial;
+import fr.tangv.sorcicubespell.card.CardRarity;
+import fr.tangv.sorcicubespell.card.CardType;
+import fr.tangv.sorcicubespell.card.CardValue;
 
 public class PanelNav extends JPanel {
 
@@ -90,7 +90,7 @@ public class PanelNav extends JPanel {
 	}
 	
 	public void refrech() {
-		this.list.setListData(new Vector<Card>(this.cartsPanel.getCarts().getCarts()));
+		this.list.setListData(new Vector<Card>(this.cartsPanel.getCarts().getCarts().values()));
 	}
 	
 	private class ListPopupMenu extends JPopupMenu {

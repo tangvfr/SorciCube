@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.cards;
+package fr.tangv.sorcicubespell.card;
 
 import java.util.Comparator;
 import java.util.regex.Pattern;

@@ -1,6 +1,6 @@
-package fr.tangv.sorcicubespell.cards;
+package fr.tangv.sorcicubespell.card;
 
-import fr.tangv.sorcicubespell.cards.CardValue.TypeValue;
+import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 
 public enum CardFeatureType {
 	

@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.cards;
+package fr.tangv.sorcicubespell.card;
 
 import java.util.List;
 import java.util.UUID;
@@ -135,7 +135,7 @@ public class Card {
 	}
 
 	public Card clone() {
-		return Card.toCart(this.toDocument());
+		return Card.toCard(this.toDocument());
 	}
 	
 	public Document toDocument() {
@@ -154,7 +154,7 @@ public class Card {
 		return document;
 	}
 	
-	public static Card toCart(Document document) {
+	public static Card toCard(Document document) {
 		return new Card(
 				UUID.fromString(document.getString("uuid")),
 				CardMaterial.toCartMaterial(document.get("material", Document.class)),

@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.gui.admin;
+package fr.tangv.sorcicubespell.gui;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,33 +11,35 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import fr.tangv.sorcicubespell.manager.ManagerGuiAdmin;
+import fr.tangv.sorcicubespell.manager.ManagerGui;
 
-public class EventGuiAdminViewCards implements Listener{
+public class EventGuiPlayer implements Listener{
 
-	private ManagerGuiAdmin manager;
+	private ManagerGui manager;
 	
-	public EventGuiAdminViewCards(ManagerGuiAdmin manager) {
+	public EventGuiPlayer(ManagerGui manager) {
 		this.manager = manager;
-		for (Player player : Bukkit.getOnlinePlayers())
-			this.manager.getPlayerGuiAdmins().put(player, new PlayerGuiAdmin(player));
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			player.closeInventory();
+			this.manager.getPlayerGuis().put(player, new PlayerGui(player));
+		}
 	}
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		this.manager.getPlayerGuiAdmins().put(e.getPlayer(), new PlayerGuiAdmin(e.getPlayer()));
+		this.manager.getPlayerGuis().put(e.getPlayer(), new PlayerGui(e.getPlayer()));
 	}
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
-		this.manager.getPlayerGuiAdmins().remove(e.getPlayer());
+		this.manager.getPlayerGuis().remove(e.getPlayer());
 	}
 	
 	@EventHandler
 	public void onDrag(InventoryDragEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
-			PlayerGuiAdmin player = this.manager.getPlayerGuiAdmins().get((Player) e.getWhoClicked());
-			AbstractGuiAdmin gui = player.getGui();
+			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getWhoClicked());
+			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory() == player.getInvOfGui())
 				gui.onDrag(player.getPlayer(), e);
 		}
@@ -46,8 +48,8 @@ public class EventGuiAdminViewCards implements Listener{
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
-			PlayerGuiAdmin player = this.manager.getPlayerGuiAdmins().get((Player) e.getWhoClicked());
-			AbstractGuiAdmin gui = player.getGui();
+			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getWhoClicked());
+			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory() == player.getInvOfGui())
 				gui.onClick(player.getPlayer(), e);
 		}
@@ -56,8 +58,8 @@ public class EventGuiAdminViewCards implements Listener{
 	@EventHandler
 	public void onClose(InventoryCloseEvent e) {
 		if (e.getPlayer() instanceof Player) {
-			PlayerGuiAdmin player = this.manager.getPlayerGuiAdmins().get((Player) e.getPlayer());
-			AbstractGuiAdmin gui = player.getGui();
+			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getPlayer());
+			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory() == player.getInvOfGui())
 				gui.onClose(player.getPlayer(), e);
 		}
@@ -66,8 +68,8 @@ public class EventGuiAdminViewCards implements Listener{
 	@EventHandler
 	public void onOpen(InventoryOpenEvent e) {
 		if (e.getPlayer() instanceof Player) {
-			PlayerGuiAdmin player = this.manager.getPlayerGuiAdmins().get((Player) e.getPlayer());
-			AbstractGuiAdmin gui = player.getGui();
+			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getPlayer());
+			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory() == player.getInvOfGui())
 				gui.onOpen(player.getPlayer(), e);
 		}

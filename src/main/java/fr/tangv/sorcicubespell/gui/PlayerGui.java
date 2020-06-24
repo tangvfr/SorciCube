@@ -1,21 +1,21 @@
-package fr.tangv.sorcicubespell.gui.admin;
+package fr.tangv.sorcicubespell.gui;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import fr.tangv.sorcicubespell.cards.Card;
-import fr.tangv.sorcicubespell.cards.CardComparator;
+import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardComparator;
 
-public class PlayerGuiAdmin {
+public class PlayerGui {
 
 	private Player player;
 	private Card card;
 	private Inventory invOfGui;
-	private AbstractGuiAdmin gui;
+	private AbstractGui gui;
 	private CardComparator cardComparator;
 	private int pageEditGui;
 	
-	public PlayerGuiAdmin(Player player) {
+	public PlayerGui(Player player) {
 		this.player = player;
 		this.card = null;
 		this.gui = null;
@@ -36,11 +36,11 @@ public class PlayerGuiAdmin {
 		this.card = card;
 	}
 	
-	public AbstractGuiAdmin getGui() {
+	public AbstractGui getGui() {
 		return gui;
 	}
 	
-	public void setGuiAdmin(AbstractGuiAdmin gui) {
+	public void setGuiAdmin(AbstractGui gui) {
 		this.gui = gui;
 		this.invOfGui = null;
 	}
