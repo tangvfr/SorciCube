@@ -21,6 +21,7 @@ public class ManagerGui {
 	private GuiSelectDefaultDeck guiSelectDefaultDeck;
 	
 	public ManagerGui(SorciCubeSpell sorci) {
+		this.sorci = sorci;
 		this.playerGuis = new ConcurrentHashMap<Player, PlayerGui>();
 		this.guiViewCards = new GuiAdminViewCards(this);
 		this.guiSelectDefaultDeck = new GuiSelectDefaultDeck(this);
