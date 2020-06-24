@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
+import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.Gui;
 
@@ -15,11 +16,13 @@ public abstract class AbstractGui implements Gui {
 	protected ManagerGui manager;
 	protected ConfigurationSection config;
 	protected String name;
+	protected SorciCubeSpell sorci;
 	
 	public AbstractGui(ManagerGui manager, ConfigurationSection config) {
 		this.manager = manager;
 		this.name = config.getString("name");
 		this.config = config;
+		this.sorci = manager.getSorci();
 	}
 
 	public PlayerGui getPlayerGui(Player player) {

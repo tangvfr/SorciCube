@@ -14,6 +14,7 @@ public class MongoDBManager {
 	private MongoDatabase database;
 	private MongoCollection<Document> cards;
 	private MongoCollection<Document> players;
+	private MongoCollection<Document> defaultDeck;
 	private String uri;
 	private String databaseName;
 	
@@ -46,6 +47,10 @@ public class MongoDBManager {
 		return players;
 	}
 	
+	public MongoCollection<Document> getDefaultDeck() {
+		return defaultDeck;
+	}
+	
 	public void refrech() {
 		//init
 		MongoClient client = MongoClients.create(uri);
@@ -53,6 +58,7 @@ public class MongoDBManager {
 		//init collection
 		this.cards = defineCollection("cards");
 		this.players = defineCollection("players");
+		this.defaultDeck = defineCollection("default_deck");
 	}
 	
 }

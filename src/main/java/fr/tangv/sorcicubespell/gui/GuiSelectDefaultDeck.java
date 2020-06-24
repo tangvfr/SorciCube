@@ -52,29 +52,36 @@ public class GuiSelectDefaultDeck extends AbstractGui {
 
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
+		e.setCancelled(true);
 		int raw = e.getRawSlot();
+		CardFaction faction;
 		switch (raw) {
 		
 			case 19://dark
-				
+				faction = CardFaction.DARK;
 				break;
 	
 			case 21://light
-				
+				faction = CardFaction.LIGHT;
 				break;
 				
 			case 23://nature
-				
+				faction = CardFaction.NATURE;
 				break;
 				
 			case 25://toxic
-				
+				faction = CardFaction.TOXIC;
 				break;
 				
 			default:
-				break;
+				return;
 		}
-		e.setCancelled(true);
+		if (sorci.getManagerPlayers().initPlayer(player, faction))
+			player.sendMessage(sorci.getMessage().getString("message_select_default_deck")
+					.replace("{faction}", sorci.getEnumTool().factionToString(faction)));
+		else
+			player.sendMessage(sorci.getMessage().getString("message_already_select_default_deck"));
+		player.closeInventory();
 	}
 
 }

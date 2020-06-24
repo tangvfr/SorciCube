@@ -9,7 +9,7 @@ import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class DeckCards {
 
-	private final static int size = 20;
+	public final static int size = 20;
 	private Card[] cards;
 	
 	public DeckCards(Card[] cards) throws Exception {
@@ -40,15 +40,19 @@ public class DeckCards {
 	public Document toDocument() {
 		Document doc = new Document();
 		for (int i = 0; i < size; i++)
-			doc.put(Integer.toString(i), cards[i].toDocument());
+			doc.put(Integer.toString(i), cards[i].getUUID().toString());
 		return doc;
 	}
 	
-	public static DeckCards toDeckPlayer(ManagerCards manager, Document doc) throws Exception {
+	public static DeckCards toDeckCards(ManagerCards manager, Document doc) throws Exception {
 		Card[] cards = new Card[size];
 		for (int i = 0; i < size; i++)
 			cards[i] = manager.getCart(UUID.fromString(doc.getString(Integer.toString(i))));
 		return new DeckCards(cards);
+	}
+	
+	public static DeckCards createDeckCarsEmpty() throws Exception {
+		return new DeckCards(new Card[DeckCards.size]);
 	}
 	
 }

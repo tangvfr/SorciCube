@@ -42,7 +42,7 @@ public class GuiAdminViewCards extends AbstractGui {
 	
 	public Inventory getInventory(Player player, int page) {
 		PlayerGui playerGA = getPlayerGui(player);
-		ArrayList<Card> carts = new ArrayList<Card>(manager.getSorci().getCarts().getCarts().values());
+		ArrayList<Card> carts = new ArrayList<Card>(manager.getSorci().getManagerCards().getCarts().values());
 		CardComparator sorted = playerGA.getCardComparator();
 		carts.sort(CardComparator.BY_ID);
 		carts.sort(sorted);

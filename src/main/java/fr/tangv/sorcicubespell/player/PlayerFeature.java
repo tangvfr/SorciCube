@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.player;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.bukkit.entity.Player;
 
@@ -15,6 +17,7 @@ public class PlayerFeature {
 	private DeckCards deck4;
 	private DeckCards deck5;
 	private int unlockDecks;
+	private List<String> cardsUnlocks;
 	
 	public PlayerFeature(Player player,
 			DeckCards deck1,
@@ -22,7 +25,8 @@ public class PlayerFeature {
 			DeckCards deck3,
 			DeckCards deck4,
 			DeckCards deck5,
-			int unlockDecks
+			int unlockDecks,
+			List<String> cardsUnlocks
 		) {
 		this.player = player;
 		this.unlockDecks = unlockDecks;
@@ -31,6 +35,7 @@ public class PlayerFeature {
 		this.deck3 = deck3;
 		this.deck4 = deck4;
 		this.deck5 = deck5;
+		this.cardsUnlocks = cardsUnlocks;
 	}
 	
 	public Player getPlayer() {
@@ -65,6 +70,10 @@ public class PlayerFeature {
 		return deck5;
 	}
 	
+	public List<String> getCardsUnlocks() {
+		return cardsUnlocks;
+	}
+	
 	public Document toDocument() {
 		Document doc = new Document()
 				.append("uuid", player.getUniqueId().toString())
@@ -73,19 +82,21 @@ public class PlayerFeature {
 				.append("deck3", deck3.toDocument())
 				.append("deck4", deck4.toDocument())
 				.append("deck5", deck5.toDocument())
-				.append("unlock", unlockDecks)
+				.append("deck_unlock", unlockDecks)
+				.append("cards_unlocks", cardsUnlocks)
 			;
 		return doc;
 	}
 	
 	public static PlayerFeature toPlayerFeature(ManagerCards manager, Player player, Document doc) throws Exception {
-		DeckCards deck1 = DeckCards.toDeckPlayer(manager, doc.get("deck1", Document.class));
-		DeckCards deck2 = DeckCards.toDeckPlayer(manager, doc.get("deck2", Document.class));
-		DeckCards deck3 = DeckCards.toDeckPlayer(manager, doc.get("deck3", Document.class));
-		DeckCards deck4 = DeckCards.toDeckPlayer(manager, doc.get("deck4", Document.class));
-		DeckCards deck5 = DeckCards.toDeckPlayer(manager, doc.get("deck5", Document.class));
-		int unlockDecks = doc.getInteger("unlock");
-		return new PlayerFeature(player, deck1, deck2, deck3, deck4, deck5, unlockDecks);
+		DeckCards deck1 = DeckCards.toDeckCards(manager, doc.get("deck1", Document.class));
+		DeckCards deck2 = DeckCards.toDeckCards(manager, doc.get("deck2", Document.class));
+		DeckCards deck3 = DeckCards.toDeckCards(manager, doc.get("deck3", Document.class));
+		DeckCards deck4 = DeckCards.toDeckCards(manager, doc.get("deck4", Document.class));
+		DeckCards deck5 = DeckCards.toDeckCards(manager, doc.get("deck5", Document.class));
+		int unlockDecks = doc.getInteger("deck_unlock");
+		List<String> cardsUnlocks = doc.getList("cards_unlocks", String.class);
+		return new PlayerFeature(player, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks);
 	}
 	
 	public Document toUUIDDocument() {

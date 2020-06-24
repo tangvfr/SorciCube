@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubespell.manager.ManagerCards;
+import fr.tangv.sorcicubespell.manager.ManagerDefaultDeck;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
@@ -12,16 +13,17 @@ import fr.tangv.sorcicubespell.util.EnumTool;
 
 public class SorciCubeSpell extends JavaPlugin {
 
-	private MongoDBManager mongo;
-	private ManagerCards carts;
 	private Config message;
 	private Config parameter;
 	private Config enumConfig;
 	private Config cartConfig;
 	private Config guiConfig;
 	private EnumTool enumTool;
+	private MongoDBManager mongo;
+	private ManagerCards managerCards;
 	private ManagerGui managerGuiAdmin;
 	private ManagerPlayers managerPlayers;
+	private ManagerDefaultDeck managerDefaultDeck;
 	
 	@Override
 	public void onEnable() {
@@ -37,9 +39,10 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.enumTool = new EnumTool(this.enumConfig);
 			//init manager
 			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("database"));
-			this.carts = new ManagerCards(this.mongo);
+			this.managerCards = new ManagerCards(this.mongo);
 			this.managerGuiAdmin = new ManagerGui(this);
-			this.managerPlayers = new ManagerPlayers(this.mongo, this.carts);
+			this.managerPlayers = new ManagerPlayers(this);
+			this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(e.getMessage());
 			e.printStackTrace();
@@ -53,10 +56,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public Config getParameter() {
 		return parameter;
-	}
-	
-	public ManagerCards getCarts() {
-		return carts;
 	}
 
 	public EnumTool getEnumTool() {
@@ -79,12 +78,20 @@ public class SorciCubeSpell extends JavaPlugin {
 		return mongo;
 	}
 	
+	public ManagerCards getManagerCards() {
+		return managerCards;
+	}
+	
 	public ManagerGui getManagerGuiAdmin() {
 		return managerGuiAdmin;
 	}
 	
 	public ManagerPlayers getManagerPlayers() {
 		return managerPlayers;
+	}
+	
+	public ManagerDefaultDeck getManagerDefaultDeck() {
+		return managerDefaultDeck;
 	}
 	
 }

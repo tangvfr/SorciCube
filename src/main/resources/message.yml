@@ -1,1 +1,3 @@
 message_no_player: "§cVous n'êtes pas un joueur !"
+message_select_default_deck: "§aVous venez de choisir comme premier deck, un deck {faction} §a!"
+message_already_select_default_deck: "§cVous avez déja eu votre premier deck !"
