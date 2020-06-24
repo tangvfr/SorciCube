@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubespell.manager.ManagerCards;
+import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
 import fr.tangv.sorcicubespell.manager.ManagerDefaultDeck;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.manager.ManagerPlayers;
@@ -24,6 +25,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerGui managerGuiAdmin;
 	private ManagerPlayers managerPlayers;
 	private ManagerDefaultDeck managerDefaultDeck;
+	private ManagerClickNPC managerClickNPC;
 	
 	@Override
 	public void onEnable() {
@@ -43,6 +45,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerGuiAdmin = new ManagerGui(this);
 			this.managerPlayers = new ManagerPlayers(this);
 			this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
+			this.managerClickNPC = new ManagerClickNPC(this);
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(e.getMessage());
 			e.printStackTrace();
@@ -94,4 +97,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerDefaultDeck;
 	}
 	
+	public ManagerClickNPC getManagerClickNPC() {
+		return managerClickNPC;
+	}
 }

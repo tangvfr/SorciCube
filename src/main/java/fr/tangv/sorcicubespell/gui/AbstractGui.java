@@ -9,7 +9,6 @@ import org.bukkit.inventory.Inventory;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
-import fr.tangv.sorcicubespell.util.Gui;
 
 public abstract class AbstractGui implements Gui {
 

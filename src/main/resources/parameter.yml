@@ -1,6 +1,6 @@
 #mongodb
 mongodb: "mongodb://ect..."
 database: "plugin"
-#perm
-permission:
-  editdesc: "sorcicube.editdesc"
+#name
+name_npc:
+  test1: ""
