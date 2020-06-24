@@ -31,7 +31,7 @@ public abstract class AbstractGui implements Gui {
 	@Override
 	public void open(Player player) {
 		PlayerGui playerGA = getPlayerGui(player);
-		playerGA.setGuiAdmin(this);
+		playerGA.setGui(this);
 		Inventory inv = this.getInventory(player);
 		playerGA.setInvOfGui(inv);
 		player.openInventory(inv);
@@ -42,8 +42,8 @@ public abstract class AbstractGui implements Gui {
 	
 	@Override
 	public void onClose(Player player, InventoryCloseEvent e) {
-		PlayerGui playerGA = getPlayerGui(player);
-		playerGA.setGuiAdmin(null);
+		/*PlayerGui playerGA = getPlayerGui(player);
+		playerGA.setGui(null);*/
 	}
 
 	@Override

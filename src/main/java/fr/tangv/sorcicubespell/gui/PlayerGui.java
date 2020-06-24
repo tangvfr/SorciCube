@@ -40,7 +40,7 @@ public class PlayerGui {
 		return gui;
 	}
 	
-	public void setGuiAdmin(AbstractGui gui) {
+	public void setGui(AbstractGui gui) {
 		this.gui = gui;
 		this.invOfGui = null;
 	}

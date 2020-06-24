@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.player;
 import java.util.UUID;
 
 import org.bson.Document;
+import org.bukkit.Bukkit;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
@@ -40,14 +41,19 @@ public class DeckCards {
 	public Document toDocument() {
 		Document doc = new Document();
 		for (int i = 0; i < size; i++)
-			doc.put(Integer.toString(i), cards[i].getUUID().toString());
+			doc.put(Integer.toString(i), cards[i] == null ? "none" : cards[i].getUUID().toString());
 		return doc;
 	}
 	
 	public static DeckCards toDeckCards(ManagerCards manager, Document doc) throws Exception {
 		Card[] cards = new Card[size];
-		for (int i = 0; i < size; i++)
-			cards[i] = manager.getCart(UUID.fromString(doc.getString(Integer.toString(i))));
+		for (int i = 0; i < size; i++) {
+			String uuid = doc.getString(Integer.toString(i));
+			if (uuid.equals("none"))
+				cards[i] = null;
+			else
+				cards[i] = manager.getCart(UUID.fromString(uuid));
+		}
 		return new DeckCards(cards);
 	}
 	

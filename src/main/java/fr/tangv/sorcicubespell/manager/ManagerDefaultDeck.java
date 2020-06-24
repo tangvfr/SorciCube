@@ -22,10 +22,10 @@ public class ManagerDefaultDeck {
 			this.deckLight = DeckCards.createDeckCarsEmpty();
 			this.deckNature = DeckCards.createDeckCarsEmpty();
 			this.deckToxic = DeckCards.createDeckCarsEmpty();
-			doc.append("deck_dark", deckDark);
-			doc.append("deck_light", deckLight);
-			doc.append("deck_nature", deckNature);
-			doc.append("ddeck_toxic", deckToxic);
+			doc.append("deck_dark", deckDark.toDocument());
+			doc.append("deck_light", deckLight.toDocument());
+			doc.append("deck_nature", deckNature.toDocument());
+			doc.append("ddeck_toxic", deckToxic.toDocument());
 			defaultDeck.insertOne(doc);
 		} else {
 			doc = FDD.next();
