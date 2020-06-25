@@ -42,8 +42,8 @@ public abstract class AbstractGui implements Gui {
 	
 	@Override
 	public void onClose(Player player, InventoryCloseEvent e) {
-		/*PlayerGui playerGA = getPlayerGui(player);
-		playerGA.setGui(null);*/
+		PlayerGui playerGA = getPlayerGui(player);
+		playerGA.setGui(null);
 	}
 
 	@Override

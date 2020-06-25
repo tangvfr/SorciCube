@@ -49,6 +49,14 @@ public class EventGuiPlayer implements Listener{
 	public void onClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
 			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getWhoClicked());
+			
+			Bukkit.broadcastMessage("ref: "+player.getInvOfGui().toString());
+			Bukkit.broadcastMessage("2: "+player.getPlayer().getOpenInventory().toString());
+			Bukkit.broadcastMessage("3: "+player.getPlayer().getOpenInventory().getBottomInventory().toString());
+			Bukkit.broadcastMessage("4: "+player.getPlayer().getOpenInventory().getTopInventory().toString());
+			Bukkit.broadcastMessage("5: "+e.getInventory().toString());
+			Bukkit.broadcastMessage("-------------------");
+			
 			AbstractGui gui = player.getGui();
 			if (gui != null && player.getPlayer().getOpenInventory() == player.getInvOfGui())
 				gui.onClick(player.getPlayer(), e);
