@@ -41,11 +41,11 @@ public class CardFeatures {
 		this.features.remove(name);
 	}
 	
-	public Set<String> keySet() {
+	public Set<String> listNameFeatures() {
 		return this.features.keySet();
 	}
 	
-	public Collection<CardFeature> values() {
+	public Collection<CardFeature> listFeatures() {
 		return this.features.values();
 	}
 	

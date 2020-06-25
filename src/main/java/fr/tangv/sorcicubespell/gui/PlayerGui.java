@@ -13,14 +13,14 @@ public class PlayerGui {
 	private Inventory invOfGui;
 	private AbstractGui gui;
 	private CardComparator cardComparator;
-	private int pageEditGui;
+	private int pageViewGui;
 	
 	public PlayerGui(Player player) {
 		this.player = player;
 		this.card = null;
 		this.gui = null;
 		this.cardComparator = CardComparator.BY_ID;
-		this.pageEditGui = 0;
+		this.setPageViewGui(0);
 		this.invOfGui = null;
 	}
 	
@@ -45,20 +45,20 @@ public class PlayerGui {
 		this.invOfGui = null;
 	}
 
+	public int getPageViewGui() {
+		return pageViewGui;
+	}
+
+	public void setPageViewGui(int pageViewGui) {
+		this.pageViewGui = pageViewGui;
+	}
+
 	public CardComparator getCardComparator() {
 		return cardComparator;
 	}
 
 	public void setCardComparator(CardComparator cardComparator) {
 		this.cardComparator = cardComparator;
-	}
-
-	public int getPageEditGui() {
-		return pageEditGui;
-	}
-
-	public void setPageEditGui(int pageEditGui) {
-		this.pageEditGui = pageEditGui;
 	}
 
 	public Inventory getInvOfGui() {

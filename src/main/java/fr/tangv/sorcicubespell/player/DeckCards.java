@@ -3,7 +3,6 @@ package fr.tangv.sorcicubespell.player;
 import java.util.UUID;
 
 import org.bson.Document;
-import org.bukkit.Bukkit;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.manager.ManagerCards;

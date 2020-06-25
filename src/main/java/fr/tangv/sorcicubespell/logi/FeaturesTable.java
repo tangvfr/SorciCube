@@ -42,7 +42,7 @@ public class FeaturesTable extends JTable {
 	
 	public void init(Window window) {
 		//sort list
-		ArrayList<CardFeature> list = new ArrayList<CardFeature>(cardFeatures.values());
+		ArrayList<CardFeature> list = new ArrayList<CardFeature>(cardFeatures.listFeatures());
 		list.sort(new Comparator<CardFeature>() {
 			@Override
 			public int compare(CardFeature f1, CardFeature f2) {

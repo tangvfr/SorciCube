@@ -37,7 +37,7 @@ public class GuiAdminViewCards extends AbstractGui {
 
 	@Override
 	public Inventory getInventory(Player player) {
-		return this.getInventory(player, getPlayerGui(player).getPageEditGui());
+		return this.getInventory(player, getPlayerGui(player).getPageViewGui());
 	}
 	
 	public Inventory getInventory(Player player, int page) {
@@ -49,7 +49,7 @@ public class GuiAdminViewCards extends AbstractGui {
 		//define max page
 		int max = carts.size() < 1 ? 0 : (carts.size()-1)/45;
 		page = page > max ? max : (page < 0 ? 0 : page);
-		playerGA.setPageEditGui(page);
+		playerGA.setPageViewGui(page);
 		//set carts item
 		int decal = page*45;
 		int num = carts.size()-decal;
