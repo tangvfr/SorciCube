@@ -37,19 +37,16 @@ public class GuiAdminViewCards extends AbstractGui {
 
 	@Override
 	public Inventory getInventory(Player player) {
-		return this.getInventory(player, getPlayerGui(player).getPageViewGui());
-	}
-	
-	public Inventory getInventory(Player player, int page) {
-		PlayerGui playerGA = getPlayerGui(player);
+		PlayerGui playerG = getPlayerGui(player);
+		int page = playerG.getPageViewGui();
 		ArrayList<Card> carts = new ArrayList<Card>(manager.getSorci().getManagerCards().getCarts().values());
-		CardComparator sorted = playerGA.getCardComparator();
+		CardComparator sorted = playerG.getCardComparator();
 		carts.sort(CardComparator.BY_ID);
 		carts.sort(sorted);
 		//define max page
 		int max = carts.size() < 1 ? 0 : (carts.size()-1)/45;
 		page = page > max ? max : (page < 0 ? 0 : page);
-		playerGA.setPageViewGui(page);
+		playerG.setPageViewGui(page);
 		//set carts item
 		int decal = page*45;
 		int num = carts.size()-decal;
@@ -92,7 +89,7 @@ public class GuiAdminViewCards extends AbstractGui {
 	public void onClick(Player player, InventoryClickEvent e) {
 		int raw = e.getRawSlot();
 		if (raw >= 45) {
-			int page = e.getInventory().getItem(49).getAmount();
+			PlayerGui playerG = getPlayerGui(player);
 			switch (raw) {
 				//previous
 				case 45:
@@ -100,15 +97,17 @@ public class GuiAdminViewCards extends AbstractGui {
 					break;
 				//previous
 				case 48:
-					player.openInventory(this.getInventory(player, page-2));
+					playerG.setPageViewGui(playerG.getPageViewGui()-1);
+					this.open(player);
 					break;
 				//page
 				case 49:
-					player.openInventory(this.getInventory(player, page-1));
+					this.open(player);
 					break;
 				//next
 				case 50:
-					player.openInventory(this.getInventory(player, page));
+					playerG.setPageViewGui(playerG.getPageViewGui()+1);
+					this.open(player);
 					break;
 				//close
 				case 53:

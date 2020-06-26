@@ -48,7 +48,7 @@ public class DeckCards {
 		Card[] cards = new Card[size];
 		for (int i = 0; i < size; i++) {
 			String uuid = doc.getString(Integer.toString(i));
-			if (uuid.equals("none"))
+			if ("none".equals(uuid))
 				cards[i] = null;
 			else
 				cards[i] = manager.getCart(UUID.fromString(uuid));

@@ -25,12 +25,12 @@ public class ManagerDefaultDeck {
 			doc.append("deck_dark", deckDark.toDocument());
 			doc.append("deck_light", deckLight.toDocument());
 			doc.append("deck_nature", deckNature.toDocument());
-			doc.append("ddeck_toxic", deckToxic.toDocument());
+			doc.append("deck_toxic", deckToxic.toDocument());
 			defaultDeck.insertOne(doc);
 		} else {
 			doc = FDD.next();
 			this.deckDark = DeckCards.toDeckCards(managerCards, doc.get("deck_dark", Document.class));
-			this.deckLight = DeckCards.toDeckCards(managerCards, doc.get("deck_ligth", Document.class));
+			this.deckLight = DeckCards.toDeckCards(managerCards, doc.get("deck_light", Document.class));
 			this.deckNature = DeckCards.toDeckCards(managerCards, doc.get("deck_nature", Document.class));
 			this.deckToxic = DeckCards.toDeckCards(managerCards, doc.get("deck_toxic", Document.class));
 		}
