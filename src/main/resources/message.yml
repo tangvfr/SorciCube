@@ -1,3 +1,7 @@
 message_no_player: "§cVous n'êtes pas un joueur !"
 message_select_default_deck: "§aVous venez de choisir comme premier deck, un deck {faction} §a!"
 message_already_select_default_deck: "§cVous avez déja eu votre premier deck !"
+message_need_for_return_spawn: "§cIl faut choisir un deck par default pour pouvoir aller au spawn !"
+message_teleport_spawn: "§aVous venez d'être redirigé au spawn !"
+message_welcom: "§2Bien venue sur SorciCube !\n§6Vous allez être téléporter sur un tutoriel !"
+message_welcom_back: "§2Bon retour parmi nous sur SorciBube !"

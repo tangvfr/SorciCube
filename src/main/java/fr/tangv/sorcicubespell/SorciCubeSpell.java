@@ -7,6 +7,7 @@ import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
 import fr.tangv.sorcicubespell.manager.ManagerDefaultDeck;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
+import fr.tangv.sorcicubespell.manager.ManagerLobby;
 import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 import fr.tangv.sorcicubespell.util.Config;
@@ -46,6 +47,11 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerPlayers = new ManagerPlayers(this);
 			this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 			this.managerClickNPC = new ManagerClickNPC(this);
+			if (getParameter().getBoolean("is_lobby")) {
+				new ManagerLobby(this);
+			} else {
+				//new Manager...
+			}
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(e.getMessage());
 			e.printStackTrace();
@@ -85,7 +91,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerCards;
 	}
 	
-	public ManagerGui getManagerGuiAdmin() {
+	public ManagerGui getManagerGui() {
 		return managerGuiAdmin;
 	}
 	

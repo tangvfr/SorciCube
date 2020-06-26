@@ -1,6 +1,30 @@
 #mongodb
 mongodb: "mongodb://ect..."
 database: "plugin"
-#name
+#is lobby
+is_lobby: true
+#name npc
 name_npc:
-  test1: ""
+  edit_deck: "§6L'éditeur de card"
+  return_spawn: "§cRetour Spawn"
+  default_deck: "§aPremier deck"
+#location
+location_spawn:
+  ==: org.bukkit.Location
+  world: "world"
+  x: 0.0
+  y: 100.0
+  z: 0.0
+  pitch: 0.0
+  yaw: 0.0
+location_tuto:
+  ==: org.bukkit.Location
+  world: "world"
+  x: 100.0
+  y: 100.0
+  z: 100.0
+  pitch: 0.0
+  yaw: 0.0
+#message
+join_message: "§8[§2+§8] §7{player}"
+quit_message: "§8[§4-§8] §7{player}"
