@@ -32,24 +32,24 @@ public class GuiAdminViewCards extends AbstractGui {
 		this.previous = ItemBuild.buildSkull(SkullUrl.BACK_GRAY, 1, config.getString("item_name.previous"), null, false);
 		this.next = ItemBuild.buildSkull(SkullUrl.FORWARD_GRAY, 1, config.getString("item_name.next"), null, false);
 		this.close = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("item_name.close"), null, false);
-		this.deco =  ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 0, config.getString("item_name.deco"), null, false);
+		this.deco =  ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 0, " ", null, false);
 	}
 
 	@Override
 	public Inventory getInventory(Player player) {
 		PlayerGui playerG = getPlayerGui(player);
 		int page = playerG.getPageViewGui();
-		ArrayList<Card> carts = new ArrayList<Card>(manager.getSorci().getManagerCards().getCarts().values());
+		ArrayList<Card> cards = new ArrayList<Card>(manager.getSorci().getManagerCards().getCarts().values());
 		CardComparator sorted = playerG.getCardComparator();
-		carts.sort(CardComparator.BY_ID);
-		carts.sort(sorted);
+		cards.sort(CardComparator.BY_ID);
+		cards.sort(sorted);
 		//define max page
-		int max = carts.size() < 1 ? 0 : (carts.size()-1)/45;
+		int max = cards.size() < 1 ? 0 : (cards.size()-1)/45;
 		page = page > max ? max : (page < 0 ? 0 : page);
 		playerG.setPageViewGui(page);
 		//set carts item
 		int decal = page*45;
-		int num = carts.size()-decal;
+		int num = cards.size()-decal;
 		if (num > 45)
 			num = 45;
 		//init inv
@@ -58,9 +58,9 @@ public class GuiAdminViewCards extends AbstractGui {
 				.replace("{page}", ""+(page+1))
 				.replace("{max}", ""+(max+1)));
 		//set inv
-		if (carts.size() > 0)
+		if (cards.size() > 0)
 			for (int i = 0; i < num; i++) {
-				inv.setItem(i, CardRender.cardToItem(carts.get(i+decal), this.manager.getSorci()));
+				inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci()));
 			}
 		//init paper
 		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 

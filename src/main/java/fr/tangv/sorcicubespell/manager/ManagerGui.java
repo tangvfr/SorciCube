@@ -10,21 +10,36 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.CommandGuiAdminViewCards;
 import fr.tangv.sorcicubespell.gui.EventGuiPlayer;
 import fr.tangv.sorcicubespell.gui.GuiAdminViewCards;
+import fr.tangv.sorcicubespell.gui.GuiDecks;
+import fr.tangv.sorcicubespell.gui.GuiEditDeck;
+import fr.tangv.sorcicubespell.gui.GuiEditOrView;
 import fr.tangv.sorcicubespell.gui.GuiSelectDefaultDeck;
+import fr.tangv.sorcicubespell.gui.GuiSwapCard;
+import fr.tangv.sorcicubespell.gui.GuiViewCards;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 
 public class ManagerGui {
 
 	private SorciCubeSpell sorci;
 	private Map<Player, PlayerGui> playerGuis;
-	private GuiAdminViewCards guiViewCards;
+	private GuiAdminViewCards guiAdminViewCards;
 	private GuiSelectDefaultDeck guiSelectDefaultDeck;
+	private GuiEditOrView guiEditOrView;
+	private GuiViewCards guiViewCards;
+	private GuiDecks guiDecks;
+	private GuiEditDeck guiEditDeck;
+	private GuiSwapCard guiSwapCard;
 	
 	public ManagerGui(SorciCubeSpell sorci) {
 		this.sorci = sorci;
 		this.playerGuis = new ConcurrentHashMap<Player, PlayerGui>();
-		this.guiViewCards = new GuiAdminViewCards(this);
+		this.guiAdminViewCards = new GuiAdminViewCards(this);
 		this.guiSelectDefaultDeck = new GuiSelectDefaultDeck(this);
+		this.guiEditOrView = new GuiEditOrView(this);
+		this.guiViewCards = new GuiViewCards(this);
+		this.guiDecks = new GuiDecks(this);
+		this.guiEditDeck = new GuiEditDeck(this);
+		this.guiSwapCard = new GuiSwapCard(this);
 		//spigot init
 		sorci.getCommand("viewcards").setExecutor(new CommandGuiAdminViewCards(this));
 		Bukkit.getPluginManager().registerEvents(new EventGuiPlayer(this), sorci);
@@ -39,11 +54,31 @@ public class ManagerGui {
 	}
 	
 	public GuiAdminViewCards getGuiAdminViewCards() {
-		return guiViewCards;
+		return guiAdminViewCards;
 	}
 
 	public GuiSelectDefaultDeck getGuiSelectDefaultDeck() {
 		return guiSelectDefaultDeck;
+	}
+
+	public GuiEditOrView getGuiEditOrView() {
+		return guiEditOrView;
+	}
+	
+	public GuiViewCards getGuiViewCards() {
+		return guiViewCards;
+	}
+	
+	public GuiDecks getGuiDecks() {
+		return guiDecks;
+	}
+	
+	public GuiEditDeck getGuiEditDeck() {
+		return guiEditDeck;
+	}
+	
+	public GuiSwapCard getGuiSwapCard() {
+		return guiSwapCard;
 	}
 	
 }

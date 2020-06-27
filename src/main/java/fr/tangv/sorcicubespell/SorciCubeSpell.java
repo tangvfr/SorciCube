@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubespell.manager.ManagerCards;
@@ -18,7 +19,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config message;
 	private Config parameter;
 	private Config enumConfig;
-	private Config cartConfig;
+	private Config cardConfig;
 	private Config guiConfig;
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
@@ -36,7 +37,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.message = new Config(this, "message.yml");
 			this.parameter = new Config(this, "parameter.yml");
 			this.enumConfig = new Config(this, "enum.yml");
-			this.cartConfig = new Config(this, "cart.yml");
+			this.cardConfig = new Config(this, "card.yml");
 			this.guiConfig = new Config(this, "gui.yml");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
@@ -59,6 +60,12 @@ public class SorciCubeSpell extends JavaPlugin {
 		}
 	}
 	
+	@Override
+	public void onDisable() {
+		for (Player player : Bukkit.getOnlinePlayers())
+			player.closeInventory();
+	}
+	
 	public Config getMessage() {
 		return message;
 	}
@@ -75,8 +82,8 @@ public class SorciCubeSpell extends JavaPlugin {
 		return enumConfig;
 	}
 
-	public Config getCartConfig() {
-		return cartConfig;
+	public Config getCardConfig() {
+		return cardConfig;
 	}
 	
 	public Config gertGuiConfig() {

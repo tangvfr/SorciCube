@@ -4,6 +4,7 @@ import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
+import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.player.DeckCards;
 
 public class ManagerDefaultDeck {
@@ -18,10 +19,10 @@ public class ManagerDefaultDeck {
 		Document doc = new Document("default_deck", "default_deck");
 		MongoCursor<Document> FDD = defaultDeck.find(doc).iterator();
 		if (!FDD.hasNext()) {
-			this.deckDark = DeckCards.createDeckCarsEmpty();
-			this.deckLight = DeckCards.createDeckCarsEmpty();
-			this.deckNature = DeckCards.createDeckCarsEmpty();
-			this.deckToxic = DeckCards.createDeckCarsEmpty();
+			this.deckDark = DeckCards.createDeckCarsEmpty(CardFaction.DARK);
+			this.deckLight = DeckCards.createDeckCarsEmpty(CardFaction.LIGHT);
+			this.deckNature = DeckCards.createDeckCarsEmpty(CardFaction.NATURE);
+			this.deckToxic = DeckCards.createDeckCarsEmpty(CardFaction.TOXIC);
 			doc.append("deck_dark", deckDark.toDocument());
 			doc.append("deck_light", deckLight.toDocument());
 			doc.append("deck_nature", deckNature.toDocument());

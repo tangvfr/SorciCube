@@ -19,10 +19,8 @@ public class EventGuiPlayer implements Listener{
 	
 	public EventGuiPlayer(ManagerGui manager) {
 		this.manager = manager;
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			player.closeInventory();
+		for (Player player : Bukkit.getOnlinePlayers())
 			this.manager.getPlayerGuis().put(player, new PlayerGui(player));
-		}
 	}
 	
 	@EventHandler

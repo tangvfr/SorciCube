@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.util;
 
+import fr.tangv.sorcicubespell.card.CardFaction;
+
 public class SkullUrl {
 
 	public static String TRASH = "http://textures.minecraft.net/texture/f32c1472a7bc6975ded7c0c51696959b89af61b75ae954cc4036bc384b3b8301";
@@ -14,5 +16,28 @@ public class SkullUrl {
 	public static String LECTTUCE = "http://textures.minecraft.net/texture/ffcf698f77d6783ee072af7ca4e87757f713dc1c941a7e75583f2ea5165d57d";
 	public static String CHEST_GRAY = "http://textures.minecraft.net/texture/5f93ed3f196876113b2e7460933493b81da91b8f34db3c5288a69eeb96de40fb";
 	public static String CHEST_GREEN = "http://textures.minecraft.net/texture/c31b161770f020237b4aa1e928c5480c8b36cbfe3a6aab9e22e557c1d910";
+	
+	public static String getSkullForFaction(CardFaction faction, boolean basic) {
+		switch (faction) {
+			case BASIC:
+				if (basic)
+					return SkullUrl.HOPPER;
+				else
+					return SkullUrl.CHEST_GREEN;
+	
+			case DARK:
+				return SkullUrl.ENDER_ORB;
+				
+			case LIGHT:
+				return SkullUrl.BALLOON_YELLOW;
+				
+			case NATURE:
+				return SkullUrl.LECTTUCE;
+			
+			case TOXIC:
+				return SkullUrl.BLACK_BERRY;
+		}
+		return SkullUrl.X_RED;
+	}
 	
 }

@@ -5,6 +5,7 @@ import org.bukkit.inventory.Inventory;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardComparator;
+import fr.tangv.sorcicubespell.player.PlayerFeature;
 
 public class PlayerGui {
 
@@ -14,6 +15,10 @@ public class PlayerGui {
 	private AbstractGui gui;
 	private CardComparator cardComparator;
 	private int pageViewGui;
+	private int deckEdit;
+	private int deckCardEdit;
+	private PlayerFeature playerFeature;
+	private AbstractGui previousGui;
 	
 	public PlayerGui(Player player) {
 		this.player = player;
@@ -22,6 +27,10 @@ public class PlayerGui {
 		this.cardComparator = CardComparator.BY_ID;
 		this.setPageViewGui(0);
 		this.invOfGui = null;
+		this.setDeckEdit(1);
+		this.setDeckCardEdit(0);
+		this.setPlayerFeature(null);
+		this.setPreviousGui(null);
 	}
 	
 	public Player getPlayer() {
@@ -67,6 +76,38 @@ public class PlayerGui {
 	
 	public void setInvOfGui(Inventory invOfGui) {
 		this.invOfGui = invOfGui;
+	}
+
+	public int getDeckEdit() {
+		return deckEdit;
+	}
+
+	public void setDeckEdit(int deckEdit) {
+		this.deckEdit = deckEdit;
+	}
+
+	public int getDeckCardEdit() {
+		return deckCardEdit;
+	}
+
+	public void setDeckCardEdit(int deckCardEdit) {
+		this.deckCardEdit = deckCardEdit;
+	}
+
+	public PlayerFeature getPlayerFeature() {
+		return playerFeature;
+	}
+
+	public void setPlayerFeature(PlayerFeature playerFeature) {
+		this.playerFeature = playerFeature;
+	}
+
+	public AbstractGui getPreviousGui() {
+		return previousGui;
+	}
+
+	public void setPreviousGui(AbstractGui previousGui) {
+		this.previousGui = previousGui;
 	}
 	
 }

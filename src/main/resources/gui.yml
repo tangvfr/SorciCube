@@ -7,11 +7,43 @@ gui_admin_view_cards:
     next: "§aPage suivant"
     close: "§cFermer"
     page: "§7Actualisé la page {page}/{max}"
-    deco: " "
-    create_sort: "§6Crée un sort"
-    create_entity: "§9Crée un serviteur"
 #Gui select deck default
 gui_select_deck_default:
   name: "§aChoisi ton premier deck"
   lore_select: "§2Prendre un deck de type {faction}§2 pour commencé."
   command_then_select: "none"
+#Gui Edit Or View
+gui_edit_or_view:
+  name: "§5Libraire Choix"
+  deck: "§6Deck"
+  card: "§2Card"
+  close: "§cClose"
+#Gui View Cards
+gui_view_cards:
+  name: "§5Libraire Cartes"
+  item_name:
+    sort: "§aTriage"
+    previous: "§aPage précedant"
+    next: "§aPage suivant"
+    back: "§cRetour"
+    page: "§7Actualisé la page {page}/{max}"
+#Gui Decks
+gui_decks:
+  name: "§5Libraire Decks"
+  deck: "§2Deck {number}"
+  back: "§cRetour"
+#Gui Edit Deck
+gui_edit_deck:
+  name: "§5Libraire Edit Deck"
+  deck: "§2Deck {number}"
+  back: "§cRetour"
+#Gui Swap Card
+gui_swap_card:
+  name: "§5Libraire Edit Carte Deck"
+  item_name:
+    sort: "§aTriage"
+    previous: "§aPage précedant"
+    next: "§aPage suivant"
+    back: "§cRetour"
+    page: "§7Actualisé la page {page}/{max}"
+  

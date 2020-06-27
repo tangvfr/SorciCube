@@ -70,6 +70,28 @@ public class PlayerFeature {
 		return deck5;
 	}
 	
+	public DeckCards getDeck(int number) {
+		switch (number) {
+			case 1:
+				return deck1;
+	
+			case 2:
+				return deck2;
+				
+			case 3:
+				return deck3;
+				
+			case 4:
+				return deck4;
+				
+			case 5:
+				return deck5;
+				
+			default:
+				return null;
+		}
+	}
+	
 	public List<String> getCardsUnlocks() {
 		return cardsUnlocks;
 	}

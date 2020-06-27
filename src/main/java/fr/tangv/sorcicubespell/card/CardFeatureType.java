@@ -7,6 +7,7 @@ public enum CardFeatureType {
 	SKIN(TypeValue.TEXT),
 	HEALTH(TypeValue.NUMBER),
 	DAMAGE(TypeValue.NUMBER),
+	INCITEMENT(TypeValue.NONE),
 	HIDE_CART(TypeValue.NONE),
 	IF_HURT(TypeValue.NONE),
 	TAKE_NEW_CART(TypeValue.NONE),

@@ -23,7 +23,8 @@ public class ManagerClickNPC {
 		clickNPCs.put(sorci.getParameter().getString("name_npc.edit_deck"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-				
+				if (sorci.getManagerPlayers().containtPlayer(player))
+					sorci.getManagerGui().getGuiEditOrView().open(player);
 			}
 		});
 		clickNPCs.put(sorci.getParameter().getString("name_npc.default_deck"), new ClickNPC() {
