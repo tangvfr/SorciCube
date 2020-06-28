@@ -36,8 +36,7 @@ public class ManagerLobby implements Listener {
 	}
 	
 	@EventHandler
-	public void onFaim(FoodLevelChangeEvent e) {
-		e.setFoodLevel(20);
+	public void onFood(FoodLevelChangeEvent e) {
 		e.setCancelled(true);
 	}
 	
@@ -61,6 +60,7 @@ public class ManagerLobby implements Listener {
 	public void onJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
 		e.setJoinMessage(sorci.getParameter().getString("join_message").replace("{player}", player.getDisplayName()));
+		player.setFoodLevel(18);
 		teleportPlayerToSpawn(player);
 		Bukkit.getScheduler().runTaskAsynchronously(sorci, new Runnable() {
 			@Override
