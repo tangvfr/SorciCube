@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.manager;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,7 @@ public class ManagerLobby implements Listener {
 		this.sorci = sorci;
 		this.locationTuto = (Location) sorci.getParameter().get("location_tuto");
 		this.locationSpawn = (Location) sorci.getParameter().get("location_spawn");
+		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
 	
 	@EventHandler
