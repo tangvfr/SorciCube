@@ -24,7 +24,7 @@ public class GuiChangeSort extends AbstractGui {
 	}
 
 	private ItemStack itemSort(PlayerGui playerG, String url, CardComparator sort) {
-		return ItemBuild.buildSkull(url, playerG.getCardComparator().equals(sort) ? 3 : 1, manager.getSorci().getEnumTool().sortToString(sort), null, false);
+		return ItemBuild.buildSkull(url, playerG.getCardComparator().equals(sort) ? 2 : 1, manager.getSorci().getEnumTool().sortToString(sort), null, false);
 	}
 	
 	@Override
