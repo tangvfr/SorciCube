@@ -21,6 +21,7 @@ public class ManagerPlayers {
 	private SorciCubeSpell sorci;
 	
 	public ManagerPlayers(SorciCubeSpell sorci) {
+		this.sorci = sorci;
 		this.players = sorci.getMongo().getPlayers();
 	}
 	
@@ -77,8 +78,11 @@ public class ManagerPlayers {
 			}
 			//list cards unlocked
 			List<String> cardsUnlocks = new ArrayList<String>();
-			for (int i = 0; i < defaultDeck.size(); i++)
-				cardsUnlocks.add(defaultDeck.getCard(i).getUUID().toString());
+			for (int i = 0; i < defaultDeck.size(); i++) {
+				Card card = defaultDeck.getCard(i);
+				if (card != null)
+					cardsUnlocks.add(card.getUUID().toString());
+			}
 			//create and insert playerfeature
 			PlayerFeature playerFeature = new PlayerFeature(player,
 					defaultDeck,

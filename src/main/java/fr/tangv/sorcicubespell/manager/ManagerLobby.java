@@ -37,7 +37,8 @@ public class ManagerLobby implements Listener {
 	
 	@EventHandler
 	public void onFaim(FoodLevelChangeEvent e) {
-		e.setFoodLevel(9);
+		e.setFoodLevel(20);
+		e.setCancelled(true);
 	}
 	
 	@EventHandler
