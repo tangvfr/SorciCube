@@ -30,17 +30,14 @@ public class ManagerLobby implements Listener {
 	private void teleportPlayerToSpawn(Player player) {
 		if (sorci.getManagerPlayers().containtPlayer(player)) {
 			player.teleport(locationSpawn);
-			player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
 		} else {
 			player.teleport(locationTuto);
-			player.sendMessage(sorci.getMessage().getString("message_welcom"));
 		}
 	}
 	
 	@EventHandler
 	public void onFaim(FoodLevelChangeEvent e) {
 		e.setFoodLevel(18);
-		e.setCancelled(true);
 	}
 	
 	@EventHandler
@@ -64,6 +61,10 @@ public class ManagerLobby implements Listener {
 		Player player = e.getPlayer();
 		e.setJoinMessage(sorci.getParameter().getString("join_message").replace("{player}", player.getDisplayName()));
 		teleportPlayerToSpawn(player);
+		if (sorci.getManagerPlayers().containtPlayer(player))
+			player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
+		else
+			player.sendMessage(sorci.getMessage().getString("message_welcom"));
 	}
 	
 	@EventHandler
