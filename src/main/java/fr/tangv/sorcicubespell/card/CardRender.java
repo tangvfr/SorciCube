@@ -16,6 +16,7 @@ public class CardRender {
 	
 	@SuppressWarnings("deprecation")
 	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, int amount, boolean ench) {
+		if (card == null) return null;
 		//Config config = sorci.get
 		ArrayList<String> lore = new ArrayList<String>();
 		//type
