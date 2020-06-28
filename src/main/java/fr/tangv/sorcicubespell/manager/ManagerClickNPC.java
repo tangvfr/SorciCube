@@ -52,7 +52,6 @@ public class ManagerClickNPC {
 	}
 	
 	public void excuteClickNPC(Player player, String nameNPC) {
-		Bukkit.broadcastMessage("nameNPC: "+nameNPC);
 		if (clickNPCs.containsKey(nameNPC))
 			clickNPCs.get(nameNPC).clickNPC(sorci, nameNPC, player);
 	}

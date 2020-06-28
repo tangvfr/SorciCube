@@ -4,6 +4,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
 
@@ -17,7 +18,7 @@ public class EventClickNPC implements Listener {
 	
 	@EventHandler
 	public void clickNPC(PlayerInteractAtEntityEvent e) {
-		if (e.getRightClicked() instanceof HumanEntity)
+		if (e.getHand() == EquipmentSlot.HAND && e.getRightClicked() instanceof HumanEntity)
 			manager.excuteClickNPC(e.getPlayer(), e.getRightClicked().getCustomName());
 	}
 	
