@@ -35,10 +35,10 @@ type:
   entity: "§9Serviteur"
 #sort
 sort:
-  by_id: "§5Trié par id"
+  by_id: "§7Trié par id"
   by_faction: "§aTrié par faction"
-  by_rarity: "§aTrié par rareté"
-  by_type: "§aTrié par type"
-  by_low_mana: "§3Trié par mana C"
-  by_high_mana: "§3Trié par mana DC"
-  by_name: "§9Trié par nom"
+  by_rarity: "§eTrié par rareté"
+  by_type: "§dTrié par type"
+  by_low_mana: "§9Trié par mana croissant"
+  by_high_mana: "§9Trié par mana décroissant"
+  by_name: "§cTrié par nom"

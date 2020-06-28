@@ -11,7 +11,6 @@ gui_admin_view_cards:
 gui_select_deck_default:
   name: "§aChoisi ton premier deck"
   lore_select: "§2Prendre un deck de type {faction}§2 pour commencé."
-  command_then_select: "none"
 #Gui Edit Or View
 gui_edit_or_view:
   name: "§5Libraire Choix"
@@ -37,6 +36,9 @@ gui_edit_deck:
   name: "§5Libraire Edit Deck"
   deck: "§2Deck {number}"
   back: "§cRetour"
+  lore_faction:
+    - "§5Cliquez pour reset et"
+    - "§5Changé de faction le deck"
 #Gui Swap Card
 gui_swap_card:
   name: "§5Libraire Edit Carte Deck"
@@ -46,4 +48,13 @@ gui_swap_card:
     next: "§aPage suivant"
     back: "§cRetour"
     page: "§7Actualisé la page {page}/{max}"
+#Gui Change Sort
+gui_change_sort:
+  name: "§dChoisir le triage"
+  back: "§cRetour"
+#Gui Create Deck
+gui_create_deck:
+  name: "§4Crée un nouveau deck"
+  back: "§cRetour"
+  lore_select: "§2Crée un deck de type {faction}.§2"
   

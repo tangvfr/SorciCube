@@ -108,7 +108,8 @@ public class GuiViewCards extends AbstractGui {
 			switch (raw) {
 				//previous
 				case 45:
-					player.sendMessage("§4§n/!\\§r §4A venir §4§n/!\\");
+					playerG.setPreviousGui(this);
+					manager.getGuiChangeSort().open(player);
 					break;
 				//previous
 				case 48:

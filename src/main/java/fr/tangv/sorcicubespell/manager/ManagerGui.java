@@ -10,6 +10,8 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.CommandGuiAdminViewCards;
 import fr.tangv.sorcicubespell.gui.EventGuiPlayer;
 import fr.tangv.sorcicubespell.gui.GuiAdminViewCards;
+import fr.tangv.sorcicubespell.gui.GuiChangeSort;
+import fr.tangv.sorcicubespell.gui.GuiCreateDeck;
 import fr.tangv.sorcicubespell.gui.GuiDecks;
 import fr.tangv.sorcicubespell.gui.GuiEditDeck;
 import fr.tangv.sorcicubespell.gui.GuiEditOrView;
@@ -29,6 +31,8 @@ public class ManagerGui {
 	private GuiDecks guiDecks;
 	private GuiEditDeck guiEditDeck;
 	private GuiSwapCard guiSwapCard;
+	private GuiChangeSort guiChangeSort;
+	private GuiCreateDeck guiCreateDeck;
 	
 	public ManagerGui(SorciCubeSpell sorci) {
 		this.sorci = sorci;
@@ -40,6 +44,8 @@ public class ManagerGui {
 		this.guiDecks = new GuiDecks(this);
 		this.guiEditDeck = new GuiEditDeck(this);
 		this.guiSwapCard = new GuiSwapCard(this);
+		this.guiChangeSort = new GuiChangeSort(this);
+		this.guiCreateDeck = new GuiCreateDeck(this);
 		//spigot init
 		sorci.getCommand("viewcards").setExecutor(new CommandGuiAdminViewCards(this));
 		Bukkit.getPluginManager().registerEvents(new EventGuiPlayer(this), sorci);
@@ -79,6 +85,14 @@ public class ManagerGui {
 	
 	public GuiSwapCard getGuiSwapCard() {
 		return guiSwapCard;
+	}
+	
+	public GuiChangeSort getGuiChangeSort() {
+		return guiChangeSort;
+	}
+	
+	public GuiCreateDeck getGuiCreateDeck() {
+		return guiCreateDeck;
 	}
 	
 }

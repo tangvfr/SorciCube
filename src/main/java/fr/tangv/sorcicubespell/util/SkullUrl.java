@@ -16,14 +16,18 @@ public class SkullUrl {
 	public static String LECTTUCE = "http://textures.minecraft.net/texture/ffcf698f77d6783ee072af7ca4e87757f713dc1c941a7e75583f2ea5165d57d";
 	public static String CHEST_GRAY = "http://textures.minecraft.net/texture/5f93ed3f196876113b2e7460933493b81da91b8f34db3c5288a69eeb96de40fb";
 	public static String CHEST_GREEN = "http://textures.minecraft.net/texture/c31b161770f020237b4aa1e928c5480c8b36cbfe3a6aab9e22e557c1d910";
+	public static String UP_BLUE = "http://textures.minecraft.net/texture/f2fc23866523caaa8a9534566127a6f8389af3e76b8e3c33c2473cba6889c4";
+	public static String DOWN_BLUE = "http://textures.minecraft.net/texture/f0d1df8046f0b5d934c3e05798eacfeea6d7b595dbe26debf7db9acc8c4fa798";
+	public static String I_DRAY = "http://textures.minecraft.net/texture/e7a2f8bf7e138d6ba9246f7dc1ff144f43ed512e44892b1e316535ea882f7a5";
+	public static String N_RED = "http://textures.minecraft.net/texture/3a1d1f6fec429e7cbabc6965b03285ec5ac918ee6e5c3511aef81f52a848e71";
+	public static String T_PURPLE = "http://textures.minecraft.net/texture/c451897d7f747a901c183bfee2ed174f35655c966f9adf6e2c7630a03a8155bd";
+	public static String R_YELLOW = "http://textures.minecraft.net/texture/6ac6f775e8acfdf6e1deac80a8da1f37b3b4ba5caa4a35249f9eb145ccf43da5";
+	public static String F_LIME = "http://textures.minecraft.net/texture/a4413bdb2a7ea27cf303d799ddc627d6feed71b01876b9b1b0e013a8e1c624";
 	
-	public static String getSkullForFaction(CardFaction faction, boolean basic) {
+	public static String getSkullForFaction(CardFaction faction) {
 		switch (faction) {
 			case BASIC:
-				if (basic)
-					return SkullUrl.HOPPER;
-				else
-					return SkullUrl.CHEST_GREEN;
+				return SkullUrl.CHEST_GREEN;
 	
 			case DARK:
 				return SkullUrl.ENDER_ORB;

@@ -23,14 +23,15 @@ public class GuiEditDeck extends AbstractGui {
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 		itemBack = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 14, config.getString("back"), null, false);
 	}
-
+	
 	@Override
 	public Inventory getInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 36 ,this.name);
 		PlayerGui playerG = getPlayerGui(player);
 		DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());
-		ItemStack itemTypeDeck = ItemBuild.buildSkull(SkullUrl.getSkullForFaction(deck.getFaction(), false), 1,
-				manager.getSorci().getEnumTool().factionToString(deck.getFaction()), null, false);
+		ItemStack itemTypeDeck = ItemBuild.buildSkull(SkullUrl.getSkullForFaction(deck.getFaction()), 1,
+				manager.getSorci().getEnumTool().factionToString(deck.getFaction()), 
+				config.getStringList("lore_faction"), false);
 		ItemStack itemDeck = ItemBuild.buildItem(Material.BOOK, 1, (short) 0, (byte) 0, 
 				config.getString("deck").replace("{number}", Integer.toString(playerG.getDeckEdit())), null, false);
 		//set items
@@ -48,6 +49,9 @@ public class GuiEditDeck extends AbstractGui {
 		int raw = e.getRawSlot();
 		if (raw == 8 || raw == 17 || raw == 26 || raw == 35) {//back
 			manager.getSorci().getManagerGui().getGuiDecks().open(player);
+		} else if (raw == 10) {
+			getPlayerGui(player).setPreviousGui(this);
+			manager.getGuiCreateDeck().open(player);
 		} else {
 			int a = (raw%9)-3;
 			if (a >= 0 && a < 5) {

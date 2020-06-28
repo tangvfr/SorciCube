@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.player.DeckCards;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
@@ -28,7 +29,7 @@ public class GuiDecks extends AbstractGui {
 		String url = "";
 		if (playerF.getUnlockDecks() >= number) {
 			DeckCards deckCards = playerF.getDeck(number);
-			url = SkullUrl.getSkullForFaction(deckCards.getFaction(), false);
+			url = SkullUrl.getSkullForFaction(deckCards.getFaction());
 		} else {
 			url = SkullUrl.CHEST_GRAY;
 		}
@@ -41,7 +42,12 @@ public class GuiDecks extends AbstractGui {
 		if (playerF.getUnlockDecks() >= number) {
 			playerG.setDeckEdit(number);
 			playerG.setPlayerFeature(playerF);
-			
+			if (playerF.getDeck(number).getFaction() != CardFaction.BASIC) {
+				manager.getGuiEditDeck().open(player);
+			} else {
+				playerG.setPreviousGui(this);
+				manager.getGuiCreateDeck().open(player);
+			}
 		}
 	}
 	
