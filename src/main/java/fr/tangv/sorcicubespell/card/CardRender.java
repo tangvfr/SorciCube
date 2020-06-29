@@ -27,11 +27,11 @@ public class CardRender {
 		String name = card.getName()+"§r §b2\u2756";
 		ArrayList<String> lore = new ArrayList<String>();
 		//rarity and faction
-		lore.add("  "+sorci.getEnumTool().factionToString(card.getFaction()));
-		lore.add("  "+sorci.getEnumTool().rarityToString(card.getRarity()));
+		lore.add(sorci.getEnumTool().factionToString(card.getFaction()));
+		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {
-			lore.add("    §e"+features.getFeature(CardFeatures.ATTACK_DAMMAGE).getValue().toString()+" \u2694"
+			lore.add("  §e"+features.getFeature(CardFeatures.ATTACK_DAMMAGE).getValue().toString()+" \u2694"
 					+" §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+" \u2665");
 		}
 		lore.add("");
