@@ -61,8 +61,10 @@ public class ManagerLobby implements Listener {
 		Player player = e.getPlayer();
 		e.setJoinMessage(sorci.getParameter().getString("join_message").replace("{player}", player.getDisplayName()));
 		player.setFoodLevel(19);
-		player.setMaxHealth(2);
-		player.setHealth(2);
+		player.setMaxHealth(20);
+		player.setHealth(20);
+		player.setHealthScale(20);
+		player.setHealthScaled(true);
 		teleportPlayerToSpawn(player);
 		Bukkit.getScheduler().runTaskAsynchronously(sorci, new Runnable() {
 			@Override
