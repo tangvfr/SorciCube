@@ -130,8 +130,8 @@ public class PanelNav extends JPanel {
 					if (e.getID() == 1001) {
 						Card cart = list.getSelectedValue();
 						CardFeatures features = new CardFeatures();
-						features.putFeature(new CardFeature("Health", CardFeatureType.HEALTH, new CardValue(3)));
-						features.putFeature(new CardFeature("AttackDamage", CardFeatureType.DAMAGE, new CardValue(1)));
+						features.putFeature(new CardFeature(CardFeatures.HEALTH, CardFeatureType.HEALTH, new CardValue(3)));
+						features.putFeature(new CardFeature(CardFeatures.ATTACK_DAMMAGE, CardFeatureType.DAMAGE, new CardValue(1)));
 						cartsPanel.getCarts().insert(new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(3, 0),

@@ -17,26 +17,46 @@ public class CardRender {
 	@SuppressWarnings("deprecation")
 	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, int amount, boolean ench) {
 		if (card == null) return null;
-		//Config config = sorci.get
+		CardFeatures features = card.getFeatures();
+		String cible = sorci.getEnumTool().cibleToString(card.getCible())+
+				(card.getCibleFaction() != CardFaction.BASIC ? (" "+sorci.getEnumTool().factionToString(card.getCibleFaction())) : "");
+		String name = card.getName()+" §8/ §b2\u2756";
 		ArrayList<String> lore = new ArrayList<String>();
-		//type
+		//rarity and faction
+		lore.add(sorci.getEnumTool().factionToString(card.getFaction())
+				+" §f| "
+				+sorci.getEnumTool().rarityToString(card.getRarity()));
 		lore.add("");
-		lore.add("§7"+sorci.getEnumTool().typeToString(card.getType()));
-		lore.add("§7"+sorci.getEnumTool().rarityToString(card.getRarity()));
-		lore.add("§7"+sorci.getEnumTool().factionToString(card.getFaction()));
+		//damage and health if is entity
+		if (card.getType() == CardType.ENTITY) {
+			lore.add("      §e"+features.getFeature(CardFeatures.ATTACK_DAMMAGE).getValue().toString()+"\u2694"
+					+" §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+"\u2665");
+			lore.add("");
+		}
+		//features
+		for (CardFeature feature : features.listFeatures())
+			lore.add(sorci.getEnumTool().featureToString(feature.getType())
+					.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", feature.getValue().toString())
+					.replace("{cible}", cible)
+				);
 		//lore
 		lore.add("");
 		for (int i = 0; i < card.getDescription().size(); i++)
 			lore.add(card.getDescription().get(i));
-		//id
+		//type
 		lore.add("");
+		lore.add("");
+		lore.add(sorci.getEnumTool().typeToString(card.getType()));
+		lore.add("");
+		lore.add("");
+		//id
 		lore.add("§8Id: "+card.getUUID());
 		//return item
 		CardMaterial material = card.getMaterial();
 		if (material.hasUrl())
 			return ItemBuild.buildSkull(material.getUrl(),
 					amount,
-					card.getName(),
+					name,
 					lore,
 					ench);
 		else
@@ -44,7 +64,7 @@ public class CardRender {
 					amount,
 					(short) 0,
 					(byte) material.getData(),
-					card.getName(),
+					name,
 					lore,
 					ench);
 	}

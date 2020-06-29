@@ -5,6 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardComparator;
 import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 
@@ -15,6 +16,7 @@ public class EnumTool {
 	private ConfigurationSection rarity;
 	private ConfigurationSection type;
 	private ConfigurationSection sort;
+	private ConfigurationSection feature;
 	
 	public EnumTool(Config config) {
 		this.cible = config.getConfigurationSection("cible");
@@ -22,6 +24,7 @@ public class EnumTool {
 		this.rarity = config.getConfigurationSection("rarity");
 		this.type = config.getConfigurationSection("type");
 		this.sort = config.getConfigurationSection("sort");
+		this.feature = config.getConfigurationSection("feature");
 	}
 	
 	public String cibleToString(CardCible cible) {
@@ -42,6 +45,10 @@ public class EnumTool {
 	
 	public String sortToString(CardComparator sort) {
 		return this.enumToString(sort, this.sort);
+	}
+	
+	public String featureToString(CardFeatureType featureType) {
+		return this.enumToString(featureType, feature);
 	}
 	
 	public String enumToString(Enum<?> enum1, ConfigurationSection config) {

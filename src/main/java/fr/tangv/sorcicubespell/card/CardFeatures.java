@@ -9,6 +9,9 @@ import org.bson.Document;
 
 public class CardFeatures {
 
+	public static final String HEALTH = "Health";
+	public static final String ATTACK_DAMMAGE = "AttackDamage";
+	
 	private Map<String, CardFeature> features;
 	
 	public CardFeatures() {
