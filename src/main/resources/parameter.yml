@@ -3,6 +3,7 @@ mongodb: "mongodb://ect..."
 database: "plugin"
 #is lobby
 is_lobby: true
+perm_build: "sorcicubespell.build"
 #name npc
 name_npc:
   edit_deck: "§6L'éditeur de card"
@@ -28,3 +29,7 @@ location_tuto:
 #message
 join_message: "§8[§2+§8] §7{player}"
 quit_message: "§8[§4-§8] §7{player}"
+#packet
+packet_lore: "§8Packet of cards"
+packet_format: "{name}§r§7: §d{value}§6%"
+packet_size: "§6Nombre de Carte(s)§7: §d{value}"

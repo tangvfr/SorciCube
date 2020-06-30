@@ -24,16 +24,17 @@ public class CardRender {
 		CardFeatures features = card.getFeatures();
 		String cible = sorci.getEnumTool().cibleToString(card.getCible())+
 				(card.getCibleFaction() != CardFaction.BASIC ? (" "+sorci.getEnumTool().factionToString(card.getCibleFaction())) : "");
-		String name = card.getName()+"§r §b2\u2756";
+		String name = card.getName()+"§r §b"+card.getMana()+" \u2756";
 		ArrayList<String> lore = new ArrayList<String>();
-		//rarity and faction
-		lore.add(sorci.getEnumTool().factionToString(card.getFaction()));
-		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {
 			lore.add("  §e"+features.getFeature(CardFeatures.ATTACK_DAMMAGE).getValue().toString()+" \u2694"
-					+" §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+" \u2665");
+					+"  §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+" \u2665");
 		}
+		//rarity and faction
+		lore.add("");
+		lore.add(sorci.getEnumTool().factionToString(card.getFaction()));
+		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));
 		lore.add("");
 		//features
 		for (CardFeature feature : features.listFeatures())

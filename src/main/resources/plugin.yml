@@ -1,6 +1,6 @@
 name: SorciCubeSpell
 prefix: SorciCubeSpell
-description: This is an plugin to implement the spell of server SorciCube.
+description: "This is an plugin to implement the spell of server SorciCube."
 version: 1.0.1
 api-version: 1.9.4
 author: Tangv
@@ -9,5 +9,13 @@ main: fr.tangv.sorcicubespell.SorciCubeSpell
 commands:
   viewcards:
     usage: /viewcards
-    description: Open gui with the list of the cards.
+    description: "Open gui with the list of the cards."
     permission: sorcicubespell.viewcards
+  packetadd:
+    usage: /packetadd <name>
+    description: "Add new packet card."
+    permission: sorcicubespell.packetadd
+  packetgive:
+    usage: /packetgive <player> <name>
+    description: "Give packet card of a player."
+    permission: sorcicubespell.packetgive

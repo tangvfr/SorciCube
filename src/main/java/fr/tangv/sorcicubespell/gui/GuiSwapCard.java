@@ -145,11 +145,13 @@ public class GuiSwapCard extends AbstractGui {
 			ItemStack item = e.getInventory().getItem(raw);
 			if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
 				List<String> lore = item.getItemMeta().getLore();
-				String uuid = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
-				Card card = manager.getSorci().getManagerCards().getCart(UUID.fromString(uuid));
-				playerG.getPlayerFeature().getDeck(playerG.getDeckEdit()).setCard(playerG.getDeckCardEdit(), card);
-				manager.getSorci().getManagerPlayers().update(playerG.getPlayerFeature());
-				manager.getSorci().getManagerGui().getGuiEditDeck().open(player);
+				if (lore.size() >= 1) {
+					String uuid = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
+					Card card = manager.getSorci().getManagerCards().getCart(UUID.fromString(uuid));
+					playerG.getPlayerFeature().getDeck(playerG.getDeckEdit()).setCard(playerG.getDeckCardEdit(), card);
+					manager.getSorci().getManagerPlayers().update(playerG.getPlayerFeature());
+					manager.getSorci().getManagerGui().getGuiEditDeck().open(player);
+				}
 			}
 		}
 		e.setCancelled(true);

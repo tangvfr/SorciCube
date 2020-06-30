@@ -9,6 +9,7 @@ import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
 import fr.tangv.sorcicubespell.manager.ManagerDefaultDeck;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.manager.ManagerLobby;
+import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
 import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 import fr.tangv.sorcicubespell.util.Config;
@@ -28,6 +29,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerPlayers managerPlayers;
 	private ManagerDefaultDeck managerDefaultDeck;
 	private ManagerClickNPC managerClickNPC;
+	private ManagerPacketCards managerPacketCards;
 	
 	@Override
 	public void onEnable() {
@@ -48,6 +50,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerPlayers = new ManagerPlayers(this);
 			this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 			this.managerClickNPC = new ManagerClickNPC(this);
+			this.managerPacketCards = new ManagerPacketCards(this);
 			if (getParameter().getBoolean("is_lobby")) {
 				new ManagerLobby(this);
 			} else {
@@ -113,4 +116,9 @@ public class SorciCubeSpell extends JavaPlugin {
 	public ManagerClickNPC getManagerClickNPC() {
 		return managerClickNPC;
 	}
+	
+	public ManagerPacketCards getManagerPacketCards() {
+		return managerPacketCards;
+	}
+	
 }
