@@ -33,8 +33,8 @@ rarity:
   legendary: "§6§lLégendaire"
 #type
 type:
-  sort: "  §f[§cSort§f]"
-  entity: "  §f[§9Serviteur§f]"
+  sort: "§f[§cSort§f]"
+  entity: "§f[§9Serviteur§f]"
 #sort
 sort:
   by_id: "§7Trié par id"

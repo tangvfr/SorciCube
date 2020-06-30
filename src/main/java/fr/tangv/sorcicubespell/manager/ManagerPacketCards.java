@@ -114,7 +114,7 @@ public class ManagerPacketCards {
 	
 	public List<String> getListNamePacket() {
 		List<String> list = new ArrayList<String>();
-		for (Document doc : packets.listIndexes())
+		for (Document doc : packets.find())
 			list.add(doc.getString("name"));
 		return list;
 	}

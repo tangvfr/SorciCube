@@ -49,7 +49,7 @@ public class CardRender {
 			lore.add(card.getDescription().get(i));
 		//type
 		lore.add("");
-		lore.add(sorci.getEnumTool().typeToString(card.getType()));
+		lore.add("  "+sorci.getEnumTool().typeToString(card.getType()));
 		lore.add("");
 		//id
 		lore.add("§8Id: "+card.getUUID());

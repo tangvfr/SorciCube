@@ -59,7 +59,8 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 			for (Player player : Bukkit.getOnlinePlayers())
 				list.add(player.getName());
 		} else if (args.length == 2) {
-			return manager.getListNamePacket();
+			for (String name: manager.getListNamePacket())
+				list.add(name.replace("§", "&"));
 		}
 		return list;
 	}
