@@ -38,11 +38,16 @@ public class CardRender {
 		lore.add("");
 		//features
 		for (CardFeature feature : features.listFeatures())
-			if (feature.getType() != CardFeatureType.SKIN && feature.getType() != CardFeatureType.HEALTH)
-				lore.add(sorci.getEnumTool().featureToString(feature.getType())
+			if (feature.getType() != CardFeatureType.SKIN && feature.getType() != CardFeatureType.HEALTH) {
+				if (!(card.getType() == CardType.ENTITY 
+						&& card.getCible() == CardCible.ONE_ENEMIE 
+						&& card.getCibleFaction() == CardFaction.BASIC)) {
+					lore.add(sorci.getEnumTool().featureToString(feature.getType())
 						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
 						.replace("{cible}", cible)
 					);
+				}
+			}
 		//lore
 		lore.add("");
 		for (int i = 0; i < card.getDescription().size(); i++)
