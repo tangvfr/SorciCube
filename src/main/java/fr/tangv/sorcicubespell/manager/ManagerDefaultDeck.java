@@ -19,10 +19,10 @@ public class ManagerDefaultDeck {
 		Document doc = new Document("default_deck", "default_deck");
 		MongoCursor<Document> FDD = defaultDeck.find(doc).iterator();
 		if (!FDD.hasNext()) {
-			this.deckDark = DeckCards.createDeckCarsEmpty(CardFaction.DARK);
-			this.deckLight = DeckCards.createDeckCarsEmpty(CardFaction.LIGHT);
-			this.deckNature = DeckCards.createDeckCarsEmpty(CardFaction.NATURE);
-			this.deckToxic = DeckCards.createDeckCarsEmpty(CardFaction.TOXIC);
+			this.deckDark = DeckCards.createDeckCardsEmpty(CardFaction.DARK);
+			this.deckLight = DeckCards.createDeckCardsEmpty(CardFaction.LIGHT);
+			this.deckNature = DeckCards.createDeckCardsEmpty(CardFaction.NATURE);
+			this.deckToxic = DeckCards.createDeckCardsEmpty(CardFaction.TOXIC);
 			doc.append("deck_dark", deckDark.toDocument());
 			doc.append("deck_light", deckLight.toDocument());
 			doc.append("deck_nature", deckNature.toDocument());

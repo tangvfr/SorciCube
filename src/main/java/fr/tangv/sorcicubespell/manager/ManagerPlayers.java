@@ -86,10 +86,10 @@ public class ManagerPlayers {
 			//create and insert playerfeature
 			PlayerFeature playerFeature = new PlayerFeature(player,
 					defaultDeck,
-					DeckCards.createDeckCarsEmpty(),
-					DeckCards.createDeckCarsEmpty(),
-					DeckCards.createDeckCarsEmpty(),
-					DeckCards.createDeckCarsEmpty(),
+					DeckCards.createDeckCardsEmpty(),
+					DeckCards.createDeckCardsEmpty(),
+					DeckCards.createDeckCardsEmpty(),
+					DeckCards.createDeckCardsEmpty(),
 					2,
 					cardsUnlocks);
 			this.insert(playerFeature);
