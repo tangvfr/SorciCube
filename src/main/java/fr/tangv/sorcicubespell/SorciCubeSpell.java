@@ -20,7 +20,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config message;
 	private Config parameter;
 	private Config enumConfig;
-	private Config cardConfig;
 	private Config guiConfig;
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
@@ -39,7 +38,6 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.message = new Config(this, "message.yml");
 			this.parameter = new Config(this, "parameter.yml");
 			this.enumConfig = new Config(this, "enum.yml");
-			this.cardConfig = new Config(this, "card.yml");
 			this.guiConfig = new Config(this, "gui.yml");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
@@ -84,10 +82,6 @@ public class SorciCubeSpell extends JavaPlugin {
 
 	public Config getEnumConfig() {
 		return enumConfig;
-	}
-
-	public Config getCardConfig() {
-		return cardConfig;
 	}
 	
 	public Config gertGuiConfig() {
