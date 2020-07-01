@@ -45,7 +45,7 @@ public class CardRender {
 				if (card.getType() == CardType.ENTITY 
 						&& card.getCible() == CardCible.ONE_ENEMIE 
 						&& card.getCibleFaction() == CardFaction.BASIC) {
-					if (f.size() <= 1) {
+					if (f.size() <= 3) {
 						rn = false;
 					}
 				} else {

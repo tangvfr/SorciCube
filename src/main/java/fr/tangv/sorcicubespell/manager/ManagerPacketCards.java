@@ -15,6 +15,8 @@ import com.mongodb.client.MongoCollection;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.card.CardFeature;
+import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.packet.CommandPacketAdd;
@@ -123,9 +125,16 @@ public class ManagerPacketCards {
 			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity())];
 			CardType type = CardType.values()[chooseIndex(packet.getType())];
 			ArrayList<Card> list = new ArrayList<Card>();
-			for (Card card : collectionCards)
-				if (card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
+			for (Card card : collectionCards) {
+				boolean hide = false;
+				for (CardFeature feature : card.getFeatures().listFeatures())
+					if (feature.getType() == CardFeatureType.HIDE_CART) {
+						hide = true;
+						break;
+					}
+				if (!hide && card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
 					list.add(card);
+			}
 			if (list.size() <= 0)
 				throw new Exception("Not found card for the filter");
 			cards[i] = list.get((int) (Math.random()*list.size()));
