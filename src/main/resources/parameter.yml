@@ -6,7 +6,7 @@ is_lobby: true
 perm_build: "sorcicubespell.build"
 #name npc
 name_npc:
-  edit_deck: "§6L'éditeur de card"
+  edit_deck: "§6L'éditeur"
   return_spawn: "§cRetour Spawn"
   default_deck: "§aPremier deck"
 #location
