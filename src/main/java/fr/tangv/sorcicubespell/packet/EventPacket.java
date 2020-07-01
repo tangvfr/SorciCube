@@ -145,13 +145,14 @@ public class EventPacket implements Listener, Runnable {
 			if (player.needActual() && player.getCooldown().update()) {
 				int index = player.getViewCard();
 				player.getInventory().setItem(player.getStart()+index, player.getItemCard(index));
-				player.setViewCard(index+1);
+				index += 1;
+				player.setViewCard(index);
 				if (index >= player.getSizeItemCards()) {
 					player.stopActual();
 					player.getCooldown().stop();
 					player.getInventory().setItem(22, itemBack);
 				}
-				player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 100.0F, 0.75F);
+				player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
 			}
 		}
 	}
