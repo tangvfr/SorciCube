@@ -10,3 +10,4 @@ message_create_packet_cards: "§aVous venez de crée un nouveaux paquet de carte
 message_player_no_found: "§cLe joueur \"{player}§r§c\" est introuvable !"
 message_packet_no_found: "§cLe paquet de cartes nommé \"{name}§r§c\" est introuvable !"
 message_give_packet: "§aVous venez de give un paquet de cartes \"{name}§r§a\" au joueur \"{player}§r§a\"."
+message_packet_error_take: "§cDésolé il y a eu une erreur lors de la sélection des cartes gagnier. Veuillez avertire un Administrateur."

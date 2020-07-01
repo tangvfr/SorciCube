@@ -23,6 +23,7 @@ public class SkullUrl {
 	public static String T_PURPLE = "http://textures.minecraft.net/texture/c451897d7f747a901c183bfee2ed174f35655c966f9adf6e2c7630a03a8155bd";
 	public static String R_YELLOW = "http://textures.minecraft.net/texture/6ac6f775e8acfdf6e1deac80a8da1f37b3b4ba5caa4a35249f9eb145ccf43da5";
 	public static String F_LIME = "http://textures.minecraft.net/texture/a4413bdb2a7ea27cf303d799ddc627d6feed71b01876b9b1b0e013a8e1c624";
+	public static String QUESTION = "http://textures.minecraft.net/texture/9d9cc58ad25a1ab16d36bb5d6d493c8f5898c2bf302b64e325921c41c35867";
 	
 	public static String getSkullForFaction(CardFaction faction) {
 		switch (faction) {

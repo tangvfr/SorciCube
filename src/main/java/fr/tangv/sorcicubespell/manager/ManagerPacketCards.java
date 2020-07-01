@@ -1,21 +1,25 @@
 package fr.tangv.sorcicubespell.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.bson.Document;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.mongodb.client.MongoCollection;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.packet.CommandPacketAdd;
 import fr.tangv.sorcicubespell.packet.CommandPacketGive;
+import fr.tangv.sorcicubespell.packet.EventPacket;
 import fr.tangv.sorcicubespell.packet.PacketCards;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 
@@ -32,6 +36,11 @@ public class ManagerPacketCards {
 		CommandPacketGive commandPacketGive = new CommandPacketGive(this);
 		sorci.getCommand("packetgive").setExecutor(commandPacketGive);
 		sorci.getCommand("packetgive").setTabCompleter(commandPacketGive);
+		//event
+		EventPacket eventPacket = new EventPacket(this);
+		Bukkit.getPluginManager().registerEvents(eventPacket, sorci);
+		//timer
+		Bukkit.getScheduler().runTaskTimer(sorci, eventPacket, 0, 10);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -85,6 +94,43 @@ public class ManagerPacketCards {
 			}
 		}
 		return false;
+	}
+	
+	private int chooseIndex(int[] stat) throws Exception {
+		int max = 0;
+		for (int num : stat) {
+			if (num < 0)
+				throw new Exception("Negative number");
+			max += num;
+		}
+		if (max <= 0)
+			throw new Exception("Total stat is 0");
+		int number = (int) (Math.random()*max)+1;
+		int progression = 0;
+		for (int i = 0; i < stat.length; i++) {
+			progression += stat[i];
+			if (number <= progression)
+				return i;
+		}
+		return -1;
+	}
+	
+	public Card[] packetTakeCard(PacketCards packet) throws Exception {
+		Card[] cards = new Card[packet.getSize()];
+		Collection<Card> collectionCards = sorci.getManagerCards().getCarts().values();
+		for (int i = 0; i < cards.length; i++) {
+			CardFaction faction = CardFaction.values()[chooseIndex(packet.getFaction())];
+			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity())];
+			CardType type = CardType.values()[chooseIndex(packet.getType())];
+			ArrayList<Card> list = new ArrayList<Card>();
+			for (Card card : collectionCards)
+				if (card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
+					list.add(card);
+			if (list.size() <= 0)
+				throw new Exception("Not found card for the filter");
+			cards[i] = list.get((int) (Math.random()*list.size()));
+		}
+		return cards;
 	}
 	
 	public SorciCubeSpell getSorci() {

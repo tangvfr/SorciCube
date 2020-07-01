@@ -57,4 +57,7 @@ gui_create_deck:
   name: "§4Crée un nouveau deck"
   back: "§cRetour"
   lore_select: "§2Crée un deck de type {faction}.§2"
-  
+#Gui Open Packet
+gui_open_packet:
+  no_view: "§bMystère"
+  back: "§cRetour"

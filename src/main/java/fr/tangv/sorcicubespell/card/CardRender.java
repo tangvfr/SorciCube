@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.card;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -37,23 +38,31 @@ public class CardRender {
 		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));
 		lore.add("");
 		//features
-		for (CardFeature feature : features.listFeatures())
+		boolean rn = true;
+		Collection<CardFeature> f = features.listFeatures();
+		for (CardFeature feature : f)
 			if (feature.getType() != CardFeatureType.SKIN && feature.getType() != CardFeatureType.HEALTH) {
-				if (!(card.getType() == CardType.ENTITY 
+				if (card.getType() == CardType.ENTITY 
 						&& card.getCible() == CardCible.ONE_ENEMIE 
-						&& card.getCibleFaction() == CardFaction.BASIC)) {
+						&& card.getCibleFaction() == CardFaction.BASIC) {
+					if (f.size() <= 1) {
+						rn = false;
+					}
+				} else {
 					lore.add(sorci.getEnumTool().featureToString(feature.getType())
 						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
 						.replace("{cible}", cible)
 					);
 				}
 			}
+		if (rn)
+			lore.add("");
 		//lore
-		lore.add("");
 		for (int i = 0; i < card.getDescription().size(); i++)
 			lore.add(card.getDescription().get(i));
+		if (card.getDescription().size() >= 1)
+			lore.add("");
 		//type
-		lore.add("");
 		lore.add("  "+sorci.getEnumTool().typeToString(card.getType()));
 		lore.add("");
 		//id

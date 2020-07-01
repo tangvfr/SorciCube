@@ -67,6 +67,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	public void onDisable() {
 		for (Player player : Bukkit.getOnlinePlayers())
 			player.closeInventory();
+		Bukkit.getScheduler().cancelTasks(this);
 	}
 	
 	public Config getMessage() {
