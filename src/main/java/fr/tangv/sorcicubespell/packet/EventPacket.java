@@ -93,6 +93,7 @@ public class EventPacket implements Listener, Runnable {
 							else
 								player.getInventory().setItemInMainHand(null);
 							packetsPlayers.put(player, new PlayerPacket(player, inv, itemCards, start));
+							player.openInventory(inv);
 						}
 					} catch (Exception e1) {
 						e1.printStackTrace();
