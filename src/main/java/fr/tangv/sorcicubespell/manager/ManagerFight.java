@@ -23,6 +23,7 @@ public class ManagerFight implements Listener {
 	
 	private void teleportPlayerToLoc(Player player) {
 		
+		
 	}
 	
 	@EventHandler
