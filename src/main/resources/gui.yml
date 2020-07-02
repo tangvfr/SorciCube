@@ -16,10 +16,10 @@ gui_edit_or_view:
   name: "§5Libraire Choix"
   deck: "§6Deck"
   card: "§2Card"
-  close: "§cClose"
+  close: "§cFermer"
 #Gui View Cards
 gui_view_cards:
-  name: "§5Libraire Cartes"
+  name: "§5Libraire Cartes {page}/{max}"
   item_name:
     sort: "§aTriage"
     previous: "§aPage précedant"
@@ -41,7 +41,7 @@ gui_edit_deck:
     - "§5Changé de faction le deck"
 #Gui Swap Card
 gui_swap_card:
-  name: "§5Libraire Edit Carte Deck"
+  name: "§5Libraire Edit Carte Deck {page}/{max}"
   item_name:
     sort: "§aTriage"
     previous: "§aPage précedant"
@@ -60,4 +60,4 @@ gui_create_deck:
 #Gui Open Packet
 gui_open_packet:
   no_view: "§bMystère"
-  back: "§cRetour"
+  back: "§cFermer"

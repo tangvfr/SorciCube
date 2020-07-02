@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardComparator;
+import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.player.DeckCards;
@@ -46,18 +47,22 @@ public class GuiSwapCard extends AbstractGui {
 		try {
 			PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player);
 			PlayerGui playerG = getPlayerGui(player);
+			DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());
 			int page = playerG.getPageViewGui();
 			HashMap<UUID, Card> mapCards = manager.getSorci().getManagerCards().getCarts();
 			ArrayList<Card> cards = new ArrayList<Card>();
 			for (String uuidS : playerF.getCardsUnlocks()) {
 				UUID uuid = UUID.fromString(uuidS);
-				if (mapCards.containsKey(uuid))
-					cards.add(mapCards.get(uuid));
+				if (mapCards.containsKey(uuid)) {
+					Card card = mapCards.get(uuid);
+					if (card.getFaction() == CardFaction.BASIC || card.getFaction() == deck.getFaction()) {
+						cards.add(card);
+					}
+				}
 			}
-			DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());
 			for (int i = 0; i < deck.size(); i++) {
 				Card card = deck.getCard(i);
-				if (card != null)
+				if (card != null && cards.contains(card))
 					cards.remove(card);
 			}
 			CardComparator sorted = playerG.getCardComparator();

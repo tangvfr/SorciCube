@@ -81,10 +81,17 @@ public class EventPacket implements Listener, Runnable {
 						int start = ((7-packet.getSize())/2)+10;
 						Card[] cardTake = manager.packetTakeCard(packet);
 						ItemStack[] itemCards = new ItemStack[cardTake.length];
+						boolean[] newCards = new boolean[cardTake.length];
 						PlayerFeature feature = manager.getSorci().getManagerPlayers().getPlayerFeature(player);
 						if (feature != null) {
 							for (int i = 0; i < cardTake.length; i++) {
-								feature.getCardsUnlocks().add(cardTake[i].getUUID().toString());
+								String uuid = cardTake[i].getUUID().toString();
+								if (feature.getCardsUnlocks().contains(uuid)) {
+									newCards[i] = false;
+								} else {
+									feature.getCardsUnlocks().add(uuid);
+									newCards[i] = true;
+								}
 								itemCards[i] = CardRender.cardToItem(cardTake[i], manager.getSorci());
 								inv.setItem(start+i, itemQuestion);
 							}
@@ -93,7 +100,7 @@ public class EventPacket implements Listener, Runnable {
 								item.setAmount(item.getAmount()-1);
 							else
 								player.getInventory().setItemInMainHand(null);
-							packetsPlayers.put(player, new PlayerPacket(player, inv, itemCards, start));
+							packetsPlayers.put(player, new PlayerPacket(player, inv, itemCards, newCards ,start));
 							player.openInventory(inv);
 						}
 					} catch (Exception e1) {
@@ -145,6 +152,7 @@ public class EventPacket implements Listener, Runnable {
 		for (PlayerPacket player : packetsPlayers.values()) {
 			if (player.needActual() && player.getCooldown().update()) {
 				int index = player.getViewCard();
+				boolean newCard = player.isNewCard(index);
 				player.getInventory().setItem(player.getStart()+index, player.getItemCard(index));
 				index += 1;
 				player.setViewCard(index);
@@ -153,7 +161,10 @@ public class EventPacket implements Listener, Runnable {
 					player.getCooldown().stop();
 					player.getInventory().setItem(22, itemBack);
 				}
-				player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
+				if (newCard)
+					player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
+				else
+					player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
 			}
 		}
 	}
