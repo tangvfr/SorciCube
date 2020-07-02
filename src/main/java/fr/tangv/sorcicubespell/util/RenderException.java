@@ -2,6 +2,10 @@ package fr.tangv.sorcicubespell.util;
 
 public class RenderException {
 	
+	/*
+	 *  Create By Tangv 
+	*/
+	
 	/*private static String rightString(char c, String text, int max) {
 		return generatedChar(' ', max-text.length())+text;
 	}*/
