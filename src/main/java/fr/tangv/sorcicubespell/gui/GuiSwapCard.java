@@ -21,6 +21,7 @@ import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.player.DeckCards;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import fr.tangv.sorcicubespell.util.RenderException;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
 public class GuiSwapCard extends AbstractGui {
@@ -103,7 +104,7 @@ public class GuiSwapCard extends AbstractGui {
 			inv.setItem(53, this.back);
 			return inv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Bukkit.getLogger().warning(RenderException.renderException(e));
 			return null;
 		}
 	}

@@ -19,6 +19,7 @@ import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import fr.tangv.sorcicubespell.util.RenderException;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
 public class GuiViewCards extends AbstractGui {
@@ -95,7 +96,7 @@ public class GuiViewCards extends AbstractGui {
 			inv.setItem(53, this.back);
 			return inv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Bukkit.getLogger().warning(RenderException.renderException(e));
 			return null;
 		}
 	}

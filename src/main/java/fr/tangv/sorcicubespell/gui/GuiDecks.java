@@ -12,6 +12,7 @@ import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.player.DeckCards;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import fr.tangv.sorcicubespell.util.RenderException;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
 public class GuiDecks extends AbstractGui {
@@ -68,7 +69,7 @@ public class GuiDecks extends AbstractGui {
 			inv.setItem(40, itemBack);
 			return inv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Bukkit.getLogger().warning(RenderException.renderException(e));
 			return null;
 		}
 	}
@@ -106,7 +107,7 @@ public class GuiDecks extends AbstractGui {
 					break;
 			}
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			Bukkit.getLogger().warning(RenderException.renderException(e1));
 		}
 		e.setCancelled(true);
 	}

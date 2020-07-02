@@ -14,6 +14,7 @@ import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
+import fr.tangv.sorcicubespell.util.RenderException;
 
 public class SorciCubeSpell extends JavaPlugin {
 
@@ -55,8 +56,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				//new Manager...
 			}
 		} catch (Exception e) {
-			Bukkit.getLogger().warning(e.getMessage());
-			e.printStackTrace();
+			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
 	}

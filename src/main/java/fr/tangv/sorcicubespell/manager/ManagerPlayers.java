@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.bson.Document;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.mongodb.client.MongoCollection;
@@ -14,6 +15,7 @@ import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.player.DeckCards;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
+import fr.tangv.sorcicubespell.util.RenderException;
 
 public class ManagerPlayers {
 
@@ -95,7 +97,7 @@ public class ManagerPlayers {
 			this.insert(playerFeature);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Bukkit.getLogger().warning(RenderException.renderException(e));
 			return false;
 		}
 	}

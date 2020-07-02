@@ -22,6 +22,7 @@ import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import fr.tangv.sorcicubespell.util.RenderException;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
 public class EventPacket implements Listener, Runnable {
@@ -96,7 +97,7 @@ public class EventPacket implements Listener, Runnable {
 							player.openInventory(inv);
 						}
 					} catch (Exception e1) {
-						e1.printStackTrace();
+						Bukkit.getLogger().warning(RenderException.renderException(e1));
 						player.sendMessage(manager.getSorci().getMessage().getString("message_packet_error_take"));
 					}
 				}
