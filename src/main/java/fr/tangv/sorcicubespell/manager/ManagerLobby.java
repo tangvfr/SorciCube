@@ -6,16 +6,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockBreakEvent;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 
@@ -38,43 +32,6 @@ public class ManagerLobby implements Listener {
 		} else {
 			player.teleport(locationTuto);
 		}
-	}
-	
-	private boolean isAuto(Player player) {
-		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission(sorci.getParameter().getString("perm_build"));
-	}
-	
-	@EventHandler
-	public void onExplosion(BlockExplodeEvent e) {
-		e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onBreak(BlockBreakEvent e) {
-		if (!isAuto(e.getPlayer()))
-			e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onPlace(BlockPlaceEvent e) {
-		if (!isAuto(e.getPlayer()))
-			e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onDrop(PlayerDropItemEvent e) {
-		if (!isAuto(e.getPlayer()))
-			e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onFood(FoodLevelChangeEvent e) {
-		e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onNoDammage(EntityDamageEvent e) {
-		e.setCancelled(true);
 	}
 	
 	@EventHandler

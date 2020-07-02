@@ -4,9 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
 import fr.tangv.sorcicubespell.manager.ManagerDefaultDeck;
+import fr.tangv.sorcicubespell.manager.ManagerFight;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.manager.ManagerLobby;
 import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
@@ -53,8 +55,9 @@ public class SorciCubeSpell extends JavaPlugin {
 			if (getParameter().getBoolean("is_lobby")) {
 				new ManagerLobby(this);
 			} else {
-				//new Manager...
+				new ManagerFight(this);
 			}
+			new ManagerSecurity(this);
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);
