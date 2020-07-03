@@ -34,8 +34,9 @@ public class CardRender {
 		}
 		//rarity and faction
 		lore.add("");
-		lore.add(sorci.getEnumTool().factionToString(card.getFaction()));
-		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));
+		lore.add(sorci.getEnumTool().rarityToString(card.getRarity())+"§r§f§l \u2807 "+sorci.getEnumTool().factionToString(card.getFaction()));
+		/*lore.add(sorci.getEnumTool().factionToString(card.getFaction()));
+		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));*/
 		lore.add("");
 		//features
 		boolean rn = false;
