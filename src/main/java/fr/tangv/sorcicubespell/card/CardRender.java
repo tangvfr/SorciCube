@@ -38,17 +38,12 @@ public class CardRender {
 		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));
 		lore.add("");
 		//features
-		boolean rn = true;
+		boolean rn = false;
 		Collection<CardFeature> f = features.listFeatures();
 		for (CardFeature feature : f)
 			if (feature.getType() != CardFeatureType.SKIN && feature.getType() != CardFeatureType.HEALTH) {
-				if (card.getType() == CardType.ENTITY 
-						&& card.getCible() == CardCible.ONE_ENEMIE 
-						&& card.getCibleFaction() == CardFaction.BASIC) {
-					if (f.size() <= 3) {
-						rn = false;
-					}
-				} else {
+				if (!(card.getType() == CardType.ENTITY && feature.getName().equals(CardFeatures.ATTACK_DAMMAGE) && card.getCible() == CardCible.ONE_ENEMIE && card.getCibleFaction() == CardFaction.BASIC)) {
+					rn = true;
 					lore.add(sorci.getEnumTool().featureToString(feature.getType())
 						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
 						.replace("{cible}", cible)
