@@ -52,7 +52,7 @@ public class RenderException {
 		int maxLine = line+3+classe+3+methode;
 		if (max < maxLine)
 			max = maxLine;
-		String text = "";
+		String text = "\r\n";
 		//new line
 		text += "┏━"+generatedChar('━', max)+"━┓\r\n";
 		//new line
