@@ -13,6 +13,7 @@ import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.manager.ManagerLobby;
 import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
 import fr.tangv.sorcicubespell.manager.ManagerPlayers;
+import fr.tangv.sorcicubespell.manager.ManagerPreFightData;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
@@ -32,6 +33,8 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerDefaultDeck managerDefaultDeck;
 	private ManagerClickNPC managerClickNPC;
 	private ManagerPacketCards managerPacketCards;
+	private ManagerFight managerFight;
+	private ManagerPreFightData managerPreFightData;
 	
 	@Override
 	public void onEnable() {
@@ -52,10 +55,11 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 			this.managerClickNPC = new ManagerClickNPC(this);
 			this.managerPacketCards = new ManagerPacketCards(this);
+			this.managerPreFightData = new ManagerPreFightData(this);
 			if (getParameter().getBoolean("is_lobby")) {
 				new ManagerLobby(this);
 			} else {
-				new ManagerFight(this);
+				this.managerFight = new ManagerFight(this);
 			}
 			new ManagerSecurity(this);
 		} catch (Exception e) {
@@ -117,6 +121,14 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public ManagerPacketCards getManagerPacketCards() {
 		return managerPacketCards;
+	}
+	
+	public ManagerPreFightData getManagerPreFightData() {
+		return managerPreFightData;
+	}
+	
+	public ManagerFight getManagerFight() {
+		return managerFight;
 	}
 	
 }

@@ -11,11 +11,13 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoDBManager {
 
+	private Iterator<String> listCol;
 	private MongoDatabase database;
 	private MongoCollection<Document> cards;
 	private MongoCollection<Document> players;
 	private MongoCollection<Document> defaultDeck;
 	private MongoCollection<Document> packets;
+	private MongoCollection<Document> preFights;
 	private String uri;
 	private String databaseName;
 	
@@ -26,7 +28,6 @@ public class MongoDBManager {
 	}
 	
 	private MongoCollection<Document> defineCollection(String collection) {
-		Iterator<String> listCol = database.listCollectionNames().iterator();
 		boolean hasCollection = false;
 		while (listCol.hasNext()) {
 			String name = listCol.next();
@@ -56,15 +57,21 @@ public class MongoDBManager {
 		return packets;
 	}
 	
+	public MongoCollection<Document> getPreFights() {
+		return preFights;
+	}
+	
 	public void refrech() {
 		//init
 		MongoClient client = MongoClients.create(uri);
 		this.database = client.getDatabase(databaseName);
+		this.listCol = database.listCollectionNames().iterator();
 		//init collection
 		this.cards = defineCollection("cards");
 		this.players = defineCollection("players");
 		this.defaultDeck = defineCollection("default_deck");
 		this.packets = defineCollection("packets");
+		this.preFights = defineCollection("pre_fights");
 	}
 	
 }

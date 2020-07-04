@@ -1,57 +1,43 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.fight.EventFight;
+import fr.tangv.sorcicubespell.fight.PreFight;
+import fr.tangv.sorcicubespell.fight.PreFightData;
 
 public class ManagerFight implements Listener {
 
 	private SorciCubeSpell sorci;
+	private HashMap<UUID, PreFight> preFights;
 	
 	public ManagerFight(SorciCubeSpell sorci) {
 		this.sorci = sorci;
-		Bukkit.getPluginManager().registerEvents(this, sorci);
+		this.preFights = new HashMap<UUID, PreFight>();
+		//event
+		Bukkit.getPluginManager().registerEvents(new EventFight(this), sorci);
 	}
 	
-	private void teleportPlayerToLoc(Player player) {
-		
-		
-	}
-	
-	@EventHandler
-	public void onMove(PlayerMoveEvent e) {
-		if (e.getTo().getY() < 0)
-			teleportPlayerToLoc(e.getPlayer());
-	}
-	
-	@EventHandler
-	public void onRespawn(PlayerRespawnEvent e) {
-		teleportPlayerToLoc(e.getPlayer());
-	}
-	
-	@EventHandler
-	public void onJoin(PlayerJoinEvent e) {
-		Player player = e.getPlayer();
-		e.setJoinMessage("");
-		player.setGameMode(GameMode.ADVENTURE);
-		player.setFoodLevel(20);
-		teleportPlayerToLoc(player);
-		//tempo add fight
-		player.setMaxHealth(20);
-		player.setHealth(20);
-	}
-	
-	@EventHandler
-	public void onQuit(PlayerQuitEvent e) {
-		e.setQuitMessage("");
+	public void playerJoin(Player player) {
+		if (preFights.containsKey(player.getUniqueId())) {
+			//start
+			return;
+		} else {
+			PreFightData preFightData = sorci.getManagerPreFightData().getPreFightData(player.getUniqueId());
+			if (preFightData != null) {
+				sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
+				PreFight preFight = PreFight.createPreFight(player, preFightData);
+				preFights.put(preFight.getPlayerUUID2(), preFight);
+				return;
+			}
+		}
+		//return player to lobby
 	}
 	
 }
