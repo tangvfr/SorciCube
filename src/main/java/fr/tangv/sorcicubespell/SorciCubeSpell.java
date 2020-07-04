@@ -1,5 +1,8 @@
 package fr.tangv.sorcicubespell;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,8 +36,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerDefaultDeck managerDefaultDeck;
 	private ManagerClickNPC managerClickNPC;
 	private ManagerPacketCards managerPacketCards;
-	private ManagerFight managerFight;
 	private ManagerPreFightData managerPreFightData;
+	private String nameServerLobby;
+	private String nameServerFight;
+	private String nameServerJump;
 	
 	@Override
 	public void onEnable() {
@@ -59,9 +64,14 @@ public class SorciCubeSpell extends JavaPlugin {
 			if (getParameter().getBoolean("is_lobby")) {
 				new ManagerLobby(this);
 			} else {
-				this.managerFight = new ManagerFight(this);
+				new ManagerFight(this);
 			}
 			new ManagerSecurity(this);
+			//init for change server
+			getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+			this.nameServerLobby = this.parameter.getString("server_lobby");
+			this.nameServerFight = this.parameter.getString("server_fight");
+			this.nameServerJump = this.parameter.getString("server_jump");
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);
@@ -73,6 +83,30 @@ public class SorciCubeSpell extends JavaPlugin {
 		for (Player player : Bukkit.getOnlinePlayers())
 			player.closeInventory();
 		Bukkit.getScheduler().cancelTasks(this);
+	}
+	
+	public void sendPlayerToServer(Player player, String server) {
+		ByteArrayOutputStream data = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(data);
+		try {
+			out.writeUTF("Connect");
+			out.writeUTF(server);
+		} catch (Exception e) {
+			Bukkit.getLogger().warning(RenderException.renderException(e));
+		}
+		player.sendPluginMessage(this, "BungeeCord", data.toByteArray());
+	}
+	
+	public String getNameServerLobby() {
+		return nameServerLobby;
+	}
+	
+	public String getNameServerFight() {
+		return nameServerFight;
+	}
+	
+	public String getNameServerJump() {
+		return nameServerJump;
 	}
 	
 	public Config getMessage() {
@@ -125,10 +159,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public ManagerPreFightData getManagerPreFightData() {
 		return managerPreFightData;
-	}
-	
-	public ManagerFight getManagerFight() {
-		return managerFight;
 	}
 	
 }

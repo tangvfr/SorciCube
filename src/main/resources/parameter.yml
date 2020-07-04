@@ -4,6 +4,10 @@ database: "plugin"
 #is lobby
 is_lobby: true
 perm_build: "sorcicubespell.build"
+#server
+server_lobby: "lobby"
+server_fight: "fight"
+server_jump: "jump"
 #name npc
 name_npc:
   edit_deck: "§6L'éditeur"

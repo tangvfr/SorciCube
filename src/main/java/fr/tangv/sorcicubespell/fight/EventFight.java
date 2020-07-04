@@ -43,12 +43,14 @@ public class EventFight implements Listener {
 		player.setMaxHealth(20);
 		player.setHealth(20);
 		
+		manager.playerJoin(player);
 		teleportPlayerToLoc(player);
 	}
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		e.setQuitMessage("");
+		manager.playerQuit(e.getPlayer());
 	}
 	
 }
