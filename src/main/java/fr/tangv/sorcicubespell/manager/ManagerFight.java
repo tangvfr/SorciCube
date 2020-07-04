@@ -12,6 +12,7 @@ import fr.tangv.sorcicubespell.fight.EventFight;
 import fr.tangv.sorcicubespell.fight.Fight;
 import fr.tangv.sorcicubespell.fight.PreFight;
 import fr.tangv.sorcicubespell.fight.PreFightData;
+import fr.tangv.sorcicubespell.util.RenderException;
 
 public class ManagerFight implements Runnable {
 
@@ -32,8 +33,13 @@ public class ManagerFight implements Runnable {
 		if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
 			preFights.remove(preFight.getPlayerUUID2());
-			fights.add(new Fight(sorci, preFight, player));
-			return;
+			try {
+				fights.add(new Fight(sorci, preFight, player));
+				return;
+			} catch (Exception e) {
+				Bukkit.getLogger().warning(RenderException.renderException(e));
+				sorci.sendPlayerToServer(preFight.getPlayer1(), sorci.getNameServerLobby());
+			}
 		} else {
 			PreFightData preFightData = sorci.getManagerPreFightData().getPreFightData(player.getUniqueId());
 			if (preFightData != null) {

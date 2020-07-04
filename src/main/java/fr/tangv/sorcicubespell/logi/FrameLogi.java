@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
+import fr.tangv.sorcicubespell.util.RenderException;
 
 public class FrameLogi extends JFrame {
 
@@ -40,7 +41,7 @@ public class FrameLogi extends JFrame {
 		} catch (Exception e) {
 			this.connectionPanel.setMessage("Error: "+e.getMessage(), Color.RED);
 			showConnection();
-			e.printStackTrace();
+			System.err.println(RenderException.renderException(e));
 		}
 	}
 	

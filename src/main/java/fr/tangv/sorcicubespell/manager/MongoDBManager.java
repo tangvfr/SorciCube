@@ -1,17 +1,17 @@
 package fr.tangv.sorcicubespell.manager;
 
-import java.util.Iterator;
-
 import org.bson.Document;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 
 public class MongoDBManager {
 
-	private Iterator<String> listCol;
+	private MongoIterable<String> listCol;
 	private MongoDatabase database;
 	private MongoCollection<Document> cards;
 	private MongoCollection<Document> players;
@@ -29,8 +29,9 @@ public class MongoDBManager {
 	
 	private MongoCollection<Document> defineCollection(String collection) {
 		boolean hasCollection = false;
-		while (listCol.hasNext()) {
-			String name = listCol.next();
+		MongoCursor<String> it = listCol.iterator();
+		while (it.hasNext()) {
+			String name = it.next();
 			if (name.equals(collection)) {
 				hasCollection = true;
 				break;
@@ -65,7 +66,7 @@ public class MongoDBManager {
 		//init
 		MongoClient client = MongoClients.create(uri);
 		this.database = client.getDatabase(databaseName);
-		this.listCol = database.listCollectionNames().iterator();
+		this.listCol = database.listCollectionNames();
 		//init collection
 		this.cards = defineCollection("cards");
 		this.players = defineCollection("players");

@@ -13,13 +13,15 @@ public class Fight {
 	private FightDeck deck2;
 	private boolean isEnd;
 	
-	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2) {
+	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2) throws Exception {
 		this.sorci = sorci;
 		this.player1 = preFight.getPlayer1();
 		this.player2 = player2;
-		/*deck1
-		deck2*/
+		this.deck1 = new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player1).getDeck(preFight.getPlayer1DeckUse()));
+		this.deck1 = new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player2).getDeck(preFight.getPlayer2DeckUse()));
 		this.isEnd = false;
+		//init fight
+		
 	}
 	
 	public void update() {
