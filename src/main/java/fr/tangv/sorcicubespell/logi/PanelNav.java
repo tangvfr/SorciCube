@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
@@ -31,7 +32,7 @@ import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.card.CardValue;
 
-public class PanelNav extends JScrollPane {
+public class PanelNav extends JPanel {
 
 	private static final long serialVersionUID = -493103431246777186L;
 	private CardsPanel cartsPanel;
@@ -84,7 +85,7 @@ public class PanelNav extends JScrollPane {
 		//PanelNav
 		this.setLayout(new BorderLayout());
 		this.add(this.refrech, BorderLayout.NORTH);
-		this.add(this.list, BorderLayout.CENTER);
+		this.add(new JScrollPane(this.list), BorderLayout.CENTER);
 		this.add(this.disconnect, BorderLayout.SOUTH);
 		this.refrech();
 	}
