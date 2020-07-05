@@ -31,7 +31,7 @@ public class FightDeck {
 	public Card pickCard() {
 		if (cards.size() <= 0)
 			mixCards();
-		return cards.remove();
+		return cards.remove().clone();
 	}
 	
 }

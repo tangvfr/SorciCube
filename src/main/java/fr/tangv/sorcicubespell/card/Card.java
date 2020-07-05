@@ -135,7 +135,7 @@ public class Card {
 	}
 
 	public Card clone() {
-		return Card.toCard(this.toDocument());
+		return new Card(uuid, material, name, type, rarity, faction, cible, cibleFaction, mana, features, description);
 	}
 	
 	public Document toDocument() {

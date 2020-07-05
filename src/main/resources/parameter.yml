@@ -3,7 +3,11 @@ mongodb: "mongodb://ect..."
 database: "plugin"
 #is lobby
 is_lobby: true
+#security
 perm_build: "sorcicubespell.build"
+#fight
+cooldown_below_fight: 5
+cooldown_one_round: 180
 #server
 server_lobby: "lobby"
 server_fight: "fight"

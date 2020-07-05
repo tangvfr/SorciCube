@@ -19,6 +19,12 @@ public class CardRender {
 		return CardRender.cardToItem(card, sorci, 1, false);
 	}
 	
+	public static String renderStatCard(Card card) {
+		CardFeatures features = card.getFeatures();
+		return "§e"+features.getFeature(CardFeatures.ATTACK_DAMMAGE).getValue().toString()+" \u2694"
+				+"  §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+" \u2665";
+	}
+	
 	@SuppressWarnings("deprecation")
 	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, int amount, boolean ench) {
 		if (card == null) return null;
@@ -29,8 +35,7 @@ public class CardRender {
 		ArrayList<String> lore = new ArrayList<String>();
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {
-			lore.add("  §e"+features.getFeature(CardFeatures.ATTACK_DAMMAGE).getValue().toString()+" \u2694"
-					+"  §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+" \u2665");
+			lore.add("  "+renderStatCard(card));
 		}
 		//rarity and faction
 		lore.add("");

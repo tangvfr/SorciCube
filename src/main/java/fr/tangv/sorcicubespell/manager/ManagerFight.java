@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.manager;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.fight.EventFight;
 import fr.tangv.sorcicubespell.fight.Fight;
 import fr.tangv.sorcicubespell.fight.FightArena;
+import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.fight.PreFight;
 import fr.tangv.sorcicubespell.fight.PreFightData;
 import fr.tangv.sorcicubespell.util.RenderException;
@@ -21,9 +23,11 @@ public class ManagerFight implements Runnable {
 	private HashMap<UUID, PreFight> preFights;
 	private Vector<Fight> fights;
 	private Vector<FightArena> arena;
+	private ConcurrentHashMap<Player, PlayerFight> playerFights;
 	
 	public ManagerFight(SorciCubeSpell sorci) throws Exception {
 		this.sorci = sorci;
+		this.playerFights = new ConcurrentHashMap<Player, PlayerFight>();
 		this.preFights = new HashMap<UUID, PreFight>();
 		this.fights = new Vector<Fight>();
 		this.arena = new Vector<FightArena>();
@@ -38,6 +42,14 @@ public class ManagerFight implements Runnable {
 	
 	public FightArena pickArena() {
 		return arena.elementAt((int) (arena.size()*Math.random()));
+	}
+	
+	public HashMap<UUID, PreFight> getPreFights() {
+		return preFights;
+	}
+	
+	public ConcurrentHashMap<Player, PlayerFight> getPlayerFights() {
+		return playerFights;
 	}
 	
 	public void playerJoin(Player player) {
@@ -64,6 +76,8 @@ public class ManagerFight implements Runnable {
 	}
 	
 	public void playerQuit(Player player) {
+		if (playerFights.containsKey(player))
+			playerFights.remove(player);
 		for (PreFight preFight : preFights.values())
 			if (preFight.getPlayerUUID1().equals(player.getUniqueId())) {
 				preFights.remove(preFight.getPlayerUUID2());
