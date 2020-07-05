@@ -7,20 +7,36 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 public class Fight {
 
 	private SorciCubeSpell sorci;
-	private Player player1;
-	private Player player2;
-	private FightDeck deck1;
-	private FightDeck deck2;
+	private PlayerFight player1;
+	private PlayerFight player2;
+	private FightArena arena;
+	//end
 	private boolean isEnd;
+	private Player losser;
 	
-	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2) throws Exception {
+	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2Arg) throws Exception {
 		this.sorci = sorci;
-		this.player1 = preFight.getPlayer1();
-		this.player2 = player2;
-		this.deck1 = new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player1).getDeck(preFight.getPlayer1DeckUse()));
-		this.deck1 = new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player2).getDeck(preFight.getPlayer2DeckUse()));
+		//player1 start one
+		if (Math.random() < 0.5) {
+			this.player1 = new PlayerFight(preFight.getPlayer1(),
+					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(preFight.getPlayer1()).getDeck(preFight.getPlayer1DeckUse())));
+			this.player2 = new PlayerFight(player2Arg,
+					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player2Arg).getDeck(preFight.getPlayer2DeckUse())));
+		} else {
+			this.player2 = new PlayerFight(preFight.getPlayer1(),
+					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(preFight.getPlayer1()).getDeck(preFight.getPlayer1DeckUse())));
+			this.player1 = new PlayerFight(player2Arg,
+					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player2Arg).getDeck(preFight.getPlayer2DeckUse())));
+		}
 		this.isEnd = false;
+		this.losser = null;
 		//init fight
+		this.arena = sorci.getManagerFight().pickArena();
+		//init player
+		player1.teleport(arena.getFirstBase());
+		player2.teleport(arena.getSecondBase());
+		player1.showPlayer(player2);
+		player2.showPlayer(player1);
 		
 	}
 	
@@ -29,25 +45,41 @@ public class Fight {
 	}
 	
 	//for end
+	public void setEnd(Player losser) {
+		this.losser = losser;
+		this.isEnd = true;
+	}
 	
 	public boolean isEnd() {
 		return isEnd;
 	}
 	
 	public void end() {
-		
+		end(losser);
 	}
 	
 	//player is player loss
-	public void end(Player player) {
-		
+	public void end(Player losser) {
+		end(losser, player1.isPlayer(losser) ? player2.getPlayer() : player1.getPlayer());
 	}
 	
-	public Player getPlayer1() {
+	private void end(Player losser, Player winner) {
+		if (losser.isOnline()) {
+			
+		}
+		if (winner.isOnline()) {
+			
+		}
+	}
+	
+	//geting seting
+	
+	public PlayerFight getPlayer1() {
 		return player1;
 	}
 
-	public Player getPlayer2() {
+	public PlayerFight getPlayer2() {
 		return player2;
 	}
+	
 }

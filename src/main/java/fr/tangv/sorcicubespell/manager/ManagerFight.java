@@ -10,23 +10,34 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.fight.EventFight;
 import fr.tangv.sorcicubespell.fight.Fight;
+import fr.tangv.sorcicubespell.fight.FightArena;
 import fr.tangv.sorcicubespell.fight.PreFight;
 import fr.tangv.sorcicubespell.fight.PreFightData;
 import fr.tangv.sorcicubespell.util.RenderException;
 
 public class ManagerFight implements Runnable {
-
+	
 	private SorciCubeSpell sorci;
 	private HashMap<UUID, PreFight> preFights;
 	private Vector<Fight> fights;
+	private Vector<FightArena> arena;
 	
-	public ManagerFight(SorciCubeSpell sorci) {
+	public ManagerFight(SorciCubeSpell sorci) throws Exception {
 		this.sorci = sorci;
 		this.preFights = new HashMap<UUID, PreFight>();
 		this.fights = new Vector<Fight>();
+		this.arena = new Vector<FightArena>();
+		for (String name : sorci.gertArenaConfig().getKeys(false))
+			this.arena.add(new FightArena(name, sorci.gertArenaConfig().getConfigurationSection(name)));
+		if (arena.size() <= 0)
+			throw new Exception("Nothing arena !");
 		//event
 		Bukkit.getPluginManager().registerEvents(new EventFight(this), sorci);
 		Bukkit.getScheduler().runTaskTimer(sorci, this, 0, 1);
+	}
+	
+	public FightArena pickArena() {
+		return arena.elementAt((int) (arena.size()*Math.random()));
 	}
 	
 	public void playerJoin(Player player) {
@@ -59,11 +70,15 @@ public class ManagerFight implements Runnable {
 				return;
 			}
 		for (int i = 0; i < fights.size(); i++) {
-			Fight fight = fights.get(i);
-			if (fight.getPlayer1().equals(player) || fight.getPlayer2().equals(player)) {
-				fight.end(player);
-				fights.remove(i);
-				return;
+			try {
+				Fight fight = fights.get(i);
+				if (fight.getPlayer1().isPlayer(player) || fight.getPlayer2().isPlayer(player)) {
+					fight.end(player);
+					fights.remove(i);
+					return;
+				}
+			} catch (Exception e) {
+				Bukkit.getLogger().warning(RenderException.renderException(e));
 			}
 		}
 	}
@@ -76,12 +91,16 @@ public class ManagerFight implements Runnable {
 				sorci.sendPlayerToServer(preFight.getPlayer1(), sorci.getNameServerLobby());
 			}
 		for (int i = 0; i < fights.size(); i++) {
-			Fight fight = fights.get(i);
-			fight.update();
-			if (fight.isEnd()) {
-				fight.end();
-				fights.remove(i);
-				i--;
+			try {
+				Fight fight = fights.get(i);
+				fight.update();
+				if (fight.isEnd()) {
+					fight.end();
+					fights.remove(i);
+					i--;
+				}
+			} catch (Exception e) {
+				Bukkit.getLogger().warning(RenderException.renderException(e));
 			}
 		}
 	}

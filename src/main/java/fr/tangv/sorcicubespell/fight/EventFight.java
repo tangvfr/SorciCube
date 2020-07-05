@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +43,10 @@ public class EventFight implements Listener {
 		player.setFoodLevel(20);
 		player.setMaxHealth(20);
 		player.setHealth(20);
+		for (Player other : Bukkit.getOnlinePlayers()) {
+			other.hidePlayer(player);
+			player.hidePlayer(other);
+		}
 		
 		manager.playerJoin(player);
 		teleportPlayerToLoc(player);

@@ -3,6 +3,8 @@ package fr.tangv.sorcicubespell;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +30,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config parameter;
 	private Config enumConfig;
 	private Config guiConfig;
+	private Config arenaConfig;
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
 	private ManagerCards managerCards;
@@ -37,6 +40,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerClickNPC managerClickNPC;
 	private ManagerPacketCards managerPacketCards;
 	private ManagerPreFightData managerPreFightData;
+	private ManagerFight managerFight;
 	private String nameServerLobby;
 	private String nameServerFight;
 	private String nameServerJump;
@@ -50,6 +54,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.parameter = new Config(this, "parameter.yml");
 			this.enumConfig = new Config(this, "enum.yml");
 			this.guiConfig = new Config(this, "gui.yml");
+			this.arenaConfig = new Config(this, "arena.yml");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
 			//init manager
@@ -64,7 +69,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			if (getParameter().getBoolean("is_lobby")) {
 				new ManagerLobby(this);
 			} else {
-				new ManagerFight(this);
+				this.managerFight = new ManagerFight(this);
 			}
 			new ManagerSecurity(this);
 			//init for change server
@@ -128,6 +133,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	public Config gertGuiConfig() {
 		return guiConfig;
 	}
+	
+	public Config gertArenaConfig() {
+		return arenaConfig;
+	}
 
 	public MongoDBManager getMongo() {
 		return mongo;
@@ -159,6 +168,11 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public ManagerPreFightData getManagerPreFightData() {
 		return managerPreFightData;
+	}
+	
+	@Nullable
+	public ManagerFight getManagerFight() {
+		return managerFight;
 	}
 	
 }

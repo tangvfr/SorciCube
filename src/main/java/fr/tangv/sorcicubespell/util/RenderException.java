@@ -83,7 +83,7 @@ public class RenderException {
 		//new line
 		text += "┗━"+generatedChar('━', line)
 		+"━┻━"+generatedChar('━', classe)
-		+"━┻━"+generatedChar('━', methode)+"━┛";
+		+"━┻━"+generatedChar('━', methode)+"━┛\r\n";
 		//example border
 		/*
 		 * ┏━┳━┓
