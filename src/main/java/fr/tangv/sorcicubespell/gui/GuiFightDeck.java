@@ -51,12 +51,15 @@ public class GuiFightDeck extends GuiDecks {
 						break;
 				}
 				player.teleport(sorci.getManagerCreatorFight().getLocationFor(player));
+			} else {
+				player.sendMessage(sorci.getMessage().getString("message_invalid_deck"));
 			}
 		}
 	}
 	
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
+		e.setCancelled(true);
 		try {
 			int raw = e.getRawSlot();
 			switch (raw) {
@@ -90,7 +93,6 @@ public class GuiFightDeck extends GuiDecks {
 		} catch (Exception e1) {
 			Bukkit.getLogger().warning(RenderException.renderException(e1));
 		}
-		e.setCancelled(true);
 	}
 
 }

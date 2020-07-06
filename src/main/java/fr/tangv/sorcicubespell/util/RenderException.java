@@ -32,8 +32,9 @@ public class RenderException {
 		String methodeLabel = "Methode";
 		String messageLabel = "Error Message:";
 		int max = messageLabel.length();
-		if (max < e.getMessage().length())
-			max = e.getMessage().length();
+		int messageLenght = e.getMessage() == null ? 4 : e.getMessage().length();
+		if (max < messageLenght)
+			max = messageLenght;
 		int line = lineLabel.length();
 		int classe = classeLabel.length();
 		int methode = methodeLabel.length();
