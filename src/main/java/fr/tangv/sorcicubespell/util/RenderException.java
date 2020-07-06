@@ -65,16 +65,16 @@ public class RenderException {
 		text += "┃ "+centerString(' ', e.getMessage(), max)+" ┃\r\n";
 		//new line
 		text += "┣━"+generatedChar('━', line)
-		+"━┳━"+generatedChar('━', classe)
-		+"━┳━"+generatedChar('━', methode)+"━┫\r\n";
+			+"━┳━"+generatedChar('━', classe)
+			+"━┳━"+generatedChar('━', methode)+"━┫\r\n";
 		//new line
 		text += "┃ "+centerString(' ', lineLabel, line)
 			+" ┃ "+centerString(' ', classeLabel, classe)
 			+" ┃ "+centerString(' ', methodeLabel, methode)+" ┃\r\n";
 		//new line
 		text += "┣━"+generatedChar('━', line)
-		+"━╋━"+generatedChar('━', classe)
-		+"━╋━"+generatedChar('━', methode)+"━┫\r\n";
+			+"━╋━"+generatedChar('━', classe)
+			+"━╋━"+generatedChar('━', methode)+"━┫\r\n";
 		//new line
 		for (int i = s.length-1; i > 0; i--) {
 			StackTraceElement trace = s[i];
