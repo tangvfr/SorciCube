@@ -67,7 +67,7 @@ public class PanelNav extends JPanel {
 		list.setCellRenderer(new ListCellRenderer<Card>() {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
-				String prefix = (isSelected ? ">" : "") + (card.getType() == CardType.ENTITY ? "[E]" : "[S]");
+				String prefix = (isSelected ? ">" : "");
 				boolean skin = false;
 				boolean hide = false;
 				for (CardFeature feature : card.getFeatures().listFeatures()) {
@@ -76,10 +76,14 @@ public class PanelNav extends JPanel {
 					else if (feature.getType() == CardFeatureType.HIDE_CART)
 						hide = true;
 				}
-				if (skin)
-					prefix += "[Skin]";
 				if (hide)
-					prefix += "[Hide]";
+					prefix += "<span color=\"#E60FB8\">[Hide]</span>";
+				prefix += (card.getType() == CardType.ENTITY ? 
+						"<span color=\"#E8A006\">[Entity]</span>" 
+						: "<span color=\"#E64D0F\">[Spell]</span>");
+				if (skin)
+					prefix += "<span color=\"#2BBFE0\">[Skin]</span>";
+				prefix += "<span color=\"#000000\"> | </span>";
 				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.getName())+"</body></html>");
 			}
 		});
