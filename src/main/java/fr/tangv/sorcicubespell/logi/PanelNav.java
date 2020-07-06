@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubespell.card.CardComparator;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardFeatureType;
@@ -31,6 +32,7 @@ import fr.tangv.sorcicubespell.card.CardMaterial;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.card.CardValue;
+import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
 
 public class PanelNav extends JPanel {
 
@@ -39,6 +41,7 @@ public class PanelNav extends JPanel {
 	private JButton refrech;
 	private JButton disconnect;
 	private JList<Card> list;
+	private CardComparator sort;
 	
 	public PanelNav(CardsPanel cartsPanel) {
 		this.cartsPanel = cartsPanel;
@@ -103,11 +106,15 @@ public class PanelNav extends JPanel {
 		this.add(this.refrech, BorderLayout.NORTH);
 		this.add(new JScrollPane(this.list), BorderLayout.CENTER);
 		this.add(this.disconnect, BorderLayout.SOUTH);
+		this.sort = CardComparator.BY_ID;
 		this.refrech();
 	}
 	
 	public void refrech() {
-		this.list.setListData(new Vector<Card>(this.cartsPanel.getCarts().getCarts().values()));
+		Vector<Card> list = new Vector<Card>(this.cartsPanel.getCarts().getCarts().values());
+		list.sort(CardComparator.BY_ID);
+		list.sort(sort);
+		this.list.setListData(list);
 	}
 	
 	private class ListPopupMenu extends JPopupMenu {
@@ -187,6 +194,24 @@ public class PanelNav extends JPanel {
 				}
 			});
 			this.add(itemRemove);
+			JMenuItem itemSort = new JMenuItem("Change Sort");
+			itemSort.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (e.getID() == 1001) {
+						new DialogCombo<CardComparator>(cartsPanel.getFrameLogi(), "Sorted by", sort) {
+							private static final long serialVersionUID = 944290591647698175L;
+									
+							@Override
+							public void eventOk(CardComparator newSort) {
+								sort = newSort;
+								refrech();
+							}
+						}; 
+					}
+				}
+			});
+			this.add(itemSort);
 		}
 		
 	}
