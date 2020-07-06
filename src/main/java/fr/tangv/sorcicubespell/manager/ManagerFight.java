@@ -72,7 +72,8 @@ public class ManagerFight implements Runnable {
 				return;
 			}
 		}
-		sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
+		if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
+			sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
 	}
 	
 	public void playerQuit(Player player) {

@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import fr.tangv.sorcicubespell.manager.ManagerFight;
 
@@ -36,6 +37,11 @@ public class EventFight implements Listener {
 	}
 	
 	@EventHandler
+	public void onSwap(PlayerSwapHandItemsEvent e) {
+		e.setCancelled(true);
+	}
+	
+	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().contains(e.getPlayer())) {
 			e.getPlayer().openInventory(e.getPlayer().getInventory());
@@ -45,11 +51,14 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClickInv(InventoryClickEvent e) {
-		if (manager.getPlayerFights().contains(e.getWhoClicked())) {
+		if (e.getInventory().hashCode() == e.getWhoClicked().getInventory().hashCode()
+				&& manager.getPlayerFights().contains(e.getWhoClicked())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
+			player.getPlayer().sendMessage("Click in Inv");
 			if (player.canPlay()) {
 				//action here
 				//and detect where click
+				player.getPlayer().sendMessage("Click raw: "+e.getRawSlot());
 			}
 		}
 		e.setCancelled(true);

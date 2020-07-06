@@ -5,6 +5,10 @@ database: "plugin"
 is_lobby: true
 #security
 perm_build: "sorcicubespell.build"
+perm_admin: "sorcicubespell.admin"
+#/viewcards permission = sorcicubespell.viewcards
+#/packetadd <name> permission = sorcicubespell.packetadd
+#/packetgive <player> <name> permission = sorcicubespell.packetgive
 #fight
 cooldown_below_fight: 5
 cooldown_one_round: 180

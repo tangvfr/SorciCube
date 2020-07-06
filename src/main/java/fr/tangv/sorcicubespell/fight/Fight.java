@@ -25,7 +25,7 @@ public class Fight {
 		this.isEnd = false;
 		this.losser = null;
 		this.cooldown = new Cooldown(1_000);
-		this.round = -sorci.getParameter().getInt("cooldown_below_fight");
+		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
 		//player1 start one
 		if (Math.random() < 0.5) {
@@ -60,31 +60,39 @@ public class Fight {
 	
 	@SuppressWarnings("deprecation")
 	public void update() {
-		if (round <= 0) {
+		if (round <= -1) {
 			if (cooldown.update()) {
 				String message;
-				if (round == 0) {
+				if (round == -1) {
 					message = sorci.getMessage().getString("message_start_game");
 					cooldown.stop();
 					this.cooldown = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
-					round = -1;
 					gameIsStart = true;
 					nextRound();
 				} else {
 					message = sorci.getMessage().getString("message_below_start_game")
-							.replace("{time}", Integer.toString(Math.abs(round)));
+							.replace("{time}", Integer.toString(Math.abs(round+1)));
 					round += 1;
 				}
 				player1.getPlayer().sendTitle("", message);
 				player2.getPlayer().sendTitle("", message);
 			}
 		} else {
+			if (cooldown.update())
+				nextRound();
 			
+			//maj boss bar for time
+			
+			//for test
+			if (round >= 4)
+				setEnd(player1.getPlayer());
+			//end for test
 		}
 	}
 	
 	public void nextRound() {
 		round += 1;
+		cooldown.start();
 		this.firstPlay = round%2 == 0;
 		int mana = (round/2)+1;
 		if (round == 1)
@@ -92,6 +100,8 @@ public class Fight {
 		PlayerFight player = this.firstPlay ? player1 : player2;
 		player.setMana(mana);
 		player.getEnemie().setMana(0);
+		
+		//send message nextRound
 		
 		//init inv etc
 	}
@@ -116,15 +126,22 @@ public class Fight {
 	}
 	
 	private void end(Player losser, Player winner) {
+		setEnd(losser);
 		if (losser.isOnline()) {
 			
+			sorci.sendPlayerToServer(losser, sorci.getNameServerLobby());
 		}
 		if (winner.isOnline()) {
 			
+			sorci.sendPlayerToServer(winner, sorci.getNameServerLobby());
 		}
 	}
 	
 	//geting seting
+	
+	public SorciCubeSpell getSorci() {
+		return sorci;
+	}
 	
 	public boolean gameIsStart() {
 		return gameIsStart;
