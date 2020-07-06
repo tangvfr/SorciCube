@@ -120,4 +120,8 @@ public class ManagerFight implements Runnable {
 		}
 	}
 	
+	public SorciCubeSpell getSorci() {
+		return sorci;
+	}
+	
 }

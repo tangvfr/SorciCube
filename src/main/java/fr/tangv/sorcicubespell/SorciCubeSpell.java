@@ -94,15 +94,17 @@ public class SorciCubeSpell extends JavaPlugin {
 	}
 	
 	public void sendPlayerToServer(Player player, String server) {
-		ByteArrayOutputStream data = new ByteArrayOutputStream();
-		DataOutputStream out = new DataOutputStream(data);
-		try {
-			out.writeUTF("Connect");
-			out.writeUTF(server);
-		} catch (Exception e) {
-			Bukkit.getLogger().warning(RenderException.renderException(e));
+		if (player != null && player.isOnline()) {
+			ByteArrayOutputStream data = new ByteArrayOutputStream();
+			DataOutputStream out = new DataOutputStream(data);
+			try {
+				out.writeUTF("Connect");
+				out.writeUTF(server);
+			} catch (Exception e) {
+				Bukkit.getLogger().warning(RenderException.renderException(e));
+			}
+			player.sendPluginMessage(this, "BungeeCord", data.toByteArray());
 		}
-		player.sendPluginMessage(this, "BungeeCord", data.toByteArray());
 	}
 	
 	public String getNameServerLobby() {

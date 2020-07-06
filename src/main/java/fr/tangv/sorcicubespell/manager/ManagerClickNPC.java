@@ -58,6 +58,7 @@ public class ManagerClickNPC {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				sorci.getManagerCreatorFight().playerLeave(player, false);
+				player.sendMessage(sorci.getMessage().getString("message_leave_fight"));
 			}
 		});
 		//init bukkit

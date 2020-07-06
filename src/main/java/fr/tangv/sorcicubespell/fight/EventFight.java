@@ -89,7 +89,12 @@ public class EventFight implements Listener {
 			other.hidePlayer(player);
 			player.hidePlayer(other);
 		}
-		manager.playerJoin(player);
+		Bukkit.getScheduler().runTaskLater(manager.getSorci(), new Runnable() {
+			@Override
+			public void run() {
+				manager.playerJoin(player);
+			}
+		}, 1);
 	}
 	
 	@EventHandler
