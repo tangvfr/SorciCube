@@ -66,9 +66,21 @@ public class PanelNav extends JPanel {
 		list.setComponentPopupMenu(new ListPopupMenu(this.cartsPanel));
 		list.setCellRenderer(new ListCellRenderer<Card>() {
 			@Override
-			public Component getListCellRendererComponent(JList<? extends Card> list, Card cart, int index, boolean isSelected, boolean cellHasFocus) {
-				String prefix = (isSelected ? ">" : "") + (cart.getType() == CardType.ENTITY ? "[E]" : "[S]");
-				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(cart.getName())+"</body></html>");
+			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
+				String prefix = (isSelected ? ">" : "") + (card.getType() == CardType.ENTITY ? "[E]" : "[S]");
+				boolean skin = false;
+				boolean hide = false;
+				for (CardFeature feature : card.getFeatures().listFeatures()) {
+					if (feature.getType() == CardFeatureType.SKIN)
+						skin = true;
+					else if (feature.getType() == CardFeatureType.HIDE_CART)
+						hide = true;
+				}
+				if (skin)
+					prefix += "[Skin]";
+				if (hide)
+					prefix += "[Hide]";
+				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.getName())+"</body></html>");
 			}
 		});
 		list.addMouseListener(new ClickListener() {
