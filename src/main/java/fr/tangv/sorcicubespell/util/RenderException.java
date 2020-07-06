@@ -11,12 +11,14 @@ public class RenderException {
 	}*/
 	
 	private static String leftString(char c, String text, int max) {
-		return text+generatedChar(' ', max-text.length());
+		int lenght = text == null ? 4 : text.length();
+		return text+generatedChar(' ', max-lenght);
 	}
 	
 	private static String centerString(char c, String text, int max) {
-		int stringDecal = (max-text.length())/2;
-		return generatedChar(' ', stringDecal)+text+generatedChar(' ', max-(text.length()+stringDecal));
+		int lenght = text == null ? 4 : text.length();
+		int stringDecal = (max-lenght)/2;
+		return generatedChar(' ', stringDecal)+text+generatedChar(' ', max-(lenght+stringDecal));
 	}
 	
 	private static String generatedChar(char c, int number) {
