@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.gui;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -50,7 +51,9 @@ public class GuiFightDeck extends GuiDecks {
 						//add after
 						break;
 				}
-				player.teleport(sorci.getManagerCreatorFight().getLocationFor(player));
+				Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
+				if (loc != null)
+					player.teleport(loc);
 			} else {
 				player.sendMessage(sorci.getMessage().getString("message_invalid_deck"));
 			}
