@@ -21,7 +21,7 @@ server_jump: "jump"
 name_npc:
   edit_deck: "§6L'éditeur"
   return_spawn: "§cRetour Spawn"
-  default_deck: "§aPremier deck"
+  default_deck: "§aPremier Deck"
   fight: "§4Gardien"
   leave: "§4Big Man"
 #location
