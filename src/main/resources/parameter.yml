@@ -3,6 +3,7 @@ mongodb: "mongodb://ect..."
 database: "plugin"
 #is lobby
 is_lobby: true
+chat_format: "{displayname}§r§8: §r§f{message}"
 #security
 perm_build: "sorcicubespell.build"
 perm_admin: "sorcicubespell.admin"
@@ -21,6 +22,8 @@ name_npc:
   edit_deck: "§6L'éditeur"
   return_spawn: "§cRetour Spawn"
   default_deck: "§aPremier deck"
+  fight: "§4Gardien"
+  leave: "§4Big Man"
 #location
 location_spawn:
   ==: org.bukkit.Location
@@ -36,6 +39,30 @@ location_tuto:
   x: 100.0
   y: 100.0
   z: 100.0
+  pitch: 0.0
+  yaw: 0.0
+location_noclassified:
+  ==: org.bukkit.Location
+  world: "world"
+  x: 100.0
+  y: 100.0
+  z: 200.0
+  pitch: 0.0
+  yaw: 0.0
+location_duel:
+  ==: org.bukkit.Location
+  world: "world"
+  x: 100.0
+  y: 100.0
+  z: 0.0
+  pitch: 0.0
+  yaw: 0.0
+location_npc:
+  ==: org.bukkit.Location
+  world: "world"
+  x: 0.0
+  y: 100.0
+  z: 0.0
   pitch: 0.0
   yaw: 0.0
 #message

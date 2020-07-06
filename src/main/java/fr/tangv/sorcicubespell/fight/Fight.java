@@ -7,6 +7,7 @@ import fr.tangv.sorcicubespell.util.Cooldown;
 public class Fight {
 
 	private SorciCubeSpell sorci;
+	private FightType fightType;
 	private PlayerFight player1;
 	private PlayerFight player2;
 	private FightArena arena;
@@ -24,6 +25,7 @@ public class Fight {
 		this.gameIsStart = false;
 		this.isEnd = false;
 		this.losser = null;
+		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
@@ -141,6 +143,10 @@ public class Fight {
 	
 	public SorciCubeSpell getSorci() {
 		return sorci;
+	}
+	
+	public FightType getFightType() {
+		return fightType;
 	}
 	
 	public boolean gameIsStart() {

@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
+import fr.tangv.sorcicubespell.manager.ManagerCreatorFight;
 import fr.tangv.sorcicubespell.manager.ManagerDefaultDeck;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
@@ -26,6 +27,9 @@ import fr.tangv.sorcicubespell.util.RenderException;
 
 public class SorciCubeSpell extends JavaPlugin {
 
+	private String nameServerLobby;
+	private String nameServerFight;
+	private String nameServerJump;
 	private Config message;
 	private Config parameter;
 	private Config enumConfig;
@@ -41,9 +45,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerPacketCards managerPacketCards;
 	private ManagerPreFightData managerPreFightData;
 	private ManagerFight managerFight;
-	private String nameServerLobby;
-	private String nameServerFight;
-	private String nameServerJump;
+	private ManagerCreatorFight managerCreatorFight;
 	
 	@Override
 	public void onEnable() {
@@ -67,6 +69,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerPacketCards = new ManagerPacketCards(this);
 			this.managerPreFightData = new ManagerPreFightData(this);
 			if (getParameter().getBoolean("is_lobby")) {
+				this.managerCreatorFight = new ManagerCreatorFight(this);
 				new ManagerLobby(this);
 			} else {
 				this.managerFight = new ManagerFight(this);
@@ -173,6 +176,11 @@ public class SorciCubeSpell extends JavaPlugin {
 	@Nullable
 	public ManagerFight getManagerFight() {
 		return managerFight;
+	}
+	
+	@Nullable
+	public ManagerCreatorFight getManagerCreatorFight() {
+		return managerCreatorFight;
 	}
 	
 }

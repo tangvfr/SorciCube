@@ -28,7 +28,7 @@ gui_view_cards:
     page: "§7Actualisé la page {page}/{max}"
 #Gui Decks
 gui_decks:
-  name: "§5Libraire Decks"
+  name: "§5Choisir un Deck"
   deck: "§2Deck {number}"
   back: "§cRetour"
 #Gui Edit Deck
@@ -61,3 +61,9 @@ gui_create_deck:
 gui_open_packet:
   no_view: "§bMystère"
   back: "§cFermer"
+#Gui Fight
+gui_fight:
+  name: "§3Choisir le type de combat"
+  unclassied: "§8Non Classé"
+  duel: "§cDuel"
+  close: "§cFermer"

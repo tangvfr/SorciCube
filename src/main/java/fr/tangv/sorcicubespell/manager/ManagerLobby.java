@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -18,20 +19,34 @@ public class ManagerLobby implements Listener {
 	private SorciCubeSpell sorci;
 	private Location locationTuto;
 	private Location locationSpawn;
+	private String formatChat;
 	
 	public ManagerLobby(SorciCubeSpell sorci) {
 		this.sorci = sorci;
 		this.locationTuto = (Location) sorci.getParameter().get("location_tuto");
 		this.locationSpawn = (Location) sorci.getParameter().get("location_spawn");
+		this.formatChat = sorci.getParameter().getString("chat_format");
 		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
 	
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent e) {
+		e.setFormat(formatChat
+				.replace("{displayname}", e.getPlayer().getDisplayName())
+				.replace("{message}", e.getMessage())
+			);
+	}
+	
 	private void teleportPlayerToSpawn(Player player) {
-		if (sorci.getManagerPlayers().containtPlayer(player)) {
-			player.teleport(locationSpawn);
-		} else {
-			player.teleport(locationTuto);
+		Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
+		if (loc == null) {
+			if (sorci.getManagerPlayers().containtPlayer(player)) {
+				loc = locationSpawn;
+			} else {
+				loc = locationTuto;
+			}
 		}
+		player.teleport(loc);
 	}
 	
 	@EventHandler
@@ -69,6 +84,7 @@ public class ManagerLobby implements Listener {
 	public void onQuit(PlayerQuitEvent e) {
 		Player player = e.getPlayer();
 		e.setQuitMessage(sorci.getParameter().getString("quit_message").replace("{player}", player.getDisplayName()));
+		sorci.getManagerCreatorFight().playerLeave(player, true);
 	}
 	
 }

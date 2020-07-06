@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.tangv.sorcicubespell.manager.ManagerFight;
 
@@ -21,6 +22,11 @@ public class EventFight implements Listener {
 
 	public EventFight(ManagerFight manager) {
 		this.manager = manager;
+	}
+	
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent e) {
+		e.setCancelled(true);
 	}
 	
 	@EventHandler

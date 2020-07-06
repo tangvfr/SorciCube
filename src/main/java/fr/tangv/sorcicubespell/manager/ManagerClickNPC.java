@@ -47,6 +47,19 @@ public class ManagerClickNPC {
 				}
 			}
 		});
+		clickNPCs.put(sorci.getParameter().getString("name_npc.fight"), new ClickNPC() {
+			@Override
+			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
+				if (sorci.getManagerPlayers().containtPlayer(player))
+					sorci.getManagerGui().getGuiFightDeck().open(player);
+			}
+		});
+		clickNPCs.put(sorci.getParameter().getString("name_npc.leave"), new ClickNPC() {
+			@Override
+			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
+				sorci.getManagerCreatorFight().playerLeave(player, false);
+			}
+		});
 		//init bukkit
 		Bukkit.getPluginManager().registerEvents(new EventClickNPC(this), sorci);
 	}

@@ -5,6 +5,7 @@ import org.bukkit.inventory.Inventory;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardComparator;
+import fr.tangv.sorcicubespell.fight.FightType;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 
 public class PlayerGui {
@@ -19,6 +20,7 @@ public class PlayerGui {
 	private int deckCardEdit;
 	private PlayerFeature playerFeature;
 	private AbstractGui previousGui;
+	private FightType fightType;
 	
 	public PlayerGui(Player player) {
 		this.player = player;
@@ -108,6 +110,14 @@ public class PlayerGui {
 
 	public void setPreviousGui(AbstractGui previousGui) {
 		this.previousGui = previousGui;
+	}
+
+	public FightType getFightType() {
+		return fightType;
+	}
+
+	public void setFightType(FightType fightType) {
+		this.fightType = fightType;
 	}
 	
 }

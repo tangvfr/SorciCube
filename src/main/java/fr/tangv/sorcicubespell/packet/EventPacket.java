@@ -85,14 +85,19 @@ public class EventPacket implements Listener, Runnable {
 						PlayerFeature feature = manager.getSorci().getManagerPlayers().getPlayerFeature(player);
 						if (feature != null) {
 							for (int i = 0; i < cardTake.length; i++) {
-								String uuid = cardTake[i].getUUID().toString();
-								if (feature.getCardsUnlocks().contains(uuid)) {
+								if (cardTake[i] == null) {
 									newCards[i] = false;
+									itemCards[i] = null;
 								} else {
-									feature.getCardsUnlocks().add(uuid);
-									newCards[i] = true;
+									String uuid = cardTake[i].getUUID().toString();
+									if (feature.getCardsUnlocks().contains(uuid)) {
+										newCards[i] = false;
+									} else {
+										feature.getCardsUnlocks().add(uuid);
+										newCards[i] = true;
+									}
+									itemCards[i] = CardRender.cardToItem(cardTake[i], manager.getSorci());
 								}
-								itemCards[i] = CardRender.cardToItem(cardTake[i], manager.getSorci());
 								inv.setItem(start+i, itemQuestion);
 							}
 							manager.getSorci().getManagerPlayers().update(feature);
