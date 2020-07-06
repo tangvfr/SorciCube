@@ -29,6 +29,7 @@ public class GuiFightDeck extends GuiDecks {
 					case UNCLASSIFIED:
 						if (cf.getNoClassified() == null) {
 							cf.setNoClassified(player);
+							player.sendMessage(sorci.getMessage().getString("message_wait_fight"));
 							break;
 						} else {
 							Player player1 = cf.getNoClassified();
