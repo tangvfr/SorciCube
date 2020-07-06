@@ -137,7 +137,9 @@ public class ManagerPacketCards {
 			}
 			if (list.size() <= 0)
 				throw new Exception("Not found card for the filter");
-			cards[i] = list.get((int) (Math.random()*list.size()));
+			Card card = list.get((int) (Math.random()*list.size()));
+			collectionCards.remove(card);
+			cards[i] = card;
 		}
 		return cards;
 	}
