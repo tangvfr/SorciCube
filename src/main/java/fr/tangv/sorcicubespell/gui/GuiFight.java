@@ -45,8 +45,8 @@ public class GuiFight extends AbstractGui {
 			getPlayerGui(player).setFightType(FightType.UNCLASSIFIED);
 			manager.getGuiFightDeck().open(player);
 		} else if (raw == 15) {//duel
-			/*getPlayerGui(player).setFightType(FightType.DUEL);
-			manager.getGuiFightDeck().open(player);*/
+			getPlayerGui(player).setFightType(FightType.DUEL);
+			manager.getGuiFightDeck().open(player);
 		} else if (raw == 22) {//close
 			player.closeInventory();
 		}

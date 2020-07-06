@@ -51,7 +51,7 @@ public class ManagerClickNPC {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				if (sorci.getManagerPlayers().containtPlayer(player))
-					sorci.getManagerGui().getGuiFightDeck().open(player);
+					sorci.getManagerGui().getGuiFight().open(player);
 			}
 		});
 		clickNPCs.put(sorci.getParameter().getString("name_npc.leave"), new ClickNPC() {
