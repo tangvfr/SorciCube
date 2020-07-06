@@ -56,7 +56,6 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.parameter = new Config(this, "parameter.yml");
 			this.enumConfig = new Config(this, "enum.yml");
 			this.guiConfig = new Config(this, "gui.yml");
-			this.arenaConfig = new Config(this, "arena.yml");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
 			//init manager
@@ -72,6 +71,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.managerCreatorFight = new ManagerCreatorFight(this);
 				new ManagerLobby(this);
 			} else {
+				this.arenaConfig = new Config(this, "arena.yml");
 				this.managerFight = new ManagerFight(this);
 			}
 			new ManagerSecurity(this);

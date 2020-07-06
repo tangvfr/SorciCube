@@ -10,7 +10,7 @@ public enum CardFeatureType {
 	INCITEMENT(TypeValue.NONE),
 	HIDE_CART(TypeValue.NONE),
 	IF_HURT(TypeValue.NONE),
-	TAKE_NEW_CART(TypeValue.NONE),
+	TAKE_NEW_CART(TypeValue.NUMBER),
 	DESTRUCT(TypeValue.NONE),
 	HEAL(TypeValue.NUMBER),
 	BOOST_DAMAGE(TypeValue.NUMBER),
