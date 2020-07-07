@@ -54,7 +54,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		//try for bug
 		try {
 			//init lib
-			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"));
+			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"), this);
 			//init Config
 			this.message = new Config(this, "message.yml");
 			this.parameter = new Config(this, "parameter.yml");

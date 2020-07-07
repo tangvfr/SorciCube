@@ -20,7 +20,7 @@ public class ManagerLogi {
 	public ManagerLogi(boolean loadLibs) throws Exception {
 		System.out.println("Load libs: "+loadLibs);
 		if (loadLibs)
-			LibLoader.loadLibs(new File("."+File.separatorChar+"libs"));
+			LibLoader.loadLibs(new File("."+File.separatorChar+"libs"), null);
 		this.frameLogi = new FrameLogi(this);
 		this.frameLogi.setVisible(true);
 	}
