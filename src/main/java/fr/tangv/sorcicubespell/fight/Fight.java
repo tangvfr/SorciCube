@@ -13,6 +13,7 @@ public class Fight {
 	private FightArena arena;
 	private int round;
 	private Cooldown cooldown;
+	private Cooldown cooldownRound;
 	private boolean firstPlay;
 	private boolean gameIsStart;
 	//end
@@ -27,6 +28,7 @@ public class Fight {
 		this.losser = null;
 		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
+		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
 		//player1 start one
@@ -67,8 +69,6 @@ public class Fight {
 				String message;
 				if (round == -1) {
 					message = sorci.getMessage().getString("message_start_game");
-					cooldown.stop();
-					this.cooldown = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 					gameIsStart = true;
 					nextRound();
 				} else {
@@ -80,8 +80,15 @@ public class Fight {
 				player2.getPlayer().sendTitle("", message);
 			}
 		} else {
-			if (cooldown.update())
+			if (cooldown.update()) {
+				cooldown.stop();
+				player1.getPlayer().sendTitle("", "");
+				player2.getPlayer().sendTitle("", "");
+			}
+			if (cooldownRound.update()) {
 				nextRound();
+				return;
+			}
 			
 			//maj boss bar for time
 			
@@ -94,7 +101,7 @@ public class Fight {
 	
 	public void nextRound() {
 		round += 1;
-		cooldown.start();
+		cooldownRound.start();
 		this.firstPlay = round%2 == 0;
 		int mana = (round/2)+1;
 		if (round == 1)
@@ -106,6 +113,8 @@ public class Fight {
 		//send message nextRound
 		
 		//init inv etc
+		player.initHotBar();
+		player.getEnemie().initHotBar();
 	}
 	
 	//for end

@@ -38,6 +38,9 @@ public class ManagerFight implements Runnable {
 		//event
 		Bukkit.getPluginManager().registerEvents(new EventFight(this), sorci);
 		Bukkit.getScheduler().runTaskTimer(sorci, this, 0, 1);
+		for (Player player : Bukkit.getOnlinePlayers())
+			if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
+				sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
 	}
 	
 	public FightArena pickArena() {
@@ -53,7 +56,6 @@ public class ManagerFight implements Runnable {
 	}
 	
 	public void playerJoin(Player player) {
-		boolean error = false;
 		if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
 			preFights.remove(preFight.getPlayerUUID2());
@@ -61,9 +63,10 @@ public class ManagerFight implements Runnable {
 				fights.add(new Fight(sorci, preFight, player));
 				return;
 			} catch (Exception e) {
-				error = true;
 				Bukkit.getLogger().warning(RenderException.renderException(e));
 				sorci.sendPlayerToServer(preFight.getPlayer1(), sorci.getNameServerLobby());
+				sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
+				return;
 			}
 		} else {
 			PreFightData preFightData = sorci.getManagerPreFightData().getPreFightData(player.getUniqueId());
@@ -74,7 +77,7 @@ public class ManagerFight implements Runnable {
 				return;
 			}
 		}
-		if (error || !player.hasPermission(sorci.getParameter().getString("perm_admin")))
+		if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
 			sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
 	}
 	

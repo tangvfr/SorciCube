@@ -4,7 +4,7 @@
 
   <groupId>fr.tangv.sorcicubespell</groupId>
   <artifactId>SorciCubeSpell</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>0.0.5-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>SorciCubeSpell</name>
@@ -17,14 +17,14 @@
   </properties>
 
   <build>
-        <defaultGoal>package</defaultGoal>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <directory>target</directory>
-        <resources>
-          <resource>
-            <directory>src/main/resources</directory>
-          </resource>
-        </resources>
+	<defaultGoal>package</defaultGoal>
+	<sourceDirectory>src/main/java</sourceDirectory>
+	<directory>target</directory>
+	<resources>
+		<resource>
+			<directory>src/main/resources</directory>
+		</resource>
+	</resources>
   </build>
 
   <dependencies>

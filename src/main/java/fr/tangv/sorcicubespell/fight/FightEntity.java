@@ -33,26 +33,24 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
 public class FightEntity {
 
+	private Fight fight;
 	private Location loc;
 	private EntityPlayer entityPlayer;
 	private EntityArmorStand entityName;
 	private EntityArmorStand entityStat;
 	private EntityArmorStand entityHead;
-	private PlayerConnection connection1;
-	private PlayerConnection connection2;
 	private GameProfile gameProfile;
 	private Card card;
 	
 	public FightEntity(Fight fight, Location loc) {
+		this.fight = fight;
 		this.loc = loc;
 		this.card = null;
-		this.connection1 = ((CraftPlayer) fight.getPlayer1().getPlayer()).getHandle().playerConnection;
-		this.connection2 = ((CraftPlayer) fight.getPlayer1().getPlayer()).getHandle().playerConnection;
 		this.gameProfile = new GameProfile(UUID.randomUUID(), "§6Entity");
 		byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", "").getBytes());
 		Property property = new Property("textures", new String(encodedData));
-	  	gameProfile.getProperties().put("textures", property);
-	  	//create entity
+		gameProfile.getProperties().put("textures", property);
+		//create entity
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
 		this.entityPlayer = new EntityPlayer(server, world, gameProfile, new PlayerInteractManager(world));
@@ -74,9 +72,13 @@ public class FightEntity {
 		return entity;
 	}
 	
+	private PlayerConnection getConnectionPlayer(PlayerFight player) {
+		return ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
+	}
+	
 	private void sendPacket(Packet<?> packet) {
-		connection1.sendPacket(packet);
-		connection2.sendPacket(packet);
+		getConnectionPlayer(fight.getPlayer1()).sendPacket(packet);
+		getConnectionPlayer(fight.getPlayer2()).sendPacket(packet);
 	}
 	
 	private void addPlayer() {

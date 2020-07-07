@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 
 import javax.annotation.Nullable;
 
@@ -23,6 +24,7 @@ import fr.tangv.sorcicubespell.manager.ManagerPreFightData;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
+import fr.tangv.sorcicubespell.util.LibLoader;
 import fr.tangv.sorcicubespell.util.RenderException;
 
 public class SorciCubeSpell extends JavaPlugin {
@@ -51,6 +53,8 @@ public class SorciCubeSpell extends JavaPlugin {
 	public void onEnable() {
 		//try for bug
 		try {
+			//init lib
+			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"));
 			//init Config
 			this.message = new Config(this, "message.yml");
 			this.parameter = new Config(this, "parameter.yml");
@@ -58,6 +62,11 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.guiConfig = new Config(this, "gui.yml");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
+			//init for change server
+			getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+			this.nameServerLobby = this.parameter.getString("server_lobby");
+			this.nameServerFight = this.parameter.getString("server_fight");
+			this.nameServerJump = this.parameter.getString("server_jump");
 			//init manager
 			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("database"));
 			this.managerCards = new ManagerCards(this.mongo);
@@ -75,11 +84,6 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.managerFight = new ManagerFight(this);
 			}
 			new ManagerSecurity(this);
-			//init for change server
-			getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-			this.nameServerLobby = this.parameter.getString("server_lobby");
-			this.nameServerFight = this.parameter.getString("server_fight");
-			this.nameServerJump = this.parameter.getString("server_jump");
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);

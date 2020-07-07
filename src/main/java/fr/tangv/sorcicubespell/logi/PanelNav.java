@@ -130,9 +130,6 @@ public class PanelNav extends JPanel {
 						Card cart = list.getSelectedValue();
 						CardFeatures features = new CardFeatures();
 						features.putFeature(new CardFeature("DEFAULT_HIDE", CardFeatureType.HIDE_CART, new CardValue()));
-						ArrayList<String> description = new ArrayList<String>();
-						description.add("§dDefault description it is");
-						description.add("§dBecause is default story");
 						cartsPanel.getCarts().insert(new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(1, 0),
@@ -144,7 +141,7 @@ public class PanelNav extends JPanel {
 								CardFaction.BASIC,
 								1,
 								features,
-								description)
+								new ArrayList<String>())
 							);
 						refrech();
 						list.setSelectedValue(cart, true);
@@ -162,9 +159,6 @@ public class PanelNav extends JPanel {
 						features.putFeature(new CardFeature(CardFeatures.HEALTH, CardFeatureType.HEALTH, new CardValue(3)));
 						features.putFeature(new CardFeature(CardFeatures.ATTACK_DAMMAGE, CardFeatureType.DAMAGE, new CardValue(1)));
 						features.putFeature(new CardFeature("DEFAULT_HIDE", CardFeatureType.HIDE_CART, new CardValue()));
-						ArrayList<String> description = new ArrayList<String>();
-						description.add("§dDefault description it is");
-						description.add("§dBecause is default story");
 						cartsPanel.getCarts().insert(new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(3, 0),
@@ -176,7 +170,7 @@ public class PanelNav extends JPanel {
 								CardFaction.BASIC,
 								1,
 								features,
-								description
+								new ArrayList<String>()
 							));
 						refrech();
 						list.setSelectedValue(card, true);

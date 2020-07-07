@@ -50,14 +50,14 @@ public class EventFight implements Listener {
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().contains(e.getPlayer())) {
-			e.getPlayer().openInventory(e.getPlayer().getInventory());
+			e.getPlayer().openInventory(e.getPlayer().getInventory());//a modif sont prope inv marche
 		}
 		e.setCancelled(false);
 	}
 	
 	@EventHandler
 	public void onClickInv(InventoryClickEvent e) {
-		if (e.getInventory().hashCode() == e.getWhoClicked().getInventory().hashCode()
+		if (e.getInventory().hashCode() == e.getWhoClicked().getInventory().hashCode()//a modif sont prope inv marche
 				&& manager.getPlayerFights().contains(e.getWhoClicked())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
 			player.getPlayer().sendMessage("Click in Inv");
