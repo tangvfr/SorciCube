@@ -22,7 +22,7 @@ public class FightDeck {
 	
 	private void mixCards() {
 		while (cardsUse.size() > 0) {
-			Card card = cardsUse.elementAt((int) (cards.size()*Math.random()));
+			Card card = cardsUse.elementAt((int) (cardsUse.size()*Math.random()));
 			cardsUse.remove(card);
 			cards.add(card);
 		}

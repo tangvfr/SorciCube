@@ -30,7 +30,6 @@ public class Fight {
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
 		//player1 start one
-		System.err.println(preFight);
 		if (Math.random() < 0.5) {
 			this.player1 = new PlayerFight(this, preFight.getPlayer1(),
 					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(preFight.getPlayer1()).getDeck(preFight.getPlayer1DeckUse())),
@@ -42,7 +41,14 @@ public class Fight {
 				);
 		} else {
 			this.player2 = new PlayerFight(this, preFight.getPlayer1(),
-					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(preFight.getPlayer1()).getDeck(preFight.getPlayer1DeckUse())),
+					new FightDeck(sorci
+							.getManagerPlayers()
+							/*>null pointeur*/.getPlayerFeature(
+									preFight
+									.getPlayer1())
+							.getDeck(
+									preFight
+									.getPlayer1DeckUse())),
 					true
 				);
 			this.player1 = new PlayerFight(this, player2Arg,

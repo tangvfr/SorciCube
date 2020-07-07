@@ -24,6 +24,7 @@ public class PreFight extends PreFightData {
 					int player2DeckUse,
 					FightType fightType) {
 		super(player1.getUniqueId(), playerUUID2, player1DeckUse, player2DeckUse, fightType);
+		this.player1 = player1;
 		this.cooldown = new Cooldown(10_000);
 		cooldown.start();
 	}

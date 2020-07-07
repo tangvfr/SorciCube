@@ -68,16 +68,16 @@ public class ManagerLobby implements Listener {
 		player.setFoodLevel(19);
 		player.setMaxHealth(20);
 		player.setHealth(20);
-		teleportPlayerToSpawn(player);
-		Bukkit.getScheduler().runTaskAsynchronously(sorci, new Runnable() {
+		Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
 			@Override
 			public void run() {
+				teleportPlayerToSpawn(player);
 				if (sorci.getManagerPlayers().containtPlayer(player))
 					player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
 				else
 					player.sendMessage(sorci.getMessage().getString("message_welcom"));
 			}
-		});
+		}, 1);
 	}
 	
 	@EventHandler
