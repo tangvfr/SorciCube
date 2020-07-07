@@ -53,6 +53,7 @@ public class ManagerFight implements Runnable {
 	}
 	
 	public void playerJoin(Player player) {
+		boolean error = false;
 		if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
 			preFights.remove(preFight.getPlayerUUID2());
@@ -60,6 +61,7 @@ public class ManagerFight implements Runnable {
 				fights.add(new Fight(sorci, preFight, player));
 				return;
 			} catch (Exception e) {
+				error = true;
 				Bukkit.getLogger().warning(RenderException.renderException(e));
 				sorci.sendPlayerToServer(preFight.getPlayer1(), sorci.getNameServerLobby());
 			}
@@ -72,7 +74,7 @@ public class ManagerFight implements Runnable {
 				return;
 			}
 		}
-		if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
+		if (error || !player.hasPermission(sorci.getParameter().getString("perm_admin")))
 			sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
 	}
 	

@@ -41,14 +41,7 @@ public class Fight {
 				);
 		} else {
 			this.player2 = new PlayerFight(this, preFight.getPlayer1(),
-					new FightDeck(sorci
-							.getManagerPlayers()
-							/*>null pointeur*/.getPlayerFeature(
-									preFight
-									.getPlayer1())
-							.getDeck(
-									preFight
-									.getPlayer1DeckUse())),
+					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(preFight.getPlayer1()).getDeck(preFight.getPlayer1DeckUse())),
 					true
 				);
 			this.player1 = new PlayerFight(this, player2Arg,

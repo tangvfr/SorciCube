@@ -37,6 +37,7 @@ public class PlayerFight {
 		this.entity = new FightEntity[locs.length];
 		for (int i = 0; i < locs.length; i++)
 			this.entity[i] = new FightEntity(fight, locs[i]);
+		//cards hand
 		this.cardHand = new Card[6];
 		for (int i = 0; i < 4; i++)
 			cardHand[i] = getDeck().pickCard();
