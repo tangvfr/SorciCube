@@ -2,7 +2,7 @@ package fr.tangv.sorcicubespell.card;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Material;
@@ -13,7 +13,7 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class CardRender {
 
-	private static String featureToString(SorciCubeSpell sorci, HashMap<UUID, Card> cards, CardFeature feature) {
+	private static String featureToString(SorciCubeSpell sorci, Map<UUID, Card> cards, CardFeature feature) {
 		if (feature.getType() == CardFeatureType.INVOCATION ||
 				feature.getType() == CardFeatureType.ACTION_DEAD ||
 				feature.getType() == CardFeatureType.ACTION_SPAWN ||
@@ -29,7 +29,7 @@ public class CardRender {
 			return feature.getValue().toString();
 	}
 	
-	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, HashMap<UUID, Card> cards) {
+	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, Map<UUID, Card> cards) {
 		return CardRender.cardToItem(card, sorci, cards, 1, false);
 	}
 	
@@ -44,7 +44,7 @@ public class CardRender {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, HashMap<UUID, Card> cards, int amount, boolean ench) {
+	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, Map<UUID, Card> cards, int amount, boolean ench) {
 		if (card == null) return null;
 		CardFeatures features = card.getFeatures();
 		String cible = sorci.getEnumTool().cibleToString(card.getCible())+

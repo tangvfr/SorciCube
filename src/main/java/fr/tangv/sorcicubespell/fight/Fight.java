@@ -1,6 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
-import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
@@ -38,7 +38,7 @@ public class Fight {
 	private boolean gameIsStart;
 	private BossBar bossBar;
 	private String titleBossBar;
-	private HashMap<UUID, Card> hashCards;
+	private ConcurrentHashMap<UUID, Card> hashCards;
 	//end
 	private boolean isEnd;
 	private Player losser;
@@ -54,7 +54,7 @@ public class Fight {
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
-		this.hashCards = sorci.getManagerCards().getCarts();
+		this.hashCards = new ConcurrentHashMap<UUID, Card>(sorci.getManagerCards().getCarts());
 		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
 		this.bossBar = Bukkit.createBossBar(
 				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
@@ -147,10 +147,10 @@ public class Fight {
 	public void sendTitleToPlayer(String message) {
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
 				toIChatBaseComposent(""),
-				0, 12, 0));
+				0, 6, 0));
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
 				toIChatBaseComposent(message),
-				0, 12, 0));
+				0, 6, 0));
 	}
 	
 	private void updatePlayer(PlayerFight player) {
@@ -244,7 +244,7 @@ public class Fight {
 		return fightType;
 	}
 	
-	public HashMap<UUID, Card> getHashCards() {
+	public ConcurrentHashMap<UUID, Card> getHashCards() {
 		return hashCards;
 	}
 	

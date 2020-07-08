@@ -70,6 +70,7 @@ public class ManagerLobby implements Listener {
 		player.setFoodLevel(19);
 		player.setMaxHealth(20);
 		player.setHealth(20);
+		player.setCollidable(false);
 		Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
 			@Override
 			public void run() {

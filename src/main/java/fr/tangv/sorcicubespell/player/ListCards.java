@@ -1,6 +1,6 @@
 package fr.tangv.sorcicubespell.player;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bson.Document;
@@ -46,7 +46,7 @@ public class ListCards {
 		return doc;
 	}
 	
-	public static ListCards toListCards(HashMap<UUID, Card> hashCards, Document doc) {
+	public static ListCards toListCards(Map<UUID, Card> hashCards, Document doc) {
 		int numberCard = doc.getInteger("size", 0);
 		Card[] cards = new Card[numberCard];
 		for (int i = 0; i < numberCard; i++) {
