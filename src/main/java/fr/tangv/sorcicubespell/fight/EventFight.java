@@ -57,14 +57,49 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClickInv(InventoryClickEvent e) {
-		e.getWhoClicked().sendMessage("You in fight list: "+manager.getPlayerFights().containsKey(e.getWhoClicked()));
 		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
 			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()) {
-				player.getPlayer().sendMessage("Click in Inv");
 				if (player.canPlay()) {
-					//action here
-					//and detect where click
+					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
+					switch (slot) {
+						case CARD_1:
+							player.setCardSelect(0);
+							player.showSelectCard();
+							break;
+	
+						case CARD_2:
+							player.setCardSelect(1);
+							player.showSelectCard();
+							break;
+							
+						case CARD_3:
+							player.setCardSelect(2);
+							player.showSelectCard();
+							break;
+							
+						case CARD_4:
+							player.setCardSelect(3);
+							player.showSelectCard();
+							break;
+							
+						case CARD_5:
+							player.setCardSelect(4);
+							player.showSelectCard();
+							break;
+							
+						case CARD_6:
+							player.setCardSelect(5);
+							player.showSelectCard();
+							break;
+							
+						case FINISH_ROUND:
+							player.getFight().nextRound();
+							break;
+							
+						default:
+							break;
+					}
 					player.getPlayer().sendMessage("Click raw: "+e.getRawSlot());
 				}
 			} else {

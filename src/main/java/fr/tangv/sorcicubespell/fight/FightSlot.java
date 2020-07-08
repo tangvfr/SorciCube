@@ -12,20 +12,27 @@ public enum FightSlot {
 	NONE_2(9, 43),
 	FINISH_ROUND(8, 44);
 
-	private Integer slotInv;
-	private Integer slotClick;
+	public static FightSlot valueOfRaw(int raw) {
+		for (FightSlot slot : values())
+			if (slot.getSlotRaw() == raw)
+				return slot;
+		return null;
+	}
 	
-	private FightSlot(int slotInv, int slotClick) {
+	private Integer slotInv;
+	private Integer slotRaw;
+	
+	private FightSlot(int slotInv, int slotRaw) {
 		this.slotInv = slotInv;
-		this.slotClick = slotClick;
+		this.slotRaw = slotRaw;
 	}
 	
 	public Integer getSlotInv() {
 		return slotInv;
 	}
 	
-	public Integer getSlotClick() {
-		return slotClick;
+	public Integer getSlotRaw() {
+		return slotRaw;
 	}
 	
 }

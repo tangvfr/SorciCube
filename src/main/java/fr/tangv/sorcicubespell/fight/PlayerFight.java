@@ -23,6 +23,7 @@ public class PlayerFight {
 	private int mana;
 	private int manaBoost;
 	private int health;
+	private int cardSelected;
 	private FightEntity[] entity;
 	private Location locBase;
 	private Card[] cardHand;
@@ -35,6 +36,7 @@ public class PlayerFight {
 		this.setMana(0);
 		this.setManaBoost(0);
 		this.setHealth(30);
+		this.cardSelected = -1;
 		this.first = first;
 		this.locBase = this.isFisrt() ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase();
 		//item
@@ -135,6 +137,30 @@ public class PlayerFight {
 		this.enemie = enemie;
 		player.showPlayer(enemie.getPlayer());
 	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		if (health < 0)
+			this.health = 0;
+		else if (health > 60) 
+			this.health = 60;
+		else
+			this.health = health;
+	}
+	
+	public int getCardSelect() {
+		return cardSelected;
+	}
+	
+	public void setCardSelect(int index) {
+		if (index < 0 || index > cardHand.length-1 || cardHand[index] == null)
+			this.cardSelected = -1;
+		else
+			this.cardSelected = index;
+	}
 	
 	//function
 	
@@ -156,6 +182,10 @@ public class PlayerFight {
 		player.updateInventory();
 	}
 	
+	public void showSelectCard() {
+		
+	}
+	
 	public boolean canPlay() {
 		return fight.gameIsStart() && fight.getFirstPlay() == first;
 	}
@@ -166,19 +196,6 @@ public class PlayerFight {
 	
 	public boolean teleportToBase() {
 		return player.teleport(this.locBase, TeleportCause.PLUGIN);
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		if (health < 0)
-			this.health = 0;
-		else if (health > 60) 
-			this.health = 60;
-		else
-			this.health = health;
 	}
 	
 }

@@ -7,7 +7,10 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.util.Cooldown;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class Fight {
 
@@ -103,13 +106,25 @@ public class Fight {
 				return;
 			}
 			bossBar.setTitle(titleBossBar.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining())));
-			bossBar.setProgress(1-cooldownRound.getProgess());
-			
+			bossBar.setProgress(cooldownRound.getProgess());
+			this.updatePlayer(player1);
+			this.updatePlayer(player2);
 			//for test
 			if (round >= 4)
 				setEnd(player1.getPlayer());
 			//end for test
 		}
+	}
+	
+	private void updatePlayer(PlayerFight player) {
+		String messageActionBar = "";
+		int cardSelected = player.getCardSelect();
+		if (cardSelected != -1) {
+			Card card = player.getCardHand(cardSelected);
+			messageActionBar = "§r§f> "+card.getName()+"§r§f <";
+		}
+		player.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
+				new TextComponent(messageActionBar));
 	}
 	
 	public void nextRound() {
