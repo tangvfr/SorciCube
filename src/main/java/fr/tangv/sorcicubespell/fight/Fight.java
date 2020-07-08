@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.util.Cooldown;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -134,13 +135,13 @@ public class Fight {
 		getConnectionPlayer(player2).sendPacket(packet);
 	}
 	
-	public IChatBaseComponent toIChatBaseComposent(BaseComponent baseComponent) {
-		return ChatSerializer.a(ComponentSerializer.toString(baseComponent));
+	public IChatBaseComponent toIChatBaseComposent(String text) {
+		return ChatSerializer.a("{\"text\": \""+text+"\"}");
 	}
 	
 	public void sendTitleToPlayer(String message) {
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
-				toIChatBaseComposent(new TextComponent(message)),
+				toIChatBaseComposent(message),
 				10, 30, 10));
 	}
 	
@@ -151,7 +152,8 @@ public class Fight {
 			if (cardSelected != -1) {
 				Card card = player.getCardHand(cardSelected);
 				messageActionBar = 
-						CardRender.renderManaCard(card)+"§r §d> "+card.getName()+"§r§d < "+CardRender.renderStatCard(card);
+						CardRender.renderManaCard(card)+"§r §d> "+card.getName()+"§r§d < "+
+						(card.getType() == CardType.ENTITY ? CardRender.renderStatCard(card) : CardRender.renderManaCard(card));
 			}
 			player.getPlayer().setExp(1F);
 		} else {
