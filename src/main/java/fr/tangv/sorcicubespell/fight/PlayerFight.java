@@ -23,7 +23,7 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 public class PlayerFight {
 
 	private final static int MAX_HEALTH = 60;
-	private final static int START_HEALTH = 60;
+	private final static int START_HEALTH = 33;
 	private Inventory invHistoric;
 	private Fight fight;
     private PlayerFight enemie;
@@ -249,9 +249,9 @@ public class PlayerFight {
 		} else
 			text += "§c";
 		int off = 10-number;
-		text += generatedChar('\u25AE', number);
+		text += generatedChar('\u25A0', number);
 		text += colorOff;
-		text += generatedChar('\u25AE', off);
+		text += generatedChar('\u25A0', off);
 		text += "§8]";
 		return text;
 	}

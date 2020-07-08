@@ -59,7 +59,7 @@ public class Fight {
 		this.bossBar = Bukkit.createBossBar(
 				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
 				BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_arena")),
-				BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC
+				BarStyle.SOLID, new BarFlag[0]
 			);
 		//player1 start one
 		if (Math.random() < 0.5) {
@@ -114,7 +114,6 @@ public class Fight {
 				cooldown.stop();
 			}
 			if (cooldownRound.update()) {
-				player1.setHealth(player1.getHealth()-3);
 				nextRound();
 				return;
 			}
@@ -199,6 +198,9 @@ public class Fight {
 		//init inv
 		player.initHotBar();
 		player.getEnemie().initHotBar();
+		//for test
+		player1.setHealth(player1.getHealth()-3);
+		//end for test
 	}
 	
 	//for end
