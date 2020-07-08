@@ -31,41 +31,41 @@ name_npc:
 location_spawn:
   ==: org.bukkit.Location
   world: "world"
-  x: 0.0
+  x: 0.5
   y: 100.0
-  z: 0.0
+  z: 0.5
   pitch: 0.0
   yaw: 0.0
 location_tuto:
   ==: org.bukkit.Location
   world: "world"
-  x: 100.0
+  x: 100.5
   y: 100.0
-  z: 100.0
+  z: 100.5
   pitch: 0.0
   yaw: 0.0
 location_noclassified:
   ==: org.bukkit.Location
   world: "world"
-  x: 100.0
+  x: 100.5
   y: 100.0
-  z: 200.0
+  z: 200.5
   pitch: 0.0
   yaw: 0.0
 location_duel:
   ==: org.bukkit.Location
   world: "world"
-  x: 100.0
+  x: 100.5
   y: 100.0
-  z: 0.0
+  z: 0.5
   pitch: 0.0
   yaw: 0.0
 location_npc:
   ==: org.bukkit.Location
   world: "world"
-  x: 0.0
+  x: 0.5
   y: 100.0
-  z: 0.0
+  z: 0.5
   pitch: 0.0
   yaw: 0.0
 #message

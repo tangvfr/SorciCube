@@ -3,62 +3,62 @@
   first:
     base:
       ==: Vector
-      x: 0.0
+      x: 0.5
       y: 64.0
-      z: 0.0
+      z: 0.5
     entity1:
       ==: Vector
-      x: 6.0
+      x: 6.5
       y: 62.0
-      z: 6.0
+      z: 6.5
     entity2:
       ==: Vector
-      x: 3.0
+      x: 3.5
       y: 62.0
-      z: 6.0
+      z: 6.5
     entity3:
       ==: Vector
-      x: 0.0
+      x: 0.5
       y: 62.0
-      z: 6.0
+      z: 6.5
     entity4:
       ==: Vector
-      x: -2.0
+      x: -2.5
       y: 62.0
-      z: 6.0
+      z: 6.5
     entity5:
       ==: Vector
-      x: -5.0
+      x: -5.5
       y: 62.0
-      z: 6.0
+      z: 6.5
   second:
     base:
       ==: Vector
-      x: 0.0
+      x: 0.5
       y: 64.0
-      z: 18.0
+      z: 18.5
     entity1:
       ==: Vector
-      x: -5.0
+      x: -5.5
       y: 62.0
-      z: 12.0
+      z: 12.5
     entity2:
       ==: Vector
-      x: -2.0
+      x: -2.5
       y: 62.0
-      z: 12.0
+      z: 12.5
     entity3:
       ==: Vector
-      x: 0.0
+      x: 0.5
       y: 62.0
-      z: 12.0
+      z: 12.5
     entity4:
       ==: Vector
-      x: 3.0
+      x: 3.5
       y: 62.0
-      z: 12.0
+      z: 12.5
     entity5:
       ==: Vector
-      x: 6.0
+      x: 6.5
       y: 62.0
-      z: 12.0
+      z: 12.5

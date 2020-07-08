@@ -51,7 +51,7 @@ public class FightEntity {
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
 		this.entityPlayer = new EntityPlayer(server, world, gameProfile, new PlayerInteractManager(world));
-		this.entityPlayer.setLocation(loc.getBlockX()+0.5D, loc.getBlockY()+0.5D, loc.getBlockZ()+0.5D, loc.getYaw(), loc.getPitch());
+		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 		this.entityStat = createArmorStand(world, "", 0D);
 		this.entityName = createArmorStand(world, "", 0.25D);
 		this.entityHead = createArmorStand(world, "", 1.0D);
