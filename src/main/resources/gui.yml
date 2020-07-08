@@ -67,3 +67,6 @@ gui_fight:
   unclassied: "§8Non Classé"
   duel: "§cDuel"
   close: "§cFermer"
+#Gui Historic
+gui_historic:
+  name: "§5Historique"

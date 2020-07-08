@@ -1,9 +1,11 @@
 package fr.tangv.sorcicubespell.fight;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
@@ -12,6 +14,7 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class PlayerFight {
 
+	private Inventory invHistoric;
 	private Fight fight;
     private PlayerFight enemie;
 	private Player player;
@@ -41,6 +44,8 @@ public class PlayerFight {
 		this.cardHand = new Card[6];
 		for (int i = 0; i < 4; i++)
 			cardHand[i] = getDeck().pickCard();
+		//historique
+		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
 	}
 	
 	//param number is number card pick
@@ -56,6 +61,14 @@ public class PlayerFight {
 			}
 		}
 		return numberPick;
+	}
+	
+	public void openInvHistoric() {
+		player.openInventory(invHistoric);
+	}
+	
+	public Inventory getInvHistoric() {
+		return invHistoric;
 	}
 	
 	public int getMaxCardHand() {
@@ -115,12 +128,12 @@ public class PlayerFight {
 	
 	public void initHotBar() {
 		boolean play = canPlay();
-		player.getInventory().setItem(6, null);
-		player.getInventory().setItem(7, null);
+		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), null);
+		player.getInventory().setItem(FightSlot.NONE_2.getSlotInv(), null);
 		ItemStack item = null;
 		if (play)
 			item = itemNextRound;
-		player.getInventory().setItem(8, item);
+		player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);
 		//card hand
 		for (int i = 0; i < getMaxCardHand(); i++)
 			player.getInventory().setItem(i, CardRender.cardToItem(getCardHand(i), fight.getSorci()));

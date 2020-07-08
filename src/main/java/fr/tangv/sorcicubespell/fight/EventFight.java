@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -49,25 +50,34 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
-		if (manager.getPlayerFights().contains(e.getPlayer())) {
-			e.getPlayer().openInventory(e.getPlayer().getInventory());//a modif sont prope inv marche
-		}
+		if (manager.getPlayerFights().contains(e.getPlayer()))
+			manager.getPlayerFights().get(e.getPlayer()).openInvHistoric();
 		e.setCancelled(false);
 	}
 	
 	@EventHandler
 	public void onClickInv(InventoryClickEvent e) {
-		if (e.getInventory().hashCode() == e.getWhoClicked().getInventory().hashCode()//a modif sont prope inv marche
-				&& manager.getPlayerFights().contains(e.getWhoClicked())) {
+		if (manager.getPlayerFights().contains(e.getWhoClicked())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
-			player.getPlayer().sendMessage("Click in Inv");
-			if (player.canPlay()) {
-				//action here
-				//and detect where click
-				player.getPlayer().sendMessage("Click raw: "+e.getRawSlot());
+			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()) {
+				player.getPlayer().sendMessage("Click in Inv");
+				if (player.canPlay()) {
+					//action here
+					//and detect where click
+					player.getPlayer().sendMessage("Click raw: "+e.getRawSlot());
+				}
 			}
 		}
 		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onOpenInv(InventoryOpenEvent e) {
+		if (!(manager.getPlayerFights().contains(e.getPlayer())
+			&& manager.getPlayerFights().get(e.getPlayer()).getInvHistoric().hashCode() ==  e.getInventory().hashCode())
+			&& !e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
+			e.setCancelled(true);
+		}
 	}
 	
 	@EventHandler
