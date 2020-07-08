@@ -135,8 +135,12 @@ public class PlayerFight {
 			item = itemNextRound;
 		player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);
 		//card hand
-		for (int i = 0; i < getMaxCardHand(); i++)
-			player.getInventory().setItem(i, CardRender.cardToItem(getCardHand(i), fight.getSorci()));
+		player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), CardRender.cardToItem(getCardHand(0), fight.getSorci()));
+		player.getInventory().setItem(FightSlot.CARD_2.getSlotInv(), CardRender.cardToItem(getCardHand(1), fight.getSorci()));
+		player.getInventory().setItem(FightSlot.CARD_3.getSlotInv(), CardRender.cardToItem(getCardHand(2), fight.getSorci()));
+		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), CardRender.cardToItem(getCardHand(3), fight.getSorci()));
+		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), CardRender.cardToItem(getCardHand(4), fight.getSorci()));
+		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), CardRender.cardToItem(getCardHand(5), fight.getSorci()));
 	}
 	
 	public boolean canPlay() {

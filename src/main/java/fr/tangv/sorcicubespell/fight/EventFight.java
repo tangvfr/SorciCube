@@ -74,9 +74,9 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onOpenInv(InventoryOpenEvent e) {
-		if (!(manager.getPlayerFights().containsKey(e.getPlayer())
-			&& manager.getPlayerFights().get(e.getPlayer()).getInvHistoric().hashCode() ==  e.getInventory().hashCode())
-			&& !e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
+		if (manager.getPlayerFights().containsKey(e.getPlayer()) ? 
+			manager.getPlayerFights().get(e.getPlayer()).getInvHistoric().hashCode() !=  e.getInventory().hashCode()
+			: !e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
 			e.setCancelled(true);
 		}
 	}
