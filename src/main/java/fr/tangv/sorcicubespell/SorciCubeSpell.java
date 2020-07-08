@@ -70,13 +70,13 @@ public class SorciCubeSpell extends JavaPlugin {
 			//init manager
 			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("database"));
 			this.managerCards = new ManagerCards(this.mongo);
-			this.managerGuiAdmin = new ManagerGui(this);
 			this.managerPlayers = new ManagerPlayers(this);
-			this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
-			this.managerClickNPC = new ManagerClickNPC(this);
-			this.managerPacketCards = new ManagerPacketCards(this);
 			this.managerPreFightData = new ManagerPreFightData(this);
 			if (getParameter().getBoolean("is_lobby")) {
+				this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
+				this.managerClickNPC = new ManagerClickNPC(this);
+				this.managerGuiAdmin = new ManagerGui(this);
+				this.managerPacketCards = new ManagerPacketCards(this);
 				this.managerCreatorFight = new ManagerCreatorFight(this);
 				new ManagerLobby(this);
 			} else {
@@ -166,6 +166,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerCards;
 	}
 	
+	@Nullable
 	public ManagerGui getManagerGui() {
 		return managerGuiAdmin;
 	}
@@ -174,14 +175,17 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerPlayers;
 	}
 	
+	@Nullable
 	public ManagerDefaultDeck getManagerDefaultDeck() {
 		return managerDefaultDeck;
 	}
 	
+	@Nullable
 	public ManagerClickNPC getManagerClickNPC() {
 		return managerClickNPC;
 	}
 	
+	@Nullable
 	public ManagerPacketCards getManagerPacketCards() {
 		return managerPacketCards;
 	}
