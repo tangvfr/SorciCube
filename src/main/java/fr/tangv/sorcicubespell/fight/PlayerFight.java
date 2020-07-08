@@ -22,6 +22,8 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 
 public class PlayerFight {
 
+	private final static int MAX_HEALTH = 60;
+	private final static int MIDLE_HEALTH = 60;
 	private Inventory invHistoric;
 	private Fight fight;
     private PlayerFight enemie;
@@ -41,9 +43,9 @@ public class PlayerFight {
 		this.fight = fight;
 		this.player = player;
 		this.deck = deck;
-		this.setMana(0);
-		this.setManaBoost(0);
-		this.setHealth(30);
+		this.mana = 0;
+		this.manaBoost = 0;
+		this.health = MIDLE_HEALTH;
 		this.cardSelected = -1;
 		this.first = first;
 		this.locBase = this.isFisrt() ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase();
@@ -152,8 +154,8 @@ public class PlayerFight {
 	public void setHealth(int health) {
 		if (health < 0)
 			this.health = 0;
-		else if (health > 60) 
-			this.health = 60;
+		else if (health > MAX_HEALTH) 
+			this.health = MAX_HEALTH;
 		else
 			this.health = health;
 		updateViewLifes();
@@ -240,13 +242,13 @@ public class PlayerFight {
 		String text = "§8[";
 		String colorOff = "§7";
 		int number = health;
-		if (number > 30) {
-			health -= 30;
+		if (number > MIDLE_HEALTH) {
+			health -= MIDLE_HEALTH;
 			colorOff = "§c";
 			text += "§a";
 		} else
 			text += "§c";
-		int off = 30-number;
+		int off = MIDLE_HEALTH-number;
 		text += generatedChar('\u25AE', number);
 		text += colorOff;
 		text += generatedChar('\u25AE', off);
