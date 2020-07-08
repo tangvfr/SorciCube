@@ -74,3 +74,5 @@ gui_historic:
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"
   color: "YELLOW"
+scoreboard:
+  name: "§cVie des hero"

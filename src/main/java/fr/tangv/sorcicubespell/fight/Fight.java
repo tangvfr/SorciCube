@@ -7,7 +7,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,7 +20,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent;
 import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutTitle;
-import net.minecraft.server.v1_9_R2.PlayerConnection;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
 
@@ -70,6 +68,8 @@ public class Fight {
 		//init player
 		player1.setEnemie(player2);
 		player2.setEnemie(player1);
+		player1.createScoreboard();
+		player2.createScoreboard();
 		player1.teleportToBase();
 		player2.teleportToBase();
 		sorci.getManagerFight().getPlayerFights().put(player1.getPlayer(), player1);
@@ -131,13 +131,9 @@ public class Fight {
 		return CardRender.cardToItem(card, sorci, hashCards);
 	}
 	
-	public PlayerConnection getConnectionPlayer(PlayerFight player) {
-		return ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-	}
-	
 	public void sendPacket(Packet<?> packet) {
-		getConnectionPlayer(player1).sendPacket(packet);
-		getConnectionPlayer(player2).sendPacket(packet);
+		player1.sendPacket(packet);
+		player2.sendPacket(packet);
 	}
 	
 	public IChatBaseComponent toIChatBaseComposent(String text) {
@@ -170,6 +166,8 @@ public class Fight {
 		player.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 				new TextComponent(messageActionBar));
 		player.getPlayer().setLevel(player.getMana());
+		//scoreboard
+		
 	}
 	
 	public void nextRound() {

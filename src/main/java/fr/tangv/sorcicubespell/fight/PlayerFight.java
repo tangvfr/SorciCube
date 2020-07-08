@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.fight;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.Inventory;
@@ -10,6 +11,14 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import net.minecraft.server.v1_9_R2.IScoreboardCriteria;
+import net.minecraft.server.v1_9_R2.Packet;
+import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardDisplayObjective;
+import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardObjective;
+import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardScore;
+import net.minecraft.server.v1_9_R2.Scoreboard;
+import net.minecraft.server.v1_9_R2.ScoreboardObjective;
+import net.minecraft.server.v1_9_R2.ScoreboardScore;
 
 public class PlayerFight {
 
@@ -147,6 +156,8 @@ public class PlayerFight {
 			this.health = 60;
 		else
 			this.health = health;
+		updateViewLifes();
+		getEnemie().updateViewLifes();
 	}
 	
 	public int getCardSelect() {
@@ -161,6 +172,87 @@ public class PlayerFight {
 	}
 	
 	//function
+
+	public void sendPacket(Packet<?> packet) {
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+	}
+	
+	private void sendScore(String name, String lastName, int scoreNumber) {
+		if (lastName != null)
+			sendPacket(new PacketPlayOutScoreboardScore(lastName)/*remove*/);
+		ScoreboardScore score = new ScoreboardScore(this.sc, this.scob, name/*text display*/);
+		score.setScore(scoreNumber);
+		sendPacket(new PacketPlayOutScoreboardScore(score)/*change*/);
+	}
+	
+	private String lastScoreMy;
+	private String lastScoreEnemie;
+	private Scoreboard sc;
+	private ScoreboardObjective scob;
+	
+	public void createScoreboard() {
+		this.sc = new Scoreboard();
+		this.scob = new ScoreboardObjective(sc, 
+				fight.getSorci().gertGuiConfig().getString("scoreboard.name")/*displayName*/,
+				IScoreboardCriteria.b/*dummy*/
+			);
+		sendPacket(new PacketPlayOutScoreboardObjective(scob, 0/*0 create, 1 remmove, 2 update*/));
+		sendPacket(new PacketPlayOutScoreboardDisplayObjective(1/*0 LIST, 1 SIDEBAR, 2 BELOW_NAME*/, scob));
+		//init score
+		this.lastScoreMy = healthToString();
+		this.lastScoreEnemie = "§r"+getEnemie().healthToString();
+		sendScore(" ", null, -1);
+		sendScore("§7"+getPlayer().getName()+"§8:", null, -2);
+		sendScore(this.lastScoreMy, null, -3);
+		sendScore("   ", null, -4);
+		sendScore("    ", null, -5);
+		sendScore("     ", null, -6);
+		sendScore("      ", null, -7);
+		sendScore("       ", null, -8);
+		sendScore("        ", null, -9);
+		sendScore("§7"+getEnemie().getPlayer().getName()+"§8:", null, -10);
+		sendScore(this.lastScoreEnemie, null, -11);
+		sendScore("         ", null, -12);
+		//update objective
+		sendPacket(new PacketPlayOutScoreboardObjective(scob, 2/*0 create, 1 remmove, 2 update*/));
+	}
+	
+	public void updateViewLifes() {
+		String scoreMy = healthToString();
+		String scoreEnemie = "§r"+getEnemie().healthToString();
+		//update score
+		sendScore(scoreMy, this.lastScoreMy, -3);
+		sendScore(scoreEnemie, this.lastScoreEnemie, -11);
+		//update objective
+		sendPacket(new PacketPlayOutScoreboardObjective(scob, 2/*0 create, 1 remmove, 2 update*/));
+		this.lastScoreMy = scoreMy;
+		this.lastScoreEnemie = scoreEnemie;
+	}
+	
+	private static String generatedChar(char c, int number) {
+		String text = "";
+		for (int i = 0; i < number; i++)
+			text += c;
+		return text;
+	}
+	
+	private String healthToString() {
+		String text = "§8[";
+		String colorOff = "§7";
+		int number = health;
+		if (number > 30) {
+			health -= 30;
+			colorOff = "§c";
+			text += "§a";
+		} else
+			text += "§c";
+		int off = 30-number;
+		text += generatedChar('\u25AE', number);
+		text += colorOff;
+		text += generatedChar('\u25AE', off);
+		text += "§8]";
+		return text;
+	}
 	
 	public void initHotBar() {
 		boolean play = canPlay();
