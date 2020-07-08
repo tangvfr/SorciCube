@@ -131,6 +131,8 @@ public class EventFight implements Listener {
 		player.setFoodLevel(20);
 		player.setMaxHealth(20);
 		player.setHealth(20);
+		player.setExp(1F);
+		player.setLevel(0);
 		player.setCollidable(false);
 		player.getInventory().clear();
 		for (Player other : Bukkit.getOnlinePlayers()) {

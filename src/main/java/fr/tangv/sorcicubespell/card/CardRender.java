@@ -25,13 +25,17 @@ public class CardRender {
 				+"  §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+" \u2665";
 	}
 	
+	public static String renderManaCard(Card card) {
+		return "§b"+card.getMana()+" \u2756";
+	}
+	
 	@SuppressWarnings("deprecation")
 	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, int amount, boolean ench) {
 		if (card == null) return null;
 		CardFeatures features = card.getFeatures();
 		String cible = sorci.getEnumTool().cibleToString(card.getCible())+
 				(card.getCibleFaction() != CardFaction.BASIC ? (" "+sorci.getEnumTool().factionToString(card.getCibleFaction())) : "");
-		String name = card.getName()+"§r §b"+card.getMana()+" \u2756";
+		String name = card.getName()+"§r "+renderManaCard(card);
 		ArrayList<String> lore = new ArrayList<String>();
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {

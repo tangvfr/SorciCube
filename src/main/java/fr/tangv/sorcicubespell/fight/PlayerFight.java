@@ -48,8 +48,7 @@ public class PlayerFight {
 			this.entity[i] = new FightEntity(fight, locs[i]);
 		//cards hand
 		this.cardHand = new Card[6];
-		for (int i = 0; i < 4; i++)
-			cardHand[i] = getDeck().pickCard();
+		this.pickCard(3);
 		//historique
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
 	}
@@ -185,6 +184,7 @@ public class PlayerFight {
 	public void showSelectCard() {
 		if (cardSelected != -1) {
 			
+			player.closeInventory();
 		}
 	}
 	

@@ -4,16 +4,27 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.util.Cooldown;
 import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
+import net.minecraft.server.v1_9_R2.IChatBaseComponent;
+import net.minecraft.server.v1_9_R2.Packet;
+import net.minecraft.server.v1_9_R2.PacketPlayOutTitle;
+import net.minecraft.server.v1_9_R2.PlayerConnection;
+import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
 
 public class Fight {
 
+	private final static int MAX_MANA_ROUND = 12;
 	private SorciCubeSpell sorci;
 	private FightType fightType;
 	private PlayerFight player1;
@@ -76,30 +87,25 @@ public class Fight {
 		//start
 		cooldown.loop();
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	public void update() {
 		if (round < 0) {
 			if (cooldown.update()) {
-				String message;
 				if (round == -1) {
-					message = sorci.getMessage().getString("message_start_game");
 					gameIsStart = true;
 					bossBar.setVisible(true);
 					nextRound();
 				} else {
-					message = sorci.getMessage().getString("message_below_start_game")
-							.replace("{time}", Integer.toString(Math.abs(round+1)));
+					sendTitleToPlayer(
+							sorci.getMessage().getString("message_below_start_game")
+							.replace("{time}", Integer.toString(Math.abs(round+1)))
+						);
 					round += 1;
 				}
-				player1.getPlayer().sendTitle("", message);
-				player2.getPlayer().sendTitle("", message);
 			}
 		} else {
 			if (cooldown.update()) {
 				cooldown.stop();
-				player1.getPlayer().sendTitle("", "");
-				player2.getPlayer().sendTitle("", "");
 			}
 			if (cooldownRound.update()) {
 				nextRound();
@@ -119,13 +125,33 @@ public class Fight {
 		}
 	}
 	
+	public PlayerConnection getConnectionPlayer(PlayerFight player) {
+		return ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
+	}
+	
+	public void sendPacket(Packet<?> packet) {
+		getConnectionPlayer(player1).sendPacket(packet);
+		getConnectionPlayer(player2).sendPacket(packet);
+	}
+	
+	public IChatBaseComponent toIChatBaseComposent(BaseComponent baseComponent) {
+		return ChatSerializer.a(ComponentSerializer.toString(baseComponent));
+	}
+	
+	public void sendTitleToPlayer(String message) {
+		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
+				toIChatBaseComposent(new TextComponent(message)),
+				10, 30, 10));
+	}
+	
 	private void updatePlayer(PlayerFight player) {
 		String messageActionBar = "";
 		if (player.canPlay()) {
 			int cardSelected = player.getCardSelect();
 			if (cardSelected != -1) {
 				Card card = player.getCardHand(cardSelected);
-				messageActionBar = "§r§f> "+card.getName()+"§r§f <";
+				messageActionBar = 
+						CardRender.renderManaCard(card)+"§r §d> "+card.getName()+"§r§d < "+CardRender.renderStatCard(card);
 			}
 			player.getPlayer().setExp(1F);
 		} else {
@@ -143,14 +169,21 @@ public class Fight {
 		int mana = (round/2)+1;
 		if (round == 1)
 			mana = 2;
+		if (mana > MAX_MANA_ROUND)
+			mana = MAX_MANA_ROUND;
 		PlayerFight player = this.firstPlay ? player1 : player2;
 		player.setMana(mana+player.getManaBoost());
 		player.setManaBoost(0);
+		player.pickCard(1);
+		//enemie
 		player.getEnemie().setMana(0);
-		
-		//send message nextRound
-		
-		//init inv etc
+		player.getEnemie().setCardSelect(-1);
+		//message
+		sendTitleToPlayer(
+				sorci.getMessage().getString("message_round")
+				.replace("{round}", Integer.toString(round+1))
+			);
+		//init inv
 		player.initHotBar();
 		player.getEnemie().initHotBar();
 	}

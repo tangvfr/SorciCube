@@ -54,7 +54,7 @@ public class FightEntity {
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
 		this.entityPlayer = new EntityPlayer(server, world, gameProfile, new PlayerInteractManager(world));
-		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+		this.entityPlayer.setLocation(loc.getBlockX()+0.5D, loc.getBlockY()+0.5D, loc.getBlockZ()+0.5D, loc.getYaw(), loc.getPitch());
 		this.entityStat = createArmorStand(world, "", 0D);
 		this.entityName = createArmorStand(world, "", 0.25D);
 		this.entityHead = createArmorStand(world, "", 1.0D);
@@ -72,23 +72,14 @@ public class FightEntity {
 		return entity;
 	}
 	
-	private PlayerConnection getConnectionPlayer(PlayerFight player) {
-		return ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-	}
-	
-	private void sendPacket(Packet<?> packet) {
-		getConnectionPlayer(fight.getPlayer1()).sendPacket(packet);
-		getConnectionPlayer(fight.getPlayer2()).sendPacket(packet);
-	}
-	
 	private void addPlayer() {
-		sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
-		sendPacket(new PacketPlayOutSpawnEntityLiving(entityName));
+		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
+		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityName));
 	}
 	
 	private void removePlayer() {
-		sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
-		sendPacket(new PacketPlayOutEntityDestroy(entityName.getId()));
+		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
+		fight.sendPacket(new PacketPlayOutEntityDestroy(entityName.getId()));
 	}
 	
 	public void reloadPlayer() {
