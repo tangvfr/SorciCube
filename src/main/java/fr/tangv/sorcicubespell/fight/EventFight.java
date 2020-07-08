@@ -62,44 +62,45 @@ public class EventFight implements Listener {
 			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()) {
 				if (player.canPlay()) {
 					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
-					switch (slot) {
-						case CARD_1:
-							player.setCardSelect(0);
-							player.showSelectCard();
-							break;
-	
-						case CARD_2:
-							player.setCardSelect(1);
-							player.showSelectCard();
-							break;
-							
-						case CARD_3:
-							player.setCardSelect(2);
-							player.showSelectCard();
-							break;
-							
-						case CARD_4:
-							player.setCardSelect(3);
-							player.showSelectCard();
-							break;
-							
-						case CARD_5:
-							player.setCardSelect(4);
-							player.showSelectCard();
-							break;
-							
-						case CARD_6:
-							player.setCardSelect(5);
-							player.showSelectCard();
-							break;
-							
-						case FINISH_ROUND:
-							player.getFight().nextRound();
-							break;
-							
-						default:
-							break;
-					}
+					if (slot != null)
+						switch (slot) {
+							case CARD_1:
+								player.setCardSelect(0);
+								player.showSelectCard();
+								break;
+		
+							case CARD_2:
+								player.setCardSelect(1);
+								player.showSelectCard();
+								break;
+								
+							case CARD_3:
+								player.setCardSelect(2);
+								player.showSelectCard();
+								break;
+								
+							case CARD_4:
+								player.setCardSelect(3);
+								player.showSelectCard();
+								break;
+								
+							case CARD_5:
+								player.setCardSelect(4);
+								player.showSelectCard();
+								break;
+								
+							case CARD_6:
+								player.setCardSelect(5);
+								player.showSelectCard();
+								break;
+								
+							case FINISH_ROUND:
+								player.getFight().nextRound();
+								break;
+								
+							default:
+								break;
+						}
 					player.getPlayer().sendMessage("Click raw: "+e.getRawSlot());
 				}
 			} else {
