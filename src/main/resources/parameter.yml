@@ -14,7 +14,7 @@ perm_admin: "sorcicubespell.admin"
 format_time_sec: "sec"
 format_time_min: "min "
 #fight
-cooldown_below_fight: 5
+cooldown_below_fight: 10
 cooldown_one_round: 180
 #server
 server_lobby: "lobby"
