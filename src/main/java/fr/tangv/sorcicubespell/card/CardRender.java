@@ -14,10 +14,10 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 public class CardRender {
 
 	private static String featureToString(SorciCubeSpell sorci, HashMap<UUID, Card> cards, CardFeature feature) {
-		if (feature.getType() == CardFeatureType.INVOCATION &&
-				feature.getType() == CardFeatureType.ACTION_DEAD &&
-				feature.getType() == CardFeatureType.ACTION_SPAWN &&
-				feature.getType() == CardFeatureType.METAMORPH_TO &&
+		if (feature.getType() == CardFeatureType.INVOCATION ||
+				feature.getType() == CardFeatureType.ACTION_DEAD ||
+				feature.getType() == CardFeatureType.ACTION_SPAWN ||
+				feature.getType() == CardFeatureType.METAMORPH_TO ||
 				feature.getType() == CardFeatureType.GIVE_FEATURE_CART) {
 			UUID uuid = UUID.fromString(feature.getValue().asString());
 			if (cards.containsKey(uuid)) {

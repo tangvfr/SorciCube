@@ -114,8 +114,8 @@ public class Fight {
 				cooldown.stop();
 			}
 			if (cooldownRound.update()) {
-				nextRound();
 				player1.setHealth(player1.getHealth()-3);
+				nextRound();
 				return;
 			}
 			bossBar.setTitle(titleBossBar
