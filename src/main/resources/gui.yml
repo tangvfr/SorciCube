@@ -70,3 +70,7 @@ gui_fight:
 #Gui Historic
 gui_historic:
   name: "§5Historique"
+#View Fight
+boss_bar:
+  name: "Temps avant le prochain round, {time} !"
+  color: "YELLOW"

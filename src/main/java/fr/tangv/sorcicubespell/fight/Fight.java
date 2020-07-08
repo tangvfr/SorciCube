@@ -1,4 +1,9 @@
 package fr.tangv.sorcicubespell.fight;
+import org.bukkit.Bukkit;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -16,6 +21,8 @@ public class Fight {
 	private Cooldown cooldownRound;
 	private boolean firstPlay;
 	private boolean gameIsStart;
+	private BossBar bossBar;
+	private String titleBossBar;
 	//end
 	private boolean isEnd;
 	private Player losser;
@@ -29,6 +36,8 @@ public class Fight {
 		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
+		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
+		this.bossBar = Bukkit.createBossBar(titleBossBar, BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")), BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
 		//player1 start one
@@ -58,6 +67,9 @@ public class Fight {
 		player2.teleportToBase();
 		sorci.getManagerFight().getPlayerFights().put(player1.getPlayer(), player1);
 		sorci.getManagerFight().getPlayerFights().put(player2.getPlayer(), player2);
+		this.bossBar.setVisible(false);
+		this.bossBar.addPlayer(player1.getPlayer());
+		this.bossBar.addPlayer(player2.getPlayer());
 		//start
 		cooldown.loop();
 	}
@@ -70,6 +82,7 @@ public class Fight {
 				if (round == -1) {
 					message = sorci.getMessage().getString("message_start_game");
 					gameIsStart = true;
+					bossBar.setVisible(true);
 					nextRound();
 				} else {
 					message = sorci.getMessage().getString("message_below_start_game")
@@ -89,8 +102,8 @@ public class Fight {
 				nextRound();
 				return;
 			}
-			
-			//maj boss bar for time
+			bossBar.setTitle(titleBossBar.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining())));
+			bossBar.setProgress(1-cooldownRound.getProgess());
 			
 			//for test
 			if (round >= 4)

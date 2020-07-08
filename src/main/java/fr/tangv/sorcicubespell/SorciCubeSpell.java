@@ -111,6 +111,17 @@ public class SorciCubeSpell extends JavaPlugin {
 		}
 	}
 	
+	public String formatTime(long time) {
+		long timeInSec = (time/1000);
+		long min = timeInSec/60;
+		long sec = timeInSec%60;
+		String format = "";
+		if (min > 0)
+			format += min+parameter.getString("format_time_min");
+		format += sec+parameter.getString("format_time_sec");
+		return format;
+	}
+	
 	public String getNameServerLobby() {
 		return nameServerLobby;
 	}

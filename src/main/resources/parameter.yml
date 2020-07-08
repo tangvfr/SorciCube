@@ -10,6 +10,9 @@ perm_admin: "sorcicubespell.admin"
 #/viewcards permission = sorcicubespell.viewcards
 #/packetadd <name> permission = sorcicubespell.packetadd
 #/packetgive <player> <name> permission = sorcicubespell.packetgive
+#format time
+format_time_sec: "sec"
+format_time_min: "min "
 #fight
 cooldown_below_fight: 5
 cooldown_one_round: 180

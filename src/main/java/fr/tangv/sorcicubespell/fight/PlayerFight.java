@@ -21,6 +21,8 @@ public class PlayerFight {
 	private FightDeck deck;
 	private boolean first;
 	private int mana;
+	private int manaBoost;
+	private int health;
 	private FightEntity[] entity;
 	private Location locBase;
 	private Card[] cardHand;
@@ -31,6 +33,8 @@ public class PlayerFight {
 		this.player = player;
 		this.deck = deck;
 		this.setMana(0);
+		this.setManaBoost(0);
+		this.setHealth(30);
 		this.first = first;
 		this.locBase = this.isFisrt() ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase();
 		//item
@@ -115,6 +119,14 @@ public class PlayerFight {
 		this.mana = mana;
 	}
 
+	public int getManaBoost() {
+		return manaBoost;
+	}
+
+	public void setManaBoost(int manaBoost) {
+		this.manaBoost = manaBoost;
+	}
+
 	public PlayerFight getEnemie() {
 		return enemie;
 	}
@@ -154,6 +166,19 @@ public class PlayerFight {
 	
 	public boolean teleportToBase() {
 		return player.teleport(this.locBase, TeleportCause.PLUGIN);
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		if (health < 0)
+			this.health = 0;
+		else if (health > 60) 
+			this.health = 60;
+		else
+			this.health = health;
 	}
 	
 }
