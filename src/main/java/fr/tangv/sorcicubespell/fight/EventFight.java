@@ -32,7 +32,7 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onChangeGameMode(PlayerGameModeChangeEvent e) {
-		if (manager.getPlayerFights().contains(e.getPlayer())) {
+		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			e.setCancelled(true);
 			return;
 		}
@@ -50,14 +50,15 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
-		if (manager.getPlayerFights().contains(e.getPlayer()))
+		if (manager.getPlayerFights().containsKey(e.getPlayer()))
 			manager.getPlayerFights().get(e.getPlayer()).openInvHistoric();
-		e.setCancelled(false);
+		e.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onClickInv(InventoryClickEvent e) {
-		if (manager.getPlayerFights().contains(e.getWhoClicked())) {
+		e.getWhoClicked().sendMessage("You in fight list: "+manager.getPlayerFights().containsKey(e.getWhoClicked()));
+		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
 			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()) {
 				player.getPlayer().sendMessage("Click in Inv");
@@ -73,7 +74,7 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onOpenInv(InventoryOpenEvent e) {
-		if (!(manager.getPlayerFights().contains(e.getPlayer())
+		if (!(manager.getPlayerFights().containsKey(e.getPlayer())
 			&& manager.getPlayerFights().get(e.getPlayer()).getInvHistoric().hashCode() ==  e.getInventory().hashCode())
 			&& !e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
 			e.setCancelled(true);
