@@ -13,9 +13,7 @@ import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.util.Cooldown;
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.chat.ComponentSerializer;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent;
 import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutTitle;
@@ -140,9 +138,12 @@ public class Fight {
 	}
 	
 	public void sendTitleToPlayer(String message) {
+		sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
+				toIChatBaseComposent(""),
+				6, 20, 6));
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
 				toIChatBaseComposent(message),
-				10, 30, 10));
+				6, 20, 6));
 	}
 	
 	private void updatePlayer(PlayerFight player) {
