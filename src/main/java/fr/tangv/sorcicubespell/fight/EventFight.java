@@ -67,6 +67,8 @@ public class EventFight implements Listener {
 					//and detect where click
 					player.getPlayer().sendMessage("Click raw: "+e.getRawSlot());
 				}
+			} else {
+				player.openInvHistoric();
 			}
 		}
 		e.setCancelled(true);
