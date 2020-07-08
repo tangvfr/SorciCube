@@ -74,5 +74,7 @@ gui_historic:
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"
   color: "YELLOW"
+  name_arena: "§f{arena}"
+  color_arena: "WHITE"
 scoreboard:
   name: "§cVie des heros"

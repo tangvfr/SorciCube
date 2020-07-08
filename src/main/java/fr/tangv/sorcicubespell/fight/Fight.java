@@ -52,11 +52,15 @@ public class Fight {
 		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
-		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
-		this.bossBar = Bukkit.createBossBar(titleBossBar, BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")), BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
 		this.hashCards = sorci.getManagerCards().getCarts();
+		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
+		this.bossBar = Bukkit.createBossBar(
+				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
+				BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_arena")),
+				BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC
+			);
 		//player1 start one
 		if (Math.random() < 0.5) {
 			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), true);
@@ -74,7 +78,6 @@ public class Fight {
 		player2.teleportToBase();
 		sorci.getManagerFight().getPlayerFights().put(player1.getPlayer(), player1);
 		sorci.getManagerFight().getPlayerFights().put(player2.getPlayer(), player2);
-		this.bossBar.setVisible(false);
 		this.bossBar.addPlayer(player1.getPlayer());
 		this.bossBar.addPlayer(player2.getPlayer());
 		//start
@@ -95,7 +98,8 @@ public class Fight {
 			if (cooldown.update()) {
 				if (round == -1) {
 					gameIsStart = true;
-					bossBar.setVisible(true);
+					bossBar.setTitle(titleBossBar);
+					bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")));
 					nextRound();
 				} else {
 					sendTitleToPlayer(
@@ -111,6 +115,7 @@ public class Fight {
 			}
 			if (cooldownRound.update()) {
 				nextRound();
+				player1.setHealth(player1.getHealth()-3);
 				return;
 			}
 			bossBar.setTitle(titleBossBar

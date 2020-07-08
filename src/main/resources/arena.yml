@@ -1,64 +1,64 @@
-"sorci arena":
-  world: "Example"
+"Arena Test":
+  world: "arena_test"
   first:
     base:
       ==: Vector
       x: 0.0
-      y: 0.0
+      y: 64.0
       z: 0.0
     entity1:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: 6.0
+      y: 62.0
+      z: 6.0
     entity2:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: 3.0
+      y: 62.0
+      z: 6.0
     entity3:
       ==: Vector
       x: 0.0
-      y: 0.0
-      z: 0.0
+      y: 62.0
+      z: 6.0
     entity4:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: -2.0
+      y: 62.0
+      z: 6.0
     entity5:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: -5.0
+      y: 62.0
+      z: 6.0
   second:
     base:
       ==: Vector
       x: 0.0
-      y: 0.0
-      z: 0.0
+      y: 64.0
+      z: 18.0
     entity1:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: -5.0
+      y: 62.0
+      z: 12.0
     entity2:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: -2.0
+      y: 62.0
+      z: 12.0
     entity3:
       ==: Vector
       x: 0.0
-      y: 0.0
-      z: 0.0
+      y: 62.0
+      z: 12.0
     entity4:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: 3.0
+      y: 62.0
+      z: 12.0
     entity5:
       ==: Vector
-      x: 0.0
-      y: 0.0
-      z: 0.0
+      x: 6.0
+      y: 62.0
+      z: 12.0

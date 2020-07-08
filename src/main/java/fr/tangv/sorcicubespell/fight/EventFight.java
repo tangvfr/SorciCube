@@ -50,9 +50,12 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
-		if (manager.getPlayerFights().containsKey(e.getPlayer()))
+		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			manager.getPlayerFights().get(e.getPlayer()).openInvHistoric();
-		e.setCancelled(true);
+			e.setCancelled(true);
+		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
+			e.setCancelled(true);
+		}
 	}
 	
 	@EventHandler
