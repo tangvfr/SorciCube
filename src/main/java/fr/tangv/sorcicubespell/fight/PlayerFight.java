@@ -141,6 +141,7 @@ public class PlayerFight {
 		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), CardRender.cardToItem(getCardHand(3), fight.getSorci()));
 		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), CardRender.cardToItem(getCardHand(4), fight.getSorci()));
 		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), CardRender.cardToItem(getCardHand(5), fight.getSorci()));
+		player.updateInventory();
 	}
 	
 	public boolean canPlay() {
