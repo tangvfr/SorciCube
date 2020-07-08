@@ -37,7 +37,7 @@ public class ManagerFight implements Runnable {
 			throw new Exception("Nothing arena !");
 		//event
 		Bukkit.getPluginManager().registerEvents(new EventFight(this), sorci);
-		Bukkit.getScheduler().runTaskTimer(sorci, this, 0, 1);
+		Bukkit.getScheduler().runTaskTimer(sorci, this, 0, 4);
 		for (Player player : Bukkit.getOnlinePlayers())
 			if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
 				sorci.sendPlayerToServer(player, sorci.getNameServerLobby());

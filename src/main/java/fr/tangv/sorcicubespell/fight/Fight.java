@@ -79,7 +79,7 @@ public class Fight {
 	
 	@SuppressWarnings("deprecation")
 	public void update() {
-		if (round <= -1) {
+		if (round < 0) {
 			if (cooldown.update()) {
 				String message;
 				if (round == -1) {
@@ -105,7 +105,10 @@ public class Fight {
 				nextRound();
 				return;
 			}
-			bossBar.setTitle(titleBossBar.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining())));
+			bossBar.setTitle(titleBossBar
+					.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining()))
+					.replace("{round}", Integer.toString(round+1))
+				);
 			bossBar.setProgress(cooldownRound.getProgess());
 			this.updatePlayer(player1);
 			this.updatePlayer(player2);
