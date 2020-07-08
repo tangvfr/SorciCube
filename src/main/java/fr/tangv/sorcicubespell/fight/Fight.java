@@ -55,23 +55,11 @@ public class Fight {
 		this.arena = sorci.getManagerFight().pickArena();
 		//player1 start one
 		if (Math.random() < 0.5) {
-			this.player1 = new PlayerFight(this, preFight.getPlayer1(),
-					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(preFight.getPlayer1()).getDeck(preFight.getPlayer1DeckUse())),
-					true
-				);
-			this.player2 = new PlayerFight(this, player2Arg,
-					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player2Arg).getDeck(preFight.getPlayer2DeckUse())),
-					false
-				);
+			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), true);
+			this.player2 = createPlayerFight(player2Arg, preFight.getPlayer2DeckUse(), false);
 		} else {
-			this.player2 = new PlayerFight(this, preFight.getPlayer1(),
-					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(preFight.getPlayer1()).getDeck(preFight.getPlayer1DeckUse())),
-					true
-				);
-			this.player1 = new PlayerFight(this, player2Arg,
-					new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player2Arg).getDeck(preFight.getPlayer2DeckUse())),
-					false
-				);
+			this.player2 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), false);
+			this.player1 = createPlayerFight(player2Arg, preFight.getPlayer2DeckUse(), true);
 		}
 		//init player
 		player1.setEnemie(player2);
@@ -87,6 +75,15 @@ public class Fight {
 		cooldown.loop();
 	}
 
+	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
+		return new PlayerFight(
+				this, 
+				player,
+				new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player).getDeck(deck)),
+				first
+			);
+	}
+	
 	public void update() {
 		if (round < 0) {
 			if (cooldown.update()) {
