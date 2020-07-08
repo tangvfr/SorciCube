@@ -137,10 +137,10 @@ public class Fight {
 	public void sendTitleToPlayer(String message) {
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
 				toIChatBaseComposent(""),
-				6, 20, 6));
+				2, 16, 2));
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
 				toIChatBaseComposent(message),
-				6, 20, 6));
+				2, 16, 2));
 	}
 	
 	private void updatePlayer(PlayerFight player) {
