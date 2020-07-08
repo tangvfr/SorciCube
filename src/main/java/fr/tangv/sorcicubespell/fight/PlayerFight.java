@@ -183,7 +183,9 @@ public class PlayerFight {
 	}
 	
 	public void showSelectCard() {
-		
+		if (cardSelected != -1) {
+			
+		}
 	}
 	
 	public boolean canPlay() {

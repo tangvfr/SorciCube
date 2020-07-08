@@ -121,10 +121,12 @@ public class Fight {
 	
 	private void updatePlayer(PlayerFight player) {
 		String messageActionBar = "";
-		int cardSelected = player.getCardSelect();
-		if (cardSelected != -1) {
-			Card card = player.getCardHand(cardSelected);
-			messageActionBar = "§r§f> "+card.getName()+"§r§f <";
+		if (player.canPlay()) {
+			int cardSelected = player.getCardSelect();
+			if (cardSelected != -1) {
+				Card card = player.getCardHand(cardSelected);
+				messageActionBar = "§r§f> "+card.getName()+"§r§f <";
+			}
 		}
 		player.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 				new TextComponent(messageActionBar));
@@ -138,7 +140,8 @@ public class Fight {
 		if (round == 1)
 			mana = 2;
 		PlayerFight player = this.firstPlay ? player1 : player2;
-		player.setMana(mana);
+		player.setMana(mana+player.getManaBoost());
+		player.setManaBoost(0);
 		player.getEnemie().setMana(0);
 		
 		//send message nextRound
