@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubespell.manager;
 
-import java.util.HashMap;
 import java.util.UUID;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +19,7 @@ import fr.tangv.sorcicubespell.util.RenderException;
 public class ManagerFight implements Runnable {
 	
 	private SorciCubeSpell sorci;
-	private HashMap<UUID, PreFight> preFights;
+	private ConcurrentHashMap<UUID, PreFight> preFights;
 	private Vector<Fight> fights;
 	private Vector<FightArena> arena;
 	private ConcurrentHashMap<Player, PlayerFight> playerFights;
@@ -28,7 +27,7 @@ public class ManagerFight implements Runnable {
 	public ManagerFight(SorciCubeSpell sorci) throws Exception {
 		this.sorci = sorci;
 		this.playerFights = new ConcurrentHashMap<Player, PlayerFight>();
-		this.preFights = new HashMap<UUID, PreFight>();
+		this.preFights = new ConcurrentHashMap<UUID, PreFight>();
 		this.fights = new Vector<Fight>();
 		this.arena = new Vector<FightArena>();
 		for (String name : sorci.gertArenaConfig().getKeys(false))
@@ -46,7 +45,7 @@ public class ManagerFight implements Runnable {
 		return arena.elementAt((int) (arena.size()*Math.random()));
 	}
 	
-	public HashMap<UUID, PreFight> getPreFights() {
+	public ConcurrentHashMap<UUID, PreFight> getPreFights() {
 		return preFights;
 	}
 	
