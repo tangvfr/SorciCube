@@ -42,7 +42,7 @@ public class ManagerPacketCards {
 		EventPacket eventPacket = new EventPacket(this);
 		Bukkit.getPluginManager().registerEvents(eventPacket, sorci);
 		//timer
-		Bukkit.getScheduler().runTaskTimer(sorci, eventPacket, 0, 4);
+		Bukkit.getScheduler().runTaskTimerAsynchronously(sorci, eventPacket, 0, 4);
 	}
 	
 	@SuppressWarnings("deprecation")

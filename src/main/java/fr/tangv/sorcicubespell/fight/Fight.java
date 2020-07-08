@@ -59,7 +59,7 @@ public class Fight {
 		this.bossBar = Bukkit.createBossBar(
 				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
 				BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_arena")),
-				BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC
+				BarStyle.SOLID, BarFlag.CREATE_FOG
 			);
 		//player1 start one
 		if (Math.random() < 0.5) {
