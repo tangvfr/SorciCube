@@ -127,9 +127,13 @@ public class Fight {
 				Card card = player.getCardHand(cardSelected);
 				messageActionBar = "§r§f> "+card.getName()+"§r§f <";
 			}
+			player.getPlayer().setExp(1F);
+		} else {
+			player.getPlayer().setExp(0F);
 		}
 		player.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 				new TextComponent(messageActionBar));
+		player.getPlayer().setLevel(player.getMana());
 	}
 	
 	public void nextRound() {
