@@ -85,7 +85,7 @@ public class GuiSwapCard extends AbstractGui {
 			//set inv
 			if (cards.size() > 0)
 				for (int i = 0; i < num; i++) {
-					inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci()));
+					inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci(), mapCards));
 				}
 			//init paper
 			ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 

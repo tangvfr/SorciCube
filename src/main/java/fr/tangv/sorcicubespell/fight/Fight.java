@@ -1,4 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -6,6 +9,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
@@ -36,6 +40,7 @@ public class Fight {
 	private boolean gameIsStart;
 	private BossBar bossBar;
 	private String titleBossBar;
+	private HashMap<UUID, Card> hashCards;
 	//end
 	private boolean isEnd;
 	private Player losser;
@@ -53,6 +58,7 @@ public class Fight {
 		this.bossBar = Bukkit.createBossBar(titleBossBar, BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")), BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
+		this.hashCards = sorci.getManagerCards().getCarts();
 		//player1 start one
 		if (Math.random() < 0.5) {
 			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), true);
@@ -119,6 +125,10 @@ public class Fight {
 				setEnd(player1.getPlayer());
 			//end for test
 		}
+	}
+	
+	public ItemStack renderCard(Card card) {
+		return CardRender.cardToItem(card, sorci, hashCards);
 	}
 	
 	public PlayerConnection getConnectionPlayer(PlayerFight player) {
@@ -227,6 +237,10 @@ public class Fight {
 	
 	public FightType getFightType() {
 		return fightType;
+	}
+	
+	public HashMap<UUID, Card> getHashCards() {
+		return hashCards;
 	}
 	
 	public boolean gameIsStart() {

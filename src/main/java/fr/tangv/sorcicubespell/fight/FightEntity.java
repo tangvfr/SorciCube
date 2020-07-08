@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
 
 import com.mojang.authlib.GameProfile;
@@ -22,10 +21,8 @@ import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
-import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_9_R2.PlayerConnection;
 import net.minecraft.server.v1_9_R2.PlayerInteractManager;
 import net.minecraft.server.v1_9_R2.WorldServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
@@ -88,13 +85,13 @@ public class FightEntity {
 	}
 	
 	private void addHead() {
-		sendPacket(new PacketPlayOutSpawnEntityLiving(entityStat));
-		sendPacket(new PacketPlayOutSpawnEntityLiving(entityHead));
+		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityStat));
+		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityHead));
 	}
 	
 	private void removeHead() {
-		sendPacket(new PacketPlayOutEntityDestroy(entityStat.getId()));
-		sendPacket(new PacketPlayOutEntityDestroy(entityHead.getId()));
+		fight.sendPacket(new PacketPlayOutEntityDestroy(entityStat.getId()));
+		fight.sendPacket(new PacketPlayOutEntityDestroy(entityHead.getId()));
 	}
 	
 	public void reloadHead() {

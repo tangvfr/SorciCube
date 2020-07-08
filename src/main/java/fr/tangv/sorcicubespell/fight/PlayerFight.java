@@ -9,7 +9,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class PlayerFight {
@@ -172,18 +171,18 @@ public class PlayerFight {
 			item = itemNextRound;
 		player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);
 		//card hand
-		player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), CardRender.cardToItem(getCardHand(0), fight.getSorci()));
-		player.getInventory().setItem(FightSlot.CARD_2.getSlotInv(), CardRender.cardToItem(getCardHand(1), fight.getSorci()));
-		player.getInventory().setItem(FightSlot.CARD_3.getSlotInv(), CardRender.cardToItem(getCardHand(2), fight.getSorci()));
-		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), CardRender.cardToItem(getCardHand(3), fight.getSorci()));
-		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), CardRender.cardToItem(getCardHand(4), fight.getSorci()));
-		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), CardRender.cardToItem(getCardHand(5), fight.getSorci()));
+		player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), fight.renderCard(getCardHand(0)));
+		player.getInventory().setItem(FightSlot.CARD_2.getSlotInv(), fight.renderCard(getCardHand(1)));
+		player.getInventory().setItem(FightSlot.CARD_3.getSlotInv(), fight.renderCard(getCardHand(2)));
+		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), fight.renderCard(getCardHand(3)));
+		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), fight.renderCard(getCardHand(4)));
+		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), fight.renderCard(getCardHand(5)));
 		player.updateInventory();
 	}
 	
 	public void showSelectCard() {
 		if (cardSelected != -1) {
-			
+			//init the cible possible
 			player.closeInventory();
 		}
 	}

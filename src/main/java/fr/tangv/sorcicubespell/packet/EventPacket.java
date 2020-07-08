@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell.packet;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -79,7 +80,8 @@ public class EventPacket implements Listener, Runnable {
 						Inventory inv = Bukkit.createInventory(null, 27, packet.getName());
 						inv.setContents(generatedInvPane());
 						int start = ((7-packet.getSize())/2)+10;
-						Card[] cardTake = manager.packetTakeCard(packet);
+						HashMap<UUID, Card> hashCards = manager.getSorci().getManagerCards().getCarts();
+						Card[] cardTake = manager.packetTakeCard(packet, hashCards.values());
 						ItemStack[] itemCards = new ItemStack[cardTake.length];
 						boolean[] newCards = new boolean[cardTake.length];
 						PlayerFeature feature = manager.getSorci().getManagerPlayers().getPlayerFeature(player);
@@ -96,7 +98,7 @@ public class EventPacket implements Listener, Runnable {
 										feature.getCardsUnlocks().add(uuid);
 										newCards[i] = true;
 									}
-									itemCards[i] = CardRender.cardToItem(cardTake[i], manager.getSorci());
+									itemCards[i] = CardRender.cardToItem(cardTake[i], manager.getSorci(), hashCards);
 								}
 								inv.setItem(start+i, itemQuestion);
 							}

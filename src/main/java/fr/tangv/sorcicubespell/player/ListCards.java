@@ -1,11 +1,11 @@
 package fr.tangv.sorcicubespell.player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.bson.Document;
 
 import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class ListCards {
 
@@ -46,15 +46,17 @@ public class ListCards {
 		return doc;
 	}
 	
-	public static ListCards toListCards(ManagerCards manager, Document doc) throws Exception {
+	public static ListCards toListCards(HashMap<UUID, Card> hashCards, Document doc) {
 		int numberCard = doc.getInteger("size", 0);
 		Card[] cards = new Card[numberCard];
 		for (int i = 0; i < numberCard; i++) {
 			String uuid = doc.getString(Integer.toString(i));
 			if ("none".equals(uuid))
 				cards[i] = null;
-			else
-				cards[i] = manager.getCart(UUID.fromString(uuid));
+			else {
+				UUID id = UUID.fromString(uuid);
+				cards[i] = hashCards.containsKey(id) ? hashCards.get(id) : null;
+			}
 		}
 		return new ListCards(cards);
 	}

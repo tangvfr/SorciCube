@@ -117,9 +117,9 @@ public class ManagerPacketCards {
 		return -1;
 	}
 	
-	public Card[] packetTakeCard(PacketCards packet) throws Exception {
+	public Card[] packetTakeCard(PacketCards packet, Collection<Card> collCards) throws Exception {
 		Card[] cards = new Card[packet.getSize()];
-		Collection<Card> collectionCards = sorci.getManagerCards().getCarts().values();
+		ArrayList<Card> collectionCards = new ArrayList<Card>(collCards);
 		for (int i = 0; i < cards.length; i++) {
 			CardFaction faction = CardFaction.values()[chooseIndex(packet.getFaction())];
 			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity())];
