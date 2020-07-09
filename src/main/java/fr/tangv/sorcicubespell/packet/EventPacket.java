@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.packet;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -29,14 +30,14 @@ import fr.tangv.sorcicubespell.util.SkullUrl;
 public class EventPacket implements Listener, Runnable {
 
 	private ManagerPacketCards manager;
-	private HashMap<Player, PlayerPacket> packetsPlayers;
+	private ConcurrentHashMap<Player, PlayerPacket> packetsPlayers;
 	private ConfigurationSection config;
 	private ItemStack itemQuestion;
 	private ItemStack itemBack;
 	
 	public EventPacket(ManagerPacketCards manager) {
 		this.manager = manager;
-		this.packetsPlayers = new HashMap<Player, PlayerPacket>();
+		this.packetsPlayers = new ConcurrentHashMap<Player, PlayerPacket>();
 		this.config = manager.getSorci().gertGuiConfig().getConfigurationSection("gui_open_packet");
 		this.itemQuestion = ItemBuild.buildSkull(SkullUrl.QUESTION, 1, config.getString("no_view"), null, false);
 		this.itemBack = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("back"), null, false);

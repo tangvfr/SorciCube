@@ -238,7 +238,7 @@ public class PlayerFight {
 		return text;
 	}
 	
-	private String healthToString() {
+	private String healthToString() {//addapt for 3 line retun String[]
 		String text = "§8[";
 		String colorOff = "§7";
 		int number = health/3;
@@ -254,6 +254,11 @@ public class PlayerFight {
 		text += generatedChar('\u25A0', off);
 		text += "§8]";
 		return text;
+		/*
+		 *╔╗
+		 *║║
+		 *╚╝
+		*/
 	}
 	
 	public void initHotBar() {

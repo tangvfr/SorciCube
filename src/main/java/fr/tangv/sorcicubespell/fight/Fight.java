@@ -70,12 +70,12 @@ public class Fight {
 			this.player1 = createPlayerFight(player2Arg, preFight.getPlayer2DeckUse(), true);
 		}
 		//init player
+		player1.teleportToBase();
+		player2.teleportToBase();
 		player1.setEnemie(player2);
 		player2.setEnemie(player1);
 		player1.createScoreboard();
 		player2.createScoreboard();
-		player1.teleportToBase();
-		player2.teleportToBase();
 		sorci.getManagerFight().getPlayerFights().put(player1.getPlayer(), player1);
 		sorci.getManagerFight().getPlayerFights().put(player2.getPlayer(), player2);
 		this.bossBar.addPlayer(player1.getPlayer());
