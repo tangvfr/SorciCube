@@ -54,7 +54,9 @@ public class EventFight implements Listener {
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
-			if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+			if (e.getAction() == Action.LEFT_CLICK_AIR 
+					|| e.getAction() == Action.LEFT_CLICK_BLOCK 
+					|| e.getAction() == Action.PHYSICAL) {
 				player.setCardSelect(-1);
 				player.openInvHistoric();
 			}
