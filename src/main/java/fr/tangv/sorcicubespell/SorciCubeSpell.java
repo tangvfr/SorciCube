@@ -51,6 +51,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		this.shutdown = true;
 		//try for bug
 		try {
 			//init lib
@@ -95,7 +96,6 @@ public class SorciCubeSpell extends JavaPlugin {
 		for (Player player : Bukkit.getOnlinePlayers())
 			player.closeInventory();
 		Bukkit.getScheduler().cancelTasks(this);
-		Bukkit.shutdown();
 	}
 	
 	public void sendPlayerToServer(Player player, String server) {
