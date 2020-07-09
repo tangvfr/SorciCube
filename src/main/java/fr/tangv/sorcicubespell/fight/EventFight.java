@@ -5,6 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
@@ -52,7 +53,11 @@ public class EventFight implements Listener {
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
-			manager.getPlayerFights().get(e.getPlayer()).openInvHistoric();
+			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
+			if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+				player.setCardSelect(-1);
+				player.openInvHistoric();
+			}
 			e.setCancelled(true);
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
 			e.setCancelled(true);

@@ -23,7 +23,7 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 public class PlayerFight {
 
 	private final static int MAX_HEALTH = 60;
-	private final static int START_HEALTH = 33;
+	private final static int START_HEALTH = 30;
 	private Inventory invHistoric;
 	private Fight fight;
     private PlayerFight enemie;
@@ -213,12 +213,11 @@ public class PlayerFight {
 		sendScore("     ", null, -8);
 		sendScore("      ", null, -9);
 		sendScore("       ", null, -10);
-		sendScore("        ", null, -11);
-		sendScore("§7"+getEnemie().getPlayer().getName()+"§8:", null, -12);
-		sendScore(this.lastScoreEnemie[0], null, -13);
-		sendScore(this.lastScoreEnemie[1], null, -14);
-		sendScore(this.lastScoreEnemie[2], null, -15);
-		sendScore("         ", null, -16);
+		sendScore("§7"+getEnemie().getPlayer().getName()+"§8:", null, -11);
+		sendScore(this.lastScoreEnemie[0], null, -12);
+		sendScore(this.lastScoreEnemie[1], null, -13);
+		sendScore(this.lastScoreEnemie[2], null, -14);
+		sendScore("         ", null, -15);
 		//update objective
 		sendPacket(new PacketPlayOutScoreboardObjective(scob, 2/*0 create, 1 remmove, 2 update*/));
 	}
@@ -230,9 +229,9 @@ public class PlayerFight {
 		sendScore(scoreMy[0], this.lastScoreMy[0], -3);
 		sendScore(scoreMy[1], this.lastScoreMy[1], -4);
 		sendScore(scoreMy[2], this.lastScoreMy[2], -5);
-		sendScore(scoreEnemie[0], this.lastScoreEnemie[0], -13);
-		sendScore(scoreEnemie[1], this.lastScoreEnemie[1], -14);
-		sendScore(scoreEnemie[2], this.lastScoreEnemie[2], -15);
+		sendScore(scoreEnemie[0], this.lastScoreEnemie[0], -12);
+		sendScore(scoreEnemie[1], this.lastScoreEnemie[1], -13);
+		sendScore(scoreEnemie[2], this.lastScoreEnemie[2], -14);
 		//update objective
 		sendPacket(new PacketPlayOutScoreboardObjective(scob, 2/*0 create, 1 remmove, 2 update*/));
 		this.lastScoreMy = scoreMy;
