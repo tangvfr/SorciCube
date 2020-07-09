@@ -261,7 +261,7 @@ public class PlayerFight {
 		}
 		char cara = '\u25A0';
 		for (int i = 0; i < 3; i++) {
-			int max = (10*i);
+			int max = 10*(i+1);
 			if (number <= max) {
 				int off = max-number;
 				if (off > 10)
@@ -273,12 +273,12 @@ public class PlayerFight {
 		}
 		String startColor = enemie ? "§r§8" : "§8";
 		text[0] = startColor+"╔"+text[0]+"§8╗";
-		text[1] = startColor+"║"+text[1]+"§8║";
+		text[1] = startColor+"╠"+text[1]+"§8╣";
 		text[2] = startColor+"╚"+text[2]+"§8╝";
 		return text;
 		/*
 		 *╔╗
-		 *║║
+		 *╠╣
 		 *╚╝
 		*/
 	}
