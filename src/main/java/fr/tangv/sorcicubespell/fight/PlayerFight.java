@@ -23,7 +23,7 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 public class PlayerFight {
 
 	private final static int MAX_HEALTH = 60;
-	private final static int START_HEALTH = 33;
+	private final static int START_HEALTH = 30;
 	private Inventory invHistoric;
 	private Fight fight;
     private PlayerFight enemie;
@@ -187,8 +187,8 @@ public class PlayerFight {
 		sendPacket(new PacketPlayOutScoreboardScore(score)/*change*/);
 	}
 	
-	private String lastScoreMy;
-	private String lastScoreEnemie;
+	private String[] lastScoreMy;
+	private String[] lastScoreEnemie;
 	private Scoreboard sc;
 	private ScoreboardObjective scob;
 	
@@ -201,30 +201,38 @@ public class PlayerFight {
 		sendPacket(new PacketPlayOutScoreboardObjective(scob, 0/*0 create, 1 remmove, 2 update*/));
 		sendPacket(new PacketPlayOutScoreboardDisplayObjective(1/*0 LIST, 1 SIDEBAR, 2 BELOW_NAME*/, scob));
 		//init score
-		this.lastScoreMy = healthToString();
-		this.lastScoreEnemie = "§r"+getEnemie().healthToString();
+		this.lastScoreMy = healthToString(false);
+		this.lastScoreEnemie = getEnemie().healthToString(true);
 		sendScore(" ", null, -1);
 		sendScore("§7"+getPlayer().getName()+"§8:", null, -2);
-		sendScore(this.lastScoreMy, null, -3);
-		sendScore("   ", null, -4);
-		sendScore("    ", null, -5);
-		sendScore("     ", null, -6);
-		sendScore("      ", null, -7);
-		sendScore("       ", null, -8);
-		sendScore("        ", null, -9);
-		sendScore("§7"+getEnemie().getPlayer().getName()+"§8:", null, -10);
-		sendScore(this.lastScoreEnemie, null, -11);
-		sendScore("         ", null, -12);
+		sendScore(this.lastScoreMy[0], null, -3);
+		sendScore(this.lastScoreMy[1], null, -4);
+		sendScore(this.lastScoreMy[2], null, -5);
+		sendScore("   ", null, -6);
+		sendScore("    ", null, -7);
+		sendScore("     ", null, -8);
+		sendScore("      ", null, -9);
+		sendScore("       ", null, -10);
+		sendScore("        ", null, -11);
+		sendScore("§7"+getEnemie().getPlayer().getName()+"§8:", null, -12);
+		sendScore(this.lastScoreEnemie[0], null, -13);
+		sendScore(this.lastScoreEnemie[1], null, -14);
+		sendScore(this.lastScoreEnemie[2], null, -15);
+		sendScore("         ", null, -16);
 		//update objective
 		sendPacket(new PacketPlayOutScoreboardObjective(scob, 2/*0 create, 1 remmove, 2 update*/));
 	}
 	
 	public void updateViewLifes() {
-		String scoreMy = healthToString();
-		String scoreEnemie = "§r"+getEnemie().healthToString();
+		String[] scoreMy = healthToString(false);
+		String[] scoreEnemie = getEnemie().healthToString(true);
 		//update score
-		sendScore(scoreMy, this.lastScoreMy, -3);
-		sendScore(scoreEnemie, this.lastScoreEnemie, -11);
+		sendScore(scoreMy[0], this.lastScoreMy[0], -3);
+		sendScore(scoreMy[1], this.lastScoreMy[1], -4);
+		sendScore(scoreMy[2], this.lastScoreMy[2], -5);
+		sendScore(scoreEnemie[0], this.lastScoreEnemie[0], -13);
+		sendScore(scoreEnemie[1], this.lastScoreEnemie[1], -14);
+		sendScore(scoreEnemie[2], this.lastScoreEnemie[2], -15);
 		//update objective
 		sendPacket(new PacketPlayOutScoreboardObjective(scob, 2/*0 create, 1 remmove, 2 update*/));
 		this.lastScoreMy = scoreMy;
@@ -238,21 +246,35 @@ public class PlayerFight {
 		return text;
 	}
 	
-	private String healthToString() {//addapt for 3 line retun String[]
-		String text = "§8[";
-		String colorOff = "§7";
-		int number = health/3;
-		if (number > 10) {
-			number -= 10;
+	private String[] healthToString(boolean enemie) {
+		String[] text = new String[3];
+		String color;
+		String colorOff;
+		int number = health;
+		if (number > 30) {
+			number -= 30;
 			colorOff = "§c";
-			text += "§a";
-		} else
-			text += "§c";
-		int off = 10-number;
-		text += generatedChar('\u25A0', number);
-		text += colorOff;
-		text += generatedChar('\u25A0', off);
-		text += "§8]";
+			color = "§a";
+		} else {
+			colorOff = "§7";
+			color = "§c";
+		}
+		char cara = '\u25A0';
+		for (int i = 0; i < 3; i++) {
+			int max = (10*i);
+			if (number <= max) {
+				int off = max-number;
+				if (off > 10)
+					off = 10;
+				text[i] = color+generatedChar(cara, 10-off)+colorOff+generatedChar(cara, off);
+			} else {
+				text[i] = color+generatedChar(cara, 10);
+			}
+		}
+		String startColor = enemie ? "§r§8" : "§8";
+		text[0] = startColor+"╔"+text[0]+"§8╗";
+		text[1] = startColor+"║"+text[1]+"§8║";
+		text[2] = startColor+"╚"+text[2]+"§8╝";
 		return text;
 		/*
 		 *╔╗

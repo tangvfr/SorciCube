@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.tangv.sorcicubespell.manager.ManagerFight;
@@ -139,6 +140,7 @@ public class EventFight implements Listener {
 		player.setLevel(0);
 		player.setCollidable(false);
 		player.getInventory().clear();
+		player.getInventory().setArmorContents(new ItemStack[4]);
 		for (Player other : Bukkit.getOnlinePlayers()) {
 			other.hidePlayer(player);
 			player.hidePlayer(other);
