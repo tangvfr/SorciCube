@@ -37,8 +37,6 @@ public class ManagerFight implements Runnable {
 		//event
 		Bukkit.getPluginManager().registerEvents(new EventFight(this), sorci);
 		Bukkit.getScheduler().runTaskTimerAsynchronously(sorci, this, 0, 5);
-		for (Player player : Bukkit.getOnlinePlayers())
-			sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
 	}
 	
 	public FightArena pickArena() {

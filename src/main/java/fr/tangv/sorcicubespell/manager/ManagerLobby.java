@@ -27,8 +27,6 @@ public class ManagerLobby implements Listener {
 		this.locationSpawn = (Location) sorci.getParameter().get("location_spawn");
 		this.formatChat = sorci.getParameter().getString("chat_format");
 		Bukkit.getPluginManager().registerEvents(this, sorci);
-		for (Player player : Bukkit.getOnlinePlayers())
-			teleportPlayerToSpawn(player);
 	}
 	
 	@EventHandler
