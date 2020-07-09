@@ -171,6 +171,7 @@ public class PlayerFight {
 			this.cardSelected = -1;
 		else
 			this.cardSelected = index;
+		showSelectCard();
 	}
 	
 	//function
@@ -300,7 +301,7 @@ public class PlayerFight {
 		player.updateInventory();
 	}
 	
-	public void showSelectCard() {
+	private void showSelectCard() {
 		if (cardSelected != -1) {
 			//init the cible possible
 			player.closeInventory();

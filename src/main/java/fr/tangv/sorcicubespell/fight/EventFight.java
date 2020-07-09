@@ -77,32 +77,26 @@ public class EventFight implements Listener {
 						switch (slot) {
 							case CARD_1:
 								player.setCardSelect(0);
-								player.showSelectCard();
 								break;
 		
 							case CARD_2:
 								player.setCardSelect(1);
-								player.showSelectCard();
 								break;
 								
 							case CARD_3:
 								player.setCardSelect(2);
-								player.showSelectCard();
 								break;
 								
 							case CARD_4:
 								player.setCardSelect(3);
-								player.showSelectCard();
 								break;
 								
 							case CARD_5:
 								player.setCardSelect(4);
-								player.showSelectCard();
 								break;
 								
 							case CARD_6:
 								player.setCardSelect(5);
-								player.showSelectCard();
 								break;
 								
 							case FINISH_ROUND:
