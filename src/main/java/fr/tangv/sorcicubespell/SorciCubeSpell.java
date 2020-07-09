@@ -51,7 +51,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		this.shutdown = true;
 		//try for bug
 		try {
 			//init lib
