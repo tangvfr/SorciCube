@@ -83,10 +83,10 @@ public class RenderException {
 			+" ┃ "+leftString(' ', trace.getClassName(), classe)
 			+" ┃ "+leftString(' ', trace.getMethodName(), methode)+" ┃\r\n";
 		}
-		//new line
+		//new line		
 		text += "┗━"+generatedChar('━', line)
-		+"━┻━"+generatedChar('━', classe)
-		+"━┻━"+generatedChar('━', methode)+"━┛\r\n";
+			+"━┻━"+generatedChar('━', classe)
+			+"━┻━"+generatedChar('━', methode)+"━┛\r\n";
 		//example border
 		/*
 		 * ┏━┳━┓
