@@ -200,7 +200,7 @@ public class Fight {
 		player.initHotBar();
 		player.getEnemie().initHotBar();
 		//for test
-		player1.setHealth(player1.getHealth()-3);
+		player1.setHealth(player1.getHealth()-4);
 		//end for test
 	}
 	

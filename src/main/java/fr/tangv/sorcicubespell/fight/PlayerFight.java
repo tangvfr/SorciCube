@@ -23,7 +23,7 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 public class PlayerFight {
 
 	private final static int MAX_HEALTH = 60;
-	private final static int START_HEALTH = 30;
+	private final static int START_HEALTH = 33;
 	private Inventory invHistoric;
 	private Fight fight;
     private PlayerFight enemie;
