@@ -34,7 +34,7 @@ public class PlayerFight {
 	private int manaBoost;
 	private int health;
 	private int cardSelected;
-	private FightEntity[] entity;
+	private FightEntityLast[] entity;
 	private Location locBase;
 	private Card[] cardHand;
 	private ItemStack itemNextRound;
@@ -53,9 +53,9 @@ public class PlayerFight {
 		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, "§6Next Round", null, false);
 		//entity
 		Location[] locs = this.isFisrt() ? fight.getArena().getFirstEntity() : fight.getArena().getSecondEntity();
-		this.entity = new FightEntity[locs.length];
+		this.entity = new FightEntityLast[locs.length];
 		for (int i = 0; i < locs.length; i++)
-			this.entity[i] = new FightEntity(fight, locs[i]);
+			this.entity[i] = new FightEntityLast(fight, locs[i]);
 		//cards hand
 		this.cardHand = new Card[6];
 		this.pickCard(3);
@@ -114,7 +114,7 @@ public class PlayerFight {
 		return deck;
 	}
 	
-	public FightEntity getEntity(int index) {
+	public FightEntityLast getEntity(int index) {
 		return entity[index];
 	}
 	

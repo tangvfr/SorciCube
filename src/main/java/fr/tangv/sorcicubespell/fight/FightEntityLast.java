@@ -28,7 +28,7 @@ import net.minecraft.server.v1_9_R2.WorldServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
-public class FightEntity {
+public class FightEntityLast {
 
 	private Fight fight;
 	private Location loc;
@@ -39,7 +39,7 @@ public class FightEntity {
 	private GameProfile gameProfile;
 	private Card card;
 	
-	public FightEntity(Fight fight, Location loc) {
+	public FightEntityLast(Fight fight, Location loc) {
 		this.fight = fight;
 		this.loc = loc;
 		this.card = null;
