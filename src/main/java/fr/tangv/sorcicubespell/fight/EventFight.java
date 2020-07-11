@@ -24,7 +24,6 @@ import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
-import fr.tangv.sorcicubespell.util.ItemHead;
 import fr.tangv.sorcicubespell.util.RenderException;
 import io.netty.util.internal.ConcurrentSet;
 

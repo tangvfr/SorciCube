@@ -408,7 +408,7 @@ public class PlayerFight {
 			if (card.getType() == CardType.ENTITY) {
 				for (FightEntity entity : entity)
 					if (!entity.isSelectable())
-						entity.showHead(ItemHead.SELECTED_POSE);
+						entity.showHead(ItemHead.SELECTABLE_POSE);
 			} else {
 				
 			}
