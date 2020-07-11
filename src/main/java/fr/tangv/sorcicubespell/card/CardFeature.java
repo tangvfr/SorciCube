@@ -10,7 +10,7 @@ public class CardFeature {
 	
 	public CardFeature(String name, CardFeatureType type, CardValue value) {
 		this.setName(name);
-		this.setType(type);
+		this.type = type;
 		if (value.getType() == type.getTypeValue())
 			this.setValue(value);
 		else
@@ -27,10 +27,6 @@ public class CardFeature {
 
 	public CardFeatureType getType() {
 		return type;
-	}
-
-	public void setType(CardFeatureType type) {
-		this.type = type;
 	}
 
 	public CardValue getValue() {

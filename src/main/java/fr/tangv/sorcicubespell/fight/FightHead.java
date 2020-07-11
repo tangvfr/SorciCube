@@ -1,8 +1,10 @@
 package fr.tangv.sorcicubespell.fight;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
+import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
@@ -12,8 +14,8 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
 public abstract class FightHead {
 
-	private Fight fight;
-	private Location loc;
+	protected Fight fight;
+	protected Location loc;
 	private EntityArmorStand entityName;
 	private EntityArmorStand entityStat;
 	private EntityArmorStand entityHead;
@@ -40,29 +42,28 @@ public abstract class FightHead {
 		return entity;
 	}
 	
-	private void addHead() {
+	public void addHead() {
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityName));
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityStat));
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityHead));
 	}
 	
-	private void removeHead() {
+	public void removeHead() {
 		fight.sendPacket(new PacketPlayOutEntityDestroy(entityName.getId()));
 		fight.sendPacket(new PacketPlayOutEntityDestroy(entityStat.getId()));
 		fight.sendPacket(new PacketPlayOutEntityDestroy(entityHead.getId()));
-	}
-	
-	public void reloadHead() {
-		this.removeHead();
-		this.addHead();
 	}
 	
 	public void setHead(String head) {
 		entityHead.setCustomName(head);
 	}
 	
-	public void setHead(CraftItemStack item) {
+	public void showHead(CraftItemStack item) {
 		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(item));
+	}
+	
+	public void hideHead() {
+		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
 	}
 	
 	public void setStat(String stat) {
@@ -75,12 +76,18 @@ public abstract class FightHead {
 	
 	public abstract boolean isSelectable();
 	
-	public abstract void addHeal();
+	public abstract void updateStat();
 	
-	public abstract void removeHeal();
+	public void addHealth(int health) {
+		setHealth(getHealth()+health);
+	}
 	
-	public abstract void setHeal();
+	public void removeHealth(int health) {
+		setHealth(getHealth()-health);
+	}
 	
-	public abstract void getHeal();
+	public abstract void setHealth(int health);
+	
+	public abstract int getHealth();
 	
 }

@@ -34,7 +34,8 @@ public class PlayerFight {
 	private int manaBoost;
 	private int health;
 	private int cardSelected;
-	private FightEntityLast[] entity;
+	private FightEntity[] entity;
+	private FightHero hero;
 	private Location locBase;
 	private Card[] cardHand;
 	private ItemStack itemNextRound;
@@ -48,14 +49,15 @@ public class PlayerFight {
 		this.health = START_HEALTH;
 		this.cardSelected = -1;
 		this.first = first;
-		this.locBase = this.isFisrt() ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase();
 		//item
 		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, "§6Next Round", null, false);
 		//entity
+		this.locBase = this.isFisrt() ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase();
 		Location[] locs = this.isFisrt() ? fight.getArena().getFirstEntity() : fight.getArena().getSecondEntity();
-		this.entity = new FightEntityLast[locs.length];
+		this.entity = new FightEntity[locs.length];
 		for (int i = 0; i < locs.length; i++)
-			this.entity[i] = new FightEntityLast(fight, locs[i]);
+			this.entity[i] = new FightEntity(fight, locs[i]);
+		this.hero = new FightHero(this);
 		//cards hand
 		this.cardHand = new Card[6];
 		this.pickCard(3);
@@ -86,6 +88,10 @@ public class PlayerFight {
 		return invHistoric;
 	}
 	
+	public Location getLocBase() {
+		return this.locBase;
+	}
+	
 	public int getMaxCardHand() {
 		return cardHand.length;
 	}
@@ -114,12 +120,16 @@ public class PlayerFight {
 		return deck;
 	}
 	
-	public FightEntityLast getEntity(int index) {
+	public FightEntity getEntity(int index) {
 		return entity[index];
 	}
 	
 	public int getMaxEntity() {
 		return entity.length;
+	}
+	
+	public FightHero getHero() {
+		return hero;
 	}
 	
 	public int getMana() {
