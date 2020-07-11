@@ -10,7 +10,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import fr.tangv.sorcicubespell.util.ItemHead;
 import net.minecraft.server.v1_9_R2.IScoreboardCriteria;
 import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardDisplayObjective;
@@ -22,8 +24,22 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 
 public class PlayerFight {
 
+	//static
+	
+	private final static ItemStack itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, " ", null, false);
+	private final static ItemStack itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 0, " ", null, false);
 	private final static int MAX_HEALTH = 60;
 	private final static int START_HEALTH = 30;
+	
+	private static ItemStack itemNull(ItemStack item) {
+		if (item == null)
+			return itemNull;
+		else
+			return item;
+	}
+	
+	//dynamic
+	
 	private Inventory invHistoric;
 	private Fight fight;
     private PlayerFight enemie;
@@ -130,6 +146,79 @@ public class PlayerFight {
 	
 	public FightHero getHero() {
 		return hero;
+	}
+	
+	public void hideAllHead() {
+		this.getEntity(0).hideHead();
+		this.getEntity(1).hideHead();
+		this.getEntity(2).hideHead();
+		this.getEntity(3).hideHead();
+		this.getEntity(4).hideHead();
+		this.getHero().hideHead();
+		enemie.getEntity(0).hideHead();
+		enemie.getEntity(1).hideHead();
+		enemie.getEntity(2).hideHead();
+		enemie.getEntity(3).hideHead();
+		enemie.getEntity(4).hideHead();
+		enemie.getHero().hideHead();
+	}
+	
+	public void reloadAllHead() {
+		this.getEntity(0).sendReloadHead();
+		this.getEntity(1).sendReloadHead();
+		this.getEntity(2).sendReloadHead();
+		this.getEntity(3).sendReloadHead();
+		this.getEntity(4).sendReloadHead();
+		this.getHero().sendReloadHead();
+		enemie.getEntity(0).sendReloadHead();
+		enemie.getEntity(1).sendReloadHead();
+		enemie.getEntity(2).sendReloadHead();
+		enemie.getEntity(3).sendReloadHead();
+		enemie.getEntity(4).sendReloadHead();
+		enemie.getHero().sendReloadHead();
+	}
+	
+	public FightHead getForCible(FightCible cible) {
+		switch (cible) {
+			case ENTITY_1_ALLY:
+				return this.getEntity(0);
+			
+			case ENTITY_2_ALLY:
+				return this.getEntity(1);
+				
+			case ENTITY_3_ALLY:
+				return this.getEntity(2);
+				
+			case ENTITY_4_ALLY:
+				return this.getEntity(3);
+				
+			case ENTITY_5_ALLY:
+				return this.getEntity(4);
+				
+			case HERO_ALLY:
+				return this.getHero();
+				
+			case ENTITY_1_ENEMIE:
+				return enemie.getEntity(0);
+			
+			case ENTITY_2_ENEMIE:
+				return enemie.getEntity(1);
+				
+			case ENTITY_3_ENEMIE:
+				return enemie.getEntity(2);
+				
+			case ENTITY_4_ENEMIE:
+				return enemie.getEntity(3);
+				
+			case ENTITY_5_ENEMIE:
+				return enemie.getEntity(4);
+				
+			case HERO_ENEMIE:
+				return enemie.getHero();
+				
+			default:
+				return null;//not possible
+		}
 	}
 	
 	public int getMana() {
@@ -295,27 +384,36 @@ public class PlayerFight {
 	
 	public void initHotBar() {
 		boolean play = canPlay();
-		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), null);
-		player.getInventory().setItem(FightSlot.NONE_2.getSlotInv(), null);
+		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), itemNone);
+		player.getInventory().setItem(FightSlot.NONE_2.getSlotInv(), itemNone);
 		ItemStack item = null;
 		if (play)
 			item = itemNextRound;
 		player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);
 		//card hand
-		player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), fight.renderCard(getCardHand(0)));
-		player.getInventory().setItem(FightSlot.CARD_2.getSlotInv(), fight.renderCard(getCardHand(1)));
-		player.getInventory().setItem(FightSlot.CARD_3.getSlotInv(), fight.renderCard(getCardHand(2)));
-		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), fight.renderCard(getCardHand(3)));
-		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), fight.renderCard(getCardHand(4)));
-		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), fight.renderCard(getCardHand(5)));
+		player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), itemNull(fight.renderCard(getCardHand(0))));
+		player.getInventory().setItem(FightSlot.CARD_2.getSlotInv(), itemNull(fight.renderCard(getCardHand(1))));
+		player.getInventory().setItem(FightSlot.CARD_3.getSlotInv(), itemNull(fight.renderCard(getCardHand(2))));
+		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), itemNull(fight.renderCard(getCardHand(3))));
+		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), itemNull(fight.renderCard(getCardHand(4))));
+		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), itemNull(fight.renderCard(getCardHand(5))));
 		player.updateInventory();
 	}
 	
 	private void showSelectCard() {
+		hideAllHead();
 		if (cardSelected != -1) {
-			//init the cible possible
 			player.closeInventory();
+			Card card = cardHand[cardSelected];
+			if (card.getType() == CardType.ENTITY) {
+				for (FightEntity entity : entity)
+					if (!entity.isSelectable())
+						entity.showHead(ItemHead.SELECTED_POSE);
+			} else {
+				
+			}
 		}
+		reloadAllHead();
 	}
 	
 	public boolean canPlay() {

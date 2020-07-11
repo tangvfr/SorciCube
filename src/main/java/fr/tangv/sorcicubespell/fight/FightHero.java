@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
 
+import fr.tangv.sorcicubespell.card.CardFaction;
+
 public class FightHero extends FightHead {
 
 	private PlayerFight player;
@@ -9,6 +11,11 @@ public class FightHero extends FightHead {
 		this.player = player;
 	}
 
+	@Override
+	public boolean isFaction(CardFaction faction) {
+		return true;
+	}
+	
 	@Override
 	public boolean isSelectable() {
 		return true;

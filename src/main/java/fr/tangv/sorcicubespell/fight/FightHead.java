@@ -6,6 +6,7 @@ import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
+import fr.tangv.sorcicubespell.card.CardFaction;
 import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
@@ -42,23 +43,28 @@ public abstract class FightHead {
 		return entity;
 	}
 	
-	public void addHead() {
+	protected void sendAddHead() {
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityName));
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityStat));
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityHead));
 	}
 	
-	public void removeHead() {
+	protected void sendRemoveHead() {
 		fight.sendPacket(new PacketPlayOutEntityDestroy(entityName.getId()));
 		fight.sendPacket(new PacketPlayOutEntityDestroy(entityStat.getId()));
 		fight.sendPacket(new PacketPlayOutEntityDestroy(entityHead.getId()));
+	}
+	
+	public void sendReloadHead() {
+		sendRemoveHead();
+		sendAddHead();
 	}
 	
 	public void setHead(String head) {
 		entityHead.setCustomName(head);
 	}
 	
-	public void showHead(CraftItemStack item) {
+	public void showHead(ItemStack item) {
 		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(item));
 	}
 	
@@ -73,6 +79,8 @@ public abstract class FightHead {
 	public void setName(String name) {
 		entityName.setCustomName(name);
 	}
+	
+	public abstract boolean isFaction(CardFaction faction);
 	
 	public abstract boolean isSelectable();
 	

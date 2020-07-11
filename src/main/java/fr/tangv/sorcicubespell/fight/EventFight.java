@@ -2,6 +2,8 @@ package fr.tangv.sorcicubespell.fight;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,10 +19,32 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubespell.card.CardEntity;
+import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
+import fr.tangv.sorcicubespell.util.ItemHead;
+import fr.tangv.sorcicubespell.util.RenderException;
+import io.netty.util.internal.ConcurrentSet;
 
 public class EventFight implements Listener {
 
+	//static
+	
+	private static ConcurrentSet<Material> materialTransparent;
+	
+	static {
+		materialTransparent = new ConcurrentSet<Material>();
+		materialTransparent.add(Material.AIR);
+		materialTransparent.add(Material.LAVA);
+		materialTransparent.add(Material.WATER);
+		materialTransparent.add(Material.STATIONARY_LAVA);
+		materialTransparent.add(Material.STATIONARY_WATER);
+	}
+	
+	//dynamic
+	
 	private ManagerFight manager;
 
 	public EventFight(ManagerFight manager) {
@@ -57,8 +81,50 @@ public class EventFight implements Listener {
 			if (e.getAction() == Action.LEFT_CLICK_AIR 
 					|| e.getAction() == Action.LEFT_CLICK_BLOCK 
 					|| e.getAction() == Action.PHYSICAL) {
+				//reset head view if possible
 				player.setCardSelect(-1);
 				player.openInvHistoric();
+			} else {
+				Block block = player.getPlayer().getTargetBlock(materialTransparent, 50);
+				if (block != null) {
+					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
+					if (cible != null) {
+						if (player.getCardSelect() != -1) {
+							Card card = player.getCardHand(player.getCardSelect());
+							if (card.getType() == CardType.ENTITY) {
+								//entity
+								if (FightCible.listForCardCible(CardCible.ALL_ENTITY_ALLY).contains(cible)) {
+									FightEntity entity = (FightEntity) player.getForCible(cible);
+									if (!entity.isSelectable()) {
+										try {
+											entity.setCard(new CardEntity(card));
+											player.setCardHand(player.getCardSelect(), null);
+											player.setCardSelect(-1);
+											player.hideAllHead();
+											player.reloadAllHead();
+										} catch (Exception e1) {
+											Bukkit.getLogger().warning(RenderException.renderException(e1));
+										}
+									}
+								}
+							} else {
+								//spell
+								if (FightCible.listForCardCible(card.getCible()).contains(cible)) {
+									FightHead head = player.getForCible(cible);
+									if (head.isSelectable() && head.isFaction(card.getCibleFaction())) {
+
+										//action spell and is possible
+										
+										/*player.setCardHand(player.getCardSelect(), null);
+										player.setCardSelect(-1);
+										player.hideAllHead();
+										player.reloadAllHead();*/
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 			e.setCancelled(true);
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {

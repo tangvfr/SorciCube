@@ -1,8 +1,11 @@
 package fr.tangv.sorcicubespell.fight;
+
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -80,6 +83,20 @@ public class Fight {
 		sorci.getManagerFight().getPlayerFights().put(player2.getPlayer(), player2);
 		this.bossBar.addPlayer(player1.getPlayer());
 		this.bossBar.addPlayer(player2.getPlayer());
+		//send entity player1
+		player1.getEntity(0).sendAddHead();
+		player1.getEntity(1).sendAddHead();
+		player1.getEntity(2).sendAddHead();
+		player1.getEntity(3).sendAddHead();
+		player1.getEntity(4).sendAddHead();
+		player1.getHero().sendAddHead();
+		//send entity player2
+		player2.getEntity(0).sendAddHead();
+		player2.getEntity(1).sendAddHead();
+		player2.getEntity(2).sendAddHead();
+		player2.getEntity(3).sendAddHead();
+		player2.getEntity(4).sendAddHead();
+		player2.getHero().sendAddHead();
 		//start
 		cooldown.loop();
 	}
@@ -128,6 +145,64 @@ public class Fight {
 			if (round >= 4)
 				setEnd(player1.getPlayer());
 			//end for test
+		}
+	}
+	
+	private final static double TOLERANCE = 3.5;
+	
+	private boolean locEntityInTolerance(Location loc1, Location loc2) {
+		if (loc1.getBlockX() == loc2.getBlockX() && loc1.getBlockZ() == loc2.getBlockZ())
+			return (Math.abs(loc1.getY()-loc2.getY()) < TOLERANCE);
+		return false;
+	}
+	
+	public FightCible getCibleForBlock(Block block, boolean first) {
+		Location loc = block.getLocation();
+		Location[] firstEntity = arena.getFirstEntity();
+		Location[] secondEntity = arena.getSecondEntity();
+		if (arena.getFirstBase().distance(block.getLocation()) < TOLERANCE) {
+			return first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
+			//hero first
+		} else if (arena.getSecondBase().distance(block.getLocation()) < TOLERANCE) {
+			return !first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
+			//hero second
+		} else 
+		//first entity	
+		if (locEntityInTolerance(loc, firstEntity[0])) {
+			return first ? FightCible.ENTITY_1_ALLY : FightCible.ENTITY_1_ENEMIE;
+			//entity first 1
+		} else if (locEntityInTolerance(loc, firstEntity[1])) {
+			return first ? FightCible.ENTITY_2_ALLY : FightCible.ENTITY_2_ENEMIE;
+			//entity first 2
+		} else if (locEntityInTolerance(loc, firstEntity[2])) {
+			return first ? FightCible.ENTITY_3_ALLY : FightCible.ENTITY_3_ENEMIE;
+			//entity first 3
+		} else if (locEntityInTolerance(loc, firstEntity[3])) {
+			return first ? FightCible.ENTITY_4_ALLY : FightCible.ENTITY_4_ENEMIE;
+			//entity first 4
+		} else if (locEntityInTolerance(loc, firstEntity[4])) {
+			return first ? FightCible.ENTITY_5_ALLY : FightCible.ENTITY_5_ENEMIE;
+			//entity first 5
+		} else 
+		//second entity
+		if (locEntityInTolerance(loc, secondEntity[0])) {
+			return !first ? FightCible.ENTITY_1_ALLY : FightCible.ENTITY_1_ENEMIE;
+			//entity second 1
+		} else if (locEntityInTolerance(loc, secondEntity[1])) {
+			return !first ? FightCible.ENTITY_2_ALLY : FightCible.ENTITY_2_ENEMIE;
+			//entity second 2
+		} else if (locEntityInTolerance(loc, secondEntity[2])) {
+			return !first ? FightCible.ENTITY_3_ALLY : FightCible.ENTITY_3_ENEMIE;
+			//entity second 3
+		} else if (locEntityInTolerance(loc, secondEntity[3])) {
+			return !first ? FightCible.ENTITY_4_ALLY : FightCible.ENTITY_4_ENEMIE;
+			//entity second 4
+		} else if (locEntityInTolerance(loc, secondEntity[4])) {
+			return !first ? FightCible.ENTITY_5_ALLY : FightCible.ENTITY_5_ENEMIE;
+			//entity second 5
+		} else {
+			return null;
+			//nothing
 		}
 	}
 	

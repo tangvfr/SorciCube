@@ -12,6 +12,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
 import fr.tangv.sorcicubespell.card.CardEntity;
+import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
@@ -40,11 +41,11 @@ public class FightEntity extends FightHead {
 		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 	}
 
-	public void addPlayer() {
+	public void sendAddPlayer() {
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 	}
 	
-	public void removePlayer() {
+	public void sendRemovePlayer() {
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
 	}
 	
@@ -56,8 +57,8 @@ public class FightEntity extends FightHead {
 	
 	public void setCard(CardEntity card) throws Exception {
 		if (this.card != null) {
-			removePlayer();
-			removeHead();
+			sendRemovePlayer();
+			sendRemoveHead();
 		}
 		this.card = card;
 		if (card != null) {
@@ -65,13 +66,23 @@ public class FightEntity extends FightHead {
 			this.setName(card.getName());
 			this.hideHead();
 			this.updateStat();
-			addPlayer();
-			this.addHead();
+			sendAddPlayer();
+			this.sendAddHead();
 		}
 	}
 	
 	public CardEntity getCard() {
 		return card;
+	}
+	
+	@Override
+	public boolean isFaction(CardFaction faction) {
+		if (card == null)
+			return false;
+		else if (faction == CardFaction.BASIC)
+			return true;
+		else
+			return faction == card.getCard().getFaction();
 	}
 	
 	@Override
@@ -96,6 +107,8 @@ public class FightEntity extends FightHead {
 	}
 	
 	public void setAttack(int attack) {
+		if (attack < 0)
+			attack = 0;
 		card.setAttack(attack);
 	}
 	
