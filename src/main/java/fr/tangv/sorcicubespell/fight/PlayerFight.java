@@ -406,14 +406,34 @@ public class PlayerFight {
 			player.closeInventory();
 			Card card = cardHand[cardSelected];
 			if (card.getType() == CardType.ENTITY) {
-				for (FightEntity entity : entity)
-					if (!entity.isSelectable())
-						entity.showHead(ItemHead.SELECTABLE_POSE);
+				initHeadForEntityPose(card);
 			} else {
-				
+				initHeadForSpell(card);
 			}
 		}
 		reloadAllHead();
+	}
+	
+	public void initHeadForEntityPose(Card card) {
+		for (FightEntity entity : entity)
+			if (!entity.isSelectable())
+				entity.showHead(ItemHead.SELECTABLE_POSE);
+	}
+	
+	public void initHeadForSpell(Card card) {
+		for (FightCible cible : FightCible.listForCardCible(card.getCible())) {
+			FightHead head = getForCible(cible);
+			if (head.isSelectable() && head.isFaction(card.getCibleFaction())) {
+
+				//action spell and it is possible
+				
+				/*player.setCardHand(player.getCardSelect(), null);
+				player.setCardSelect(-1);
+				player.hideAllHead();
+				player.reloadAllHead();*/
+			}
+		}
+		
 	}
 	
 	public boolean canPlay() {
