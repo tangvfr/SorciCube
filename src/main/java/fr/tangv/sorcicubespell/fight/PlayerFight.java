@@ -26,8 +26,8 @@ public class PlayerFight {
 
 	//static
 	
-	private final static ItemStack itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, " ", null, false);
-	private final static ItemStack itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 0, " ", null, false);
+	private final static ItemStack itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
+	private final static ItemStack itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, " ", null, false);
 	private final static int MAX_HEALTH = 60;
 	private final static int START_HEALTH = 32;
 	
@@ -386,7 +386,7 @@ public class PlayerFight {
 		boolean play = canPlay();
 		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), itemNone);
 		player.getInventory().setItem(FightSlot.NONE_2.getSlotInv(), itemNone);
-		ItemStack item = null;
+		ItemStack item = itemNone;
 		if (play)
 			item = itemNextRound;
 		player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);

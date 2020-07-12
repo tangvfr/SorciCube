@@ -37,8 +37,13 @@ public abstract class FightHead {
 		entity.setBasePlate(false);
 		entity.setInvulnerable(true);
 		entity.setInvisible(true);
-		entity.setCustomNameVisible(true);
-		entity.setCustomName(name);
+		if (name.isEmpty()) {
+			entity.setCustomNameVisible(false);
+			entity.setCustomName(name);
+		} else {
+			entity.setCustomNameVisible(true);
+			entity.setCustomName(name);
+		}
 		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
 		return entity;
 	}
@@ -61,7 +66,13 @@ public abstract class FightHead {
 	}
 	
 	public void setHead(String head) {
-		entityHead.setCustomName(head);
+		if (head.isEmpty()) {
+			entityHead.setCustomNameVisible(false);
+			entityHead.setCustomName(head);
+		} else {
+			entityHead.setCustomNameVisible(true);
+			entityHead.setCustomName(head);
+		}
 	}
 	
 	public void showHead(ItemStack item) {
@@ -73,11 +84,23 @@ public abstract class FightHead {
 	}
 	
 	public void setStat(String stat) {
-		entityStat.setCustomName(stat);
+		if (stat.isEmpty()) {
+			entityStat.setCustomNameVisible(false);
+			entityStat.setCustomName(stat);
+		} else {
+			entityStat.setCustomNameVisible(true);
+			entityStat.setCustomName(stat);
+		}
 	}
 	
 	public void setName(String name) {
-		entityName.setCustomName(name);
+		if (name.isEmpty()) {
+			entityName.setCustomNameVisible(false);
+			entityName.setCustomName(name);
+		} else {
+			entityName.setCustomNameVisible(true);
+			entityName.setCustomName(name);
+		}
 	}
 	
 	public abstract boolean isFaction(CardFaction faction);

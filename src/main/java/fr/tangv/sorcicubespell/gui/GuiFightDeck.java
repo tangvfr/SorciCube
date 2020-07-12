@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell.gui;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -57,6 +58,7 @@ public class GuiFightDeck extends GuiDecks {
 					player.teleport(loc);
 			} else {
 				player.sendMessage(sorci.getMessage().getString("message_invalid_deck"));
+				player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_HURT, 1F, 1F);
 			}
 		}
 	}

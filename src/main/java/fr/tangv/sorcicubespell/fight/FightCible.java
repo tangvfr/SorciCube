@@ -24,6 +24,7 @@ public enum FightCible {
 	private static ConcurrentHashMap<CardCible, Vector<FightCible>> lists;
 	
 	static {
+		lists = new ConcurrentHashMap<CardCible, Vector<FightCible>>();
 		Vector<FightCible> allEntityAlly = new Vector<FightCible>(Arrays.asList(
 				FightCible.ENTITY_1_ALLY,
 				FightCible.ENTITY_2_ALLY,
