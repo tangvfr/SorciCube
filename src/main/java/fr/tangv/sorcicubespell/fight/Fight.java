@@ -160,50 +160,53 @@ public class Fight {
 		Location loc = block.getLocation();
 		Location[] firstEntity = arena.getFirstEntity();
 		Location[] secondEntity = arena.getSecondEntity();
-		if (arena.getFirstBase().distance(block.getLocation()) < TOLERANCE) {
-			return first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
-			//hero first
-		} else if (arena.getSecondBase().distance(block.getLocation()) < TOLERANCE) {
-			return !first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
-			//hero second
-		} else 
-		//first entity	
-		if (locEntityInTolerance(loc, firstEntity[0])) {
-			return first ? FightCible.ENTITY_1_ALLY : FightCible.ENTITY_1_ENEMIE;
-			//entity first 1
-		} else if (locEntityInTolerance(loc, firstEntity[1])) {
-			return first ? FightCible.ENTITY_2_ALLY : FightCible.ENTITY_2_ENEMIE;
-			//entity first 2
-		} else if (locEntityInTolerance(loc, firstEntity[2])) {
-			return first ? FightCible.ENTITY_3_ALLY : FightCible.ENTITY_3_ENEMIE;
-			//entity first 3
-		} else if (locEntityInTolerance(loc, firstEntity[3])) {
-			return first ? FightCible.ENTITY_4_ALLY : FightCible.ENTITY_4_ENEMIE;
-			//entity first 4
-		} else if (locEntityInTolerance(loc, firstEntity[4])) {
-			return first ? FightCible.ENTITY_5_ALLY : FightCible.ENTITY_5_ENEMIE;
-			//entity first 5
-		} else 
-		//second entity
-		if (locEntityInTolerance(loc, secondEntity[0])) {
-			return !first ? FightCible.ENTITY_1_ALLY : FightCible.ENTITY_1_ENEMIE;
-			//entity second 1
-		} else if (locEntityInTolerance(loc, secondEntity[1])) {
-			return !first ? FightCible.ENTITY_2_ALLY : FightCible.ENTITY_2_ENEMIE;
-			//entity second 2
-		} else if (locEntityInTolerance(loc, secondEntity[2])) {
-			return !first ? FightCible.ENTITY_3_ALLY : FightCible.ENTITY_3_ENEMIE;
-			//entity second 3
-		} else if (locEntityInTolerance(loc, secondEntity[3])) {
-			return !first ? FightCible.ENTITY_4_ALLY : FightCible.ENTITY_4_ENEMIE;
-			//entity second 4
-		} else if (locEntityInTolerance(loc, secondEntity[4])) {
-			return !first ? FightCible.ENTITY_5_ALLY : FightCible.ENTITY_5_ENEMIE;
-			//entity second 5
-		} else {
-			return null;
-			//nothing
+		if (arena.getWorld().equals(block.getWorld())) {
+			if (arena.getFirstBase().distance(block.getLocation()) < TOLERANCE) {
+				return first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
+				//hero first
+			} else if (arena.getSecondBase().distance(block.getLocation()) < TOLERANCE) {
+				return !first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
+				//hero second
+			} else 
+			//first entity	
+			if (locEntityInTolerance(loc, firstEntity[0])) {
+				return first ? FightCible.ENTITY_1_ALLY : FightCible.ENTITY_1_ENEMIE;
+				//entity first 1
+			} else if (locEntityInTolerance(loc, firstEntity[1])) {
+				return first ? FightCible.ENTITY_2_ALLY : FightCible.ENTITY_2_ENEMIE;
+				//entity first 2
+			} else if (locEntityInTolerance(loc, firstEntity[2])) {
+				return first ? FightCible.ENTITY_3_ALLY : FightCible.ENTITY_3_ENEMIE;
+				//entity first 3
+			} else if (locEntityInTolerance(loc, firstEntity[3])) {
+				return first ? FightCible.ENTITY_4_ALLY : FightCible.ENTITY_4_ENEMIE;
+				//entity first 4
+			} else if (locEntityInTolerance(loc, firstEntity[4])) {
+				return first ? FightCible.ENTITY_5_ALLY : FightCible.ENTITY_5_ENEMIE;
+				//entity first 5
+			} else 
+			//second entity
+			if (locEntityInTolerance(loc, secondEntity[0])) {
+				return !first ? FightCible.ENTITY_1_ALLY : FightCible.ENTITY_1_ENEMIE;
+				//entity second 1
+			} else if (locEntityInTolerance(loc, secondEntity[1])) {
+				return !first ? FightCible.ENTITY_2_ALLY : FightCible.ENTITY_2_ENEMIE;
+				//entity second 2
+			} else if (locEntityInTolerance(loc, secondEntity[2])) {
+				return !first ? FightCible.ENTITY_3_ALLY : FightCible.ENTITY_3_ENEMIE;
+				//entity second 3
+			} else if (locEntityInTolerance(loc, secondEntity[3])) {
+				return !first ? FightCible.ENTITY_4_ALLY : FightCible.ENTITY_4_ENEMIE;
+				//entity second 4
+			} else if (locEntityInTolerance(loc, secondEntity[4])) {
+				return !first ? FightCible.ENTITY_5_ALLY : FightCible.ENTITY_5_ENEMIE;
+				//entity second 5
+			} else {
+				return null;
+				//nothing
+			}
 		}
+		return null;
 	}
 	
 	public ItemStack renderCard(Card card) {
