@@ -100,7 +100,6 @@ public class EventFight implements Listener {
 											player.setCardHand(player.getCardSelect(), null);
 											player.setCardSelect(-1);
 											player.hideAllHead();
-											player.reloadAllHead();
 										} catch (Exception e1) {
 											Bukkit.getLogger().warning(RenderException.renderException(e1));
 										}

@@ -10,6 +10,7 @@ import fr.tangv.sorcicubespell.card.CardFaction;
 import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntityEquipment;
 import net.minecraft.server.v1_9_R2.WorldServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
@@ -37,6 +38,19 @@ public abstract class FightHead {
 		entity.setBasePlate(false);
 		entity.setInvulnerable(true);
 		entity.setInvisible(true);
+		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
+		entity.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
+		sendHead(entity, name, false);
+		return entity;
+	}
+	
+	private void sendHeadEntity(EntityArmorStand entity) {
+		fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, entity.getEquipment(EnumItemSlot.HEAD)));
+	}
+	
+	private void sendHead(EntityArmorStand entity, String name, boolean already) {
+		if (already)
+			fight.sendPacket(new PacketPlayOutEntityDestroy(entity.getId()));
 		if (name.isEmpty()) {
 			entity.setCustomNameVisible(false);
 			entity.setCustomName(name);
@@ -44,63 +58,30 @@ public abstract class FightHead {
 			entity.setCustomNameVisible(true);
 			entity.setCustomName(name);
 		}
-		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
-		return entity;
-	}
-	
-	protected void sendAddHead() {
-		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityName));
-		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityStat));
-		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entityHead));
-	}
-	
-	protected void sendRemoveHead() {
-		fight.sendPacket(new PacketPlayOutEntityDestroy(entityName.getId()));
-		fight.sendPacket(new PacketPlayOutEntityDestroy(entityStat.getId()));
-		fight.sendPacket(new PacketPlayOutEntityDestroy(entityHead.getId()));
-	}
-	
-	public void sendReloadHead() {
-		sendRemoveHead();
-		sendAddHead();
-	}
-	
-	public void setHead(String head) {
-		if (head.isEmpty()) {
-			entityHead.setCustomNameVisible(false);
-			entityHead.setCustomName(head);
-		} else {
-			entityHead.setCustomNameVisible(true);
-			entityHead.setCustomName(head);
-		}
+		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
+		sendHeadEntity(entity);
 	}
 	
 	public void showHead(ItemStack item) {
 		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(item));
+		sendHeadEntity(entityHead);
 	}
 	
 	public void hideHead() {
 		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
+		sendHeadEntity(entityHead);
+	}
+	
+	public void setHead(String head) {
+		sendHead(entityHead, head, true);
 	}
 	
 	public void setStat(String stat) {
-		if (stat.isEmpty()) {
-			entityStat.setCustomNameVisible(false);
-			entityStat.setCustomName(stat);
-		} else {
-			entityStat.setCustomNameVisible(true);
-			entityStat.setCustomName(stat);
-		}
+		sendHead(entityStat, stat, true);
 	}
 	
 	public void setName(String name) {
-		if (name.isEmpty()) {
-			entityName.setCustomNameVisible(false);
-			entityName.setCustomName(name);
-		} else {
-			entityName.setCustomNameVisible(true);
-			entityName.setCustomName(name);
-		}
+		sendHead(entityName, name, true);
 	}
 	
 	public abstract boolean isFaction(CardFaction faction);

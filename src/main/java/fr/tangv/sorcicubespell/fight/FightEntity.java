@@ -58,7 +58,6 @@ public class FightEntity extends FightHead {
 	public void setCard(CardEntity card) throws Exception {
 		if (this.card != null) {
 			sendRemovePlayer();
-			sendRemoveHead();
 		}
 		this.card = card;
 		if (card != null) {
@@ -67,7 +66,6 @@ public class FightEntity extends FightHead {
 			this.hideHead();
 			this.updateStat();
 			sendAddPlayer();
-			this.sendAddHead();
 		}
 	}
 	

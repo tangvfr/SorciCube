@@ -69,16 +69,19 @@ public class PlayerFight {
 		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, "§6Next Round", null, false);
 		//entity
 		this.locBase = this.isFisrt() ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase();
-		Location[] locs = this.isFisrt() ? fight.getArena().getFirstEntity() : fight.getArena().getSecondEntity();
-		this.entity = new FightEntity[locs.length];
-		for (int i = 0; i < locs.length; i++)
-			this.entity[i] = new FightEntity(fight, locs[i]);
-		this.hero = new FightHero(this);
 		//cards hand
 		this.cardHand = new Card[6];
 		this.pickCard(3);
 		//historique
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
+	}
+	
+	public void initFightHead() {
+		Location[] locs = this.isFisrt() ? fight.getArena().getFirstEntity() : fight.getArena().getSecondEntity();
+		this.entity = new FightEntity[locs.length];
+		for (int i = 0; i < locs.length; i++)
+			this.entity[i] = new FightEntity(fight, locs[i]);
+		this.hero = new FightHero(this);
 	}
 	
 	//param number is number card pick
@@ -161,21 +164,6 @@ public class PlayerFight {
 		enemie.getEntity(3).hideHead();
 		enemie.getEntity(4).hideHead();
 		enemie.getHero().hideHead();
-	}
-	
-	public void reloadAllHead() {
-		this.getEntity(0).sendReloadHead();
-		this.getEntity(1).sendReloadHead();
-		this.getEntity(2).sendReloadHead();
-		this.getEntity(3).sendReloadHead();
-		this.getEntity(4).sendReloadHead();
-		this.getHero().sendReloadHead();
-		enemie.getEntity(0).sendReloadHead();
-		enemie.getEntity(1).sendReloadHead();
-		enemie.getEntity(2).sendReloadHead();
-		enemie.getEntity(3).sendReloadHead();
-		enemie.getEntity(4).sendReloadHead();
-		enemie.getHero().sendReloadHead();
 	}
 	
 	public FightHead getForCible(FightCible cible) {
@@ -411,7 +399,6 @@ public class PlayerFight {
 				initHeadForSpell(card);
 			}
 		}
-		reloadAllHead();
 	}
 	
 	public void initHeadForEntityPose(Card card) {

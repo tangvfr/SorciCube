@@ -73,6 +73,8 @@ public class Fight {
 			this.player1 = createPlayerFight(player2Arg, preFight.getPlayer2DeckUse(), true);
 		}
 		//init player
+		player1.initFightHead();
+		player2.initFightHead();
 		player1.teleportToBase();
 		player2.teleportToBase();
 		player1.setEnemie(player2);
@@ -83,20 +85,6 @@ public class Fight {
 		sorci.getManagerFight().getPlayerFights().put(player2.getPlayer(), player2);
 		this.bossBar.addPlayer(player1.getPlayer());
 		this.bossBar.addPlayer(player2.getPlayer());
-		//send entity player1
-		player1.getEntity(0).sendAddHead();
-		player1.getEntity(1).sendAddHead();
-		player1.getEntity(2).sendAddHead();
-		player1.getEntity(3).sendAddHead();
-		player1.getEntity(4).sendAddHead();
-		player1.getHero().sendAddHead();
-		//send entity player2
-		player2.getEntity(0).sendAddHead();
-		player2.getEntity(1).sendAddHead();
-		player2.getEntity(2).sendAddHead();
-		player2.getEntity(3).sendAddHead();
-		player2.getEntity(4).sendAddHead();
-		player2.getHero().sendAddHead();
 		//start
 		cooldown.loop();
 	}
