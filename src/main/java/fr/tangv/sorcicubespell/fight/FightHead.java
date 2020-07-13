@@ -11,6 +11,7 @@ import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityEquipment;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.WorldServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
@@ -60,6 +61,13 @@ public abstract class FightHead {
 		}
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
 		sendHeadEntity(entity);
+	}
+	
+	public void rotateHead(float angle) {
+		entityHead.yaw += angle;
+		if (entityHead.yaw > 360.0F)
+			entityHead.yaw -= 360.0F;
+		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityHead, (byte) ((entityHead.yaw*256.0F)/360.0F)));
 	}
 	
 	public void showHead(ItemStack item) {
