@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell.fight;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -41,6 +42,8 @@ public class EventFight implements Listener {
 		materialTransparent.add(Material.STATIONARY_LAVA);
 		materialTransparent.add(Material.STATIONARY_WATER);
 	}
+	
+	private final static double TOLERANCE_MOVE = 2.8;
 	
 	//dynamic
 	
@@ -190,7 +193,19 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
-		
+		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
+			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
+			Location loc = player.getLocBase();
+			if (loc.getWorld().equals(e.getTo().getWorld())) {
+				loc = new Location(loc.getWorld(), loc.getX(), e.getTo().getY(), loc.getZ());
+				if (e.getTo().distance(loc) > TOLERANCE_MOVE) {
+					Location newLoc = e.getFrom();
+					newLoc.setX(e.getFrom().getX());
+					newLoc.setZ(e.getFrom().getZ());
+					e.setTo(newLoc);
+				}
+			}
+		}
 	}
 	
 	@EventHandler
