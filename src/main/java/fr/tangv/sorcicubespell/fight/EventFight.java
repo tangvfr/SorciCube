@@ -43,7 +43,7 @@ public class EventFight implements Listener {
 		materialTransparent.add(Material.STATIONARY_WATER);
 	}
 	
-	private final static double TOLERANCE_MOVE = 2.8;
+	private final static double TOLERANCE_MOVE = 3.2;
 	
 	//dynamic
 	
@@ -102,6 +102,7 @@ public class EventFight implements Listener {
 											entity.setCard(new CardEntity(card));
 											player.setCardHand(player.getCardSelect(), null);
 											player.setCardSelect(-1);
+											player.initHotBar();
 											player.hideAllHead();
 										} catch (Exception e1) {
 											Bukkit.getLogger().warning(RenderException.renderException(e1));

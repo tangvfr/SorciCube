@@ -38,7 +38,7 @@ public abstract class FightHead {
 		entity.setGravity(false);
 		entity.setBasePlate(false);
 		entity.setInvulnerable(true);
-		entity.setInvisible(true);
+		entity.setInvisible(false);
 		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
 		entity.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
 		sendHead(entity, name, false);
@@ -73,11 +73,13 @@ public abstract class FightHead {
 	public void showHead(ItemStack item) {
 		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(item));
 		sendHeadEntity(entityHead);
+		setHead("ici");
 	}
 	
 	public void hideHead() {
 		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
 		sendHeadEntity(entityHead);
+		setHead("none");
 	}
 	
 	public void setHead(String head) {

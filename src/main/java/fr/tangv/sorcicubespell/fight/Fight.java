@@ -249,6 +249,8 @@ public class Fight {
 			mana = 2;
 		if (mana > MAX_MANA_ROUND)
 			mana = MAX_MANA_ROUND;
+		player1.getPlayer().closeInventory();
+		player2.getPlayer().closeInventory();
 		PlayerFight player = this.firstPlay ? player1 : player2;
 		player.setMana(mana+player.getManaBoost());
 		player.setManaBoost(0);
