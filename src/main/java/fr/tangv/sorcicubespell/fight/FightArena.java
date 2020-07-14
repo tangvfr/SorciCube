@@ -72,7 +72,7 @@ public class FightArena {
 	}
 	
 	public Location[] getSecondEntity() {
-		return firstEntity;
+		return secondEntity;
 	}
 	
 }

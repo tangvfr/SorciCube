@@ -136,7 +136,7 @@ public class Fight {
 		}
 	}
 	
-	private final static double TOLERANCE = 3.8;
+	private final static double TOLERANCE = 4.6;
 	
 	private boolean locEntityInTolerance(Location loc1, Location loc2) {
 		if (loc1.getBlockX() == loc2.getBlockX() && loc1.getBlockZ() == loc2.getBlockZ())

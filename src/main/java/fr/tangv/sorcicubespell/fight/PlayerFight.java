@@ -53,6 +53,7 @@ public class PlayerFight {
 	private FightEntity[] entity;
 	private FightHero hero;
 	private Location locBase;
+	private Location[] entityLoc;
 	private Card[] cardHand;
 	private ItemStack itemNextRound;
 	
@@ -67,8 +68,14 @@ public class PlayerFight {
 		this.first = first;
 		//item
 		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, "§6Next Round", null, false);
-		//entity
-		this.locBase = this.isFisrt() ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase();
+		//entity loc
+		if (first) {
+			this.locBase = fight.getArena().getFirstBase();
+			this.entityLoc = fight.getArena().getFirstEntity();
+		} else {
+			this.locBase = fight.getArena().getSecondBase();
+			this.entityLoc = fight.getArena().getSecondEntity();
+		}
 		//cards hand
 		this.cardHand = new Card[6];
 		this.pickCard(3);
@@ -77,10 +84,9 @@ public class PlayerFight {
 	}
 	
 	public void initFightHead() {
-		Location[] locs = this.isFisrt() ? fight.getArena().getFirstEntity() : fight.getArena().getSecondEntity();
-		this.entity = new FightEntity[locs.length];
-		for (int i = 0; i < locs.length; i++)
-			this.entity[i] = new FightEntity(fight, locs[i]);
+		this.entity = new FightEntity[entityLoc.length];
+		for (int i = 0; i < entityLoc.length; i++)
+			this.entity[i] = new FightEntity(fight, entityLoc[i]);
 		this.hero = new FightHero(this);
 	}
 	

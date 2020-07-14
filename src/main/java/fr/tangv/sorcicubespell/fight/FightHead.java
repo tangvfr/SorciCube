@@ -22,6 +22,7 @@ public abstract class FightHead {
 	private EntityArmorStand entityName;
 	private EntityArmorStand entityStat;
 	private EntityArmorStand entityHead;
+	private net.minecraft.server.v1_9_R2.ItemStack headItem;
 	
 	public FightHead(Fight fight, Location loc) {
 		this.fight = fight;
@@ -38,7 +39,7 @@ public abstract class FightHead {
 		entity.setGravity(false);
 		entity.setBasePlate(false);
 		entity.setInvulnerable(true);
-		entity.setInvisible(false);
+		entity.setInvisible(true);
 		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
 		entity.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
 		sendHead(entity, name, false);
@@ -46,7 +47,7 @@ public abstract class FightHead {
 	}
 	
 	private void sendHeadEntity(EntityArmorStand entity) {
-		fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, entity.getEquipment(EnumItemSlot.HEAD)));
+		fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, headItem));
 	}
 	
 	private void sendHead(EntityArmorStand entity, String name, boolean already) {
@@ -71,7 +72,7 @@ public abstract class FightHead {
 	}
 	
 	public void showHead(ItemStack item) {
-		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(item));
+		headItem = CraftItemStack.asNMSCopy(item);
 		sendHeadEntity(entityHead);
 		setHead("ici");
 	}
@@ -79,7 +80,7 @@ public abstract class FightHead {
 	public void hideHead() {
 		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
 		sendHeadEntity(entityHead);
-		setHead("none");
+		setHead("");
 	}
 	
 	public void setHead(String head) {
