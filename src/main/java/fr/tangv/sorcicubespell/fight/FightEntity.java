@@ -16,6 +16,7 @@ import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_9_R2.PlayerInteractManager;
 import net.minecraft.server.v1_9_R2.WorldServer;
@@ -30,7 +31,7 @@ public class FightEntity extends FightHead {
 	public FightEntity(Fight fight, Location loc) {
 		super(fight, loc);
 		this.card = null;
-		this.gameProfile = new GameProfile(UUID.randomUUID(), "§6Entity");
+		this.gameProfile = new GameProfile(UUID.randomUUID(), "");
 		byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", "").getBytes());
 		Property property = new Property("textures", new String(encodedData));
 		gameProfile.getProperties().put("textures", property);
@@ -43,6 +44,7 @@ public class FightEntity extends FightHead {
 
 	public void sendAddPlayer() {
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
+		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
 	}
 	
 	public void sendRemovePlayer() {
@@ -56,9 +58,8 @@ public class FightEntity extends FightHead {
 	}
 	
 	public void setCard(CardEntity card) throws Exception {
-		if (this.card != null) {
+		if (this.card != null)
 			sendRemovePlayer();
-		}
 		this.card = card;
 		if (card != null) {
 			setSkin(card.hasSkin() ? card.getSkin() : "");

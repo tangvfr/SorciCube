@@ -31,7 +31,7 @@ public abstract class FightHead {
 		WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
 		this.entityStat = createArmorStand(world, "", 0D);
 		this.entityName = createArmorStand(world, "", 0.25D);
-		this.entityHead = createArmorStand(world, "", 1.0D);
+		this.entityHead = createArmorStand(world, "", 1.5D);
 	}
 	
 	private EntityArmorStand createArmorStand(WorldServer world, String name, double decal) {
@@ -41,7 +41,6 @@ public abstract class FightHead {
 		entity.setInvulnerable(true);
 		entity.setInvisible(true);
 		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
-		entity.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
 		sendHead(entity, name, false);
 		return entity;
 	}
@@ -61,7 +60,6 @@ public abstract class FightHead {
 			entity.setCustomName(name);
 		}
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
-		sendHeadEntity(entity);
 	}
 	
 	public void rotateHead(float angle) {
@@ -74,13 +72,11 @@ public abstract class FightHead {
 	public void showHead(ItemStack item) {
 		headItem = CraftItemStack.asNMSCopy(item);
 		sendHeadEntity(entityHead);
-		setHead("ici");
 	}
 	
 	public void hideHead() {
-		entityHead.setEquipment(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemStack(Material.AIR)));
+		headItem = CraftItemStack.asNMSCopy(new ItemStack(Material.AIR));
 		sendHeadEntity(entityHead);
-		setHead("");
 	}
 	
 	public void setHead(String head) {

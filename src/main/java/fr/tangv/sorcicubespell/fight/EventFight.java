@@ -129,8 +129,10 @@ public class EventFight implements Listener {
 				}
 			}
 			e.setCancelled(true);
+			e.getPlayer().updateInventory();
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
 			e.setCancelled(true);
+			e.getPlayer().updateInventory();
 		}
 	}
 	
