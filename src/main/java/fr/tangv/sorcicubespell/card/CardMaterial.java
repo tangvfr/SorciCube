@@ -55,7 +55,7 @@ public class CardMaterial {
 	@Override
 	public String toString() {
 		if (hasUrl())
-			return "skull: "+url;
+			return "skull: "+url.replaceFirst("http://textures.minecraft.net/texture/", "");
 		else
 			return id+":"+data;
 	}

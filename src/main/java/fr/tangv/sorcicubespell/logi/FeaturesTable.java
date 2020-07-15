@@ -26,6 +26,7 @@ import fr.tangv.sorcicubespell.card.CardValue;
 import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
+import fr.tangv.sorcicubespell.logi.dialog.DialogSkin;
 
 public class FeaturesTable extends JTable {
 
@@ -49,8 +50,7 @@ public class FeaturesTable extends JTable {
 						CardFeature feature = getCardFeature(id);
 						CardValue value = feature.getValue();
 						if (feature.getType() == CardFeatureType.SKIN) {
-							String link = value.asString().replaceFirst("http://textures.minecraft.net/texture/", "");
-							new DialogBase<JTextField>(window, "Skin", new JTextField(link)) {
+							new DialogSkin(window, "Skin", value.asString()) {
 								private static final long serialVersionUID = 4116920655857733839L;
 
 								@Override

@@ -19,6 +19,7 @@ import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
+import fr.tangv.sorcicubespell.logi.dialog.DialogSkin;
 import fr.tangv.sorcicubespell.util.TextList;
 
 public class MouseTable extends ClickListener {
@@ -73,7 +74,7 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 3:
-					new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Material", new JTextField(card.getMaterial().toString())) {
+					new DialogSkin(cartsPanel.getFrameLogi(), "Material", card.getMaterial().toString()) {
 						private static final long serialVersionUID = -4613034932047272120L;
 
 						@Override

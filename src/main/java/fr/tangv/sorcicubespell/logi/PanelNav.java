@@ -71,6 +71,8 @@ public class PanelNav extends JPanel {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
 				String prefix = (isSelected ? ">" : "");
+				if (card.getFeatures().isWarning())
+					prefix += "<span color=\"#d61818\" style=\"text-decoration: underline;\">[/!\\]</span>";
 				if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CART))
 					prefix += "<span color=\"#E60FB8\">[Hide]</span>";
 				prefix += (card.getType() == CardType.ENTITY ? 

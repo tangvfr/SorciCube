@@ -20,6 +20,7 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 
 	private static final long serialVersionUID = -5728665688478855133L;
 	private Window frameLogi;
+	protected JPanel panUp;
 	
 	public DialogBase(Window owner, String label, T comp) {
 		this(owner, label, comp, null);
@@ -46,9 +47,9 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		});
 		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setTitle("Edit Cart "+label);
+		this.setTitle("Edit Card "+label);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		JPanel panUp = new JPanel();
+		this.panUp = new JPanel();
 		panUp.setLayout(new BorderLayout());
 		panUp.add(new JLabel(label+": "), BorderLayout.WEST);
 		this.initComp(comp);

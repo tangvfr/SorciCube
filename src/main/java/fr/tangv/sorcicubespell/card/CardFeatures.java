@@ -8,9 +8,11 @@ import org.bson.Document;
 public class CardFeatures {
 
 	private ConcurrentHashMap<CardFeatureType, CardFeature> features;
+	private boolean warning;
 	
 	public CardFeatures() {
 		this.features = new ConcurrentHashMap<CardFeatureType, CardFeature>();
+		this.warning = false;
 	}
 
 	public boolean hasFeature(CardFeatureType type) {
@@ -29,12 +31,20 @@ public class CardFeatures {
 		return this.features.remove(feature.getType());
 	}
 	
+	public CardFeature removeFeature(CardFeatureType type) {
+		return this.features.remove(type);
+	}
+	
 	public Collection<CardFeature> valueFeatures() {
 		return this.features.values();
 	}
 	
 	public int size() {
 		return this.features.size();
+	}
+	
+	public boolean isWarning() {
+		return warning;
 	}
 	
 	public Document toDocument() {
@@ -49,6 +59,8 @@ public class CardFeatures {
 		CardFeatures features = new CardFeatures();
 		if (document.containsKey("version")) {
 			for (String key : document.keySet()) {
+				if (key.equals("version"))
+					continue;
 				CardFeatureType type = CardFeatureType.valueOf(key);
 				features.putFeature(CardFeature.toCartFeature(type, document.get(key, Document.class)));
 			}
@@ -62,6 +74,8 @@ public class CardFeatures {
 				if (!features.hasFeature(feature.getType()))
 					features.putFeature(feature);
 			}
+			if (features.hasFeature(CardFeatureType.SKIN))
+				features.warning = true;
 		}
 		return features;
 	}

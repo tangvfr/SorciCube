@@ -48,7 +48,10 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 					break;
 					
 				case 2://value
-					text = feature.getValue().toString();
+					if (feature.getType() == CardFeatureType.SKIN)
+						text = feature.getValue().toString().replace("http://textures.minecraft.net/texture/", "");
+					else
+						text = feature.getValue().toString();
 					break;
 					
 				default://default not possible
