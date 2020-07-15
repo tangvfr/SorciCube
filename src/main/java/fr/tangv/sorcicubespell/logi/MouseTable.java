@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell.logi;
 
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -80,7 +81,12 @@ public class MouseTable extends ClickListener {
 							CardMaterial material = null;
 							String text = comp.getText();
 							if (text.startsWith("skull: ")) {
-								material = new CardMaterial(text.replaceFirst("skull: ", ""));
+								try {
+									String textURL = "http://textures.minecraft.net/texture/"+text.replaceFirst("skull: ", "");
+									URL url = new URL(textURL);
+									url.openStream().close();
+									material = new CardMaterial(textURL);
+								} catch (Exception e) {}
 							} else {
 								String[] split = text.split(":");
 								if (split.length == 2 || split.length == 1) {
@@ -98,7 +104,7 @@ public class MouseTable extends ClickListener {
 								cartsPanel.getCarts().update(card);
 								cartsPanel.refrech();
 							} else {
-								JOptionPane.showMessageDialog(this, "Error invalid Material", "Error Cart Material", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(this, "Error invalid Material", "Error Card Material", JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					};

@@ -15,7 +15,6 @@ import com.mongodb.client.MongoCollection;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFaction;
-import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
@@ -126,13 +125,7 @@ public class ManagerPacketCards {
 			CardType type = CardType.values()[chooseIndex(packet.getType())];
 			ArrayList<Card> list = new ArrayList<Card>();
 			for (Card card : collectionCards) {
-				boolean hide = false;
-				for (CardFeature feature : card.getFeatures().listFeatures())
-					if (feature.getType() == CardFeatureType.HIDE_CART) {
-						hide = true;
-						break;
-					}
-				if (!hide && card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
+				if (!card.getFeatures().hasFeature(CardFeatureType.HIDE_CART) && card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
 					list.add(card);
 			}
 			if (list.size() <= 0)

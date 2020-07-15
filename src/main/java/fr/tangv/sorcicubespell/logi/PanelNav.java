@@ -71,20 +71,12 @@ public class PanelNav extends JPanel {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
 				String prefix = (isSelected ? ">" : "");
-				boolean skin = false;
-				boolean hide = false;
-				for (CardFeature feature : card.getFeatures().listFeatures()) {
-					if (feature.getType() == CardFeatureType.SKIN)
-						skin = true;
-					else if (feature.getType() == CardFeatureType.HIDE_CART)
-						hide = true;
-				}
-				if (hide)
+				if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CART))
 					prefix += "<span color=\"#E60FB8\">[Hide]</span>";
 				prefix += (card.getType() == CardType.ENTITY ? 
 						"<span color=\"#E8A006\">[Entity]</span>" 
 						: "<span color=\"#E64D0F\">[Spell]</span>");
-				if (skin)
+				if (card.getFeatures().hasFeature(CardFeatureType.SKIN))
 					prefix += "<span color=\"#2BBFE0\">[Skin]</span>";
 				prefix += "<span color=\"#000000\"> | </span>";
 				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.getName())+"</body></html>");
@@ -129,7 +121,7 @@ public class PanelNav extends JPanel {
 					if (e.getID() == 1001) {
 						Card cart = list.getSelectedValue();
 						CardFeatures features = new CardFeatures();
-						features.putFeature(new CardFeature("DEFAULT_HIDE", CardFeatureType.HIDE_CART, new CardValue()));
+						features.putFeature(new CardFeature(CardFeatureType.HIDE_CART, new CardValue()));
 						cartsPanel.getCarts().insert(new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(1, 0),
@@ -156,9 +148,9 @@ public class PanelNav extends JPanel {
 					if (e.getID() == 1001) {
 						Card card = list.getSelectedValue();
 						CardFeatures features = new CardFeatures();
-						features.putFeature(new CardFeature(CardFeatures.HEALTH, CardFeatureType.HEALTH, new CardValue(3)));
-						features.putFeature(new CardFeature(CardFeatures.ATTACK_DAMMAGE, CardFeatureType.DAMAGE, new CardValue(1)));
-						features.putFeature(new CardFeature("DEFAULT_HIDE", CardFeatureType.HIDE_CART, new CardValue()));
+						features.putFeature(new CardFeature(CardFeatureType.HEALTH, new CardValue(3)));
+						features.putFeature(new CardFeature(CardFeatureType.DAMAGE, new CardValue(1)));
+						features.putFeature(new CardFeature(CardFeatureType.HIDE_CART, new CardValue()));
 						cartsPanel.getCarts().insert(new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(3, 0),

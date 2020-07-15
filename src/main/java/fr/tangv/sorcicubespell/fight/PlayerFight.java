@@ -29,7 +29,7 @@ public class PlayerFight {
 	private final static ItemStack itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 	private final static ItemStack itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, " ", null, false);
 	private final static int MAX_HEALTH = 60;
-	private final static int START_HEALTH = 32;
+	private final static int START_HEALTH = 30;
 	
 	private static ItemStack itemNull(ItemStack item) {
 		if (item == null)

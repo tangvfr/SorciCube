@@ -4,37 +4,43 @@ import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 
 public enum CardFeatureType {
 	
-	SKIN(TypeValue.TEXT),
-	HEALTH(TypeValue.NUMBER),
-	DAMAGE(TypeValue.NUMBER),
-	INCITEMENT(TypeValue.NONE),
-	HIDE_CART(TypeValue.NONE),
-	IF_HURT(TypeValue.NONE),
-	TAKE_NEW_CART(TypeValue.NUMBER),
-	DESTRUCT(TypeValue.NONE),
-	HEAL(TypeValue.NUMBER),
-	BOOST_DAMAGE(TypeValue.NUMBER),
-	BOOST_HEALTH(TypeValue.NUMBER),
-	BOOST_MANA(TypeValue.NUMBER),
-	COPY_CART_ARENA_POSE(TypeValue.NUMBER),
-	COPY_CART_ARENA(TypeValue.NUMBER),
-	REMOVE_MANA_HERO(TypeValue.NUMBER),
-	INVULNERABILITY(TypeValue.NUMBER),
-	IMMOBILIZATION(TypeValue.NUMBER),
-	INVOCATION(TypeValue.TEXT),
-	ACTION_DEAD(TypeValue.TEXT),
-	ACTION_SPAWN(TypeValue.TEXT),
-	METAMORPH_TO(TypeValue.TEXT),
-	GIVE_FEATURE_CART(TypeValue.TEXT);
+	SKIN(TypeValue.TEXT, false),
+	HEALTH(TypeValue.NUMBER, false),
+	DAMAGE(TypeValue.NUMBER, true),
+	INCITEMENT(TypeValue.NONE, true),
+	HIDE_CART(TypeValue.NONE, true),
+	IF_HURT(TypeValue.NONE, true),
+	TAKE_NEW_CART(TypeValue.NUMBER, true),
+	DESTRUCT(TypeValue.NONE, true),
+	HEAL(TypeValue.NUMBER, true),
+	BOOST_DAMAGE(TypeValue.NUMBER, true),
+	BOOST_HEALTH(TypeValue.NUMBER, true),
+	BOOST_MANA(TypeValue.NUMBER, true),
+	COPY_CART_ARENA_POSE(TypeValue.NUMBER, true),
+	COPY_CART_ARENA(TypeValue.NUMBER, true),
+	REMOVE_MANA_HERO(TypeValue.NUMBER, true),
+	INVULNERABILITY(TypeValue.NUMBER, true),
+	IMMOBILIZATION(TypeValue.NUMBER, true),
+	INVOCATION(TypeValue.TEXT, true),
+	ACTION_DEAD(TypeValue.TEXT, true),
+	ACTION_SPAWN(TypeValue.TEXT, true),
+	METAMORPH_TO(TypeValue.TEXT, true),
+	GIVE_FEATURE_CART(TypeValue.TEXT, true);
 	
 	private TypeValue typeValue;
+	private boolean show;
 	
-	private CardFeatureType(TypeValue typeValue) {
+	private CardFeatureType(TypeValue typeValue, boolean show) {
 		this.typeValue = typeValue;
+		this.show = show;
 	}
 	
 	public TypeValue getTypeValue() {
 		return typeValue;
+	}
+	
+	public boolean isShow() {
+		return show;
 	}
 	
 }

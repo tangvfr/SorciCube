@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.table.AbstractTableModel;
 
 import fr.tangv.sorcicubespell.card.CardFeature;
+import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 
 public class FeaturesTableModel extends AbstractTableModel implements MouseListener {
@@ -19,7 +20,7 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 	
 	@Override
 	public int getColumnCount() {
-		return 4;
+		return 3;
 	}
 	
 	@Override
@@ -27,7 +28,7 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 		return 1+featuresTable.getCardFeatures().size();
 	}
 	
-	private static final String[] names = {"Name", "Type", "Value", "Type Value"};
+	private static final String[] names = {"Type", "Type Value", "Value"};
 	@Override
 	public Object getValueAt(int row, int column) {
 		String text = null;
@@ -36,38 +37,32 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 			text = names[column];
 			lock = false;
 		} else {
-			CardFeature feature = featuresTable.getCardFeatures().getFeature(featuresTable.getName(row-1));
+			CardFeature feature = featuresTable.getCardFeature(row-1);
 			switch (column) {
-				case 0://name
-					text = feature.getName();
+				case 0://type
+					text = feature.getType().name();
 					break;
 					
-				case 1://type
-					text = feature.getType().name();
+				case 1://type value
+					text = feature.getValue().getType().name();
 					break;
 					
 				case 2://value
 					text = feature.getValue().toString();
 					break;
 					
-				case 3://type value
-					text = feature.getValue().getType().name();
-					break;
-					
 				default://default not possible
 					break;
 			}
-			lock = (column == 2 && feature.getType().getTypeValue() == TypeValue.NONE) || (column != 2 && featuresTable.isEntity() && (feature.getName().equals("Health") || feature.getName().equals("AttackDamage")));
+			lock = (column == 2 && feature.getType().getTypeValue() == TypeValue.NONE) || (column != 2 && featuresTable.isEntity() && (feature.getType() == CardFeatureType.DAMAGE || feature.getType() == CardFeatureType.HEALTH));
 		}
-		if (column == 1 || column == 3 || lock)
+		if (column == 1 || lock)
 			return "<html><body><span color='#5555FF'>"+text+"</span></body></html>";
 		return text;
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 	
 	@Override
 	public void mousePressed(MouseEvent e) {}

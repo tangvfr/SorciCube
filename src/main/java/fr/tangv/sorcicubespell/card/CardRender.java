@@ -1,7 +1,6 @@
 package fr.tangv.sorcicubespell.card;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
@@ -35,8 +34,8 @@ public class CardRender {
 	
 	public static String renderStatCard(Card card) {
 		CardFeatures features = card.getFeatures();
-		return "§e"+features.getFeature(CardFeatures.ATTACK_DAMMAGE).getValue().toString()+" \u2694"
-				+"  §c"+features.getFeature(CardFeatures.HEALTH).getValue().toString()+" \u2665";
+		return "§e"+features.getFeature(CardFeatureType.DAMAGE).getValue().toString()+" \u2694"
+				+"  §c"+features.getFeature(CardFeatureType.HEALTH).getValue().toString()+" \u2665";
 	}
 	
 	public static String renderManaCard(Card card) {
@@ -62,19 +61,17 @@ public class CardRender {
 		lore.add(sorci.getEnumTool().rarityToString(card.getRarity()));*/
 		lore.add("");
 		//features
-		boolean rn = false;
-		Collection<CardFeature> f = features.listFeatures();
-		for (CardFeature feature : f)
-			if (feature.getType() != CardFeatureType.SKIN && feature.getType() != CardFeatureType.HEALTH) {
-				if (!(card.getType() == CardType.ENTITY && feature.getName().equals(CardFeatures.ATTACK_DAMMAGE) && card.getCible() == CardCible.ONE_ENEMIE && card.getCibleFaction() == CardFaction.BASIC)) {
-					rn = true;
+		boolean featureReturn = false;
+		for (CardFeature feature : features.valueFeatures())
+			if (feature.getType().isShow())
+				if (card.getType() != CardType.ENTITY || feature.getType() != CardFeatureType.DAMAGE || card.getCible() != CardCible.ONE_ENEMIE || card.getCibleFaction() != CardFaction.BASIC) {
+					featureReturn = true;
 					lore.add(sorci.getEnumTool().featureToString(feature.getType())
 						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, cards, feature))
 						.replace("{cible}", cible)
 					);
 				}
-			}
-		if (rn)
+		if (featureReturn)
 			lore.add("");
 		//lore
 		for (int i = 0; i < card.getDescription().size(); i++)

@@ -19,8 +19,8 @@ public abstract class FightHead {
 
 	protected Fight fight;
 	protected Location loc;
+	protected WorldServer world;
 	private EntityArmorStand entityName;
-	private EntityArmorStand entityStat;
 	private EntityArmorStand entityHead;
 	private net.minecraft.server.v1_9_R2.ItemStack headItem;
 	
@@ -28,14 +28,13 @@ public abstract class FightHead {
 		this.fight = fight;
 		this.loc = loc;
 		//create entity
-		WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
-		this.entityStat = createArmorStand(world, "", 0D);
-		this.entityName = createArmorStand(world, "", 0.25D);
-		this.entityHead = createArmorStand(world, "", 1.5D);
+		this.world = ((CraftWorld) loc.getWorld()).getHandle();
+		this.entityName = createArmorStand("", 0.1D);
+		this.entityHead = createArmorStand("", 1.1D);
 	}
 	
-	private EntityArmorStand createArmorStand(WorldServer world, String name, double decal) {
-		EntityArmorStand entity = new EntityArmorStand(world);
+	protected EntityArmorStand createArmorStand(String name, double decal) {
+		EntityArmorStand entity = new EntityArmorStand(this.world);
 		entity.setGravity(false);
 		entity.setBasePlate(false);
 		entity.setInvulnerable(true);
@@ -49,7 +48,7 @@ public abstract class FightHead {
 		fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, headItem));
 	}
 	
-	private void sendHead(EntityArmorStand entity, String name, boolean already) {
+	protected void sendHead(EntityArmorStand entity, String name, boolean already) {
 		if (already)
 			fight.sendPacket(new PacketPlayOutEntityDestroy(entity.getId()));
 		if (name.isEmpty()) {
@@ -83,10 +82,6 @@ public abstract class FightHead {
 		sendHead(entityHead, head, true);
 	}
 	
-	public void setStat(String stat) {
-		sendHead(entityStat, stat, true);
-	}
-	
 	public void setName(String name) {
 		sendHead(entityName, name, true);
 	}
@@ -96,6 +91,8 @@ public abstract class FightHead {
 	public abstract boolean isSelectable();
 	
 	public abstract void updateStat();
+	
+	public abstract void setStat(String stat);
 	
 	public void addHealth(int health) {
 		setHealth(getHealth()+health);

@@ -6,7 +6,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -16,57 +15,67 @@ import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_9_R2.PlayerInteractManager;
-import net.minecraft.server.v1_9_R2.WorldServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 
 public class FightEntity extends FightHead {
 
 	private EntityPlayer entityPlayer;
-	private GameProfile gameProfile;
+	private UUID uuid;
 	private CardEntity card;
+	private String skinUrl;
+	private MinecraftServer server;
 	
 	public FightEntity(Fight fight, Location loc) {
 		super(fight, loc);
 		this.card = null;
-		this.gameProfile = new GameProfile(UUID.randomUUID(), "");
-		byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", "").getBytes());
-		Property property = new Property("textures", new String(encodedData));
-		gameProfile.getProperties().put("textures", property);
+		this.uuid = UUID.randomUUID();
+		this.skinUrl = "";
 		//create entity
-		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-		WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
+		this.server = ((CraftServer) Bukkit.getServer()).getServer();
+		reCreatePlayer("", false);
+	}
+	
+	private void reCreatePlayer(String name, boolean remove) {
+		if (remove)
+			removePlayer();
+		GameProfile gameProfile = new GameProfile(uuid, name);
+		gameProfile.getProperties().removeAll("textures");
+		byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", skinUrl).getBytes());
+		gameProfile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+		Bukkit.broadcastMessage("name: "+name+" skin:"+skinUrl);
 		this.entityPlayer = new EntityPlayer(server, world, gameProfile, new PlayerInteractManager(world));
 		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 	}
 
-	public void sendAddPlayer() {
+	@Override
+	public void setStat(String stat) {
+		reCreatePlayer(stat, true);
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
+		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
 	}
-	
-	public void sendRemovePlayer() {
+
+	public void removePlayer() {
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
 	}
 	
-	private void setSkin(String url) {
-		gameProfile.getProperties().removeAll("textures");
-		byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", "").getBytes());
-	  	gameProfile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+	private void setSkin(String url) throws Exception {
+		this.skinUrl = url;
 	}
 	
 	public void setCard(CardEntity card) throws Exception {
 		if (this.card != null)
-			sendRemovePlayer();
+			removePlayer();
 		this.card = card;
 		if (card != null) {
 			setSkin(card.hasSkin() ? card.getSkin() : "");
 			this.setName(card.getName());
 			this.hideHead();
 			this.updateStat();
-			sendAddPlayer();
 		}
 	}
 	

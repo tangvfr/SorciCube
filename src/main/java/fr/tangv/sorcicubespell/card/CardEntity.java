@@ -11,14 +11,11 @@ public class CardEntity {
 		if (card.getType() != CardType.ENTITY)
 			throw new Exception("Card is not ENTITY !");
 		this.card = card;
-		this.skin = null;
-		for (CardFeature feature : card.getFeatures().listFeatures())
-			if (feature.getType() == CardFeatureType.SKIN) {
-				skin = feature.getValue().asString();
-				break;
-			}
-		this.health = card.getFeatures().getFeature(CardFeatures.HEALTH);
-		this.attack = card.getFeatures().getFeature(CardFeatures.ATTACK_DAMMAGE);
+		this.skin = card.getFeatures().hasFeature(CardFeatureType.SKIN) ?
+				card.getFeatures().getFeature(CardFeatureType.SKIN).getValue().asString()
+				: null;
+		this.health = card.getFeatures().getFeature(CardFeatureType.HEALTH);
+		this.attack = card.getFeatures().getFeature(CardFeatureType.DAMAGE);
 	}
 	
 	public String getName() {

@@ -1,54 +1,35 @@
 package fr.tangv.sorcicubespell.card;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bson.Document;
 
 public class CardFeatures {
 
-	public static final String HEALTH = "Health";
-	public static final String ATTACK_DAMMAGE = "AttackDamage";
-	
-	private Map<String, CardFeature> features;
+	private ConcurrentHashMap<CardFeatureType, CardFeature> features;
 	
 	public CardFeatures() {
-		this.features = new HashMap<String, CardFeature>();
+		this.features = new ConcurrentHashMap<CardFeatureType, CardFeature>();
 	}
 
-	public boolean hasFeature(String name) {
-		return this.features.containsKey(name);
+	public boolean hasFeature(CardFeatureType type) {
+		return this.features.containsKey(type);
 	}
 	
-	public CardFeature getFeature(String name) {
-		return this.features.get(name);
+	public CardFeature getFeature(CardFeatureType type) {
+		return this.features.get(type);
 	}
 	
-	public void renameFeature(CardFeature cartFeature, String newName) {
-		this.removeFeature(cartFeature.getName());
-		cartFeature.setName(newName);
-		this.putFeature(cartFeature);
+	public CardFeature putFeature(CardFeature feature) {
+		return this.features.put(feature.getType(), feature);
 	}
 	
-	public void replaceFeature(CardFeature cartFeature) {
-		this.features.replace(cartFeature.getName(), cartFeature);
+	public CardFeature removeFeature(CardFeature feature) {
+		return this.features.remove(feature.getType());
 	}
 	
-	public void putFeature(CardFeature cartFeature) {
-		this.features.put(cartFeature.getName(), cartFeature);
-	}
-	
-	public void removeFeature(String name) {
-		this.features.remove(name);
-	}
-	
-	public Set<String> listNameFeatures() {
-		return this.features.keySet();
-	}
-	
-	public Collection<CardFeature> listFeatures() {
+	public Collection<CardFeature> valueFeatures() {
 		return this.features.values();
 	}
 	
@@ -58,15 +39,30 @@ public class CardFeatures {
 	
 	public Document toDocument() {
 		Document document = new Document();
-		for (String key : this.features.keySet())
-			document.append(key, this.features.get(key).toDocument());
+		document.append("version", 2);
+		for (CardFeatureType key : this.features.keySet())
+			document.append(key.name(), this.features.get(key).toDocument());
 		return document;
 	}
 	
-	public static CardFeatures toCartFeatures(Document document) {
+	public static CardFeatures toCardFeatures(Document document) {
 		CardFeatures features = new CardFeatures();
-		for (String key : document.keySet())
-			features.putFeature(CardFeature.toCartFeature(document.get(key, Document.class)));
+		if (document.containsKey("version")) {
+			for (String key : document.keySet()) {
+				CardFeatureType type = CardFeatureType.valueOf(key);
+				features.putFeature(CardFeature.toCartFeature(type, document.get(key, Document.class)));
+			}
+		} else {
+			for (String key : document.keySet()) {
+				Document docCard = document.get(key, Document.class);
+				CardFeature feature = new CardFeature(
+								CardFeatureType.valueOf(docCard.getString("type")),
+								CardValue.toCartValue(docCard.get("value", Document.class))
+							);
+				if (!features.hasFeature(feature.getType()))
+					features.putFeature(feature);
+			}
+		}
 		return features;
 	}
 	
