@@ -81,6 +81,8 @@ public class Fight {
 		player2.setEnemie(player1);
 		player1.createScoreboard();
 		player2.createScoreboard();
+		player1.getHero().updateStat();
+		player2.getHero().updateStat();
 		sorci.getManagerFight().getPlayerFights().put(player1.getPlayer(), player1);
 		sorci.getManagerFight().getPlayerFights().put(player2.getPlayer(), player2);
 		this.bossBar.addPlayer(player1.getPlayer());

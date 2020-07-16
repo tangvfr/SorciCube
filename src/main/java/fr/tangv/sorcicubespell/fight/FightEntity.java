@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.lang.reflect.Field;
 import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
@@ -13,8 +14,11 @@ import com.mojang.authlib.properties.Property;
 import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.util.RenderException;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntity;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
@@ -28,6 +32,7 @@ public class FightEntity extends FightHead {
 	private CardEntity card;
 	private String skinUrl;
 	private MinecraftServer server;
+	private boolean isSend;
 	
 	public FightEntity(Fight fight, Location loc) {
 		super(fight, loc);
@@ -36,31 +41,40 @@ public class FightEntity extends FightHead {
 		this.skinUrl = "";
 		//create entity
 		this.server = ((CraftServer) Bukkit.getServer()).getServer();
-		reCreatePlayer("", false);
+		this.entityPlayer = new EntityPlayer(server, world, new GameProfile(uuid, ""), new PlayerInteractManager(world));
+		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+		this.isSend = false;
 	}
 	
-	private void reCreatePlayer(String name, boolean remove) {
-		if (remove)
-			removePlayer();
-		GameProfile gameProfile = new GameProfile(uuid, name);
-		gameProfile.getProperties().removeAll("textures");
-		byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", skinUrl).getBytes());
-		gameProfile.getProperties().put("textures", new Property("textures", new String(encodedData)));
-		Bukkit.broadcastMessage("name: "+name+" skin:"+skinUrl);
-		this.entityPlayer = new EntityPlayer(server, world, gameProfile, new PlayerInteractManager(world));
-		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+	private void removePlayer() {
+		fight.sendPacket(new PacketPlayOutEntityDestroy(entityPlayer.getId()));
+		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
+		this.isSend = false;
+	}
+	
+	private void changeProfil(String name) {
+		try {
+			GameProfile gameProfile = new GameProfile(uuid, name);
+			gameProfile.getProperties().removeAll("textures");
+			byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", skinUrl).getBytes());
+			gameProfile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+			Field field = entityPlayer.getClass().getSuperclass().getDeclaredField("bS");
+			field.setAccessible(true);
+			field.set(entityPlayer, gameProfile);
+		} catch (Exception e) {
+			Bukkit.getLogger().warning(RenderException.renderException(e));
+		}
 	}
 
-	@Override
 	public void setStat(String stat) {
-		reCreatePlayer(stat, true);
+		changeProfil(stat);
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
+		fight.sendPacket(
+				new PacketPlayOutEntity.PacketPlayOutEntityLook(entityPlayer.getId(), (byte) ((loc.getYaw()*256F)/360F), (byte) 0, true)
+			);
 		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
-	}
-
-	public void removePlayer() {
-		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
+		this.isSend = true;
 	}
 	
 	private void setSkin(String url) throws Exception {
@@ -68,9 +82,9 @@ public class FightEntity extends FightHead {
 	}
 	
 	public void setCard(CardEntity card) throws Exception {
-		if (this.card != null)
-			removePlayer();
 		this.card = card;
+		if (this.isSend)
+			removePlayer();
 		if (card != null) {
 			setSkin(card.hasSkin() ? card.getSkin() : "");
 			this.setName(card.getName());

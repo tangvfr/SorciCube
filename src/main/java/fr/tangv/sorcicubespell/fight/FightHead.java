@@ -92,8 +92,6 @@ public abstract class FightHead {
 	
 	public abstract void updateStat();
 	
-	public abstract void setStat(String stat);
-	
 	public void addHealth(int health) {
 		setHealth(getHealth()+health);
 	}

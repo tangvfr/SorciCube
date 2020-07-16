@@ -221,6 +221,7 @@ public class PlayerFight {
 
 	public void setMana(int mana) {
 		this.mana = mana;
+		this.hero.updateStat();
 	}
 
 	public int getManaBoost() {
@@ -230,7 +231,7 @@ public class PlayerFight {
 	public void setManaBoost(int manaBoost) {
 		this.manaBoost = manaBoost;
 	}
-
+	
 	public PlayerFight getEnemie() {
 		return enemie;
 	}
@@ -245,14 +246,17 @@ public class PlayerFight {
 	}
 
 	public void setHealth(int health) {
-		if (health < 0)
+		if (health < 0) {
 			this.health = 0;
-		else if (health > MAX_HEALTH) 
+
+			//add if heal < 0 is dead, add action 
+		} else if (health > MAX_HEALTH) 
 			this.health = MAX_HEALTH;
 		else
 			this.health = health;
 		updateViewLifes();
 		getEnemie().updateViewLifes();
+		this.hero.updateStat();
 	}
 	
 	public int getCardSelect() {
