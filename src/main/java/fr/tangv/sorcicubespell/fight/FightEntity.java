@@ -17,7 +17,6 @@ import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.util.RenderException;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
-import net.minecraft.server.v1_9_R2.PacketPlayOutEntity;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
@@ -31,7 +30,6 @@ public class FightEntity extends FightHead {
 	private UUID uuid;
 	private CardEntity card;
 	private String skinUrl;
-	private MinecraftServer server;
 	private boolean isSend;
 	
 	public FightEntity(Fight fight, Location loc) {
@@ -39,10 +37,8 @@ public class FightEntity extends FightHead {
 		this.card = null;
 		this.uuid = UUID.randomUUID();
 		this.skinUrl = "";
-		//create entity
-		this.server = ((CraftServer) Bukkit.getServer()).getServer();
+		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		this.entityPlayer = new EntityPlayer(server, world, new GameProfile(uuid, ""), new PlayerInteractManager(world));
-		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 		this.isSend = false;
 	}
 	
@@ -67,12 +63,11 @@ public class FightEntity extends FightHead {
 	}
 
 	public void setStat(String stat) {
+		if (this.isSend)
+			removePlayer();
 		changeProfil(stat);
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
-		fight.sendPacket(
-				new PacketPlayOutEntity.PacketPlayOutEntityLook(entityPlayer.getId(), (byte) ((loc.getYaw()*256F)/360F), (byte) 0, true)
-			);
 		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
 		this.isSend = true;
 	}
