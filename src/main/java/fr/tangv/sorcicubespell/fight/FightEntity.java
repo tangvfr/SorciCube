@@ -36,9 +36,10 @@ public class FightEntity extends FightHead {
 		super(fight, loc);
 		this.card = null;
 		this.uuid = UUID.randomUUID();
-		this.skinUrl = "";
+		this.skinUrl = "http://textures.minecraft.net/texture/1a53379ca2eec3d4a0e0c7496b38e41f9c20fb59131a7c0074bd9bee5f230ee3";
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-		this.entityPlayer = new EntityPlayer(server, world, new GameProfile(uuid, ""), new PlayerInteractManager(world));
+		this.entityPlayer = new EntityPlayer(server, world, createProfil("Default"), new PlayerInteractManager(world));
+		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw()/2, loc.getPitch()/2);
 		this.isSend = false;
 	}
 	
@@ -48,15 +49,27 @@ public class FightEntity extends FightHead {
 		this.isSend = false;
 	}
 	
+	private GameProfile createProfil(String name) {
+		GameProfile gameProfile = new GameProfile(uuid, name);
+		byte[] encodedData = Base64.encodeBase64(("{\"textures\":{\"SKIN\":{\"url\":\""+skinUrl+"\"}}}").getBytes());
+		gameProfile.getProperties().clear();
+		gameProfile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+		return gameProfile;
+		/*
+		 * id = 1563811155 // is upload before on this site
+		 * https://mineskin.org/1563811155
+		 * https://api.mineskin.org/get/id/1563811155/
+		 * https://api.mineskin.org/render/1563811155/head
+		 * https://api.mineskin.org/render/1563811155/skin
+		 * and show skin url sirect [img1 | img2] on logi
+		 */
+	}
+	
 	private void changeProfil(String name) {
 		try {
-			GameProfile gameProfile = new GameProfile(uuid, name);
-			gameProfile.getProperties().removeAll("textures");
-			byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", skinUrl).getBytes());
-			gameProfile.getProperties().put("textures", new Property("textures", new String(encodedData)));
 			Field field = entityPlayer.getClass().getSuperclass().getDeclaredField("bS");
 			field.setAccessible(true);
-			field.set(entityPlayer, gameProfile);
+			field.set(entityPlayer, createProfil(name));
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 		}
