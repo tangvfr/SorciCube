@@ -4,7 +4,7 @@ import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 
 public enum CardFeatureType {
 	
-	SKIN(TypeValue.TEXT, false),
+	SKIN(TypeValue.SKIN, false),
 	HEALTH(TypeValue.NUMBER, false),
 	DAMAGE(TypeValue.NUMBER, true),
 	INCITEMENT(TypeValue.NONE, true),

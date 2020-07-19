@@ -2,7 +2,6 @@ package fr.tangv.sorcicubespell.logi;
 
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -16,6 +15,7 @@ import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardMaterial;
 import fr.tangv.sorcicubespell.card.CardRarity;
+import fr.tangv.sorcicubespell.card.CardSkin;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
@@ -36,9 +36,9 @@ public class MouseTable extends ClickListener {
 	public void mouseClicked(MouseEvent e) {
 		int col = table.getSelectedColumn();
 		int row = table.getSelectedRow();
-		if (table.getModel() instanceof ModelEditCart && col == 1) {
-			ModelEditCart edit = (ModelEditCart) table.getModel();
-			Card card = edit.getCart();
+		if (table.getModel() instanceof ModelEditCard && col == 1) {
+			ModelEditCard edit = (ModelEditCard) table.getModel();
+			Card card = edit.getCard();
 			switch (row) {
 				case 0:
 					JTextField textID = new JTextField(card.getUUID().toString());
@@ -52,7 +52,7 @@ public class MouseTable extends ClickListener {
 			
 				case 1:
 					new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Name", new JTextField(card.getName())) {
-						private static final long serialVersionUID = -4613034932047272120L;
+						private static final long serialVersionUID = -4613034932047272121L;
 
 						@Override
 						public void eventOk(JTextField comp) {
@@ -67,48 +67,31 @@ public class MouseTable extends ClickListener {
 					JTextField textType = new JTextField(card.getType().name());
 					textType.setEditable(false);
 					new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Type", textType) {
-						private static final long serialVersionUID = -4613094932047272120L;
+						private static final long serialVersionUID = -4613094932047272122L;
 						@Override
 						public void eventOk(JTextField comp) {}
 					};
 					break;
 					
 				case 3:
-					new DialogSkin(cartsPanel.getFrameLogi(), "Material", card.getMaterial().toString()) {
-						private static final long serialVersionUID = -4613034932047272120L;
+					if (card.getMaterial().hasSkin())
+						new DialogSkin(cartsPanel.getFrameLogi(), "Material", card.getMaterial().getSkin(), true) {
+							private static final long serialVersionUID = -4613034932047272123L;
 
-						@Override
-						public void eventOk(JTextField comp) {
-							CardMaterial material = null;
-							String text = comp.getText();
-							if (text.startsWith("skull: ")) {
-								try {
-									String textURL = "http://textures.minecraft.net/texture/"+text.replaceFirst("skull: ", "");
-									URL url = new URL(textURL);
-									url.openStream().close();
-									material = new CardMaterial(textURL);
-								} catch (Exception e) {}
-							} else {
-								String[] split = text.split(":");
-								if (split.length == 2 || split.length == 1) {
-									try {
-										int id = Integer.parseInt(split[0]);
-										int data = 0;
-										if (split.length == 2)
-											data = Byte.parseByte(split[1]);
-										material = new CardMaterial(id, data);
-									} catch (Exception e) {}
-								}
+							@Override
+							public void eventOk(JTextField comp) {
+								eventOkMaterial(comp, card, this);
 							}
-							if (material != null) {
-								card.setMaterial(material);
-								cartsPanel.getCarts().update(card);
-								cartsPanel.refrech();
-							} else {
-								JOptionPane.showMessageDialog(this, "Error invalid Material", "Error Card Material", JOptionPane.ERROR_MESSAGE);
+						};
+					else
+						new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Material", new JTextField(card.getMaterial().toString())) {
+							private static final long serialVersionUID = -4613034932047272124L;
+	
+							@Override
+							public void eventOk(JTextField comp) {
+								eventOkMaterial(comp, card, this);
 							}
-						}
-					};
+						};
 					break;
 					
 				case 4:
@@ -218,6 +201,37 @@ public class MouseTable extends ClickListener {
 						JOptionPane.showMessageDialog(cartsPanel, "name: "+ob.getClass().getSimpleName()+"\nvalue: "+ob.toString(), "Feature Cart No Editable", JOptionPane.INFORMATION_MESSAGE);
 					break;
 			}
+		}
+	}
+	
+	
+	
+	private void eventOkMaterial(JTextField comp, Card card, DialogBase<?> base) {
+		CardMaterial material = null;
+		String text = comp.getText();
+		if (text.startsWith("skull: ")) {
+			try {
+				int id = Integer.parseInt(text.replaceFirst("skull: ", ""));
+				material = new CardMaterial(CardSkin.createCardSkin(id));
+			} catch (Exception e) {}
+		} else {
+			String[] split = text.split(":");
+			if (split.length == 2 || split.length == 1) {
+				try {
+					int id = Integer.parseInt(split[0]);
+					int data = 0;
+					if (split.length == 2)
+						data = Byte.parseByte(split[1]);
+					material = new CardMaterial(id, data);
+				} catch (Exception e) {}
+			}
+		}
+		if (material != null) {
+			card.setMaterial(material);
+			cartsPanel.getCarts().update(card);
+			cartsPanel.refrech();
+		} else {
+			JOptionPane.showMessageDialog(base, "Error invalid Material", "Error Card Material", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	

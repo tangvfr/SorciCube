@@ -21,6 +21,7 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 	private static final long serialVersionUID = -5728665688478855133L;
 	private Window frameLogi;
 	protected JPanel panUp;
+	protected JPanel panDown;
 	
 	public DialogBase(Window owner, String label, T comp) {
 		this(owner, label, comp, null);
@@ -56,7 +57,7 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		panUp.add(comp, BorderLayout.CENTER);
 		panUp.setBorder(new EmptyBorder(10, 10, 10, 10));
 		this.add(panUp);
-		JPanel panDown = new JPanel();
+		this.panDown = new JPanel();
 		panDown.setLayout(new BoxLayout(panDown, BoxLayout.X_AXIS));
 		panDown.add(btnCancel);
 		panDown.add(new CompEmpty(10, 10));
@@ -65,8 +66,8 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		this.add(panDown);
 		if (minDim != null)
 			this.setMinimumSize(minDim);
-		this.setLocationRelativeTo(owner);
 		this.pack();
+		this.setLocationRelativeTo(owner);
 		this.setVisible(true);
 	}
 	

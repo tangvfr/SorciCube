@@ -5,14 +5,14 @@ public class CardEntity {
 	private Card card;
 	private CardFeature health;
 	private CardFeature attack;
-	private String skin;
+	private CardSkin skin;
 	
 	public CardEntity(Card card) throws Exception {
 		if (card.getType() != CardType.ENTITY)
 			throw new Exception("Card is not ENTITY !");
 		this.card = card;
 		this.skin = card.getFeatures().hasFeature(CardFeatureType.SKIN) ?
-				card.getFeatures().getFeature(CardFeatureType.SKIN).getValue().asString()
+				card.getFeatures().getFeature(CardFeatureType.SKIN).getValue().asSkin()
 				: null;
 		this.health = card.getFeatures().getFeature(CardFeatureType.HEALTH);
 		this.attack = card.getFeatures().getFeature(CardFeatureType.DAMAGE);
@@ -42,7 +42,7 @@ public class CardEntity {
 		return skin != null;
 	}
 	
-	public String getSkin() {
+	public CardSkin getSkin() {
 		return skin;
 	}
 	

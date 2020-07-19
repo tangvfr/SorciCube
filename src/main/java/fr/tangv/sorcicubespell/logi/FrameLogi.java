@@ -35,7 +35,8 @@ public class FrameLogi extends JFrame {
 	public void tryConnection(String mongoURI, String database) {
 		try {
 			MongoDBManager mongo = new MongoDBManager(mongoURI, database);
-			this.setContentPane(new CardsPanel(mongo, this));
+			CardsPanel panel = new CardsPanel(mongo, this);
+			this.setContentPane(panel);
 			super.setResizable(true);
 			this.repaint();
 		} catch (Exception e) {

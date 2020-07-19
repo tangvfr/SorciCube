@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -34,16 +33,13 @@ public class ItemBuild {
 		return item;
 	}
 	
-	public static ItemStack buildSkull(String url, int amount, String name, List<String> lore, boolean ench) {
+	public static ItemStack buildSkull(String texture, int amount, String name, List<String> lore, boolean ench) {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, amount, (short) 3);
-		//verif differente null
-		if (url == null || url.isEmpty())
-			return skull;
 		//init texture meta of skull
 		ItemMeta skullMeta = skull.getItemMeta();
 		GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-		byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
-	    profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+		profile.getProperties().clear();
+	    profile.getProperties().put("textures", new Property("textures", texture));
 	    //change profil of metaskull
 	    try {
 	    	Field profileField = skullMeta.getClass().getDeclaredField("profile");

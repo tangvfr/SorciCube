@@ -64,6 +64,8 @@ public class CardFeatures {
 				CardFeatureType type = CardFeatureType.valueOf(key);
 				features.putFeature(CardFeature.toCartFeature(type, document.get(key, Document.class)));
 			}
+			if (features.hasFeature(CardFeatureType.SKIN))
+				features.warning = features.getFeature(CardFeatureType.SKIN).getValue().asSkin().isLastVersion();
 		} else {
 			for (String key : document.keySet()) {
 				Document docCard = document.get(key, Document.class);
@@ -74,8 +76,7 @@ public class CardFeatures {
 				if (!features.hasFeature(feature.getType()))
 					features.putFeature(feature);
 			}
-			if (features.hasFeature(CardFeatureType.SKIN))
-				features.warning = true;
+			features.warning = true;
 		}
 		return features;
 	}

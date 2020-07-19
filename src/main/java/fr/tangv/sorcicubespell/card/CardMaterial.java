@@ -6,22 +6,22 @@ public class CardMaterial {
 
 	private int id;
 	private int data;
-	private String url;
+	private CardSkin skin;
 	
-	public CardMaterial(String url) {
-		this.url = url;
+	public CardMaterial(CardSkin skin) {
+		this.skin = skin;
 		this.id = 397;
 		this.data = (int) 3;
 	}
 	
 	public CardMaterial(int id, int data) {
-		this.url = null;
+		this.skin = null;
 		this.id = id;
 		this.data = data;
 	}
 	
-	public boolean hasUrl() {
-		return url != null && !url.isEmpty();
+	public boolean hasSkin() {
+		return skin != null;
 	}
 	
 	public int getId() {
@@ -32,30 +32,33 @@ public class CardMaterial {
 		return data;
 	}
 
-	public String getUrl() {
-		return url;
+	public CardSkin getSkin() {
+		return skin;
 	}
 
 	public Document toDocument() {
-		Document document = new Document()
-				.append("id", id)
-				.append("data", data)
-				.append("url", url);
-		return document;
+		if (hasSkin())
+			return new Document().append("skin", skin.toDocument());
+		else
+			return new Document().append("id", id).append("data", data);
 	}
 	
 	public static CardMaterial toCartMaterial(Document document) {
-		String url = document.getString("url");
-		if (url != null && !url.isEmpty())
-			return new CardMaterial(url);
-		else
-			return new CardMaterial(document.getInteger("id"), document.getInteger("data"));
+		if (document.containsKey("skin")) {
+			return new CardMaterial(CardSkin.toCartSkin(document.get("skin", Document.class)));
+		}
+		if (document.containsKey("url")) {
+			String url = document.getString("url");
+			if (url != null && !url.isEmpty())
+				return new CardMaterial(new CardSkin(url));
+		}
+		return new CardMaterial(document.getInteger("id"), document.getInteger("data"));
 	}
 	
 	@Override
 	public String toString() {
-		if (hasUrl())
-			return "skull: "+url.replaceFirst("http://textures.minecraft.net/texture/", "");
+		if (hasSkin())
+			return "skull: "+skin.toString();
 		else
 			return id+":"+data;
 	}

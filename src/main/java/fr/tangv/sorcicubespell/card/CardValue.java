@@ -15,6 +15,12 @@ public class CardValue {
 				return new CardValue(0);
 			case BOOL:
 				return new CardValue(false);
+			case SKIN:
+				try {
+					return new CardValue(CardSkin.createCardSkin(644618518));
+				} catch (Exception e) {
+					return new CardValue(); //it is not possible, except problem network
+				}
 			case NONE:
 				return new CardValue();
 		}
@@ -41,6 +47,11 @@ public class CardValue {
 		this.type = CardValue.TypeValue.BOOL;
 	}
 	
+	public CardValue(CardSkin value) {
+		this.value = value;
+		this.type = CardValue.TypeValue.SKIN;
+	}
+	
 	public boolean isString() {
 		return this.type == CardValue.TypeValue.TEXT;
 	}
@@ -57,6 +68,10 @@ public class CardValue {
 		return this.type == CardValue.TypeValue.BOOL;
 	}
 	
+	public boolean isSkin() {
+		return this.type == CardValue.TypeValue.SKIN;
+	}
+	
 	public String asString() {
 		return (String) value;
 	}
@@ -65,8 +80,12 @@ public class CardValue {
 		return (int) value;
 	}
 	
-	public Boolean asBollean() {
+	public boolean asBollean() {
 		return (boolean) value;
+	}
+	
+	public CardSkin asSkin() {
+		return (CardSkin) value;
 	}
 	
 	public TypeValue getType() {
@@ -81,7 +100,10 @@ public class CardValue {
 	}
 	
 	public Document toDocument() {
-		return new Document("type", this.type.name()).append("value", this.value);
+		if (type == TypeValue.SKIN)
+			return new Document("type", this.type.name()).append("value", ((CardSkin) this.value).toDocument());
+		else
+			return new Document("type", this.type.name()).append("value", this.value);
 	}
 	
 	public static CardValue toCartValue(Document document) {
@@ -93,6 +115,8 @@ public class CardValue {
 				return new CardValue(document.getInteger("value"));
 			case BOOL:
 				return new CardValue(document.getBoolean("value"));
+			case SKIN:
+				return new CardValue(CardSkin.toCartSkin(document.get("value", Document.class)));
 			case NONE:
 				return new CardValue();
 		}
@@ -103,6 +127,7 @@ public class CardValue {
 		TEXT(),
 		NUMBER(),
 		BOOL(),
+		SKIN(),
 		NONE();
 	}
 	

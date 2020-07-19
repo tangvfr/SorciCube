@@ -5,17 +5,17 @@ import javax.swing.table.AbstractTableModel;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.util.TextList;
 
-public class ModelEditCart extends AbstractTableModel {
+public class ModelEditCard extends AbstractTableModel {
 
 	private static final long serialVersionUID = -3498539069595000083L;
 	private Card card;
 	
-	public ModelEditCart(Card cart) {
+	public ModelEditCard(Card cart) {
 		super();
 		this.card = cart;
 	}
 	
-	public Card getCart() {
+	public Card getCard() {
 		return card;
 	}
 

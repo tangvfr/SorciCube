@@ -139,7 +139,7 @@ public class Card {
 	}
 	
 	public Document toDocument() {
-		Document document = new Document()
+		Document document = new Document("version", 2)
 			.append("uuid", this.uuid.toString())
 			.append("material", this.material.toDocument())
 			.append("name", this.name)

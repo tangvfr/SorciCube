@@ -4,7 +4,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -22,6 +21,7 @@ import javax.swing.SpinnerNumberModel;
 import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardFeatures;
+import fr.tangv.sorcicubespell.card.CardSkin;
 import fr.tangv.sorcicubespell.card.CardValue;
 import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
@@ -50,16 +50,14 @@ public class FeaturesTable extends JTable {
 						CardFeature feature = getCardFeature(id);
 						CardValue value = feature.getValue();
 						if (feature.getType() == CardFeatureType.SKIN) {
-							new DialogSkin(window, "Skin", value.asString()) {
-								private static final long serialVersionUID = 4116920655857733839L;
+							new DialogSkin(window, "Skin", value.asSkin(), false) {
+								private static final long serialVersionUID = 4116920655857733849L;
 
 								@Override
 								public void eventOk(JTextField comp) {
 									try {
-										String textURL = "http://textures.minecraft.net/texture/"+comp.getText();
-										URL url = new URL(textURL);
-										url.openStream().close();
-										feature.setValue(new CardValue(textURL));
+										int id = Integer.parseInt(comp.getText());
+										feature.setValue(new CardValue(CardSkin.createCardSkin(id)));
 										FeaturesTable.this.init(window);
 										FeaturesTable.this.repaint();
 									} catch (Exception e) {

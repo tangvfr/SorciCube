@@ -71,7 +71,7 @@ public class PanelNav extends JPanel {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
 				String prefix = (isSelected ? ">" : "");
-				if (card.getFeatures().isWarning())
+				if (card.getFeatures().isWarning() || (card.getMaterial().hasSkin() && card.getMaterial().getSkin().isLastVersion()))
 					prefix += "<span color=\"#d61818\" style=\"text-decoration: underline;\">[/!\\]</span>";
 				if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CART))
 					prefix += "<span color=\"#E60FB8\">[Hide]</span>";
@@ -89,7 +89,7 @@ public class PanelNav extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				Card cart = list.getSelectedValue();
 				if (cart != null) {
-					cartsPanel.getTable().setModel(new ModelEditCart(cart));
+					cartsPanel.getTable().setModel(new ModelEditCard(cart));
 				} else {
 					cartsPanel.getTable().setModel(new DefaultTableModel());
 				}
@@ -109,6 +109,10 @@ public class PanelNav extends JPanel {
 		list.sort(CardComparator.BY_ID);
 		list.sort(sort);
 		this.list.setListData(list);
+		if (cartsPanel.getTable().getModel() instanceof ModelEditCard) {
+			Card card = ((ModelEditCard) cartsPanel.getTable().getModel()).getCard();
+			this.list.setSelectedIndex(list.indexOf(card));
+		}
 	}
 	
 	private class ListPopupMenu extends JPopupMenu {

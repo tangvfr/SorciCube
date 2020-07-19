@@ -85,8 +85,8 @@ public class CardRender {
 		lore.add("§8Id: "+card.getUUID());
 		//return item
 		CardMaterial material = card.getMaterial();
-		if (material.hasUrl())
-			return ItemBuild.buildSkull(material.getUrl(),
+		if (material.hasSkin())
+			return ItemBuild.buildSkull(material.getSkin().getTexture(),
 					amount,
 					name,
 					lore,
