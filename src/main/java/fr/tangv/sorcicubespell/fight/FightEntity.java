@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 
 import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardFaction;
@@ -48,9 +49,19 @@ public class FightEntity extends FightHead {
 		this.isSend = false;
 	}
 	
+	private GameProfile skinToGameProfil(String name) {
+		GameProfile gameProfile = new GameProfile(uuid, name);
+		gameProfile.getProperties().clear();
+		if (skin.isLastVersion())
+			gameProfile.getProperties().put("textures", new Property("textures", skin.getTexture()));
+		else
+			gameProfile.getProperties().put("textures", new Property("textures", skin.getTexture(), skin.getSignature()));
+		return gameProfile;
+	}
+	
 	private GameProfile createProfil(String name) {
 		if (skin != null)
-			return skin.toGameProfil(uuid, name);
+			return skinToGameProfil(name);
 		else
 			return new GameProfile(uuid, name);
 	}

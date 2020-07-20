@@ -3,18 +3,15 @@ package fr.tangv.sorcicubespell.card;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.UUID;
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.bson.Document;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 
 public class CardSkin {
 
@@ -23,7 +20,6 @@ public class CardSkin {
 	private String texture;
 	private String signature;
 	private boolean lastVersion;
-	private GameProfile gameProfileNone;
 	
 	public CardSkin(int id, String url, String texture, String signature) {
 		this.id = id;
@@ -31,11 +27,10 @@ public class CardSkin {
 		this.texture = texture;
 		this.signature = signature;
 		this.lastVersion = (id == -1);
-		this.gameProfileNone = toGameProfil(UUID.randomUUID(), "");
 	}
 	
 	public CardSkin(String url) {
-		this(-1, url, new String(Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes())), "");
+		this(-1, url, new String(Base64.getEncoder().encodeToString(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes())), "");
 	}
 	
 	public int getId() {
@@ -46,22 +41,12 @@ public class CardSkin {
 		return texture;
 	}
 	
+	public String getSignature() {
+		return signature;
+	}
+	
 	public boolean isLastVersion() {
 		return lastVersion;
-	}
-	
-	public GameProfile getGameProfileNone() {
-		return gameProfileNone;
-	}
-	
-	public GameProfile toGameProfil(UUID uuid, String name) {
-		GameProfile gameProfile = new GameProfile(uuid, name);
-		gameProfile.getProperties().clear();
-		if (lastVersion)
-			gameProfile.getProperties().put("textures", new Property("textures", texture));
-		else
-			gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
-		return gameProfile;
 	}
 	
 	public static CardSkin createCardSkin(int id) throws Exception {
