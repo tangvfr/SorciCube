@@ -57,7 +57,7 @@ public class Fight {
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
-		this.hashCards = new ConcurrentHashMap<UUID, Card>(sorci.getManagerCards().getCarts());
+		this.hashCards = sorci.getManagerCards().cloneCards();
 		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
 		this.bossBar = Bukkit.createBossBar(
 				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
@@ -200,7 +200,7 @@ public class Fight {
 	}
 	
 	public ItemStack renderCard(Card card) {
-		return CardRender.cardToItem(card, sorci, hashCards);
+		return CardRender.cardToItem(card, sorci);
 	}
 	
 	public void sendPacket(Packet<?> packet) {

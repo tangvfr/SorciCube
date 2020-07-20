@@ -1,13 +1,9 @@
 package fr.tangv.sorcicubespell.manager;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
-import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.player.DeckCards;
 
@@ -34,11 +30,10 @@ public class ManagerDefaultDeck {
 			defaultDeck.insertOne(doc);
 		} else {
 			doc = FDD.next();
-			HashMap<UUID, Card> hashCards = managerCards.getCarts();
-			this.deckDark = DeckCards.toDeckCards(hashCards, doc.get("deck_dark", Document.class));
-			this.deckLight = DeckCards.toDeckCards(hashCards, doc.get("deck_light", Document.class));
-			this.deckNature = DeckCards.toDeckCards(hashCards, doc.get("deck_nature", Document.class));
-			this.deckToxic = DeckCards.toDeckCards(hashCards, doc.get("deck_toxic", Document.class));
+			this.deckDark = DeckCards.toDeckCards(managerCards, doc.get("deck_dark", Document.class));
+			this.deckLight = DeckCards.toDeckCards(managerCards, doc.get("deck_light", Document.class));
+			this.deckNature = DeckCards.toDeckCards(managerCards, doc.get("deck_nature", Document.class));
+			this.deckToxic = DeckCards.toDeckCards(managerCards, doc.get("deck_toxic", Document.class));
 		}
 	}
 	

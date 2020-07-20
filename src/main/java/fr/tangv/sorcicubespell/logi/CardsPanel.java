@@ -62,11 +62,10 @@ public class CardsPanel extends JPanel {
 	}
 	
 	public void refrech() {
-		this.mongo.refrech();
-		this.carts = new ManagerCards(mongo);
+		this.carts.refrech();
 		this.nav.refrech();
 		if (table.getModel() instanceof ModelEditCard)
-			table.setModel(new ModelEditCard(this.carts.getCart(((ModelEditCard) table.getModel()).getCard().getUUID())));
+			table.setModel(new ModelEditCard(this.carts.getCard(((ModelEditCard) table.getModel()).getCard().getUUID())));
 	}
 
 }

@@ -18,13 +18,18 @@ public class MongoDBManager {
 	private MongoCollection<Document> defaultDeck;
 	private MongoCollection<Document> packets;
 	private MongoCollection<Document> preFights;
-	private String uri;
-	private String databaseName;
 	
-	public MongoDBManager(String uri, String database) throws Exception {
-		this.uri = uri;
-		this.databaseName = database;
-		this.refrech();
+	public MongoDBManager(String uri, String databaseName) throws Exception {
+		//init
+		MongoClient client = MongoClients.create(uri);
+		this.database = client.getDatabase(databaseName);
+		this.listCol = database.listCollectionNames();
+		//init collection
+		this.cards = defineCollection("cards");
+		this.players = defineCollection("players");
+		this.defaultDeck = defineCollection("default_deck");
+		this.packets = defineCollection("packets");
+		this.preFights = defineCollection("pre_fights");
 	}
 	
 	private MongoCollection<Document> defineCollection(String collection) {
@@ -42,37 +47,24 @@ public class MongoDBManager {
 		return database.getCollection(collection);
 	}
 
-	public MongoCollection<Document> getCards() {
+	protected MongoCollection<Document> getCards() {
 		return cards;
 	}
 	
-	public MongoCollection<Document> getPlayers() {
+	protected MongoCollection<Document> getPlayers() {
 		return players;
 	}
 	
-	public MongoCollection<Document> getDefaultDeck() {
+	protected MongoCollection<Document> getDefaultDeck() {
 		return defaultDeck;
 	}
 	
-	public MongoCollection<Document> getPackets() {
+	protected MongoCollection<Document> getPackets() {
 		return packets;
 	}
 	
-	public MongoCollection<Document> getPreFights() {
+	protected MongoCollection<Document> getPreFights() {
 		return preFights;
-	}
-	
-	public void refrech() {
-		//init
-		MongoClient client = MongoClients.create(uri);
-		this.database = client.getDatabase(databaseName);
-		this.listCol = database.listCollectionNames();
-		//init collection
-		this.cards = defineCollection("cards");
-		this.players = defineCollection("players");
-		this.defaultDeck = defineCollection("default_deck");
-		this.packets = defineCollection("packets");
-		this.preFights = defineCollection("pre_fights");
 	}
 	
 }

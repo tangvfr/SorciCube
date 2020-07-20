@@ -1,9 +1,7 @@
 package fr.tangv.sorcicubespell.gui;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.Vector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -41,8 +39,7 @@ public class GuiAdminViewCards extends AbstractGui {
 	public Inventory getInventory(Player player) {
 		PlayerGui playerG = getPlayerGui(player);
 		int page = playerG.getPageViewGui();
-		HashMap<UUID, Card> hashCards = manager.getSorci().getManagerCards().getCarts();
-		ArrayList<Card> cards = new ArrayList<Card>(hashCards.values());
+		Vector<Card> cards = manager.getSorci().getManagerCards().cloneCardsValue();
 		CardComparator sorted = playerG.getCardComparator();
 		cards.sort(CardComparator.BY_ID);
 		cards.sort(sorted);
@@ -63,7 +60,7 @@ public class GuiAdminViewCards extends AbstractGui {
 		//set inv
 		if (cards.size() > 0)
 			for (int i = 0; i < num; i++) {
-				inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci(), hashCards));
+				inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci()));
 			}
 		//init paper
 		ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 

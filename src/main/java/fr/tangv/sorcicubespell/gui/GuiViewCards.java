@@ -2,7 +2,6 @@ package fr.tangv.sorcicubespell.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -45,12 +44,12 @@ public class GuiViewCards extends AbstractGui {
 			PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player);
 			PlayerGui playerG = getPlayerGui(player);
 			int page = playerG.getPageViewGui();
-			HashMap<UUID, Card> mapCards = manager.getSorci().getManagerCards().getCarts();
 			ArrayList<Card> cards = new ArrayList<Card>();
 			for (String uuidS : playerF.getCardsUnlocks()) {
-				UUID uuid = UUID.fromString(uuidS);
-				if (mapCards.containsKey(uuid))
-					cards.add(mapCards.get(uuid));
+				Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuidS));
+				if (card != null) {
+					cards.add(card);
+				}
 			}
 			CardComparator sorted = playerG.getCardComparator();
 			cards.sort(CardComparator.BY_ID);
@@ -72,7 +71,7 @@ public class GuiViewCards extends AbstractGui {
 			//set inv
 			if (cards.size() > 0)
 				for (int i = 0; i < num; i++) {
-					inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci(), mapCards));
+					inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci()));
 				}
 			//init paper
 			ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 

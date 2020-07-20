@@ -1,8 +1,5 @@
 package fr.tangv.sorcicubespell.gui;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,7 +7,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.player.DeckCards;
@@ -43,9 +39,8 @@ public class GuiEditDeck extends AbstractGui {
 		inv.setItem(9, itemDeco); inv.setItem(10, itemTypeDeck); inv.setItem(11, itemDeco); inv.setItem(17, itemBack);
 		inv.setItem(18, itemDeco); inv.setItem(19, itemDeck); inv.setItem(20, itemDeco); inv.setItem(26, itemBack);
 		inv.setItem(27, itemDeco); inv.setItem(28, itemDeco); inv.setItem(29, itemDeco); inv.setItem(35, itemBack);
-		HashMap<UUID, Card> hashCards = sorci.getManagerCards().getCarts();
 		for (int i = 0; i < deck.size(); i++)
-			inv.setItem(((i/5)*9)+3+(i%5), CardRender.cardToItem(deck.getCard(i),manager.getSorci(), hashCards));
+			inv.setItem(((i/5)*9)+3+(i%5), CardRender.cardToItem(deck.getCard(i),manager.getSorci()));
 		return inv;
 	}
 

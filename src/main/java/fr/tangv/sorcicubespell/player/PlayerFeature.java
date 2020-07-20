@@ -1,13 +1,12 @@
 package fr.tangv.sorcicubespell.player;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import org.bson.Document;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class PlayerFeature {
 
@@ -111,12 +110,12 @@ public class PlayerFeature {
 		return doc;
 	}
 	
-	public static PlayerFeature toPlayerFeature(HashMap<UUID, Card> hashCards, Player player, Document doc) throws Exception {
-		DeckCards deck1 = DeckCards.toDeckCards(hashCards, doc.get("deck1", Document.class));
-		DeckCards deck2 = DeckCards.toDeckCards(hashCards, doc.get("deck2", Document.class));
-		DeckCards deck3 = DeckCards.toDeckCards(hashCards, doc.get("deck3", Document.class));
-		DeckCards deck4 = DeckCards.toDeckCards(hashCards, doc.get("deck4", Document.class));
-		DeckCards deck5 = DeckCards.toDeckCards(hashCards, doc.get("deck5", Document.class));
+	public static PlayerFeature toPlayerFeature(Player player, ManagerCards manager, Document doc) throws Exception {
+		DeckCards deck1 = DeckCards.toDeckCards(manager, doc.get("deck1", Document.class));
+		DeckCards deck2 = DeckCards.toDeckCards(manager, doc.get("deck2", Document.class));
+		DeckCards deck3 = DeckCards.toDeckCards(manager, doc.get("deck3", Document.class));
+		DeckCards deck4 = DeckCards.toDeckCards(manager, doc.get("deck4", Document.class));
+		DeckCards deck5 = DeckCards.toDeckCards(manager, doc.get("deck5", Document.class));
 		int unlockDecks = doc.getInteger("deck_unlock");
 		List<String> cardsUnlocks = doc.getList("cards_unlocks", String.class);
 		return new PlayerFeature(player, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks);

@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.packet;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -59,8 +60,9 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 			for (Player player : Bukkit.getOnlinePlayers())
 				list.add(player.getName());
 		} else if (args.length == 2) {
-			for (String name: manager.getListNamePacket())
-				list.add(name.replace("§", "&"));
+			Enumeration<String> names = manager.getEnumNamePacket();
+			while (names.hasMoreElements())
+				list.add(names.nextElement().replace("§", "&"));
 		}
 		return list;
 	}

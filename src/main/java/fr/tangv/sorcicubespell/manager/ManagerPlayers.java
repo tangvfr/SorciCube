@@ -35,7 +35,7 @@ public class ManagerPlayers {
 	public PlayerFeature getPlayerFeature(Player player) throws Exception {
 		Iterator<Document> rep = players.find(Card.toUUIDDocument(player.getUniqueId())).iterator();
 		if (rep.hasNext())
-			return PlayerFeature.toPlayerFeature(sorci.getManagerCards().getCarts(), player, rep.next());
+			return PlayerFeature.toPlayerFeature(player, sorci.getManagerCards(), rep.next());
 		else
 			return null;
 	}

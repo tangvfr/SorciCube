@@ -1,12 +1,10 @@
 package fr.tangv.sorcicubespell.player;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import org.bson.Document;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class DeckCards extends ListCards {
 
@@ -39,8 +37,8 @@ public class DeckCards extends ListCards {
 		return doc;
 	}
 	
-	public static DeckCards toDeckCards(HashMap<UUID, Card> hashCards, Document doc) throws Exception {
-		ListCards listCards = ListCards.toListCards(hashCards, doc);
+	public static DeckCards toDeckCards(ManagerCards manager, Document doc) throws Exception {
+		ListCards listCards = ListCards.toListCards(manager, doc);
 		CardFaction faction = CardFaction.valueOf(doc.getString("faction"));
 		return new DeckCards(listCards, faction);
 	}

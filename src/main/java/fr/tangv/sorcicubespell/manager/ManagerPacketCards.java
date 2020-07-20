@@ -1,8 +1,9 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.bson.Document;
@@ -27,11 +28,13 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 public class ManagerPacketCards {
 
 	public SorciCubeSpell sorci;
-	public MongoCollection<Document> packets;
+	public MongoCollection<Document> packetsMongo;
+	public ConcurrentHashMap<String, PacketCards> packets;
 	
 	public ManagerPacketCards(SorciCubeSpell sorci) {
 		this.sorci = sorci;
-		this.packets = sorci.getMongo().getPackets();
+		this.packetsMongo = sorci.getMongo().getPackets();
+		this.refrech();
 		//command
 		sorci.getCommand("packetadd").setExecutor(new CommandPacketAdd(this));
 		CommandPacketGive commandPacketGive = new CommandPacketGive(this);
@@ -44,9 +47,17 @@ public class ManagerPacketCards {
 		Bukkit.getScheduler().runTaskTimerAsynchronously(sorci, eventPacket, 0, 4);
 	}
 	
+	public void refrech() {
+		this.packets = new ConcurrentHashMap<String, PacketCards>();
+		for (Document doc : packetsMongo.find()) {
+			PacketCards packet = PacketCards.toPacketCards(doc);
+			packets.put(packet.getName(), packet);
+		}	
+	}
+	
 	@SuppressWarnings("deprecation")
 	public ItemStack packetToItem(PacketCards packet) {
-		List<String> lore = new ArrayList<String>();
+		ArrayList<String> lore = new ArrayList<String>();
 		//faction
 		lore.add("");
 		CardFaction[] factions = CardFaction.values();
@@ -116,9 +127,9 @@ public class ManagerPacketCards {
 		return -1;
 	}
 	
-	public Card[] packetTakeCard(PacketCards packet, Collection<Card> collCards) throws Exception {
+	public Card[] packetTakeCard(PacketCards packet) throws Exception {
 		Card[] cards = new Card[packet.getSize()];
-		ArrayList<Card> collectionCards = new ArrayList<Card>(collCards);
+		Vector<Card> collectionCards = sorci.getManagerCards().cloneCardsValue();
 		for (int i = 0; i < cards.length; i++) {
 			CardFaction faction = CardFaction.values()[chooseIndex(packet.getFaction())];
 			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity())];
@@ -141,32 +152,22 @@ public class ManagerPacketCards {
 		return sorci;
 	}
 	
-	private Document nameDocument(String name) {
-		return new Document("name", name);
-	}
-	
 	public void newPacket(String name) {
-		packets.insertOne(PacketCards.createNeutralPacketCards(name).toDocument());
+		PacketCards packet = PacketCards.createNeutralPacketCards(name);
+		packetsMongo.insertOne(packet.toDocument());
+		packets.put(name, packet);
 	}
 	
 	public boolean containtPacket(String name) {
-		Iterator<Document> rep = packets.find(nameDocument(name)).iterator();
-		return rep.hasNext();
+		return packets.containsKey(name);
 	}
 	
 	public PacketCards getPacketCards(String name) {
-		Iterator<Document> rep = packets.find(nameDocument(name)).iterator();
-		if (rep.hasNext())
-			return PacketCards.toPacketCards(rep.next());
-		else
-			return null;
+		return packets.get(name);
 	}
 	
-	public List<String> getListNamePacket() {
-		List<String> list = new ArrayList<String>();
-		for (Document doc : packets.find())
-			list.add(doc.getString("name"));
-		return list;
+	public Enumeration<String> getEnumNamePacket() {
+		return packets.keys();
 	}
 	
 }

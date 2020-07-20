@@ -1,49 +1,62 @@
 package fr.tangv.sorcicubespell.manager;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.UUID;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bson.Document;
+
 import com.mongodb.client.MongoCollection;
 
 import fr.tangv.sorcicubespell.card.Card;
 
 public class ManagerCards {
 
-	private MongoCollection<Document> cards;
+	private MongoCollection<Document> cardsCol;
+	private ConcurrentHashMap<UUID, Card> cards;
 	
 	public ManagerCards(MongoDBManager manager) {
-		this.cards = manager.getCards();
+		this.cardsCol = manager.getCards();
+		refrech();
 	}
 	
-	public HashMap<UUID, Card> getCarts() {
-		HashMap<UUID, Card> map = new HashMap<UUID, Card>();
-		for (Document doc : cards.find()) {
+	public void refrech() {
+		this.cards = new ConcurrentHashMap<UUID, Card>();
+		for (Document doc : cardsCol.find()) {
 			Card card = Card.toCard(doc);
-			map.put(card.getUUID(), card);
+			cards.put(card.getUUID(), card);
 		}
-		return map;
 	}
 	
-	public Card getCart(UUID uuid) {
-		Iterator<Document> rep = cards.find(Card.toUUIDDocument(uuid)).iterator();
-		if (rep.hasNext())
-			return Card.toCard(rep.next());
+	public ConcurrentHashMap<UUID, Card> originalCards() {
+		return cards;
+	}
+	
+	public ConcurrentHashMap<UUID, Card> cloneCards() {
+		return new ConcurrentHashMap<UUID, Card>(cards);
+	}
+	
+	public Vector<Card> cloneCardsValue() {
+		return new Vector<Card>(cards.values());
+	}
+	
+	public Card getCard(UUID uuid) {
+		if (cards.containsKey(uuid))
+			return cards.get(uuid);
 		else
 			return null;
 	}
 	
-	public void insert(Card cart) {
-		cards.insertOne(cart.toDocument());
+	public void insert(Card card) {
+		cardsCol.insertOne(card.toDocument());
 	}
 	
-	public void update(Card cart) {
-		cards.findOneAndReplace(cart.toUUIDDocument(), cart.toDocument());
+	public void update(Card card) {
+		cardsCol.findOneAndReplace(card.toUUIDDocument(), card.toDocument());
 	}
 	
-	public void delete(Card cart) {
-		cards.findOneAndDelete(cart.toUUIDDocument());
+	public void delete(Card card) {
+		cardsCol.findOneAndDelete(card.toUUIDDocument());
 	}
 	
 }

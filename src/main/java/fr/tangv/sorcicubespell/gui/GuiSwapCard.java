@@ -2,7 +2,6 @@ package fr.tangv.sorcicubespell.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,12 +48,10 @@ public class GuiSwapCard extends AbstractGui {
 			PlayerGui playerG = getPlayerGui(player);
 			DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());
 			int page = playerG.getPageViewGui();
-			HashMap<UUID, Card> mapCards = manager.getSorci().getManagerCards().getCarts();
 			ArrayList<Card> cards = new ArrayList<Card>();
 			for (String uuidS : playerF.getCardsUnlocks()) {
-				UUID uuid = UUID.fromString(uuidS);
-				if (mapCards.containsKey(uuid)) {
-					Card card = mapCards.get(uuid);
+				Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuidS));
+				if (card != null) {
 					if (card.getFaction() == CardFaction.BASIC || card.getFaction() == deck.getFaction()) {
 						cards.add(card);
 					}
@@ -85,7 +82,7 @@ public class GuiSwapCard extends AbstractGui {
 			//set inv
 			if (cards.size() > 0)
 				for (int i = 0; i < num; i++) {
-					inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci(), mapCards));
+					inv.setItem(i, CardRender.cardToItem(cards.get(i+decal), this.manager.getSorci()));
 				}
 			//init paper
 			ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 
@@ -153,7 +150,7 @@ public class GuiSwapCard extends AbstractGui {
 				List<String> lore = item.getItemMeta().getLore();
 				if (lore.size() >= 1) {
 					String uuid = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
-					Card card = manager.getSorci().getManagerCards().getCart(UUID.fromString(uuid));
+					Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuid));
 					playerG.getPlayerFeature().getDeck(playerG.getDeckEdit()).setCard(playerG.getDeckCardEdit(), card);
 					manager.getSorci().getManagerPlayers().update(playerG.getPlayerFeature());
 					manager.getSorci().getManagerGui().getGuiEditDeck().open(player);

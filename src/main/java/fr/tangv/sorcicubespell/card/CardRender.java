@@ -1,7 +1,6 @@
 package fr.tangv.sorcicubespell.card;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Material;
@@ -12,15 +11,15 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class CardRender {
 
-	private static String featureToString(SorciCubeSpell sorci, Map<UUID, Card> cards, CardFeature feature) {
+	private static String featureToString(SorciCubeSpell sorci, CardFeature feature) {
 		if (feature.getType() == CardFeatureType.INVOCATION ||
 				feature.getType() == CardFeatureType.ACTION_DEAD ||
 				feature.getType() == CardFeatureType.ACTION_SPAWN ||
 				feature.getType() == CardFeatureType.METAMORPH_TO ||
 				feature.getType() == CardFeatureType.GIVE_FEATURE_CART) {
 			UUID uuid = UUID.fromString(feature.getValue().asString());
-			if (cards.containsKey(uuid)) {
-				Card card = cards.get(uuid);
+			Card card = sorci.getManagerCards().getCard(uuid);
+			if (card != null) {
 				return card.getName()+(card.getType() == CardType.ENTITY ? " "+renderStatCard(card) : "");
 			} else
 				return "nothing";
@@ -28,8 +27,8 @@ public class CardRender {
 			return feature.getValue().toString();
 	}
 	
-	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, Map<UUID, Card> cards) {
-		return CardRender.cardToItem(card, sorci, cards, 1, false);
+	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci) {
+		return CardRender.cardToItem(card, sorci, 1, false);
 	}
 	
 	public static String renderStatCard(Card card) {
@@ -43,7 +42,7 @@ public class CardRender {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, Map<UUID, Card> cards, int amount, boolean ench) {
+	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, int amount, boolean ench) {
 		if (card == null) return null;
 		CardFeatures features = card.getFeatures();
 		String cible = sorci.getEnumTool().cibleToString(card.getCible())+
@@ -67,7 +66,7 @@ public class CardRender {
 				if (card.getType() != CardType.ENTITY || feature.getType() != CardFeatureType.DAMAGE || card.getCible() != CardCible.ONE_ENEMIE || card.getCibleFaction() != CardFaction.BASIC) {
 					featureReturn = true;
 					lore.add(sorci.getEnumTool().featureToString(feature.getType())
-						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, cards, feature))
+						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
 						.replace("{cible}", cible)
 					);
 				}
