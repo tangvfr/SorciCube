@@ -10,9 +10,6 @@ import javax.imageio.ImageIO;
 
 import org.bson.Document;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 public class CardSkin {
 
 	private int id;
@@ -55,12 +52,12 @@ public class CardSkin {
 		while (sc.hasNextLine())
 			json += "\r\n"+sc.nextLine();
 		sc.close();
-		JsonObject texture = new JsonParser().parse(json).getAsJsonObject()
-			.get("data").getAsJsonObject()
-			.get("texture").getAsJsonObject();
-		String value = texture.get("value").getAsString();
-		String signature = texture.get("signature").getAsString();
-		String url = texture.get("url").getAsString();
+		Document texture = Document.parse(json)
+			.get("data", Document.class)
+			.get("texture", Document.class);
+		String value = texture.getString("value");
+		String signature = texture.getString("signature");
+		String url = texture.getString("url");
 		return new CardSkin(id, url, value, signature);
 	}
 	
