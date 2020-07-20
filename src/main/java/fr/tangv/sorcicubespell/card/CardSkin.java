@@ -4,10 +4,10 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.Base64;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.IOUtils;
 import org.bson.Document;
 
 import com.google.gson.JsonObject;
@@ -50,7 +50,11 @@ public class CardSkin {
 	}
 	
 	public static CardSkin createCardSkin(int id) throws Exception {
-		String json = IOUtils.toString(new URL("https://api.mineskin.org/get/id/"+id));
+		String json = "";
+		Scanner sc = new Scanner(new URL("https://api.mineskin.org/get/id/"+id).openStream());
+		while (sc.hasNextLine())
+			json += "\r\n"+sc.nextLine();
+		sc.close();
 		JsonObject texture = new JsonParser().parse(json).getAsJsonObject()
 			.get("data").getAsJsonObject()
 			.get("texture").getAsJsonObject();
