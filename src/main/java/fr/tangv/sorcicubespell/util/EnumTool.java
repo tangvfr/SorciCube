@@ -8,6 +8,7 @@ import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
+import fr.tangv.sorcicubespell.card.CardValue;
 
 public class EnumTool {
 
@@ -47,12 +48,22 @@ public class EnumTool {
 		return this.enumToString(sort, this.sort);
 	}
 	
-	public String featureToString(CardFeatureType featureType) {
-		return this.enumToString(featureType, feature);
+	public String featureToString(CardFeatureType featureType, CardValue value) {
+		if ((featureType == CardFeatureType.BOOST_DAMAGE
+				|| featureType == CardFeatureType.BOOST_HEALTH
+				|| featureType == CardFeatureType.BOOST_MANA)
+			&& value.asInt() < 0)
+			return this.enumToStringNeg(featureType, feature);
+		else
+			return this.enumToString(featureType, feature);
 	}
 	
-	public String enumToString(Enum<?> enum1, ConfigurationSection config) {
+	private String enumToString(Enum<?> enum1, ConfigurationSection config) {
 		return config.getString(enum1.name().toLowerCase());
+	}
+	
+	private String enumToStringNeg(Enum<?> enum1, ConfigurationSection config) {
+		return config.getString(enum1.name().toLowerCase()+"_neg");
 	}
 	
 }

@@ -86,7 +86,7 @@ public class FightEntity extends FightHead {
 		this.isSend = true;
 	}
 	
-	public void setCard(CardEntity card) throws Exception {
+	public void setCard(CardEntity card) {
 		this.card = card;
 		if (this.isSend)
 			removePlayer();
@@ -124,8 +124,9 @@ public class FightEntity extends FightHead {
 
 	@Override
 	public void setHealth(int health) {
-		//add if heal < 0 is dead, add action 
 		card.setHealth(health);
+		if (health < 0)
+			this.dead();
 	}
 
 	@Override
@@ -141,6 +142,14 @@ public class FightEntity extends FightHead {
 	
 	public int getAttack() {
 		return card.getAttack();
+	}
+	
+	public boolean isDead() {
+		return this.card == null;
+	}
+	
+	public void dead() {
+		this.setCard(null);
 	}
 
 }
