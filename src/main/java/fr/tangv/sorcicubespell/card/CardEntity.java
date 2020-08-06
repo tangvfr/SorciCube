@@ -5,17 +5,21 @@ public class CardEntity {
 	private Card card;
 	private CardFeature health;
 	private CardFeature attack;
+	private boolean hasIncitement;
 	private CardSkin skin;
 	
 	public CardEntity(Card card) throws Exception {
 		if (card.getType() != CardType.ENTITY)
 			throw new Exception("Card is not ENTITY !");
 		this.card = card;
-		this.skin = card.getFeatures().hasFeature(CardFeatureType.SKIN) ?
-				card.getFeatures().getFeature(CardFeatureType.SKIN).getValue().asSkin()
+		CardFeatures features = card.getFeatures();
+		this.skin = features.hasFeature(CardFeatureType.SKIN) ?
+				features.getFeature(CardFeatureType.SKIN).getValue().asSkin()
 				: null;
-		this.health = card.getFeatures().getFeature(CardFeatureType.HEALTH);
-		this.attack = card.getFeatures().getFeature(CardFeatureType.DAMAGE);
+				
+		this.health = features.getFeature(CardFeatureType.HEALTH);
+		this.attack = features.getFeature(CardFeatureType.DAMAGE);
+		this.hasIncitement = features.hasFeature(CardFeatureType.INCITEMENT);
 	}
 	
 	public String getName() {
@@ -40,6 +44,10 @@ public class CardEntity {
 	
 	public boolean hasSkin() {
 		return skin != null;
+	}
+	
+	public boolean hasIncitement() {
+		return hasIncitement;
 	}
 	
 	public CardSkin getSkin() {

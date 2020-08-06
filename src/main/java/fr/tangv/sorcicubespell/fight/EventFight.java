@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -24,6 +26,7 @@ import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardType;
+import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
 import fr.tangv.sorcicubespell.util.RenderException;
 import io.netty.util.internal.ConcurrentSet;
@@ -80,6 +83,10 @@ public class EventFight implements Listener {
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
+			if (!player.canPlay()) {
+				e.setCancelled(true);
+				return;
+			}
 			if (e.getAction() == Action.LEFT_CLICK_AIR 
 					|| e.getAction() == Action.LEFT_CLICK_BLOCK 
 					|| e.getAction() == Action.PHYSICAL) {
@@ -91,38 +98,43 @@ public class EventFight implements Listener {
 				if (block != null) {
 					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
 					if (cible != null) {
+						
 						if (player.getCardSelect() != -1) {
 							Card card = player.getCardHand(player.getCardSelect());
-							if (card.getType() == CardType.ENTITY) {
-								//entity
-								if (FightCible.listForCardCible(CardCible.ALL_ENTITY_ALLY).contains(cible)) {
-									FightEntity entity = (FightEntity) player.getForCible(cible);
-									if (!entity.isSelectable()) {
-										try {
-											entity.setCard(new CardEntity(card));
-											player.setCardHand(player.getCardSelect(), null);
-											player.setCardSelect(-1);
-											player.initHotBar();
-											player.hideAllHead();
-										} catch (Exception e1) {
-											Bukkit.getLogger().warning(RenderException.renderException(e1));
+							if (player.hasMana(card.getMana())) {
+								if (card.getType() == CardType.ENTITY) {
+									//entity
+									if (FightCible.listForCardCible(CardCible.ALL_ENTITY_ALLY).contains(cible)) {
+										FightEntity entity = (FightEntity) player.getForCible(cible);
+										if (!entity.isSelectable()) {
+											try {
+												player.removeMana(card.getMana());
+												entity.setCard(new CardEntity(card));
+												player.setCardHand(player.getCardSelect(), null);
+												player.setCardSelect(-1);
+												player.initHotBar();
+											} catch (Exception e1) {
+												Bukkit.getLogger().warning(RenderException.renderException(e1));
+											}
 										}
+									}
+								} else {
+									FightHead head = player.getForCible(cible);
+									if (player.testFightHeadForCard(card, new ResultFightHead() {
+										@Override
+										public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+											return fightHeads.contains(head) && (incitement ? head.hasIncitement() : true);
+										}
+									})) {
+										player.removeMana(card.getMana());
+										FightSpell.startActionSpell(player, card.getFeatures(), head);
+										player.setCardHand(player.getCardSelect(), null);
+										player.setCardSelect(-1);
+										player.initHotBar();
 									}
 								}
 							} else {
-								//spell
-								if (FightCible.listForCardCible(card.getCible()).contains(cible)) {
-									FightHead head = player.getForCible(cible);
-									if (head.isSelectable() && head.isFaction(card.getCibleFaction())) {
-
-										//action spell and is possible
-										
-										/*player.setCardHand(player.getCardSelect(), null);
-										player.setCardSelect(-1);
-										player.hideAllHead();
-										player.reloadAllHead();*/
-									}
-								}
+								player.getPlayer().sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
 							}
 						}
 					}

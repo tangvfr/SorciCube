@@ -16,7 +16,8 @@ public class CardRender {
 				feature.getType() == CardFeatureType.ACTION_DEAD ||
 				feature.getType() == CardFeatureType.ACTION_SPAWN ||
 				feature.getType() == CardFeatureType.METAMORPH_TO ||
-				feature.getType() == CardFeatureType.GIVE_FEATURE_CART) {
+				feature.getType() == CardFeatureType.GIVE_FEATURE_CART ||
+				feature.getType() == CardFeatureType.IF_HURT) {
 			UUID uuid = UUID.fromString(feature.getValue().asString());
 			Card card = sorci.getManagerCards().getCard(uuid);
 			if (card != null) {

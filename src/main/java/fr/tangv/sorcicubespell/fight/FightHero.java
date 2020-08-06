@@ -49,4 +49,13 @@ public class FightHero extends FightHead {
 		return player.getHealth();
 	}
 
+	@Override
+	public boolean hasIncitement() {
+		return false;
+	}
+	
+	public PlayerFight getPlayer() {
+		return player;
+	}
+
 }

@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -54,6 +56,8 @@ public class PlayerFight {
 	private Location[] entityLoc;
 	private Card[] cardHand;
 	private ItemStack itemNextRound;
+	//private listEntity AttackPossible
+	//private Choose prio for spell
 	
 	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first) {
 		this.fight = fight;
@@ -217,11 +221,24 @@ public class PlayerFight {
 		return mana;
 	}
 
+	public boolean hasMana(int manaHave) {
+		return mana >= manaHave;
+	}
+	
 	public void setMana(int mana) {
 		if (mana < 0)
 			mana = 0;
 		this.mana = mana;
+		player.getPlayer().setLevel(mana);
 		this.hero.updateStat();
+	}
+	
+	public void addMana(int mana) {
+		setMana(getMana()+mana);
+	}
+	
+	public void removeMana(int mana) {
+		setMana(getMana()-mana);
 	}
 
 	public int getManaBoost() {
@@ -230,6 +247,14 @@ public class PlayerFight {
 
 	public void setManaBoost(int manaBoost) {
 		this.manaBoost = manaBoost;
+	}
+	
+	public void addManaBoost(int manaBoost) {
+		setManaBoost(getManaBoost()+manaBoost);
+	}
+	
+	public void removeManaBoost(int manaBoost) {
+		setManaBoost(getManaBoost()-manaBoost);
 	}
 	
 	public PlayerFight getEnemie() {
@@ -246,10 +271,9 @@ public class PlayerFight {
 	}
 
 	public void setHealth(int health) {
-		if (health < 0) {
+		if (health <= 0) {
 			this.health = 0;
-
-			//add if heal < 0 is dead, add action 
+			fight.end(player);
 		} else if (health > fight.max_health) 
 			this.health = fight.max_health;
 		else
@@ -274,6 +298,10 @@ public class PlayerFight {
 	//function
 
 	public void sendPacket(Packet<?> packet) {
+		sendPacket(player, packet);
+	}
+	
+	public static void sendPacket(Player player, Packet<?> packet) {
 		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 	}
 	
@@ -406,7 +434,7 @@ public class PlayerFight {
 			if (card.getType() == CardType.ENTITY) {
 				initHeadForEntityPose(card);
 			} else {
-				initHeadForSpell(card);
+				initHeadForCard(card, ItemHead.SELECTABLE_SPELL);
 			}
 		}
 	}
@@ -417,8 +445,6 @@ public class PlayerFight {
 				entity.showHead(ItemHead.SELECTABLE_POSE);
 	}
 	
-
-			//SELECTABLE_DAMAGE = /*orange*/
 	
 			//spell or action
 			//SELECTABLE_SPELL = /*purple*/
@@ -431,23 +457,48 @@ public class PlayerFight {
 			//entity attack
 			//SELECTABLE_ATTACK = /*yellow*/
 			//SELECTED_ENTITY = /*lime*/
+			//SELECTABLE_DAMAGE = /*orange*/
 	
 			
 			
-	public void initHeadForSpell(Card card) {
+	public boolean initHeadForCard(Card card, ItemStack headItem) {
+		return testFightHeadForCard(card, new ResultFightHead() {
+			@Override
+			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+				boolean possible = false;
+				if (incitement) {
+					for (FightHead head : fightHeads)
+						if (head.hasIncitement()) {
+							possible = true;
+							head.showHead(headItem);
+						}
+				} else {
+					for (FightHead head : fightHeads) {
+						possible = true;
+						head.showHead(headItem);
+					}
+				}
+				return possible;
+			}
+		});
+	}
+	
+	public boolean testFightHeadForCard(Card card, ResultFightHead resultFightHead) {
+		ArrayList<FightHead> fightHeads = new ArrayList<FightHead>();
+		boolean incitement = false;
 		for (FightCible cible : FightCible.listForCardCible(card.getCible())) {
 			FightHead head = getForCible(cible);
 			if (head.isSelectable() && head.isFaction(card.getCibleFaction())) {
-
-				//action spell and it is possible
-				
-				/*player.setCardHand(player.getCardSelect(), null);
-				player.setCardSelect(-1);
-				player.hideAllHead();
-				player.reloadAllHead();*/
+				if (head.hasIncitement())
+					incitement = true;
+				fightHeads.add(head);
 			}
 		}
-		
+		return resultFightHead.resultFightHead(fightHeads, incitement);
+	}
+	
+	public static interface ResultFightHead {
+		public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement);
 	}
 	
 	public boolean canPlay() {

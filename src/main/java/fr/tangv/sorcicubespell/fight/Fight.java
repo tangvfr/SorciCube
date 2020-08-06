@@ -28,25 +28,25 @@ public class Fight {
 	protected final int max_mana;
 	protected final int max_health;
 	protected final int start_health;
-	private SorciCubeSpell sorci;
-	private FightType fightType;
-	private PlayerFight player1;
-	private PlayerFight player2;
-	private FightArena arena;
+	private final SorciCubeSpell sorci;
+	private final FightType fightType;
+	private final PlayerFight player1;
+	private final PlayerFight player2;
+	private final FightArena arena;
 	private int round;
 	private Cooldown cooldown;
-	private Cooldown cooldownRound;
-	private long timeCooldownEnd;
-	private String titleEnd;
-	private boolean firstPlay;
+	private final Cooldown cooldownRound;
+	private final long timeCooldownEnd;
+	private final String titleEnd;
+	private volatile boolean firstPlay;
 	private boolean isStart;
-	private BossBar bossBar;
-	private String titleBossBar;
+	private final BossBar bossBar;
+	private final String titleBossBar;
 	//end
-	private boolean isEnd;
-	private Player losser;
-	private Player winner;
-	private boolean isDeleted;
+	private volatile boolean isEnd;
+	private volatile Player losser;
+	private volatile Player winner;
+	private volatile boolean isDeleted;
 	
 	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2Arg) throws Exception {
 		this.sorci = sorci;
@@ -240,12 +240,12 @@ public class Fight {
 				0, 6, 0));
 	}
 	
-	public void alertPlayer(PlayerFight player, String message) {
+	public void alertPlayer(Player player, String message) {
 		player.getPlayer().sendMessage(message);
-		player.sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
+		PlayerFight.sendPacket(player, new PacketPlayOutTitle(EnumTitleAction.TITLE,
 				toIChatBaseComposent(""),
 				0, 6, 0));
-		player.sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
+		PlayerFight.sendPacket(player, new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
 				toIChatBaseComposent(message),
 				0, 6, 0));
 	}
@@ -318,15 +318,14 @@ public class Fight {
 		bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_end")));
 		bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
 		bossBar.setProgress(cooldown.getProgess());
-
 		this.isEnd = true;
 		if (losser.isOnline()) {
-			losser.sendMessage("Losser");//replace by title and chat
+			alertPlayer(losser, "Losser");//replace by title and chat
 			losser.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 					new TextComponent(""));
 		}
 		if (winner.isOnline()) {
-			winner.sendMessage("Winner");//replace by title and chat
+			alertPlayer(winner, "Winner");//replace by title and chat
 			winner.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 					new TextComponent(""));
 		}

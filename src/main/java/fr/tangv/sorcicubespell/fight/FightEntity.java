@@ -126,7 +126,7 @@ public class FightEntity extends FightHead {
 	@Override
 	public void setHealth(int health) {
 		card.setHealth(health);
-		if (health < 0)
+		if (health <= 0)
 			this.dead();
 	}
 
@@ -151,6 +151,11 @@ public class FightEntity extends FightHead {
 	
 	public void dead() {
 		this.setCard(null);
+	}
+
+	@Override
+	public boolean hasIncitement() {
+		return card != null && card.hasIncitement();
 	}
 
 }

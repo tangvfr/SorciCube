@@ -104,4 +104,6 @@ public abstract class FightHead {
 	
 	public abstract int getHealth();
 	
+	public abstract boolean hasIncitement();
+	
 }
