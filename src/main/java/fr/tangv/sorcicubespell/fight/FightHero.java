@@ -24,7 +24,19 @@ public class FightHero extends FightHead {
 	
 	@Override
 	public void updateStat() {
-		this.setName("§c"+player.getHealth()+" \u2665 §b"+player.getMana()+" \u2756");
+		String mana;
+		if (player.canPlay())
+			mana = Integer.toString(player.getMana());
+		else {
+			int value = player.getManaBoost();
+			if (value < 0)
+				mana = Integer.toString(player.getMana());
+			else if (value > 0)
+				mana = "+"+Integer.toString(player.getMana());
+			else
+				mana = "0";
+		}
+		this.setName("§c"+player.getHealth()+" \u2665 §b"+mana+" \u2756");
 	}
 	
 	@Override

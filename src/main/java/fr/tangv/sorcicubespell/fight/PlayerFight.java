@@ -28,8 +28,6 @@ public class PlayerFight {
 	
 	private final static ItemStack itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 	private final static ItemStack itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, " ", null, false);
-	private final static int MAX_HEALTH = 60;
-	private final static int START_HEALTH = 30;
 	
 	private static ItemStack itemNull(ItemStack item) {
 		if (item == null)
@@ -63,7 +61,7 @@ public class PlayerFight {
 		this.deck = deck;
 		this.mana = 0;
 		this.manaBoost = 0;
-		this.health = START_HEALTH;
+		this.health = fight.start_health;
 		this.cardSelected = -1;
 		this.first = first;
 		//item
@@ -220,6 +218,8 @@ public class PlayerFight {
 	}
 
 	public void setMana(int mana) {
+		if (mana < 0)
+			mana = 0;
 		this.mana = mana;
 		this.hero.updateStat();
 	}
@@ -250,8 +250,8 @@ public class PlayerFight {
 			this.health = 0;
 
 			//add if heal < 0 is dead, add action 
-		} else if (health > MAX_HEALTH) 
-			this.health = MAX_HEALTH;
+		} else if (health > fight.max_health) 
+			this.health = fight.max_health;
 		else
 			this.health = health;
 		updateViewLifes();
@@ -417,6 +417,23 @@ public class PlayerFight {
 				entity.showHead(ItemHead.SELECTABLE_POSE);
 	}
 	
+
+			//SELECTABLE_DAMAGE = /*orange*/
+	
+			//spell or action
+			//SELECTABLE_SPELL = /*purple*/
+			//SELECTABLE_DEAD = /*red*/
+			//SELECTABLE_SPAWN = /*cyan*/
+			
+			//pose
+			//SELECTABLE_POSE = /*brown*/
+			
+			//entity attack
+			//SELECTABLE_ATTACK = /*yellow*/
+			//SELECTED_ENTITY = /*lime*/
+	
+			
+			
 	public void initHeadForSpell(Card card) {
 		for (FightCible cible : FightCible.listForCardCible(card.getCible())) {
 			FightHead head = getForCible(cible);
@@ -434,7 +451,7 @@ public class PlayerFight {
 	}
 	
 	public boolean canPlay() {
-		return fight.gameIsStart() && fight.getFirstPlay() == first;
+		return fight.isStart() && !fight.isEnd() && fight.getFirstPlay() == first;
 	}
 	
 	public boolean isPlayer(Player player) {

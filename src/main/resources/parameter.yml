@@ -16,6 +16,10 @@ format_time_min: "min "
 #fight
 cooldown_below_fight: 10
 cooldown_one_round: 180
+cooldown_end: 10
+max_mana: 12
+max_health: 60
+start_health: 30
 #server
 server_lobby: "lobby"
 server_fight: "fight"

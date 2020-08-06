@@ -110,8 +110,7 @@ public class ManagerFight implements Runnable {
 			try {
 				Fight fight = fights.get(i);
 				fight.update();
-				if (fight.isEnd()) {
-					fight.end();
+				if (fight.isDeleted()) {
 					fights.remove(i);
 					i--;
 				}

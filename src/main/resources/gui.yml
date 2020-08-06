@@ -76,5 +76,7 @@ boss_bar:
   color: "YELLOW"
   name_arena: "§f{arena}"
   color_arena: "WHITE"
+  name_end: "Retour au lobby dans {time} !"
+  color_end: "PURPLE"
 scoreboard:
   name: "§cVie des heros"

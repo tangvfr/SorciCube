@@ -119,7 +119,8 @@ public class FightEntity extends FightHead {
 
 	@Override
 	public void updateStat() {
-		this.setStat(CardRender.renderStatCard(card.getCard()));
+		if (!isDead())
+			this.setStat(CardRender.renderStatCard(card.getCard()));
 	}
 
 	@Override

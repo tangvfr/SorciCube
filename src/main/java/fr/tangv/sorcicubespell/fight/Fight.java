@@ -1,8 +1,5 @@
 package fr.tangv.sorcicubespell.fight;
 
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -28,7 +25,9 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
 
 public class Fight {
 
-	private final static int MAX_MANA_ROUND = 12;
+	protected final int max_mana;
+	protected final int max_health;
+	protected final int start_health;
 	private SorciCubeSpell sorci;
 	private FightType fightType;
 	private PlayerFight player1;
@@ -37,27 +36,35 @@ public class Fight {
 	private int round;
 	private Cooldown cooldown;
 	private Cooldown cooldownRound;
+	private long timeCooldownEnd;
+	private String titleEnd;
 	private boolean firstPlay;
-	private boolean gameIsStart;
+	private boolean isStart;
 	private BossBar bossBar;
 	private String titleBossBar;
-	private ConcurrentHashMap<UUID, Card> hashCards;
 	//end
 	private boolean isEnd;
 	private Player losser;
+	private Player winner;
+	private boolean isDeleted;
 	
 	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2Arg) throws Exception {
 		this.sorci = sorci;
+		this.max_mana = sorci.getParameter().getInt("max_mana");
+		this.max_health = sorci.getParameter().getInt("max_health");
+		this.start_health = sorci.getParameter().getInt("start_health");
 		this.firstPlay = true;
-		this.gameIsStart = false;
+		this.isStart = false;
+		this.isDeleted = false;
 		this.isEnd = false;
 		this.losser = null;
 		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
+		this.timeCooldownEnd = (long) sorci.getParameter().getInt("cooldown_end")*1000L;
+		this.titleEnd = sorci.gertGuiConfig().getString("boss_bar.name_end");
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
-		this.hashCards = sorci.getManagerCards().cloneCards();
 		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
 		this.bossBar = Bukkit.createBossBar(
 				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
@@ -101,40 +108,52 @@ public class Fight {
 	}
 	
 	public void update() {
-		if (round < 0) {
-			if (cooldown.update()) {
-				if (round == -1) {
-					gameIsStart = true;
-					bossBar.setTitle(titleBossBar);
-					bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")));
-					nextRound();
-				} else {
-					sendTitleToPlayer(
-							sorci.getMessage().getString("message_below_start_game")
-							.replace("{time}", Integer.toString(Math.abs(round+1)))
-						);
-					round += 1;
+		if (!isEnd) {
+			if (round < 0) {
+				if (cooldown.update()) {
+					if (round == -1) {
+						isStart = true;
+						bossBar.setTitle(titleBossBar);
+						bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")));
+						nextRound();
+					} else {
+						sendTitleToTwoPlayer(
+								sorci.getMessage().getString("message_below_start_game")
+								.replace("{time}", Integer.toString(Math.abs(round+1)))
+							);
+						round += 1;
+					}
 				}
+			} else {
+				if (cooldown.update()) {
+					cooldown.stop();
+				}
+				if (cooldownRound.update()) {
+					nextRound();
+					return;
+				}
+				bossBar.setTitle(titleBossBar
+						.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining()))
+						.replace("{round}", Integer.toString(round+1))
+					);
+				bossBar.setProgress(cooldownRound.getProgess());
+				this.updatePlayer(player1);
+				this.updatePlayer(player2);
+				//for test
+				if (round >= 4)
+					end(player1.getPlayer());
+				//end for test
 			}
 		} else {
+			bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
+			bossBar.setProgress(cooldown.getProgess());
 			if (cooldown.update()) {
-				cooldown.stop();
+				if (losser.isOnline())
+					sorci.sendPlayerToServer(losser, sorci.getNameServerLobby());
+				if (winner.isOnline())
+					sorci.sendPlayerToServer(winner, sorci.getNameServerLobby());
+				this.isDeleted = true;
 			}
-			if (cooldownRound.update()) {
-				nextRound();
-				return;
-			}
-			bossBar.setTitle(titleBossBar
-					.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining()))
-					.replace("{round}", Integer.toString(round+1))
-				);
-			bossBar.setProgress(cooldownRound.getProgess());
-			this.updatePlayer(player1);
-			this.updatePlayer(player2);
-			//for test
-			if (round >= 4)
-				setEnd(player1.getPlayer());
-			//end for test
 		}
 	}
 	
@@ -212,11 +231,21 @@ public class Fight {
 		return ChatSerializer.a("{\"text\": \""+text+"\"}");
 	}
 	
-	public void sendTitleToPlayer(String message) {
+	public void sendTitleToTwoPlayer(String message) {
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
 				toIChatBaseComposent(""),
 				0, 6, 0));
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
+				toIChatBaseComposent(message),
+				0, 6, 0));
+	}
+	
+	public void alertPlayer(PlayerFight player, String message) {
+		player.getPlayer().sendMessage(message);
+		player.sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
+				toIChatBaseComposent(""),
+				0, 6, 0));
+		player.sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
 				toIChatBaseComposent(message),
 				0, 6, 0));
 	}
@@ -238,8 +267,6 @@ public class Fight {
 		player.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 				new TextComponent(messageActionBar));
 		player.getPlayer().setLevel(player.getMana());
-		//scoreboard
-		
 	}
 	
 	public void nextRound() {
@@ -249,8 +276,8 @@ public class Fight {
 		int mana = (round/2)+1;
 		if (round == 1)
 			mana = 2;
-		if (mana > MAX_MANA_ROUND)
-			mana = MAX_MANA_ROUND;
+		if (mana > max_mana)
+			mana = max_mana;
 		player1.getPlayer().closeInventory();
 		player2.getPlayer().closeInventory();
 		PlayerFight player = this.firstPlay ? player1 : player2;
@@ -262,7 +289,7 @@ public class Fight {
 		player.getEnemie().setCardSelect(-1);
 		//and reset cible (entity head)
 		//message
-		sendTitleToPlayer(
+		sendTitleToTwoPlayer(
 				sorci.getMessage().getString("message_round")
 				.replace("{round}", Integer.toString(round+1))
 			);
@@ -275,33 +302,33 @@ public class Fight {
 	}
 	
 	//for end
-	public void setEnd(Player losser) {
-		this.losser = losser;
-		this.isEnd = true;
-	}
-	
 	public boolean isEnd() {
 		return isEnd;
 	}
 	
-	public void end() {
-		end(losser);
-	}
-	
-	//player is player loss
 	public void end(Player losser) {
 		end(losser, player1.isPlayer(losser) ? player2.getPlayer() : player1.getPlayer());
 	}
 	
 	private void end(Player losser, Player winner) {
-		setEnd(losser);
+		this.losser = losser;
+		this.winner = winner;
+		this.cooldown = new Cooldown(timeCooldownEnd);
+		this.cooldown.start();
+		bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_end")));
+		bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
+		bossBar.setProgress(cooldown.getProgess());
+
+		this.isEnd = true;
 		if (losser.isOnline()) {
-			
-			sorci.sendPlayerToServer(losser, sorci.getNameServerLobby());
+			losser.sendMessage("Losser");//replace by title and chat
+			losser.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
+					new TextComponent(""));
 		}
 		if (winner.isOnline()) {
-			
-			sorci.sendPlayerToServer(winner, sorci.getNameServerLobby());
+			winner.sendMessage("Winner");//replace by title and chat
+			winner.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
+					new TextComponent(""));
 		}
 	}
 	
@@ -315,12 +342,12 @@ public class Fight {
 		return fightType;
 	}
 	
-	public ConcurrentHashMap<UUID, Card> getHashCards() {
-		return hashCards;
+	public boolean isStart() {
+		return isStart;
 	}
 	
-	public boolean gameIsStart() {
-		return gameIsStart;
+	public boolean isDeleted() {
+		return isDeleted;
 	}
 	
 	public int getRound() {
