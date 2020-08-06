@@ -83,13 +83,9 @@ public class EventFight implements Listener {
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
-			if (!player.canPlay()) {
-				e.setCancelled(true);
-				return;
-			}
-			if (e.getAction() == Action.LEFT_CLICK_AIR 
+			if (!player.canPlay() || (e.getAction() == Action.LEFT_CLICK_AIR 
 					|| e.getAction() == Action.LEFT_CLICK_BLOCK 
-					|| e.getAction() == Action.PHYSICAL) {
+					|| e.getAction() == Action.PHYSICAL)) {
 				//reset head view if possible
 				player.setCardSelect(-1);
 				player.openInvHistoric();
