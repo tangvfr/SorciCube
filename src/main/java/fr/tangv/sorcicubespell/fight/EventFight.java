@@ -1,7 +1,5 @@
 package fr.tangv.sorcicubespell.fight;
 
-import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,10 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardType;
-import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
 import fr.tangv.sorcicubespell.util.ItemHead;
 import fr.tangv.sorcicubespell.util.RenderException;
@@ -108,6 +104,8 @@ public class EventFight implements Listener {
 									player.setEntityAttack(null);
 									player.showEntityAttackPossible();
 									//start action fight entity
+									
+										/*insert code here*/
 									
 									//end action fight entity
 								}
