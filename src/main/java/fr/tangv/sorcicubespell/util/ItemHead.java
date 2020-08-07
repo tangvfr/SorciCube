@@ -24,4 +24,17 @@ public class ItemHead {
 	public final static ItemStack SELECTABLE_POSE = /*brown*/createHead("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGQ0Mzg1ZGI3YWRjZTkyMDc3YzgxOTQzODUyYThlNTFlNjc4ZDE5OWViODk5ZWQzYTA2NWM0MDhkNTg2ZDIxNSJ9fX0=");
 	public final static ItemStack SELECTED_ENTITY = /*lime*/createHead("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGY5YjFlNGYwM2FlMzcyYjZjOTVhMGU1ZDFlM2Q5YjU5ZjVhN2RiNWQzOWY3YjU4ZDIzMDNhZDIxNzA1OWEwZSJ9fX0=");
 	
+	//spell or action
+	//SELECTABLE_SPELL = /*purple*/
+	//SELECTABLE_DEAD = /*red*/
+	//SELECTABLE_SPAWN = /*cyan*/
+	
+	//pose
+	//SELECTABLE_POSE = /*brown*/
+	
+	//entity attack
+	//SELECTABLE_ATTACK = /*yellow*/
+	//SELECTED_ENTITY = /*lime*/
+	//SELECTABLE_DAMAGE = /*orange*/
+	
 }

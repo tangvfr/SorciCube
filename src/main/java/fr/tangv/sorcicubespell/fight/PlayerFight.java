@@ -56,6 +56,8 @@ public class PlayerFight {
 	private Location[] entityLoc;
 	private Card[] cardHand;
 	private ItemStack itemNextRound;
+	//private Vector<Card> Spell
+	private FightEntity entityAttack;
 	//private listEntity AttackPossible
 	//private Choose prio for spell
 	
@@ -68,6 +70,7 @@ public class PlayerFight {
 		this.health = fight.start_health;
 		this.cardSelected = -1;
 		this.first = first;
+		this.entityAttack = null;
 		//item
 		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, "§6Next Round", null, false);
 		//entity loc
@@ -83,6 +86,30 @@ public class PlayerFight {
 		this.pickCard(3);
 		//historique
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
+	}
+	
+	public void resetEntityAttackPossible() {
+		for (FightEntity entity : entity)
+			entity.setAttackPossible(!entity.isDead());
+	}
+	
+	public void showEntityAttackPossible() {
+		hideAllHead();
+		for (FightEntity entity : entity)
+			if (!entity.isDead() && entity.attackIsPossible()) 
+				entity.showHead(ItemHead.SELECTABLE_ENTITY_ATTACK);
+	}
+	
+	public boolean hasEntityAttack() {
+		return entityAttack != null;
+	}
+	
+	public FightEntity getEntityAttack() {
+		return entityAttack;
+	}
+	
+	public void setEntityAttack(FightEntity entityAttack) {
+		this.entityAttack = entityAttack; 
 	}
 	
 	public void initFightHead() {
@@ -444,23 +471,7 @@ public class PlayerFight {
 			if (!entity.isSelectable())
 				entity.showHead(ItemHead.SELECTABLE_POSE);
 	}
-	
-	
-			//spell or action
-			//SELECTABLE_SPELL = /*purple*/
-			//SELECTABLE_DEAD = /*red*/
-			//SELECTABLE_SPAWN = /*cyan*/
-			
-			//pose
-			//SELECTABLE_POSE = /*brown*/
-			
-			//entity attack
-			//SELECTABLE_ATTACK = /*yellow*/
-			//SELECTED_ENTITY = /*lime*/
-			//SELECTABLE_DAMAGE = /*orange*/
-	
-			
-			
+		
 	public boolean initHeadForCard(Card card, ItemStack headItem) {
 		return testFightHeadForCard(card, new ResultFightHead() {
 			@Override
@@ -479,6 +490,15 @@ public class PlayerFight {
 					}
 				}
 				return possible;
+			}
+		});
+	}
+	
+	public boolean testHeadValidForCard(Card card, FightHead head) {
+		return testFightHeadForCard(card, new ResultFightHead() {
+			@Override
+			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+				return fightHeads.contains(head) && (incitement ? head.hasIncitement() : true);
 			}
 		});
 	}

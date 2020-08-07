@@ -8,18 +8,36 @@ import fr.tangv.sorcicubespell.card.CardCible;
 
 public enum FightCible {
 
-	HERO_ALLY(),
-	ENTITY_1_ALLY(),
-	ENTITY_2_ALLY(),
-	ENTITY_3_ALLY(),
-	ENTITY_4_ALLY(),
-	ENTITY_5_ALLY(),	
-	HERO_ENEMIE(),
-	ENTITY_1_ENEMIE(),
-	ENTITY_2_ENEMIE(),
-	ENTITY_3_ENEMIE(),
-	ENTITY_4_ENEMIE(),
-	ENTITY_5_ENEMIE();
+	HERO_ALLY(true, true),
+	ENTITY_1_ALLY(false, true),
+	ENTITY_2_ALLY(false, true),
+	ENTITY_3_ALLY(false, true),
+	ENTITY_4_ALLY(false, true),
+	ENTITY_5_ALLY(false, true),	
+	HERO_ENEMIE(true, false),
+	ENTITY_1_ENEMIE(false, false),
+	ENTITY_2_ENEMIE(false, false),
+	ENTITY_3_ENEMIE(false, false),
+	ENTITY_4_ENEMIE(false, false),
+	ENTITY_5_ENEMIE(false, false);
+	
+	private boolean ally;
+	private boolean hero;
+	
+	private FightCible(boolean hero, boolean ally) {
+		this.hero = hero;
+		this.ally = ally;
+	}
+	
+	public boolean isHero() {
+		return hero;
+	}
+	
+	public boolean isAlly() {
+		return ally;
+	}
+	
+	//static lists
 	
 	private static ConcurrentHashMap<CardCible, Vector<FightCible>> lists;
 	

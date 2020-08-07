@@ -22,7 +22,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.SKIN, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
-				
+				//nothing
 			}
 		});
 		actionsSpells.put(CardFeatureType.HEALTH, new ActionSpell() {
@@ -52,7 +52,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.TAKE_NEW_CART, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
-				
+				player.pickCard(feature.getValue().asInt());
 			}
 		});
 		actionsSpells.put(CardFeatureType.DESTRUCT, new ActionSpell() {

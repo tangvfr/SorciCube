@@ -31,6 +31,7 @@ public class FightEntity extends FightHead {
 	private CardEntity card;
 	private CardSkin skin;
 	private boolean isSend;
+	private boolean attackIsPossible;
 	
 	public FightEntity(Fight fight, Location loc) {
 		super(fight, loc);
@@ -41,6 +42,7 @@ public class FightEntity extends FightHead {
 		this.entityPlayer = new EntityPlayer(server, world, createProfil("Default"), new PlayerInteractManager(world));
 		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw()/2, loc.getPitch()/2);
 		this.isSend = false;
+		this.attackIsPossible = false;
 	}
 	
 	private void removePlayer() {
@@ -88,6 +90,7 @@ public class FightEntity extends FightHead {
 	
 	public void setCard(CardEntity card) {
 		this.card = card;
+		this.attackIsPossible = false;
 		if (this.isSend)
 			removePlayer();
 		if (card != null) {
@@ -96,6 +99,14 @@ public class FightEntity extends FightHead {
 			this.hideHead();
 			this.updateStat();
 		}
+	}
+	
+	public boolean attackIsPossible() {
+		return attackIsPossible;
+	}
+	
+	public void setAttackPossible(boolean attackPossible) {
+		this.attackIsPossible = attackPossible;
 	}
 	
 	public CardEntity getCard() {

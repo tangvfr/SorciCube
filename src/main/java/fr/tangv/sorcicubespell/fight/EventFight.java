@@ -28,6 +28,7 @@ import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
+import fr.tangv.sorcicubespell.util.ItemHead;
 import fr.tangv.sorcicubespell.util.RenderException;
 import io.netty.util.internal.ConcurrentSet;
 
@@ -89,18 +90,45 @@ public class EventFight implements Listener {
 				//reset head view if possible
 				player.setCardSelect(-1);
 				player.openInvHistoric();
+				if (player.canPlay()) {
+					player.setEntityAttack(null);
+					player.showEntityAttackPossible();
+				}
 			} else {
 				Block block = player.getPlayer().getTargetBlock(materialTransparent, 50);
 				if (block != null) {
 					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
 					if (cible != null) {
-						
-						if (player.getCardSelect() != -1) {
+						if (player.getCardSelect() == -1) {
+							if (player.hasEntityAttack()) {
+								Card card = player.getEntityAttack().getCard().getCard();
+								FightHead head = player.getForCible(cible);
+								if (player.testHeadValidForCard(card, head)) {
+									player.getEntityAttack().setAttackPossible(false);
+									player.setEntityAttack(null);
+									player.showEntityAttackPossible();
+									//start action fight entity
+									
+									//end action fight entity
+								}
+							} else {
+								if (!cible.isHero() && cible.isAlly()) {
+									FightEntity entity = (FightEntity) player.getForCible(cible);
+									if (entity.attackIsPossible()) {
+										Card card = entity.getCard().getCard();
+										player.initHeadForCard(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
+									}
+									player.setEntityAttack(entity);
+									entity.showHead(ItemHead.SELECTED_ENTITY);
+								}
+							}
+						} else {
+							//start card actions
 							Card card = player.getCardHand(player.getCardSelect());
 							if (player.hasMana(card.getMana())) {
 								if (card.getType() == CardType.ENTITY) {
 									//entity
-									if (FightCible.listForCardCible(CardCible.ALL_ENTITY_ALLY).contains(cible)) {
+									if (!cible.isHero() && cible.isAlly()) {
 										FightEntity entity = (FightEntity) player.getForCible(cible);
 										if (!entity.isSelectable()) {
 											try {
@@ -116,12 +144,7 @@ public class EventFight implements Listener {
 									}
 								} else {
 									FightHead head = player.getForCible(cible);
-									if (player.testFightHeadForCard(card, new ResultFightHead() {
-										@Override
-										public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-											return fightHeads.contains(head) && (incitement ? head.hasIncitement() : true);
-										}
-									})) {
+									if (player.testHeadValidForCard(card, head)) {
 										player.removeMana(card.getMana());
 										FightSpell.startActionSpell(player, card.getFeatures(), head);
 										player.setCardHand(player.getCardSelect(), null);
@@ -133,6 +156,7 @@ public class EventFight implements Listener {
 								player.getPlayer().sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
 							}
 						}
+						//end cards action
 					}
 				}
 			}

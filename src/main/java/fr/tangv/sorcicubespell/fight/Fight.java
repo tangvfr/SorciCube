@@ -139,10 +139,6 @@ public class Fight {
 				bossBar.setProgress(cooldownRound.getProgess());
 				this.updatePlayer(player1);
 				this.updatePlayer(player2);
-				//for test
-				if (round >= 4)
-					end(player1.getPlayer());
-				//end for test
 			}
 		} else {
 			bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
@@ -296,9 +292,10 @@ public class Fight {
 		//init inv
 		player.initHotBar();
 		player.getEnemie().initHotBar();
-		//for test
-		player1.setHealth(player1.getHealth()-4);
-		//end for test
+		//init view
+		player.setEntityAttack(null);
+		player.resetEntityAttackPossible();
+		player.showEntityAttackPossible();
 	}
 	
 	//for end
