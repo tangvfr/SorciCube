@@ -3,12 +3,9 @@ package fr.tangv.sorcicubespell.fight;
 import fr.tangv.sorcicubespell.card.CardFaction;
 
 public class FightHero extends FightHead {
-
-	private PlayerFight player;
 	
-	public FightHero(PlayerFight player) {
-		super(player.getFight(), player.getLocBase());
-		this.player = player;
+	public FightHero(PlayerFight owner) {
+		super(owner, owner.getLocBase());
 		this.updateStat();
 	}
 	
@@ -25,37 +22,39 @@ public class FightHero extends FightHead {
 	@Override
 	public void updateStat() {
 		String mana;
-		if (player.canPlay())
-			mana = Integer.toString(player.getMana());
+		if (owner.canPlay())
+			mana = Integer.toString(owner.getMana());
 		else {
-			int value = player.getManaBoost();
+			int value = owner.getManaBoost();
 			if (value < 0)
-				mana = Integer.toString(player.getMana());
+				mana = Integer.toString(owner.getMana());
 			else if (value > 0)
-				mana = "+"+Integer.toString(player.getMana());
+				mana = "+"+Integer.toString(owner.getMana());
 			else
 				mana = "0";
 		}
-		this.setName("§c"+player.getHealth()+" \u2665 §b"+mana+" \u2756");
+		this.setName("§c"+owner.getHealth()+" \u2665 §b"+mana+" \u2756");
 	}
 	
 	@Override
 	public void setHealth(int health) {
-		player.setHealth(health);
+		owner.setHealth(health);
 	}
 
 	@Override
 	public int getHealth() {
-		return player.getHealth();
+		return owner.getHealth();
 	}
 
 	@Override
 	public boolean hasIncitement() {
 		return false;
 	}
-	
-	public PlayerFight getPlayer() {
-		return player;
+
+	@Override
+	public int damage(int damage) {
+		setHealth(getHealth()-damage);
+		return 0;
 	}
 
 }

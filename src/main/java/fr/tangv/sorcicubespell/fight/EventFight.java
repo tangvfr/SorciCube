@@ -100,13 +100,14 @@ public class EventFight implements Listener {
 								Card card = player.getEntityAttack().getCard().getCard();
 								FightHead head = player.getForCible(cible);
 								if (player.testHeadValidForCard(card, head)) {
-									player.getEntityAttack().setAttackPossible(false);
+									FightEntity entity = player.getEntityAttack();
+									entity.setAttackPossible(false);
 									player.setEntityAttack(null);
 									player.showEntityAttackPossible();
 									//start action fight entity
-									
-										/*insert code here*/
-									
+									int cAttack = head.damage(entity.getAttack());
+									if (cAttack != 0)
+										entity.damage(cAttack);
 									//end action fight entity
 								}
 							} else {

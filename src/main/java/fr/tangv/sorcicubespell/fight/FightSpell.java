@@ -112,10 +112,43 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.IMMOBILIZATION, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
-				
+				//nothing
 			}
 		});
-		actionsSpells.put(CardFeatureType.IF_HURT, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.STUNNED, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
+				//nothing
+			}
+		});
+		actionsSpells.put(CardFeatureType.IF_ATTACKED_EXEC_ONE, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				if (cardFeature != null) {
+					
+				}
+			}
+		});
+		actionsSpells.put(CardFeatureType.IF_ATTACKED_EXEC, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				if (cardFeature != null) {
+					
+				}
+			}
+		});
+		actionsSpells.put(CardFeatureType.IF_ATTACKED_GIVE_ONE, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				if (cardFeature != null) {
+					
+				}
+			}
+		});
+		actionsSpells.put(CardFeatureType.IF_ATTACKED_GIVE, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> head) {
 				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));

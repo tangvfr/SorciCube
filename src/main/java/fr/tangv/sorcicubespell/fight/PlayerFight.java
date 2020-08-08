@@ -88,9 +88,15 @@ public class PlayerFight {
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
 	}
 	
+	public void nextRoundFightEntity() {
+		for (FightEntity entity : entity)
+			if(!entity.isDead())
+				entity.getCard().nextRound();
+	}
+	
 	public void resetEntityAttackPossible() {
 		for (FightEntity entity : entity)
-			entity.setAttackPossible(!entity.isDead());
+			entity.setAttackPossible(!entity.isDead() && !(entity.getCard().isImmobilization() || entity.getCard().isStunned()));
 	}
 	
 	public void showEntityAttackPossible() {
@@ -115,7 +121,7 @@ public class PlayerFight {
 	public void initFightHead() {
 		this.entity = new FightEntity[entityLoc.length];
 		for (int i = 0; i < entityLoc.length; i++)
-			this.entity[i] = new FightEntity(fight, entityLoc[i]);
+			this.entity[i] = new FightEntity(this, entityLoc[i]);
 		this.hero = new FightHero(this);
 	}
 	

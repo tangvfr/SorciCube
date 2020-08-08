@@ -33,8 +33,8 @@ public class FightEntity extends FightHead {
 	private boolean isSend;
 	private boolean attackIsPossible;
 	
-	public FightEntity(Fight fight, Location loc) {
-		super(fight, loc);
+	public FightEntity(PlayerFight owner, Location loc) {
+		super(owner, loc);
 		this.card = null;
 		this.uuid = UUID.randomUUID();
 		this.skin = null;
@@ -134,6 +134,14 @@ public class FightEntity extends FightHead {
 			this.setStat(CardRender.renderStatCard(card.getCard()));
 	}
 
+	@Override
+	public int damage(int damage) {
+		int cAttack = card.isStunned() ? 0 : card.getAttack();
+		if (!card.isInvulnerability())
+			setHealth(getHealth()-damage);
+		return cAttack;
+	}
+	
 	@Override
 	public void setHealth(int health) {
 		card.setHealth(health);

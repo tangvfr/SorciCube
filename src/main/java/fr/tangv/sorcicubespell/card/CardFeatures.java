@@ -23,16 +23,16 @@ public class CardFeatures {
 		return this.features.get(type);
 	}
 	
-	public CardFeature putFeature(CardFeature feature) {
-		return this.features.put(feature.getType(), feature);
+	public void putFeature(CardFeature feature) {
+		this.features.put(feature.getType(), feature);
 	}
 	
-	public CardFeature removeFeature(CardFeature feature) {
-		return this.features.remove(feature.getType());
+	public void removeFeature(CardFeature feature) {
+		removeFeature(feature.getType());
 	}
 	
-	public CardFeature removeFeature(CardFeatureType type) {
-		return this.features.remove(type);
+	public void removeFeature(CardFeatureType type) {
+		this.features.remove(type);
 	}
 	
 	public Collection<CardFeature> valueFeatures() {
@@ -62,21 +62,11 @@ public class CardFeatures {
 				if (key.equals("version"))
 					continue;
 				CardFeatureType type = CardFeatureType.valueOf(key);
-				features.putFeature(CardFeature.toCartFeature(type, document.get(key, Document.class)));
+				if (type != null)
+					features.putFeature(CardFeature.toCartFeature(type, document.get(key, Document.class)));
 			}
 			if (features.hasFeature(CardFeatureType.SKIN))
 				features.warning = features.getFeature(CardFeatureType.SKIN).getValue().asSkin().isLastVersion();
-		} else {
-			for (String key : document.keySet()) {
-				Document docCard = document.get(key, Document.class);
-				CardFeature feature = new CardFeature(
-								CardFeatureType.valueOf(docCard.getString("type")),
-								CardValue.toCartValue(docCard.get("value", Document.class))
-							);
-				if (!features.hasFeature(feature.getType()))
-					features.putFeature(feature);
-			}
-			features.warning = true;
 		}
 		return features;
 	}

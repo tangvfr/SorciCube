@@ -42,6 +42,37 @@ public class CardEntity {
 		this.attack.setValue(new CardValue(attack));
 	}
 	
+	
+	public boolean isInvulnerability() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.INVULNERABILITY);
+	}
+	
+	public boolean isImmobilization() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.IMMOBILIZATION);
+	}
+	
+	public boolean isStunned() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.STUNNED);
+	}
+	
+	public void nextRound(CardFeatureType type) {
+		if (card.getFeatures().hasFeature(type)) {
+			CardFeature feature = card.getFeatures().getFeature(type);
+			int value = feature.getValue().asInt();
+			if (value > 0) {
+				feature.setValue(new CardValue(value-1));
+			} else {
+				card.getFeatures().removeFeature(type);
+			}
+		}
+	}
+	
+	public void nextRound() {
+		nextRound(CardFeatureType.INVULNERABILITY);
+		nextRound(CardFeatureType.IMMOBILIZATION);
+		nextRound(CardFeatureType.STUNNED);
+	}
+	
 	public boolean hasSkin() {
 		return skin != null;
 	}

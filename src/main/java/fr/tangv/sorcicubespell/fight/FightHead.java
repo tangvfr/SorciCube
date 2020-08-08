@@ -17,6 +17,7 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
 public abstract class FightHead {
 
+	protected PlayerFight owner;
 	protected Fight fight;
 	protected Location loc;
 	protected WorldServer world;
@@ -24,8 +25,9 @@ public abstract class FightHead {
 	private EntityArmorStand entityHead;
 	private net.minecraft.server.v1_9_R2.ItemStack headItem;
 	
-	public FightHead(Fight fight, Location loc) {
-		this.fight = fight;
+	public FightHead(PlayerFight owner, Location loc) {
+		this.fight = owner.getFight();
+		this.owner = owner;
 		this.loc = loc;
 		//create entity
 		this.world = ((CraftWorld) loc.getWorld()).getHandle();
@@ -86,21 +88,23 @@ public abstract class FightHead {
 		sendHead(entityName, name, true);
 	}
 	
+	public PlayerFight getOwner() {
+		return owner;
+	}
+	
 	public abstract boolean isFaction(CardFaction faction);
 	
 	public abstract boolean isSelectable();
 	
 	public abstract void updateStat();
 	
+	public abstract int damage(int damage);
+	
 	public void addHealth(int health) {
 		setHealth(getHealth()+health);
 	}
 	
-	public void removeHealth(int health) {
-		setHealth(getHealth()-health);
-	}
-	
-	public abstract void setHealth(int health);
+	protected abstract void setHealth(int health);
 	
 	public abstract int getHealth();
 	

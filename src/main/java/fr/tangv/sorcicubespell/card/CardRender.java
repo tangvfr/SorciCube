@@ -12,18 +12,27 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 public class CardRender {
 
 	private static String featureToString(SorciCubeSpell sorci, CardFeature feature) {
-		if (feature.getType() == CardFeatureType.INVOCATION ||
-				feature.getType() == CardFeatureType.ACTION_DEAD ||
-				feature.getType() == CardFeatureType.ACTION_SPAWN ||
-				feature.getType() == CardFeatureType.METAMORPH_TO ||
-				feature.getType() == CardFeatureType.GIVE_FEATURE_CART ||
-				feature.getType() == CardFeatureType.IF_HURT) {
+		CardFeatureType featureType = feature.getType();
+		if (featureType == CardFeatureType.INVOCATION ||
+				featureType == CardFeatureType.ACTION_DEAD ||
+				featureType == CardFeatureType.ACTION_SPAWN ||
+				featureType == CardFeatureType.METAMORPH_TO ||
+				featureType == CardFeatureType.GIVE_FEATURE_CART ||
+				featureType == CardFeatureType.IF_ATTACKED_EXEC_ONE ||
+				featureType == CardFeatureType.IF_ATTACKED_EXEC ||
+				featureType == CardFeatureType.IF_ATTACKED_GIVE_ONE ||
+				featureType == CardFeatureType.IF_ATTACKED_GIVE) {
 			UUID uuid = UUID.fromString(feature.getValue().asString());
 			Card card = sorci.getManagerCards().getCard(uuid);
 			if (card != null) {
 				return card.getName()+(card.getType() == CardType.ENTITY ? " "+renderStatCard(card) : "");
 			} else
 				return "nothing";
+		} else if ((featureType == CardFeatureType.BOOST_DAMAGE
+				|| featureType == CardFeatureType.BOOST_HEALTH
+				|| featureType == CardFeatureType.BOOST_MANA)
+			&& feature.getValue().asInt() < 0) {
+			return Integer.toString(-feature.getValue().asInt());
 		} else
 			return feature.getValue().toString();
 	}
