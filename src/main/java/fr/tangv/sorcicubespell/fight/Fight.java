@@ -283,7 +283,6 @@ public class Fight {
 		//enemie
 		player.getEnemie().setMana(0);
 		player.getEnemie().setCardSelect(-1);
-		//and reset cible (entity head)
 		//message
 		sendTitleToTwoPlayer(
 				sorci.getMessage().getString("message_round")
