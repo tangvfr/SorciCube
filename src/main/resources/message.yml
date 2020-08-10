@@ -17,3 +17,5 @@ message_wait_fight: "§aVous venez de rentrer dans la file d'attente pour combat
 message_leave_fight: "§cVous venez de quitté la file d'attente pour combatre !"
 message_round: "§5Round {round} !"
 message_mana_insufficient: "Vous n'avez pas assez de mana !"
+message_winner: "§2Tu as gagnier !"
+message_losser: "§4Tu as perdu !"

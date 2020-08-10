@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubespell.card.CardFaction;
 
 public enum FightCible {
 
@@ -40,17 +41,19 @@ public enum FightCible {
 	//static lists
 	
 	private static ConcurrentHashMap<CardCible, Vector<FightCible>> lists;
+	private static Vector<FightCible> allEntityAlly;
+	private static Vector<FightCible> allEntityEnemie;
 	
 	static {
 		lists = new ConcurrentHashMap<CardCible, Vector<FightCible>>();
-		Vector<FightCible> allEntityAlly = new Vector<FightCible>(Arrays.asList(
+		allEntityAlly = new Vector<FightCible>(Arrays.asList(
 				FightCible.ENTITY_1_ALLY,
 				FightCible.ENTITY_2_ALLY,
 				FightCible.ENTITY_3_ALLY,
 				FightCible.ENTITY_4_ALLY,
 				FightCible.ENTITY_5_ALLY
 			));
-		Vector<FightCible> allEntityEnemie = new Vector<FightCible>(Arrays.asList(
+		allEntityEnemie = new Vector<FightCible>(Arrays.asList(
 				FightCible.ENTITY_1_ALLY,
 				FightCible.ENTITY_2_ALLY,
 				FightCible.ENTITY_3_ALLY,
@@ -149,6 +152,36 @@ public enum FightCible {
 	
 	public static Vector<FightCible> listForCardCible(CardCible cible) {
 		return lists.get(cible);
+	}
+	
+	private static Vector<FightHead> listForCibles(PlayerFight player, Vector<FightCible> cibles, CardFaction faction) {
+		Vector<FightHead> list = new Vector<FightHead>();
+		for (FightHead head : player.getForCibles(cibles))
+			if (head.isFaction(faction))
+				list.add(head);
+		return list;
+	}
+	
+	private static void addRandomInList(Vector<FightHead> listIn, Vector<FightHead> listOut) {
+		if (listIn.size() > 0)
+			listOut.add(listIn.get((int) (Math.random()*listIn.size())));
+	}
+	
+	public static Vector<FightHead> randomFightHeadsForCible(PlayerFight player, CardCible cible, CardFaction faction) {
+		if (cible == CardCible.NONE)
+			return new Vector<FightHead>();
+		Vector<FightHead> list = listForCibles(player, lists.get(cible), faction);
+		if (cible.hasChoose() && list.size() > 0) {
+			Vector<FightHead> cibles = new Vector<FightHead>();
+			if (cible == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE) {
+				addRandomInList(listForCibles(player, allEntityAlly, faction), cibles);
+				addRandomInList(listForCibles(player, allEntityEnemie, faction), cibles);
+			} else {
+				addRandomInList(list, cibles);
+			}
+			return cibles;
+		} else
+			return list;
 	}
 	
 }

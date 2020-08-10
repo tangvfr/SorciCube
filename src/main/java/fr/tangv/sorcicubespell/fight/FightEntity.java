@@ -10,13 +10,16 @@ import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
+import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardSkin;
 import fr.tangv.sorcicubespell.util.RenderException;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntity;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
@@ -32,6 +35,7 @@ public class FightEntity extends FightHead {
 	private CardSkin skin;
 	private boolean isSend;
 	private boolean attackIsPossible;
+	private boolean attacked;
 	
 	public FightEntity(PlayerFight owner, Location loc) {
 		super(owner, loc);
@@ -43,6 +47,7 @@ public class FightEntity extends FightHead {
 		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw()/2, loc.getPitch()/2);
 		this.isSend = false;
 		this.attackIsPossible = false;
+		this.attacked = false;
 	}
 	
 	private void removePlayer() {
@@ -84,6 +89,7 @@ public class FightEntity extends FightHead {
 		changeProfil(stat);
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
+		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutEntityLook(entityPlayer.getId(), (byte) ((loc.getYaw()*256F)/360F), (byte) ((loc.getPitch()*256F)/360F), false));
 		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
 		this.isSend = true;
 	}
@@ -98,6 +104,7 @@ public class FightEntity extends FightHead {
 			this.setName(card.getName());
 			this.hideHead();
 			this.updateStat();
+			this.spawn();
 		}
 	}
 	
@@ -111,6 +118,10 @@ public class FightEntity extends FightHead {
 	
 	public CardEntity getCard() {
 		return card;
+	}
+	
+	public boolean isAlreadyAttacked() {
+		return attacked;
 	}
 	
 	@Override
@@ -137,6 +148,17 @@ public class FightEntity extends FightHead {
 	@Override
 	public int damage(int damage) {
 		int cAttack = card.isStunned() ? 0 : card.getAttack();
+		if (this.card.hasIfAE())
+			actionedCard(card.getIfAE(owner.getFight().getSorci()));
+		if (this.card.hasIfAG())
+			giveCard(card.getIfAG(owner.getFight().getSorci()));
+		if (!this.attacked) {
+			this.attacked = true;
+			if (this.card.hasIfAEO())
+				actionedCard(card.getIfAEO(owner.getFight().getSorci()));
+			if (this.card.hasIfAGO())
+				giveCard(card.getIfAGO(owner.getFight().getSorci()));
+		}
 		if (!card.isInvulnerability())
 			setHealth(getHealth()-damage);
 		return cAttack;
@@ -154,6 +176,10 @@ public class FightEntity extends FightHead {
 		return card.getHealth();
 	}
 	
+	public void addAttack(int attack) {
+		setAttack(getAttack()+attack);
+	}
+	
 	public void setAttack(int attack) {
 		if (attack < 0)
 			attack = 0;
@@ -168,8 +194,25 @@ public class FightEntity extends FightHead {
 		return this.card == null;
 	}
 	
+	private void actionedCard(Card card) {
+		FightSpell.startActionSpell(owner, card.getFeatures(), 
+				FightCible.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction()));
+	}
+	
+	private void giveCard(CardFeature feature) {
+		FightSpell.startActionFeature(owner, feature, this);
+	}
+	
 	public void dead() {
+		if (!isDead() && card.hasActionDead())
+			actionedCard(card.getActionDead(owner.getFight().getSorci()));
 		this.setCard(null);
+	}
+	
+	private void spawn() {
+		this.attacked = false;
+		if (this.card.hasActionSpawn())
+			actionedCard(card.getActionSpawn(owner.getFight().getSorci()));
 	}
 
 	@Override

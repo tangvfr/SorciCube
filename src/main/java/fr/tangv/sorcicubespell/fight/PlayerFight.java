@@ -1,6 +1,8 @@
 package fr.tangv.sorcicubespell.fight;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Vector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,10 +58,7 @@ public class PlayerFight {
 	private Location[] entityLoc;
 	private Card[] cardHand;
 	private ItemStack itemNextRound;
-	//private Vector<Card> Spell
 	private FightEntity entityAttack;
-	//private listEntity AttackPossible
-	//private Choose prio for spell
 	
 	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first) {
 		this.fight = fight;
@@ -205,6 +204,13 @@ public class PlayerFight {
 		enemie.getEntity(3).hideHead();
 		enemie.getEntity(4).hideHead();
 		enemie.getHero().hideHead();
+	}
+	
+	public Vector<FightHead> getForCibles(Collection<FightCible> cibles) {
+		Vector<FightHead> heads = new Vector<FightHead>();
+		for (FightCible cible : cibles)
+			heads.add(getForCible(cible));
+		return heads;
 	}
 	
 	public FightHead getForCible(FightCible cible) {

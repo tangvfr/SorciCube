@@ -317,12 +317,12 @@ public class Fight {
 		bossBar.setProgress(cooldown.getProgess());
 		this.isEnd = true;
 		if (losser.isOnline()) {
-			alertPlayer(losser, "Losser");//replace by title and chat
+			alertPlayer(losser, sorci.getMessage().getString("message_losser"));
 			losser.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 					new TextComponent(""));
 		}
 		if (winner.isOnline()) {
-			alertPlayer(winner, "Winner");//replace by title and chat
+			alertPlayer(winner, sorci.getMessage().getString("message_winner"));
 			winner.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
 					new TextComponent(""));
 		}

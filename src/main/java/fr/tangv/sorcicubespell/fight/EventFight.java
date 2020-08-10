@@ -91,7 +91,7 @@ public class EventFight implements Listener {
 					player.showEntityAttackPossible();
 				}
 			} else {
-				Block block = player.getPlayer().getTargetBlock(materialTransparent, 50);
+				Block block = player.getPlayer().getTargetBlock(materialTransparent, 100);
 				if (block != null) {
 					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
 					if (cible != null) {

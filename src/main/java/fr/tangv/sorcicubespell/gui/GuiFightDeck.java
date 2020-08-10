@@ -50,7 +50,7 @@ public class GuiFightDeck extends GuiDecks {
 						}
 						
 					case DUEL:
-						//add after
+						//add after and add anti afk
 						break;
 				}
 				Location loc = sorci.getManagerCreatorFight().getLocationFor(player);

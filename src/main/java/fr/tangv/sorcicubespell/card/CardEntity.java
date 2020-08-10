@@ -1,11 +1,12 @@
 package fr.tangv.sorcicubespell.card;
 
+import java.util.UUID;
+
+import fr.tangv.sorcicubespell.SorciCubeSpell;
+
 public class CardEntity {
 
 	private Card card;
-	private CardFeature health;
-	private CardFeature attack;
-	private boolean hasIncitement;
 	private CardSkin skin;
 	
 	public CardEntity(Card card) throws Exception {
@@ -16,10 +17,6 @@ public class CardEntity {
 		this.skin = features.hasFeature(CardFeatureType.SKIN) ?
 				features.getFeature(CardFeatureType.SKIN).getValue().asSkin()
 				: null;
-				
-		this.health = features.getFeature(CardFeatureType.HEALTH);
-		this.attack = features.getFeature(CardFeatureType.DAMAGE);
-		this.hasIncitement = features.hasFeature(CardFeatureType.INCITEMENT);
 	}
 	
 	public String getName() {
@@ -27,21 +24,76 @@ public class CardEntity {
 	}
 	
 	public int getHealth() {
-		return this.health.getValue().asInt();
+		return this.card.getFeatures().getFeature(CardFeatureType.HEALTH).getValue().asInt();
 	}
 	
 	public int getAttack() {
-		return this.attack.getValue().asInt();
+		return this.card.getFeatures().getFeature(CardFeatureType.DAMAGE).getValue().asInt();
 	}
 	
 	public void setHealth(int health) {
-		this.health.setValue(new CardValue(health));
+		this.card.getFeatures().getFeature(CardFeatureType.HEALTH).setValue(new CardValue(health));
 	}
 	
 	public void setAttack(int attack) {
-		this.attack.setValue(new CardValue(attack));
+		this.card.getFeatures().getFeature(CardFeatureType.DAMAGE).setValue(new CardValue(attack));
 	}
 	
+	private Card featureToCard(SorciCubeSpell sorci, CardFeature feature) {
+		return sorci.getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+	}
+	
+	private CardFeature featureToGiveCardFeature(SorciCubeSpell sorci, CardFeature feature) {
+		return new CardFeature(CardFeatureType.GIVE_FEATURE_CART, feature.getValue());
+	}
+	
+	public boolean hasIfAEO() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.IF_ATTACKED_EXEC_ONE);
+	}
+	
+	public boolean hasIfAE() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.IF_ATTACKED_EXEC);
+	}
+	
+	public boolean hasIfAGO() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.IF_ATTACKED_GIVE_ONE);
+	}
+	
+	public boolean hasIfAG() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.IF_ATTACKED_GIVE);
+	}
+	
+	public Card getIfAEO(SorciCubeSpell sorci) {
+		return featureToCard(sorci, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC_ONE));
+	}
+	
+	public Card getIfAE(SorciCubeSpell sorci) {
+		return featureToCard(sorci, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC));
+	}
+	
+	public CardFeature getIfAGO(SorciCubeSpell sorci) {
+		return featureToGiveCardFeature(sorci, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_GIVE_ONE));
+	}
+	
+	public CardFeature getIfAG(SorciCubeSpell sorci) {
+		return featureToGiveCardFeature(sorci, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_GIVE));
+	}
+
+	public boolean hasActionSpawn() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.ACTION_SPAWN);
+	}
+	
+	public boolean hasActionDead() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.ACTION_DEAD);
+	}
+	
+	public Card getActionSpawn(SorciCubeSpell sorci) {
+		return featureToCard(sorci, card.getFeatures().getFeature(CardFeatureType.ACTION_SPAWN));
+	}
+	
+	public Card getActionDead(SorciCubeSpell sorci) {
+		return featureToCard(sorci, card.getFeatures().getFeature(CardFeatureType.ACTION_DEAD));
+	}
 	
 	public boolean isInvulnerability() {
 		return this.card.getFeatures().hasFeature(CardFeatureType.INVULNERABILITY);
@@ -78,7 +130,7 @@ public class CardEntity {
 	}
 	
 	public boolean hasIncitement() {
-		return hasIncitement;
+		return this.card.getFeatures().hasFeature(CardFeatureType.INCITEMENT);
 	}
 	
 	public CardSkin getSkin() {
