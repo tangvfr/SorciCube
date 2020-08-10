@@ -26,8 +26,8 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
 public class Fight {
 
 	protected final int max_mana;
-	protected final int max_health;
-	protected final int start_health;
+	protected static final int max_health = 60;
+	protected static final int start_health = 30;
 	private final SorciCubeSpell sorci;
 	private final FightType fightType;
 	private final PlayerFight player1;
@@ -51,8 +51,6 @@ public class Fight {
 	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2Arg) throws Exception {
 		this.sorci = sorci;
 		this.max_mana = sorci.getParameter().getInt("max_mana");
-		this.max_health = sorci.getParameter().getInt("max_health");
-		this.start_health = sorci.getParameter().getInt("start_health");
 		this.firstPlay = true;
 		this.isStart = false;
 		this.isDeleted = false;

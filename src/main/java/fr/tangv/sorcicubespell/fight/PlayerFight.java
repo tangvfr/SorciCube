@@ -66,7 +66,7 @@ public class PlayerFight {
 		this.deck = deck;
 		this.mana = 0;
 		this.manaBoost = 0;
-		this.health = fight.start_health;
+		this.health = Fight.start_health;
 		this.cardSelected = -1;
 		this.first = first;
 		this.entityAttack = null;
@@ -326,8 +326,8 @@ public class PlayerFight {
 		if (health <= 0) {
 			this.health = 0;
 			fight.end(player);
-		} else if (health > fight.max_health) 
-			this.health = fight.max_health;
+		} else if (health > Fight.max_health) 
+			this.health = Fight.max_health;
 		else
 			this.health = health;
 		updateViewLifes();
