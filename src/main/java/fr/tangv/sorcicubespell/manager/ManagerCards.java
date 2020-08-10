@@ -17,10 +17,10 @@ public class ManagerCards {
 	
 	public ManagerCards(MongoDBManager manager) {
 		this.cardsCol = manager.getCards();
-		refrech();
+		refresh();
 	}
 	
-	public void refrech() {
+	public void refresh() {
 		this.cards = new ConcurrentHashMap<UUID, Card>();
 		for (Document doc : cardsCol.find()) {
 			Card card = Card.toCard(doc);

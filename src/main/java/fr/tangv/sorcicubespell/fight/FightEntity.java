@@ -144,11 +144,11 @@ public class FightEntity extends FightHead {
 		if (!isDead()) {
 			String string = CardRender.renderStatCard(card.getCard());
 			if (card.isImmobilization())
-				string += " §b\u2744";
+				string += "  §b\u2744";
 			if (card.isStunned())
-				string += " §6\u0040";
+				string += "  §6\u0040";
 			if (card.isInvulnerability())
-				string += " §d\u267e";
+				string += "  §d\u267e";
 			this.setStat(string);
 		}
 	}

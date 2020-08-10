@@ -22,6 +22,7 @@ import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
 import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.manager.ManagerPreFightData;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
+import fr.tangv.sorcicubespell.refresh.CommandRefresh;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
 import fr.tangv.sorcicubespell.util.LibLoader;
@@ -84,6 +85,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.managerFight = new ManagerFight(this);
 			}
 			new ManagerSecurity(this);
+			getCommand("refresh").setExecutor(new CommandRefresh(this));
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);
