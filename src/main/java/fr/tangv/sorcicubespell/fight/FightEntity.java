@@ -141,8 +141,16 @@ public class FightEntity extends FightHead {
 
 	@Override
 	public void updateStat() {
-		if (!isDead())
-			this.setStat(CardRender.renderStatCard(card.getCard()));
+		if (!isDead()) {
+			String string = CardRender.renderStatCard(card.getCard());
+			if (card.isImmobilization())
+				string += " §b\u2744";
+			if (card.isStunned())
+				string += " §6\u0040";
+			if (card.isInvulnerability())
+				string += " §d\u267e";
+			this.setStat(string);
+		}
 	}
 
 	@Override
@@ -169,6 +177,7 @@ public class FightEntity extends FightHead {
 		card.setHealth(health);
 		if (health <= 0)
 			this.dead();
+		updateStat();
 	}
 
 	@Override
@@ -184,6 +193,7 @@ public class FightEntity extends FightHead {
 		if (attack < 0)
 			attack = 0;
 		card.setAttack(attack);
+		updateStat();
 	}
 	
 	public int getAttack() {

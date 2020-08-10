@@ -270,6 +270,7 @@ public class FightSpell {
 										features.removeFeature(feat.getType());
 									features.putFeature(feature);
 								}
+								entity.updateStat();
 							}
 						}
 				}
