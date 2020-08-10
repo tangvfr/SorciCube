@@ -43,8 +43,11 @@ public class CardRender {
 	
 	public static String renderStatCard(Card card) {
 		CardFeatures features = card.getFeatures();
-		return "§e"+features.getFeature(CardFeatureType.DAMAGE).getValue().toString()+" \u2694"
+		String string = "§e"+features.getFeature(CardFeatureType.DAMAGE).getValue().toString()+" \u2694"
 				+"  §c"+features.getFeature(CardFeatureType.HEALTH).getValue().toString()+" \u2665";
+		if (features.hasFeature(CardFeatureType.INCITEMENT))
+			string += "  §7\u2617";
+		return string;
 	}
 	
 	public static String renderManaCard(Card card) {

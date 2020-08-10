@@ -29,6 +29,10 @@ public class CardFeature {
 		this.value = value;
 	}
 
+	public CardFeature clone() {
+		return toCartFeature(type, toDocument());
+	}
+	
 	public Document toDocument() {
 		return value.toDocument();
 	}

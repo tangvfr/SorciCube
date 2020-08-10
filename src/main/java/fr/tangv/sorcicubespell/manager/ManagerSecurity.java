@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 
@@ -30,6 +31,12 @@ public class ManagerSecurity implements Listener {
 	@EventHandler
 	public void onExplosion(BlockExplodeEvent e) {
 		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent e) {
+		if (!isAuto(e.getPlayer()))
+			e.setCancelled(true);
 	}
 	
 	@EventHandler

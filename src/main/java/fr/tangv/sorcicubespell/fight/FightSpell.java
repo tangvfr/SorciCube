@@ -98,26 +98,71 @@ public class FightSpell {
 		});
 		actionsSpells.put(CardFeatureType.BOOST_MANA, new ActionSpell() {
 			@Override
-			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				
+			public void actionSpell(PlayerFight p, CardFeature feature, Collection<FightHead> heads) {
+				int mana = feature.getValue().asInt();
+				for (FightHead head : heads)
+					if (head instanceof FightHero) {
+						PlayerFight player = head.getOwner();
+						if (player.canPlay())
+							player.addMana(mana);
+						else
+							player.addManaBoost(mana);
+					} else {
+						((FightEntity) head).getCard().getCard().setMana(mana);
+					}
 			}
 		});
 		actionsSpells.put(CardFeatureType.COPY_CART_ARENA_POSE, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				
+				int number = feature.getValue().asInt();
+				for (FightHead head : heads)
+					if (head instanceof FightEntity) {
+						FightEntity ent = (FightEntity) head;
+						if (!ent.isDead()) {
+							Card card = ent.getCard().getCard();
+							int numberPose = 0;
+							for (int i = 0; i < player.getMaxEntity() && numberPose < number; i++) {
+								FightEntity entity = player.getEntity(i);
+								if (!entity.isSelectable()) {
+									try {
+										entity.setCard(new CardEntity(card));
+									} catch (Exception e1) {
+										Bukkit.getLogger().warning(RenderException.renderException(e1));
+									}
+									numberPose++;
+								}
+							}
+							break;
+						}
+					}
 			}
 		});
 		actionsSpells.put(CardFeatureType.COPY_CART_ARENA, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				
+				for (FightHead head : heads)
+					if (head instanceof FightEntity) {
+						FightEntity entity = (FightEntity) head;
+						if (!entity.isDead()) {
+							player.giveCard(entity.getCard().getCard(), feature.getValue().asInt());
+							break;
+						}
+					}
 			}
 		});
 		actionsSpells.put(CardFeatureType.REMOVE_MANA_HERO, new ActionSpell() {
 			@Override
-			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				
+			public void actionSpell(PlayerFight p, CardFeature feature, Collection<FightHead> heads) {
+				int mana = feature.getValue().asInt();
+				for (FightHead head : heads)
+					if (head instanceof FightHero) {
+						PlayerFight player = head.getOwner();
+						if (player.canPlay())
+							player.removeMana(mana);
+						else
+							player.removeManaBoost(mana);
+					}
 			}
 		});
 		actionsSpells.put(CardFeatureType.INVULNERABILITY, new ActionSpell() {
@@ -215,7 +260,18 @@ public class FightSpell {
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
 				if (cardFeature != null) {
-					
+					for (FightHead head : heads)
+						if (head instanceof FightEntity) {
+							FightEntity entity = (FightEntity) head;
+							if (!entity.isDead()) {
+								CardFeatures features = entity.getCard().getCard().getFeatures();
+								for (CardFeature feat : cardFeature.getFeatures().valueFeatures()) {
+									if (features.hasFeature(feat.getType()))
+										features.removeFeature(feat.getType());
+									features.putFeature(feature);
+								}
+							}
+						}
 				}
 			}
 		});

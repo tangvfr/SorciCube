@@ -139,6 +139,19 @@ public class PlayerFight {
 		return numberPick;
 	}
 	
+	public int giveCard(Card card, int number) {
+		int numberPick = 0;
+		for (int i = 0; i < getMaxCardHand(); i++) {
+			if (numberPick >= number)
+				break;
+			if (getCardHand(i) == null) {
+				setCardHand(i, card.clone());
+				numberPick += 1;
+			}
+		}
+		return numberPick;
+	}
+	
 	public void openInvHistoric() {
 		player.openInventory(invHistoric);
 	}
