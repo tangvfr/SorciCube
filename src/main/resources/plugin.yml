@@ -2,7 +2,7 @@ name: SorciCubeSpell
 prefix: SorciCubeSpell
 softdepend: ["LuckPerms", "Multiverse-Core"]
 description: "This is an plugin to implement the spell of server SorciCube."
-version: 0.0.8.3-SNAPSHOT
+version: 0.0.8.4
 api-version: 1.9.4
 author: Tangv
 website: www.tangv.fr
