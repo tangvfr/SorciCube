@@ -207,7 +207,6 @@ public class EventFight implements Listener {
 							default:
 								break;
 						}
-					player.getPlayer().sendMessage("Click raw: "+e.getRawSlot());
 				}
 			} else {
 				player.openInvHistoric();

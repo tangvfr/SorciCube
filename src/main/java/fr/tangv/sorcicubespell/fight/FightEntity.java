@@ -105,6 +105,8 @@ public class FightEntity extends FightHead {
 			this.hideHead();
 			this.updateStat();
 			this.spawn();
+		} else {
+			this.setName("");
 		}
 	}
 	
@@ -155,21 +157,24 @@ public class FightEntity extends FightHead {
 
 	@Override
 	public int damage(int damage) {
-		int cAttack = card.isStunned() ? 0 : card.getAttack();
-		if (this.card.hasIfAE())
-			actionedCard(card.getIfAE(owner.getFight().getSorci()));
-		if (this.card.hasIfAG())
-			giveCard(card.getIfAG(owner.getFight().getSorci()));
-		if (!this.attacked) {
-			this.attacked = true;
-			if (this.card.hasIfAEO())
-				actionedCard(card.getIfAEO(owner.getFight().getSorci()));
-			if (this.card.hasIfAGO())
-				giveCard(card.getIfAGO(owner.getFight().getSorci()));
-		}
-		if (!card.isInvulnerability())
-			setHealth(getHealth()-damage);
-		return cAttack;
+		if (!isDead()) {
+			int cAttack = card.isStunned() ? 0 : card.getAttack();
+			if (this.card.hasIfAE())
+				actionedCard(card.getIfAE(owner.getFight().getSorci()));
+			if (this.card.hasIfAG())
+				giveCard(card.getIfAG(owner.getFight().getSorci()));
+			if (!this.attacked) {
+				this.attacked = true;
+				if (this.card.hasIfAEO())
+					actionedCard(card.getIfAEO(owner.getFight().getSorci()));
+				if (this.card.hasIfAGO())
+					giveCard(card.getIfAGO(owner.getFight().getSorci()));
+			}
+			if (!card.isInvulnerability())
+				setHealth(getHealth()-damage);
+			return cAttack;
+		} else
+			return 0;
 	}
 	
 	@Override

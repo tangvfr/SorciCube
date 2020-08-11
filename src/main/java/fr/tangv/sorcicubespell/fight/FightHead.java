@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubespell.fight;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
@@ -66,13 +65,11 @@ public abstract class FightHead {
 	
 	public void rotateHead(float angle) {
 		entityHead.yaw += angle;
-		if (entityHead.yaw > 360.0F)
-			entityHead.yaw -= 360.0F;
+		entityHead.yaw = 360.0F%360.0F;
 		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityHead, (byte) ((entityHead.yaw*256.0F)/360.0F)));
 	}
 	
 	public void showHead(ItemStack item) {
-		Bukkit.broadcastMessage(item.toString());
 		headItem = CraftItemStack.asNMSCopy(item);
 		sendHeadEntity(entityHead);
 	}
@@ -84,6 +81,8 @@ public abstract class FightHead {
 	
 	public void setHead(String head) {
 		sendHead(entityHead, head, true);
+		sendHeadEntity(entityHead);
+		rotateHead(0F);
 	}
 	
 	public void setName(String name) {
