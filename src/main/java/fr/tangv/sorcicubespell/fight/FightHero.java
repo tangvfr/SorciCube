@@ -57,4 +57,9 @@ public class FightHero extends FightHead {
 		return 0;
 	}
 
+	@Override
+	public boolean isDead() {
+		return false;
+	}
+
 }

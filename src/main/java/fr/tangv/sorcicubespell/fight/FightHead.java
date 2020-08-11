@@ -105,6 +105,8 @@ public abstract class FightHead {
 		setHealth(getHealth()+health);
 	}
 	
+	public abstract boolean isDead();
+	
 	protected abstract void setHealth(int health);
 	
 	public abstract int getHealth();

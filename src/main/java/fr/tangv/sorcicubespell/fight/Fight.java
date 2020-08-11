@@ -139,14 +139,16 @@ public class Fight {
 				this.updatePlayer(player2);
 			}
 		} else {
-			bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
-			bossBar.setProgress(cooldown.getProgess());
 			if (cooldown.update()) {
 				if (losser.isOnline())
 					sorci.sendPlayerToServer(losser, sorci.getNameServerLobby());
 				if (winner.isOnline())
 					sorci.sendPlayerToServer(winner, sorci.getNameServerLobby());
 				this.isDeleted = true;
+				Bukkit.broadcastMessage("return player");
+			} else {
+				bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
+				bossBar.setProgress(cooldown.getProgess());
 			}
 		}
 	}

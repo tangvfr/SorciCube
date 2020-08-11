@@ -486,19 +486,21 @@ public class PlayerFight {
 			if (card.getType() == CardType.ENTITY) {
 				initHeadForEntityPose(card);
 			} else {
-				initHeadForCard(card, ItemHead.SELECTABLE_SPELL);
+				showHeadForAttack(card, ItemHead.SELECTABLE_SPELL);
 			}
 		}
 	}
 	
 	public void initHeadForEntityPose(Card card) {
+		hideAllHead();
 		for (FightEntity entity : entity)
 			if (entity.isDead())
 				entity.showHead(ItemHead.SELECTABLE_POSE);
 	}
 		
-	public boolean initHeadForCard(Card card, ItemStack headItem) {
-		return testFightHeadForCard(card, new ResultFightHead() {
+	public boolean showHeadForAttack(Card card, ItemStack headItem) {
+		hideAllHead();
+		return executeFightHeadIsGoodCible(card, new ResultFightHead() {
 			@Override
 			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
 				boolean possible = false;
@@ -519,8 +521,8 @@ public class PlayerFight {
 		});
 	}
 	
-	public boolean testHeadValidForCard(Card card, FightHead head) {
-		return testFightHeadForCard(card, new ResultFightHead() {
+	public boolean testHeadValidForAttack(Card card, FightHead head) {
+		return executeFightHeadIsGoodCible(card, new ResultFightHead() {
 			@Override
 			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
 				return fightHeads.contains(head) && (incitement ? head.hasIncitement() : true);
@@ -528,7 +530,7 @@ public class PlayerFight {
 		});
 	}
 	
-	public boolean testFightHeadForCard(Card card, ResultFightHead resultFightHead) {
+	public boolean executeFightHeadIsGoodCible(Card card, ResultFightHead resultFightHead) {
 		ArrayList<FightHead> fightHeads = new ArrayList<FightHead>();
 		boolean incitement = false;
 		for (FightCible cible : FightCible.listForCardCible(card.getCible())) {

@@ -1,11 +1,14 @@
 package fr.tangv.sorcicubespell.fight;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_9_R2.scoreboard.CraftScoreboard;
+import org.bukkit.event.EventHandler;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -17,6 +20,7 @@ import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardSkin;
 import fr.tangv.sorcicubespell.util.RenderException;
+import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntity;
@@ -25,11 +29,15 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_9_R2.PlayerInteractManager;
+import net.minecraft.server.v1_9_R2.ScoreboardTeam;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
+import net.minecraft.server.v1_9_R2.ScoreboardTeamBase.EnumNameTagVisibility;
+import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardTeam;
 
 public class FightEntity extends FightHead {
 
 	private EntityPlayer entityPlayer;
+	private EntityArmorStand entityStat;
 	private UUID uuid;
 	private CardEntity card;
 	private CardSkin skin;
@@ -48,12 +56,37 @@ public class FightEntity extends FightHead {
 		this.isSend = false;
 		this.attackIsPossible = false;
 		this.attacked = false;
+		this.entityStat = createArmorStand("", -0.2D);
 	}
 	
 	private void removePlayer() {
 		fight.sendPacket(new PacketPlayOutEntityDestroy(entityPlayer.getId()));
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
 		this.isSend = false;
+	}
+	
+	private void spawnPlayer() {
+		try {
+			Field field = entityPlayer.getClass().getSuperclass().getDeclaredField("bS");
+			field.setAccessible(true);
+			field.set(entityPlayer, createProfil(""));
+		} catch (Exception e) {
+			Bukkit.getLogger().warning(RenderException.renderException(e));
+		}
+		//create team
+		ScoreboardTeam team = new ScoreboardTeam(((CraftScoreboard) Bukkit.getScoreboardManager().getMainScoreboard()).getHandle(), "GENE");
+		team.setNameTagVisibility(EnumNameTagVisibility.NEVER);
+		ArrayList<String> playerToAdd = new ArrayList<String>();
+		playerToAdd.add(entityPlayer.getName());
+		//send player
+		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
+		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
+		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutEntityLook(entityPlayer.getId(), (byte) ((loc.getYaw()*256F)/360F), (byte) ((loc.getPitch()*256F)/360F), false));
+		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
+		//send team
+		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
+		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
+		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, playerToAdd, 3));
 	}
 	
 	private GameProfile skinToGameProfil(String name) {
@@ -72,26 +105,9 @@ public class FightEntity extends FightHead {
 		else
 			return new GameProfile(uuid, name);
 	}
-	
-	private void changeProfil(String name) {
-		try {
-			Field field = entityPlayer.getClass().getSuperclass().getDeclaredField("bS");
-			field.setAccessible(true);
-			field.set(entityPlayer, createProfil(name));
-		} catch (Exception e) {
-			Bukkit.getLogger().warning(RenderException.renderException(e));
-		}
-	}
 
 	public void setStat(String stat) {
-		if (this.isSend)
-			removePlayer();
-		changeProfil(stat);
-		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
-		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
-		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutEntityLook(entityPlayer.getId(), (byte) ((loc.getYaw()*256F)/360F), (byte) ((loc.getPitch()*256F)/360F), false));
-		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
-		this.isSend = true;
+		super.sendHead(entityStat, stat, true);
 	}
 	
 	public void setCard(CardEntity card) {
@@ -104,9 +120,11 @@ public class FightEntity extends FightHead {
 			this.setName(card.getName());
 			this.hideHead();
 			this.updateStat();
+			this.spawnPlayer();
 			this.spawn();
 		} else {
 			this.setName("");
+			this.setStat("");
 		}
 	}
 	
@@ -205,6 +223,7 @@ public class FightEntity extends FightHead {
 		return card.getAttack();
 	}
 	
+	@EventHandler
 	public boolean isDead() {
 		return this.card == null;
 	}

@@ -99,7 +99,7 @@ public class EventFight implements Listener {
 							if (player.hasEntityAttack()) {
 								Card card = player.getEntityAttack().getCard().getCard();
 								FightHead head = player.getForCible(cible);
-								if (player.testHeadValidForCard(card, head)) {
+								if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
 									FightEntity entity = player.getEntityAttack();
 									entity.setAttackPossible(false);
 									player.setEntityAttack(null);
@@ -113,12 +113,12 @@ public class EventFight implements Listener {
 							} else {
 								if (!cible.isHero() && cible.isAlly()) {
 									FightEntity entity = (FightEntity) player.getForCible(cible);
-									if (entity.attackIsPossible()) {
+									if (!entity.isDead() && entity.attackIsPossible()) {
 										Card card = entity.getCard().getCard();
-										player.initHeadForCard(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
+										player.showHeadForAttack(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
+										player.setEntityAttack(entity);
+										entity.showHead(ItemHead.SELECTED_ENTITY);
 									}
-									player.setEntityAttack(entity);
-									entity.showHead(ItemHead.SELECTED_ENTITY);
 								}
 							}
 						} else {
@@ -136,6 +136,8 @@ public class EventFight implements Listener {
 												player.setCardHand(player.getCardSelect(), null);
 												player.setCardSelect(-1);
 												player.initHotBar();
+												player.setEntityAttack(null);
+												player.showEntityAttackPossible();
 											} catch (Exception e1) {
 												Bukkit.getLogger().warning(RenderException.renderException(e1));
 											}
@@ -143,12 +145,14 @@ public class EventFight implements Listener {
 									}
 								} else {
 									FightHead head = player.getForCible(cible);
-									if (player.testHeadValidForCard(card, head)) {
+									if (player.testHeadValidForAttack(card, head)) {
 										player.removeMana(card.getMana());
 										FightSpell.startActionSpell(player, card.getFeatures(), head);
 										player.setCardHand(player.getCardSelect(), null);
 										player.setCardSelect(-1);
 										player.initHotBar();
+										player.setEntityAttack(null);
+										player.showEntityAttackPossible();
 									}
 								}
 							} else {
