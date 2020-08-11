@@ -115,7 +115,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	}
 	
 	public String formatTime(long time) {
-		long timeInSec = (time/1000);
+		long timeInSec = (long) Math.ceil(time/1000D);
 		long min = timeInSec/60;
 		long sec = timeInSec%60;
 		String format = "";

@@ -60,94 +60,107 @@ public enum FightCible {
 				FightCible.ENTITY_4_ALLY,
 				FightCible.ENTITY_5_ALLY
 			));
-		Vector<FightCible> list;
-		//------------------------------------
-		list = new Vector<FightCible>();
-		lists.put(CardCible.NONE, list);
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addAll(allEntityAlly);
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE, list);
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ALLY);
-		list.addElement(FightCible.HERO_ENEMIE);
-		lists.put(CardCible.ONE_HERO, list);
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ALLY);
-		list.addElement(FightCible.HERO_ENEMIE);
-		lists.put(CardCible.ALL_HERO, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ALLY);
-		list.addElement(FightCible.HERO_ENEMIE);
-		list.addAll(allEntityAlly);
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ONE, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ENEMIE);
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ONE_ENEMIE, list);
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ONE_ENTITY_ENEMIE, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ENEMIE);
-		lists.put(CardCible.HERO_ENEMIE, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ENEMIE);
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ALL_ENEMIE, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ALL_ENTITY_ENEMIE, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ALLY);
-		list.addAll(allEntityAlly);
-		lists.put(CardCible.ONE_ALLY, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addAll(allEntityAlly);
-		lists.put(CardCible.ONE_ENTITY_ALLY, list);
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ALLY);
-		lists.put(CardCible.HERO_ALLY, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ALLY);
-		list.addAll(allEntityAlly);
-		lists.put(CardCible.ALL_ALLY, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addAll(allEntityAlly);
-		lists.put(CardCible.ALL_ENTITY_ALLY, list); 
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addAll(allEntityAlly);
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ONE_ENTITY, list);
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addAll(allEntityAlly);
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ALL_ENTITY, list);
-		//------------------------------------
-		list = new Vector<FightCible>();
-		list.addElement(FightCible.HERO_ALLY);
-		list.addElement(FightCible.HERO_ENEMIE);
-		list.addAll(allEntityAlly);
-		list.addAll(allEntityEnemie);
-		lists.put(CardCible.ALL, list);
-		//------------------------------------
+		lists.put(CardCible.NONE, new Vector<FightCible>());
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.addAll(allEntityAlly);
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE, list);
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ALLY);
+			list.add(FightCible.HERO_ENEMIE);
+			lists.put(CardCible.ONE_HERO, list);
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ALLY);
+			list.add(FightCible.HERO_ENEMIE);
+			lists.put(CardCible.ALL_HERO, list);
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ALLY);
+			list.add(FightCible.HERO_ENEMIE);
+			list.addAll(allEntityAlly);
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ONE, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ENEMIE);
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ONE_ENEMIE, list);
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ONE_ENTITY_ENEMIE, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ENEMIE);
+			lists.put(CardCible.HERO_ENEMIE, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ENEMIE);
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ALL_ENEMIE, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ALL_ENTITY_ENEMIE, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ALLY);
+			list.addAll(allEntityAlly);
+			lists.put(CardCible.ONE_ALLY, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.addAll(allEntityAlly);
+			lists.put(CardCible.ONE_ENTITY_ALLY, list);
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ALLY);
+			lists.put(CardCible.HERO_ALLY, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ALLY);
+			list.addAll(allEntityAlly);
+			lists.put(CardCible.ALL_ALLY, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.addAll(allEntityAlly);
+			lists.put(CardCible.ALL_ENTITY_ALLY, list); 
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.addAll(allEntityAlly);
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ONE_ENTITY, list);
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.addAll(allEntityAlly);
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ALL_ENTITY, list);
+		}
+		{
+			Vector<FightCible> list = new Vector<FightCible>();
+			list.add(FightCible.HERO_ALLY);
+			list.add(FightCible.HERO_ENEMIE);
+			list.addAll(allEntityAlly);
+			list.addAll(allEntityEnemie);
+			lists.put(CardCible.ALL, list);
+		}
 	}
 	
 	public static Vector<FightCible> listForCardCible(CardCible cible) {

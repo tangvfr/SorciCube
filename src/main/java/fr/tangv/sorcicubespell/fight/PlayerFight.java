@@ -227,6 +227,7 @@ public class PlayerFight {
 	}
 	
 	public FightHead getForCible(FightCible cible) {
+		Bukkit.broadcastMessage(cible.name());
 		switch (cible) {
 			case ENTITY_1_ALLY:
 				return this.getEntity(0);

@@ -104,8 +104,6 @@ public class FightSpell {
 					if (head instanceof FightHero) {
 						PlayerFight player = head.getOwner();
 						player.addManaBoost(mana);
-					} else {
-						((FightEntity) head).getCard().getCard().setMana(mana);
 					}
 			}
 		});
