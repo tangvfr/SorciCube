@@ -2,10 +2,10 @@ package fr.tangv.sorcicubespell.util;
 
 public class Cooldown {
 	
-	private long time;
-	private long timeStart;
-	private long timeRemaining;
-	private CooldownState state;
+	private final long time;
+	private volatile long timeStart;
+	private volatile long timeRemaining;
+	private volatile CooldownState state;
 	
 	public Cooldown(long time) {
 		this.time = time;
