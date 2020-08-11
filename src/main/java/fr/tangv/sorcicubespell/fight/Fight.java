@@ -34,9 +34,9 @@ public class Fight {
 	private final PlayerFight player2;
 	private final FightArena arena;
 	private int round;
-	private Cooldown cooldown;
+	private final Cooldown cooldown;
+	private final Cooldown cooldownEnd;
 	private final Cooldown cooldownRound;
-	private final long timeCooldownEnd;
 	private final String titleEnd;
 	private volatile boolean firstPlay;
 	private boolean isStart;
@@ -59,7 +59,7 @@ public class Fight {
 		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
-		this.timeCooldownEnd = (long) sorci.getParameter().getInt("cooldown_end")*1000L;
+		this.cooldownEnd = new Cooldown((long) sorci.getParameter().getInt("cooldown_end")*1000L);
 		this.titleEnd = sorci.gertGuiConfig().getString("boss_bar.name_end");
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
@@ -114,6 +114,7 @@ public class Fight {
 						bossBar.setTitle(titleBossBar);
 						bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")));
 						nextRound();
+						cooldown.stop();
 					} else {
 						sendTitleToTwoPlayer(
 								sorci.getMessage().getString("message_below_start_game")
@@ -123,9 +124,6 @@ public class Fight {
 					}
 				}
 			} else {
-				if (cooldown.update()) {
-					cooldown.stop();
-				}
 				if (cooldownRound.update()) {
 					nextRound();
 					return;
@@ -139,7 +137,7 @@ public class Fight {
 				this.updatePlayer(player2);
 			}
 		} else {
-			if (cooldown.update()) {
+			if (cooldownEnd.update()) {
 				if (losser.isOnline())
 					sorci.sendPlayerToServer(losser, sorci.getNameServerLobby());
 				if (winner.isOnline())
@@ -147,8 +145,8 @@ public class Fight {
 				this.isDeleted = true;
 				Bukkit.broadcastMessage("return player");
 			} else {
-				bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
-				bossBar.setProgress(cooldown.getProgess());
+				bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
+				bossBar.setProgress(cooldownEnd.getProgess());
 			}
 		}
 	}
@@ -310,11 +308,10 @@ public class Fight {
 	private void end(Player losser, Player winner) {
 		this.losser = losser;
 		this.winner = winner;
-		this.cooldown = new Cooldown(timeCooldownEnd);
-		this.cooldown.start();
+		this.cooldownEnd.start();
 		bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_end")));
-		bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldown.getTimeRemaining())));
-		bossBar.setProgress(cooldown.getProgess());
+		bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
+		bossBar.setProgress(cooldownEnd.getProgess());
 		this.isEnd = true;
 		if (losser.isOnline()) {
 			alertPlayer(losser, sorci.getMessage().getString("message_losser"));
