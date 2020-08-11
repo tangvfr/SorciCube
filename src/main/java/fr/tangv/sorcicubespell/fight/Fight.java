@@ -290,8 +290,8 @@ public class Fight {
 		player.initHotBar();
 		player.getEnemie().initHotBar();
 		//init view
-		player.nextRoundFightEntity();
 		player.setEntityAttack(null);
+		player.nextRoundFightEntity();
 		player.resetEntityAttackPossible();
 		player.showEntityAttackPossible();
 	}

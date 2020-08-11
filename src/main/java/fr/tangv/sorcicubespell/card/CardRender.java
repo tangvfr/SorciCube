@@ -30,7 +30,8 @@ public class CardRender {
 				return "nothing";
 		} else if ((featureType == CardFeatureType.BOOST_DAMAGE
 				|| featureType == CardFeatureType.BOOST_HEALTH
-				|| featureType == CardFeatureType.BOOST_MANA)
+				|| featureType == CardFeatureType.BOOST_MANA
+				|| featureType == CardFeatureType.REMOVE_MANA_HERO)
 			&& feature.getValue().asInt() < 0) {
 			return Integer.toString(-feature.getValue().asInt());
 		} else

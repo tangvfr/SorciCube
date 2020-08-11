@@ -493,7 +493,7 @@ public class PlayerFight {
 	
 	public void initHeadForEntityPose(Card card) {
 		for (FightEntity entity : entity)
-			if (!entity.isSelectable())
+			if (entity.isDead())
 				entity.showHead(ItemHead.SELECTABLE_POSE);
 	}
 		

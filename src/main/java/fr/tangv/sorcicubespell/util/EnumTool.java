@@ -51,7 +51,8 @@ public class EnumTool {
 	public String featureToString(CardFeatureType featureType, CardValue value) {
 		if ((featureType == CardFeatureType.BOOST_DAMAGE
 				|| featureType == CardFeatureType.BOOST_HEALTH
-				|| featureType == CardFeatureType.BOOST_MANA)
+				|| featureType == CardFeatureType.BOOST_MANA
+				|| featureType == CardFeatureType.REMOVE_MANA_HERO)
 			&& value.asInt() < 0)
 			return this.enumToStringNeg(featureType, feature);
 		else
