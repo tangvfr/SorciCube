@@ -12,8 +12,8 @@ public class ManagerCreatorFight {
 	private Location locNoClassified;
 	private Location locDuel;
 	private Location locNPC;
-	private Vector<Player> duelPlayers;
-	private Player noClassified; 
+	private volatile Vector<Player> duelPlayers;
+	private volatile Player noClassified; 
 	
 	public ManagerCreatorFight(SorciCubeSpell sorci) {
 		this.locNoClassified = (Location) sorci.getParameter().get("location_noclassified");

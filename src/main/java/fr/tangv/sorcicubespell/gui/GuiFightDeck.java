@@ -30,11 +30,13 @@ public class GuiFightDeck extends GuiDecks {
 					case UNCLASSIFIED:
 						if (cf.getNoClassified() == null) {
 							cf.setNoClassified(player);
+							sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
 							player.sendMessage(sorci.getMessage().getString("message_wait_fight"));
 							break;
 						} else {
 							Player player1 = cf.getNoClassified();
 							cf.setNoClassified(null);
+							sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
 							sorci.getManagerPreFightData().addPreFightData(
 									new PreFightData(
 											player1.getUniqueId(),
