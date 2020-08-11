@@ -54,11 +54,11 @@ public enum FightCible {
 				FightCible.ENTITY_5_ALLY
 			));
 		allEntityEnemie = new Vector<FightCible>(Arrays.asList(
-				FightCible.ENTITY_1_ALLY,
-				FightCible.ENTITY_2_ALLY,
-				FightCible.ENTITY_3_ALLY,
-				FightCible.ENTITY_4_ALLY,
-				FightCible.ENTITY_5_ALLY
+				FightCible.ENTITY_1_ENEMIE,
+				FightCible.ENTITY_2_ENEMIE,
+				FightCible.ENTITY_3_ENEMIE,
+				FightCible.ENTITY_4_ENEMIE,
+				FightCible.ENTITY_5_ENEMIE
 			));
 		lists.put(CardCible.NONE, new Vector<FightCible>());
 		{
