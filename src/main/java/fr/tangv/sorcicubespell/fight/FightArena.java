@@ -32,23 +32,42 @@ public class FightArena {
 		this.secondEntity[2] = ((Vector) config.get("second.entity3")).toLocation(world, 180, 0);
 		this.secondEntity[3] = ((Vector) config.get("second.entity4")).toLocation(world, 180, 0);
 		this.secondEntity[4] = ((Vector) config.get("second.entity5")).toLocation(world, 180, 0);
-		if (this.name == null ||
-				this.world == null ||
-				this.firstBase == null ||
-				this.firstEntity == null ||
-				this.firstEntity[0] == null ||
-				this.firstEntity[1] == null ||
-				this.firstEntity[2] == null ||
-				this.firstEntity[3] == null ||
-				this.firstEntity[4] == null ||
-				this.secondBase == null ||
-				this.secondEntity == null ||
-				this.secondEntity[0] == null ||
-				this.secondEntity[1] == null ||
-				this.secondEntity[2] == null ||
-				this.secondEntity[3] == null ||
-				this.secondEntity[4] == null)
-			throw new Exception("Value null in arena \""+name+"\" !");
+		String errorNull = "";
+		if (this.name == null)
+			errorNull = "Name";
+		else if (this.world == null)
+			errorNull = "World";
+		else if (this.firstBase == null)
+			errorNull = "FirstBase";
+		else if (this.firstEntity == null)
+			errorNull = "ListFirstEntity";
+		else if (this.firstEntity[0] == null)
+			errorNull = "FirstEntity1";
+		else if (this.firstEntity[1] == null)
+			errorNull = "FirstEntity2";
+		else if (this.firstEntity[2] == null)
+			errorNull = "FirstEntity3";
+		else if (this.firstEntity[3] == null)
+			errorNull = "FirstEntity4";
+		else if (this.firstEntity[4] == null)
+			errorNull = "FirstEntity5";
+		else if (this.secondBase == null)
+			errorNull = "ListSecondEntity";
+		else if (this.secondEntity == null)
+			errorNull = "SecondEntity1";
+		else if (this.secondEntity[0] == null)
+			errorNull = "SecondEntity2";
+		else if (this.secondEntity[1] == null)
+			errorNull = "SecondEntity3";
+		else if (this.secondEntity[2] == null)
+			errorNull = "SecondEntity4";
+		else if (this.secondEntity[3] == null)
+			errorNull = "SecondEntity5";
+		else if (this.secondEntity[4] == null)
+			errorNull = "SecondEntity6";
+		//test
+		if (!errorNull.isEmpty())
+			throw new Exception("Value \""+errorNull+"\" is null, arena \""+name+"\" !");
 	}
 	
 	public String getName() {
