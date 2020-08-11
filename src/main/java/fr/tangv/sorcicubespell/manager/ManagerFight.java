@@ -90,7 +90,6 @@ public class ManagerFight implements Runnable {
 				Fight fight = fights.get(i);
 				if (fight.getPlayer1().isPlayer(player) || fight.getPlayer2().isPlayer(player)) {
 					fight.end(player);
-					fights.remove(i);
 					return;
 				}
 			} catch (Exception e) {

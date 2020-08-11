@@ -54,6 +54,7 @@ public class GuiFightDeck extends GuiDecks {
 					case DUEL:
 						//add after and add anti afk and add history and add view entity with stick
 						//add system level and experience
+						//improve system get FIght in list Fight
 						break;
 				}
 				Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
