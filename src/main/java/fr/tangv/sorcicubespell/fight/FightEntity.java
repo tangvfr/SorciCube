@@ -87,6 +87,7 @@ public class FightEntity extends FightHead {
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, playerToAdd, 3));
+		this.isSend = true;
 	}
 	
 	private GameProfile skinToGameProfil(String name) {
