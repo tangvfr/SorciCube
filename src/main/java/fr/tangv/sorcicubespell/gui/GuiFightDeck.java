@@ -50,7 +50,8 @@ public class GuiFightDeck extends GuiDecks {
 						}
 						
 					case DUEL:
-						//add after and add anti afk
+						//add after and add anti afk and add history and add view entity with stick
+						//add system level and experience
 						break;
 				}
 				Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
@@ -58,7 +59,7 @@ public class GuiFightDeck extends GuiDecks {
 					player.teleport(loc);
 			} else {
 				player.sendMessage(sorci.getMessage().getString("message_invalid_deck"));
-				player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_HURT, 1F, 1F);
+				player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1F, 1F);
 			}
 		}
 	}
