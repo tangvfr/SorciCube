@@ -136,8 +136,6 @@ public class EventFight implements Listener {
 												player.setCardHand(player.getCardSelect(), null);
 												player.setCardSelect(-1);
 												player.initHotBar();
-												player.setEntityAttack(null);
-												player.showEntityAttackPossible();
 											} catch (Exception e1) {
 												Bukkit.getLogger().warning(RenderException.renderException(e1));
 											}
@@ -151,13 +149,13 @@ public class EventFight implements Listener {
 										player.setCardHand(player.getCardSelect(), null);
 										player.setCardSelect(-1);
 										player.initHotBar();
-										player.setEntityAttack(null);
-										player.showEntityAttackPossible();
 									}
 								}
 							} else {
 								player.getPlayer().sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
 							}
+							player.setEntityAttack(null);
+							player.showEntityAttackPossible();
 						}
 						//end cards action
 					}
