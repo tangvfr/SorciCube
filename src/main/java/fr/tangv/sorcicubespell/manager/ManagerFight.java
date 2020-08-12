@@ -78,24 +78,20 @@ public class ManagerFight implements Runnable {
 	}
 	
 	public void playerQuit(Player player) {
-		if (playerFights.containsKey(player))
+		if (playerFights.containsKey(player)) {
+			Fight fight = playerFights.get(player).getFight();
+			if (fight.getPlayer1().getPlayer().isOnline() || fight.getPlayer2().getPlayer().isOnline())
+				fight.end(player);
+			else
+				fights.remove(fight);
 			playerFights.remove(player);
+			return;
+		}
 		for (PreFight preFight : preFights.values())
 			if (preFight.getPlayerUUID1().equals(player.getUniqueId())) {
 				preFights.remove(preFight.getPlayerUUID2());
 				return;
 			}
-		for (int i = 0; i < fights.size(); i++) {
-			try {
-				Fight fight = fights.get(i);
-				if (fight.getPlayer1().isPlayer(player) || fight.getPlayer2().isPlayer(player)) {
-					fight.end(player);
-					return;
-				}
-			} catch (Exception e) {
-				Bukkit.getLogger().warning(RenderException.renderException(e));
-			}
-		}
 	}
 
 	@Override
