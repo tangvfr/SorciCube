@@ -52,7 +52,14 @@ public class GuiFightDeck extends GuiDecks {
 						}
 						
 					case DUEL:
+						//change system choose entity 
+						//path rotate player
+						//path view boost mana
+						
 						//add history and add view entity with stick
+						
+						//(path bug incitement) after test || give feature
+						
 						//add after and add anti afk
 						//add system level and experience
 						break;

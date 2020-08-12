@@ -486,7 +486,10 @@ public class PlayerFight {
 			if (card.getType() == CardType.ENTITY) {
 				initHeadForEntityPose(card);
 			} else {
-				showHeadForAttack(card, ItemHead.SELECTABLE_SPELL);
+				if (card.getCible().hasChoose())
+					showHeadForAttack(card, ItemHead.SELECTABLE_SPELL);
+				else
+					showHeadForAttack(card, ItemHead.SELECTABLE_ALL_SPELL);
 			}
 		}
 	}
@@ -515,6 +518,21 @@ public class PlayerFight {
 						possible = true;
 						head.showHead(headItem);
 					}
+				}
+				return possible;
+			}
+		});
+	}
+	
+	public boolean showHeadForAttackAll(Card card, ItemStack headItem) {
+		hideAllHead();
+		return executeFightHeadIsGoodCible(card, new ResultFightHead() {
+			@Override
+			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+				boolean possible = false;
+				for (FightHead head : fightHeads) {
+					possible = true;
+					head.showHead(headItem);
 				}
 				return possible;
 			}

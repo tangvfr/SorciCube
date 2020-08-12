@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,6 +25,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardType;
+import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
 import fr.tangv.sorcicubespell.util.ItemHead;
 import fr.tangv.sorcicubespell.util.RenderException;
@@ -141,13 +144,27 @@ public class EventFight implements Listener {
 										}
 									}
 								} else {
-									FightHead head = player.getForCible(cible);
-									if (player.testHeadValidForAttack(card, head)) {
+									if (!card.getCible().hasChoose()) {
 										player.removeMana(card.getMana());
-										FightSpell.startActionSpell(player, card.getFeatures(), head);
+										player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+											@Override
+											public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+												FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
+												return true;
+											}
+										});
 										player.setCardHand(player.getCardSelect(), null);
 										player.setCardSelect(-1);
 										player.initHotBar();
+									} else {
+										FightHead head = player.getForCible(cible);
+										if (player.testHeadValidForAttack(card, head)) {
+											player.removeMana(card.getMana());
+											FightSpell.startActionSpell(player, card.getFeatures(), head);
+											player.setCardHand(player.getCardSelect(), null);
+											player.setCardSelect(-1);
+											player.initHotBar();
+										}
 									}
 								}
 							} else {

@@ -263,7 +263,7 @@ public class FightSpell {
 								for (CardFeature feat : cardFeature.getFeatures().valueFeatures()) {
 									if (features.hasFeature(feat.getType()))
 										features.removeFeature(feat.getType());
-									features.putFeature(feature);
+									features.putFeature(feature.clone());
 								}
 								entity.updateStat();
 							}
