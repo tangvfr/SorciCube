@@ -23,17 +23,18 @@ public class FightHero extends FightHead {
 	public void updateStat() {
 		String mana;
 		if (owner.canPlay())
-			mana = Integer.toString(owner.getMana());
+			mana = Integer.toString(owner.getMana())+" \u2756";
 		else {
 			int value = owner.getManaBoost();
 			if (value < 0)
-				mana = Integer.toString(owner.getMana());
+				mana = Integer.toString(owner.getManaBoost());
 			else if (value > 0)
-				mana = "+"+Integer.toString(owner.getMana());
+				mana = "+"+Integer.toString(owner.getManaBoost());
 			else
 				mana = "0";
+			mana += " \u21ea";
 		}
-		this.setName("§c"+owner.getHealth()+" \u2665 §b"+mana+" \u2756");
+		this.setName("§c"+owner.getHealth()+" \u2665 §b"+mana);
 	}
 	
 	@Override
