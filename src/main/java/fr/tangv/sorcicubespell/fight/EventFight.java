@@ -42,8 +42,30 @@ public class EventFight implements Listener {
 		materialTransparent.add(Material.AIR);
 		materialTransparent.add(Material.LAVA);
 		materialTransparent.add(Material.WATER);
+		materialTransparent.add(Material.PORTAL);
+		materialTransparent.add(Material.ENDER_PORTAL);
 		materialTransparent.add(Material.STATIONARY_LAVA);
 		materialTransparent.add(Material.STATIONARY_WATER);
+		materialTransparent.add(Material.WHEAT);
+		materialTransparent.add(Material.VINE);
+		materialTransparent.add(Material.SUGAR_CANE_BLOCK);
+		materialTransparent.add(Material.SAPLING);
+		materialTransparent.add(Material.PUMPKIN_STEM);
+		materialTransparent.add(Material.POTATO);
+		materialTransparent.add(Material.MELON_STEM);
+		materialTransparent.add(Material.WATER_LILY);
+		materialTransparent.add(Material.DOUBLE_PLANT);
+		materialTransparent.add(Material.LONG_GRASS);
+		materialTransparent.add(Material.RED_ROSE);
+		materialTransparent.add(Material.YELLOW_FLOWER);
+		materialTransparent.add(Material.RED_MUSHROOM);
+		materialTransparent.add(Material.BROWN_MUSHROOM);
+		materialTransparent.add(Material.DEAD_BUSH);
+		materialTransparent.add(Material.COCOA);
+		materialTransparent.add(Material.CARROT);
+		materialTransparent.add(Material.BEETROOT_BLOCK);
+		materialTransparent.add(Material.CHORUS_FLOWER);
+		materialTransparent.add(Material.CHORUS_PLANT);
 	}
 	
 	private final static double TOLERANCE_MOVE = 3.2;
