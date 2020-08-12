@@ -76,3 +76,4 @@ feature:
   action_spawn: "§f§lEntrée en jeu : {text}."
   metamorph_to: "§f§lTransforme {cible} en {text}."
   give_feature_cart: "§f§lDonne les caratèristeque {text} à {cible}."
+  execute: "§f§lExecute : {text}."

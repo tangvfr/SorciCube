@@ -271,6 +271,16 @@ public class FightSpell {
 				}
 			}
 		});
+		actionsSpells.put(CardFeatureType.EXECUTE, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				if (cardFeature != null) {
+					FightSpell.startActionSpell(player, cardFeature.getFeatures(), 
+							FightCible.randomFightHeadsForCible(player, cardFeature.getCible(), cardFeature.getCibleFaction()));
+				}
+			}
+		});
 	}
 	
 	public static void startActionSpell(PlayerFight player, CardFeatures features, FightHead head) {

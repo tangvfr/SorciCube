@@ -29,7 +29,8 @@ public enum CardFeatureType {
 	ACTION_DEAD(TypeValue.TEXT, true),
 	ACTION_SPAWN(TypeValue.TEXT, true),
 	METAMORPH_TO(TypeValue.TEXT, true),
-	GIVE_FEATURE_CART(TypeValue.TEXT, true);
+	GIVE_FEATURE_CART(TypeValue.TEXT, true),
+	EXECUTE(TypeValue.TEXT, true);
 	
 	private TypeValue typeValue;
 	private boolean show;

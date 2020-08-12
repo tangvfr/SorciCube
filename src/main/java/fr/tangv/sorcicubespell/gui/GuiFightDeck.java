@@ -55,6 +55,7 @@ public class GuiFightDeck extends GuiDecks {
 						//change system choose entity 
 						//path rotate player
 						//path view boost mana
+						//add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						
 						//add history and add view entity with stick
 						

@@ -21,7 +21,8 @@ public class CardRender {
 				featureType == CardFeatureType.IF_ATTACKED_EXEC_ONE ||
 				featureType == CardFeatureType.IF_ATTACKED_EXEC ||
 				featureType == CardFeatureType.IF_ATTACKED_GIVE_ONE ||
-				featureType == CardFeatureType.IF_ATTACKED_GIVE) {
+				featureType == CardFeatureType.IF_ATTACKED_GIVE ||
+				featureType == CardFeatureType.EXECUTE) {
 			UUID uuid = UUID.fromString(feature.getValue().asString());
 			Card card = sorci.getManagerCards().getCard(uuid);
 			if (card != null) {
