@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Archiver-Version: Plexus Archiver
-Created-By: Apache Maven 3.3.9
-Build-Jdk: 1.8.0_231
-Built-By: Tangv
-Main-Class: fr.tangv.sorcicubespell.logi.ManagerLogi
-
