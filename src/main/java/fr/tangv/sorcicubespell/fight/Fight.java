@@ -152,10 +152,13 @@ public class Fight {
 	}
 	
 	private final static double TOLERANCE = 4.6;
+	private final static double TOLERANCE_ENTITY = 1.2;
 	
-	private boolean locEntityInTolerance(Location loc1, Location loc2) {
-		if (loc1.getBlockX() == loc2.getBlockX() && loc1.getBlockZ() == loc2.getBlockZ())
-			return (Math.abs(loc1.getY()-loc2.getY()) < TOLERANCE);
+	private boolean locEntityInTolerance(Location locPos, Location locBase) {
+		Location loc = locBase.clone();
+		loc.setY(locPos.getY());
+		if (loc.distance(locPos) <= TOLERANCE_ENTITY)
+			return (Math.abs(locPos.getY()-(locBase.getY()+1D)) <= TOLERANCE_ENTITY);
 		return false;
 	}
 	
@@ -164,10 +167,10 @@ public class Fight {
 		Location[] firstEntity = arena.getFirstEntity();
 		Location[] secondEntity = arena.getSecondEntity();
 		if (arena.getWorld().equals(block.getWorld())) {
-			if (arena.getFirstBase().distance(block.getLocation()) < TOLERANCE) {
+			if (arena.getFirstBase().distance(block.getLocation()) <= TOLERANCE) {
 				return first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
 				//hero first
-			} else if (arena.getSecondBase().distance(block.getLocation()) < TOLERANCE) {
+			} else if (arena.getSecondBase().distance(block.getLocation()) <= TOLERANCE) {
 				return !first ? FightCible.HERO_ALLY : FightCible.HERO_ENEMIE;
 				//hero second
 			} else 

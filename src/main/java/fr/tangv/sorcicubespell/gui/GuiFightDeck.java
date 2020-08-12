@@ -52,7 +52,6 @@ public class GuiFightDeck extends GuiDecks {
 						}
 						
 					case DUEL:
-						//change system choose entity 
 						//path rotate player
 						//path view boost mana
 						//add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
