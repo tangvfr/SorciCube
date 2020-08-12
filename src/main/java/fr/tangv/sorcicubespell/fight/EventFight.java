@@ -46,7 +46,7 @@ public class EventFight implements Listener {
 		materialTransparent.add(Material.ENDER_PORTAL);
 		materialTransparent.add(Material.STATIONARY_LAVA);
 		materialTransparent.add(Material.STATIONARY_WATER);
-		materialTransparent.add(Material.WHEAT);
+		materialTransparent.add(Material.CROPS);
 		materialTransparent.add(Material.VINE);
 		materialTransparent.add(Material.SUGAR_CANE_BLOCK);
 		materialTransparent.add(Material.SAPLING);
@@ -66,6 +66,37 @@ public class EventFight implements Listener {
 		materialTransparent.add(Material.BEETROOT_BLOCK);
 		materialTransparent.add(Material.CHORUS_FLOWER);
 		materialTransparent.add(Material.CHORUS_PLANT);
+		materialTransparent.add(Material.TRAP_DOOR);
+		materialTransparent.add(Material.IRON_TRAPDOOR);
+		materialTransparent.add(Material.STONE_PLATE);
+		materialTransparent.add(Material.GOLD_PLATE);
+		materialTransparent.add(Material.WOOD_PLATE);
+		materialTransparent.add(Material.IRON_PLATE);
+		materialTransparent.add(Material.STONE_BUTTON);
+		materialTransparent.add(Material.WOOD_BUTTON);
+		materialTransparent.add(Material.TORCH);
+		materialTransparent.add(Material.REDSTONE_TORCH_OFF);
+		materialTransparent.add(Material.REDSTONE_TORCH_ON);
+		materialTransparent.add(Material.LEVER);
+		materialTransparent.add(Material.LADDER);
+		materialTransparent.add(Material.RAILS);
+		materialTransparent.add(Material.ACTIVATOR_RAIL);
+		materialTransparent.add(Material.DETECTOR_RAIL);
+		materialTransparent.add(Material.POWERED_RAIL);
+		materialTransparent.add(Material.STANDING_BANNER);
+		materialTransparent.add(Material.WALL_BANNER);
+		materialTransparent.add(Material.END_ROD);
+		materialTransparent.add(Material.REDSTONE_WIRE);
+		materialTransparent.add(Material.REDSTONE_COMPARATOR_OFF);
+		materialTransparent.add(Material.REDSTONE_COMPARATOR_ON);
+		materialTransparent.add(Material.DIODE_BLOCK_OFF);
+		materialTransparent.add(Material.DIODE_BLOCK_ON);
+		materialTransparent.add(Material.SIGN_POST);
+		materialTransparent.add(Material.WALL_SIGN);
+		materialTransparent.add(Material.SNOW);
+		materialTransparent.add(Material.TRIPWIRE);
+		materialTransparent.add(Material.TRIPWIRE_HOOK);
+		materialTransparent.add(Material.WEB);
 	}
 	
 	private final static double TOLERANCE_MOVE = 3.2;
