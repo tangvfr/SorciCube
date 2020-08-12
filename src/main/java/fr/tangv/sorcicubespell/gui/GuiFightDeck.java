@@ -52,15 +52,18 @@ public class GuiFightDeck extends GuiDecks {
 						}
 						
 					case DUEL:
-						//path rotate player
-						//add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
+						/*
+							+ path rotate player
 						
-						//add history and add view entity with stick
+							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						
-						//(path bug incitement) after test || give feature
+							- add history and add view entity with stick
 						
-						//add after and add anti afk
-						//add system level and experience
+							- (path bug incitement) after test || give feature
+						
+							- add after and add anti afk
+							- add system level and experience
+						*/
 						break;
 				}
 				Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
