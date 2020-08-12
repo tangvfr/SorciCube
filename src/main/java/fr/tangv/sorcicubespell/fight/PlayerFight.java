@@ -509,7 +509,7 @@ public class PlayerFight {
 				boolean possible = false;
 				if (incitement) {
 					for (FightHead head : fightHeads)
-						if (head.hasIncitement()) {
+						if (head.hasIncitement() || head.getOwner() == PlayerFight.this) {
 							possible = true;
 							head.showHead(headItem);
 						}
@@ -543,7 +543,7 @@ public class PlayerFight {
 		return executeFightHeadIsGoodCible(card, new ResultFightHead() {
 			@Override
 			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-				return fightHeads.contains(head) && (incitement ? head.hasIncitement() : true);
+				return fightHeads.contains(head) && (incitement ? (head.hasIncitement() || head.getOwner() == PlayerFight.this) : true);
 			}
 		});
 	}
@@ -554,7 +554,7 @@ public class PlayerFight {
 		for (FightCible cible : FightCible.listForCardCible(card.getCible())) {
 			FightHead head = getForCible(cible);
 			if (head.isSelectable() && head.isFaction(card.getCibleFaction())) {
-				if (head.hasIncitement())
+				if (head.hasIncitement() && head.getOwner() != PlayerFight.this)
 					incitement = true;
 				fightHeads.add(head);
 			}
