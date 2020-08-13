@@ -75,7 +75,7 @@ gui_view_entity:
   name: "§5View Entity"
 #Gui Of Player
 gui_player:
-  null: "§fAucune carte"
+  "null": "§fAucune carte"
   none: " "
   next: "§6Next Round"
   stick_view: "§5View Entity"
