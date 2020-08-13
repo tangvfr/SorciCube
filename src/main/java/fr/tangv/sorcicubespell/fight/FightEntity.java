@@ -51,7 +51,7 @@ public class FightEntity extends FightHead {
 		this.skin = null;
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		this.entityPlayer = new EntityPlayer(server, world, createProfil(""), new PlayerInteractManager(world));
-		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw()*1.4F, 0);
 		//end init player
 		this.isSend = false;
 		this.attackIsPossible = false;
