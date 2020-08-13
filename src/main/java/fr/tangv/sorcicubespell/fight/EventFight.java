@@ -172,99 +172,95 @@ public class EventFight implements Listener {
 					}
 				}
 			}
-			if (next) {
-				if (player.canPlay()) {
-					Block block = player.getPlayer().getTargetBlock(materialTransparent, distanceGetBlock);
-					if (block != null) {
-						FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
-						if (cible != null) {
-							if (player.getCardSelect() == -1) {
-								if (player.hasEntityAttack()) {
-									Card card = player.getEntityAttack().getCard().getCard();
-									FightHead head = player.getForCible(cible);
-									if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
-										FightEntity entity = player.getEntityAttack();
-										entity.setAttackPossible(false);
-										player.setEntityAttack(null);
-										player.showEntityAttackPossible();
-										//start action fight entity
-										int cAttack = head.damage(entity.getAttack());
-										if (cAttack != 0)
-											entity.damage(cAttack);
-										//end action fight entity
-									}
-								} else {
-									if (!cible.isHero() && cible.isAlly()) {
-										FightEntity entity = (FightEntity) player.getForCible(cible);
-										if (!entity.isDead() && entity.attackIsPossible()) {
-											Card card = entity.getCard().getCard();
-											player.showHeadForAttack(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
-											player.setEntityAttack(entity);
-											entity.showHead(ItemHead.SELECTED_ENTITY);
-										}
-									}
+			if (next && player.canPlay()) {
+				Block block = player.getPlayer().getTargetBlock(materialTransparent, distanceGetBlock);
+				if (block != null) {
+					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
+					if (cible != null) {
+						if (player.getCardSelect() == -1) {
+							if (player.hasEntityAttack()) {
+								Card card = player.getEntityAttack().getCard().getCard();
+								FightHead head = player.getForCible(cible);
+								if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
+									FightEntity entity = player.getEntityAttack();
+									entity.setAttackPossible(false);
+									player.setEntityAttack(null);
+									player.showEntityAttackPossible();
+									//start action fight entity
+									int cAttack = head.damage(entity.getAttack());
+									if (cAttack != 0)
+										entity.damage(cAttack);
+									//end action fight entity
 								}
 							} else {
-								//start card actions
-								Card card = player.getCardHand(player.getCardSelect());
-								if (player.hasMana(card.getMana())) {
-									if (card.getType() == CardType.ENTITY) {
-										//entity
-										if (!cible.isHero() && cible.isAlly()) {
-											FightEntity entity = (FightEntity) player.getForCible(cible);
-											if (!entity.isSelectable()) {
-												try {
-													player.removeMana(card.getMana());
-													entity.setCard(new CardEntity(card));
-													player.setCardHand(player.getCardSelect(), null);
-													player.setCardSelect(-1);
-													player.addHistoric(card, player);
-													player.getEnemie().addHistoric(card, player);
-													player.initHotBar();
-												} catch (Exception e1) {
-													Bukkit.getLogger().warning(RenderException.renderException(e1));
-												}
-											}
-										}
-									} else {
-										if (!card.getCible().hasChoose()) {
-											player.removeMana(card.getMana());
-											player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
-												@Override
-												public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-													FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
-													return true;
-												}
-											});
-											player.setCardHand(player.getCardSelect(), null);
-											player.setCardSelect(-1);
-											player.addHistoric(card, player);
-											player.getEnemie().addHistoric(card, player);
-											player.initHotBar();
-										} else {
-											FightHead head = player.getForCible(cible);
-											if (player.testHeadValidForAttack(card, head)) {
+								if (!cible.isHero() && cible.isAlly()) {
+									FightEntity entity = (FightEntity) player.getForCible(cible);
+									if (!entity.isDead() && entity.attackIsPossible()) {
+										Card card = entity.getCard().getCard();
+										player.showHeadForAttack(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
+										player.setEntityAttack(entity);
+										entity.showHead(ItemHead.SELECTED_ENTITY);
+									}
+								}
+							}
+						} else {
+							//start card actions
+							Card card = player.getCardHand(player.getCardSelect());
+							if (player.hasMana(card.getMana())) {
+								if (card.getType() == CardType.ENTITY) {
+									//entity
+									if (!cible.isHero() && cible.isAlly()) {
+										FightEntity entity = (FightEntity) player.getForCible(cible);
+										if (!entity.isSelectable()) {
+											try {
 												player.removeMana(card.getMana());
-												FightSpell.startActionSpell(player, card.getFeatures(), head);
+												entity.setCard(new CardEntity(card));
 												player.setCardHand(player.getCardSelect(), null);
 												player.setCardSelect(-1);
 												player.addHistoric(card, player);
 												player.getEnemie().addHistoric(card, player);
 												player.initHotBar();
+											} catch (Exception e1) {
+												Bukkit.getLogger().warning(RenderException.renderException(e1));
 											}
 										}
 									}
 								} else {
-									player.getPlayer().sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
+									if (!card.getCible().hasChoose()) {
+										player.removeMana(card.getMana());
+										player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+											@Override
+											public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+												FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
+												return true;
+											}
+										});
+										player.setCardHand(player.getCardSelect(), null);
+										player.setCardSelect(-1);
+										player.addHistoric(card, player);
+										player.getEnemie().addHistoric(card, player);
+										player.initHotBar();
+									} else {
+										FightHead head = player.getForCible(cible);
+										if (player.testHeadValidForAttack(card, head)) {
+											player.removeMana(card.getMana());
+											FightSpell.startActionSpell(player, card.getFeatures(), head);
+											player.setCardHand(player.getCardSelect(), null);
+											player.setCardSelect(-1);
+											player.addHistoric(card, player);
+											player.getEnemie().addHistoric(card, player);
+											player.initHotBar();
+										}
+									}
 								}
-								player.setEntityAttack(null);
-								player.showEntityAttackPossible();
+							} else {
+								player.getPlayer().sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
 							}
-							//end cards action
+							player.setEntityAttack(null);
+							player.showEntityAttackPossible();
 						}
+						//end cards action
 					}
-				} else {
-					player.openInvHistoric();
 				}
 			}
 			e.getPlayer().updateInventory();
