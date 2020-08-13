@@ -34,12 +34,14 @@ public class ItemBuild {
 	}
 	
 	public static ItemStack buildSkull(String texture, int amount, String name, List<String> lore, boolean ench) {
-		ItemStack skull = new ItemStack(Material.SKULL_ITEM, amount, (short) 3);
-		//init texture meta of skull
-		ItemMeta skullMeta = skull.getItemMeta();
 		GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-		profile.getProperties().clear();
 	    profile.getProperties().put("textures", new Property("textures", texture));
+	    return buildSkull(profile, amount, name, lore, ench);
+	}
+	
+	public static ItemStack buildSkull(GameProfile profile, int amount, String name, List<String> lore, boolean ench) {
+		ItemStack skull = new ItemStack(Material.SKULL_ITEM, amount, (short) 3);
+		ItemMeta skullMeta = skull.getItemMeta();
 	    //change profil of metaskull
 	    try {
 	    	Field profileField = skullMeta.getClass().getDeclaredField("profile");

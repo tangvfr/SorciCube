@@ -1,12 +1,33 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.ArrayList;
+
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.inventory.ItemStack;
+
 import fr.tangv.sorcicubespell.card.CardFaction;
+import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class FightHero extends FightHead {
 	
 	public FightHero(PlayerFight owner) {
 		super(owner, owner.getLocBase());
 		this.updateStat();
+	}
+	
+	public ItemStack renderToItem(boolean ally) {
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("  "+getName());
+		lore.add("");
+		lore.add("  "+owner.getFight().getSorci().getEnumConfig().getString("type.hero"));
+		lore.add("");
+		return ItemBuild.buildSkull(
+				((CraftPlayer) owner.getPlayer()).getProfile(),
+				ally ? 2 : 1,
+				(ally ? "§a" : "§c")+owner.getPlayer().getName(),
+				lore,
+				false
+			);
 	}
 	
 	@Override

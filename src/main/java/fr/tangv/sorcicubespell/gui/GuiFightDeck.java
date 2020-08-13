@@ -57,11 +57,9 @@ public class GuiFightDeck extends GuiDecks {
 						
 							+ path problème pick card
 						
-							+ add the stick 
-						
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						
-							- (path bug incitement) after test || give feature
+							/ (path bug incitement) after test > give feature
 						
 							- add after and add anti afk
 							- add system level and experience

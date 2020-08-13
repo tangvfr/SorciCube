@@ -89,6 +89,10 @@ public abstract class FightHead {
 		sendHead(entityName, name, true);
 	}
 	
+	protected String getName() {
+		return entityName.getCustomName();
+	}
+	
 	public PlayerFight getOwner() {
 		return owner;
 	}

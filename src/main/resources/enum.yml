@@ -35,6 +35,7 @@ rarity:
 type:
   sort: "§f[§cSort§f]"
   entity: "§f[§9Serviteur§f]"
+  hero: "§f[§6Hero§f]"
 #sort
 sort:
   by_id: "§7Trié par id"
