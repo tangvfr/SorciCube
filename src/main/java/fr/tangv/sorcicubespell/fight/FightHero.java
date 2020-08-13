@@ -24,7 +24,7 @@ public class FightHero extends FightHead {
 		return ItemBuild.buildSkull(
 				((CraftPlayer) owner.getPlayer()).getProfile(),
 				ally ? 2 : 1,
-				(ally ? "§a" : "§c")+owner.getPlayer().getName(),
+				(ally ? "§2" : "§4")+owner.getPlayer().getName(),
 				lore,
 				false
 			);
