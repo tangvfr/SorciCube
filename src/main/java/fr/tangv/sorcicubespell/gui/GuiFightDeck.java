@@ -53,8 +53,6 @@ public class GuiFightDeck extends GuiDecks {
 						
 					case DUEL:
 						/*
-						  	+ un use card if impossible idem error of has mana
-						 
 							+ path rotate player
 						
 							+ add history and add view entity with stick

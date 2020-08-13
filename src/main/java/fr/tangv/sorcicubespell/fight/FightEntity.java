@@ -24,7 +24,6 @@ import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_9_R2.PlayerInteractManager;
@@ -51,11 +50,29 @@ public class FightEntity extends FightHead {
 		this.skin = null;
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		this.entityPlayer = new EntityPlayer(server, world, createProfil("Default"), new PlayerInteractManager(world));
-		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), (byte) ((loc.getYaw()*256.0F)/360.0F), (byte) ((loc.getPitch()*256.0F)/360.0F));
+		this.entityPlayer.locX = loc.getX();
+		this.entityPlayer.locY = loc.getY();
+		this.entityPlayer.locZ = loc.getZ();
+		this.entityPlayer.yaw = loc.getYaw();
+		this.entityPlayer.lastYaw = loc.getYaw();
+		this.entityPlayer.pitch = loc.getPitch();
+		this.entityPlayer.lastPitch = loc.getPitch();
+		//end init player
 		this.isSend = false;
 		this.attackIsPossible = false;
 		this.attacked = false;
 		this.entityStat = createArmorStand("", -0.2D);
+	}
+	
+	@Deprecated
+	public void testRotate(float rotate) {
+		if (!isDead()) {
+			this.entityPlayer.yaw += rotate;
+			this.entityPlayer.lastYaw = this.entityPlayer.yaw;
+			Bukkit.broadcastMessage(owner.getPlayer().getName()+", Rotate: "+rotate);
+			removePlayer();
+			spawn();
+		}
 	}
 	
 	private void removePlayer() {
@@ -80,7 +97,7 @@ public class FightEntity extends FightHead {
 		//send player
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
-		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) loc.getYaw()));
+		//fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) loc.getYaw()));
 		//send team
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));

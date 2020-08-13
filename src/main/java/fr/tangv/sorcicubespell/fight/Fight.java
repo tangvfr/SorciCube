@@ -143,7 +143,6 @@ public class Fight {
 				if (winner.isOnline())
 					sorci.sendPlayerToServer(winner, sorci.getNameServerLobby());
 				this.isDeleted = true;
-				Bukkit.broadcastMessage("return player");
 			} else {
 				bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
 				bossBar.setProgress(cooldownEnd.getProgess());
@@ -281,6 +280,12 @@ public class Fight {
 		player.setMana(mana+player.getManaBoost());
 		player.setManaBoost(0);
 		player.pickCard(1);
+		//test
+		for (int i = 0; i < 5; i++) {
+			float rotate = 10F;
+			player.getEntity(i).rotateHead(rotate);
+			player.getEnemie().getEntity(i).rotateHead(rotate);
+		}
 		//enemie
 		player.getEnemie().setMana(0);
 		player.getEnemie().setCardSelect(-1);
