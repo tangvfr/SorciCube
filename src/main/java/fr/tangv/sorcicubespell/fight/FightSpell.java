@@ -211,7 +211,7 @@ public class FightSpell {
 						FightEntity entity = player.getEntity(i);
 						if (!entity.isSelectable()) {
 							try {
-								entity.setCard(new CardEntity(cardFeature));
+								entity.setCard(new CardEntity(cardFeature.clone()));
 							} catch (Exception e1) {
 								Bukkit.getLogger().warning(RenderException.renderException(e1));
 							}
@@ -239,7 +239,7 @@ public class FightSpell {
 				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
 				if (cardFeature != null) {
 					for (FightHead head : heads)
-						if (head instanceof FightEntity) {
+						if (head instanceof FightEntity && head.isSelectable()) {
 							FightEntity entity = (FightEntity) head;
 							try {
 								entity.setCard(new CardEntity(cardFeature));
