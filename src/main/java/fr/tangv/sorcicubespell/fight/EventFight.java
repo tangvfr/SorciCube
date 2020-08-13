@@ -24,6 +24,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardEntity;
+import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
@@ -35,7 +36,8 @@ public class EventFight implements Listener {
 
 	//static
 	
-	private static ConcurrentSet<Material> materialTransparent;
+	private static final ConcurrentSet<Material> materialTransparent;
+	private static final int distanceGetBlock = 100;
 	
 	static {
 		materialTransparent = new ConcurrentSet<Material>();
@@ -136,8 +138,24 @@ public class EventFight implements Listener {
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
-			if (!player.canPlay() || (e.getAction() == Action.LEFT_CLICK_AIR 
-					|| e.getAction() == Action.LEFT_CLICK_BLOCK)) {
+			if (player.hasInHandStick()) {
+				Block block = player.getPlayer().getTargetBlock(materialTransparent, distanceGetBlock);
+				if (block != null) {
+					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
+					if (cible != null && !cible.isHero()) {
+						FightEntity entity = (FightEntity) player.getForCible(cible);
+						if (!entity.isDead()) {
+							player.openInvViewEntity(CardRender.cardToItem(
+									entity.getCard().getCard(), manager.getSorci(),
+									cible.isAlly() ? 2 : 1, false
+							));
+						}
+					}
+				}
+			} else if (!player.canPlay() 
+					|| e.getAction() == Action.LEFT_CLICK_AIR 
+					|| e.getAction() == Action.LEFT_CLICK_BLOCK 
+					|| e.getAction() == Action.PHYSICAL) {
 				player.openInvHistoric();
 				if (player.canPlay()) {
 					player.setCardSelect(-1);
@@ -145,7 +163,7 @@ public class EventFight implements Listener {
 					player.showEntityAttackPossible();
 				}
 			} else {
-				Block block = player.getPlayer().getTargetBlock(materialTransparent, 100);
+				Block block = player.getPlayer().getTargetBlock(materialTransparent, distanceGetBlock);
 				if (block != null) {
 					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
 					if (cible != null) {

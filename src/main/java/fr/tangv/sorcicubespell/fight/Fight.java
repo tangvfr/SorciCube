@@ -283,8 +283,8 @@ public class Fight {
 		//test
 		for (int i = 0; i < 5; i++) {
 			float rotate = 10F;
-			player.getEntity(i).rotateHead(rotate);
-			player.getEnemie().getEntity(i).rotateHead(rotate);
+			player.getEntity(i).testRotate(rotate);
+			player.getEnemie().getEntity(i).testRotate(rotate);
 		}
 		//enemie
 		player.getEnemie().setMana(0);

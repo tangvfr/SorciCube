@@ -259,11 +259,13 @@ public class FightSpell {
 						if (head instanceof FightEntity) {
 							FightEntity entity = (FightEntity) head;
 							if (!entity.isDead()) {
+								Bukkit.broadcastMessage("Give Feature:");
 								CardFeatures features = entity.getCard().getCard().getFeatures();
 								for (CardFeature feat : cardFeature.getFeatures().valueFeatures()) {
 									if (features.hasFeature(feat.getType()))
 										features.removeFeature(feat.getType());
 									features.putFeature(feature.clone());
+									Bukkit.broadcastMessage("Feature "+feature.getType().name()+" has "+features.hasFeature(feature.getType()));
 								}
 								entity.updateStat();
 							}

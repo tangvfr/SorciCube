@@ -21,15 +21,12 @@ public class FightDeck {
 	}
 	
 	private void mixCards() {
-		while (cardsUse.size() > 0) {
-			Card card = cardsUse.elementAt((int) (cardsUse.size()*Math.random()));
-			cardsUse.remove(card);
-			cards.add(card);
-		}
+		while (!cardsUse.isEmpty())
+			cards.add(cardsUse.remove((int) (cardsUse.size()*Math.random())));
 	}
 	
 	public Card pickCard() {
-		if (cards.size() <= 0)
+		if (cards.isEmpty())
 			mixCards();
 		return cards.remove().clone();
 	}

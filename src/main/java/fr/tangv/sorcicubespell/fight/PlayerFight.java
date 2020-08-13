@@ -30,20 +30,6 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 
 public class PlayerFight {
 
-	//static
-	
-	private final static ItemStack itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
-	private final static ItemStack itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, " ", null, false);
-	
-	private static ItemStack itemNull(ItemStack item) {
-		if (item == null)
-			return itemNull;
-		else
-			return item;
-	}
-	
-	//dynamic
-	
 	private Inventory invHistoric;
 	private Inventory invViewEntity;
 	private Fight fight;
@@ -61,6 +47,9 @@ public class PlayerFight {
 	private Location[] entityLoc;
 	private Card[] cardHand;
 	private ItemStack itemNextRound;
+	private ItemStack itemNone;
+	private ItemStack itemNull;
+	private ItemStack itemStickView;
 	private FightEntity entityAttack;
 	
 	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first) {
@@ -74,7 +63,10 @@ public class PlayerFight {
 		this.first = first;
 		this.entityAttack = null;
 		//item
-		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, "§6Next Round", null, false);
+		this.itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, fight.getSorci().gertGuiConfig().getString("gui_player.none"), null, false);
+		this.itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, fight.getSorci().gertGuiConfig().getString("gui_player.null"), null, false);
+		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.next"), null, false);
+		this.itemStickView = ItemBuild.buildItem(Material.BLAZE_ROD, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.stick_view"), null, false);
 		//entity loc
 		if (first) {
 			this.locBase = fight.getArena().getFirstBase();
@@ -154,6 +146,13 @@ public class PlayerFight {
 			}
 		}
 		return numberPick;
+	}
+	
+	private ItemStack itemNull(ItemStack item) {
+		if (item == null)
+			return itemNull;
+		else
+			return item;
 	}
 	
 	public void openInvViewEntity(ItemStack item) {
@@ -480,10 +479,14 @@ public class PlayerFight {
 		*/
 	}
 	
+	public boolean hasInHandStick() {
+		return player.getInventory().getItemInMainHand().isSimilar(itemStickView);
+	}
+	
 	public void initHotBar() {
 		boolean play = canPlay();
 		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), itemNone);
-		player.getInventory().setItem(FightSlot.NONE_2.getSlotInv(), itemNone);
+		player.getInventory().setItem(FightSlot.STICK_VIEW.getSlotInv(), itemStickView);
 		ItemStack item = itemNone;
 		if (play)
 			item = itemNextRound;
@@ -509,7 +512,7 @@ public class PlayerFight {
 				if (card.getCible().hasChoose())
 					showHeadForAttack(card, ItemHead.SELECTABLE_SPELL);
 				else
-					showHeadForAttack(card, ItemHead.SELECTABLE_ALL_SPELL);
+					showHeadForAttackAll(card, ItemHead.SELECTABLE_ALL_SPELL);
 			}
 		}
 	}

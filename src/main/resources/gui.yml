@@ -73,6 +73,12 @@ gui_historic:
 #Gui View Entity
 gui_view_entity:
   name: "§5View Entity"
+#Gui Of Player
+gui_player:
+  null: "§fAucune carte"
+  none: " "
+  next: "§6Next Round"
+  stick_view: "§5View Entity"
 #View Fight
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"
