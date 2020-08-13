@@ -479,7 +479,7 @@ public class PlayerFight {
 		*/
 	}
 	
-	public boolean hasInHandStick() {
+	public boolean hasStickView() {
 		return player.getInventory().getItemInMainHand().isSimilar(itemStickView);
 	}
 	
