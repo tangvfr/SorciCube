@@ -101,7 +101,7 @@ public class EventFight implements Listener {
 		materialTransparent.add(Material.WEB);
 	}
 	
-	private final static double TOLERANCE_MOVE = 3.2;
+	private final static double TOLERANCE_MOVE = 3.8;
 	
 	//dynamic
 	

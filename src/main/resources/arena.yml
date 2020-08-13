@@ -36,7 +36,7 @@
       ==: Vector
       x: 0.5
       y: 64.0
-      z: 18.0
+      z: 19.0
     entity1:
       ==: Vector
       x: -5.5
