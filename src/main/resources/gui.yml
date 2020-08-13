@@ -70,6 +70,9 @@ gui_fight:
 #Gui Historic
 gui_historic:
   name: "§5Historique"
+#Gui View Entity
+gui_view_entity:
+  name: "§5View Entity"
 #View Fight
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"

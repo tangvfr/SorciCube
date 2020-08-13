@@ -9,11 +9,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.ItemHead;
@@ -43,6 +45,7 @@ public class PlayerFight {
 	//dynamic
 	
 	private Inventory invHistoric;
+	private Inventory invViewEntity;
 	private Fight fight;
     private PlayerFight enemie;
 	private Player player;
@@ -85,6 +88,7 @@ public class PlayerFight {
 		this.pickCard(3);
 		//historique
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
+		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DROPPER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
 	}
 	
 	public void nextRoundFightEntity() {
@@ -150,6 +154,22 @@ public class PlayerFight {
 			}
 		}
 		return numberPick;
+	}
+	
+	public void openInvViewEntity(ItemStack item) {
+		invViewEntity.setItem(4, item);
+		player.openInventory(invViewEntity);
+	}
+	
+	public Inventory getInvViewEntity() {
+		return invViewEntity;
+	}
+	
+	public void addHistoric(Card card, PlayerFight owner) {
+		ItemStack item = CardRender.cardToItem(card, fight.getSorci(), (this == owner) ? 2 : 1, false);
+		for (int i = 0; i < 8; i++)
+			invHistoric.setItem(i, invHistoric.getItem(i+1));
+		invHistoric.setItem(8, item);
 	}
 	
 	public void openInvHistoric() {

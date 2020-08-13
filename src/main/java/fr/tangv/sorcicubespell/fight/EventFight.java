@@ -190,6 +190,8 @@ public class EventFight implements Listener {
 												entity.setCard(new CardEntity(card));
 												player.setCardHand(player.getCardSelect(), null);
 												player.setCardSelect(-1);
+												player.addHistoric(card, player);
+												player.getEnemie().addHistoric(card, player);
 												player.initHotBar();
 											} catch (Exception e1) {
 												Bukkit.getLogger().warning(RenderException.renderException(e1));
@@ -208,6 +210,8 @@ public class EventFight implements Listener {
 										});
 										player.setCardHand(player.getCardSelect(), null);
 										player.setCardSelect(-1);
+										player.addHistoric(card, player);
+										player.getEnemie().addHistoric(card, player);
 										player.initHotBar();
 									} else {
 										FightHead head = player.getForCible(cible);
@@ -216,6 +220,8 @@ public class EventFight implements Listener {
 											FightSpell.startActionSpell(player, card.getFeatures(), head);
 											player.setCardHand(player.getCardSelect(), null);
 											player.setCardSelect(-1);
+											player.addHistoric(card, player);
+											player.getEnemie().addHistoric(card, player);
 											player.initHotBar();
 										}
 									}
@@ -241,8 +247,10 @@ public class EventFight implements Listener {
 	@EventHandler
 	public void onClickInv(InventoryClickEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
+			e.setCancelled(true);
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
-			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()) {
+			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode() ||
+					e.getInventory().hashCode() == player.getInvViewEntity().hashCode()) {
 				if (player.canPlay()) {
 					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
 					if (slot != null)
@@ -283,7 +291,6 @@ public class EventFight implements Listener {
 				player.openInvHistoric();
 			}
 		}
-		e.setCancelled(true);
 	}
 	
 	@EventHandler

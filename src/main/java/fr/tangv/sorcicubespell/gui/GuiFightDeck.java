@@ -55,9 +55,10 @@ public class GuiFightDeck extends GuiDecks {
 						/*
 							+ path rotate player
 						
-							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
+							+ add history and add view entity with stick
+							- add the stick 
 						
-							- add history and add view entity with stick
+							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						
 							- (path bug incitement) after test || give feature
 						

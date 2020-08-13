@@ -26,7 +26,7 @@ public class ItemBuild {
 		if (lore != null)
 			meta.setLore(lore);
 		if (ench)
-			meta.addEnchant(Enchantment.DURABILITY, 0, true);
+			meta.addEnchant(Enchantment.DURABILITY, 10, true);
 		for (ItemFlag flag : ItemFlag.values())
 			meta.addItemFlags(flag);
 		item.setItemMeta(meta);
@@ -54,7 +54,7 @@ public class ItemBuild {
 		if (lore != null)
 			skullMeta.setLore(lore);
 		if (ench)
-			skullMeta.addEnchant(Enchantment.DURABILITY, 0, true);
+			skullMeta.addEnchant(Enchantment.DURABILITY, 10, true);
 		for (ItemFlag flag : ItemFlag.values())
 			skullMeta.addItemFlags(flag);
 		//set meta
