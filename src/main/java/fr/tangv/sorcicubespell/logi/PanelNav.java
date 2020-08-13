@@ -106,6 +106,7 @@ public class PanelNav extends JPanel {
 	
 	public void refrech() {
 		Vector<Card> list = this.cartsPanel.getCarts().cloneCardsValue();
+		this.refrech.setText("Refrech | "+Integer.toString(list.size())+" cartds");
 		list.sort(CardComparator.BY_ID);
 		list.sort(sort);
 		this.list.setListData(list);
