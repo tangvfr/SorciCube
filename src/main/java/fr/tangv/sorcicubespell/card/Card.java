@@ -7,17 +7,17 @@ import org.bson.Document;
 
 public class Card {
 	
-	private UUID uuid;
-	private CardMaterial material;
-	private String name;
-	private CardType type;
-	private CardRarity rarity;
-	private CardFaction faction;
-	private CardCible cible;
-	private CardFaction cibleFaction;
-	private int mana;
-	private CardFeatures features;
-	private List<String> description;
+	private final UUID uuid;
+	private volatile CardMaterial material;
+	private volatile String name;
+	private volatile CardType type;
+	private volatile CardRarity rarity;
+	private volatile CardFaction faction;
+	private volatile CardCible cible;
+	private volatile CardFaction cibleFaction;
+	private volatile int mana;
+	private volatile CardFeatures features;
+	private volatile List<String> description;
 	
 	public Card(UUID uuid,
 			CardMaterial material,

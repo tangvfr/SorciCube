@@ -105,7 +105,7 @@ public class EventFight implements Listener {
 	
 	//dynamic
 	
-	private ManagerFight manager;
+	private final ManagerFight manager;
 
 	public EventFight(ManagerFight manager) {
 		this.manager = manager;
@@ -139,16 +139,12 @@ public class EventFight implements Listener {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
 			if (player.hasStickView()) {
-				Bukkit.broadcastMessage("StickView 1");
 				Block block = player.getPlayer().getTargetBlock(materialTransparent, distanceGetBlock);
 				if (block != null) {
 					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
-					Bukkit.broadcastMessage("StickView 2");
 					if (cible != null && !cible.isHero()) {
-						Bukkit.broadcastMessage("StickView 3");
 						FightEntity entity = (FightEntity) player.getForCible(cible);
 						if (!entity.isDead()) {
-							Bukkit.broadcastMessage("StickView 4");
 							player.openInvViewEntity(CardRender.cardToItem(
 									entity.getCard().getCard(), manager.getSorci(),
 									cible.isAlly() ? 2 : 1, false

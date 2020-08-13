@@ -24,10 +24,14 @@ import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
 
 public class Fight {
-
-	protected final int max_mana;
+	
+	//value static
+	private final static double TOLERANCE = 4.6;
+	private final static double TOLERANCE_ENTITY = 1.6;
 	protected static final int max_health = 60;
 	protected static final int start_health = 30;
+	
+	protected final int max_mana;
 	private final SorciCubeSpell sorci;
 	private final FightType fightType;
 	private final PlayerFight player1;
@@ -149,9 +153,6 @@ public class Fight {
 			}
 		}
 	}
-	
-	private final static double TOLERANCE = 4.6;
-	private final static double TOLERANCE_ENTITY = 1.6;
 	
 	private boolean locEntityInTolerance(Location locPos, Location locBase) {
 		Location loc = locBase.clone();

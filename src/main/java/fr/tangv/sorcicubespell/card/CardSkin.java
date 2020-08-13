@@ -3,7 +3,6 @@ package fr.tangv.sorcicubespell.card;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.Base64;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
@@ -16,18 +15,12 @@ public class CardSkin {
 	private String url;
 	private String texture;
 	private String signature;
-	private boolean lastVersion;
 	
 	public CardSkin(int id, String url, String texture, String signature) {
 		this.id = id;
 		this.url = url;
 		this.texture = texture;
 		this.signature = signature;
-		this.lastVersion = (id == -1);
-	}
-	
-	public CardSkin(String url) {
-		this(-1, url, new String(Base64.getEncoder().encodeToString(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes())), "");
 	}
 	
 	public int getId() {
@@ -40,10 +33,6 @@ public class CardSkin {
 	
 	public String getSignature() {
 		return signature;
-	}
-	
-	public boolean isLastVersion() {
-		return lastVersion;
 	}
 	
 	public static CardSkin createCardSkin(int id) throws Exception {
@@ -93,10 +82,7 @@ public class CardSkin {
 	
 	@Override
 	public String toString() {
-		if (lastVersion)
-			return url;
-		else
-			return Integer.toString(id);
+		return Integer.toString(id);
 	}
 	
 }

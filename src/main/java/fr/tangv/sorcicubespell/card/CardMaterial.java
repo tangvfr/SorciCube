@@ -4,9 +4,9 @@ import org.bson.Document;
 
 public class CardMaterial {
 
-	private int id;
-	private int data;
-	private CardSkin skin;
+	private final int id;
+	private final int data;
+	private final CardSkin skin;
 	
 	public CardMaterial(CardSkin skin) {
 		this.skin = skin;
@@ -44,15 +44,10 @@ public class CardMaterial {
 	}
 	
 	public static CardMaterial toCartMaterial(Document document) {
-		if (document.containsKey("skin")) {
+		if (document.containsKey("skin"))
 			return new CardMaterial(CardSkin.toCartSkin(document.get("skin", Document.class)));
-		}
-		if (document.containsKey("url")) {
-			String url = document.getString("url");
-			if (url != null && !url.isEmpty())
-				return new CardMaterial(new CardSkin(url));
-		}
-		return new CardMaterial(document.getInteger("id"), document.getInteger("data"));
+		else
+			return new CardMaterial(document.getInteger("id"), document.getInteger("data"));
 	}
 	
 	@Override

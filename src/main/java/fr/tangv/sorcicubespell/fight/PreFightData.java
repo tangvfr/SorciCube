@@ -6,11 +6,11 @@ import org.bson.Document;
 
 public class PreFightData {
 
-	private UUID playerUUID1;
-	private UUID playerUUID2;
-	private int player1DeckUse;
-	private int player2DeckUse;
-	private FightType fightType;
+	private final UUID playerUUID1;
+	private final UUID playerUUID2;
+	private final int player1DeckUse;
+	private final int player2DeckUse;
+	private final FightType fightType;
 	
 	public PreFightData(UUID playerUUID1,
 					UUID playerUUID2,

@@ -9,8 +9,8 @@ import fr.tangv.sorcicubespell.player.DeckCards;
 
 public class FightDeck {
 
-	private Vector<Card> cardsUse;
-	private ConcurrentLinkedQueue<Card> cards;
+	private final Vector<Card> cardsUse;
+	private final ConcurrentLinkedQueue<Card> cards;
 	
 	public FightDeck(DeckCards deck) throws Exception {
 		if (!deck.isComplet())
@@ -20,12 +20,12 @@ public class FightDeck {
 		mixCards();
 	}
 	
-	private void mixCards() {
+	private synchronized void mixCards() {
 		while (!cardsUse.isEmpty())
 			cards.add(cardsUse.remove((int) (cardsUse.size()*Math.random())));
 	}
 	
-	public Card pickCard() {
+	public synchronized Card pickCard() {
 		if (cards.isEmpty())
 			mixCards();
 		return cards.remove().clone();

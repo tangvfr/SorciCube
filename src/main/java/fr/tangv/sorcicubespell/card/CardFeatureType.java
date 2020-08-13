@@ -32,8 +32,8 @@ public enum CardFeatureType {
 	GIVE_FEATURE_CART(TypeValue.TEXT, true),
 	EXECUTE(TypeValue.TEXT, true);
 	
-	private TypeValue typeValue;
-	private boolean show;
+	private final TypeValue typeValue;
+	private final boolean show;
 	
 	private CardFeatureType(TypeValue typeValue, boolean show) {
 		this.typeValue = typeValue;

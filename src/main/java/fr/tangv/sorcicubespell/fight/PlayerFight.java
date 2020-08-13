@@ -30,27 +30,33 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 
 public class PlayerFight {
 
-	private Inventory invHistoric;
-	private Inventory invViewEntity;
-	private Fight fight;
-    private PlayerFight enemie;
-	private Player player;
-	private FightDeck deck;
-	private boolean first;
-	private int mana;
-	private int manaBoost;
-	private int health;
-	private int cardSelected;
-	private FightEntity[] entity;
-	private FightHero hero;
-	private Location locBase;
-	private Location[] entityLoc;
-	private Card[] cardHand;
-	private ItemStack itemNextRound;
-	private ItemStack itemNone;
-	private ItemStack itemNull;
-	private ItemStack itemStickView;
-	private FightEntity entityAttack;
+	private final Inventory invHistoric;
+	private final Inventory invViewEntity;
+	private final Fight fight;
+    private volatile PlayerFight enemie;
+	private final Player player;
+	private final FightDeck deck;
+	private final boolean first;
+	private volatile int mana;
+	private volatile int manaBoost;
+	private volatile int health;
+	private volatile int cardSelected;
+	private volatile FightEntity[] entity;
+	private volatile FightHero hero;
+	private final Location locBase;
+	private final Location[] entityLoc;
+	private final Card[] cardHand;
+	private final ItemStack itemNextRound;
+	private final ItemStack itemNone;
+	private final ItemStack itemNull;
+	private final ItemStack itemStickView;
+	private volatile FightEntity entityAttack;
+	
+	//scoreboard
+	private volatile String[] lastScoreMy;
+	private volatile String[] lastScoreEnemie;
+	private volatile Scoreboard sc;
+	private volatile ScoreboardObjective scob;
 	
 	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first) {
 		this.fight = fight;
@@ -80,7 +86,7 @@ public class PlayerFight {
 		this.pickCard(3);
 		//historique
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
-		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DROPPER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
+		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
 	}
 	
 	public void nextRoundFightEntity() {
@@ -383,11 +389,6 @@ public class PlayerFight {
 		score.setScore(scoreNumber);
 		sendPacket(new PacketPlayOutScoreboardScore(score)/*change*/);
 	}
-	
-	private String[] lastScoreMy;
-	private String[] lastScoreEnemie;
-	private Scoreboard sc;
-	private ScoreboardObjective scob;
 	
 	public void createScoreboard() {
 		this.sc = new Scoreboard();

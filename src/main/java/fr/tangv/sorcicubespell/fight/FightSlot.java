@@ -19,8 +19,8 @@ public enum FightSlot {
 		return null;
 	}
 	
-	private Integer slotInv;
-	private Integer slotRaw;
+	private final Integer slotInv;
+	private final Integer slotRaw;
 	
 	private FightSlot(int slotInv, int slotRaw) {
 		this.slotInv = slotInv;

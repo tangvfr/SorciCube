@@ -4,15 +4,13 @@ import org.bson.Document;
 
 public class CardFeature {
 
-	private CardFeatureType type;
-	private CardValue value;
+	private final CardFeatureType type;
+	private volatile CardValue value;
 	
 	public CardFeature(CardFeatureType type, CardValue value) {
 		this.type = type;
 		if (value.getType() == type.getTypeValue())
 			this.setValue(value);
-		else if (type == CardFeatureType.SKIN && value.isString())
-			this.setValue(new CardValue(new CardSkin(value.asString())));
 		else
 			this.setValue(CardValue.createCardValue(type.getTypeValue()));
 	}

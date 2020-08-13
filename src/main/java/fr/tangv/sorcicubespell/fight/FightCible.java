@@ -22,8 +22,8 @@ public enum FightCible {
 	ENTITY_4_ENEMIE(false, false),
 	ENTITY_5_ENEMIE(false, false);
 	
-	private boolean ally;
-	private boolean hero;
+	private final boolean ally;
+	private final boolean hero;
 	
 	private FightCible(boolean hero, boolean ally) {
 		this.hero = hero;
@@ -40,9 +40,9 @@ public enum FightCible {
 	
 	//static lists
 	
-	private static ConcurrentHashMap<CardCible, Vector<FightCible>> lists;
-	private static Vector<FightCible> allEntityAlly;
-	private static Vector<FightCible> allEntityEnemie;
+	private static final ConcurrentHashMap<CardCible, Vector<FightCible>> lists;
+	private static final Vector<FightCible> allEntityAlly;
+	private static final Vector<FightCible> allEntityEnemie;
 	
 	static {
 		lists = new ConcurrentHashMap<CardCible, Vector<FightCible>>();

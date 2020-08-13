@@ -18,11 +18,11 @@ import fr.tangv.sorcicubespell.util.RenderException;
 
 public class ManagerFight implements Runnable {
 	
-	private SorciCubeSpell sorci;
-	private ConcurrentHashMap<UUID, PreFight> preFights;
-	private Vector<Fight> fights;
-	private Vector<FightArena> arena;
-	private ConcurrentHashMap<Player, PlayerFight> playerFights;
+	private final SorciCubeSpell sorci;
+	private final ConcurrentHashMap<UUID, PreFight> preFights;
+	private final Vector<Fight> fights;
+	private final Vector<FightArena> arena;
+	private final ConcurrentHashMap<Player, PlayerFight> playerFights;
 	
 	public ManagerFight(SorciCubeSpell sorci) throws Exception {
 		this.sorci = sorci;

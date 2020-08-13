@@ -34,14 +34,14 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardTeam;
 
 public class FightEntity extends FightHead {
 
-	private EntityPlayer entityPlayer;
-	private EntityArmorStand entityStat;
-	private UUID uuid;
-	private CardEntity card;
-	private CardSkin skin;
-	private boolean isSend;
-	private boolean attackIsPossible;
-	private boolean attacked;
+	private final EntityPlayer entityPlayer;
+	private final EntityArmorStand entityStat;
+	private final UUID uuid;
+	private volatile CardEntity card;
+	private volatile CardSkin skin;
+	private volatile boolean isSend;
+	private volatile boolean attackIsPossible;
+	private volatile boolean attacked;
 	
 	public FightEntity(PlayerFight owner, Location loc) {
 		super(owner, loc);
@@ -69,9 +69,14 @@ public class FightEntity extends FightHead {
 		if (!isDead()) {
 			this.entityPlayer.yaw += rotate;
 			this.entityPlayer.lastYaw = this.entityPlayer.yaw;
-			Bukkit.broadcastMessage(owner.getPlayer().getName()+", Rotate: "+rotate);
+			Bukkit.broadcastMessage(owner.getPlayer().getName()+", Rotate: "+this.entityPlayer.yaw);
 			removePlayer();
-			spawn();
+			Bukkit.getScheduler().runTaskLater(owner.getFight().getSorci(), new Runnable() {
+				@Override
+				public void run() {
+					spawn();
+				}
+			}, 1);
 		}
 	}
 	
@@ -107,11 +112,7 @@ public class FightEntity extends FightHead {
 	
 	private GameProfile skinToGameProfil(String name) {
 		GameProfile gameProfile = new GameProfile(uuid, name);
-		gameProfile.getProperties().clear();
-		if (skin.isLastVersion())
-			gameProfile.getProperties().put("textures", new Property("textures", skin.getTexture()));
-		else
-			gameProfile.getProperties().put("textures", new Property("textures", skin.getTexture(), skin.getSignature()));
+		gameProfile.getProperties().put("textures", new Property("textures", skin.getTexture(), skin.getSignature()));
 		return gameProfile;
 	}
 	

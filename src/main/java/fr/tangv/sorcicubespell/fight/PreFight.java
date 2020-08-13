@@ -8,8 +8,8 @@ import fr.tangv.sorcicubespell.util.Cooldown;
 
 public class PreFight extends PreFightData {
 
-	private Player player1;
-	private Cooldown cooldown;
+	private final Player player1;
+	private final Cooldown cooldown;
 	
 	public static PreFight createPreFight(Player player, PreFightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))

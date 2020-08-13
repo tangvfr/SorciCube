@@ -17,13 +17,13 @@ import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
 public abstract class FightHead {
 
-	protected PlayerFight owner;
-	protected Fight fight;
-	protected Location loc;
-	protected WorldServer world;
-	private EntityArmorStand entityName;
-	private EntityArmorStand entityHead;
-	private net.minecraft.server.v1_9_R2.ItemStack headItem;
+	protected final PlayerFight owner;
+	protected final Fight fight;
+	protected final Location loc;
+	protected final WorldServer world;
+	private final EntityArmorStand entityName;
+	private final EntityArmorStand entityHead;
+	private volatile net.minecraft.server.v1_9_R2.ItemStack headItem;
 	
 	public FightHead(PlayerFight owner, Location loc) {
 		this.fight = owner.getFight();

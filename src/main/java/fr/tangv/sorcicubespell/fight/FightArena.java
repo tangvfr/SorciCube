@@ -8,12 +8,12 @@ import org.bukkit.util.Vector;
 
 public class FightArena {
 
-	private String name;
-	private World world;
-	private Location firstBase;
-	private Location[] firstEntity;
-	private Location secondBase;
-	private Location[] secondEntity;
+	private final String name;
+	private final World world;
+	private final Location firstBase;
+	private final Location[] firstEntity;
+	private final Location secondBase;
+	private final Location[] secondEntity;
 	
 	public FightArena(String name, ConfigurationSection config) throws Exception {
 		this.name = name;

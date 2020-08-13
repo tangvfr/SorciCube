@@ -6,8 +6,8 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class CardEntity {
 
-	private Card card;
-	private CardSkin skin;
+	private final Card card;
+	private final CardSkin skin;
 	
 	public CardEntity(Card card) throws Exception {
 		if (card.getType() != CardType.ENTITY)

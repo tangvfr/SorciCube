@@ -7,12 +7,10 @@ import org.bson.Document;
 
 public class CardFeatures {
 
-	private ConcurrentHashMap<CardFeatureType, CardFeature> features;
-	private boolean warning;
+	private final ConcurrentHashMap<CardFeatureType, CardFeature> features;
 	
 	public CardFeatures() {
 		this.features = new ConcurrentHashMap<CardFeatureType, CardFeature>();
-		this.warning = false;
 	}
 
 	public boolean hasFeature(CardFeatureType type) {
@@ -43,10 +41,6 @@ public class CardFeatures {
 		return this.features.size();
 	}
 	
-	public boolean isWarning() {
-		return warning;
-	}
-	
 	public Document toDocument() {
 		Document document = new Document();
 		document.append("version", 2);
@@ -65,8 +59,6 @@ public class CardFeatures {
 				if (type != null)
 					features.putFeature(CardFeature.toCartFeature(type, document.get(key, Document.class)));
 			}
-			if (features.hasFeature(CardFeatureType.SKIN))
-				features.warning = features.getFeature(CardFeatureType.SKIN).getValue().asSkin().isLastVersion();
 		}
 		return features;
 	}

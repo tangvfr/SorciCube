@@ -4,8 +4,8 @@ import org.bson.Document;
 
 public class CardValue {
 
-	private Object value;
-	private TypeValue type;
+	private final Object value;
+	private final TypeValue type;
 	
 	public static CardValue createCardValue(TypeValue type) {
 		switch (type) {

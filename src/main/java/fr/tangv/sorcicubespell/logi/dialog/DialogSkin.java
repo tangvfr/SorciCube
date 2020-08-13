@@ -1,7 +1,6 @@
 package fr.tangv.sorcicubespell.logi.dialog;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
 import java.awt.Window;
@@ -33,14 +32,13 @@ public abstract class DialogSkin extends DialogBase<JTextField> {
 			JLabel labTexture = new JLabel(new ImageIcon(skin.toImageTexture()));
 			labTexture.setBorder(new EmptyBorder(0, 0, 0, 30));
 			panel.add(labTexture);
-			if (!skin.isLastVersion())
-				panel.add(new JLabel(new ImageIcon(head ? skin.toImageHead() : skin.toImageSkin())));
-			else {
+			panel.add(new JLabel(new ImageIcon(head ? skin.toImageHead() : skin.toImageSkin())));
+			/*if (skin.isLastVersion()) {
 				JLabel pan = new JLabel("Error Invalid Skin");
 				pan.setSize(200, 200);
 				pan.setBackground(Color.RED);
 				panel.add(pan);
-			}
+			}*/
 		} catch (Exception e) {}
 		this.panUp.add(panel, BorderLayout.SOUTH);
 		panDown.add(new CompEmpty(10, 10));
