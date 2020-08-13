@@ -32,7 +32,7 @@ public abstract class FightHead {
 		//create entity
 		this.world = ((CraftWorld) loc.getWorld()).getHandle();
 		this.entityName = createArmorStand("", 0.1D);
-		this.entityHead = createArmorStand("", 1.1D);
+		this.entityHead = createArmorStand("", 1.4D);
 	}
 	
 	protected EntityArmorStand createArmorStand(String name, double decal) {
