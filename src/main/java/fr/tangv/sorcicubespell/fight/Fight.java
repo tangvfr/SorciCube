@@ -152,7 +152,7 @@ public class Fight {
 	}
 	
 	private final static double TOLERANCE = 4.6;
-	private final static double TOLERANCE_ENTITY = 1.2;
+	private final static double TOLERANCE_ENTITY = 1.6;
 	
 	private boolean locEntityInTolerance(Location locPos, Location locBase) {
 		Location loc = locBase.clone();
