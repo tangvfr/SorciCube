@@ -281,12 +281,6 @@ public class Fight {
 		player.setMana(mana+player.getManaBoost());
 		player.setManaBoost(0);
 		player.pickCard(1);
-		//test
-		for (int i = 0; i < 5; i++) {
-			float rotate = 10F;
-			player.getEntity(i).testRotate(rotate);
-			player.getEnemie().getEntity(i).testRotate(rotate);
-		}
 		//enemie
 		player.getEnemie().setMana(0);
 		player.getEnemie().setCardSelect(-1);

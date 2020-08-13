@@ -86,7 +86,7 @@ public class PlayerFight {
 		this.pickCard(3);
 		//historique
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
-		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
+		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DROPPER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
 	}
 	
 	public void nextRoundFightEntity() {
