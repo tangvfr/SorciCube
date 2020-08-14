@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.util.Vector;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_9_R2.scoreboard.CraftScoreboard;
@@ -23,8 +24,8 @@ import fr.tangv.sorcicubespell.util.RenderException;
 import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntity;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_9_R2.PlayerInteractManager;
@@ -52,7 +53,6 @@ public class FightEntity extends FightHead {
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		this.entityPlayer = new EntityPlayer(server, world, createProfil(""), new PlayerInteractManager(world));
 		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), 0);
-		this.entityPlayer.mo
 		//end init player
 		this.isSend = false;
 		this.attackIsPossible = false;
@@ -82,6 +82,17 @@ public class FightEntity extends FightHead {
 		//send player
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
+		
+		//move player
+		Vector direction = loc.getDirection().clone().multiply(-2);
+		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(
+				entityPlayer.getId(),
+				(long) (direction.getX()*32)*128,
+				0,
+				(long) (direction.getZ()*32)*128,
+				false
+		));
+		
 		//send team
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));

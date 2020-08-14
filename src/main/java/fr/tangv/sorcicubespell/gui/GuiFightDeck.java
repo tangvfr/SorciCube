@@ -53,6 +53,9 @@ public class GuiFightDeck extends GuiDecks {
 						
 					case DUEL:
 						/*
+							
+							- path bug no view player and head and no tp, path in init Fight
+					
 							+ path rotate player
 						
 							+ path problème pick card
