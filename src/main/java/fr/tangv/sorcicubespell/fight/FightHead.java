@@ -11,7 +11,6 @@ import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityEquipment;
-import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.WorldServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
@@ -32,7 +31,7 @@ public abstract class FightHead {
 		//create entity
 		this.world = ((CraftWorld) loc.getWorld()).getHandle();
 		this.entityName = createArmorStand("", 0.1D);
-		this.entityHead = createArmorStand("", 1.4D);
+		this.entityHead = createArmorStand("", 1.3D);
 	}
 	
 	protected EntityArmorStand createArmorStand(String name, double decal) {
@@ -63,12 +62,6 @@ public abstract class FightHead {
 		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
 	}
 	
-	public void rotateHead(float angle) {
-		entityHead.yaw += angle;
-		entityHead.yaw = 360.0F%360.0F;
-		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityHead, (byte) ((entityHead.yaw*256.0F)/360.0F)));
-	}
-	
 	public void showHead(ItemStack item) {
 		headItem = CraftItemStack.asNMSCopy(item);
 		sendHeadEntity(entityHead);
@@ -82,7 +75,6 @@ public abstract class FightHead {
 	public void setHead(String head) {
 		sendHead(entityHead, head, true);
 		sendHeadEntity(entityHead);
-		rotateHead(0F);
 	}
 	
 	public void setName(String name) {

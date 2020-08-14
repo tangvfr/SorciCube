@@ -51,7 +51,8 @@ public class FightEntity extends FightHead {
 		this.skin = null;
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		this.entityPlayer = new EntityPlayer(server, world, createProfil(""), new PlayerInteractManager(world));
-		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw()*1.4F, 0);
+		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), 0);
+		this.entityPlayer.mo
 		//end init player
 		this.isSend = false;
 		this.attackIsPossible = false;
@@ -81,7 +82,6 @@ public class FightEntity extends FightHead {
 		//send player
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
-		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256.0F)/360.0F)));
 		//send team
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));

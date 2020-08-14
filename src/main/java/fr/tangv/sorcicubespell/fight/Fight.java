@@ -132,11 +132,13 @@ public class Fight {
 					nextRound();
 					return;
 				}
+				//bossbar
 				bossBar.setTitle(titleBossBar
 						.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining()))
 						.replace("{round}", Integer.toString(round+1))
 					);
 				bossBar.setProgress(cooldownRound.getProgess());
+				//player
 				this.updatePlayer(player1);
 				this.updatePlayer(player2);
 			}
