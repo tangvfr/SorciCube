@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
+import fr.tangv.sorcicubespell.command.CommandRefresh;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
 import fr.tangv.sorcicubespell.manager.ManagerCreatorFight;
@@ -22,7 +23,6 @@ import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
 import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.manager.ManagerPreFightData;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
-import fr.tangv.sorcicubespell.refresh.CommandRefresh;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
 import fr.tangv.sorcicubespell.util.LibLoader;
