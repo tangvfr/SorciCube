@@ -63,11 +63,13 @@ public class GuiFightDeck extends GuiDecks {
 							/ (path bug incitement) after test > give feature
 						
 							- add after and add anti afk
-							- add system level and experience
 							
 							-/add change one card by round
 							
 							-/buy card for 5 mana
+							
+							
+							last - add system level and experience
 						*/
 						break;
 				}
