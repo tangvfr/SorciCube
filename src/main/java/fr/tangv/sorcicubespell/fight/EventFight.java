@@ -331,7 +331,7 @@ public class EventFight implements Listener {
 								break;
 								
 							case SWAP_CARD:
-								if (player.hasAlreadySwap())
+								if (!player.hasAlreadySwap())
 									player.openInvSwap();
 								break;
 								
