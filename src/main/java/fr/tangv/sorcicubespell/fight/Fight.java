@@ -32,6 +32,7 @@ public class Fight {
 	protected static final int start_health = 30;
 	
 	protected final int max_mana;
+	private final int start_mana;
 	private final SorciCubeSpell sorci;
 	private final FightType fightType;
 	private final PlayerFight player1;
@@ -55,6 +56,7 @@ public class Fight {
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
 		this.sorci = sorci;
 		this.max_mana = sorci.getParameter().getInt("max_mana");
+		this.start_mana = sorci.getParameter().getInt("start_mana");
 		this.firstPlay = true;
 		this.isStart = false;
 		this.isDeleted = false;
@@ -272,9 +274,7 @@ public class Fight {
 		round += 1;
 		cooldownRound.start();
 		this.firstPlay = round%2 == 0;
-		int mana = (round/2)+1;
-		if (round == 1)
-			mana = 2;
+		int mana = ((round+1)/2)+start_mana;
 		if (mana > max_mana)
 			mana = max_mana;
 		player1.getPlayer().closeInventory();
