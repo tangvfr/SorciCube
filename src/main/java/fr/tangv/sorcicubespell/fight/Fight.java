@@ -52,7 +52,7 @@ public class Fight {
 	private volatile Player winner;
 	private volatile boolean isDeleted;
 	
-	public Fight(SorciCubeSpell sorci, PreFight preFight, Player player2Arg) throws Exception {
+	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
 		this.sorci = sorci;
 		this.max_mana = sorci.getParameter().getInt("max_mana");
 		this.firstPlay = true;
@@ -76,10 +76,10 @@ public class Fight {
 		//player1 start one
 		if (Math.random() < 0.5) {
 			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), true);
-			this.player2 = createPlayerFight(player2Arg, preFight.getPlayer2DeckUse(), false);
+			this.player2 = createPlayerFight(preFight.getPlayer2(), preFight.getPlayer2DeckUse(), false);
 		} else {
 			this.player2 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), false);
-			this.player1 = createPlayerFight(player2Arg, preFight.getPlayer2DeckUse(), true);
+			this.player1 = createPlayerFight(preFight.getPlayer2(), preFight.getPlayer2DeckUse(), true);
 		}
 		//init player
 		player1.initFightHead();

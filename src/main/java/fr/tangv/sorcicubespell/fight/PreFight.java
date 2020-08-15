@@ -9,7 +9,8 @@ import fr.tangv.sorcicubespell.util.Cooldown;
 public class PreFight extends PreFightData {
 
 	private final Player player1;
-	private final Cooldown cooldown;
+	private volatile Player player2;
+	private volatile Cooldown cooldown;
 	
 	public static PreFight createPreFight(Player player, PreFightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))
@@ -25,8 +26,19 @@ public class PreFight extends PreFightData {
 					FightType fightType) {
 		super(player1.getUniqueId(), playerUUID2, player1DeckUse, player2DeckUse, fightType);
 		this.player1 = player1;
+		this.player2 = null;
 		this.cooldown = new Cooldown(1_000);
 		cooldown.start();
+	}
+	
+	public void complet(Player player2) {
+		this.player2 = player2;
+		this.cooldown = new Cooldown(500);
+		cooldown.start();
+	}
+	
+	public boolean isComplet() {
+		return player2 != null;
 	}
 	
 	public boolean updateOutOfDate() {
@@ -35,6 +47,10 @@ public class PreFight extends PreFightData {
 	
 	public Player getPlayer1() {
 		return player1;
+	}
+	
+	public Player getPlayer2() {
+		return player2;
 	}
 	
 }

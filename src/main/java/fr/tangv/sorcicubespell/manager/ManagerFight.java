@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,16 +55,7 @@ public class ManagerFight implements Runnable {
 	public void playerJoin(Player player) {
 		if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
-			preFights.remove(preFight.getPlayerUUID2());
-			try {
-				fights.add(new Fight(sorci, preFight, player));
-				return;
-			} catch (Exception e) {
-				Bukkit.getLogger().warning(RenderException.renderException(e));
-				sorci.sendPlayerToServer(preFight.getPlayer1(), sorci.getNameServerLobby());
-				sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
-				return;
-			}
+			preFight.complet(player);
 		} else {
 			PreFightData preFightData = sorci.getManagerPreFightData().getPreFightData(player.getUniqueId());
 			if (preFightData != null) {
@@ -94,13 +86,35 @@ public class ManagerFight implements Runnable {
 			}
 	}
 
+	private void sendLobbyPlayer(Player player) {
+		if (player.isOnline())
+			sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
+	}
+	
 	@Override
 	public void run() {
-		for (PreFight preFight : preFights.values())
+		for (PreFight preFight : new ArrayList<PreFight>(this.preFights.values())) {
 			if (preFight.updateOutOfDate()) {
 				preFights.remove(preFight.getPlayerUUID2());
-				sorci.sendPlayerToServer(preFight.getPlayer1(), sorci.getNameServerLobby());
+				if (preFight.isComplet()) {
+					if (!preFight.getPlayer1().isOnline() || !preFight.getPlayer2().isOnline()) {
+						sendLobbyPlayer(preFight.getPlayer1());
+						sendLobbyPlayer(preFight.getPlayer2());
+					} else {
+						try {
+							fights.add(new Fight(sorci, preFight));
+						} catch (Exception e) {
+							Bukkit.getLogger().warning(RenderException.renderException(e));
+							sendLobbyPlayer(preFight.getPlayer1());
+							sendLobbyPlayer(preFight.getPlayer2());
+						}
+					}
+				} else {
+					sendLobbyPlayer(preFight.getPlayer1());
+				}
 			}
+		}
+		
 		for (int i = 0; i < fights.size(); i++) {
 			try {
 				Fight fight = fights.get(i);

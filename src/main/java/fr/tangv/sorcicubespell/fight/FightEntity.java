@@ -26,6 +26,7 @@ import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntity;
 import net.minecraft.server.v1_9_R2.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_9_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_9_R2.PlayerInteractManager;
@@ -66,6 +67,16 @@ public class FightEntity extends FightHead {
 		this.isSend = false;
 	}
 	
+	private void sendMovePlayer(Vector vec) {
+		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(
+				entityPlayer.getId(),
+				(long) (vec.getX()*32)*128,
+				(long) (vec.getY()*32)*128,
+				(long) (vec.getZ()*32)*128,
+				false
+		));
+	}
+	
 	private void spawnPlayer() {
 		try {
 			Field field = entityPlayer.getClass().getSuperclass().getDeclaredField("bS");
@@ -82,17 +93,15 @@ public class FightEntity extends FightHead {
 		//send player
 		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
-		
+		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
 		//move player
-		Vector direction = loc.getDirection().clone().multiply(-2);
-		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(
-				entityPlayer.getId(),
-				(long) (direction.getX()*32)*128,
-				0,
-				(long) (direction.getZ()*32)*128,
-				false
-		));
-		
+		sendMovePlayer(loc.getDirection().clone().multiply(-2));
+		Bukkit.getScheduler().runTaskLaterAsynchronously(owner.getFight().getSorci(), new Runnable() {
+			@Override
+			public void run() {
+				sendMovePlayer(loc.getDirection().clone().multiply(2));
+			}
+		}, 1);
 		//send team
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
