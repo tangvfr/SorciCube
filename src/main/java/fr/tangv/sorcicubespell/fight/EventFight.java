@@ -214,11 +214,11 @@ public class EventFight implements Listener {
 										if (!entity.isSelectable()) {
 											try {
 												player.removeMana(card.getMana());
-												entity.setCard(new CardEntity(card));
 												player.setCardHand(player.getCardSelect(), null);
 												player.setCardSelect(-1);
 												player.addHistoric(card, player);
 												player.getEnemie().addHistoric(card, player);
+												entity.setCard(new CardEntity(card));
 												player.initHotBar();
 											} catch (Exception e1) {
 												Bukkit.getLogger().warning(RenderException.renderException(e1));
@@ -228,6 +228,10 @@ public class EventFight implements Listener {
 								} else {
 									if (!card.getCible().hasChoose()) {
 										player.removeMana(card.getMana());
+										player.setCardHand(player.getCardSelect(), null);
+										player.setCardSelect(-1);
+										player.addHistoric(card, player);
+										player.getEnemie().addHistoric(card, player);
 										player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
 											@Override
 											public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
@@ -235,20 +239,16 @@ public class EventFight implements Listener {
 												return true;
 											}
 										});
-										player.setCardHand(player.getCardSelect(), null);
-										player.setCardSelect(-1);
-										player.addHistoric(card, player);
-										player.getEnemie().addHistoric(card, player);
 										player.initHotBar();
 									} else {
 										FightHead head = player.getForCible(cible);
 										if (player.testHeadValidForAttack(card, head)) {
 											player.removeMana(card.getMana());
-											FightSpell.startActionSpell(player, card.getFeatures(), head);
 											player.setCardHand(player.getCardSelect(), null);
 											player.setCardSelect(-1);
 											player.addHistoric(card, player);
 											player.getEnemie().addHistoric(card, player);
+											FightSpell.startActionSpell(player, card.getFeatures(), head);
 											player.initHotBar();
 										}
 									}

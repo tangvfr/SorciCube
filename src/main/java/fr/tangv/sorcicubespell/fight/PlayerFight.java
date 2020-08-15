@@ -339,6 +339,7 @@ public class PlayerFight {
 
 	public void setManaBoost(int manaBoost) {
 		this.manaBoost = manaBoost;
+		this.hero.updateStat();
 	}
 	
 	public void addManaBoost(int manaBoost) {
