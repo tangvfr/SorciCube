@@ -86,8 +86,8 @@ gui_player:
   stick_view_desc: "§eClick on entity"
   buy: "§bBuy new card for 5 mana."
   buy_desc: "§eClick for buy"
-  swap: "§bBuy new card for 5 mana."
-  swap_desc: "§eClick for buy"
+  swap: "§bSwap card."
+  swap_desc: "§eClick for swap"
 #View Fight
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"
