@@ -60,11 +60,15 @@ public class SorciCubeSpell extends JavaPlugin {
 			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"), this);
 			//is lobby
 			this.isLobby = getParameter().getBoolean("is_lobby");
-			//init Config
-			this.message = new Config(this, "message.yml");
-			this.parameter = new Config(this, "parameter.yml");
-			this.enumConfig = new Config(this, "enum.yml");
-			this.guiConfig = new Config(this, "gui.yml");
+			try {
+				//init Config
+				this.message = new Config(this, "message.yml");
+				this.parameter = new Config(this, "parameter.yml");
+				this.enumConfig = new Config(this, "enum.yml");
+				this.guiConfig = new Config(this, "gui.yml");
+			} catch (Exception e) {
+				throw new Exception("Error In Config");
+			}
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
 			//init for change server
