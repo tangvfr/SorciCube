@@ -58,8 +58,6 @@ public class SorciCubeSpell extends JavaPlugin {
 		try {
 			//init lib
 			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"), this);
-			//is lobby
-			this.isLobby = getParameter().getBoolean("is_lobby");
 			try {
 				//init Config
 				this.message = new Config(this, "message.yml");
@@ -69,6 +67,8 @@ public class SorciCubeSpell extends JavaPlugin {
 			} catch (Exception e) {
 				throw new Exception("Error In Config");
 			}
+			//is lobby
+			this.isLobby = getParameter().getBoolean("is_lobby");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
 			//init for change server
