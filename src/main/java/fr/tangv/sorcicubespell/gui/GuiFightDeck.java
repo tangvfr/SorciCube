@@ -56,16 +56,11 @@ public class GuiFightDeck extends GuiDecks {
 							
 							* path bug no view player and head and no tp, path in init Fight
 							
-							- add shock
+							/path finish add change one card by round
 							
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						
 							- add after and add anti afk
-							
-							finish add change one card by round
-							
-							+ buy card for 5 mana
-							
 							
 							last - add system level and experience
 						*/
