@@ -15,7 +15,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
 import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardRender;
@@ -186,6 +185,7 @@ public class FightEntity extends FightHead {
 	public void updateStat() {
 		if (!isDead()) {
 			String string = CardRender.renderStatCard(card.getCard());
+			Bukkit.broadcastMessage("immobile: "+card.isImmobilization());
 			if (card.isImmobilization())
 				string += "  §b\u2744";
 			if (card.isStunned())

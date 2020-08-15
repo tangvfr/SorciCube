@@ -76,7 +76,7 @@ public class GuiFightDeck extends GuiDecks {
 					player.teleport(loc);
 			} else {
 				player.sendMessage(sorci.getMessage().getString("message_invalid_deck"));
-				player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1F, 1F);
+				player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1.0F, 1.5F);
 			}
 		}
 	}

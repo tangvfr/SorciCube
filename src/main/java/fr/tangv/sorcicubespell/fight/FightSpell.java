@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 
 import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardFeatures;

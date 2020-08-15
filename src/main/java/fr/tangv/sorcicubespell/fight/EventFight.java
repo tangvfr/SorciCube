@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.card.CardEntity;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
@@ -254,6 +254,7 @@ public class EventFight implements Listener {
 									}
 								}
 							} else {
+								player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1.0F, 1.5F);
 								player.getPlayer().sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
 							}
 							player.setEntityAttack(null);

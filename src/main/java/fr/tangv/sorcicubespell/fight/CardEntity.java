@@ -1,8 +1,15 @@
-package fr.tangv.sorcicubespell.card;
+package fr.tangv.sorcicubespell.fight;
 
 import java.util.UUID;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardFeature;
+import fr.tangv.sorcicubespell.card.CardFeatureType;
+import fr.tangv.sorcicubespell.card.CardFeatures;
+import fr.tangv.sorcicubespell.card.CardSkin;
+import fr.tangv.sorcicubespell.card.CardType;
+import fr.tangv.sorcicubespell.card.CardValue;
 
 public class CardEntity {
 
