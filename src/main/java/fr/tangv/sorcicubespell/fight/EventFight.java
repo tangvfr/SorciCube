@@ -263,8 +263,6 @@ public class EventFight implements Listener {
 							} else {
 								sendMessageInsufficientMana(player.getPlayer());
 							}
-							player.setEntityAttack(null);
-							player.showEntityAttackPossible();
 						}
 						//end cards action
 					}
@@ -288,7 +286,7 @@ public class EventFight implements Listener {
 				if (player.canPlay()) {
 					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
 						//swap
-						return;
+						//return;
 					}
 					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
 					if (slot != null)
