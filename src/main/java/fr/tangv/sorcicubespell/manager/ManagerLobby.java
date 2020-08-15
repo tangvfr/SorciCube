@@ -69,10 +69,10 @@ public class ManagerLobby implements Listener {
 		player.setMaxHealth(20);
 		player.setHealth(20);
 		player.setCollidable(false);
-		teleportPlayerToSpawn(player);
 		Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
 			@Override
 			public void run() {
+				teleportPlayerToSpawn(player);
 				if (sorci.getManagerPlayers().containtPlayer(player))
 					player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
 				else
