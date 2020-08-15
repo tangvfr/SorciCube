@@ -64,7 +64,7 @@ public class ConnectionPanel extends JPanel {
 		//add in centerPan
 		this.centerPan.add(new Label("MongoURI:"));
 		this.centerPan.add(mongoURI);
-		this.centerPan.add(new Label("Database:"));
+		this.centerPan.add(new Label("Collection:"));
 		this.centerPan.add(database);
 		this.centerPan.add(btnConnection);
 		this.centerPan.add(btnReset);
