@@ -81,9 +81,13 @@ gui_player:
   "null": "§fAucune carte"
   none: " "
   next: "§6Next Round"
+  next_desc: "§eClick for action"
   stick_view: "§5View Entity"
   stick_view_desc: "§eClick on entity"
   buy: "§bBuy new card for 5 mana."
+  buy_desc: "§eClick for buy";
+  swap: "§bBuy new card for 5 mana."
+  swap_desc: "§eClick for buy"
 #View Fight
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"
