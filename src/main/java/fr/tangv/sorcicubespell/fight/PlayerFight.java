@@ -340,7 +340,12 @@ public class PlayerFight {
 
 	public void setEnemie(PlayerFight enemie) {
 		this.enemie = enemie;
-		player.showPlayer(enemie.getPlayer());
+		Bukkit.getScheduler().runTask(fight.getSorci(), new Runnable() {
+			@Override
+			public void run() {
+				player.showPlayer(enemie.getPlayer());
+			}
+		});
 	}
 
 	public int getHealth() {

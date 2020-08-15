@@ -101,7 +101,7 @@ public class FightEntity extends FightHead {
 			public void run() {
 				sendMovePlayer(loc.getDirection().clone().multiply(2));
 			}
-		}, 1);
+		}, 20);
 		//send team
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));

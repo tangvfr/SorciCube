@@ -53,20 +53,29 @@ public class ManagerFight implements Runnable {
 	}
 	
 	public void playerJoin(Player player) {
+		boolean kick = true;
 		if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
 			preFight.complet(player);
+			kick = false;
 		} else {
 			PreFightData preFightData = sorci.getManagerPreFightData().getPreFightData(player.getUniqueId());
 			if (preFightData != null) {
 				sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
 				PreFight preFight = PreFight.createPreFight(player, preFightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
-				return;
+				kick = false;
 			}
 		}
-		if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
-			sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
+		if (kick) {
+			if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
+				sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
+		} else {
+			for (Player other : Bukkit.getOnlinePlayers()) {
+				other.hidePlayer(player);
+				player.hidePlayer(other);
+			}
+		}
 	}
 	
 	public void playerQuit(Player player) {

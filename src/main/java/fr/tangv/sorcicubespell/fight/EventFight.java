@@ -7,7 +7,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -137,7 +136,6 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
-		e.getPlayer().sendMessage("yaw:"+((CraftPlayer) e.getPlayer()).getHandle().yaw+" lastYaw:"+((CraftPlayer) e.getPlayer()).getHandle().lastYaw);
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			e.setCancelled(true);
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
@@ -364,10 +362,6 @@ public class EventFight implements Listener {
 		player.setCollidable(false);
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(new ItemStack[4]);
-		for (Player other : Bukkit.getOnlinePlayers()) {
-			other.hidePlayer(player);
-			player.hidePlayer(other);
-		}
 		manager.playerJoin(player);
 	}
 	
