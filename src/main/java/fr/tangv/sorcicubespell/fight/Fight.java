@@ -283,6 +283,7 @@ public class Fight {
 		player.setMana(mana+player.getManaBoost());
 		player.setManaBoost(0);
 		player.pickCard(1);
+		player.setAlreadySwap(false);
 		//enemie
 		player.getEnemie().setMana(0);
 		player.getEnemie().setCardSelect(-1);

@@ -73,12 +73,17 @@ gui_historic:
 #Gui View Entity
 gui_view_entity:
   name: "§5View Entity"
+#Gui Swap Fight
+gui_swap_fight:
+  name: "§5Swap Card"
 #Gui Of Player
 gui_player:
   "null": "§fAucune carte"
   none: " "
   next: "§6Next Round"
   stick_view: "§5View Entity"
+  stick_view_desc: "§eClick on entity"
+  buy: "§bBuy new card for 5 mana."
 #View Fight
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"

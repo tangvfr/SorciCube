@@ -106,9 +106,16 @@ public class EventFight implements Listener {
 	//dynamic
 	
 	private final ManagerFight manager;
+	private final int priceCard;
 
 	public EventFight(ManagerFight manager) {
 		this.manager = manager;
+		this.priceCard = manager.getSorci().getParameter().getInt("price_card");
+	}
+	
+	private void sendMessageInsufficientMana(Player player) {
+		player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1.0F, 1.5F);
+		player.sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
 	}
 	
 	@EventHandler
@@ -254,8 +261,7 @@ public class EventFight implements Listener {
 									}
 								}
 							} else {
-								player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1.0F, 1.5F);
-								player.getPlayer().sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
+								sendMessageInsufficientMana(player.getPlayer());
 							}
 							player.setEntityAttack(null);
 							player.showEntityAttackPossible();
@@ -276,9 +282,14 @@ public class EventFight implements Listener {
 		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
 			e.setCancelled(true);
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
-			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode() ||
-					e.getInventory().hashCode() == player.getInvViewEntity().hashCode()) {
+			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()
+					|| e.getInventory().hashCode() == player.getInvViewEntity().hashCode()
+					|| e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
 				if (player.canPlay()) {
+					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
+						//swap
+						return;
+					}
 					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
 					if (slot != null)
 						switch (slot) {
@@ -308,6 +319,21 @@ public class EventFight implements Listener {
 								
 							case FINISH_ROUND:
 								player.getFight().nextRound();
+								break;
+								
+							case BUY_CARD:
+								if (player.hasMana(priceCard)) {
+									if (player.pickCard(1) > 0)
+										player.removeMana(priceCard);
+								} else {
+									sendMessageInsufficientMana(player.getPlayer());
+								}
+								break;
+								
+							case SWAP_CARD:
+								if (player.hasAlreadySwap()) {
+									player.openInvSwap();
+								}
 								break;
 								
 							default:

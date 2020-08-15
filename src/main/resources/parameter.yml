@@ -19,6 +19,7 @@ cooldown_one_round: 180
 cooldown_end: 10
 max_mana: 12
 start_mana: 2
+price_card: 5
 #server
 server_lobby: "lobby"
 server_fight: "fight"

@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -19,6 +20,7 @@ import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.ItemHead;
+import fr.tangv.sorcicubespell.util.SkullUrl;
 import net.minecraft.server.v1_9_R2.IScoreboardCriteria;
 import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardDisplayObjective;
@@ -30,6 +32,7 @@ import net.minecraft.server.v1_9_R2.ScoreboardScore;
 
 public class PlayerFight {
 
+	private final Inventory invSwap;
 	private final Inventory invHistoric;
 	private final Inventory invViewEntity;
 	private final Fight fight;
@@ -50,8 +53,11 @@ public class PlayerFight {
 	private final ItemStack itemNone;
 	private final ItemStack itemNull;
 	private final ItemStack itemStickView;
+	private final ItemStack itemSwap;
+	private final ItemStack itemBuy;
 	private volatile FightEntity entityAttack;
 	private volatile FightEntity firstSelection;
+	private volatile boolean alreadySwap;
 	
 	//scoreboard
 	private volatile String[] lastScoreMy;
@@ -70,11 +76,14 @@ public class PlayerFight {
 		this.first = first;
 		this.entityAttack = null;
 		this.firstSelection = null;
+		this.alreadySwap = false;
 		//item
 		this.itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, fight.getSorci().gertGuiConfig().getString("gui_player.none"), null, false);
 		this.itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, fight.getSorci().gertGuiConfig().getString("gui_player.null"), null, false);
-		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.next"), null, false);
-		this.itemStickView = ItemBuild.buildItem(Material.BLAZE_ROD, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.stick_view"), null, false);
+		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.next"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.next_desc")), false);
+		this.itemStickView = ItemBuild.buildItem(Material.BLAZE_ROD, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.stick_view"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.stick_view_desc")), false);
+		this.itemBuy = ItemBuild.buildSkull(SkullUrl.QUESTION, 1, fight.getSorci().gertGuiConfig().getString("gui_player.buy"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.buy_desc")), false);
+		this.itemSwap = ItemBuild.buildItem(Material.SHEARS, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.swap"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.swap_desc")), false);
 		//entity loc
 		if (first) {
 			this.locBase = fight.getArena().getFirstBase();
@@ -88,9 +97,18 @@ public class PlayerFight {
 		this.pickCard(3);
 		//historique
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
+		this.invSwap = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_swap_fight.name"));
 		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
 	}
 	
+	public boolean hasAlreadySwap() {
+		return alreadySwap;
+	}
+
+	public void setAlreadySwap(boolean alreadySwap) {
+		this.alreadySwap = alreadySwap;
+	}
+
 	public void nextRoundFightEntity() {
 		for (FightEntity entity : entity)
 			if(!entity.isDead())
@@ -198,6 +216,14 @@ public class PlayerFight {
 	
 	public Inventory getInvHistoric() {
 		return invHistoric;
+	}
+	
+	public void openInvSwap() {
+		player.openInventory(invSwap);
+	}
+	
+	public Inventory getInvSwap() {
+		return invSwap;
 	}
 	
 	public Location getLocBase() {
@@ -520,6 +546,9 @@ public class PlayerFight {
 		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), itemNull(fight.renderCard(getCardHand(3))));
 		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), itemNull(fight.renderCard(getCardHand(4))));
 		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), itemNull(fight.renderCard(getCardHand(5))));
+		//inv in
+		player.getInventory().setItem(FightSlot.BUY_CARD.getSlotInv(), this.itemBuy);
+		player.getInventory().setItem(FightSlot.SWAP_CARD.getSlotInv(), alreadySwap ? null : this.itemSwap);
 		player.updateInventory();
 	}
 	

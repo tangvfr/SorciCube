@@ -12,6 +12,7 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
+import fr.tangv.sorcicubespell.player.PlayerFeature;
 
 public class CommandGiveCard implements CommandExecutor {
 
@@ -40,6 +41,13 @@ public class CommandGiveCard implements CommandExecutor {
 					);
 				} else {
 					if (sorci.isLobby() || !sorci.getManagerFight().getPlayerFights().containsKey(player)) {
+						PlayerFeature feature = sorci.getManagerPlayers().getPlayerFeature(player);
+						if (feature != null) {
+							String uuid = card.getUUID().toString();
+							if (!feature.getCardsUnlocks().contains(uuid))
+								feature.getCardsUnlocks().add(uuid);
+							sorci.getManagerPlayers().update(feature);
+						}
 						player.getInventory().addItem(CardRender.cardToItem(card, sorci));
 					} else {
 						PlayerFight pf = sorci.getManagerFight().getPlayerFights().get(player);

@@ -10,7 +10,9 @@ public enum FightSlot {
 	CARD_6(5, 41),
 	NONE_1(6, 42),
 	STICK_VIEW(7, 43),
-	FINISH_ROUND(8, 44);
+	FINISH_ROUND(8, 44),
+	BUY_CARD(20, 20),
+	SWAP_CARD(24, 24);
 
 	public static FightSlot valueOfRaw(int raw) {
 		for (FightSlot slot : values())

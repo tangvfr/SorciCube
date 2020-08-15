@@ -62,9 +62,9 @@ public class GuiFightDeck extends GuiDecks {
 						
 							- add after and add anti afk
 							
-							-/add change one card by round
+							finish add change one card by round
 							
-							-/buy card for 5 mana
+							+ buy card for 5 mana
 							
 							
 							last - add system level and experience
