@@ -54,6 +54,7 @@ public class FightEntity extends FightHead {
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		this.entityPlayer = new EntityPlayer(server, world, createProfil(""), new PlayerInteractManager(world));
 		this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), 0);
+		//remove fake player of in onlineplayerlist
 		//end init player
 		this.isSend = false;
 		this.attackIsPossible = false;
