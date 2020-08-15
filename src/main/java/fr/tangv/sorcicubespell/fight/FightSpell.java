@@ -255,19 +255,15 @@ public class FightSpell {
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
 				if (cardFeature != null) {
-					Bukkit.broadcastMessage("has cards");
 					for (FightHead head : heads)
 						if (head instanceof FightEntity) {
-							Bukkit.broadcastMessage("ent");
 							FightEntity entity = (FightEntity) head;
 							if (!entity.isDead()) {
-								Bukkit.broadcastMessage("Give Feature:");
 								CardFeatures features = entity.getCard().getCard().getFeatures();
 								for (CardFeature feat : cardFeature.getFeatures().valueFeatures()) {
 									if (features.hasFeature(feat.getType()))
 										features.removeFeature(feat.getType());
 									features.putFeature(feature.clone());
-									Bukkit.broadcastMessage("Feature "+feature.getType().name()+" has "+features.hasFeature(feature.getType()));
 								}
 								entity.updateStat();
 							}
