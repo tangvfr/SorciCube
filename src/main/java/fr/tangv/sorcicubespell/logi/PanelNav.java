@@ -51,6 +51,7 @@ public class PanelNav extends JPanel {
 		this.cartsPanel = cartsPanel;
 		//info
 		this.search = new JTextField();
+		search.setToolTipText("name of card or uuid of card");
 		search.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
