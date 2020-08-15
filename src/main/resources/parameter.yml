@@ -18,6 +18,7 @@ cooldown_below_fight: 10
 cooldown_one_round: 180
 cooldown_end: 10
 max_mana: 12
+start_mana: 2
 #server
 server_lobby: "lobby"
 server_fight: "fight"

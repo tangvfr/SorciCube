@@ -133,13 +133,13 @@ public class PanelNav extends JPanel {
 		if (!name.isEmpty()) {
 			list = new Vector<Card>();
 			for (Card card : listCard)
-				if (card.getName().toLowerCase().contains(name)) {
+				if (card.getName().toLowerCase().contains(name) || card.getUUID().toString().equalsIgnoreCase(name)) {
 					list.add(card);
 				}
 		} else {
 			list = listCard;
 		}
-		this.refrech.setText("Refrech | "+Integer.toString(listCard.size())+" cartds "+Integer.toString(list.size())+" find");
+		this.refrech.setText("Refrech | "+Integer.toString(listCard.size())+" cards "+Integer.toString(list.size())+" find");
 		list.sort(CardComparator.BY_ID);
 		list.sort(sort);
 		this.list.setListData(list);
