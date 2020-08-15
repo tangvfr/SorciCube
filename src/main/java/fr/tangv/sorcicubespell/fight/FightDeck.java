@@ -28,7 +28,9 @@ public class FightDeck {
 	public synchronized Card pickCard() {
 		if (cards.isEmpty())
 			mixCards();
-		return cards.remove().clone();
+		Card card = cards.remove();
+		cardsUse.add(card);
+		return card.clone();
 	}
 	
 }

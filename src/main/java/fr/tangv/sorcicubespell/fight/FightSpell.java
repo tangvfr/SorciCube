@@ -255,8 +255,10 @@ public class FightSpell {
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
 				if (cardFeature != null) {
+					Bukkit.broadcastMessage("has cards");
 					for (FightHead head : heads)
 						if (head instanceof FightEntity) {
+							Bukkit.broadcastMessage("ent");
 							FightEntity entity = (FightEntity) head;
 							if (!entity.isDead()) {
 								Bukkit.broadcastMessage("Give Feature:");

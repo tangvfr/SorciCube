@@ -54,11 +54,9 @@ public class GuiFightDeck extends GuiDecks {
 					case DUEL:
 						/*
 							
-							+ path bug no view player and head and no tp, path in init Fight
-					
-							+ path rotate player
+							* path bug no view player and head and no tp, path in init Fight
 						
-							+ path problème pick card
+							+ test pick card
 						
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						
@@ -66,6 +64,10 @@ public class GuiFightDeck extends GuiDecks {
 						
 							- add after and add anti afk
 							- add system level and experience
+							
+							-/add change one card by round
+							
+							-/buy card for 5 mana
 						*/
 						break;
 				}

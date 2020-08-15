@@ -51,6 +51,7 @@ public class PlayerFight {
 	private final ItemStack itemNull;
 	private final ItemStack itemStickView;
 	private volatile FightEntity entityAttack;
+	private volatile FightEntity firstSelection;
 	
 	//scoreboard
 	private volatile String[] lastScoreMy;
@@ -68,6 +69,7 @@ public class PlayerFight {
 		this.cardSelected = -1;
 		this.first = first;
 		this.entityAttack = null;
+		this.firstSelection = null;
 		//item
 		this.itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, fight.getSorci().gertGuiConfig().getString("gui_player.none"), null, false);
 		this.itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, fight.getSorci().gertGuiConfig().getString("gui_player.null"), null, false);
@@ -105,6 +107,19 @@ public class PlayerFight {
 		for (FightEntity entity : entity)
 			if (!entity.isDead() && entity.attackIsPossible()) 
 				entity.showHead(ItemHead.SELECTABLE_ENTITY_ATTACK);
+	}
+	
+	public boolean hasFirstSelection() {
+		return firstSelection == null;
+	}
+	
+	public FightEntity getFirstSelection() {
+		return this.firstSelection;
+	}
+	
+
+	public void setFirstSelection(FightEntity firstSelection) {
+		this.firstSelection = firstSelection;
 	}
 	
 	public boolean hasEntityAttack() {
