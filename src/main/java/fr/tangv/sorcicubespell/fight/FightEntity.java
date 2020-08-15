@@ -68,6 +68,17 @@ public class FightEntity extends FightHead {
 		this.isSend = false;
 	}
 	
+	private void repeatMove(int number) {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(owner.getFight().getSorci(), new Runnable() {
+			@Override
+			public void run() {
+				sendMovePlayer(loc.getDirection().clone().multiply(0.25));
+				if (number > 1)
+					repeatMove(number-1);
+			}
+		}, 2);
+	}
+	
 	private void sendMovePlayer(Vector vec) {
 		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(
 				entityPlayer.getId(),
@@ -96,13 +107,8 @@ public class FightEntity extends FightHead {
 		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
 		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
 		//move player
-		sendMovePlayer(loc.getDirection().clone().multiply(-2));
-		Bukkit.getScheduler().runTaskLaterAsynchronously(owner.getFight().getSorci(), new Runnable() {
-			@Override
-			public void run() {
-				sendMovePlayer(loc.getDirection().clone().multiply(2));
-			}
-		}, 20);
+		sendMovePlayer(loc.getDirection().clone().multiply(-1.5));
+		repeatMove(6);
 		//send team
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
 		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
