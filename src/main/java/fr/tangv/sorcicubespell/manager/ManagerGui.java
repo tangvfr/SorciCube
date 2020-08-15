@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
-import fr.tangv.sorcicubespell.gui.CommandGuiAdminViewCards;
+import fr.tangv.sorcicubespell.command.CommandGuiAdminViewCards;
 import fr.tangv.sorcicubespell.gui.EventGuiPlayer;
 import fr.tangv.sorcicubespell.gui.GuiAdminViewCards;
 import fr.tangv.sorcicubespell.gui.GuiChangeSort;

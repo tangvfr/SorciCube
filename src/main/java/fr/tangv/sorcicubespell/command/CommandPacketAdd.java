@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.packet;
+package fr.tangv.sorcicubespell.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
+import fr.tangv.sorcicubespell.command.CommandGiveCard;
 import fr.tangv.sorcicubespell.command.CommandRefresh;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
@@ -30,6 +31,7 @@ import fr.tangv.sorcicubespell.util.RenderException;
 
 public class SorciCubeSpell extends JavaPlugin {
 
+	private boolean isLobby;
 	private String nameServerLobby;
 	private String nameServerFight;
 	private String nameServerJump;
@@ -56,6 +58,8 @@ public class SorciCubeSpell extends JavaPlugin {
 		try {
 			//init lib
 			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"), this);
+			//is lobby
+			this.isLobby = getParameter().getBoolean("is_lobby");
 			//init Config
 			this.message = new Config(this, "message.yml");
 			this.parameter = new Config(this, "parameter.yml");
@@ -73,7 +77,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerCards = new ManagerCards(this.mongo);
 			this.managerPlayers = new ManagerPlayers(this);
 			this.managerPreFightData = new ManagerPreFightData(this);
-			if (getParameter().getBoolean("is_lobby")) {
+			if (this.isLobby) {
 				this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 				this.managerClickNPC = new ManagerClickNPC(this);
 				this.managerGuiAdmin = new ManagerGui(this);
@@ -86,6 +90,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			}
 			new ManagerSecurity(this);
 			getCommand("refresh").setExecutor(new CommandRefresh(this));
+			getCommand("givecard").setExecutor(new CommandGiveCard(this));
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);
@@ -123,6 +128,10 @@ public class SorciCubeSpell extends JavaPlugin {
 			format += min+parameter.getString("format_time_min");
 		format += sec+parameter.getString("format_time_sec");
 		return format;
+	}
+	
+	public boolean isLobby() {
+		return isLobby;
 	}
 	
 	public String getNameServerLobby() {

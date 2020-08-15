@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.packet;
+package fr.tangv.sorcicubespell.command;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -12,6 +12,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
+import fr.tangv.sorcicubespell.packet.PacketCards;
 
 public class CommandPacketGive implements CommandExecutor, TabCompleter {
 	
@@ -24,7 +25,7 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		if (args.length < 2) return false;
-		Player player = Bukkit.getPlayerExact(args[0]);
+		Player player = Bukkit.getPlayer(args[0]);
 		if (player == null) {
 			sender.sendMessage(
 				manager.getSorci().getMessage().getString("message_player_no_found")
