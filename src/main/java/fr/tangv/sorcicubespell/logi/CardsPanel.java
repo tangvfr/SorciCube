@@ -63,7 +63,7 @@ public class CardsPanel extends JPanel {
 	
 	public void refrech() {
 		this.carts.refresh();
-		this.nav.refrech();
+		this.nav.refresh();
 		if (table.getModel() instanceof ModelEditCard)
 			table.setModel(new ModelEditCard(this.carts.getCard(((ModelEditCard) table.getModel()).getCard().getUUID())));
 	}

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -40,11 +43,26 @@ public class PanelNav extends JPanel {
 	private CardsPanel cartsPanel;
 	private JButton refrech;
 	private JButton disconnect;
+	private JTextField search;
 	private JList<Card> list;
 	private CardComparator sort;
 	
 	public PanelNav(CardsPanel cartsPanel) {
 		this.cartsPanel = cartsPanel;
+		//info
+		this.search = new JTextField();
+		search.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {}
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					cartsPanel.refrech();
+				}
+			}
+		});
 		//refrech
 		this.refrech = new JButton("Refrech");
 		refrech.addMouseListener(new ClickListener() {
@@ -97,16 +115,31 @@ public class PanelNav extends JPanel {
 		});
 		//PanelNav
 		this.setLayout(new BorderLayout());
-		this.add(this.refrech, BorderLayout.NORTH);
+		JPanel panelUp = new JPanel(new BorderLayout());
+		panelUp.add(this.refrech, BorderLayout.NORTH);
+		panelUp.add(this.search, BorderLayout.SOUTH);
+		this.add(panelUp, BorderLayout.NORTH);
 		this.add(new JScrollPane(this.list), BorderLayout.CENTER);
 		this.add(this.disconnect, BorderLayout.SOUTH);
 		this.sort = CardComparator.BY_ID;
-		this.refrech();
+		this.refresh();
 	}
 	
-	public void refrech() {
-		Vector<Card> list = this.cartsPanel.getCarts().cloneCardsValue();
-		this.refrech.setText("Refrech | "+Integer.toString(list.size())+" cartds");
+	public void refresh() {
+		this.cartsPanel.getCarts().refresh();
+		Vector<Card> listCard = this.cartsPanel.getCarts().cloneCardsValue();
+		Vector<Card> list;
+		String name = this.search.getText().toLowerCase();
+		if (!name.isEmpty()) {
+			list = new Vector<Card>();
+			for (Card card : listCard)
+				if (card.getName().toLowerCase().contains(name)) {
+					list.add(card);
+				}
+		} else {
+			list = listCard;
+		}
+		this.refrech.setText("Refrech | "+Integer.toString(listCard.size())+" cartds "+Integer.toString(list.size())+" find");
 		list.sort(CardComparator.BY_ID);
 		list.sort(sort);
 		this.list.setListData(list);
@@ -142,7 +175,7 @@ public class PanelNav extends JPanel {
 								features,
 								new ArrayList<String>())
 							);
-						refrech();
+						refresh();
 						list.setSelectedValue(cart, true);
 					}
 				}
@@ -171,7 +204,7 @@ public class PanelNav extends JPanel {
 								features,
 								new ArrayList<String>()
 							));
-						refrech();
+						refresh();
 						list.setSelectedValue(card, true);
 					}
 				}
@@ -186,7 +219,7 @@ public class PanelNav extends JPanel {
 						if (cart != null) {
 							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure delete this Card ?", "Delete card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
 								cartsPanel.getCarts().delete(cart);
-								refrech();
+								refresh();
 								cartsPanel.getTable().setModel(new DefaultTableModel());
 							}
 						} else {
@@ -207,7 +240,7 @@ public class PanelNav extends JPanel {
 							@Override
 							public void eventOk(CardComparator newSort) {
 								sort = newSort;
-								refrech();
+								refresh();
 							}
 						}; 
 					}
