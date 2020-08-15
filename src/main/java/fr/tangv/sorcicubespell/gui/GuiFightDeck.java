@@ -56,9 +56,9 @@ public class GuiFightDeck extends GuiDecks {
 							
 							* path bug no view player and head and no tp, path in init Fight
 						
+							* (path bug incitement) after test > give feature
+							
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
-						
-							/ (path bug incitement) after test > give feature
 						
 							- add after and add anti afk
 							
