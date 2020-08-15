@@ -112,7 +112,8 @@ public class PlayerFight {
 	public void nextRoundFightEntity() {
 		for (FightEntity entity : entity)
 			if(!entity.isDead())
-				entity.getCard().nextRound();
+				if (entity.getCard().nextRound())
+					entity.updateStat();
 	}
 	
 	public void resetEntityAttackPossible() {

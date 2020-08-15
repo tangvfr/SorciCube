@@ -141,6 +141,18 @@ public class EventFight implements Listener {
 		e.setCancelled(true);
 	}
 	
+	private void useCard(PlayerFight player, Card card, Runnable run) {
+		player.removeMana(card.getMana());
+		player.setCardHand(player.getCardSelect(), null);
+		player.setCardSelect(-1);
+		player.addHistoric(card, player);
+		player.getEnemie().addHistoric(card, player);
+		run.run();
+		player.initHotBar();
+		player.setEntityAttack(null);
+		player.showEntityAttackPossible();
+	}
+	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
@@ -192,12 +204,12 @@ public class EventFight implements Listener {
 									FightEntity entity = player.getEntityAttack();
 									entity.setAttackPossible(false);
 									player.setEntityAttack(null);
-									player.showEntityAttackPossible();
 									//start action fight entity
 									int cAttack = head.damage(entity.getAttack());
 									if (cAttack != 0)
 										entity.damage(cAttack);
 									//end action fight entity
+									player.showEntityAttackPossible();
 								}
 							} else {
 								if (!cible.isHero() && cible.isAlly()) {
@@ -219,44 +231,32 @@ public class EventFight implements Listener {
 									if (!cible.isHero() && cible.isAlly()) {
 										FightEntity entity = (FightEntity) player.getForCible(cible);
 										if (!entity.isSelectable()) {
-											try {
-												player.removeMana(card.getMana());
-												player.setCardHand(player.getCardSelect(), null);
-												player.setCardSelect(-1);
-												player.addHistoric(card, player);
-												player.getEnemie().addHistoric(card, player);
-												entity.setCard(new CardEntity(card));
-												player.initHotBar();
-											} catch (Exception e1) {
-												Bukkit.getLogger().warning(RenderException.renderException(e1));
-											}
+											this.useCard(player, card, () -> {
+												try {
+													entity.setCard(new CardEntity(card));
+												} catch (Exception e1) {
+													Bukkit.getLogger().warning(RenderException.renderException(e1));
+												}
+											});
 										}
 									}
 								} else {
 									if (!card.getCible().hasChoose()) {
-										player.removeMana(card.getMana());
-										player.setCardHand(player.getCardSelect(), null);
-										player.setCardSelect(-1);
-										player.addHistoric(card, player);
-										player.getEnemie().addHistoric(card, player);
-										player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
-											@Override
-											public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-												FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
-												return true;
-											}
+										this.useCard(player, card, () -> {
+											player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+												@Override
+												public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+													FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
+													return true;
+												}
+											});
 										});
-										player.initHotBar();
 									} else {
 										FightHead head = player.getForCible(cible);
 										if (player.testHeadValidForAttack(card, head)) {
-											player.removeMana(card.getMana());
-											player.setCardHand(player.getCardSelect(), null);
-											player.setCardSelect(-1);
-											player.addHistoric(card, player);
-											player.getEnemie().addHistoric(card, player);
-											FightSpell.startActionSpell(player, card.getFeatures(), head);
-											player.initHotBar();
+											this.useCard(player, card, () -> {
+												FightSpell.startActionSpell(player, card.getFeatures(), head);
+											});
 										}
 									}
 								}
@@ -321,8 +321,11 @@ public class EventFight implements Listener {
 								
 							case BUY_CARD:
 								if (player.hasMana(priceCard)) {
-									if (player.pickCard(1) > 0)
+									if (player.pickCard(1) > 0) {
 										player.removeMana(priceCard);
+										player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
+										player.initHotBar();
+									}
 								} else {
 									sendMessageInsufficientMana(player.getPlayer());
 								}

@@ -140,6 +140,7 @@ public class FightEntity extends FightHead {
 		if (card != null) {
 			this.skin = card.getSkin();
 			this.setName(card.getName());
+			this.setAttackPossible(card.hasShock());
 			this.hideHead();
 			this.updateStat();
 			this.spawnPlayer();

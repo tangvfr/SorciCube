@@ -114,7 +114,8 @@ public class CardEntity {
 		return this.card.getFeatures().hasFeature(CardFeatureType.STUNNED);
 	}
 	
-	public void nextRound(CardFeatureType type) {
+	public boolean nextRound(CardFeatureType type) {
+		boolean updateStat = false;
 		if (card.getFeatures().hasFeature(type)) {
 			CardFeature feature = card.getFeatures().getFeature(type);
 			int value = feature.getValue().asInt();
@@ -122,14 +123,21 @@ public class CardEntity {
 				feature.setValue(new CardValue(value-1));
 			} else {
 				card.getFeatures().removeFeature(type);
+				updateStat = true;
 			}
 		}
+		return updateStat;
 	}
 	
-	public void nextRound() {
-		nextRound(CardFeatureType.INVULNERABILITY);
-		nextRound(CardFeatureType.IMMOBILIZATION);
-		nextRound(CardFeatureType.STUNNED);
+	public boolean nextRound() {
+		boolean updateStat = false;
+		if (nextRound(CardFeatureType.INVULNERABILITY))
+			updateStat = true;
+		if (nextRound(CardFeatureType.IMMOBILIZATION))
+			updateStat = true;
+		if (nextRound(CardFeatureType.STUNNED))
+			updateStat = true;
+		return updateStat;
 	}
 	
 	public boolean hasSkin() {
@@ -138,6 +146,10 @@ public class CardEntity {
 	
 	public boolean hasIncitement() {
 		return this.card.getFeatures().hasFeature(CardFeatureType.INCITEMENT);
+	}
+	
+	public boolean hasShock() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.SHOCK);
 	}
 	
 	public CardSkin getSkin() {

@@ -11,6 +11,8 @@ public enum CardFeatureType {
 	HIDE_CART(TypeValue.NONE, true),
 	TAKE_NEW_CART(TypeValue.NUMBER, true),
 	DESTRUCT(TypeValue.NONE, true),
+	SHOCK(TypeValue.NONE, true),
+	APPLY_SHOCK(TypeValue.NONE, true),
 	HEAL(TypeValue.NUMBER, true),
 	BOOST_DAMAGE(TypeValue.NUMBER, true),
 	BOOST_HEALTH(TypeValue.NUMBER, true),

@@ -70,6 +70,23 @@ public class FightSpell {
 					}
 			}
 		});
+		actionsSpells.put(CardFeatureType.SHOCK, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
+				//nothing
+			}
+		});
+		actionsSpells.put(CardFeatureType.APPLY_SHOCK, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
+				for (FightHead head : heads)
+					if (head instanceof FightEntity) {
+						FightEntity entity = (FightEntity) head;
+						if (!entity.isDead())
+							entity.setAttackPossible(true);
+					}
+			}
+		});
 		actionsSpells.put(CardFeatureType.HEAL, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
