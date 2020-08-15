@@ -185,7 +185,6 @@ public class FightEntity extends FightHead {
 	public void updateStat() {
 		if (!isDead()) {
 			String string = CardRender.renderStatCard(card.getCard());
-			Bukkit.broadcastMessage("immobile: "+card.isImmobilization());
 			if (card.isImmobilization())
 				string += "  §b\u2744";
 			if (card.isStunned())
