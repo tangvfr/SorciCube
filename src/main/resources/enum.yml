@@ -55,7 +55,7 @@ feature:
   take_new_cart: "§f§lVous piochez {number} carte(s)."
   destruct: "§f§lDétruit {cible}."
   apply_excited: "§f§l{cible} va de nouveau pouvoir attaquez."
-  excited: ""§f§lPeux attaquer directement."
+  excited: "§f§lPeux attaquer directement."
   heal: "§f§lSoigne {number} point(s) de vie à {cible}."
   boost_damage: "§f§lAugmente l'attaque de {number} à {cible}."
   boost_health: "§f§lAugmente la vie de {number} à {cible}."
