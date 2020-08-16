@@ -55,8 +55,8 @@ public class GuiFightDeck extends GuiDecks {
 						/*
 							
 							* path bug no view player and head and no tp, path in init Fight
-							
-							/path finish add change one card by round
+							 
+							+ test swap cards
 							
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						

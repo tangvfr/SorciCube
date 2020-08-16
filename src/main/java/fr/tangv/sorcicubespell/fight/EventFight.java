@@ -280,18 +280,24 @@ public class EventFight implements Listener {
 		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
 			e.setCancelled(true);
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
-			if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()
-					|| e.getInventory().hashCode() == player.getInvViewEntity().hashCode()
-					|| e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
-				if (player.canPlay()) {
-					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
-						if (e.getRawSlot() < 9 && e.getCurrentItem() == null) {
+			if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
+				if (player.canPlay() && e.getRawSlot() >= 0 && e.getRawSlot() < 9) {
+					if (e.getRawSlot() < player.getMaxCardHand()) {
+						Card card = player.getCardHand(e.getRawSlot());
+						if (card != null) {
+							player.setAlreadySwap(true);
+							player.setCardHand(e.getRawSlot(), null);
+							player.pickCard(1);
+							player.initHotBar();
 							player.openInvHistoric();
-							return;
+							player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
 						}
-						//swap
-						//return;
 					}
+				} else
+					player.openInvHistoric();
+			} else if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()
+					|| e.getInventory().hashCode() == player.getInvViewEntity().hashCode()) {
+				if (player.canPlay()) {
 					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
 					if (slot != null)
 						switch (slot) {
