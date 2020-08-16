@@ -285,6 +285,10 @@ public class EventFight implements Listener {
 					|| e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
 				if (player.canPlay()) {
 					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
+						if (e.getRawSlot() < 9 && e.getCurrentItem() == null) {
+							player.openInvHistoric();
+							return;
+						}
 						//swap
 						//return;
 					}
@@ -351,7 +355,8 @@ public class EventFight implements Listener {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
 			if (e.getInventory().hashCode() != player.getInvHistoric().hashCode() &&
-					e.getInventory().hashCode() != player.getInvViewEntity().hashCode()) {
+					e.getInventory().hashCode() != player.getInvViewEntity().hashCode() &&
+					e.getInventory().hashCode() != player.getInvSwap().hashCode()) {
 				e.setCancelled(true);
 			}
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
