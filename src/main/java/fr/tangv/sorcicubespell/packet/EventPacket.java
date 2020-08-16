@@ -96,7 +96,7 @@ public class EventPacket implements Listener, Runnable {
 										feature.getCardsUnlocks().add(uuid);
 										newCards[i] = true;
 									}
-									itemCards[i] = CardRender.cardToItem(cardTake[i], manager.getSorci());
+									itemCards[i] = CardRender.cardToItem(cardTake[i], manager.getSorci(), newCards[i] ? 1 : 2, false);
 								}
 								inv.setItem(start+i, itemQuestion);
 							}

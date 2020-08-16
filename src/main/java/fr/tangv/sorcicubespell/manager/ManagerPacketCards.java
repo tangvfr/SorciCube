@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -128,6 +129,7 @@ public class ManagerPacketCards {
 	}
 	
 	public Card[] packetTakeCard(PacketCards packet) throws Exception {
+		Random random = new Random();
 		Card[] cards = new Card[packet.getSize()];
 		Vector<Card> collectionCards = sorci.getManagerCards().cloneCardsValue();
 		for (int i = 0; i < cards.length; i++) {
@@ -141,7 +143,7 @@ public class ManagerPacketCards {
 			}
 			if (list.size() <= 0)
 				throw new Exception("Not found card for the filter");
-			Card card = list.get((int) (Math.random()*list.size()));
+			Card card = list.get(random.nextInt(list.size()));
 			collectionCards.remove(card);
 			cards[i] = card;
 		}
