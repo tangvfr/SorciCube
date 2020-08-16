@@ -222,7 +222,7 @@ public class PlayerFight {
 	public void openInvSwap() {
 		//card hand
 		for (int i = 0; i < getMaxCardHand(); i++)
-			invSwap.setItem(i, itemNull(fight.renderCard(getCardHand(i))));
+			invSwap.setItem(i, player.getPlayer().getInventory().getItem(i));
 		//none
 		for (int i = getMaxCardHand(); i < 9; i++)
 			invSwap.setItem(i, itemNone);

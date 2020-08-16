@@ -141,8 +141,10 @@ public class Fight {
 					);
 				bossBar.setProgress(cooldownRound.getProgess());
 				//player
-				this.updatePlayer(player1);
-				this.updatePlayer(player2);
+				if (player1.getPlayer().isOnline())
+					this.updatePlayer(player1);
+				if (player2.getPlayer().isOnline())
+					this.updatePlayer(player2);
 			}
 		} else {
 			if (cooldownEnd.update()) {

@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -141,6 +142,12 @@ public class EventFight implements Listener {
 		e.setCancelled(true);
 	}
 	
+	private boolean inventoryAutorized(PlayerFight player, Inventory inv) {
+		return inv.hashCode() == player.getInvHistoric().hashCode() ||
+				inv.hashCode() == player.getInvViewEntity().hashCode() ||
+				inv.hashCode() == player.getInvSwap().hashCode();
+	}
+	
 	private void useCard(PlayerFight player, Card card, Runnable run) {
 		player.removeMana(card.getMana());
 		player.setCardHand(player.getCardSelect(), null);
@@ -160,13 +167,14 @@ public class EventFight implements Listener {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
 			boolean next = true;
 			if (e.getAction() == Action.LEFT_CLICK_AIR 
-					|| e.getAction() == Action.LEFT_CLICK_BLOCK 
-					|| e.getAction() == Action.PHYSICAL) {
-				player.openInvHistoric();
-				if (player.canPlay()) {
-					player.setCardSelect(-1);
-					player.setEntityAttack(null);
-					player.showEntityAttackPossible();
+					|| e.getAction() == Action.LEFT_CLICK_BLOCK) {
+				if (!inventoryAutorized(player, player.getPlayer().getOpenInventory().getTopInventory())) {
+					player.openInvHistoric();
+					if (player.canPlay()) {
+						player.setCardSelect(-1);
+						player.setEntityAttack(null);
+						player.showEntityAttackPossible();
+					}
 				}
 				next = false;
 			} else if (player.hasStickView()) {
@@ -280,24 +288,22 @@ public class EventFight implements Listener {
 		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
 			e.setCancelled(true);
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
-			if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
-				if (player.canPlay() && e.getRawSlot() >= 0 && e.getRawSlot() < 9) {
-					if (e.getRawSlot() < player.getMaxCardHand()) {
-						Card card = player.getCardHand(e.getRawSlot());
-						if (card != null) {
-							player.setAlreadySwap(true);
-							player.setCardHand(e.getRawSlot(), null);
-							player.pickCard(1);
-							player.initHotBar();
-							player.openInvHistoric();
-							player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
+			if (inventoryAutorized(player, e.getInventory())) {
+				if (player.canPlay()) {
+					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
+						if (e.getRawSlot() >= 0 && e.getRawSlot() < player.getMaxCardHand()) {
+							Card card = player.getCardHand(e.getRawSlot());
+							if (card != null) {
+								player.setAlreadySwap(true);
+								player.setCardHand(e.getRawSlot(), null);
+								player.pickCard(1);
+								player.initHotBar();
+								player.openInvHistoric();
+								player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
+							}
+							return;
 						}
 					}
-				} else if (e.getRawSlot() != FightSlot.SWAP_CARD.getSlotRaw() && e.getRawSlot() != -999)
-					player.openInvHistoric();
-			} else if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()
-					|| e.getInventory().hashCode() == player.getInvViewEntity().hashCode()) {
-				if (player.canPlay()) {
 					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
 					if (slot != null)
 						switch (slot) {
@@ -360,9 +366,7 @@ public class EventFight implements Listener {
 	public void onOpenInv(InventoryOpenEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
-			if (e.getInventory().hashCode() != player.getInvHistoric().hashCode() &&
-					e.getInventory().hashCode() != player.getInvViewEntity().hashCode() &&
-					e.getInventory().hashCode() != player.getInvSwap().hashCode()) {
+			if (!inventoryAutorized(player, e.getInventory())) {
 				e.setCancelled(true);
 			}
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {

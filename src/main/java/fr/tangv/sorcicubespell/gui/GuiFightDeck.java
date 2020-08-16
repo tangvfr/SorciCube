@@ -54,9 +54,7 @@ public class GuiFightDeck extends GuiDecks {
 					case DUEL:
 						/*
 							
-							* path bug no view player and head and no tp, path in init Fight
-							 
-							+ test swap cards
+							/!\ test already bug with select
 							
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						

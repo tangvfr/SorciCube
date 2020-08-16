@@ -82,7 +82,8 @@ public class ManagerFight implements Runnable {
 		if (playerFights.containsKey(player)) {
 			Fight fight = playerFights.get(player).getFight();
 			if (fight.getPlayer1().getPlayer().isOnline() || fight.getPlayer2().getPlayer().isOnline())
-				fight.end(player);
+				if (!fight.isEnd())
+					fight.end(player);
 			else
 				fights.remove(fight);
 			playerFights.remove(player);
