@@ -10,6 +10,8 @@ perm_admin: "sorcicubespell.admin"
 #/viewcards permission = sorcicubespell.viewcards
 #/packetadd <name> permission = sorcicubespell.packetadd
 #/packetgive <player> <name> permission = sorcicubespell.packetgive
+#/refresh  permission = sorcicubespell.refresh
+#/givecard <name> <uuid> permission = sorcicubespell.givecard
 #format time
 format_time_sec: "sec"
 format_time_min: "min "
