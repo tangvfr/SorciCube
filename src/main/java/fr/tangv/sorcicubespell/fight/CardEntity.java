@@ -148,8 +148,8 @@ public class CardEntity {
 		return this.card.getFeatures().hasFeature(CardFeatureType.INCITEMENT);
 	}
 	
-	public boolean hasShock() {
-		return this.card.getFeatures().hasFeature(CardFeatureType.SHOCK);
+	public boolean isExited() {
+		return this.card.getFeatures().hasFeature(CardFeatureType.EXCITED);
 	}
 	
 	public CardSkin getSkin() {

@@ -70,13 +70,13 @@ public class FightSpell {
 					}
 			}
 		});
-		actionsSpells.put(CardFeatureType.SHOCK, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.EXCITED, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				//nothing
 			}
 		});
-		actionsSpells.put(CardFeatureType.APPLY_SHOCK, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.APPLY_EXCITED, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				for (FightHead head : heads)
