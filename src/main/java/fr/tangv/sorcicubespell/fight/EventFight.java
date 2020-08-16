@@ -293,7 +293,7 @@ public class EventFight implements Listener {
 							player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
 						}
 					}
-				} else if (e.getRawSlot() != FightSlot.SWAP_CARD.getSlotRaw())
+				} else if (e.getRawSlot() != FightSlot.SWAP_CARD.getSlotRaw() && e.getRawSlot() != -999)
 					player.openInvHistoric();
 			} else if (e.getInventory().hashCode() == player.getInvHistoric().hashCode()
 					|| e.getInventory().hashCode() == player.getInvViewEntity().hashCode()) {
