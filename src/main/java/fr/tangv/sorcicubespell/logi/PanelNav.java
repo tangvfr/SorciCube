@@ -160,10 +160,9 @@ public class PanelNav extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (e.getID() == 1001) {
-						Card cart = list.getSelectedValue();
 						CardFeatures features = new CardFeatures();
 						features.putFeature(new CardFeature(CardFeatureType.HIDE_CART, new CardValue()));
-						cartsPanel.getCarts().insert(new Card(
+						Card card = new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(1, 0),
 								"§4NoNameSort",
@@ -174,10 +173,11 @@ public class PanelNav extends JPanel {
 								CardFaction.BASIC,
 								1,
 								features,
-								new ArrayList<String>())
+								new ArrayList<String>()
 							);
+						cartsPanel.getCarts().insert(card);
+						cartsPanel.getTable().setModel(new ModelEditCard(card));
 						refresh();
-						list.setSelectedValue(cart, true);
 					}
 				}
 			});
@@ -187,12 +187,11 @@ public class PanelNav extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (e.getID() == 1001) {
-						Card card = list.getSelectedValue();
 						CardFeatures features = new CardFeatures();
 						features.putFeature(new CardFeature(CardFeatureType.HEALTH, new CardValue(3)));
 						features.putFeature(new CardFeature(CardFeatureType.DAMAGE, new CardValue(1)));
 						features.putFeature(new CardFeature(CardFeatureType.HIDE_CART, new CardValue()));
-						cartsPanel.getCarts().insert(new Card(
+						Card card = new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(3, 0),
 								"§4NoNameEntity",
@@ -204,9 +203,10 @@ public class PanelNav extends JPanel {
 								1,
 								features,
 								new ArrayList<String>()
-							));
+							);
+						cartsPanel.getCarts().insert(card);
+						cartsPanel.getTable().setModel(new ModelEditCard(card));
 						refresh();
-						list.setSelectedValue(card, true);
 					}
 				}
 			});
