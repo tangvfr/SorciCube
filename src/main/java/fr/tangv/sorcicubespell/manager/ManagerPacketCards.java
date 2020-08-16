@@ -109,7 +109,7 @@ public class ManagerPacketCards {
 		return false;
 	}
 	
-	private int chooseIndex(int[] stat) throws Exception {
+	private int chooseIndex(int[] stat, Random random) throws Exception {
 		int max = 0;
 		for (int num : stat) {
 			if (num < 0)
@@ -118,7 +118,7 @@ public class ManagerPacketCards {
 		}
 		if (max <= 0)
 			throw new Exception("Total stat is 0");
-		int number = (int) (Math.random()*max)+1;
+		int number = random.nextInt(max)+1;
 		int progression = 0;
 		for (int i = 0; i < stat.length; i++) {
 			progression += stat[i];
@@ -133,9 +133,9 @@ public class ManagerPacketCards {
 		Card[] cards = new Card[packet.getSize()];
 		Vector<Card> collectionCards = sorci.getManagerCards().cloneCardsValue();
 		for (int i = 0; i < cards.length; i++) {
-			CardFaction faction = CardFaction.values()[chooseIndex(packet.getFaction())];
-			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity())];
-			CardType type = CardType.values()[chooseIndex(packet.getType())];
+			CardFaction faction = CardFaction.values()[chooseIndex(packet.getFaction(), random)];
+			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity(), random)];
+			CardType type = CardType.values()[chooseIndex(packet.getType(), random)];
 			ArrayList<Card> list = new ArrayList<Card>();
 			for (Card card : collectionCards) {
 				if (!card.getFeatures().hasFeature(CardFeatureType.HIDE_CART) && card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
