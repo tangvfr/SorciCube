@@ -261,9 +261,12 @@ public class FightEntity extends FightHead {
 	}
 	
 	public void dead() {
-		if (!isDead() && card.hasActionDead())
+		if (!isDead() && card.hasActionDead()) {
+			CardEntity card = this.card;
+			this.setCard(null);
 			actionedCard(card.getActionDead(owner.getFight().getSorci()));
-		this.setCard(null);
+		} else
+			this.setCard(null);
 	}
 	
 	private void spawn() {
