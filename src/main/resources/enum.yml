@@ -51,7 +51,7 @@ feature:
   health: "hide show"
   damage: "§f§lInflige {number} à {cible}."
   incitement: "§f§lIncitation"
-  hide_cart: "§d§lCarte caché"
+  hide_cart: "§d§lCarte non dévérouilable"
   take_new_cart: "§f§lVous piochez {number} carte(s)."
   destruct: "§f§lDétruit {cible}."
   apply_excited: "§f§l{cible} va de nouveau pouvoir attaquez."
