@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -25,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
@@ -154,6 +156,7 @@ public class EventFight implements Listener {
 		player.getEnemie().addHistoric(card, player);
 		run.run();
 		player.initHotBar();
+		player.setFirstSelection(null);
 		player.setEntityAttack(null);
 		player.showEntityAttackPossible();
 	}
@@ -170,6 +173,7 @@ public class EventFight implements Listener {
 					player.openInvHistoric();
 					if (player.canPlay()) {
 						player.setCardSelect(-1);
+						player.setFirstSelection(null);
 						player.setEntityAttack(null);
 						player.showEntityAttackPossible();
 					}
@@ -259,7 +263,19 @@ public class EventFight implements Listener {
 										});
 									} else {
 										FightHead head = player.getForCible(cible);
-										if (player.testHeadValidForAttack(card, head)) {
+										if (card.getCible() == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE) {
+											if (player.hasFirstSelection()) {
+												if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getCibleFaction(), head)) {
+													this.useCard(player, card, () -> {
+														FightSpell.startActionSpell(player, card.getFeatures(), Arrays.asList(player.getFirstSelection(), head));
+													});
+												}
+											} else if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ALLY, card.getCibleFaction(), head)) {
+												player.setFirstSelection(head);
+												player.showHeadForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
+												player.getFirstSelection().showHead(ItemHead.SELECTABLE_ENTITY_DAMAGE);
+											}
+										} else if (player.testHeadValidForAttack(card, head)) {
 											this.useCard(player, card, () -> {
 												FightSpell.startActionSpell(player, card.getFeatures(), head);
 											});

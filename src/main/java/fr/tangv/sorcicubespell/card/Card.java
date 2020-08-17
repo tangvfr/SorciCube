@@ -185,7 +185,7 @@ public class Card {
 				document.getInteger("mana"),
 				CardFeatures.toCardFeatures(document.get("features", Document.class)),
 				document.getList("description", String.class),
-				document.containsKey("original_name") ? document.getBoolean("original_name") : true
+				document.containsKey("original_name") ? document.getBoolean("original_name") : false
 			);
 	}
 	

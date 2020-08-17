@@ -14,6 +14,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.util.ItemHead;
@@ -46,7 +48,7 @@ public class PlayerFight {
 	private final Location[] entityLoc;
 	private final Card[] cardHand;
 	private volatile FightEntity entityAttack;
-	private volatile FightEntity firstSelection;
+	private volatile FightHead firstSelection;
 	private volatile boolean alreadySwap;
 	
 	//scoreboard
@@ -115,12 +117,12 @@ public class PlayerFight {
 		return firstSelection == null;
 	}
 	
-	public FightEntity getFirstSelection() {
+	public FightHead getFirstSelection() {
 		return this.firstSelection;
 	}
 	
 
-	public void setFirstSelection(FightEntity firstSelection) {
+	public void setFirstSelection(FightHead firstSelection) {
 		this.firstSelection = firstSelection;
 	}
 	
@@ -551,7 +553,9 @@ public class PlayerFight {
 			if (card.getType() == CardType.ENTITY) {
 				initHeadForEntityPose(card);
 			} else {
-				if (card.getCible().hasChoose())
+				if (card.getCible() == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE)
+					showHeadForAttack(CardCible.ONE_ENTITY_ALLY, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
+				else if (card.getCible().hasChoose())
 					showHeadForAttack(card, ItemHead.SELECTABLE_SPELL);
 				else
 					showHeadForAttackAll(card, ItemHead.SELECTABLE_ALL_SPELL);
@@ -567,8 +571,12 @@ public class PlayerFight {
 	}
 		
 	public boolean showHeadForAttack(Card card, ItemStack headItem) {
+		return showHeadForAttack(card.getCible(), card.getCibleFaction(), headItem);
+	}
+	
+	public boolean showHeadForAttack(CardCible cibleC, CardFaction cibleFaction, ItemStack headItem) {
 		hideAllHead();
-		return executeFightHeadIsGoodCible(card, new ResultFightHead() {
+		return executeFightHeadIsGoodCible(cibleC, cibleFaction, new ResultFightHead() {
 			@Override
 			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
 				boolean possible = false;
@@ -590,8 +598,12 @@ public class PlayerFight {
 	}
 	
 	public boolean showHeadForAttackAll(Card card, ItemStack headItem) {
+		return showHeadForAttackAll(card.getCible(), card.getCibleFaction(), headItem);
+	}
+	
+	public boolean showHeadForAttackAll(CardCible cibleC, CardFaction cibleFaction, ItemStack headItem) {
 		hideAllHead();
-		return executeFightHeadIsGoodCible(card, new ResultFightHead() {
+		return executeFightHeadIsGoodCible(cibleC, cibleFaction, new ResultFightHead() {
 			@Override
 			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
 				boolean possible = false;
@@ -605,7 +617,11 @@ public class PlayerFight {
 	}
 	
 	public boolean testHeadValidForAttack(Card card, FightHead head) {
-		return executeFightHeadIsGoodCible(card, new ResultFightHead() {
+		return testHeadValidForAttack(card.getCible(), card.getCibleFaction(), head);
+	}
+	
+	public boolean testHeadValidForAttack(CardCible cibleC, CardFaction cibleFaction, FightHead head) {
+		return executeFightHeadIsGoodCible(cibleC, cibleFaction, new ResultFightHead() {
 			@Override
 			public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
 				return fightHeads.contains(head) && (incitement ? (head.hasIncitement() || head.getOwner() == PlayerFight.this) : true);
@@ -614,11 +630,15 @@ public class PlayerFight {
 	}
 	
 	public boolean executeFightHeadIsGoodCible(Card card, ResultFightHead resultFightHead) {
+		return executeFightHeadIsGoodCible(card.getCible(), card.getCibleFaction(), resultFightHead);
+	}
+	
+	public boolean executeFightHeadIsGoodCible(CardCible cibleC, CardFaction cibleFaction, ResultFightHead resultFightHead) {
 		ArrayList<FightHead> fightHeads = new ArrayList<FightHead>();
 		boolean incitement = false;
-		for (FightCible cible : FightCible.listForCardCible(card.getCible())) {
+		for (FightCible cible : FightCible.listForCardCible(cibleC)) {
 			FightHead head = getForCible(cible);
-			if (head.isSelectable() && head.isFaction(card.getCibleFaction())) {
+			if (head.isSelectable() && head.isFaction(cibleFaction)) {
 				if (head.hasIncitement() && head.getOwner() != PlayerFight.this)
 					incitement = true;
 				fightHeads.add(head);
