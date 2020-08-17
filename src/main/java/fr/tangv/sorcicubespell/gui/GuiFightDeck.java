@@ -54,13 +54,14 @@ public class GuiFightDeck extends GuiDecks {
 					case DUEL:
 						/*
 							
-							/!\ test already bug with select
+							/!\ test already bug with select card in hand
 							
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 						
 							- add after and add anti afk
 							
 							last - add system level and experience
+							
 						*/
 						break;
 				}

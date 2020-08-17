@@ -107,11 +107,9 @@ public class EventFight implements Listener {
 	//dynamic
 	
 	private final ManagerFight manager;
-	private final int priceCard;
 
 	public EventFight(ManagerFight manager) {
 		this.manager = manager;
-		this.priceCard = manager.getSorci().getParameter().getInt("price_card");
 	}
 	
 	private void sendMessageInsufficientMana(Player player) {
@@ -336,9 +334,9 @@ public class EventFight implements Listener {
 								break;
 								
 							case BUY_CARD:
-								if (player.hasMana(priceCard)) {
+								if (player.hasMana(ValueFight.V.priceCard)) {
 									if (player.pickCard(1) > 0) {
-										player.removeMana(priceCard);
+										player.removeMana(ValueFight.V.priceCard);
 										player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
 										player.initHotBar();
 									}

@@ -31,8 +31,6 @@ public class Fight {
 	protected static final int max_health = 60;
 	protected static final int start_health = 30;
 	
-	protected final int max_mana;
-	private final int start_mana;
 	private final SorciCubeSpell sorci;
 	private final FightType fightType;
 	private final PlayerFight player1;
@@ -42,11 +40,9 @@ public class Fight {
 	private final Cooldown cooldown;
 	private final Cooldown cooldownEnd;
 	private final Cooldown cooldownRound;
-	private final String titleEnd;
 	private volatile boolean firstPlay;
 	private boolean isStart;
 	private final BossBar bossBar;
-	private final String titleBossBar;
 	//end
 	private volatile boolean isEnd;
 	private volatile Player losser;
@@ -55,8 +51,6 @@ public class Fight {
 	
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
 		this.sorci = sorci;
-		this.max_mana = sorci.getParameter().getInt("max_mana");
-		this.start_mana = sorci.getParameter().getInt("start_mana");
 		this.firstPlay = true;
 		this.isStart = false;
 		this.isDeleted = false;
@@ -66,10 +60,8 @@ public class Fight {
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.cooldownEnd = new Cooldown((long) sorci.getParameter().getInt("cooldown_end")*1000L);
-		this.titleEnd = sorci.gertGuiConfig().getString("boss_bar.name_end");
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
-		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
 		this.bossBar = Bukkit.createBossBar(
 				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
 				BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_arena")),
@@ -117,8 +109,8 @@ public class Fight {
 				if (cooldown.update()) {
 					if (round == -1) {
 						isStart = true;
-						bossBar.setTitle(titleBossBar);
-						bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color")));
+						bossBar.setTitle(ValueFight.V.titleBossBar);
+						bossBar.setColor(ValueFight.V.titleBossBarColor);
 						nextRound();
 						cooldown.stop();
 					} else {
@@ -135,7 +127,7 @@ public class Fight {
 					return;
 				}
 				//bossbar
-				bossBar.setTitle(titleBossBar
+				bossBar.setTitle(ValueFight.V.titleBossBar
 						.replace("{time}", sorci.formatTime(cooldownRound.getTimeRemaining()))
 						.replace("{round}", Integer.toString(round+1))
 					);
@@ -154,7 +146,7 @@ public class Fight {
 					sorci.sendPlayerToServer(winner, sorci.getNameServerLobby());
 				this.isDeleted = true;
 			} else {
-				bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
+				bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
 				bossBar.setProgress(cooldownEnd.getProgess());
 			}
 		}
@@ -276,9 +268,9 @@ public class Fight {
 		round += 1;
 		cooldownRound.start();
 		this.firstPlay = round%2 == 0;
-		int mana = ((round+1)/2)+start_mana;
-		if (mana > max_mana)
-			mana = max_mana;
+		int mana = ((round+1)/2)+ValueFight.V.start_mana;
+		if (mana > ValueFight.V.max_mana)
+			mana = ValueFight.V.max_mana;
 		player1.getPlayer().closeInventory();
 		player2.getPlayer().closeInventory();
 		PlayerFight player = this.firstPlay ? player1 : player2;
@@ -317,8 +309,8 @@ public class Fight {
 		this.losser = losser;
 		this.winner = winner;
 		this.cooldownEnd.start();
-		bossBar.setColor(BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_end")));
-		bossBar.setTitle(titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
+		bossBar.setColor(ValueFight.V.titleEndColor);
+		bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
 		bossBar.setProgress(cooldownEnd.getProgess());
 		this.isEnd = true;
 		if (losser.isOnline()) {

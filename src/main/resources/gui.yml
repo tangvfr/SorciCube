@@ -84,7 +84,7 @@ gui_player:
   next_desc: "§eClick for action"
   stick_view: "§5View Entity"
   stick_view_desc: "§eClick on entity"
-  buy: "§bBuy new card for 5 mana."
+  buy: "§bBuy new card for {price} mana."
   buy_desc: "§eClick for buy"
   swap: "§bSwap card."
   swap_desc: "§eClick for swap"

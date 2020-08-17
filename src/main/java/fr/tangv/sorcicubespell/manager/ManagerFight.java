@@ -15,6 +15,7 @@ import fr.tangv.sorcicubespell.fight.FightArena;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.fight.PreFight;
 import fr.tangv.sorcicubespell.fight.PreFightData;
+import fr.tangv.sorcicubespell.fight.ValueFight;
 import fr.tangv.sorcicubespell.util.RenderException;
 
 public class ManagerFight implements Runnable {
@@ -27,6 +28,7 @@ public class ManagerFight implements Runnable {
 	
 	public ManagerFight(SorciCubeSpell sorci) throws Exception {
 		this.sorci = sorci;
+		ValueFight.V = new ValueFight(sorci);
 		this.playerFights = new ConcurrentHashMap<Player, PlayerFight>();
 		this.preFights = new ConcurrentHashMap<UUID, PreFight>();
 		this.fights = new Vector<Fight>();

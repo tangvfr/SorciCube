@@ -1,13 +1,11 @@
 package fr.tangv.sorcicubespell.fight;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Vector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -18,9 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
-import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.ItemHead;
-import fr.tangv.sorcicubespell.util.SkullUrl;
 import net.minecraft.server.v1_9_R2.IScoreboardCriteria;
 import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardDisplayObjective;
@@ -49,12 +45,6 @@ public class PlayerFight {
 	private final Location locBase;
 	private final Location[] entityLoc;
 	private final Card[] cardHand;
-	private final ItemStack itemNextRound;
-	private final ItemStack itemNone;
-	private final ItemStack itemNull;
-	private final ItemStack itemStickView;
-	private final ItemStack itemSwap;
-	private final ItemStack itemBuy;
 	private volatile FightEntity entityAttack;
 	private volatile FightEntity firstSelection;
 	private volatile boolean alreadySwap;
@@ -77,13 +67,6 @@ public class PlayerFight {
 		this.entityAttack = null;
 		this.firstSelection = null;
 		this.alreadySwap = false;
-		//item
-		this.itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, fight.getSorci().gertGuiConfig().getString("gui_player.none"), null, false);
-		this.itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, fight.getSorci().gertGuiConfig().getString("gui_player.null"), null, false);
-		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.next"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.next_desc")), false);
-		this.itemStickView = ItemBuild.buildItem(Material.BLAZE_ROD, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.stick_view"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.stick_view_desc")), false);
-		this.itemBuy = ItemBuild.buildSkull(SkullUrl.QUESTION, 1, fight.getSorci().gertGuiConfig().getString("gui_player.buy"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.buy_desc")), false);
-		this.itemSwap = ItemBuild.buildItem(Material.SHEARS, 1, (short) 0, (byte) 0, fight.getSorci().gertGuiConfig().getString("gui_player.swap"), Arrays.asList(fight.getSorci().gertGuiConfig().getString("gui_player.swap_desc")), false);
 		//entity loc
 		if (first) {
 			this.locBase = fight.getArena().getFirstBase();
@@ -190,7 +173,7 @@ public class PlayerFight {
 	
 	private ItemStack itemNull(ItemStack item) {
 		if (item == null)
-			return itemNull;
+			return ValueFight.V.itemNull;
 		else
 			return item;
 	}
@@ -225,7 +208,7 @@ public class PlayerFight {
 			invSwap.setItem(i, player.getPlayer().getInventory().getItem(i));
 		//none
 		for (int i = getMaxCardHand(); i < 9; i++)
-			invSwap.setItem(i, itemNone);
+			invSwap.setItem(i, ValueFight.V.itemNone);
 		//open
 		player.openInventory(invSwap);
 	}
@@ -536,16 +519,16 @@ public class PlayerFight {
 	}
 	
 	public boolean hasStickView() {
-		return player.getInventory().getItemInMainHand().isSimilar(itemStickView);
+		return player.getInventory().getItemInMainHand().isSimilar(ValueFight.V.itemStickView);
 	}
 	
 	public void initHotBar() {
 		boolean play = canPlay();
-		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), itemNone);
-		player.getInventory().setItem(FightSlot.STICK_VIEW.getSlotInv(), itemStickView);
-		ItemStack item = itemNone;
+		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), ValueFight.V.itemNone);
+		player.getInventory().setItem(FightSlot.STICK_VIEW.getSlotInv(), ValueFight.V.itemStickView);
+		ItemStack item = ValueFight.V.itemNone;
 		if (play)
-			item = itemNextRound;
+			item = ValueFight.V.itemNextRound;
 		player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);
 		//card hand
 		player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), itemNull(fight.renderCard(getCardHand(0))));
@@ -555,8 +538,8 @@ public class PlayerFight {
 		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), itemNull(fight.renderCard(getCardHand(4))));
 		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), itemNull(fight.renderCard(getCardHand(5))));
 		//inv in
-		player.getInventory().setItem(FightSlot.BUY_CARD.getSlotInv(), this.itemBuy);
-		player.getInventory().setItem(FightSlot.SWAP_CARD.getSlotInv(), alreadySwap ? null : this.itemSwap);
+		player.getInventory().setItem(FightSlot.BUY_CARD.getSlotInv(), ValueFight.V.itemBuy);
+		player.getInventory().setItem(FightSlot.SWAP_CARD.getSlotInv(), alreadySwap ? null : ValueFight.V.itemSwap);
 		player.updateInventory();
 	}
 	
