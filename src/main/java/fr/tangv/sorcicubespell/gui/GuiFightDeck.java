@@ -57,6 +57,8 @@ public class GuiFightDeck extends GuiDecks {
 							/!\ test already bug with select card in hand
 							
 							- add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
+							
+							- auto sort list feature for the render
 						
 							- add after and add anti afk
 							
