@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -47,12 +48,14 @@ public class PanelNav extends JPanel {
 	private JTextField search;
 	private JList<Card> list;
 	private PanelFilter filter;
+	private JCheckBox filterApply;
 	private CardComparator sort;
 	
 	public PanelNav(CardsPanel cartsPanel) throws Exception {
 		this.cartsPanel = cartsPanel;
 		//filter
 		this.filter = new PanelFilter();
+		this.filterApply = new JCheckBox("Filter", false);
 		//info
 		this.search = new JTextField();
 		search.setToolTipText("name of card or uuid of card");
@@ -118,12 +121,15 @@ public class PanelNav extends JPanel {
 				}
 			}
 		});
-		//PanelNav
+		//Display
 		this.setLayout(new BorderLayout());
 		JPanel panelUp = new JPanel(new BorderLayout());
 		panelUp.add(this.refrech, BorderLayout.NORTH);
 		panelUp.add(new JScrollPane(this.filter), BorderLayout.CENTER);
-		panelUp.add(this.search, BorderLayout.SOUTH);
+		JPanel searchBar = new JPanel();
+		searchBar.add(this.search, BorderLayout.CENTER);
+		searchBar.add(this.filterApply, BorderLayout.EAST);
+		panelUp.add(searchBar, BorderLayout.SOUTH);
 		this.add(new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelUp, new JScrollPane(this.list)), BorderLayout.CENTER);
 		this.add(this.disconnect, BorderLayout.SOUTH);
 		this.sort = CardComparator.BY_ID;
@@ -135,15 +141,22 @@ public class PanelNav extends JPanel {
 		Vector<Card> listCard = this.cartsPanel.getCarts().cloneCardsValue();
 		Vector<Card> list;
 		String name = this.search.getText().toLowerCase();
+		boolean uuidSearch = false;
 		if (!name.isEmpty()) {
 			list = new Vector<Card>();
 			for (Card card : listCard)
-				if (card.getName().toLowerCase().contains(name) || card.getUUID().toString().equalsIgnoreCase(name)) {
+				if (card.getName().toLowerCase().contains(name)) {
 					list.add(card);
+				} else if (card.getUUID().toString().equalsIgnoreCase(name)) {
+					list.add(card);
+					uuidSearch = true;
 				}
 		} else {
 			list = listCard;
 		}
+		if (!uuidSearch && this.filterApply.isSelected())
+			list = this.filter.applyFilter(list);
+		//display
 		this.refrech.setText("Refrech | "+Integer.toString(listCard.size())+" cards "+Integer.toString(list.size())+" find");
 		list.sort(CardComparator.BY_ID);
 		list.sort(sort);
