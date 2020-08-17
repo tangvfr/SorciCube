@@ -68,9 +68,9 @@ public class GuiFightDeck extends GuiDecks {
 							
 							- add system spectator
 							
-							last - add system level and experience
-							 
-							- add system reconnect
+							last - add system reconnect
+							
+							last - add system level and experience + coin
 							
 						*/
 						break;
