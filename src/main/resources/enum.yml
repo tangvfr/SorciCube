@@ -20,17 +20,17 @@ cible:
   all: "§f§ltous les serviteurs et héros"
 #faction
 faction:
-  basic: "§7§l§nBasique"
-  dark: "§8§l§nObscure"
-  light: "§6§l§nLumière"
-  nature: "§2§l§nNature"
-  toxic: "§5§l§nToxique"
+  basic: "§l§nBasique"
+  dark: "§l§nObscure"
+  light: "§l§nLumière"
+  nature: "§l§nNature"
+  toxic: "§l§nToxique"
 #rarity
 rarity:
-  commun: "§8§lCommune"
-  rare: "§3§lRare"
-  epic: "§d§lEpique"
-  legendary: "§6§lLégendaire"
+  commun: "§lCommune"
+  rare: "§lRare"
+  epic: "§lEpique"
+  legendary: "§lLégendaire"
 #type
 type:
   sort: "§f[§cSort§f]"

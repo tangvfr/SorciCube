@@ -26,7 +26,7 @@ public class CardRender {
 			UUID uuid = UUID.fromString(feature.getValue().asString());
 			Card card = sorci.getManagerCards().getCard(uuid);
 			if (card != null) {
-				return card.getName()+(card.getType() == CardType.ENTITY ? " "+renderStatCard(card) : "");
+				return card.renderName()+(card.getType() == CardType.ENTITY ? " "+renderStatCard(card) : "");
 			} else
 				return "nothing";
 		} else if ((featureType == CardFeatureType.BOOST_DAMAGE
@@ -62,7 +62,7 @@ public class CardRender {
 		CardFeatures features = card.getFeatures();
 		String cible = sorci.getEnumTool().cibleToString(card.getCible())+
 				(card.getCibleFaction() != CardFaction.BASIC ? (" "+sorci.getEnumTool().factionToString(card.getCibleFaction())) : "");
-		String name = card.getName()+"§r "+renderManaCard(card);
+		String name = card.renderName()+"§r "+renderManaCard(card);
 		ArrayList<String> lore = new ArrayList<String>();
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {

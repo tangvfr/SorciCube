@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.logi;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -193,6 +194,20 @@ public class MouseTable extends ClickListener {
 						}
 					};
 					dialogTextArea.setResizable(true);
+					break;
+					
+				case 11:
+					new DialogBase<JCheckBox>(cartsPanel.getFrameLogi(), "Orignal Name",
+							new JCheckBox("", card.isOriginalName())) {
+						private static final long serialVersionUID = 664926995384148851L;
+
+						@Override
+						public void eventOk(JCheckBox comp) {
+							card.setOriginalName(comp.isSelected());
+							cartsPanel.getCarts().update(card);
+							cartsPanel.refrech();
+						}
+					};
 					break;
 						
 				default:

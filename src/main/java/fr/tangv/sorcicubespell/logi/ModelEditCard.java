@@ -21,7 +21,7 @@ public class ModelEditCard extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return 11;
+		return 12;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class ModelEditCard extends AbstractTableModel {
 		return 2;
 	}
 
-	public static final String[] nameRow = {"ID", "Name", "Type", "Material", "Rarity", "Faction", "Cible", "Cible Faction", "Mana", "Features", "Description"};
+	public static final String[] nameRow = {"ID", "Name", "Type", "Material", "Rarity", "Faction", "Cible", "Cible Faction", "Mana", "Features", "Description", "Orignal Name"};
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -80,6 +80,10 @@ public class ModelEditCard extends AbstractTableModel {
 
 				case 10:
 					text = TextList.listToText(card.getDescription());
+					break;
+					
+				case 11:
+					text = ""+card.isOriginalName();
 					break;
 						
 				default:

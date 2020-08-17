@@ -33,11 +33,11 @@ public class EnumTool {
 	}
 	
 	public String factionToString(CardFaction faction) {
-		return this.enumToString(faction, this.faction);
+		return faction.getColor()+this.enumToString(faction, this.faction);
 	}
 	
 	public String rarityToString(CardRarity rarity) {
-		return this.enumToString(rarity, this.rarity);
+		return rarity.getColor()+this.enumToString(rarity, this.rarity);
 	}
 	
 	public String typeToString(CardType type) {

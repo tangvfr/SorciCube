@@ -100,7 +100,7 @@ public class PanelNav extends JPanel {
 				if (card.getFeatures().hasFeature(CardFeatureType.SKIN))
 					prefix += "<span color=\"#2BBFE0\">[Skin]</span>";
 				prefix += "<span color=\"#000000\"> | </span>";
-				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.getName())+"</body></html>");
+				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.renderName())+"</body></html>");
 			}
 		});
 		list.addMouseListener(new ClickListener() {
@@ -173,7 +173,8 @@ public class PanelNav extends JPanel {
 								CardFaction.BASIC,
 								1,
 								features,
-								new ArrayList<String>()
+								new ArrayList<String>(),
+								false
 							);
 						cartsPanel.getCarts().insert(card);
 						cartsPanel.getTable().setModel(new ModelEditCard(card));
@@ -202,7 +203,8 @@ public class PanelNav extends JPanel {
 								CardFaction.BASIC,
 								1,
 								features,
-								new ArrayList<String>()
+								new ArrayList<String>(),
+								false
 							);
 						cartsPanel.getCarts().insert(card);
 						cartsPanel.getTable().setModel(new ModelEditCard(card));

@@ -26,10 +26,6 @@ public class CardEntity {
 				: null;
 	}
 	
-	public String getName() {
-		return card.getName();
-	}
-	
 	public int getHealth() {
 		return this.card.getFeatures().getFeature(CardFeatureType.HEALTH).getValue().asInt();
 	}
