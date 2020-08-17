@@ -20,7 +20,7 @@ public class CardsPanel extends JPanel {
 	private JPanel edit;
 	private JTable table;
 	
-	public CardsPanel(MongoDBManager mongo, FrameLogi frameLogi) {
+	public CardsPanel(MongoDBManager mongo, FrameLogi frameLogi) throws Exception {
 		this.frameLogi = frameLogi;
 		this.mongo = mongo;
 		this.carts = new ManagerCards(mongo);

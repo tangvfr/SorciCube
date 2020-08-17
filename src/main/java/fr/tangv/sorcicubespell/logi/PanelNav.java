@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
@@ -45,10 +46,13 @@ public class PanelNav extends JPanel {
 	private JButton disconnect;
 	private JTextField search;
 	private JList<Card> list;
+	private PanelFilter filter;
 	private CardComparator sort;
 	
-	public PanelNav(CardsPanel cartsPanel) {
+	public PanelNav(CardsPanel cartsPanel) throws Exception {
 		this.cartsPanel = cartsPanel;
+		//filter
+		this.filter = new PanelFilter();
 		//info
 		this.search = new JTextField();
 		search.setToolTipText("name of card or uuid of card");
@@ -118,9 +122,9 @@ public class PanelNav extends JPanel {
 		this.setLayout(new BorderLayout());
 		JPanel panelUp = new JPanel(new BorderLayout());
 		panelUp.add(this.refrech, BorderLayout.NORTH);
+		panelUp.add(new JScrollPane(this.filter), BorderLayout.CENTER);
 		panelUp.add(this.search, BorderLayout.SOUTH);
-		this.add(panelUp, BorderLayout.NORTH);
-		this.add(new JScrollPane(this.list), BorderLayout.CENTER);
+		this.add(new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelUp, new JScrollPane(this.list)), BorderLayout.CENTER);
 		this.add(this.disconnect, BorderLayout.SOUTH);
 		this.sort = CardComparator.BY_ID;
 		this.refresh();
