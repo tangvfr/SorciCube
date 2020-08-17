@@ -1,7 +1,6 @@
 package fr.tangv.sorcicubespell.card;
 
 import java.util.Comparator;
-import java.util.regex.Pattern;
 
 public enum CardComparator implements Comparator<Card> {
 
@@ -44,10 +43,7 @@ public enum CardComparator implements Comparator<Card> {
 	BY_NAME(new Comparator<Card>() {
 		@Override
 		public int compare(Card c1, Card c2) {
-			Pattern p = Pattern.compile("§.");
-			String n1 = p.matcher(c1.getName()).replaceAll("");
-			String n2 = p.matcher(c2.getName()).replaceAll("");
-			return n1.compareTo(n2);
+			return c1.getName().compareTo(c2.getName());
 		}
 	});
 	
