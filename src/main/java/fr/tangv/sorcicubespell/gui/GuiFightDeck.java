@@ -64,6 +64,8 @@ public class GuiFightDeck extends GuiDecks {
 						
 							- add after and add anti afk
 							
+							- add duel
+							
 							- add system spectator
 							
 							last - add system level and experience
