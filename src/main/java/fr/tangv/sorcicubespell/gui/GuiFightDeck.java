@@ -58,7 +58,7 @@ public class GuiFightDeck extends GuiDecks {
 							
 							+ add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
 							
-							- add system filter in logi
+							* add system filter in logi
 							
 							- auto sort list feature for the render
 						
