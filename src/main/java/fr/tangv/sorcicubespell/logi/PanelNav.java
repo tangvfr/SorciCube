@@ -55,7 +55,14 @@ public class PanelNav extends JPanel {
 		this.cartsPanel = cartsPanel;
 		//filter
 		this.filter = new PanelFilter();
+		filter.setVisible(false);
 		this.filterApply = new JCheckBox("Filter", false);
+		this.filterApply.addActionListener((ActionEvent e) -> {
+			if (e.getID() == 1001) {
+				filter.setVisible(filterApply.isSelected());
+				PanelNav.this.getParent().repaint();
+			}
+		});
 		//info
 		this.search = new JTextField();
 		search.setToolTipText("name of card or uuid of card");
@@ -124,9 +131,11 @@ public class PanelNav extends JPanel {
 		//Display
 		this.setLayout(new BorderLayout());
 		JPanel panelUp = new JPanel(new BorderLayout());
+		panelUp.setLayout(new BorderLayout());
 		panelUp.add(this.refrech, BorderLayout.NORTH);
-		panelUp.add(new JScrollPane(this.filter), BorderLayout.CENTER);
+		panelUp.add(this.filter, BorderLayout.CENTER);
 		JPanel searchBar = new JPanel();
+		searchBar.setLayout(new BorderLayout());
 		searchBar.add(this.search, BorderLayout.CENTER);
 		searchBar.add(this.filterApply, BorderLayout.EAST);
 		panelUp.add(searchBar, BorderLayout.SOUTH);

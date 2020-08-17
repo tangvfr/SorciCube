@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardCible;
@@ -14,7 +15,7 @@ import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 
-public class PanelFilter extends JPanel {
+public class PanelFilter extends JScrollPane {
 
 	private static final long serialVersionUID = -6789820987468634151L;
 	private PanelFilterEnum<CardType> filterType;
@@ -47,23 +48,26 @@ public class PanelFilter extends JPanel {
 		this.filterIsImmobilization = new PanelFilterBoolean("Is Immobilization", "True", "False", "Any");
 		this.filterIsStunned = new PanelFilterBoolean("Is Stunned", "True", "False", "Any");
 		//init gui
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.add(filterType);
+		JPanel pan = new JPanel();
+		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
+		pan.add(filterType);
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
 		panel1.add(filterRarity);
 		panel1.add(filterFaction);
 		panel1.add(filterCibleFaction);
-		this.add(panel1);
-		this.add(filterOriginalName);
-		this.add(filterHideCard);
-		this.add(filterHasSkin);
-		this.add(filterHasIncitement);
-		this.add(filterIsExited);
-		this.add(filterIsInvulnerability);
-		this.add(filterIsImmobilization);
-		this.add(filterIsStunned);
-		this.add(filterCible);
+		pan.add(panel1);
+		pan.add(filterOriginalName);
+		pan.add(filterHideCard);
+		pan.add(filterHasSkin);
+		pan.add(filterHasIncitement);
+		pan.add(filterIsExited);
+		pan.add(filterIsInvulnerability);
+		pan.add(filterIsImmobilization);
+		pan.add(filterIsStunned);
+		pan.add(filterCible);
+		//scroll pan
+		this.setViewportView(pan);
 	}
 	
 	public Vector<Card> applyFilter(Collection<Card> list) {
