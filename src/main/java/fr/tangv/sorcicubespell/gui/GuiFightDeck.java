@@ -62,7 +62,7 @@ public class GuiFightDeck extends GuiDecks {
 							
 							* auto sort list feature for the render
 						
-							- add after and add anti afk
+							+ add after and add anti afk
 							
 							- add duel
 							

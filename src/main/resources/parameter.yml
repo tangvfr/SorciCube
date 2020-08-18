@@ -22,6 +22,7 @@ cooldown_end: 10
 max_mana: 12
 start_mana: 2
 price_card: 5
+round_max_afk: 3
 #server
 server_lobby: "lobby"
 server_fight: "fight"

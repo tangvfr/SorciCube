@@ -21,15 +21,17 @@ public class ValueFight {
 	protected final ItemStack itemStickView;
 	protected final ItemStack itemSwap;
 	protected final ItemStack itemBuy;
-	protected final int max_mana;
-	protected final int start_mana;
+	protected final int maxMana;
+	protected final int startMana;
 	protected final String titleBossBar;
 	protected final BarColor titleBossBarColor;
 	protected final String titleEnd; 
 	protected final BarColor titleEndColor;
+	protected final byte roundMaxAFK;
 	
 	public ValueFight(SorciCubeSpell sorci) {
 		this.priceCard = sorci.getParameter().getInt("price_card");
+		this.roundMaxAFK = (byte) sorci.getParameter().getInt("round_max_afk");
 		//item
 		this.itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, sorci.gertGuiConfig().getString("gui_player.none"), null, false);
 		this.itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, sorci.gertGuiConfig().getString("gui_player.null"), null, false);
@@ -40,8 +42,8 @@ public class ValueFight {
 				, Arrays.asList(sorci.gertGuiConfig().getString("gui_player.buy_desc").replace("{price}", Integer.toString(priceCard))), false);
 		this.itemSwap = ItemBuild.buildItem(Material.SHEARS, 1, (short) 0, (byte) 0, sorci.gertGuiConfig().getString("gui_player.swap"), Arrays.asList(sorci.gertGuiConfig().getString("gui_player.swap_desc")), false);
 		//mana
-		this.max_mana = sorci.getParameter().getInt("max_mana");
-		this.start_mana = sorci.getParameter().getInt("start_mana");
+		this.maxMana = sorci.getParameter().getInt("max_mana");
+		this.startMana = sorci.getParameter().getInt("start_mana");
 		//boss bar
 		this.titleBossBar = sorci.gertGuiConfig().getString("boss_bar.name");
 		this.titleBossBarColor = BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color"));

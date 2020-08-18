@@ -302,6 +302,7 @@ public class EventFight implements Listener {
 		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
 			e.setCancelled(true);
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
+			player.noAFK();
 			if (inventoryAutorized(player, e.getInventory())) {
 				if (player.canPlay()) {
 					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {

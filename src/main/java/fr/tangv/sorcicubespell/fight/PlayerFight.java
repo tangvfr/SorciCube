@@ -19,14 +19,18 @@ import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.util.ItemHead;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_9_R2.IScoreboardCriteria;
 import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardDisplayObjective;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardObjective;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardScore;
+import net.minecraft.server.v1_9_R2.PacketPlayOutTitle;
 import net.minecraft.server.v1_9_R2.Scoreboard;
 import net.minecraft.server.v1_9_R2.ScoreboardObjective;
 import net.minecraft.server.v1_9_R2.ScoreboardScore;
+import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
 
 public class PlayerFight {
 
@@ -50,6 +54,8 @@ public class PlayerFight {
 	private volatile FightEntity entityAttack;
 	private volatile FightHead firstSelection;
 	private volatile boolean alreadySwap;
+	private volatile byte roundAFK;
+	private volatile boolean isAFK;
 	
 	//scoreboard
 	private volatile String[] lastScoreMy;
@@ -69,6 +75,8 @@ public class PlayerFight {
 		this.entityAttack = null;
 		this.firstSelection = null;
 		this.alreadySwap = false;
+		this.roundAFK = 0;
+		this.isAFK = true;
 		//entity loc
 		if (first) {
 			this.locBase = fight.getArena().getFirstBase();
@@ -86,6 +94,22 @@ public class PlayerFight {
 		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
 	}
 	
+	public void noAFK() {
+		this.isAFK = false;
+	}
+
+	public void addRoundAFK() {
+		if (isAFK) {
+			this.roundAFK++;
+			if (roundAFK >= ValueFight.V.roundMaxAFK) {
+				fight.end(this);
+			}
+		} else {
+			this.roundAFK = 0;
+			this.isAFK = true;
+		}
+	}
+
 	public boolean hasAlreadySwap() {
 		return alreadySwap;
 	}
@@ -114,7 +138,7 @@ public class PlayerFight {
 	}
 	
 	public boolean hasFirstSelection() {
-		return firstSelection == null;
+		return firstSelection != null;
 	}
 	
 	public FightHead getFirstSelection() {
@@ -217,6 +241,11 @@ public class PlayerFight {
 	
 	public Inventory getInvSwap() {
 		return invSwap;
+	}
+	
+	public void closeInventory() {
+		if (player.isOnline())
+			player.closeInventory();
 	}
 	
 	public Location getLocBase() {
@@ -390,7 +419,7 @@ public class PlayerFight {
 	public void setHealth(int health) {
 		if (health <= 0) {
 			this.health = 0;
-			fight.end(player);
+			fight.end(this);
 		} else if (health > Fight.max_health) 
 			this.health = Fight.max_health;
 		else
@@ -415,11 +444,54 @@ public class PlayerFight {
 	//function
 
 	public void sendPacket(Packet<?> packet) {
-		sendPacket(player, packet);
+		if (player.isOnline())
+			((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 	}
 	
-	public static void sendPacket(Player player, Packet<?> packet) {
-		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+	public void alert(String message) {
+		if (player.isOnline()) {
+			player.sendMessage(message);
+			sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
+					Fight.toIChatBaseComposent(""),
+					0, 6, 0));
+			sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
+					Fight.toIChatBaseComposent(message),
+					0, 6, 0));
+		}
+	}
+	
+	public void sendEndTitle(String message) {
+		if (player.isOnline()) {
+			alert(message);
+			player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+					new TextComponent(""));
+		}
+	}
+	
+	public void returnLobby() {
+		if (player.isOnline())
+			fight.getSorci().sendPlayerToServer(player, fight.getSorci().getNameServerLobby());
+	}
+	
+	public void updateDisplayPlayer() {
+		if (player.isOnline()) {
+			String messageActionBar = "";
+			if (canPlay()) {
+				int cardSelected = getCardSelect();
+				if (cardSelected != -1) {
+					Card card = getCardHand(cardSelected);
+					messageActionBar = 
+							CardRender.renderManaCard(card)+"§r §d> "+card.getName()+"§r§d < "+
+							(card.getType() == CardType.ENTITY ? CardRender.renderStatCard(card) : CardRender.renderManaCard(card));
+				}
+				player.setExp(1F);
+			} else {
+				player.setExp(0F);
+			}
+			player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+					new TextComponent(messageActionBar));
+			player.setLevel(getMana());
+		}
 	}
 	
 	private void sendScore(String name, String lastName, int scoreNumber) {
@@ -525,30 +597,32 @@ public class PlayerFight {
 	}
 	
 	public void initHotBar() {
-		boolean play = canPlay();
-		player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), ValueFight.V.itemNone);
-		player.getInventory().setItem(FightSlot.STICK_VIEW.getSlotInv(), ValueFight.V.itemStickView);
-		ItemStack item = ValueFight.V.itemNone;
-		if (play)
-			item = ValueFight.V.itemNextRound;
-		player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);
-		//card hand
-		player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), itemNull(fight.renderCard(getCardHand(0))));
-		player.getInventory().setItem(FightSlot.CARD_2.getSlotInv(), itemNull(fight.renderCard(getCardHand(1))));
-		player.getInventory().setItem(FightSlot.CARD_3.getSlotInv(), itemNull(fight.renderCard(getCardHand(2))));
-		player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), itemNull(fight.renderCard(getCardHand(3))));
-		player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), itemNull(fight.renderCard(getCardHand(4))));
-		player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), itemNull(fight.renderCard(getCardHand(5))));
-		//inv in
-		player.getInventory().setItem(FightSlot.BUY_CARD.getSlotInv(), ValueFight.V.itemBuy);
-		player.getInventory().setItem(FightSlot.SWAP_CARD.getSlotInv(), alreadySwap ? null : ValueFight.V.itemSwap);
-		player.updateInventory();
+		if (player.isOnline()) {
+			boolean play = canPlay();
+			player.getInventory().setItem(FightSlot.NONE_1.getSlotInv(), ValueFight.V.itemNone);
+			player.getInventory().setItem(FightSlot.STICK_VIEW.getSlotInv(), ValueFight.V.itemStickView);
+			ItemStack item = ValueFight.V.itemNone;
+			if (play)
+				item = ValueFight.V.itemNextRound;
+			player.getInventory().setItem(FightSlot.FINISH_ROUND.getSlotInv(), item);
+			//card hand
+			player.getInventory().setItem(FightSlot.CARD_1.getSlotInv(), itemNull(fight.renderCard(getCardHand(0))));
+			player.getInventory().setItem(FightSlot.CARD_2.getSlotInv(), itemNull(fight.renderCard(getCardHand(1))));
+			player.getInventory().setItem(FightSlot.CARD_3.getSlotInv(), itemNull(fight.renderCard(getCardHand(2))));
+			player.getInventory().setItem(FightSlot.CARD_4.getSlotInv(), itemNull(fight.renderCard(getCardHand(3))));
+			player.getInventory().setItem(FightSlot.CARD_5.getSlotInv(), itemNull(fight.renderCard(getCardHand(4))));
+			player.getInventory().setItem(FightSlot.CARD_6.getSlotInv(), itemNull(fight.renderCard(getCardHand(5))));
+			//inv in
+			player.getInventory().setItem(FightSlot.BUY_CARD.getSlotInv(), ValueFight.V.itemBuy);
+			player.getInventory().setItem(FightSlot.SWAP_CARD.getSlotInv(), alreadySwap ? null : ValueFight.V.itemSwap);
+			player.updateInventory();
+		}
 	}
 	
 	private void showSelectCard() {
 		hideAllHead();
 		if (cardSelected != -1) {
-			player.closeInventory();
+			closeInventory();
 			Card card = cardHand[cardSelected];
 			if (card.getType() == CardType.ENTITY) {
 				initHeadForEntityPose(card);
