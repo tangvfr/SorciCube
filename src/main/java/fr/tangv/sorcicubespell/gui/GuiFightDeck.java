@@ -66,6 +66,8 @@ public class GuiFightDeck extends GuiDecks {
 							
 							- add duel
 							
+							//- add entity envent with this historic chat
+							
 							- add system spectator
 							
 							last - add system reconnect
