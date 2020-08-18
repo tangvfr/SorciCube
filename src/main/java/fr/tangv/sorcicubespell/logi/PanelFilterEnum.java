@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.BoxLayout;
@@ -57,12 +56,9 @@ public class PanelFilterEnum<T extends Enum<?>> extends JPanel {
 	
 	public ArrayList<T> makeFilter() {
 		ArrayList<T> list = new ArrayList<T>();
-		Enumeration<T> iterable = this.map.keys();
-		while (iterable.hasMoreElements()) {
-			T key = iterable.nextElement();
+		for (T key : map.keySet())
 			if (map.get(key).isSelected())
 				list.add(key);
-		}
 		return list;
 	}
 	

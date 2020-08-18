@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell.card;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 import org.bson.Document;
 
@@ -35,6 +36,10 @@ public class CardFeatures {
 	
 	public Collection<CardFeature> valueFeatures() {
 		return this.features.values();
+	}
+	
+	public KeySetView<CardFeatureType, CardFeature> keySet() {
+		return this.features.keySet();
 	}
 	
 	public int size() {
