@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -37,6 +38,15 @@ import io.netty.util.internal.ConcurrentSet;
 
 public class EventFight implements Listener {
 
+	@EventHandler
+	public void onSneak(PlayerToggleSneakEvent e) {
+		Bukkit.broadcastMessage("List Player: "+Bukkit.getOnlinePlayers().size());
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			Bukkit.broadcastMessage("UUID:"+player.getUniqueId()+" Name:"+player.getName());
+		}
+		Bukkit.broadcastMessage("End List Player");
+	}
+	
 	//static
 	
 	private static final ConcurrentSet<Material> materialTransparent;
