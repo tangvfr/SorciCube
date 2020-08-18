@@ -70,10 +70,14 @@ public class ManagerFight implements Runnable {
 			}
 		}
 		if (kick) {
-			if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
+			if (player.hasPermission(sorci.getParameter().getString("perm_admin"))) {
+				for (Player other : Bukkit.getOnlinePlayers())
+					other.hidePlayer(player);
+			} else {
 				Bukkit.getScheduler().runTaskLaterAsynchronously(sorci, () -> {
 					sendLobbyPlayer(player);
 				}, 1);
+			}
 		} else {
 			for (Player other : Bukkit.getOnlinePlayers()) {
 				other.hidePlayer(player);
