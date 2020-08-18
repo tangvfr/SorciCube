@@ -60,7 +60,7 @@ public class GuiFightDeck extends GuiDecks {
 							
 							* add system filter in logi
 							
-							- auto sort list feature for the render
+							* auto sort list feature for the render
 						
 							- add after and add anti afk
 							

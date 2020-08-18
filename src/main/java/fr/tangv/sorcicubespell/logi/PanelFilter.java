@@ -68,6 +68,7 @@ public class PanelFilter extends JScrollPane {
 		pan.add(filterCible);
 		//scroll pan
 		this.setViewportView(pan);
+		this.getVerticalScrollBar().setUnitIncrement(10);
 	}
 	
 	public Vector<Card> applyFilter(Collection<Card> list) {
