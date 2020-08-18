@@ -71,7 +71,9 @@ public class ManagerFight implements Runnable {
 		}
 		if (kick) {
 			if (!player.hasPermission(sorci.getParameter().getString("perm_admin")))
-				sorci.sendPlayerToServer(player, sorci.getNameServerLobby());
+				Bukkit.getScheduler().runTaskLaterAsynchronously(sorci, () -> {
+					sendLobbyPlayer(player);
+				}, 1);
 		} else {
 			for (Player other : Bukkit.getOnlinePlayers()) {
 				other.hidePlayer(player);
@@ -128,7 +130,6 @@ public class ManagerFight implements Runnable {
 				}
 			}
 		}
-		
 		for (int i = 0; i < fights.size(); i++) {
 			try {
 				Fight fight = fights.get(i);
