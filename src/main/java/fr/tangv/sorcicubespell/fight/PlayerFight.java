@@ -23,6 +23,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_9_R2.IScoreboardCriteria;
 import net.minecraft.server.v1_9_R2.Packet;
+import net.minecraft.server.v1_9_R2.PacketPlayOutChat;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardDisplayObjective;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardObjective;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardScore;
@@ -102,6 +103,9 @@ public class PlayerFight {
 		if (isAFK) {
 			this.roundAFK++;
 			if (roundAFK >= ValueFight.V.roundMaxAFK) {
+				fight.sendPacket(new PacketPlayOutChat(Fight.toIChatBaseComposent(
+						fight.getSorci().getMessage().getString("message_afk_fight").replace("{player}", player.getName())
+				), (byte) 0));
 				fight.end(this);
 			}
 		} else {
