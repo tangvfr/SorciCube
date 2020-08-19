@@ -121,13 +121,15 @@ public class ManagerFight implements Runnable {
 						sendLobbyPlayer(preFight.getPlayer1());
 						sendLobbyPlayer(preFight.getPlayer2());
 					} else {
-						try {
-							fights.add(new Fight(sorci, preFight));
-						} catch (Exception e) {
-							Bukkit.getLogger().warning(RenderException.renderException(e));
-							sendLobbyPlayer(preFight.getPlayer1());
-							sendLobbyPlayer(preFight.getPlayer2());
-						}
+						Bukkit.getScheduler().runTask(sorci, () -> {
+							try {
+								fights.add(new Fight(sorci, preFight));
+							} catch (Exception e) {
+								Bukkit.getLogger().warning(RenderException.renderException(e));
+								sendLobbyPlayer(preFight.getPlayer1());
+								sendLobbyPlayer(preFight.getPlayer2());
+							}
+						});
 					}
 				} else {
 					sendLobbyPlayer(preFight.getPlayer1());
