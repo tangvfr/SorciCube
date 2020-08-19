@@ -25,7 +25,7 @@ public abstract class AbstractGui implements Gui {
 	}
 
 	public PlayerGui getPlayerGui(Player player) {
-		return manager.getPlayerGuis().get(player);
+		return manager.getPlayerGui(player);
 	}
 	
 	@Override

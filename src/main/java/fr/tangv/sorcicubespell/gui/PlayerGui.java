@@ -21,11 +21,13 @@ public class PlayerGui {
 	private PlayerFeature playerFeature;
 	private AbstractGui previousGui;
 	private FightType fightType;
+	private Player inviteDuel;
 	
 	public PlayerGui(Player player) {
 		this.player = player;
 		this.card = null;
 		this.gui = null;
+		this.inviteDuel = null;
 		this.cardComparator = CardComparator.BY_ID;
 		this.setPageViewGui(0);
 		this.invOfGui = null;
@@ -118,6 +120,14 @@ public class PlayerGui {
 
 	public void setFightType(FightType fightType) {
 		this.fightType = fightType;
+	}
+
+	public Player getInviteDuel() {
+		return inviteDuel;
+	}
+
+	public void setInviteDuel(Player inviteDuel) {
+		this.inviteDuel = inviteDuel;
 	}
 	
 }

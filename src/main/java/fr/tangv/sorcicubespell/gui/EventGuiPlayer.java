@@ -20,23 +20,23 @@ public class EventGuiPlayer implements Listener{
 	public EventGuiPlayer(ManagerGui manager) {
 		this.manager = manager;
 		for (Player player : Bukkit.getOnlinePlayers())
-			this.manager.getPlayerGuis().put(player, new PlayerGui(player));
+			this.manager.putPlayerGui(player, new PlayerGui(player));
 	}
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		this.manager.getPlayerGuis().put(e.getPlayer(), new PlayerGui(e.getPlayer()));
+		this.manager.putPlayerGui(e.getPlayer(), new PlayerGui(e.getPlayer()));
 	}
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
-		this.manager.getPlayerGuis().remove(e.getPlayer());
+		this.manager.removePlayerGui(e.getPlayer());
 	}
 	
 	@EventHandler
 	public void onDrag(InventoryDragEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
-			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getWhoClicked());
+			PlayerGui player = this.manager.getPlayerGui((Player) e.getWhoClicked());
 			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onDrag(player.getPlayer(), e);
@@ -46,7 +46,7 @@ public class EventGuiPlayer implements Listener{
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
-			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getWhoClicked());
+			PlayerGui player = this.manager.getPlayerGui((Player) e.getWhoClicked());
 			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onClick(player.getPlayer(), e);
@@ -56,7 +56,7 @@ public class EventGuiPlayer implements Listener{
 	@EventHandler
 	public void onClose(InventoryCloseEvent e) {
 		if (e.getPlayer() instanceof Player) {
-			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getPlayer());
+			PlayerGui player = this.manager.getPlayerGui((Player) e.getPlayer());
 			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onClose(player.getPlayer(), e);
@@ -66,7 +66,7 @@ public class EventGuiPlayer implements Listener{
 	@EventHandler
 	public void onOpen(InventoryOpenEvent e) {
 		if (e.getPlayer() instanceof Player) {
-			PlayerGui player = this.manager.getPlayerGuis().get((Player) e.getPlayer());
+			PlayerGui player = this.manager.getPlayerGui((Player) e.getPlayer());
 			AbstractGui gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onOpen(player.getPlayer(), e);
