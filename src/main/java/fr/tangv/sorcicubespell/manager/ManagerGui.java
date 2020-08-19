@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubespell.manager;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -25,7 +24,7 @@ import fr.tangv.sorcicubespell.gui.PlayerGui;
 public class ManagerGui {
 
 	private SorciCubeSpell sorci;
-	private Map<Player, PlayerGui> playerGuis;
+	private ConcurrentHashMap<Player, PlayerGui> playerGuis;
 	private GuiAdminViewCards guiAdminViewCards;
 	private GuiSelectDefaultDeck guiSelectDefaultDeck;
 	private GuiEditOrView guiEditOrView;
