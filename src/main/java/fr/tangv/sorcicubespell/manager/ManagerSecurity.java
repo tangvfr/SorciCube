@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -65,6 +66,14 @@ public class ManagerSecurity implements Listener {
 	@EventHandler
 	public void onNoDammage(EntityDamageEvent e) {
 		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onNoDammage(EntityDamageByEntityEvent e) {
+		if (!(e.getEntity() instanceof Player) && e.getDamager() instanceof Player) {
+			if (isAuto((Player) e.getDamager()))
+				e.setCancelled(false);
+		}
 	}
 		
 }

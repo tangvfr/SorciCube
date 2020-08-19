@@ -35,6 +35,7 @@ public class EventDuelCreator implements Listener {
 			Player player = e.getPlayer();
 			Player cible = (Player) e.getRightClicked();
 			if (manager.isInDuel(player) && manager.isInDuel(cible)) {
+				e.setCancelled(true);
 				PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 				PlayerGui cibleG = sorci.getManagerGui().getPlayerGui(cible);
 				if (cibleG.getInviteDuel() == player) {
@@ -55,6 +56,7 @@ public class EventDuelCreator implements Listener {
 		if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			Player player = e.getPlayer();
 			if (manager.isInDuel(player)) {
+				e.setCancelled(true);
 				PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 				if (playerG.getInviteDuel() != null) {
 					playerG.setInviteDuel(null);
