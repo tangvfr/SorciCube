@@ -87,11 +87,6 @@ public class Fight {
 		//start
 		cooldown.loop();
 	}
-
-	@Override
-	protected void finalize() throws Throwable {
-		Bukkit.broadcastMessage("*------------ End Fight ------------*");
-	}
 	
 	public void addPlayerBossBar(Player player) {
 		this.bossBar.addPlayer(player);
