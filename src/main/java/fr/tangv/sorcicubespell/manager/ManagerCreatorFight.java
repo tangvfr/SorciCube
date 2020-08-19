@@ -35,8 +35,6 @@ public class ManagerCreatorFight {
 			noClassified = null;
 		} else if (duelPlayers.contains(player)) {
 			duelPlayers.remove(player);
-			if (!disconnect)
-				sorci.getManagerGui().getPlayerGui(player).setInviteDuel(null);
 		}
 		if (!disconnect)
 			player.teleport(locNPC);
