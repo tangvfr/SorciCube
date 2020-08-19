@@ -57,7 +57,7 @@ public class CommandGiveCard implements CommandExecutor {
 					sender.sendMessage(
 						sorci.getMessage().getString("message_give_card")
 						.replace("{player}", player.getName())
-						.replace("{card}", card.getName())
+						.replace("{card}", card.renderName())
 					);
 				}
 			}
