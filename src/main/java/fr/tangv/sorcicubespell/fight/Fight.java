@@ -93,10 +93,6 @@ public class Fight {
 		Bukkit.broadcastMessage("*------------ End Fight ------------*");
 	}
 	
-	public void removePlayerBossBar(Player player) {
-		this.bossBar.removePlayer(player);
-	}
-	
 	public void addPlayerBossBar(Player player) {
 		this.bossBar.addPlayer(player);
 	}
