@@ -48,10 +48,6 @@ public class ManagerPlayers {
 		players.findOneAndReplace(playerFeature.toUUIDDocument(), playerFeature.toDocument());
 	}
 	
-	/*public void delete(PlayerFeature playerFeature) {
-		players.findOneAndDelete(playerFeature.toUUIDDocument());
-	}*/
-	
 	public boolean initPlayer(Player player, CardFaction faction) {
 		try {
 			if (this.containtPlayer(player))

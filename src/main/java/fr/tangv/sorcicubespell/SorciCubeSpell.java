@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
+import fr.tangv.sorcicubespell.command.CommandGiveArrowHead;
 import fr.tangv.sorcicubespell.command.CommandGiveCard;
 import fr.tangv.sorcicubespell.command.CommandRefresh;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
@@ -95,6 +96,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			new ManagerSecurity(this);
 			getCommand("refresh").setExecutor(new CommandRefresh(this));
 			getCommand("givecard").setExecutor(new CommandGiveCard(this));
+			getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(this));
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);

@@ -302,7 +302,6 @@ public class EventFight implements Listener {
 		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
 			e.setCancelled(true);
 			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
-			player.noAFK();
 			if (inventoryAutorized(player, e.getInventory())) {
 				if (player.canPlay()) {
 					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
@@ -383,6 +382,8 @@ public class EventFight implements Listener {
 			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
 			if (!inventoryAutorized(player, e.getInventory())) {
 				e.setCancelled(true);
+			} else {
+				player.noAFK();
 			}
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
 				e.setCancelled(true);

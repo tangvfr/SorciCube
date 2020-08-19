@@ -28,3 +28,7 @@ commands:
     usage: /givecard <name> <uuid>
     description: "Give card specify."
     permission: sorcicubespell.givecard
+  givearrowhead:
+    usage: /givearrowhead
+    description: "Give Head Arrow Were In Fight."
+    permission: sorcicubespell.givearrowhead
