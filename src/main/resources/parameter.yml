@@ -1,6 +1,8 @@
 #mongodb
 mongodb: "mongodb://ect..."
 database: "plugin"
+#deck
+number_deck_start: 2
 #is lobby
 is_lobby: true
 chat_format: "{displayname}§r§8: §r§f{message}"

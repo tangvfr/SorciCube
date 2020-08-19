@@ -88,7 +88,7 @@ public class ManagerPlayers {
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
-					2,
+					sorci.getParameter().getInt("number_deck_start"),
 					cardsUnlocks);
 			this.insert(playerFeature);
 			return true;
