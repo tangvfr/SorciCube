@@ -26,17 +26,16 @@ public class GuiFightDeck extends GuiDecks {
 			if (playerF.getDeck(number).isComplet()) {
 				playerG.setDeckEdit(number);
 				ManagerCreatorFight cf = sorci.getManagerCreatorFight();
+				sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
 				switch(playerG.getFightType()) {
 					case UNCLASSIFIED:
 						if (cf.getNoClassified() == null) {
 							cf.setNoClassified(player);
-							sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
 							player.sendMessage(sorci.getMessage().getString("message_wait_fight"));
 							break;
 						} else {
 							Player player1 = cf.getNoClassified();
 							cf.setNoClassified(null);
-							sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
 							sorci.getManagerPreFightData().addPreFightData(
 									new PreFightData(
 											player1.getUniqueId(),
@@ -52,29 +51,11 @@ public class GuiFightDeck extends GuiDecks {
 						}
 						
 					case DUEL:
-						/*
-							
-							/!\ test already bug with select card in hand
-							
-							+ add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
-							
-							* add system filter in logi
-							
-							* auto sort list feature for the render
+						cf.addInDuel(player);
+						player.sendMessage(sorci.getMessage().getString("message_wait_duel"));
+						break;
 						
-							+ add after and add anti afk
-							
-							- add duel
-							
-							//- add entity envent with this historic chat
-							
-							- add system spectator
-							
-							last - add system reconnect
-							
-							last - add system level and experience + coin
-							
-						*/
+					default:
 						break;
 				}
 				Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
