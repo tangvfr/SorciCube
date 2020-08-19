@@ -27,7 +27,7 @@ public class ManagerCreatorFight {
 		this.locNPC = (Location) sorci.getParameter().get("location_npc");
 		this.duelPlayers = new Vector<Player>();
 		this.noClassified = null;
-		Bukkit.getPluginManager().registerEvents(new EventDuelCreator(sorci), sorci);
+		Bukkit.getPluginManager().registerEvents(new EventDuelCreator(sorci, this), sorci);
 	}
 
 	public void playerLeave(Player player, boolean disconnect) {

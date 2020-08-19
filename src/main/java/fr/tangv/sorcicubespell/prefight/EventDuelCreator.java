@@ -20,9 +20,9 @@ public class EventDuelCreator implements Listener {
 	private final String messageCancel;
 	private final String messageAlready;
 	
-	public EventDuelCreator(SorciCubeSpell sorci) {
+	public EventDuelCreator(SorciCubeSpell sorci, ManagerCreatorFight manager) {
 		this.sorci = sorci;
-		this.manager = sorci.getManagerCreatorFight();
+		this.manager = manager;
 		this.messageInvite = sorci.getMessage().getString("message_duel_send_invite");
 		this.messageReceive = sorci.getMessage().getString("message_duel_receive_invite");
 		this.messageCancel = sorci.getMessage().getString("message_duel_cancel_invite");
