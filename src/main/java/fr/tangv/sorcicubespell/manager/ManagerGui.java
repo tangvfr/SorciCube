@@ -61,8 +61,16 @@ public class ManagerGui {
 		return sorci;
 	}
 	
-	public Map<Player, PlayerGui> getPlayerGuis() {
-		return playerGuis;
+	public PlayerGui getPlayerGui(Player player) {
+		return playerGuis.get(player);
+	}
+	
+	public void removePlayerGui(Player player) {
+		playerGuis.remove(player);
+	}
+	
+	public void putPlayerGui(Player player, PlayerGui playerGui) {
+		playerGuis.put(player, playerGui);
 	}
 	
 	public GuiAdminViewCards getGuiAdminViewCards() {
