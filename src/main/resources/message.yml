@@ -17,6 +17,7 @@ message_wait_fight: "§aVous venez de rentrer dans la file d'attente pour combat
 message_wait_duel: "§aVous venez de rentrer dans la file pour lancé un duel !"
 message_duel_send_invite: "§aVous venez d'invité {player} en duel !"
 message_duel_receive_invite: "§aVous venez d'être invité en duel par {player} !"
+message_duel_already_invite: "§cVous avez déja invite {player} en duel !"
 message_duel_cancel_invite: "§cVous venez d'annulé votre invitation en duel !"
 message_leave_fight: "§cVous venez de quitté la file d'attente pour combatre !"
 message_round: "§5Round {round} !"

@@ -7,6 +7,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.fight.FightType;
+import fr.tangv.sorcicubespell.fight.PreFightData;
+import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.prefight.EventDuelCreator;
 
 public class ManagerCreatorFight {
@@ -32,10 +35,27 @@ public class ManagerCreatorFight {
 			noClassified = null;
 		} else if (duelPlayers.contains(player)) {
 			duelPlayers.remove(player);
-			sorci.getManagerGui().getPlayerGui(player).setInviteDuel(null);
+			if (!disconnect)
+				sorci.getManagerGui().getPlayerGui(player).setInviteDuel(null);
 		}
 		if (!disconnect)
 			player.teleport(locNPC);
+	}
+	
+	public void duelPlayer(PlayerGui player1, PlayerGui player2) {
+		duelPlayers.remove(player1.getPlayer());
+		duelPlayers.remove(player2.getPlayer());
+		sorci.getManagerPreFightData().addPreFightData(
+				new PreFightData(
+						player1.getPlayer().getUniqueId(),
+						player2.getPlayer().getUniqueId(),
+						player1.getDeckEdit(),
+						player2.getDeckEdit(),
+						FightType.DUEL
+					)
+			);
+		sorci.sendPlayerToServer(player1.getPlayer(), sorci.getNameServerFight());
+		sorci.sendPlayerToServer(player2.getPlayer(), sorci.getNameServerFight());
 	}
 	
 	public boolean isInDuel(Player player) {

@@ -51,6 +51,7 @@ public class GuiFightDeck extends GuiDecks {
 						}
 						
 					case DUEL:
+						playerG.setInviteDuel(null);
 						cf.addInDuel(player);
 						player.sendMessage(sorci.getMessage().getString("message_wait_duel"));
 						break;
