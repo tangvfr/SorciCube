@@ -22,6 +22,7 @@ public class ManagerCreatorFight {
 	private volatile Player noClassified; 
 	
 	public ManagerCreatorFight(SorciCubeSpell sorci) {
+		this.sorci = sorci;
 		this.locNoClassified = (Location) sorci.getParameter().get("location_noclassified");
 		this.locDuel = (Location) sorci.getParameter().get("location_duel");
 		this.locNPC = (Location) sorci.getParameter().get("location_npc");

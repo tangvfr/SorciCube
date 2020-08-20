@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
@@ -31,7 +32,7 @@ public class EventDuelCreator implements Listener {
 	
 	@EventHandler
 	public void onClickOnPLayer(PlayerInteractAtEntityEvent e) {
-		if (e.getRightClicked() instanceof Player) {
+		if (e.getRightClicked() instanceof Player && e.getHand() == EquipmentSlot.HAND) {
 			Player player = e.getPlayer();
 			Player cible = (Player) e.getRightClicked();
 			if (manager.isInDuel(player) && manager.isInDuel(cible)) {

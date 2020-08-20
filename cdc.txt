@@ -5,12 +5,12 @@
 * add system filter in logi
 
 * auto sort list feature for the render
-						
+
+* add duel
+
 + add after and add anti afk
 
-+ add duel
-
-+ logi  add option open card on feature
+- logi  add option open card on feature
 
 //- add entity envent with this historic chat
 
