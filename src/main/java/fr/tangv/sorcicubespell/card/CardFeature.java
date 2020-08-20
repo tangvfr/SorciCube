@@ -39,7 +39,7 @@ public class CardFeature {
 	
 	public static CardFeature toCartFeature(CardFeatureType type, Document document) {
 		CardValue value = CardValue.toCardValue(document);
-		if (type.getTypeValue() == TypeValue.ROUND && value.getType() == TypeValue.NUMBER)
+		if (type.getTypeValue() == TypeValue.ROUND && value.isNumber())
 			value = new CardValue(value.asNumber(), true);
 		return new CardFeature(type, value);
 	}

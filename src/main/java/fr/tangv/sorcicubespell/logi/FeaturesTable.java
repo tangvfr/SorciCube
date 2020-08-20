@@ -88,7 +88,7 @@ public class FeaturesTable extends JTable {
 								}
 							};
 						} else if (value.getType() == TypeValue.ROUND) {
-							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel(value.asRound()/2, Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
+							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel((value.asRound()/2), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
 								private static final long serialVersionUID = 4116920655857733840L;
 
 								@Override

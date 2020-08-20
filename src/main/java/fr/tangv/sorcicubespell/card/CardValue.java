@@ -45,7 +45,7 @@ public class CardValue {
 	}
 	
 	public CardValue(int value, boolean path) {
-		this.value = path ? value : value*2;
+		this.value = path ? value*2 : value;
 		this.type = CardValue.TypeValue.ROUND;
 	}
 
@@ -109,11 +109,12 @@ public class CardValue {
 	
 	@Override
 	public String toString() {
-		if (isNone())
+		if (isNone()) 
 			return "none";
 		else if (isRound())
 			return Integer.toString(asRound()/2);
-		return this.value.toString();
+		else
+			return this.value.toString();
 	}
 	
 	public Document toDocument() {
