@@ -2,6 +2,8 @@ package fr.tangv.sorcicubespell.card;
 
 import org.bson.Document;
 
+import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
+
 public class CardFeature {
 
 	private final CardFeatureType type;
@@ -36,7 +38,10 @@ public class CardFeature {
 	}
 	
 	public static CardFeature toCartFeature(CardFeatureType type, Document document) {
-		return new CardFeature(type, CardValue.toCartValue(document));
+		CardValue value = CardValue.toCardValue(document);
+		if (type.getTypeValue() == TypeValue.ROUND && value.getType() == TypeValue.NUMBER)
+			value = new CardValue(value.asNumber(), true);
+		return new CardFeature(type, value);
 	}
 	
 }

@@ -38,7 +38,7 @@ public class FightSpell {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				for (FightHead head : heads)
-					head.damage(feature.getValue().asInt());
+					head.damage(feature.getValue().asNumber());
 			}
 		});
 		actionsSpells.put(CardFeatureType.INCITEMENT, new ActionSpell() {
@@ -56,7 +56,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.TAKE_NEW_CART, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				player.pickCard(feature.getValue().asInt());
+				player.pickCard(feature.getValue().asNumber());
 			}
 		});
 		actionsSpells.put(CardFeatureType.DESTRUCT, new ActionSpell() {
@@ -91,7 +91,7 @@ public class FightSpell {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				for (FightHead head : heads)
-					head.addHealth(feature.getValue().asInt());
+					head.addHealth(feature.getValue().asNumber());
 			}
 		});
 		actionsSpells.put(CardFeatureType.BOOST_DAMAGE, new ActionSpell() {
@@ -101,7 +101,7 @@ public class FightSpell {
 					if (head instanceof FightEntity) {
 						FightEntity entity = (FightEntity) head;
 						if (!entity.isDead())
-							entity.addAttack(feature.getValue().asInt());
+							entity.addAttack(feature.getValue().asNumber());
 					}
 			}
 		});
@@ -109,13 +109,13 @@ public class FightSpell {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				for (FightHead head : heads)
-					head.addHealth(feature.getValue().asInt());
+					head.addHealth(feature.getValue().asNumber());
 			}
 		});
 		actionsSpells.put(CardFeatureType.BOOST_MANA, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight p, CardFeature feature, Collection<FightHead> heads) {
-				int mana = feature.getValue().asInt();
+				int mana = feature.getValue().asNumber();
 				for (FightHead head : heads)
 					if (head instanceof FightHero) {
 						PlayerFight player = head.getOwner();
@@ -126,7 +126,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.COPY_CART_ARENA_POSE, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				int number = feature.getValue().asInt();
+				int number = feature.getValue().asNumber();
 				for (FightHead head : heads)
 					if (head instanceof FightEntity) {
 						FightEntity ent = (FightEntity) head;
@@ -156,7 +156,7 @@ public class FightSpell {
 					if (head instanceof FightEntity) {
 						FightEntity entity = (FightEntity) head;
 						if (!entity.isDead()) {
-							player.giveCard(entity.getCard().getCard(), feature.getValue().asInt());
+							player.giveCard(entity.getCard().getCard(), feature.getValue().asNumber());
 							break;
 						}
 					}
@@ -165,7 +165,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.REMOVE_MANA_HERO, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight p, CardFeature feature, Collection<FightHead> heads) {
-				int mana = feature.getValue().asInt();
+				int mana = feature.getValue().asNumber();
 				for (FightHead head : heads)
 					if (head instanceof FightHero) {
 						PlayerFight player = head.getOwner();

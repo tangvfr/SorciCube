@@ -27,11 +27,11 @@ public class CardEntity {
 	}
 	
 	public int getHealth() {
-		return this.card.getFeatures().getFeature(CardFeatureType.HEALTH).getValue().asInt();
+		return this.card.getFeatures().getFeature(CardFeatureType.HEALTH).getValue().asNumber();
 	}
 	
 	public int getAttack() {
-		return this.card.getFeatures().getFeature(CardFeatureType.DAMAGE).getValue().asInt();
+		return this.card.getFeatures().getFeature(CardFeatureType.DAMAGE).getValue().asNumber();
 	}
 	
 	public void setHealth(int health) {
@@ -114,9 +114,9 @@ public class CardEntity {
 		boolean updateStat = false;
 		if (card.getFeatures().hasFeature(type)) {
 			CardFeature feature = card.getFeatures().getFeature(type);
-			int value = feature.getValue().asInt();
-			if (value > 0) {
-				feature.setValue(new CardValue(value-1));
+			int round = feature.getValue().asRound();
+			if (round > 0) {
+				feature.setValue(new CardValue(round-1, false));
 			} else {
 				card.getFeatures().removeFeature(type);
 				updateStat = true;

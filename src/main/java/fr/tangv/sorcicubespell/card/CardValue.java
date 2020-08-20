@@ -13,6 +13,8 @@ public class CardValue {
 				return new CardValue("");
 			case NUMBER:
 				return new CardValue(0);
+			case ROUND:
+				return new CardValue(0, false);
 			case BOOL:
 				return new CardValue(false);
 			case SKIN:
@@ -41,6 +43,11 @@ public class CardValue {
 		this.value = value;
 		this.type = CardValue.TypeValue.NUMBER;
 	}
+	
+	public CardValue(int value, boolean path) {
+		this.value = path ? value : value*2;
+		this.type = CardValue.TypeValue.ROUND;
+	}
 
 	public CardValue(boolean value) {
 		this.value = value;
@@ -60,8 +67,12 @@ public class CardValue {
 		return this.type == CardValue.TypeValue.NONE;
 	}
 	
-	public boolean isInt() {
+	public boolean isNumber() {
 		return this.type == CardValue.TypeValue.NUMBER;
+	}
+	
+	public boolean isRound() {
+		return this.type == CardValue.TypeValue.ROUND;
 	}
 	
 	public boolean isBoolean() {
@@ -76,7 +87,11 @@ public class CardValue {
 		return (String) value;
 	}
 	
-	public int asInt() {
+	public int asNumber() {
+		return (int) value;
+	}
+	
+	public int asRound() {
 		return (int) value;
 	}
 	
@@ -94,8 +109,10 @@ public class CardValue {
 	
 	@Override
 	public String toString() {
-		if (type == TypeValue.NONE)
+		if (isNone())
 			return "none";
+		else if (isRound())
+			return Integer.toString(asRound()/2);
 		return this.value.toString();
 	}
 	
@@ -106,13 +123,15 @@ public class CardValue {
 			return new Document("type", this.type.name()).append("value", this.value);
 	}
 	
-	public static CardValue toCartValue(Document document) {
+	public static CardValue toCardValue(Document document) {
 		TypeValue type = TypeValue.valueOf(document.getString("type"));
 		switch (type) {
 			case TEXT:
 				return new CardValue(document.getString("value"));
 			case NUMBER:
 				return new CardValue(document.getInteger("value"));
+			case ROUND:
+				return new CardValue(document.getInteger("value"), false);
 			case BOOL:
 				return new CardValue(document.getBoolean("value"));
 			case SKIN:
@@ -126,6 +145,7 @@ public class CardValue {
 	public enum TypeValue {
 		TEXT(),
 		NUMBER(),
+		ROUND(),
 		BOOL(),
 		SKIN(),
 		NONE();

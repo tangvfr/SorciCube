@@ -53,7 +53,7 @@ public class EnumTool {
 				|| featureType == CardFeatureType.BOOST_HEALTH
 				|| featureType == CardFeatureType.BOOST_MANA
 				|| featureType == CardFeatureType.REMOVE_MANA_HERO)
-			&& value.asInt() < 0)
+			&& value.asNumber() < 0)
 			return this.enumToStringNeg(featureType, feature);
 		else
 			return this.enumToString(featureType, feature);

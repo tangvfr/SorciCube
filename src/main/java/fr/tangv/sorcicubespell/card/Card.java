@@ -182,7 +182,7 @@ public class Card {
 				CardFaction.valueOf(document.getString("faction")),
 				CardCible.valueOf(document.getString("cible")),
 				CardFaction.valueOf(document.getString("ciblefaction")),
-				document.getInteger("mana"),
+				document.getInteger("mana").byteValue(),
 				CardFeatures.toCardFeatures(document.get("features", Document.class)),
 				document.getList("description", String.class),
 				document.containsKey("original_name") ? document.getBoolean("original_name") : false

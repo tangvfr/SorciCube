@@ -77,12 +77,23 @@ public class FeaturesTable extends JTable {
 								}
 							};
 						} else if (value.getType() == TypeValue.NUMBER) {
-							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel(value.asInt(), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
+							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel(value.asNumber(), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
 								private static final long serialVersionUID = 4116920655857733840L;
 
 								@Override
 								public void eventOk(JSpinner comp) {
 									feature.setValue(new CardValue((int) comp.getValue()));
+									FeaturesTable.this.init(window);
+									FeaturesTable.this.repaint();
+								}
+							};
+						} else if (value.getType() == TypeValue.ROUND) {
+							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel(value.asRound()/2, Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
+								private static final long serialVersionUID = 4116920655857733840L;
+
+								@Override
+								public void eventOk(JSpinner comp) {
+									feature.setValue(new CardValue((int) comp.getValue(), true));
 									FeaturesTable.this.init(window);
 									FeaturesTable.this.repaint();
 								}
