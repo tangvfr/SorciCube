@@ -150,8 +150,9 @@ public class EventFight implements Listener {
 	
 	private void useCard(PlayerFight player, Card card, Runnable run) {
 		player.removeMana(card.getMana());
-		player.setCardHand(player.getCardSelect(), null);
+		int select = player.getCardSelect();
 		player.setCardSelect(-1);
+		player.setCardHand(select, null);
 		player.addHistoric(card, player);
 		player.getEnemie().addHistoric(card, player);
 		run.run();

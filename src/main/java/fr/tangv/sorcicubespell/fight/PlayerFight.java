@@ -485,7 +485,7 @@ public class PlayerFight {
 				if (cardSelected != -1) {
 					Card card = getCardHand(cardSelected);
 					messageActionBar = 
-							CardRender.renderManaCard(card)+"§r §d> "+card.getName()+"§r§d < "+
+							CardRender.renderManaCard(card)+"§r§f \u25b6 "+card.renderName()+"§r§f \u25c0 "+
 							(card.getType() == CardType.ENTITY ? CardRender.renderStatCard(card) : CardRender.renderManaCard(card));
 				}
 				player.setExp(1F);
