@@ -10,6 +10,8 @@
 
 + add duel
 
++ logi  add option open card on feature
+
 //- add entity envent with this historic chat
 
 - add system spectator
