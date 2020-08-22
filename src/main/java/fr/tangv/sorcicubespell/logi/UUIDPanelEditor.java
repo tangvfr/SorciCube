@@ -3,12 +3,10 @@ package fr.tangv.sorcicubespell.logi;
 import java.awt.BorderLayout;
 import java.util.UUID;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubespell.card.Card;
