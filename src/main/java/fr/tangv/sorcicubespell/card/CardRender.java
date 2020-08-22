@@ -1,7 +1,6 @@
 package fr.tangv.sorcicubespell.card;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -23,8 +22,7 @@ public class CardRender {
 				featureType == CardFeatureType.IF_ATTACKED_GIVE_ONE ||
 				featureType == CardFeatureType.IF_ATTACKED_GIVE ||
 				featureType == CardFeatureType.EXECUTE) {
-			UUID uuid = UUID.fromString(feature.getValue().asString());
-			Card card = sorci.getManagerCards().getCard(uuid);
+			Card card = sorci.getManagerCards().getCard(feature.getValue().asUUID());
 			if (card != null) {
 				return card.renderName()+(card.getType() == CardType.ENTITY ? " "+renderStatCard(card) : "");
 			} else

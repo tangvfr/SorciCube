@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.UUID;
 
-import javax.swing.JCheckBox;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -65,17 +65,6 @@ public class FeaturesTable extends JTable {
 									}
 								}
 							};
-						} else if (value.getType() == TypeValue.BOOL) {
-							new DialogBase<JCheckBox>(window, "Value", new JCheckBox("", value.asBollean())) {
-								private static final long serialVersionUID = 4116920655857733839L;
-
-								@Override
-								public void eventOk(JCheckBox comp) {
-									feature.setValue(new CardValue(comp.isSelected()));
-									FeaturesTable.this.init(window);
-									FeaturesTable.this.repaint();
-								}
-							};
 						} else if (value.getType() == TypeValue.NUMBER) {
 							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel(value.asNumber(), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
 								private static final long serialVersionUID = 4116920655857733840L;
@@ -98,15 +87,20 @@ public class FeaturesTable extends JTable {
 									FeaturesTable.this.repaint();
 								}
 							};
-						} else if (value.getType() == TypeValue.TEXT) {
-							new DialogBase<JTextField>(window, "Value", new JTextField(value.asString())) {
+						} else if (value.getType() == TypeValue.UUID) {
+							new DialogBase<JTextField>(window, "Value", new JTextField(value.asUUID().toString())) {
 								private static final long serialVersionUID = 4116920655857733839L;
 
 								@Override
 								public void eventOk(JTextField comp) {
-									feature.setValue(new CardValue(comp.getText()));
-									FeaturesTable.this.init(window);
-									FeaturesTable.this.repaint();
+									try {
+										UUID uuid = UUID.fromString(comp.getText());
+										feature.setValue(new CardValue(uuid));
+										FeaturesTable.this.init(window);
+										FeaturesTable.this.repaint();
+									} catch (Exception e) {
+										JOptionPane.showMessageDialog(this, "\""+comp.getText()+"\" is not UUID", "Error invalid UUID", JOptionPane.ERROR_MESSAGE);
+									}
 								}
 							};
 						}

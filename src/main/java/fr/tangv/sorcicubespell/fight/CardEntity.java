@@ -1,7 +1,5 @@
 package fr.tangv.sorcicubespell.fight;
 
-import java.util.UUID;
-
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardFeatureType;
@@ -44,7 +42,7 @@ public class CardEntity {
 	}
 	
 	private void actioneCard(PlayerFight owner, CardFeature feature) {
-		Card card = owner.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+		Card card = owner.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
 		if (card != null)
 			FightSpell.startActionSpell(owner, card.getFeatures(), 
 					FightCible.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction()));

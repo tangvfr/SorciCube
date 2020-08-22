@@ -2,7 +2,6 @@ package fr.tangv.sorcicubespell.fight;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -221,7 +220,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.INVOCATION, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					for (int i = 0; i < player.getMaxEntity(); i++) {
 						FightEntity entity = player.getEntity(i);
@@ -252,7 +251,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.METAMORPH_TO, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					for (FightHead head : heads)
 						if (head instanceof FightEntity && head.isSelectable()) {
@@ -269,7 +268,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.GIVE_FEATURE_CART, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					for (FightHead head : heads)
 						if (head instanceof FightEntity) {
@@ -290,7 +289,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.EXECUTE, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(UUID.fromString(feature.getValue().asString()));
+				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					FightSpell.startActionSpell(player, cardFeature.getFeatures(), 
 							FightCible.randomFightHeadsForCible(player, cardFeature.getCible(), cardFeature.getCibleFaction()));

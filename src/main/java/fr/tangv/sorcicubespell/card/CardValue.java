@@ -1,22 +1,24 @@
 package fr.tangv.sorcicubespell.card;
 
+import java.util.UUID;
+
 import org.bson.Document;
 
 public class CardValue {
 
+	private static final UUID EMPTY_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+	
 	private final Object value;
 	private final TypeValue type;
 	
 	public static CardValue createCardValue(TypeValue type) {
 		switch (type) {
-			case TEXT:
-				return new CardValue("");
+			case UUID:
+				return new CardValue(EMPTY_UUID);
 			case NUMBER:
 				return new CardValue(0);
 			case ROUND:
 				return new CardValue(0, false);
-			case BOOL:
-				return new CardValue(false);
 			case SKIN:
 				try {
 					return new CardValue(CardSkin.createCardSkin(644618518));
@@ -29,9 +31,9 @@ public class CardValue {
 		return new CardValue();
 	}
 	
-	public CardValue(String value) {
+	public CardValue(UUID value) {
 		this.value = value;
-		this.type = CardValue.TypeValue.TEXT;
+		this.type = CardValue.TypeValue.UUID;
 	}
 	
 	public CardValue() {
@@ -48,19 +50,14 @@ public class CardValue {
 		this.value = path ? value*2 : value;
 		this.type = CardValue.TypeValue.ROUND;
 	}
-
-	public CardValue(boolean value) {
-		this.value = value;
-		this.type = CardValue.TypeValue.BOOL;
-	}
 	
 	public CardValue(CardSkin value) {
 		this.value = value;
 		this.type = CardValue.TypeValue.SKIN;
 	}
 	
-	public boolean isString() {
-		return this.type == CardValue.TypeValue.TEXT;
+	public boolean isUUID() {
+		return this.type == CardValue.TypeValue.UUID;
 	}
 	
 	public boolean isNone() {
@@ -75,16 +72,12 @@ public class CardValue {
 		return this.type == CardValue.TypeValue.ROUND;
 	}
 	
-	public boolean isBoolean() {
-		return this.type == CardValue.TypeValue.BOOL;
-	}
-	
 	public boolean isSkin() {
 		return this.type == CardValue.TypeValue.SKIN;
 	}
 	
-	public String asString() {
-		return (String) value;
+	public UUID asUUID() {
+		return (UUID) value;
 	}
 	
 	public int asNumber() {
@@ -93,10 +86,6 @@ public class CardValue {
 	
 	public int asRound() {
 		return (int) value;
-	}
-	
-	public boolean asBollean() {
-		return (boolean) value;
 	}
 	
 	public CardSkin asSkin() {
@@ -120,21 +109,26 @@ public class CardValue {
 	public Document toDocument() {
 		if (type == TypeValue.SKIN)
 			return new Document("type", this.type.name()).append("value", ((CardSkin) this.value).toDocument());
+		else if (type == TypeValue.UUID)
+			return new Document("type", this.type.name()).append("value", this.value.toString());
 		else
 			return new Document("type", this.type.name()).append("value", this.value);
 	}
 	
 	public static CardValue toCardValue(Document document) {
-		TypeValue type = TypeValue.valueOf(document.getString("type"));
+		String typeString = document.getString("type");
+		TypeValue type;
+		if (typeString.equalsIgnoreCase("TEXT"))
+			type = TypeValue.UUID;
+		else
+			type = TypeValue.valueOf(typeString);
 		switch (type) {
-			case TEXT:
-				return new CardValue(document.getString("value"));
+			case UUID:
+				return new CardValue(UUID.fromString(document.getString("value")));
 			case NUMBER:
 				return new CardValue(document.getInteger("value"));
 			case ROUND:
 				return new CardValue(document.getInteger("value"), false);
-			case BOOL:
-				return new CardValue(document.getBoolean("value"));
 			case SKIN:
 				return new CardValue(CardSkin.toCartSkin(document.get("value", Document.class)));
 			case NONE:
@@ -144,10 +138,9 @@ public class CardValue {
 	}
 	
 	public enum TypeValue {
-		TEXT(),
+		UUID(),
 		NUMBER(),
 		ROUND(),
-		BOOL(),
 		SKIN(),
 		NONE();
 	}
