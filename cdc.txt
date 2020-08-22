@@ -1,21 +1,17 @@
-/!\ test already bug with select card in hand
 
-* add ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE
+* add after and add anti afk
 
-* add system filter in logi
-
-* auto sort list feature for the render
-
-* add duel
-
-+ add after and add anti afk
++ path action dead for damage zone entity
 
 - logi  add option open card on feature
 
-//- add entity envent with this historic chat
+- add entity envent with this historic chat
 
 - add system spectator
 
-last - add system reconnect
 
 last - add system level and experience + coin
+
+
+last - add system reconnect
+

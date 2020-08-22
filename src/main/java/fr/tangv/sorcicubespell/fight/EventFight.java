@@ -216,8 +216,13 @@ public class EventFight implements Listener {
 									player.setEntityAttack(null);
 									//start action fight entity
 									int cAttack = head.damage(entity.getAttack());
-									if (cAttack != 0)
+									if (cAttack > 0)
 										entity.damage(cAttack);
+									//excuting action
+									if (head instanceof FightEntity)
+										((FightEntity) head).excutingAction();
+									if (cAttack > 0)
+										entity.excutingAction();
 									//end action fight entity
 									player.showEntityAttackPossible();
 								}

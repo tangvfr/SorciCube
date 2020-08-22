@@ -306,6 +306,7 @@ public class FightSpell {
 	public static void startActionSpell(PlayerFight player, CardFeatures features, Collection<FightHead> heads) {
 		for (CardFeature feature : features.valueFeatures())
 			actionsSpells.get(feature.getType()).actionSpell(player, feature, heads);
+		excutingActionFightEntity(heads);
 	}
 	
 	public static void startActionFeature(PlayerFight player, CardFeature feature, FightHead head) {
@@ -314,6 +315,13 @@ public class FightSpell {
 	
 	public static void startActionFeature(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 		actionsSpells.get(feature.getType()).actionSpell(player, feature, heads);
+		excutingActionFightEntity(heads);
+	}
+	
+	private static void excutingActionFightEntity(Collection<FightHead> heads) {
+		for (FightHead head : heads)
+			if (head instanceof FightEntity)
+				((FightEntity) head).excutingAction();
 	}
 	
 }

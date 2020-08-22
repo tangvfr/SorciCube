@@ -57,6 +57,7 @@ public class PlayerFight {
 	private volatile boolean alreadySwap;
 	private volatile byte roundAFK;
 	private volatile boolean isAFK;
+	private volatile boolean lossAFK;
 	
 	//scoreboard
 	private volatile String[] lastScoreMy;
@@ -78,6 +79,7 @@ public class PlayerFight {
 		this.alreadySwap = false;
 		this.roundAFK = 0;
 		this.isAFK = true;
+		this.lossAFK = false;
 		//entity loc
 		if (first) {
 			this.locBase = fight.getArena().getFirstBase();
@@ -98,11 +100,16 @@ public class PlayerFight {
 	public void noAFK() {
 		this.isAFK = false;
 	}
+	
+	public boolean hasLossAFK() {
+		return this.lossAFK;
+	}
 
 	public void addRoundAFK() {
 		if (isAFK) {
 			this.roundAFK++;
 			if (roundAFK >= ValueFight.V.roundMaxAFK) {
+				this.lossAFK = true;
 				fight.sendPacket(new PacketPlayOutChat(Fight.toIChatBaseComposent(
 						fight.getSorci().getMessage().getString("message_afk_fight").replace("{player}", player.getName())
 				), (byte) 0));

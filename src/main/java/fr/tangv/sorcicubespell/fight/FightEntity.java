@@ -14,9 +14,7 @@ import org.bukkit.event.EventHandler;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
-import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFaction;
-import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardSkin;
 import fr.tangv.sorcicubespell.util.RenderException;
@@ -40,6 +38,7 @@ public class FightEntity extends FightHead {
 	private final EntityArmorStand entityStat;
 	private final UUID uuid;
 	private volatile CardEntity card;
+	private volatile CardEntity lastCard;
 	private volatile CardSkin skin;
 	private volatile boolean isSend;
 	private volatile boolean attackIsPossible;
@@ -48,6 +47,7 @@ public class FightEntity extends FightHead {
 	public FightEntity(PlayerFight owner, Location loc) {
 		super(owner, loc);
 		this.card = null;
+		this.lastCard = null;
 		this.uuid = UUID.randomUUID();
 		this.skin = null;
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
@@ -133,6 +133,7 @@ public class FightEntity extends FightHead {
 	
 	public void setCard(CardEntity card) {
 		this.card = card;
+		this.lastCard = card;
 		this.attackIsPossible = false;
 		if (this.isSend)
 			removePlayer();
@@ -164,6 +165,13 @@ public class FightEntity extends FightHead {
 	
 	public boolean isAlreadyAttacked() {
 		return attacked;
+	}
+	
+	public void excutingAction() {
+		if (lastCard != null) {
+			lastCard.excuteAction(this);
+			lastCard = null;
+		}
 	}
 	
 	@Override
@@ -200,15 +208,15 @@ public class FightEntity extends FightHead {
 		if (!isDead()) {
 			int cAttack = card.isStunned() ? 0 : card.getAttack();
 			if (this.card.hasIfAE())
-				actionedCard(card.getIfAE(owner.getFight().getSorci()));
+				card.excutingIfAE();
 			if (this.card.hasIfAG())
-				giveCard(card.getIfAG(owner.getFight().getSorci()));
+				card.excutingIfAG();
 			if (!this.attacked) {
 				this.attacked = true;
 				if (this.card.hasIfAEO())
-					actionedCard(card.getIfAEO(owner.getFight().getSorci()));
+					card.excutingIfAEO();
 				if (this.card.hasIfAGO())
-					giveCard(card.getIfAGO(owner.getFight().getSorci()));
+					card.excutingIfAGO();
 			}
 			if (!card.isInvulnerability())
 				setHealth(getHealth()-damage);
@@ -250,20 +258,12 @@ public class FightEntity extends FightHead {
 		return this.card == null;
 	}
 	
-	private void actionedCard(Card card) {
-		FightSpell.startActionSpell(owner, card.getFeatures(), 
-				FightCible.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction()));
-	}
-	
-	private void giveCard(CardFeature feature) {
-		FightSpell.startActionFeature(owner, feature, this);
-	}
-	
 	public void dead() {
 		if (!isDead() && card.hasActionDead()) {
 			CardEntity card = this.card;
 			this.setCard(null);
-			actionedCard(card.getActionDead(owner.getFight().getSorci()));
+			card.excutingActionDead();
+			this.lastCard = card;
 		} else
 			this.setCard(null);
 	}
@@ -271,7 +271,7 @@ public class FightEntity extends FightHead {
 	private void spawn() {
 		this.attacked = false;
 		if (this.card.hasActionSpawn())
-			actionedCard(card.getActionSpawn(owner.getFight().getSorci()));
+			card.excutingActionSpawn();
 	}
 
 	@Override
