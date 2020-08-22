@@ -3,7 +3,7 @@
 
 + path action dead for damage zone entity
 
-- logi  add option open card on feature
+w- logi  add option open card on feature
 
 - add entity envent with this historic chat
 

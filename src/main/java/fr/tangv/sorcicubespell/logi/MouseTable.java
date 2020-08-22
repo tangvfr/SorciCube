@@ -58,7 +58,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JTextField comp) {
 							card.setName(comp.getText());
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -102,7 +102,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardRarity enumCombo) {
 							card.setRarity(enumCombo);
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -115,7 +115,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardFaction enumCombo) {
 							card.setFaction(enumCombo);
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -128,7 +128,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardCible enumCombo) {
 							card.setCible(enumCombo);
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -141,7 +141,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardFaction enumCombo) {
 							card.setCibleFaction(enumCombo);
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -154,7 +154,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JSpinner comp) {
 							card.setMana((int) comp.getValue());
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -163,13 +163,13 @@ public class MouseTable extends ClickListener {
 				case 9:
 					Card cardC = card.clone();
 					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features",
-							new FeaturesTable(cardC.getFeatures(), cardC.getType() == CardType.ENTITY), new Dimension(500, 300)) {
+							new FeaturesTable(cartsPanel.getCards(), cardC.getFeatures(), cardC.getType() == CardType.ENTITY), new Dimension(500, 300)) {
 						private static final long serialVersionUID = -4613024932048272120L;
 
 						@Override
 						public void eventOk(FeaturesTable comp) {
 							card.setFeatures(comp.getCardFeatures());
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 						
@@ -189,7 +189,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JTextArea comp) {
 							card.setDescription(TextList.textToList(comp.getText()));
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -204,7 +204,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JCheckBox comp) {
 							card.setOriginalName(comp.isSelected());
-							cartsPanel.getCarts().update(card);
+							cartsPanel.getCards().update(card);
 							cartsPanel.refrech();
 						}
 					};
@@ -243,7 +243,7 @@ public class MouseTable extends ClickListener {
 		}
 		if (material != null) {
 			card.setMaterial(material);
-			cartsPanel.getCarts().update(card);
+			cartsPanel.getCards().update(card);
 			cartsPanel.refrech();
 		} else {
 			JOptionPane.showMessageDialog(base, "Error invalid Material", "Error Card Material", JOptionPane.ERROR_MESSAGE);

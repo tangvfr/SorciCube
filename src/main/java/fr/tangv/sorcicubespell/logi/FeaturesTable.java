@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.UUID;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -27,6 +26,7 @@ import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
 import fr.tangv.sorcicubespell.logi.dialog.DialogSkin;
+import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class FeaturesTable extends JTable {
 
@@ -36,7 +36,7 @@ public class FeaturesTable extends JTable {
 	private Window window;
 	private HashMap<Integer, CardFeature> idCardFeature;
 	
-	public FeaturesTable(CardFeatures cardFeatures, boolean isEntity) {
+	public FeaturesTable(ManagerCards cards, CardFeatures cardFeatures, boolean isEntity) {
 		this.cardFeatures = cardFeatures;
 		this.isEntity = isEntity;
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -88,18 +88,17 @@ public class FeaturesTable extends JTable {
 								}
 							};
 						} else if (value.getType() == TypeValue.UUID) {
-							new DialogBase<JTextField>(window, "Value", new JTextField(value.asUUID().toString())) {
+							new DialogBase<UUIDPanelEditor>(window, "Value", new UUIDPanelEditor(cards, value.asUUID())) {
 								private static final long serialVersionUID = 4116920655857733839L;
 
 								@Override
-								public void eventOk(JTextField comp) {
+								public void eventOk(UUIDPanelEditor comp) {
 									try {
-										UUID uuid = UUID.fromString(comp.getText());
-										feature.setValue(new CardValue(uuid));
+										feature.setValue(new CardValue(comp.getCardUUID()));
 										FeaturesTable.this.init(window);
 										FeaturesTable.this.repaint();
-									} catch (Exception e) {
-										JOptionPane.showMessageDialog(this, "\""+comp.getText()+"\" is not UUID", "Error invalid UUID", JOptionPane.ERROR_MESSAGE);
+									} catch (Throwable e) {
+										JOptionPane.showMessageDialog(this, e.getMessage(), "Error invalid UUID", JOptionPane.ERROR_MESSAGE);
 									}
 								}
 							};
@@ -160,7 +159,7 @@ public class FeaturesTable extends JTable {
 						CardFeature feature = getCardFeature(id);
 						if (isEntity && (feature.getType() == CardFeatureType.HEALTH || feature.getType() == CardFeatureType.DAMAGE))
 							return;
-						if (0 == JOptionPane.showConfirmDialog(FeaturesTable.this, "Are you sure to delete this feature !", "Remove Feature", JOptionPane.WARNING_MESSAGE)) {
+						if (0 == JOptionPane.showConfirmDialog(FeaturesTable.this, "Are you sure to delete \""+feature.getType().name()+"\" feature !", "Remove Feature", JOptionPane.WARNING_MESSAGE)) {
 							cardFeatures.removeFeature(feature);
 							FeaturesTable.this.init(window);
 							FeaturesTable.this.repaint();

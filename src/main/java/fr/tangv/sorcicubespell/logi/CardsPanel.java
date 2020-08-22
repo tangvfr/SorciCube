@@ -14,7 +14,7 @@ public class CardsPanel extends JPanel {
 	
 	private static final long serialVersionUID = 2411422756632892561L;
 	private MongoDBManager mongo;
-	private ManagerCards carts;
+	private ManagerCards cards;
 	private FrameLogi frameLogi;
 	private PanelNav nav;
 	private JPanel edit;
@@ -23,7 +23,7 @@ public class CardsPanel extends JPanel {
 	public CardsPanel(MongoDBManager mongo, FrameLogi frameLogi) throws Exception {
 		this.frameLogi = frameLogi;
 		this.mongo = mongo;
-		this.carts = new ManagerCards(mongo);
+		this.cards = new ManagerCards(mongo);
 		//edit
 		this.edit = new JPanel();
 		this.table = new JTable();
@@ -49,8 +49,8 @@ public class CardsPanel extends JPanel {
 		return frameLogi;
 	}
 	
-	public ManagerCards getCarts() {
-		return carts;
+	public ManagerCards getCards() {
+		return cards;
 	}
 	
 	public JTable getTable() {
@@ -62,10 +62,10 @@ public class CardsPanel extends JPanel {
 	}
 	
 	public void refrech() {
-		this.carts.refresh();
+		this.cards.refresh();
 		this.nav.refresh();
 		if (table.getModel() instanceof ModelEditCard)
-			table.setModel(new ModelEditCard(this.carts.getCard(((ModelEditCard) table.getModel()).getCard().getUUID())));
+			table.setModel(new ModelEditCard(this.cards.getCard(((ModelEditCard) table.getModel()).getCard().getUUID())));
 	}
 
 }

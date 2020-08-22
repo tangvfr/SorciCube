@@ -103,18 +103,7 @@ public class PanelNav extends JPanel {
 		list.setCellRenderer(new ListCellRenderer<Card>() {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
-				String prefix = (isSelected ? ">" : "");
-				/*if (warning)
-					prefix += "<span color=\"#d61818\" style=\"text-decoration: underline;\">[/!\\]</span>";*/
-				if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CART))
-					prefix += "<span color=\"#E60FB8\">[Hide]</span>";
-				prefix += (card.getType() == CardType.ENTITY ? 
-						"<span color=\"#E8A006\">[Entity]</span>" 
-						: "<span color=\"#E64D0F\">[Spell]</span>");
-				if (card.getFeatures().hasFeature(CardFeatureType.SKIN))
-					prefix += "<span color=\"#2BBFE0\">[Skin]</span>";
-				prefix += "<span color=\"#000000\"> | </span>";
-				return new JLabel("<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.renderName())+"</body></html>");
+				return new JLabel(renderHTMLCard(card, (isSelected ? ">" : "")));
 			}
 		});
 		list.addMouseListener(new ClickListener() {
@@ -145,9 +134,21 @@ public class PanelNav extends JPanel {
 		this.refresh();
 	}
 	
+	public static String renderHTMLCard(Card card, String prefix) {
+		if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CART))
+			prefix += "<span color=\"#E60FB8\">[Hide]</span>";
+		prefix += (card.getType() == CardType.ENTITY ? 
+				"<span color=\"#E8A006\">[Entity]</span>" 
+				: "<span color=\"#E64D0F\">[Spell]</span>");
+		if (card.getFeatures().hasFeature(CardFeatureType.SKIN))
+			prefix += "<span color=\"#2BBFE0\">[Skin]</span>";
+		prefix += "<span color=\"#000000\"> | </span>";
+		return "<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.renderName())+"</body></html>";
+	}
+	
 	public void refresh() {
-		this.cartsPanel.getCarts().refresh();
-		Vector<Card> listCard = this.cartsPanel.getCarts().cloneCardsValue();
+		this.cartsPanel.getCards().refresh();
+		Vector<Card> listCard = this.cartsPanel.getCards().cloneCardsValue();
 		Vector<Card> list;
 		String name = this.search.getText().toLowerCase();
 		boolean uuidSearch = false;
@@ -202,7 +203,7 @@ public class PanelNav extends JPanel {
 								new ArrayList<String>(),
 								false
 							);
-						cartsPanel.getCarts().insert(card);
+						cartsPanel.getCards().insert(card);
 						cartsPanel.getTable().setModel(new ModelEditCard(card));
 						refresh();
 					}
@@ -232,7 +233,7 @@ public class PanelNav extends JPanel {
 								new ArrayList<String>(),
 								false
 							);
-						cartsPanel.getCarts().insert(card);
+						cartsPanel.getCards().insert(card);
 						cartsPanel.getTable().setModel(new ModelEditCard(card));
 						refresh();
 					}
@@ -247,7 +248,7 @@ public class PanelNav extends JPanel {
 						Card cart = list.getSelectedValue();
 						if (cart != null) {
 							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure delete this Card ?", "Delete card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-								cartsPanel.getCarts().delete(cart);
+								cartsPanel.getCards().delete(cart);
 								refresh();
 								cartsPanel.getTable().setModel(new DefaultTableModel());
 							}
