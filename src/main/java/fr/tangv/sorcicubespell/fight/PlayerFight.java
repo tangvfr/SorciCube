@@ -97,6 +97,10 @@ public class PlayerFight {
 		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
 	}
 	
+	public void sendMessage(String message) {
+		sendPacket(new PacketPlayOutChat(Fight.toIChatBaseComposent(message), (byte) 0));
+	}
+	
 	public void noAFK() {
 		this.isAFK = false;
 	}

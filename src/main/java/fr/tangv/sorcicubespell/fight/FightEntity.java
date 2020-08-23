@@ -175,6 +175,11 @@ public class FightEntity extends FightHead {
 	}
 	
 	@Override
+	public String getNameInChat() {
+		return this.getName();
+	}
+	
+	@Override
 	public boolean isFaction(CardFaction faction) {
 		if (card == null)
 			return false;
@@ -259,19 +264,32 @@ public class FightEntity extends FightHead {
 	}
 	
 	public void dead() {
-		if (!isDead() && card.hasActionDead()) {
-			CardEntity card = this.card;
-			this.setCard(null);
-			card.excutingActionDead();
-			this.lastCard = card;
+		if (!isDead()) {
+			if (card.hasActionDead()) {
+				CardEntity card = this.card;
+				this.setCard(null);
+				card.excutingActionDead();
+				this.lastCard = card;
+			} else {
+				owner.getFight().sendMessage(
+						fight.getSorci().getMessage().getString("message_dead")
+						.replace("{entity}", card.getCard().renderName())
+				);
+			}
 		} else
 			this.setCard(null);
 	}
 	
 	private void spawn() {
 		this.attacked = false;
-		if (this.card.hasActionSpawn())
+		if (this.card.hasActionSpawn()) {
 			card.excutingActionSpawn();
+		} else {
+			owner.getFight().sendMessage(
+					fight.getSorci().getMessage().getString("message_spawn")
+					.replace("{entity}", card.getCard().renderName())
+			);
+		}
 	}
 
 	@Override

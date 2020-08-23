@@ -31,6 +31,11 @@ public class FightHero extends FightHead {
 	}
 	
 	@Override
+	public String getNameInChat() {
+		return owner.getPlayer().getName();
+	}
+	
+	@Override
 	public boolean isFaction(CardFaction faction) {
 		return true;
 	}

@@ -41,11 +41,14 @@ public class CardEntity {
 		this.card.getFeatures().getFeature(CardFeatureType.DAMAGE).setValue(new CardValue(attack));
 	}
 	
-	private void actioneCard(PlayerFight owner, CardFeature feature) {
+	private String actioneCard(PlayerFight owner, CardFeature feature) {
 		Card card = owner.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
-		if (card != null)
+		if (card != null) {
 			FightSpell.startActionSpell(owner, card.getFeatures(), 
 					FightCible.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction()));
+			return card.renderName();
+		}
+		return "nothing";
 	}
 	
 	private void giveCard(PlayerFight owner, FightEntity entity, CardFeature feature) {
@@ -120,11 +123,21 @@ public class CardEntity {
 		}
 		if (actions[4]) {
 			actions[4] = false;
-			actioneCard(player, card.getFeatures().getFeature(CardFeatureType.ACTION_SPAWN));
+			String action = actioneCard(player, card.getFeatures().getFeature(CardFeatureType.ACTION_SPAWN));
+			player.getFight().sendMessage(
+					player.getFight().getSorci().getMessage().getString("message_spawn_action")
+					.replace("{entity}", card.renderName())
+					.replace("{action}", action)
+			);
 		}
 		if (actions[5]) {
 			actions[5] = false;
-			actioneCard(player, card.getFeatures().getFeature(CardFeatureType.ACTION_DEAD));
+			String action = actioneCard(player, card.getFeatures().getFeature(CardFeatureType.ACTION_DEAD));
+			player.getFight().sendMessage(
+					player.getFight().getSorci().getMessage().getString("message_dead_action")
+					.replace("{entity}", card.renderName())
+					.replace("{action}", action)
+			);
 		}
 	}
 	

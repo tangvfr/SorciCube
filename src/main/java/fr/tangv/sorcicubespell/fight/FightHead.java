@@ -89,6 +89,8 @@ public abstract class FightHead {
 		return owner;
 	}
 	
+	public abstract String getNameInChat();
+	
 	public abstract boolean isFaction(CardFaction faction);
 	
 	public abstract boolean isSelectable();

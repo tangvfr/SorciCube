@@ -6,8 +6,7 @@
 
 + path action dead for damage zone entity
 
-
-- add entity envent with this historic chat
++ add entity event with this historic chat
 
 
 - add system spectator

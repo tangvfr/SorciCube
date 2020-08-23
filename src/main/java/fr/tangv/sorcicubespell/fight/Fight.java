@@ -211,6 +211,11 @@ public class Fight {
 		return CardRender.cardToItem(card, sorci);
 	}
 	
+	public void sendMessage(String message) {
+		player1.sendMessage(message);
+		player2.sendMessage(message);
+	}
+	
 	public void sendPacket(Packet<?> packet) {
 		player1.sendPacket(packet);
 		player2.sendPacket(packet);

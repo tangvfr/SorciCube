@@ -159,6 +159,11 @@ public class EventFight implements Listener {
 		player.setFirstSelection(null);
 		player.setEntityAttack(null);
 		player.showEntityAttackPossible();
+		player.getFight().sendMessage(
+				player.getFight().getSorci().getMessage().getString("message_player_use_card")
+				.replace("{player}", player.getPlayer().getName())
+				.replace("{card}", card.renderName())
+		);
 	}
 	
 	@EventHandler
@@ -215,9 +220,18 @@ public class EventFight implements Listener {
 									entity.setAttackPossible(false);
 									player.setEntityAttack(null);
 									//start action fight entity
-									int cAttack = head.damage(entity.getAttack());
+									int attack = entity.getAttack();
+									int cAttack = head.damage(attack);
 									if (cAttack > 0)
 										entity.damage(cAttack);
+									//message in chat
+									player.getFight().sendMessage(
+											player.getFight().getSorci().getMessage().getString("message_attack_entity")
+											.replace("{damager}", entity.getNameInChat())
+											.replace("{attack}", Integer.toString(attack))
+											.replace("{damaged}", head.getNameInChat())
+											.replace("{counter_attack}", Integer.toString(cAttack))
+									);
 									//excuting action
 									if (head instanceof FightEntity)
 										((FightEntity) head).excutingAction();
