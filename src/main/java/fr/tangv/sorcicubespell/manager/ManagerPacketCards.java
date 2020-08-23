@@ -35,7 +35,7 @@ public class ManagerPacketCards {
 	public ManagerPacketCards(SorciCubeSpell sorci) {
 		this.sorci = sorci;
 		this.packetsMongo = sorci.getMongo().getPackets();
-		this.refrech();
+		this.refresh();
 		//command
 		sorci.getCommand("packetadd").setExecutor(new CommandPacketAdd(this));
 		CommandPacketGive commandPacketGive = new CommandPacketGive(this);
@@ -48,7 +48,7 @@ public class ManagerPacketCards {
 		Bukkit.getScheduler().runTaskTimerAsynchronously(sorci, eventPacket, 0, 4);
 	}
 	
-	public void refrech() {
+	public void refresh() {
 		this.packets = new ConcurrentHashMap<String, PacketCards>();
 		for (Document doc : packetsMongo.find()) {
 			PacketCards packet = PacketCards.toPacketCards(doc);
