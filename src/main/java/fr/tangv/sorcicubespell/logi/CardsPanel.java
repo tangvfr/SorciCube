@@ -27,7 +27,7 @@ public class CardsPanel extends JPanel {
 		//edit
 		this.edit = new JPanel();
 		this.table = new JTable();
-		table.addMouseListener(new MouseTable(table, this));
+		table.addMouseListener(new MouseTable(table, this, frameLogi));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		edit.setLayout(new BorderLayout());
 		edit.add(table, BorderLayout.CENTER);

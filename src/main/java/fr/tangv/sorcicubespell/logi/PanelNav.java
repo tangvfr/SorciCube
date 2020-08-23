@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.logi;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,6 +45,7 @@ public class PanelNav extends JPanel {
 	private static final long serialVersionUID = -493103431246777186L;
 	private CardsPanel cartsPanel;
 	private JButton refrech;
+	private JLabel clear;
 	private JButton disconnect;
 	private JTextField search;
 	private JList<Card> list;
@@ -53,6 +55,16 @@ public class PanelNav extends JPanel {
 	
 	public PanelNav(CardsPanel cartsPanel) throws Exception {
 		this.cartsPanel = cartsPanel;
+		//clear
+		this.clear = new JLabel(" X ");
+		clear.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				search.setText("");
+				cartsPanel.refrech();
+			}
+		});
+		clear.setForeground(Color.RED);
 		//filter
 		this.filter = new PanelFilter();
 		filter.setVisible(false);
@@ -125,6 +137,7 @@ public class PanelNav extends JPanel {
 		panelUp.add(this.filter, BorderLayout.CENTER);
 		JPanel searchBar = new JPanel();
 		searchBar.setLayout(new BorderLayout());
+		searchBar.add(this.clear, BorderLayout.WEST);
 		searchBar.add(this.search, BorderLayout.CENTER);
 		searchBar.add(this.filterApply, BorderLayout.EAST);
 		panelUp.add(searchBar, BorderLayout.SOUTH);

@@ -1,9 +1,8 @@
+* logi  add option open card on feature, add copy UUID onclick for replace Jtextfiel not editable
 
 * add after and add anti afk
 
 + path action dead for damage zone entity
-
-w- logi  add option open card on feature, add copy UUID onclick for replace Jtextfiel not editable
 
 - maj name variable invalid
 

@@ -26,7 +26,6 @@ import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
 import fr.tangv.sorcicubespell.logi.dialog.DialogSkin;
-import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class FeaturesTable extends JTable {
 
@@ -36,7 +35,8 @@ public class FeaturesTable extends JTable {
 	private Window window;
 	private HashMap<Integer, CardFeature> idCardFeature;
 	
-	public FeaturesTable(ManagerCards cards, CardFeatures cardFeatures, boolean isEntity) {
+	public FeaturesTable(CardsPanel cards, CardFeatures cardFeatures, boolean isEntity) {
+		this.window = cards.getFrameLogi();
 		this.cardFeatures = cardFeatures;
 		this.isEntity = isEntity;
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -100,6 +100,11 @@ public class FeaturesTable extends JTable {
 									} catch (Throwable e) {
 										JOptionPane.showMessageDialog(this, e.getMessage(), "Error invalid UUID", JOptionPane.ERROR_MESSAGE);
 									}
+								}
+								
+								@Override
+								protected void initComp(UUIDPanelEditor comp) {
+									comp.setParent(this);
 								}
 							};
 						}

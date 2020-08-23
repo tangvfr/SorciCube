@@ -1,43 +1,46 @@
 package fr.tangv.sorcicubespell.logi;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.UUID;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class UUIDPanelEditor extends JPanel {
 
 	private static final long serialVersionUID = 6292444212076707013L;
-	private ManagerCards cards;
+	private CardsPanel cardsPanel;
 	private JTextField fieldUUID;
 	private JButton btnShow;
 	private JTextField field;
+	private Window parent;
+	private String textLabel;
+	private Card card;
 	
-	public UUIDPanelEditor(ManagerCards cards, UUID uuid) {
-		this.cards = cards;
+	public UUIDPanelEditor(CardsPanel cardsPanel, UUID uuid) {
+		this.cardsPanel = cardsPanel;
 		this.fieldUUID = new JTextField(uuid.toString());
 		this.fieldUUID.setEditable(false);
-		String textLabel = "Card: ";
-		Card card = cards.getCard(uuid);
-		if (card != null)
-			textLabel = PanelNav.renderHTMLCard(card, textLabel);
-		else
-			textLabel += "card is not existing";
+		this.card = cardsPanel.getCards().getCard(uuid);
+		this.textLabel = (card != null) ? PanelNav.renderHTMLCard(card, "Card: ") : "Card is not existing";
 		this.btnShow = new JButton("Show Card");
 		btnShow.setFocusable(false);
-		/*
-		 this.table = new JTable();
-table.addMouseListener(new MouseTable(table, this));
-table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-table.setModel(new ModelEditCard(this.carts.getCard(((ModelEditCard) table.getModel()).getCard().getUUID())));
-		 */
+		if (card != null)
+			btnShow.addMouseListener(new ClickUUIDPanelEditor());
+		else
+			btnShow.setEnabled(false);
 		this.field = new JTextField(uuid.toString());
 		//display
 		this.setLayout(new BorderLayout());
@@ -52,6 +55,10 @@ table.setModel(new ModelEditCard(this.carts.getCard(((ModelEditCard) table.getMo
 		this.add(panel2, BorderLayout.SOUTH);
 	}
 	
+	public void setParent(Window parent) {
+		this.parent = parent;
+	}
+	
 	public UUID getCardUUID() throws Throwable {
 		UUID uuid;
 		try {
@@ -59,10 +66,48 @@ table.setModel(new ModelEditCard(this.carts.getCard(((ModelEditCard) table.getMo
 		} catch (Throwable e) {
 			throw new Throwable("\""+field.getText()+"\" is not UUID !");
 		}
-		Card card = cards.getCard(uuid);
+		Card card = cardsPanel.getCards().getCard(uuid);
 		if (card == null)
 			throw new Throwable("Card is not existing for the UUID \""+uuid.toString()+"\" !");
 		return uuid;
+	}
+	
+	private class ClickUUIDPanelEditor extends ClickListener {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			//init frame
+			JFrame frame = new JFrame();
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frame.setTitle("Card: "+card.getUUID().toString());
+			//init in
+			JPanel panel = new JPanel();
+			panel.setBorder(new TitledBorder(textLabel));
+			panel.setLayout(new BorderLayout());
+			JTable table = new JTable();
+			table.addMouseListener(new MouseTable(table, cardsPanel, frame));
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			table.setModel(new ModelEditCard(card));
+			panel.add(table);
+			frame.setContentPane(panel);
+			//show
+			frame.pack();
+			frame.setSize(500, frame.getHeight());
+			parent.setEnabled(false);
+			frame.addWindowListener(new WindowListener() {
+				@Override public void windowOpened(WindowEvent e) {}
+				@Override public void windowIconified(WindowEvent e) {}
+				@Override public void windowDeiconified(WindowEvent e) {}
+				@Override public void windowDeactivated(WindowEvent e) {}
+				@Override
+				public void windowClosing(WindowEvent e) {
+					parent.setEnabled(true);
+				}
+				@Override public void windowClosed(WindowEvent e) {}
+				@Override public void windowActivated(WindowEvent e) {}
+			});
+			frame.setLocationRelativeTo(UUIDPanelEditor.this);
+			frame.setVisible(true);
+		}
 	}
 	
 }

@@ -1,6 +1,9 @@
 package fr.tangv.sorcicubespell.logi;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JCheckBox;
@@ -26,11 +29,13 @@ import fr.tangv.sorcicubespell.util.TextList;
 public class MouseTable extends ClickListener {
 
 	private JTable table;
-	private CardsPanel cartsPanel;
+	private CardsPanel cardsPanel;
+	private Window parent;
 	
-	public MouseTable(JTable table, CardsPanel cartsPanel) {
+	public MouseTable(JTable table, CardsPanel cardsPanel, Window parent) {
 		this.table = table;
-		this.cartsPanel = cartsPanel;
+		this.cardsPanel = cardsPanel;
+		this.parent = parent;
 	}
 
 	@Override
@@ -42,24 +47,19 @@ public class MouseTable extends ClickListener {
 			Card card = edit.getCard();
 			switch (row) {
 				case 0:
-					JTextField textID = new JTextField(card.getUUID().toString());
-					textID.setEditable(false);
-					new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "ID", textID) {
-						private static final long serialVersionUID = -4613094932047272120L;
-						@Override
-						public void eventOk(JTextField comp) {}
-					};
+					Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(card.getUUID().toString()), null);
+					JOptionPane.showMessageDialog(table, "UUID of card was copied !", "Card UUID", JOptionPane.INFORMATION_MESSAGE);
 					break;
 			
 				case 1:
-					new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Name", new JTextField(card.getName())) {
+					new DialogBase<JTextField>(parent, "Name", new JTextField(card.getName())) {
 						private static final long serialVersionUID = -4613034932047272121L;
 
 						@Override
 						public void eventOk(JTextField comp) {
 							card.setName(comp.getText());
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					break;
@@ -67,7 +67,7 @@ public class MouseTable extends ClickListener {
 				case 2:
 					JTextField textType = new JTextField(card.getType().name());
 					textType.setEditable(false);
-					new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Type", textType) {
+					new DialogBase<JTextField>(parent, "Type", textType) {
 						private static final long serialVersionUID = -4613094932047272122L;
 						@Override
 						public void eventOk(JTextField comp) {}
@@ -76,7 +76,7 @@ public class MouseTable extends ClickListener {
 					
 				case 3:
 					if (card.getMaterial().hasSkin())
-						new DialogSkin(cartsPanel.getFrameLogi(), "Material", card.getMaterial().getSkin(), true) {
+						new DialogSkin(parent, "Material", card.getMaterial().getSkin(), true) {
 							private static final long serialVersionUID = -4613034932047272123L;
 
 							@Override
@@ -85,7 +85,7 @@ public class MouseTable extends ClickListener {
 							}
 						};
 					else
-						new DialogBase<JTextField>(cartsPanel.getFrameLogi(), "Material", new JTextField(card.getMaterial().toString())) {
+						new DialogBase<JTextField>(parent, "Material", new JTextField(card.getMaterial().toString())) {
 							private static final long serialVersionUID = -4613034932047272124L;
 	
 							@Override
@@ -96,81 +96,81 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 4:
-					new DialogCombo<CardRarity>(cartsPanel.getFrameLogi(), "Rarity", card.getRarity()) {
+					new DialogCombo<CardRarity>(parent, "Rarity", card.getRarity()) {
 						private static final long serialVersionUID = -4807395720412058129L;
 
 						@Override
 						public void eventOk(CardRarity enumCombo) {
 							card.setRarity(enumCombo);
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					break;
 					
 				case 5:
-					new DialogCombo<CardFaction>(cartsPanel.getFrameLogi(), "Faction", card.getFaction()) {
+					new DialogCombo<CardFaction>(parent, "Faction", card.getFaction()) {
 						private static final long serialVersionUID = -4807395720412058130L;
 
 						@Override
 						public void eventOk(CardFaction enumCombo) {
 							card.setFaction(enumCombo);
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					break;
 
 				case 6:
-					new DialogCombo<CardCible>(cartsPanel.getFrameLogi(), "Cible", card.getCible()) {
+					new DialogCombo<CardCible>(parent, "Cible", card.getCible()) {
 						private static final long serialVersionUID = -4807395720412058131L;
 
 						@Override
 						public void eventOk(CardCible enumCombo) {
 							card.setCible(enumCombo);
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					break;
 					
 				case 7:
-					new DialogCombo<CardFaction>(cartsPanel.getFrameLogi(), "Cible Faction", card.getCibleFaction()) {
+					new DialogCombo<CardFaction>(parent, "Cible Faction", card.getCibleFaction()) {
 						private static final long serialVersionUID = -4807395720412058129L;
 
 						@Override
 						public void eventOk(CardFaction enumCombo) {
 							card.setCibleFaction(enumCombo);
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					break;
 				
 				case 8:
-					new DialogBase<JSpinner>(cartsPanel.getFrameLogi(), "Mana", new JSpinner(new SpinnerNumberModel(card.getMana(), 0, Integer.MAX_VALUE, 1))) {
+					new DialogBase<JSpinner>(parent, "Mana", new JSpinner(new SpinnerNumberModel(card.getMana(), 0, Integer.MAX_VALUE, 1))) {
 						private static final long serialVersionUID = -4613034932048272120L;
 
 						@Override
 						public void eventOk(JSpinner comp) {
 							card.setMana((int) comp.getValue());
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					break;
 					
 				case 9:
 					Card cardC = card.clone();
-					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(cartsPanel.getFrameLogi(), "Features",
-							new FeaturesTable(cartsPanel.getCards(), cardC.getFeatures(), cardC.getType() == CardType.ENTITY), new Dimension(500, 300)) {
+					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(parent, "Features",
+							new FeaturesTable(cardsPanel, cardC.getFeatures(), cardC.getType() == CardType.ENTITY), new Dimension(500, 300)) {
 						private static final long serialVersionUID = -4613024932048272120L;
 
 						@Override
 						public void eventOk(FeaturesTable comp) {
 							card.setFeatures(comp.getCardFeatures());
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 						
 						@Override
@@ -182,30 +182,30 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 10:
-					DialogBase<JTextArea> dialogTextArea = new DialogBase<JTextArea>(cartsPanel.getFrameLogi(), "Description",
+					DialogBase<JTextArea> dialogTextArea = new DialogBase<JTextArea>(parent, "Description",
 							new JTextArea(TextList.listToText(card.getDescription())), new Dimension(500, 300)) {
 						private static final long serialVersionUID = 6649269953841487465L;
 
 						@Override
 						public void eventOk(JTextArea comp) {
 							card.setDescription(TextList.textToList(comp.getText()));
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					dialogTextArea.setResizable(true);
 					break;
 					
 				case 11:
-					new DialogBase<JCheckBox>(cartsPanel.getFrameLogi(), "Orignal Name",
+					new DialogBase<JCheckBox>(parent, "Orignal Name",
 							new JCheckBox("", card.isOriginalName())) {
 						private static final long serialVersionUID = 664926995384148851L;
 
 						@Override
 						public void eventOk(JCheckBox comp) {
 							card.setOriginalName(comp.isSelected());
-							cartsPanel.getCards().update(card);
-							cartsPanel.refrech();
+							cardsPanel.getCards().update(card);
+							cardsPanel.refrech();
 						}
 					};
 					break;
@@ -213,7 +213,7 @@ public class MouseTable extends ClickListener {
 				default:
 					Object ob = edit.getValueAt(row, col);
 					if (ob != null)
-						JOptionPane.showMessageDialog(cartsPanel, "name: "+ob.getClass().getSimpleName()+"\nvalue: "+ob.toString(), "Feature Cart No Editable", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(table, "name: "+ob.getClass().getSimpleName()+"\nvalue: "+ob.toString(), "Feature card no editable !", JOptionPane.INFORMATION_MESSAGE);
 					break;
 			}
 		}
@@ -243,8 +243,8 @@ public class MouseTable extends ClickListener {
 		}
 		if (material != null) {
 			card.setMaterial(material);
-			cartsPanel.getCards().update(card);
-			cartsPanel.refrech();
+			cardsPanel.getCards().update(card);
+			cardsPanel.refrech();
 		} else {
 			JOptionPane.showMessageDialog(base, "Error invalid Material", "Error Card Material", JOptionPane.ERROR_MESSAGE);
 		}
