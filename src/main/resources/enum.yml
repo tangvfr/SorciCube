@@ -33,7 +33,7 @@ rarity:
   legendary: "§lLégendaire"
 #type
 type:
-  sort: "§f[§cSort§f]"
+  spell: "§f[§cSort§f]"
   entity: "§f[§9Serviteur§f]"
   hero: "§f[§6Hero§f]"
 #sort
