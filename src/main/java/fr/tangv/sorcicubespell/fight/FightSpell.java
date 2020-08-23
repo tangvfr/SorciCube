@@ -46,13 +46,13 @@ public class FightSpell {
 				//nothing
 			}
 		});
-		actionsSpells.put(CardFeatureType.HIDE_CART, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.HIDE_CARD, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				//nothing
 			}
 		});
-		actionsSpells.put(CardFeatureType.TAKE_NEW_CART, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.TAKE_NEW_CARD, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				player.pickCard(feature.getValue().asNumber());
@@ -122,7 +122,7 @@ public class FightSpell {
 					}
 			}
 		});
-		actionsSpells.put(CardFeatureType.COPY_CART_ARENA_POSE, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.COPY_CARD_ARENA_POSE, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				int number = feature.getValue().asNumber();
@@ -148,7 +148,7 @@ public class FightSpell {
 					}
 			}
 		});
-		actionsSpells.put(CardFeatureType.COPY_CART_ARENA, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.COPY_CARD_ARENA, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				for (FightHead head : heads)
@@ -265,7 +265,7 @@ public class FightSpell {
 				}
 			}
 		});
-		actionsSpells.put(CardFeatureType.GIVE_FEATURE_CART, new ActionSpell() {
+		actionsSpells.put(CardFeatureType.GIVE_FEATURE_CARD, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
 				Card cardFeature = player.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());

@@ -60,9 +60,7 @@ public class CardFeatures {
 			for (String key : document.keySet()) {
 				if (key.equals("version"))
 					continue;
-				CardFeatureType type = CardFeatureType.valueOf(key);
-				if (type != null)
-					features.putFeature(CardFeature.toCartFeature(type, document.get(key, Document.class)));
+				features.putFeature(CardFeature.toCartFeature(CardFeatureType.valueOf(key), document.get(key, Document.class)));
 			}
 		}
 		return features;

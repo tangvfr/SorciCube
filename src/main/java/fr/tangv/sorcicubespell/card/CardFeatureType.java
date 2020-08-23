@@ -8,9 +8,9 @@ public enum CardFeatureType {
 	HEALTH(TypeValue.NUMBER, false),
 	DAMAGE(TypeValue.NUMBER, true),
 	DESTRUCT(TypeValue.NONE, true),
-	TAKE_NEW_CART(TypeValue.NUMBER, true),
-	COPY_CART_ARENA_POSE(TypeValue.NUMBER, true),
-	COPY_CART_ARENA(TypeValue.NUMBER, true),
+	TAKE_NEW_CARD(TypeValue.NUMBER, true),
+	COPY_CARD_ARENA_POSE(TypeValue.NUMBER, true),
+	COPY_CARD_ARENA(TypeValue.NUMBER, true),
 	HEAL(TypeValue.NUMBER, true),
 	BOOST_DAMAGE(TypeValue.NUMBER, true),
 	BOOST_HEALTH(TypeValue.NUMBER, true),
@@ -30,9 +30,9 @@ public enum CardFeatureType {
 	ACTION_DEAD(TypeValue.UUID, true),
 	EXECUTE(TypeValue.UUID, true),
 	APPLY_EXCITED(TypeValue.NONE, true),
-	GIVE_FEATURE_CART(TypeValue.UUID, true),
+	GIVE_FEATURE_CARD(TypeValue.UUID, true),
 	METAMORPH_TO(TypeValue.UUID, true),
-	HIDE_CART(TypeValue.NONE, true);
+	HIDE_CARD(TypeValue.NONE, true);
 	
 	private final TypeValue typeValue;
 	private final boolean show;

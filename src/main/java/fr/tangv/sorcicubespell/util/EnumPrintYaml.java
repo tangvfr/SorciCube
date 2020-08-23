@@ -44,7 +44,7 @@ public class EnumPrintYaml {
 				String named = field.getName().toLowerCase();
 				CardFeatureType type = (CardFeatureType) field.get(enum1);
 				String value = type.getTypeValue() == TypeValue.NONE ? "" : " {"+type.getTypeValue().name().toLowerCase()+"}";
-				System.out.println("  "+named+": \""+named.toUpperCase().replace("_", " ")+value+"\"");
+				System.out.println("  "+named+": \""+named.toUpperCase().replace("_", " ")+value+"\" on {cible}");
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			}

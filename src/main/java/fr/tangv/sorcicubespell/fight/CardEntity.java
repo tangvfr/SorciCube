@@ -49,7 +49,7 @@ public class CardEntity {
 	}
 	
 	private void giveCard(PlayerFight owner, FightEntity entity, CardFeature feature) {
-		FightSpell.startActionFeature(owner, new CardFeature(CardFeatureType.GIVE_FEATURE_CART, feature.getValue()), entity);
+		FightSpell.startActionFeature(owner, new CardFeature(CardFeatureType.GIVE_FEATURE_CARD, feature.getValue()), entity);
 	}
 	
 	public boolean hasIfAEO() {

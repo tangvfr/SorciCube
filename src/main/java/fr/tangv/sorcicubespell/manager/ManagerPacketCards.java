@@ -138,7 +138,7 @@ public class ManagerPacketCards {
 			CardType type = CardType.values()[chooseIndex(packet.getType(), random)];
 			ArrayList<Card> list = new ArrayList<Card>();
 			for (Card card : collectionCards) {
-				if (!card.getFeatures().hasFeature(CardFeatureType.HIDE_CART) && card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
+				if (!card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD) && card.getFaction() == faction && card.getRarity() == rarity && card.getType() == type)
 					list.add(card);
 			}
 			if (list.size() <= 0)

@@ -16,7 +16,7 @@ public class CardRender {
 				featureType == CardFeatureType.ACTION_DEAD ||
 				featureType == CardFeatureType.ACTION_SPAWN ||
 				featureType == CardFeatureType.METAMORPH_TO ||
-				featureType == CardFeatureType.GIVE_FEATURE_CART ||
+				featureType == CardFeatureType.GIVE_FEATURE_CARD ||
 				featureType == CardFeatureType.IF_ATTACKED_EXEC_ONE ||
 				featureType == CardFeatureType.IF_ATTACKED_EXEC ||
 				featureType == CardFeatureType.IF_ATTACKED_GIVE_ONE ||

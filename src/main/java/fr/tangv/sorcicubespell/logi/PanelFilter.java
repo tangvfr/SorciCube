@@ -85,7 +85,7 @@ public class PanelFilter extends JScrollPane {
 				&& filterCibleFaction.contains(card.getCibleFaction())
 				&& filterCible.contains(card.getCible())
 				&& filterOriginalName.isGood(card.isOriginalName())
-				&& filterHideCard.isGood(card.getFeatures().hasFeature(CardFeatureType.HIDE_CART))
+				&& filterHideCard.isGood(card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD))
 				&& filterHasSkin.isGood(card.getFeatures().hasFeature(CardFeatureType.SKIN))
 				&& filterHasIncitement.isGood(card.getFeatures().hasFeature(CardFeatureType.INCITEMENT))
 				&& filterIsExited.isGood(card.getFeatures().hasFeature(CardFeatureType.EXCITED))

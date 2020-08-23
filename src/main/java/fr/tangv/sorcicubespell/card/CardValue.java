@@ -116,13 +116,7 @@ public class CardValue {
 	}
 	
 	public static CardValue toCardValue(Document document) {
-		String typeString = document.getString("type");
-		TypeValue type;
-		if (typeString.equalsIgnoreCase("TEXT"))
-			type = TypeValue.UUID;
-		else
-			type = TypeValue.valueOf(typeString);
-		switch (type) {
+		switch (TypeValue.valueOf(document.getString("type"))) {
 			case UUID:
 				return new CardValue(UUID.fromString(document.getString("value")));
 			case NUMBER:

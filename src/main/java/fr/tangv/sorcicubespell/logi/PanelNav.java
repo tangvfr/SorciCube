@@ -148,7 +148,7 @@ public class PanelNav extends JPanel {
 	}
 	
 	public static String renderHTMLCard(Card card, String prefix) {
-		if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CART))
+		if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD))
 			prefix += "<span color=\"#E60FB8\">[Hide]</span>";
 		prefix += (card.getType() == CardType.ENTITY ? 
 				"<span color=\"#E8A006\">[Entity]</span>" 
@@ -201,12 +201,12 @@ public class PanelNav extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					if (e.getID() == 1001) {
 						CardFeatures features = new CardFeatures();
-						features.putFeature(new CardFeature(CardFeatureType.HIDE_CART, new CardValue()));
+						features.putFeature(new CardFeature(CardFeatureType.HIDE_CARD, new CardValue()));
 						Card card = new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(1, 0),
 								"§4NoNameSort",
-								CardType.SORT,
+								CardType.SPELL,
 								CardRarity.COMMUN,
 								CardFaction.BASIC,
 								CardCible.ONE_ENEMIE,
@@ -231,7 +231,7 @@ public class PanelNav extends JPanel {
 						CardFeatures features = new CardFeatures();
 						features.putFeature(new CardFeature(CardFeatureType.HEALTH, new CardValue(3)));
 						features.putFeature(new CardFeature(CardFeatureType.DAMAGE, new CardValue(1)));
-						features.putFeature(new CardFeature(CardFeatureType.HIDE_CART, new CardValue()));
+						features.putFeature(new CardFeature(CardFeatureType.HIDE_CARD, new CardValue()));
 						Card card = new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(3, 0),
