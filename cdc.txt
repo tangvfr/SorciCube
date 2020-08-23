@@ -12,7 +12,7 @@
 - add system spectator
 
 
-last - add system level and experience + coin
+last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
 
 
 last - add system reconnect
