@@ -166,6 +166,31 @@ public class EventFight implements Listener {
 		player.showEntityAttackPossible();
 	}
 	
+	private void fightWithEntityChoose(Fight fight, FightEntity entity, FightHead head) {
+		//start action fight entity
+		String damager = entity.getNameInChat();
+		String damaged = head.getNameInChat();
+		int attack = entity.getAttack();
+		//message in chat
+		fight.sendMessage(
+				fight.getSorci().getMessage().getString("message_attack_entity")
+				.replace("{damager}", damager)
+				.replace("{attack}", Integer.toString(attack))
+				.replace("{damaged}", damaged)
+				.replace("{counter_attack}", Integer.toString(head.getCounterAttack()))
+		);
+		//apply damage
+		int cAttack = head.damage(attack);
+		if (cAttack > 0)
+			entity.damage(cAttack);
+		//excuting action
+		if (head instanceof FightEntity)
+			((FightEntity) head).executingAction();
+		if (cAttack > 0)
+			entity.executingAction();
+		//end action fight entity
+	}
+	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
 		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
@@ -215,32 +240,24 @@ public class EventFight implements Listener {
 							if (player.hasEntityAttack()) {
 								Card card = player.getEntityAttack().getCard().getCard();
 								FightHead head = player.getForCible(cible);
-								if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
+								if (!card.getCible().hasChoose()) {
 									FightEntity entity = player.getEntityAttack();
 									entity.setAttackPossible(false);
 									player.setEntityAttack(null);
-									//start action fight entity
-									String damager = entity.getNameInChat();
-									String damaged = head.getNameInChat();
-									int attack = entity.getAttack();
-									//message in chat
-									player.getFight().sendMessage(
-											player.getFight().getSorci().getMessage().getString("message_attack_entity")
-											.replace("{damager}", damager)
-											.replace("{attack}", Integer.toString(attack))
-											.replace("{damaged}", damaged)
-											.replace("{counter_attack}", Integer.toString(head.getCounterAttack()))
-									);
-									//apply damage
-									int cAttack = head.damage(attack);
-									if (cAttack > 0)
-										entity.damage(cAttack);
-									//excuting action
-									if (head instanceof FightEntity)
-										((FightEntity) head).executingAction();
-									if (cAttack > 0)
-										entity.executingAction();
-									//end action fight entity
+									player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+										@Override
+										public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+											for (FightHead head1 : fightHeads)
+												EventFight.this.fightWithEntityChoose(player.getFight(), entity, head1);
+											return true;
+										}
+									});
+									player.showEntityAttackPossible();
+								} else if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
+									FightEntity entity = player.getEntityAttack();
+									entity.setAttackPossible(false);
+									player.setEntityAttack(null);
+									this.fightWithEntityChoose(player.getFight(), entity, head);
 									player.showEntityAttackPossible();
 								}
 							} else {

@@ -64,6 +64,7 @@ public enum FightCible {
 		{
 			Vector<FightCible> list = new Vector<FightCible>();
 			list.addAll(allEntityEnemie);
+			list.addAll(allEntityAlly);
 			lists.put(CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE, list);
 		}
 		{
