@@ -154,16 +154,16 @@ public class EventFight implements Listener {
 		player.setCardSelect(-1);
 		player.addHistoric(card, player);
 		player.getEnemie().addHistoric(card, player);
-		run.run();
-		player.initHotBar();
-		player.setFirstSelection(null);
-		player.setEntityAttack(null);
-		player.showEntityAttackPossible();
 		player.getFight().sendMessage(
 				player.getFight().getSorci().getMessage().getString("message_player_use_card")
 				.replace("{player}", player.getPlayer().getName())
 				.replace("{card}", card.renderName())
 		);
+		run.run();
+		player.initHotBar();
+		player.setFirstSelection(null);
+		player.setEntityAttack(null);
+		player.showEntityAttackPossible();
 	}
 	
 	@EventHandler
@@ -220,6 +220,8 @@ public class EventFight implements Listener {
 									entity.setAttackPossible(false);
 									player.setEntityAttack(null);
 									//start action fight entity
+									String damager = entity.getNameInChat();
+									String damaged = head.getNameInChat();
 									int attack = entity.getAttack();
 									int cAttack = head.damage(attack);
 									if (cAttack > 0)
@@ -227,16 +229,16 @@ public class EventFight implements Listener {
 									//message in chat
 									player.getFight().sendMessage(
 											player.getFight().getSorci().getMessage().getString("message_attack_entity")
-											.replace("{damager}", entity.getNameInChat())
+											.replace("{damager}", damager)
 											.replace("{attack}", Integer.toString(attack))
-											.replace("{damaged}", head.getNameInChat())
+											.replace("{damaged}", damaged)
 											.replace("{counter_attack}", Integer.toString(cAttack))
 									);
 									//excuting action
 									if (head instanceof FightEntity)
-										((FightEntity) head).excutingAction();
+										((FightEntity) head).executingAction();
 									if (cAttack > 0)
-										entity.excutingAction();
+										entity.executingAction();
 									//end action fight entity
 									player.showEntityAttackPossible();
 								}
@@ -263,6 +265,7 @@ public class EventFight implements Listener {
 											this.useCard(player, card, () -> {
 												try {
 													entity.setCard(new CardEntity(card));
+													entity.executingAction();
 												} catch (Exception e1) {
 													Bukkit.getLogger().warning(RenderException.renderException(e1));
 												}

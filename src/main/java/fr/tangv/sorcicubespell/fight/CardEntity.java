@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.Vector;
+
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFeature;
 import fr.tangv.sorcicubespell.card.CardFeatureType;
@@ -44,8 +46,10 @@ public class CardEntity {
 	private String actioneCard(PlayerFight owner, CardFeature feature) {
 		Card card = owner.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
 		if (card != null) {
-			FightSpell.startActionSpell(owner, card.getFeatures(), 
-					FightCible.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction()));
+			Vector<FightHead> heads = FightCible.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction());
+			if (heads.isEmpty())
+				return null;
+			FightSpell.startActionSpell(owner, card.getFeatures(), heads);
 			return card.renderName();
 		}
 		return "nothing";
@@ -125,7 +129,7 @@ public class CardEntity {
 			actions[4] = false;
 			String action = actioneCard(player, card.getFeatures().getFeature(CardFeatureType.ACTION_SPAWN));
 			player.getFight().sendMessage(
-					player.getFight().getSorci().getMessage().getString("message_spawn_action")
+					player.getFight().getSorci().getMessage().getString((action != null) ? "message_spawn_action" : "message_spawn")
 					.replace("{entity}", card.renderName())
 					.replace("{action}", action)
 			);
@@ -134,7 +138,7 @@ public class CardEntity {
 			actions[5] = false;
 			String action = actioneCard(player, card.getFeatures().getFeature(CardFeatureType.ACTION_DEAD));
 			player.getFight().sendMessage(
-					player.getFight().getSorci().getMessage().getString("message_dead_action")
+					player.getFight().getSorci().getMessage().getString((action != null) ? "message_dead_action" : "message_dead")
 					.replace("{entity}", card.renderName())
 					.replace("{action}", action)
 			);

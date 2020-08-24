@@ -167,7 +167,7 @@ public class FightEntity extends FightHead {
 		return attacked;
 	}
 	
-	public void excutingAction() {
+	public void executingAction() {
 		if (lastCard != null) {
 			lastCard.excuteAction(this);
 			lastCard = null;
@@ -270,14 +270,15 @@ public class FightEntity extends FightHead {
 				this.setCard(null);
 				card.excutingActionDead();
 				this.lastCard = card;
+				return;
 			} else {
 				owner.getFight().sendMessage(
 						fight.getSorci().getMessage().getString("message_dead")
 						.replace("{entity}", card.getCard().renderName())
 				);
 			}
-		} else
-			this.setCard(null);
+		}
+		this.setCard(null);
 	}
 	
 	private void spawn() {
