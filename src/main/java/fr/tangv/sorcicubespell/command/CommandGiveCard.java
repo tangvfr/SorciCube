@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.fight.FightSpectator;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 
@@ -40,7 +41,7 @@ public class CommandGiveCard implements CommandExecutor {
 						.replace("{uuid}", args[1])
 					);
 				} else {
-					if (sorci.isLobby() || !sorci.getManagerFight().getPlayerFights().containsKey(player)) {
+					if (sorci.isLobby() || !sorci.getManagerFight().isSpectator(player.getUniqueId())) {
 						PlayerFeature feature = sorci.getManagerPlayers().getPlayerFeature(player);
 						if (feature != null) {
 							String uuid = card.getUUID().toString();
@@ -50,9 +51,12 @@ public class CommandGiveCard implements CommandExecutor {
 						}
 						player.getInventory().addItem(CardRender.cardToItem(card, sorci));
 					} else {
-						PlayerFight pf = sorci.getManagerFight().getPlayerFights().get(player);
-						pf.giveCard(card, 1);
-						pf.initHotBar();
+						FightSpectator spectator = sorci.getManagerFight().getSpectator(player.getUniqueId());
+						if (spectator.isFightPlayer()) {
+							PlayerFight pf = (PlayerFight) spectator;
+							pf.giveCard(card, 1);
+							pf.initHotBar();
+						}
 					}
 					sender.sendMessage(
 						sorci.getMessage().getString("message_give_card")
