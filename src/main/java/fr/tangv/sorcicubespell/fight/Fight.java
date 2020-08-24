@@ -127,8 +127,7 @@ public class Fight {
 			}
 		} else {
 			if (cooldownEnd.update()) {
-				player1.returnLobby();
-				player2.returnLobby();
+				this.returnLobby();
 				this.isDeleted = true;
 			} else {
 				bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
@@ -202,6 +201,13 @@ public class Fight {
 	
 	public ItemStack renderCard(Card card) {
 		return CardRender.cardToItem(card, sorci);
+	}
+
+	public void returnLobby() {
+		player1.returnLobby();
+		player2.returnLobby();
+		
+		//spetator
 	}
 	
 	public void addHistoric(Card card, boolean first) {

@@ -10,8 +10,9 @@
 
 + add entity event with this historic chat     |   add text "invoke" for entity and for spell "use"    path error language
 
+/\/\/\
 
-- add system spectator
+/- add system spectator
 
 
 last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
