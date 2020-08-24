@@ -25,7 +25,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardCible;
@@ -38,6 +37,7 @@ import fr.tangv.sorcicubespell.card.CardMaterial;
 import fr.tangv.sorcicubespell.card.CardRarity;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.card.CardValue;
+import fr.tangv.sorcicubespell.card.CardVisual;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
 
 public class PanelNav extends JPanel {
@@ -49,6 +49,7 @@ public class PanelNav extends JPanel {
 	private JButton disconnect;
 	private JTextField search;
 	private JList<Card> list;
+	private Vector<Card> listValue;
 	private PanelFilter filter;
 	private JCheckBox filterApply;
 	private CardComparator sort;
@@ -61,7 +62,7 @@ public class PanelNav extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				search.setText("");
-				cartsPanel.refrech();
+				cartsPanel.refresh();
 			}
 		});
 		clear.setForeground(Color.RED);
@@ -86,7 +87,7 @@ public class PanelNav extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					cartsPanel.refrech();
+					cartsPanel.refresh();
 				}
 			}
 		});
@@ -95,7 +96,7 @@ public class PanelNav extends JPanel {
 		refrech.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cartsPanel.refrech();
+				cartsPanel.refresh();
 			}
 		});
 		refrech.setFocusable(false);
@@ -121,12 +122,8 @@ public class PanelNav extends JPanel {
 		list.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Card cart = list.getSelectedValue();
-				if (cart != null) {
-					cartsPanel.getTable().setModel(new ModelEditCard(cart));
-				} else {
-					cartsPanel.getTable().setModel(new DefaultTableModel());
-				}
+				cartsPanel.setCard(list.getSelectedValue());
+				
 			}
 		});
 		//Display
@@ -144,7 +141,6 @@ public class PanelNav extends JPanel {
 		this.add(new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelUp, new JScrollPane(this.list)), BorderLayout.CENTER);
 		this.add(this.disconnect, BorderLayout.SOUTH);
 		this.sort = CardComparator.BY_ID;
-		this.refresh();
 	}
 	
 	public static String renderHTMLCard(Card card, String prefix) {
@@ -156,45 +152,49 @@ public class PanelNav extends JPanel {
 		if (card.getFeatures().hasFeature(CardFeatureType.SKIN))
 			prefix += "<span color=\"#2BBFE0\">[Skin]</span>";
 		prefix += "<span color=\"#000000\"> | </span>";
-		return "<html><body><span>"+prefix+"</span>"+ColorMCToHTML.replaceColor(card.renderName())+"</body></html>";
+		return "<html><body><span>"+prefix+"</span>"+
+				ColorMCToHTML.replaceColor(card.renderName())+
+				"<span color=\"#000000\"> | </span>"+
+				ColorMCToHTML.replaceColor(CardVisual.renderManaCard(card))+
+				"<span color=\"#000000\"> | </span>"+
+				ColorMCToHTML.replaceColor(CardVisual.renderStatCard(card))+
+				"</body></html>";
 	}
 	
 	public void refresh() {
-		this.cartsPanel.getCards().refresh();
 		Vector<Card> listCard = this.cartsPanel.getCards().cloneCardsValue();
-		Vector<Card> list;
 		String name = this.search.getText().toLowerCase();
 		boolean uuidSearch = false;
 		if (!name.isEmpty()) {
-			list = new Vector<Card>();
+			listValue = new Vector<Card>();
 			for (Card card : listCard)
 				if (card.getName().toLowerCase().contains(name)) {
-					list.add(card);
+					listValue.add(card);
 				} else if (card.getUUID().toString().equalsIgnoreCase(name)) {
-					list.add(card);
+					listValue.add(card);
 					uuidSearch = true;
 				}
 		} else {
-			list = listCard;
+			listValue = listCard;
 		}
 		if (!uuidSearch && this.filterApply.isSelected())
-			list = this.filter.applyFilter(list);
+			listValue = this.filter.applyFilter(listValue);
 		//display
-		this.refrech.setText("Refrech | "+Integer.toString(listCard.size())+" cards "+Integer.toString(list.size())+" find");
-		list.sort(CardComparator.BY_ID);
-		list.sort(sort);
-		this.list.setListData(list);
-		if (cartsPanel.getTable().getModel() instanceof ModelEditCard) {
-			Card card = ((ModelEditCard) cartsPanel.getTable().getModel()).getCard();
-			this.list.setSelectedIndex(list.indexOf(card));
-		}
+		this.refrech.setText("Refrech | "+Integer.toString(listCard.size())+" cards "+Integer.toString(listValue.size())+" find");
+		listValue.sort(CardComparator.BY_ID);
+		listValue.sort(sort);
+		this.list.setListData(listValue);
+	}
+	
+	public void setCardSelectedInList(Card card) {
+		this.list.setSelectedIndex(listValue.indexOf(card));
 	}
 	
 	private class ListPopupMenu extends JPopupMenu {
 
 		private static final long serialVersionUID = 777350512568935632L;
 		
-		public ListPopupMenu(CardsPanel cartsPanel) {
+		public ListPopupMenu(CardsPanel cardsPanel) {
 			JMenuItem itemCreateSort = new JMenuItem("Create Card Sort");
 			itemCreateSort.addActionListener(new ActionListener() {
 				@Override
@@ -216,9 +216,9 @@ public class PanelNav extends JPanel {
 								new ArrayList<String>(),
 								false
 							);
-						cartsPanel.getCards().insert(card);
-						cartsPanel.getTable().setModel(new ModelEditCard(card));
-						refresh();
+						cardsPanel.getCards().insert(card);
+						cardsPanel.setCard(card);
+						cardsPanel.refresh();
 					}
 				}
 			});
@@ -246,9 +246,9 @@ public class PanelNav extends JPanel {
 								new ArrayList<String>(),
 								false
 							);
-						cartsPanel.getCards().insert(card);
-						cartsPanel.getTable().setModel(new ModelEditCard(card));
-						refresh();
+						cardsPanel.getCards().insert(card);
+						cardsPanel.setCard(card);
+						cardsPanel.refresh();
 					}
 				}
 			});
@@ -258,12 +258,12 @@ public class PanelNav extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (e.getID() == 1001) {
-						Card cart = list.getSelectedValue();
-						if (cart != null) {
-							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure delete this Card ?", "Delete card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-								cartsPanel.getCards().delete(cart);
-								refresh();
-								cartsPanel.getTable().setModel(new DefaultTableModel());
+						Card card = list.getSelectedValue();
+						if (card != null) {
+							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure delete card nommed \""+card.getName()+"\" ?", "Delete card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+								cardsPanel.getCards().delete(card);
+								cardsPanel.setCard(null);
+								cardsPanel.refresh();
 							}
 						} else {
 							JOptionPane.showMessageDialog(PanelNav.this, "No selected card ?", "Delete Card", JOptionPane.ERROR_MESSAGE);
@@ -277,13 +277,13 @@ public class PanelNav extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (e.getID() == 1001) {
-						new DialogCombo<CardComparator>(cartsPanel.getFrameLogi(), "Sorted by", sort) {
+						new DialogCombo<CardComparator>(cardsPanel.getFrameLogi(), "Sorted by", sort) {
 							private static final long serialVersionUID = 944290591647698175L;
 									
 							@Override
 							public void eventOk(CardComparator newSort) {
 								sort = newSort;
-								refresh();
+								cardsPanel.refresh();
 							}
 						}; 
 					}

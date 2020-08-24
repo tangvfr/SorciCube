@@ -18,6 +18,7 @@ import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardType;
+import fr.tangv.sorcicubespell.card.CardVisual;
 import fr.tangv.sorcicubespell.util.ItemHead;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -496,8 +497,8 @@ public class PlayerFight {
 				if (cardSelected != -1) {
 					Card card = getCardHand(cardSelected);
 					messageActionBar = 
-							CardRender.renderManaCard(card)+"§r§f \u25b6 "+card.renderName()+"§r§f \u25c0 "+
-							(card.getType() == CardType.ENTITY ? CardRender.renderStatCard(card) : CardRender.renderManaCard(card));
+							CardVisual.renderManaCard(card)+"§r§f \u25b6 "+card.renderName()+"§r§f \u25c0 "+
+							(card.getType() == CardType.ENTITY ? CardVisual.renderStatCard(card) : CardVisual.renderManaCard(card));
 				}
 				player.setExp(1F);
 			} else {

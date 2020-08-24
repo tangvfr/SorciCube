@@ -24,7 +24,7 @@ public class CardRender {
 				featureType == CardFeatureType.EXECUTE) {
 			Card card = sorci.getManagerCards().getCard(feature.getValue().asUUID());
 			if (card != null) {
-				return card.renderName()+(card.getType() == CardType.ENTITY ? " "+renderStatCard(card) : "");
+				return card.renderName()+(card.getType() == CardType.ENTITY ? " "+CardVisual.renderStatCard(card) : "");
 			} else
 				return "nothing";
 		} else if ((featureType == CardFeatureType.BOOST_DAMAGE
@@ -41,30 +41,17 @@ public class CardRender {
 		return CardRender.cardToItem(card, sorci, 1, false);
 	}
 	
-	public static String renderStatCard(Card card) {
-		CardFeatures features = card.getFeatures();
-		String string = "§e"+features.getFeature(CardFeatureType.DAMAGE).getValue().toString()+" \u2694"
-				+"  §c"+features.getFeature(CardFeatureType.HEALTH).getValue().toString()+" \u2665";
-		if (features.hasFeature(CardFeatureType.INCITEMENT))
-			string += "  §7\u2617";
-		return string;
-	}
-	
-	public static String renderManaCard(Card card) {
-		return "§b"+card.getMana()+" \u2756";
-	}
-	
 	@SuppressWarnings("deprecation")
 	public static ItemStack cardToItem(Card card, SorciCubeSpell sorci, int amount, boolean ench) {
 		if (card == null) return null;
 		CardFeatures features = card.getFeatures();
 		String cible = sorci.getEnumTool().cibleToString(card.getCible())+
 				(card.getCibleFaction() != CardFaction.BASIC ? (" "+sorci.getEnumTool().factionToString(card.getCibleFaction())) : "");
-		String name = card.renderName()+"§r "+renderManaCard(card);
+		String name = card.renderName()+"§r "+CardVisual.renderManaCard(card);
 		ArrayList<String> lore = new ArrayList<String>();
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {
-			lore.add("  "+renderStatCard(card));
+			lore.add("  "+CardVisual.renderStatCard(card));
 		}
 		//rarity and faction
 		lore.add("");

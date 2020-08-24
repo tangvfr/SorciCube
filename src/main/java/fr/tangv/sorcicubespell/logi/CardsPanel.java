@@ -6,7 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
+import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.MongoDBManager;
 
@@ -19,6 +22,7 @@ public class CardsPanel extends JPanel {
 	private PanelNav nav;
 	private JPanel edit;
 	private JTable table;
+	private Card card;
 	
 	public CardsPanel(MongoDBManager mongo, FrameLogi frameLogi) throws Exception {
 		this.frameLogi = frameLogi;
@@ -53,19 +57,31 @@ public class CardsPanel extends JPanel {
 		return cards;
 	}
 	
-	public JTable getTable() {
-		return table;
+	public void setCard(Card card) {
+		this.card = card;
+		if (card != null) {
+			edit.setBorder(new TitledBorder(PanelNav.renderHTMLCard(card, "Card: ")));
+			table.setModel(new ModelEditCard(card));
+		} else {
+			edit.setBorder(new TitledBorder("Card: none"));
+			table.setModel(new DefaultTableModel());
+		}
 	}
 	
 	public PanelNav getPanelNav() {
 		return nav;
 	}
 	
-	public void refrech() {
+	public void refresh() {
 		this.cards.refresh();
 		this.nav.refresh();
-		if (table.getModel() instanceof ModelEditCard)
-			table.setModel(new ModelEditCard(this.cards.getCard(((ModelEditCard) table.getModel()).getCard().getUUID())));
+		if (card != null) {
+			card = this.cards.getCard(card.getUUID());
+			setCard(card);
+			if (card != null)
+				nav.setCardSelectedInList(card);
+		}
+		this.repaint();
 	}
 
 }

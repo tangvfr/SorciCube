@@ -15,8 +15,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
 import fr.tangv.sorcicubespell.card.CardFaction;
-import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.card.CardSkin;
+import fr.tangv.sorcicubespell.card.CardVisual;
 import fr.tangv.sorcicubespell.util.RenderException;
 import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
@@ -196,16 +196,8 @@ public class FightEntity extends FightHead {
 
 	@Override
 	public void updateStat() {
-		if (!isDead()) {
-			String string = CardRender.renderStatCard(card.getCard());
-			if (card.isImmobilization())
-				string += "  §b\u2744";
-			if (card.isStunned())
-				string += "  §6\u0040";
-			if (card.isInvulnerability())
-				string += "  §d\u267e";
-			this.setStat(string);
-		}
+		if (!isDead())
+			this.setStat(CardVisual.renderStatCard(card.getCard()));
 	}
 
 	@Override

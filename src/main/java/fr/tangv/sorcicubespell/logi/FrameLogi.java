@@ -38,7 +38,7 @@ public class FrameLogi extends JFrame {
 			CardsPanel panel = new CardsPanel(mongo, this);
 			this.setContentPane(panel);
 			super.setResizable(true);
-			this.repaint();
+			panel.refresh();
 		} catch (Exception e) {
 			this.connectionPanel.setMessage("Error: "+e.getMessage(), Color.RED);
 			showConnection();

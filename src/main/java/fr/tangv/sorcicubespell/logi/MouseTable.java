@@ -59,7 +59,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(JTextField comp) {
 							card.setName(comp.getText());
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					break;
@@ -103,7 +103,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(CardRarity enumCombo) {
 							card.setRarity(enumCombo);
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					break;
@@ -116,7 +116,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(CardFaction enumCombo) {
 							card.setFaction(enumCombo);
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					break;
@@ -129,7 +129,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(CardCible enumCombo) {
 							card.setCible(enumCombo);
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					break;
@@ -142,7 +142,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(CardFaction enumCombo) {
 							card.setCibleFaction(enumCombo);
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					break;
@@ -155,7 +155,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(JSpinner comp) {
 							card.setMana((int) comp.getValue());
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					break;
@@ -170,7 +170,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(FeaturesTable comp) {
 							card.setFeatures(comp.getCardFeatures());
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 						
 						@Override
@@ -190,7 +190,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(JTextArea comp) {
 							card.setDescription(TextList.textToList(comp.getText()));
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					dialogTextArea.setResizable(true);
@@ -205,7 +205,7 @@ public class MouseTable extends ClickListener {
 						public void eventOk(JCheckBox comp) {
 							card.setOriginalName(comp.isSelected());
 							cardsPanel.getCards().update(card);
-							cardsPanel.refrech();
+							cardsPanel.refresh();
 						}
 					};
 					break;
@@ -244,7 +244,7 @@ public class MouseTable extends ClickListener {
 		if (material != null) {
 			card.setMaterial(material);
 			cardsPanel.getCards().update(card);
-			cardsPanel.refrech();
+			cardsPanel.refresh();
 		} else {
 			JOptionPane.showMessageDialog(base, "Error invalid Material", "Error Card Material", JOptionPane.ERROR_MESSAGE);
 		}
