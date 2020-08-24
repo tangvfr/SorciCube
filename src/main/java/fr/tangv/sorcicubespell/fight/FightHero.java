@@ -79,9 +79,14 @@ public class FightHero extends FightHead {
 	}
 
 	@Override
+	public int getCounterAttack() {
+		return 0;
+	}
+	
+	@Override
 	public int damage(int damage) {
 		setHealth(getHealth()-damage);
-		return 0;
+		return getCounterAttack();
 	}
 
 	@Override

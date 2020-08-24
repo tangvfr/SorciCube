@@ -8,6 +8,7 @@
 
 + add entity event with this historic chat
 
+- add visuel name in table feature card
 
 - add system spectator
 

@@ -97,6 +97,8 @@ public abstract class FightHead {
 	
 	public abstract void updateStat();
 	
+	public abstract int getCounterAttack();
+	
 	public abstract int damage(int damage);
 	
 	public void addHealth(int health) {

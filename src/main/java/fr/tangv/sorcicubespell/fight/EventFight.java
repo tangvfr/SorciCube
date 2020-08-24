@@ -223,17 +223,18 @@ public class EventFight implements Listener {
 									String damager = entity.getNameInChat();
 									String damaged = head.getNameInChat();
 									int attack = entity.getAttack();
-									int cAttack = head.damage(attack);
-									if (cAttack > 0)
-										entity.damage(cAttack);
 									//message in chat
 									player.getFight().sendMessage(
 											player.getFight().getSorci().getMessage().getString("message_attack_entity")
 											.replace("{damager}", damager)
 											.replace("{attack}", Integer.toString(attack))
 											.replace("{damaged}", damaged)
-											.replace("{counter_attack}", Integer.toString(cAttack))
+											.replace("{counter_attack}", Integer.toString(head.getCounterAttack()))
 									);
+									//apply damage
+									int cAttack = head.damage(attack);
+									if (cAttack > 0)
+										entity.damage(cAttack);
 									//excuting action
 									if (head instanceof FightEntity)
 										((FightEntity) head).executingAction();

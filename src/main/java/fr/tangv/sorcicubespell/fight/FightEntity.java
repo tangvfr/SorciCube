@@ -209,9 +209,14 @@ public class FightEntity extends FightHead {
 	}
 
 	@Override
+	public int getCounterAttack() {
+		return card.isStunned() ? 0 : card.getAttack();
+	}
+	
+	@Override
 	public int damage(int damage) {
 		if (!isDead()) {
-			int cAttack = card.isStunned() ? 0 : card.getAttack();
+			int counterAttack = getCounterAttack();
 			if (this.card.hasIfAE())
 				card.excutingIfAE();
 			if (this.card.hasIfAG())
@@ -225,7 +230,7 @@ public class FightEntity extends FightHead {
 			}
 			if (!card.isInvulnerability())
 				setHealth(getHealth()-damage);
-			return cAttack;
+			return counterAttack;
 		} else
 			return 0;
 	}
