@@ -2,13 +2,12 @@ package fr.tangv.sorcicubespell.fight;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +20,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -33,90 +31,15 @@ import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
 import fr.tangv.sorcicubespell.util.ItemHead;
 import fr.tangv.sorcicubespell.util.RenderException;
-import io.netty.util.internal.ConcurrentSet;
 
 public class EventFight implements Listener {
-
-	//static
-	
-	private static final ConcurrentSet<Material> materialTransparent;
-	private static final int distanceGetBlock = 100;
-	
-	static {
-		materialTransparent = new ConcurrentSet<Material>();
-		materialTransparent.add(Material.AIR);
-		materialTransparent.add(Material.LAVA);
-		materialTransparent.add(Material.WATER);
-		materialTransparent.add(Material.PORTAL);
-		materialTransparent.add(Material.ENDER_PORTAL);
-		materialTransparent.add(Material.STATIONARY_LAVA);
-		materialTransparent.add(Material.STATIONARY_WATER);
-		materialTransparent.add(Material.CROPS);
-		materialTransparent.add(Material.VINE);
-		materialTransparent.add(Material.SUGAR_CANE_BLOCK);
-		materialTransparent.add(Material.SAPLING);
-		materialTransparent.add(Material.PUMPKIN_STEM);
-		materialTransparent.add(Material.POTATO);
-		materialTransparent.add(Material.MELON_STEM);
-		materialTransparent.add(Material.WATER_LILY);
-		materialTransparent.add(Material.DOUBLE_PLANT);
-		materialTransparent.add(Material.LONG_GRASS);
-		materialTransparent.add(Material.RED_ROSE);
-		materialTransparent.add(Material.YELLOW_FLOWER);
-		materialTransparent.add(Material.RED_MUSHROOM);
-		materialTransparent.add(Material.BROWN_MUSHROOM);
-		materialTransparent.add(Material.DEAD_BUSH);
-		materialTransparent.add(Material.COCOA);
-		materialTransparent.add(Material.CARROT);
-		materialTransparent.add(Material.BEETROOT_BLOCK);
-		materialTransparent.add(Material.CHORUS_FLOWER);
-		materialTransparent.add(Material.CHORUS_PLANT);
-		materialTransparent.add(Material.TRAP_DOOR);
-		materialTransparent.add(Material.IRON_TRAPDOOR);
-		materialTransparent.add(Material.STONE_PLATE);
-		materialTransparent.add(Material.GOLD_PLATE);
-		materialTransparent.add(Material.WOOD_PLATE);
-		materialTransparent.add(Material.IRON_PLATE);
-		materialTransparent.add(Material.STONE_BUTTON);
-		materialTransparent.add(Material.WOOD_BUTTON);
-		materialTransparent.add(Material.TORCH);
-		materialTransparent.add(Material.REDSTONE_TORCH_OFF);
-		materialTransparent.add(Material.REDSTONE_TORCH_ON);
-		materialTransparent.add(Material.LEVER);
-		materialTransparent.add(Material.LADDER);
-		materialTransparent.add(Material.RAILS);
-		materialTransparent.add(Material.ACTIVATOR_RAIL);
-		materialTransparent.add(Material.DETECTOR_RAIL);
-		materialTransparent.add(Material.POWERED_RAIL);
-		materialTransparent.add(Material.STANDING_BANNER);
-		materialTransparent.add(Material.WALL_BANNER);
-		materialTransparent.add(Material.END_ROD);
-		materialTransparent.add(Material.REDSTONE_WIRE);
-		materialTransparent.add(Material.REDSTONE_COMPARATOR_OFF);
-		materialTransparent.add(Material.REDSTONE_COMPARATOR_ON);
-		materialTransparent.add(Material.DIODE_BLOCK_OFF);
-		materialTransparent.add(Material.DIODE_BLOCK_ON);
-		materialTransparent.add(Material.SIGN_POST);
-		materialTransparent.add(Material.WALL_SIGN);
-		materialTransparent.add(Material.SNOW);
-		materialTransparent.add(Material.TRIPWIRE);
-		materialTransparent.add(Material.TRIPWIRE_HOOK);
-		materialTransparent.add(Material.WEB);
-	}
 	
 	private final static double TOLERANCE_MOVE = 3.5;
-	
-	//dynamic
 	
 	private final ManagerFight manager;
 
 	public EventFight(ManagerFight manager) {
 		this.manager = manager;
-	}
-	
-	private void sendMessageInsufficientMana(Player player) {
-		player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1.0F, 1.5F);
-		player.sendMessage(manager.getSorci().getMessage().getString("message_mana_insufficient"));
 	}
 	
 	@EventHandler
@@ -126,15 +49,9 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onChangeGameMode(PlayerGameModeChangeEvent e) {
-		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
+		UUID uuid = e.getPlayer().getUniqueId();
+		if (manager.isSpectator(uuid) || manager.inPreFight(uuid))
 			e.setCancelled(true);
-			return;
-		}
-		for (PreFight preFight : manager.getPreFights().values())
-			if (preFight.getPlayerUUID1().equals(e.getPlayer().getUniqueId())) {
-				e.setCancelled(true);
-				return;
-			}
 	}
 	
 	@EventHandler
@@ -142,21 +59,14 @@ public class EventFight implements Listener {
 		e.setCancelled(true);
 	}
 	
-	private boolean inventoryAutorized(PlayerFight player, Inventory inv) {
-		return inv.hashCode() == player.getInvHistoric().hashCode() ||
-				inv.hashCode() == player.getInvViewEntity().hashCode() ||
-				inv.hashCode() == player.getInvSwap().hashCode();
-	}
-	
 	private void useCard(PlayerFight player, Card card, Runnable run) {
 		player.removeMana(card.getMana());
 		player.setCardHand(player.getCardSelect(), null);
 		player.setCardSelect(-1);
-		player.addHistoric(card, player);
-		player.getEnemie().addHistoric(card, player);
+		player.getFight().addHistoric(card, player.isFisrt());
 		player.getFight().sendMessage(
 				player.getFight().getSorci().getMessage().getString("message_player_use_card")
-				.replace("{player}", player.getPlayer().getName())
+				.replace("{player}", player.getNamePlayer())
 				.replace("{card}", card.renderName())
 		);
 		run.run();
@@ -193,15 +103,17 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
-		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
+		UUID uuid = e.getPlayer().getUniqueId();
+		if (manager.isSpectator(uuid)) {
 			e.setCancelled(true);
-			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
+			FightSpectator spectator = manager.getSpectator(uuid);
 			boolean next = true;
 			if (e.getAction() == Action.LEFT_CLICK_AIR 
 					|| e.getAction() == Action.LEFT_CLICK_BLOCK) {
-				if (!inventoryAutorized(player, player.getPlayer().getOpenInventory().getTopInventory())) {
-					player.openInvHistoric();
-					if (player.canPlay()) {
+				if (!spectator.inventoryIsAutorized(spectator.getInvOpenTop())) {
+					spectator.openInvHistoric();
+					if (spectator.canPlay() && spectator.isFightPlayer()) {
+						PlayerFight player = (PlayerFight) spectator;
 						player.setCardSelect(-1);
 						player.setFirstSelection(null);
 						player.setEntityAttack(null);
@@ -209,125 +121,120 @@ public class EventFight implements Listener {
 					}
 				}
 				next = false;
-			} else if (player.hasStickView()) {
-				Block block = player.getPlayer().getTargetBlock(materialTransparent, distanceGetBlock);
-				if (block != null) {
-					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
-					if (cible != null) {
-						FightHead head = player.getForCible(cible);
-						if (!head.isDead()) {
-							ItemStack item;
-							if (cible.isHero()) {
-								item = ((FightHero) head).renderToItem(cible.isAlly());
-							} else {
-								item = CardRender.cardToItem(
-										((FightEntity) head).getCard().getCard(), manager.getSorci(),
-										cible.isAlly() ? 2 : 1, false
-								);
-							}
-							player.openInvViewEntity(item);
-							next = false;
+			} else if (spectator.hasStickView()) {
+				FightCible cible = spectator.getTargetCible();
+				if (cible != null) {
+					FightHead head = spectator.getForCible(cible);
+					if (!head.isDead()) {
+						ItemStack item;
+						if (cible.isHero()) {
+							item = ((FightHero) head).renderToItem(cible.isAlly());
+						} else {
+							item = CardRender.cardToItem(
+									((FightEntity) head).getCard().getCard(), manager.getSorci(),
+									cible.isAlly() ? 2 : 1, false
+							);
 						}
+						spectator.openInvViewEntity(item);
+						next = false;
 					}
 				}
 			}
-			if (next && player.canPlay()) {
-				Block block = player.getPlayer().getTargetBlock(materialTransparent, distanceGetBlock);
-				if (block != null) {
-					FightCible cible = player.getFight().getCibleForBlock(block, player.isFisrt());
-					if (cible != null) {
-						if (player.getCardSelect() == -1) {
-							if (player.hasEntityAttack()) {
-								Card card = player.getEntityAttack().getCard().getCard();
-								FightHead head = player.getForCible(cible);
-								if (!card.getCible().hasChoose()) {
-									FightEntity entity = player.getEntityAttack();
-									entity.setAttackPossible(false);
-									player.setEntityAttack(null);
-									player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
-										@Override
-										public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-											for (FightHead head1 : fightHeads)
-												EventFight.this.fightWithEntityChoose(player.getFight(), entity, head1);
-											return true;
-										}
-									});
-									player.showEntityAttackPossible();
-								} else if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
-									FightEntity entity = player.getEntityAttack();
-									entity.setAttackPossible(false);
-									player.setEntityAttack(null);
-									this.fightWithEntityChoose(player.getFight(), entity, head);
-									player.showEntityAttackPossible();
+			if (next && spectator.canPlay() && spectator.isFightPlayer()) {
+				PlayerFight player = (PlayerFight) spectator;
+				FightCible cible = player.getTargetCible();
+				if (cible != null) {
+					if (player.getCardSelect() == -1) {
+						if (player.hasEntityAttack()) {
+							Card card = player.getEntityAttack().getCard().getCard();
+							FightHead head = player.getForCible(cible);
+							if (!card.getCible().hasChoose()) {
+								FightEntity entity = player.getEntityAttack();
+								entity.setAttackPossible(false);
+								player.setEntityAttack(null);
+								player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+									@Override
+									public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+										for (FightHead head1 : fightHeads)
+											EventFight.this.fightWithEntityChoose(player.getFight(), entity, head1);
+										return true;
+									}
+								});
+								player.showEntityAttackPossible();
+							} else if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
+								FightEntity entity = player.getEntityAttack();
+								entity.setAttackPossible(false);
+								player.setEntityAttack(null);
+								this.fightWithEntityChoose(player.getFight(), entity, head);
+								player.showEntityAttackPossible();
+							}
+						} else {
+							if (!cible.isHero() && cible.isAlly()) {
+								FightEntity entity = (FightEntity) player.getForCible(cible);
+								if (!entity.isDead() && entity.attackIsPossible()) {
+									Card card = entity.getCard().getCard();
+									player.showHeadForAttack(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
+									player.setEntityAttack(entity);
+									entity.showHead(ItemHead.SELECTED_ENTITY);
 								}
-							} else {
+							}
+						}
+					} else {
+						//start card actions
+						Card card = player.getCardHand(player.getCardSelect());
+						if (player.hasMana(card.getMana())) {
+							if (card.getType() == CardType.ENTITY) {
+								//entity
 								if (!cible.isHero() && cible.isAlly()) {
 									FightEntity entity = (FightEntity) player.getForCible(cible);
-									if (!entity.isDead() && entity.attackIsPossible()) {
-										Card card = entity.getCard().getCard();
-										player.showHeadForAttack(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
-										player.setEntityAttack(entity);
-										entity.showHead(ItemHead.SELECTED_ENTITY);
+									if (!entity.isSelectable()) {
+										this.useCard(player, card, () -> {
+											try {
+												entity.setCard(new CardEntity(card));
+												entity.executingAction();
+											} catch (Exception e1) {
+												Bukkit.getLogger().warning(RenderException.renderException(e1));
+											}
+										});
+									}
+								}
+							} else {
+								if (!card.getCible().hasChoose()) {
+									this.useCard(player, card, () -> {
+										player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+											@Override
+											public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+												FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
+												return true;
+											}
+										});
+									});
+								} else {
+									FightHead head = player.getForCible(cible);
+									if (card.getCible() == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE) {
+										if (player.hasFirstSelection()) {
+											if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getCibleFaction(), head)) {
+												this.useCard(player, card, () -> {
+													FightSpell.startActionSpell(player, card.getFeatures(), Arrays.asList(player.getFirstSelection(), head));
+												});
+											}
+										} else if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ALLY, card.getCibleFaction(), head)) {
+											player.setFirstSelection(head);
+											player.showHeadForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
+											player.getFirstSelection().showHead(ItemHead.SELECTABLE_ENTITY_DAMAGE);
+										}
+									} else if (player.testHeadValidForAttack(card, head)) {
+										this.useCard(player, card, () -> {
+											FightSpell.startActionSpell(player, card.getFeatures(), head);
+										});
 									}
 								}
 							}
 						} else {
-							//start card actions
-							Card card = player.getCardHand(player.getCardSelect());
-							if (player.hasMana(card.getMana())) {
-								if (card.getType() == CardType.ENTITY) {
-									//entity
-									if (!cible.isHero() && cible.isAlly()) {
-										FightEntity entity = (FightEntity) player.getForCible(cible);
-										if (!entity.isSelectable()) {
-											this.useCard(player, card, () -> {
-												try {
-													entity.setCard(new CardEntity(card));
-													entity.executingAction();
-												} catch (Exception e1) {
-													Bukkit.getLogger().warning(RenderException.renderException(e1));
-												}
-											});
-										}
-									}
-								} else {
-									if (!card.getCible().hasChoose()) {
-										this.useCard(player, card, () -> {
-											player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
-												@Override
-												public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-													FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
-													return true;
-												}
-											});
-										});
-									} else {
-										FightHead head = player.getForCible(cible);
-										if (card.getCible() == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE) {
-											if (player.hasFirstSelection()) {
-												if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getCibleFaction(), head)) {
-													this.useCard(player, card, () -> {
-														FightSpell.startActionSpell(player, card.getFeatures(), Arrays.asList(player.getFirstSelection(), head));
-													});
-												}
-											} else if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ALLY, card.getCibleFaction(), head)) {
-												player.setFirstSelection(head);
-												player.showHeadForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
-												player.getFirstSelection().showHead(ItemHead.SELECTABLE_ENTITY_DAMAGE);
-											}
-										} else if (player.testHeadValidForAttack(card, head)) {
-											this.useCard(player, card, () -> {
-												FightSpell.startActionSpell(player, card.getFeatures(), head);
-											});
-										}
-									}
-								}
-							} else {
-								sendMessageInsufficientMana(player.getPlayer());
-							}
+							player.sendMessageInsufficientMana();
 						}
-						//end cards action
 					}
+					//end cards action
 				}
 			}
 			e.getPlayer().updateInventory();
@@ -339,11 +246,13 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onClickInv(InventoryClickEvent e) {
-		if (manager.getPlayerFights().containsKey(e.getWhoClicked())) {
+		UUID uuid = e.getWhoClicked().getUniqueId();
+		if (manager.isSpectator(uuid)) {
 			e.setCancelled(true);
-			PlayerFight player = manager.getPlayerFights().get(e.getWhoClicked());
-			if (inventoryAutorized(player, e.getInventory())) {
-				if (player.canPlay()) {
+			FightSpectator spectator = manager.getSpectator(uuid);
+			if (spectator.inventoryIsAutorized(e.getInventory())) {
+				if (spectator.canPlay() && spectator.isFightPlayer()) {
+					PlayerFight player = (PlayerFight) spectator;
 					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
 						if (e.getRawSlot() >= 0 && e.getRawSlot() < player.getMaxCardHand()) {
 							Card card = player.getCardHand(e.getRawSlot());
@@ -353,7 +262,7 @@ public class EventFight implements Listener {
 								player.pickCard(1);
 								player.initHotBar();
 								player.openInvHistoric();
-								player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
+								player.playSound(Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
 							}
 							return;
 						}
@@ -393,11 +302,11 @@ public class EventFight implements Listener {
 								if (player.hasMana(ValueFight.V.priceCard)) {
 									if (player.pickCard(1) > 0) {
 										player.removeMana(ValueFight.V.priceCard);
-										player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
+										player.playSound(Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
 										player.initHotBar();
 									}
 								} else {
-									sendMessageInsufficientMana(player.getPlayer());
+									player.sendMessageInsufficientMana();
 								}
 								break;
 								
@@ -411,19 +320,21 @@ public class EventFight implements Listener {
 						}
 				}
 			} else {
-				player.openInvHistoric();
+				spectator.openInvHistoric();
 			}
 		}
 	}
 	
 	@EventHandler
 	public void onOpenInv(InventoryOpenEvent e) {
-		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
-			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
-			if (!inventoryAutorized(player, e.getInventory())) {
+		UUID uuid = e.getPlayer().getUniqueId();
+		if (manager.isSpectator(uuid)) {
+			FightSpectator spectator = manager.getSpectator(uuid);
+			if (!spectator.inventoryIsAutorized(e.getInventory())) {
 				e.setCancelled(true);
 			} else {
-				player.noAFK();
+				if (spectator.isFightPlayer())
+					((PlayerFight) spectator).noAFK();
 			}
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
 				e.setCancelled(true);
@@ -432,16 +343,20 @@ public class EventFight implements Listener {
 	
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
-		if (manager.getPlayerFights().containsKey(e.getPlayer())) {
-			PlayerFight player = manager.getPlayerFights().get(e.getPlayer());
-			Location loc = player.getLocBase();
-			if (loc.getWorld().equals(e.getTo().getWorld())) {
-				loc = new Location(loc.getWorld(), loc.getX(), e.getTo().getY(), loc.getZ());
-				if (e.getTo().distance(loc) > TOLERANCE_MOVE) {
-					Location newLoc = e.getFrom();
-					newLoc.setX(e.getFrom().getX());
-					newLoc.setZ(e.getFrom().getZ());
-					e.setTo(newLoc);
+		UUID uuid = e.getPlayer().getUniqueId();
+		if (manager.isSpectator(uuid)) {
+			FightSpectator spectator = manager.getSpectator(uuid);
+			if (spectator.isFightPlayer()) {
+				PlayerFight player = (PlayerFight) spectator;
+				Location loc = player.getLocBase();
+				if (loc.getWorld().equals(e.getTo().getWorld())) {
+					loc = new Location(loc.getWorld(), loc.getX(), e.getTo().getY(), loc.getZ());
+					if (e.getTo().distance(loc) > TOLERANCE_MOVE) {
+						Location newLoc = e.getFrom();
+						newLoc.setX(e.getFrom().getX());
+						newLoc.setZ(e.getFrom().getZ());
+						e.setTo(newLoc);
+					}
 				}
 			}
 		}

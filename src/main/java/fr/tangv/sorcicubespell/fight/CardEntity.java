@@ -131,7 +131,7 @@ public class CardEntity {
 			player.getFight().sendMessage(
 					player.getFight().getSorci().getMessage().getString((action != null) ? "message_spawn_action" : "message_spawn")
 					.replace("{entity}", card.renderName())
-					.replace("{action}", action)
+					.replace("{action}", (action != null) ? action : "nothing")
 			);
 		}
 		if (actions[5]) {
@@ -140,7 +140,7 @@ public class CardEntity {
 			player.getFight().sendMessage(
 					player.getFight().getSorci().getMessage().getString((action != null) ? "message_dead_action" : "message_dead")
 					.replace("{entity}", card.renderName())
-					.replace("{action}", action)
+					.replace("{action}", (action != null) ? action : "nothing")
 			);
 		}
 	}

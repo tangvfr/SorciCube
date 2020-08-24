@@ -2,7 +2,6 @@ package fr.tangv.sorcicubespell.fight;
 
 import java.util.ArrayList;
 
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.CardFaction;
@@ -22,9 +21,9 @@ public class FightHero extends FightHead {
 		lore.add("  "+owner.getFight().getSorci().getEnumConfig().getString("type.hero"));
 		lore.add("");
 		return ItemBuild.buildSkull(
-				((CraftPlayer) owner.getPlayer()).getProfile(),
+				owner.getProfilePlayer(),
 				ally ? 2 : 1,
-				(ally ? "§2" : "§4")+owner.getPlayer().getName(),
+				(ally ? "§2" : "§4")+owner.getNamePlayer(),
 				lore,
 				false
 			);
@@ -32,7 +31,7 @@ public class FightHero extends FightHead {
 	
 	@Override
 	public String getNameInChat() {
-		return owner.getPlayer().getName();
+		return owner.getNamePlayer();
 	}
 	
 	@Override

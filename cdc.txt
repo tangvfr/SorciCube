@@ -4,11 +4,12 @@
 
 * maj name variable invalid
 
+* add visuel name in table feature card
+
 + path action dead for damage zone entity
 
-+ add entity event with this historic chat
++ add entity event with this historic chat     |   add text "invoke" for entity and for spell "use"    path error language
 
-- add visuel name in table feature card
 
 - add system spectator
 

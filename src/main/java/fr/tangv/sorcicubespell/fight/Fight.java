@@ -14,12 +14,7 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.util.Cooldown;
-import net.minecraft.server.v1_9_R2.IChatBaseComponent;
 import net.minecraft.server.v1_9_R2.Packet;
-import net.minecraft.server.v1_9_R2.PacketPlayOutTitle;
-import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
-
 public class Fight {
 	
 	//value static
@@ -80,16 +75,12 @@ public class Fight {
 		player2.createScoreboard();
 		player1.getHero().updateStat();
 		player2.getHero().updateStat();
-		sorci.getManagerFight().getPlayerFights().put(player1.getPlayer(), player1);
-		sorci.getManagerFight().getPlayerFights().put(player2.getPlayer(), player2);
-		addPlayerBossBar(player1.getPlayer());
-		addPlayerBossBar(player2.getPlayer());
+		sorci.getManagerFight().putFightSpectator(player1);
+		sorci.getManagerFight().putFightSpectator(player2);
+		player1.addInBossBar(bossBar);
+		player2.addInBossBar(bossBar);
 		//start
 		cooldown.loop();
-	}
-	
-	public void addPlayerBossBar(Player player) {
-		this.bossBar.addPlayer(player);
 	}
 	
 	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
@@ -112,7 +103,7 @@ public class Fight {
 						nextRound();
 						cooldown.stop();
 					} else {
-						sendTitleToTwoPlayer(
+						alertMessage(
 								sorci.getMessage().getString("message_below_start_game")
 								.replace("{time}", Integer.toString(Math.abs(round+1)))
 							);
@@ -155,6 +146,8 @@ public class Fight {
 	}
 	
 	public FightCible getCibleForBlock(Block block, boolean first) {
+		if (block == null) 
+			return null;
 		Location loc = block.getLocation();
 		Location[] firstEntity = arena.getFirstEntity();
 		Location[] secondEntity = arena.getSecondEntity();
@@ -211,27 +204,46 @@ public class Fight {
 		return CardRender.cardToItem(card, sorci);
 	}
 	
+	public void addHistoric(Card card, boolean first) {
+		player1.addHistoric(card, first);
+		player2.addHistoric(card, first);
+		
+		//spetator
+	}
+	
+	public void closeInventory() {
+		player1.closeInventory();
+		player2.closeInventory();
+		
+		//spetator
+	}
+	
+	public void updateViewLifes() {
+		player1.updateViewLifes();
+		player2.updateViewLifes();
+		
+		//spetator
+	}
+	
+	public void alertMessage(String message) {
+		player1.alert(message);
+		player2.alert(message);
+		
+		//spetator
+	}
+	
 	public void sendMessage(String message) {
 		player1.sendMessage(message);
 		player2.sendMessage(message);
+		
+		//spetator
 	}
 	
 	public void sendPacket(Packet<?> packet) {
 		player1.sendPacket(packet);
 		player2.sendPacket(packet);
-	}
-	
-	public static IChatBaseComponent toIChatBaseComposent(String text) {
-		return ChatSerializer.a("{\"text\": \""+text+"\"}");
-	}
-	
-	public void sendTitleToTwoPlayer(String message) {
-		sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
-				Fight.toIChatBaseComposent(""),
-				0, 6, 0));
-		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
-				Fight.toIChatBaseComposent(message),
-				0, 6, 0));
+		
+		//spetator
 	}
 	
 	public void nextRound() {
@@ -241,8 +253,7 @@ public class Fight {
 		int mana = ((round+1)/2)+ValueFight.V.startMana;
 		if (mana > ValueFight.V.maxMana)
 			mana = ValueFight.V.maxMana;
-		player1.closeInventory();
-		player2.closeInventory();
+		this.closeInventory();
 		PlayerFight player = this.firstPlay ? player1 : player2;
 		player.setMana(mana+player.getManaBoost());
 		player.setManaBoost(0);
@@ -253,7 +264,7 @@ public class Fight {
 		player.getEnemie().setCardSelect(-1);
 		player.getEnemie().nextRoundFightEntity();
 		//message
-		sendTitleToTwoPlayer(
+		this.alertMessage(
 				sorci.getMessage().getString("message_round")
 				.replace("{round}", Integer.toString(round+1))
 			);
