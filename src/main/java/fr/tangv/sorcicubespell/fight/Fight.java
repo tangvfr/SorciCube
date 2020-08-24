@@ -307,6 +307,8 @@ public class Fight {
 		this.isEnd = true;
 		losser.sendEndTitle(sorci.getMessage().getString("message_losser"));
 		winner.sendEndTitle(sorci.getMessage().getString("message_winner"));
+		
+		//spectator
 	}
 	
 	//geting seting
