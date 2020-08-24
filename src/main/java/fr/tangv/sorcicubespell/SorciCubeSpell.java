@@ -78,7 +78,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.nameServerFight = this.parameter.getString("server_fight");
 			this.nameServerJump = this.parameter.getString("server_jump");
 			//init manager
-			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("database"));
+			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("collection"));
 			this.managerCards = new ManagerCards(this.mongo);
 			this.managerPlayers = new ManagerPlayers(this);
 			this.managerPreFightData = new ManagerPreFightData(this);

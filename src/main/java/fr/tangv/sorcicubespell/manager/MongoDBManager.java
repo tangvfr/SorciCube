@@ -19,10 +19,10 @@ public class MongoDBManager {
 	private MongoCollection<Document> packets;
 	private MongoCollection<Document> preFights;
 	
-	public MongoDBManager(String uri, String databaseName) throws Exception {
+	public MongoDBManager(String uri, String collectionName) throws Exception {
 		//init
 		MongoClient client = MongoClients.create(uri);
-		this.database = client.getDatabase(databaseName);
+		this.database = client.getDatabase(collectionName);
 		this.listCol = database.listCollectionNames();
 		//init collection
 		this.cards = defineCollection("cards");

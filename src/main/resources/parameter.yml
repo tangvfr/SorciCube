@@ -1,6 +1,6 @@
 #mongodb
 mongodb: "mongodb://ect..."
-database: "plugin"
+collection: "plugin"
 #deck
 number_deck_start: 2
 #is lobby
