@@ -430,7 +430,7 @@ public class FightSpectator {
 	}
 	
 	public void sendMessageActionBar(String message) {
-		sendPacket(new PacketPlayOutChat(FightSpectator.toIChatBaseComposent(message), (byte) 0));
+		sendPacket(new PacketPlayOutChat(FightSpectator.toIChatBaseComposent(message), (byte) 2));
 	}
 	
 	public void sendPacket(Packet<?> packet) {
@@ -456,12 +456,8 @@ public class FightSpectator {
 		return player.teleport(this.locBase, TeleportCause.PLUGIN);
 	}
 	
-	public boolean canPlay() {
-		return false;
-	}
-	
 	public boolean isFightPlayer() {
-		return false;
+		return (this instanceof PlayerFight);
 	}
 	
 }

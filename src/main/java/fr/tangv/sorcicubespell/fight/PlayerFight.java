@@ -75,7 +75,7 @@ public class PlayerFight extends FightSpectator {
 	public void addRoundAFK() {
 		if (isAFK) {
 			this.roundAFK++;
-			if (roundAFK >= ValueFight.V.roundMaxAFK) {
+			if (roundAFK >= ValueFight.V.roundMaxAFK && !fight.isEnd()) {
 				this.lossAFK = true;
 				fight.sendMessage(fight.getSorci().getMessage().getString("message_afk_fight").replace("{player}", getNamePlayer()));
 				fight.end(this);
@@ -485,14 +485,8 @@ public class PlayerFight extends FightSpectator {
 		public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement);
 	}
 	
-	@Override
 	public boolean canPlay() {
 		return fight.isStart() && !fight.isEnd() && fight.getFirstPlay() == first;
-	}
-	
-	@Override
-	public boolean isFightPlayer() {
-		return false;
 	}
 	
 }

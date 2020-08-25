@@ -65,7 +65,8 @@ public class EventFight implements Listener {
 		player.setCardSelect(-1);
 		player.getFight().addHistoric(card, player.isFisrt());
 		player.getFight().sendMessage(
-				player.getFight().getSorci().getMessage().getString("message_player_use_card")
+				player.getFight().getSorci().getMessage().getString(
+						(card.getType() == CardType.ENTITY) ? "message_player_invoke_card" : "message_player_use_card")
 				.replace("{player}", player.getNamePlayer())
 				.replace("{card}", card.renderName())
 		);
@@ -78,14 +79,18 @@ public class EventFight implements Listener {
 	
 	private void fightWithEntityChoose(Fight fight, FightEntity entity, FightHead head) {
 		//start action fight entity
+		String damagerOwner = entity.getOwner().getNamePlayer();
+		String damagedOwner = head.getOwner().getNamePlayer();
 		String damager = entity.getNameInChat();
 		String damaged = head.getNameInChat();
 		int attack = entity.getAttack();
 		//message in chat
 		fight.sendMessage(
 				fight.getSorci().getMessage().getString("message_attack_entity")
+				.replace("{damager_owner}", damagerOwner)
 				.replace("{damager}", damager)
 				.replace("{attack}", Integer.toString(attack))
+				.replace("{damaged_owner}", damagedOwner)
 				.replace("{damaged}", damaged)
 				.replace("{counter_attack}", Integer.toString(head.getCounterAttack()))
 		);
@@ -112,12 +117,14 @@ public class EventFight implements Listener {
 					|| e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				if (!spectator.inventoryIsAutorized(spectator.getInvOpenTop())) {
 					spectator.openInvHistoric();
-					if (spectator.canPlay() && spectator.isFightPlayer()) {
+					if (spectator.isFightPlayer()) {
 						PlayerFight player = (PlayerFight) spectator;
-						player.setCardSelect(-1);
-						player.setFirstSelection(null);
-						player.setEntityAttack(null);
-						player.showEntityAttackPossible();
+						if (player.canPlay()) {
+							player.setCardSelect(-1);
+							player.setFirstSelection(null);
+							player.setEntityAttack(null);
+							player.showEntityAttackPossible();
+						}
 					}
 				}
 				next = false;
@@ -140,101 +147,103 @@ public class EventFight implements Listener {
 					}
 				}
 			}
-			if (next && spectator.canPlay() && spectator.isFightPlayer()) {
+			if (next && spectator.isFightPlayer()) {
 				PlayerFight player = (PlayerFight) spectator;
-				FightCible cible = player.getTargetCible();
-				if (cible != null) {
-					if (player.getCardSelect() == -1) {
-						if (player.hasEntityAttack()) {
-							Card card = player.getEntityAttack().getCard().getCard();
-							FightHead head = player.getForCible(cible);
-							if (!card.getCible().hasChoose()) {
-								FightEntity entity = player.getEntityAttack();
-								entity.setAttackPossible(false);
-								player.setEntityAttack(null);
-								player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
-									@Override
-									public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-										for (FightHead head1 : fightHeads)
-											EventFight.this.fightWithEntityChoose(player.getFight(), entity, head1);
-										return true;
-									}
-								});
-								player.showEntityAttackPossible();
-							} else if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
-								FightEntity entity = player.getEntityAttack();
-								entity.setAttackPossible(false);
-								player.setEntityAttack(null);
-								this.fightWithEntityChoose(player.getFight(), entity, head);
-								player.showEntityAttackPossible();
-							}
-						} else {
-							if (!cible.isHero() && cible.isAlly()) {
-								FightEntity entity = (FightEntity) player.getForCible(cible);
-								if (!entity.isDead() && entity.attackIsPossible()) {
-									Card card = entity.getCard().getCard();
-									player.showHeadForAttack(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
-									player.setEntityAttack(entity);
-									entity.showHead(ItemHead.SELECTED_ENTITY);
+				if (player.canPlay()) {
+					FightCible cible = player.getTargetCible();
+					if (cible != null) {
+						if (player.getCardSelect() == -1) {
+							if (player.hasEntityAttack()) {
+								Card card = player.getEntityAttack().getCard().getCard();
+								FightHead head = player.getForCible(cible);
+								if (!card.getCible().hasChoose()) {
+									FightEntity entity = player.getEntityAttack();
+									entity.setAttackPossible(false);
+									player.setEntityAttack(null);
+									player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+										@Override
+										public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+											for (FightHead head1 : fightHeads)
+												EventFight.this.fightWithEntityChoose(player.getFight(), entity, head1);
+											return true;
+										}
+									});
+									player.showEntityAttackPossible();
+								} else if (!head.isDead() && player.testHeadValidForAttack(card, head)) {
+									FightEntity entity = player.getEntityAttack();
+									entity.setAttackPossible(false);
+									player.setEntityAttack(null);
+									this.fightWithEntityChoose(player.getFight(), entity, head);
+									player.showEntityAttackPossible();
 								}
-							}
-						}
-					} else {
-						//start card actions
-						Card card = player.getCardHand(player.getCardSelect());
-						if (player.hasMana(card.getMana())) {
-							if (card.getType() == CardType.ENTITY) {
-								//entity
+							} else {
 								if (!cible.isHero() && cible.isAlly()) {
 									FightEntity entity = (FightEntity) player.getForCible(cible);
-									if (!entity.isSelectable()) {
+									if (!entity.isDead() && entity.attackIsPossible()) {
+										Card card = entity.getCard().getCard();
+										player.showHeadForAttack(card, ItemHead.SELECTABLE_ENTITY_DAMAGE);
+										player.setEntityAttack(entity);
+										entity.showHead(ItemHead.SELECTED_ENTITY);
+									}
+								}
+							}
+						} else {
+							//start card actions
+							Card card = player.getCardHand(player.getCardSelect());
+							if (player.hasMana(card.getMana())) {
+								if (card.getType() == CardType.ENTITY) {
+									//entity
+									if (!cible.isHero() && cible.isAlly()) {
+										FightEntity entity = (FightEntity) player.getForCible(cible);
+										if (!entity.isSelectable()) {
+											this.useCard(player, card, () -> {
+												try {
+													entity.setCard(new CardEntity(card));
+													entity.executingAction();
+												} catch (Exception e1) {
+													Bukkit.getLogger().warning(RenderException.renderException(e1));
+												}
+											});
+										}
+									}
+								} else {
+									if (!card.getCible().hasChoose()) {
 										this.useCard(player, card, () -> {
-											try {
-												entity.setCard(new CardEntity(card));
-												entity.executingAction();
-											} catch (Exception e1) {
-												Bukkit.getLogger().warning(RenderException.renderException(e1));
-											}
+											player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
+												@Override
+												public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
+													FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
+													return true;
+												}
+											});
 										});
+									} else {
+										FightHead head = player.getForCible(cible);
+										if (card.getCible() == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE) {
+											if (player.hasFirstSelection()) {
+												if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getCibleFaction(), head)) {
+													this.useCard(player, card, () -> {
+														FightSpell.startActionSpell(player, card.getFeatures(), Arrays.asList(player.getFirstSelection(), head));
+													});
+												}
+											} else if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ALLY, card.getCibleFaction(), head)) {
+												player.setFirstSelection(head);
+												player.showHeadForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
+												player.getFirstSelection().showHead(ItemHead.SELECTABLE_ENTITY_DAMAGE);
+											}
+										} else if (player.testHeadValidForAttack(card, head)) {
+											this.useCard(player, card, () -> {
+												FightSpell.startActionSpell(player, card.getFeatures(), head);
+											});
+										}
 									}
 								}
 							} else {
-								if (!card.getCible().hasChoose()) {
-									this.useCard(player, card, () -> {
-										player.executeFightHeadIsGoodCible(card, new ResultFightHead() {
-											@Override
-											public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
-												FightSpell.startActionSpell(player, card.getFeatures(), fightHeads);
-												return true;
-											}
-										});
-									});
-								} else {
-									FightHead head = player.getForCible(cible);
-									if (card.getCible() == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE) {
-										if (player.hasFirstSelection()) {
-											if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getCibleFaction(), head)) {
-												this.useCard(player, card, () -> {
-													FightSpell.startActionSpell(player, card.getFeatures(), Arrays.asList(player.getFirstSelection(), head));
-												});
-											}
-										} else if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ALLY, card.getCibleFaction(), head)) {
-											player.setFirstSelection(head);
-											player.showHeadForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
-											player.getFirstSelection().showHead(ItemHead.SELECTABLE_ENTITY_DAMAGE);
-										}
-									} else if (player.testHeadValidForAttack(card, head)) {
-										this.useCard(player, card, () -> {
-											FightSpell.startActionSpell(player, card.getFeatures(), head);
-										});
-									}
-								}
+								player.sendMessageInsufficientMana();
 							}
-						} else {
-							player.sendMessageInsufficientMana();
 						}
+						//end cards action
 					}
-					//end cards action
 				}
 			}
 			e.getPlayer().updateInventory();
@@ -251,73 +260,75 @@ public class EventFight implements Listener {
 			e.setCancelled(true);
 			FightSpectator spectator = manager.getSpectator(uuid);
 			if (spectator.inventoryIsAutorized(e.getInventory())) {
-				if (spectator.canPlay() && spectator.isFightPlayer()) {
+				if (spectator.isFightPlayer()) {
 					PlayerFight player = (PlayerFight) spectator;
-					if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
-						if (e.getRawSlot() >= 0 && e.getRawSlot() < player.getMaxCardHand()) {
-							Card card = player.getCardHand(e.getRawSlot());
-							if (card != null) {
-								player.setAlreadySwap(true);
-								player.setCardHand(e.getRawSlot(), null);
-								player.pickCard(1);
-								player.initHotBar();
-								player.openInvHistoric();
-								player.playSound(Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
-							}
-							return;
-						}
-					}
-					FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
-					if (slot != null)
-						switch (slot) {
-							case CARD_1:
-								player.setCardSelect(0);
-								break;
-		
-							case CARD_2:
-								player.setCardSelect(1);
-								break;
-								
-							case CARD_3:
-								player.setCardSelect(2);
-								break;
-								
-							case CARD_4:
-								player.setCardSelect(3);
-								break;
-								
-							case CARD_5:
-								player.setCardSelect(4);
-								break;
-								
-							case CARD_6:
-								player.setCardSelect(5);
-								break;
-								
-							case FINISH_ROUND:
-								player.getFight().nextRound();
-								break;
-								
-							case BUY_CARD:
-								if (player.hasMana(ValueFight.V.priceCard)) {
-									if (player.pickCard(1) > 0) {
-										player.removeMana(ValueFight.V.priceCard);
-										player.playSound(Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
-										player.initHotBar();
-									}
-								} else {
-									player.sendMessageInsufficientMana();
+					if (player.canPlay()) {
+						if (e.getInventory().hashCode() == player.getInvSwap().hashCode()) {
+							if (e.getRawSlot() >= 0 && e.getRawSlot() < player.getMaxCardHand()) {
+								Card card = player.getCardHand(e.getRawSlot());
+								if (card != null) {
+									player.setAlreadySwap(true);
+									player.setCardHand(e.getRawSlot(), null);
+									player.pickCard(1);
+									player.initHotBar();
+									player.openInvHistoric();
+									player.playSound(Sound.ENTITY_GENERIC_BURN, 1.0F, 2F);
 								}
-								break;
-								
-							case SWAP_CARD:
-								if (!player.hasAlreadySwap())
-									player.openInvSwap();
-								break;
-								
-							default:
-								break;
+								return;
+							}
 						}
+						FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
+						if (slot != null)
+							switch (slot) {
+								case CARD_1:
+									player.setCardSelect(0);
+									break;
+			
+								case CARD_2:
+									player.setCardSelect(1);
+									break;
+									
+								case CARD_3:
+									player.setCardSelect(2);
+									break;
+									
+								case CARD_4:
+									player.setCardSelect(3);
+									break;
+									
+								case CARD_5:
+									player.setCardSelect(4);
+									break;
+									
+								case CARD_6:
+									player.setCardSelect(5);
+									break;
+									
+								case FINISH_ROUND:
+									player.getFight().nextRound();
+									break;
+									
+								case BUY_CARD:
+									if (player.hasMana(ValueFight.V.priceCard)) {
+										if (player.pickCard(1) > 0) {
+											player.removeMana(ValueFight.V.priceCard);
+											player.playSound(Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.75F);
+											player.initHotBar();
+										}
+									} else {
+										player.sendMessageInsufficientMana();
+									}
+									break;
+									
+								case SWAP_CARD:
+									if (!player.hasAlreadySwap())
+										player.openInvSwap();
+									break;
+									
+								default:
+									break;
+							}
+					}
 				}
 			} else {
 				spectator.openInvHistoric();

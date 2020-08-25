@@ -8,7 +8,10 @@
 
 + path action dead for damage zone entity
 
-+ add entity event with this historic chat     |   add text "invoke" for entity and for spell "use"    path error language
++ add entity event with this historic chat
+     |- add text "invoke" for entity and for spell "use"    path error language 
+     |- add player use entity
+     | path sequence message spawn action and dead action
 
 /\/\/\
 

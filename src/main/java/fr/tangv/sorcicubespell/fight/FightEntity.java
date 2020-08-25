@@ -272,6 +272,7 @@ public class FightEntity extends FightHead {
 				owner.getFight().sendMessage(
 						fight.getSorci().getMessage().getString("message_dead")
 						.replace("{entity}", card.getCard().renderName())
+						.replace("{owner}", owner.getNamePlayer())
 				);
 			}
 		}
@@ -286,6 +287,7 @@ public class FightEntity extends FightHead {
 			owner.getFight().sendMessage(
 					fight.getSorci().getMessage().getString("message_spawn")
 					.replace("{entity}", card.getCard().renderName())
+					.replace("{owner}", owner.getNamePlayer())
 			);
 		}
 	}
