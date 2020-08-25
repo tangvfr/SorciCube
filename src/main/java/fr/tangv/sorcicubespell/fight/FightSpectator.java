@@ -444,7 +444,7 @@ public class FightSpectator {
 				FightSpectator.toIChatBaseComposent(""),
 				0, 6, 0));
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
-				FightSpectator.toIChatBaseComposent(message),
+				FightSpectator.toIChatBaseComposent(message.replace("\n", "")),
 				0, 6, 0));
 	}
 	
