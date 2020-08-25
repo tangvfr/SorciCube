@@ -8,13 +8,12 @@
 
 + path action dead for damage zone entity
 
-+1 add entity event with this historic chat
+* add entity event with this historic chat
      |- add text "invoke" for entity and for spell "use"    path error language 
      |- add player use entity
      | path sequence message spawn action and dead action
 
 /- add system spectator
-
 
 last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
 
