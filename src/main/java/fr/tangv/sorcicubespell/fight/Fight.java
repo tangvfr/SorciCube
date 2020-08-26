@@ -52,8 +52,8 @@ public class Fight {
 		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
 		this.arena = sorci.getManagerFight().pickArena();
 		this.bossBar = Bukkit.createBossBar(
-				sorci.gertGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
-				BarColor.valueOf(sorci.gertGuiConfig().getString("boss_bar.color_arena")),
+				sorci.getGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
+				BarColor.valueOf(sorci.getGuiConfig().getString("boss_bar.color_arena")),
 				BarStyle.SOLID, new BarFlag[0]
 			);
 		//player1 start one

@@ -41,6 +41,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config enumConfig;
 	private Config guiConfig;
 	private Config arenaConfig;
+	private Config levelConfig;
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
 	private ManagerCards managerCards;
@@ -65,6 +66,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.parameter = new Config(this, "parameter.yml");
 				this.enumConfig = new Config(this, "enum.yml");
 				this.guiConfig = new Config(this, "gui.yml");
+				this.levelConfig = new Config(this, "level.yml");
 			} catch (Exception e) {
 				throw new Exception("Error In Config");
 			}
@@ -168,12 +170,16 @@ public class SorciCubeSpell extends JavaPlugin {
 		return enumConfig;
 	}
 	
-	public Config gertGuiConfig() {
+	public Config getGuiConfig() {
 		return guiConfig;
 	}
 	
-	public Config gertArenaConfig() {
+	public Config getArenaConfig() {
 		return arenaConfig;
+	}
+	
+	public Config getLevelConfig() {
+		return levelConfig;
 	}
 
 	public MongoDBManager getMongo() {

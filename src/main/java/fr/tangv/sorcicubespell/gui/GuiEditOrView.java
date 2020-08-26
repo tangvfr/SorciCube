@@ -19,7 +19,7 @@ public class GuiEditOrView extends AbstractGui {
 	private ItemStack itemClose;
 	
 	public GuiEditOrView(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_edit_or_view"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_edit_or_view"));
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 0, " ", null, false);
 		itemDeck = ItemBuild.buildItem(Material.BOOK, 1, (short) 0, (byte) 0, config.getString("deck"), null, false);
 		itemCard = ItemBuild.buildItem(Material.MAP, 1, (short) 0, (byte) 0, config.getString("card"), null, false);

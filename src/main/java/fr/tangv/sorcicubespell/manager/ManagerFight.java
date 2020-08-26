@@ -34,8 +34,8 @@ public class ManagerFight implements Runnable {
 		this.preFights = new ConcurrentHashMap<UUID, PreFight>();
 		this.fights = new Vector<Fight>();
 		this.arena = new Vector<FightArena>();
-		for (String name : sorci.gertArenaConfig().getKeys(false))
-			this.arena.add(new FightArena(name, sorci.gertArenaConfig().getConfigurationSection(name)));
+		for (String name : sorci.getArenaConfig().getKeys(false))
+			this.arena.add(new FightArena(name, sorci.getArenaConfig().getConfigurationSection(name)));
 		if (arena.size() <= 0)
 			throw new Exception("Nothing arena !");
 		//event

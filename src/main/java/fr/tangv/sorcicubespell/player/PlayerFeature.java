@@ -1,34 +1,40 @@
 package fr.tangv.sorcicubespell.player;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.bson.Document;
-import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
 
 public class PlayerFeature {
 
-	private Player player;
-	private DeckCards deck1;
-	private DeckCards deck2;
-	private DeckCards deck3;
-	private DeckCards deck4;
-	private DeckCards deck5;
-	private int unlockDecks;
-	private List<String> cardsUnlocks;
+	private final UUID uuid;
+	private final DeckCards deck1;
+	private final DeckCards deck2;
+	private final DeckCards deck3;
+	private final DeckCards deck4;
+	private final DeckCards deck5;
+	private volatile int unlockDecks;
+	private final List<String> cardsUnlocks;
+	private volatile int money;
+	private volatile int experience;
+	private volatile byte level;
 	
-	public PlayerFeature(Player player,
+	public PlayerFeature(UUID uuid,
 			DeckCards deck1,
 			DeckCards deck2,
 			DeckCards deck3,
 			DeckCards deck4,
 			DeckCards deck5,
 			int unlockDecks,
-			List<String> cardsUnlocks
+			List<String> cardsUnlocks,
+			int money,
+			int experience,
+			byte level
 		) {
-		this.player = player;
+		this.uuid = uuid;
 		this.unlockDecks = unlockDecks;
 		this.deck1 = deck1;
 		this.deck2 = deck2;
@@ -36,10 +42,57 @@ public class PlayerFeature {
 		this.deck4 = deck4;
 		this.deck5 = deck5;
 		this.cardsUnlocks = cardsUnlocks;
+		this.money = money;
+		this.experience = experience;
+		this.level = level;
 	}
 	
-	public Player getPlayer() {
-		return player;
+	public int getLevel() {
+		return level;
+	}
+	
+	public boolean isLevel(int level) {
+		return this.level >= level;
+	}
+	
+	public void addLevel(int level) {
+		this.level += level;
+	}
+	
+	public int getExperience() {
+		return experience;
+	}
+	
+	public boolean hasExperience(int experience) {
+		return this.experience >= experience;
+	}
+	
+	public void removeExperience(int experience) {
+		this.experience -= experience;
+	}
+	
+	public void addExperience(int experience) {
+		this.experience += experience;
+	}
+	
+	public int getMoney() {
+		return money;
+	}
+	
+	public boolean hasMoney(int money) {
+		return this.money >= money;
+	}
+	
+	public void removeMoney(int money) {
+		this.money -= money;
+	}
+	
+	public void addMoney(int money) {
+		this.money += money;
+	}
+	
+	public UUID getUUID() {
+		return uuid;
 	}
 	
 	public int getUnlockDecks() {
@@ -98,7 +151,7 @@ public class PlayerFeature {
 	
 	public Document toDocument() {
 		Document doc = new Document()
-				.append("uuid", player.getUniqueId().toString())
+				.append("uuid", uuid.toString())
 				.append("deck1", deck1.toDocument())
 				.append("deck2", deck2.toDocument())
 				.append("deck3", deck3.toDocument())
@@ -106,11 +159,14 @@ public class PlayerFeature {
 				.append("deck5", deck5.toDocument())
 				.append("deck_unlock", unlockDecks)
 				.append("cards_unlocks", cardsUnlocks)
+				.append("money", money)
+				.append("experience", experience)
+				.append("level", level)
 			;
 		return doc;
 	}
 	
-	public static PlayerFeature toPlayerFeature(Player player, ManagerCards manager, Document doc) throws Exception {
+	public static PlayerFeature toPlayerFeature(UUID uuid, ManagerCards manager, Document doc) throws Exception {
 		DeckCards deck1 = DeckCards.toDeckCards(manager, doc.get("deck1", Document.class));
 		DeckCards deck2 = DeckCards.toDeckCards(manager, doc.get("deck2", Document.class));
 		DeckCards deck3 = DeckCards.toDeckCards(manager, doc.get("deck3", Document.class));
@@ -118,11 +174,14 @@ public class PlayerFeature {
 		DeckCards deck5 = DeckCards.toDeckCards(manager, doc.get("deck5", Document.class));
 		int unlockDecks = doc.getInteger("deck_unlock");
 		List<String> cardsUnlocks = doc.getList("cards_unlocks", String.class);
-		return new PlayerFeature(player, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks);
+		int money = doc.getInteger("money", 0);
+		int experience = doc.getInteger("experience", 0);
+		byte level = (byte) doc.getInteger("level", 1);
+		return new PlayerFeature(uuid, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks, money, experience, level);
 	}
 	
 	public Document toUUIDDocument() {
-		return Card.toUUIDDocument(player.getUniqueId());
+		return Card.toUUIDDocument(uuid);
 	}
 	
 }

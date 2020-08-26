@@ -35,7 +35,7 @@ public class ManagerPlayers {
 	public PlayerFeature getPlayerFeature(Player player) throws Exception {
 		Iterator<Document> rep = players.find(Card.toUUIDDocument(player.getUniqueId())).iterator();
 		if (rep.hasNext())
-			return PlayerFeature.toPlayerFeature(player, sorci.getManagerCards(), rep.next());
+			return PlayerFeature.toPlayerFeature(player.getUniqueId(), sorci.getManagerCards(), rep.next());
 		else
 			return null;
 	}
@@ -82,14 +82,15 @@ public class ManagerPlayers {
 					cardsUnlocks.add(card.getUUID().toString());
 			}
 			//create and insert playerfeature
-			PlayerFeature playerFeature = new PlayerFeature(player,
+			PlayerFeature playerFeature = new PlayerFeature(player.getUniqueId(),
 					defaultDeck,
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					sorci.getParameter().getInt("number_deck_start"),
-					cardsUnlocks);
+					cardsUnlocks,
+					0, 0, (byte) 1);
 			this.insert(playerFeature);
 			return true;
 		} catch (Exception e) {

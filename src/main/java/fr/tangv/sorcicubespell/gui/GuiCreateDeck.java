@@ -25,7 +25,7 @@ public class GuiCreateDeck extends AbstractGui {
 	private ItemStack itemBack;
 	
 	public GuiCreateDeck(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_create_deck"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_create_deck"));
 		String desc = config.getString("lore_select");
 		String dark = manager.getSorci().getEnumTool().factionToString(CardFaction.DARK);
 		String light = manager.getSorci().getEnumTool().factionToString(CardFaction.LIGHT);

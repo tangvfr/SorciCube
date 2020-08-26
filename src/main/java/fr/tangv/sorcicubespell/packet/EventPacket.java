@@ -36,7 +36,7 @@ public class EventPacket implements Listener, Runnable {
 	public EventPacket(ManagerPacketCards manager) {
 		this.manager = manager;
 		this.packetsPlayers = new ConcurrentHashMap<Player, PlayerPacket>();
-		this.config = manager.getSorci().gertGuiConfig().getConfigurationSection("gui_open_packet");
+		this.config = manager.getSorci().getGuiConfig().getConfigurationSection("gui_open_packet");
 		this.itemQuestion = ItemBuild.buildSkull(SkullUrl.QUESTION, 1, config.getString("no_view"), null, false);
 		this.itemBack = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("back"), null, false);
 	}

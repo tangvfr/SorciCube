@@ -21,7 +21,7 @@ public class GuiDecks extends AbstractGui {
 	private ItemStack itemBack;
 	
 	public GuiDecks(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_decks"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_decks"));
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.getString("back"), null, false);
 	}

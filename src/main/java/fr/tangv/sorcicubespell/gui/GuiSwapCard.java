@@ -17,7 +17,7 @@ import fr.tangv.sorcicubespell.util.SkullUrl;
 public class GuiSwapCard extends AbstractGuiCards {
 	
 	public GuiSwapCard(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_swap_card"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_swap_card"));
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import fr.tangv.sorcicubespell.util.SkullUrl;
 public class GuiViewCards extends AbstractGuiCards {
 
 	public GuiViewCards(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_view_cards"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_view_cards"));
 	}
 
 	@Override

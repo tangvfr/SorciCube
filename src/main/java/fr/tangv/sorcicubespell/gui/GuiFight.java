@@ -20,7 +20,7 @@ public class GuiFight extends AbstractGui {
 	private ItemStack itemDuel;
 	
 	public GuiFight(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_fight"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_fight"));
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 14, " ", null, false);
 		itemClose = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("close"), null, false);
 		itemNoClassified = ItemBuild.buildSkull(SkullUrl.N_GRAY, 1, config.getString("unclassied"), null, false);

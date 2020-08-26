@@ -18,7 +18,7 @@ public class GuiChangeSort extends AbstractGui {
 	private ItemStack itemBack;
 	
 	public GuiChangeSort(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_change_sort"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_change_sort"));
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.getString("back"), null, false);
 	}

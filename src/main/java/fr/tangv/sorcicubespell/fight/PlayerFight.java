@@ -60,7 +60,7 @@ public class PlayerFight extends FightSpectator {
 		this.cardHand = new Card[6];
 		this.pickCard(3);
 		//historiquez
-		this.invSwap = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_swap_fight.name"));
+		this.invSwap = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_swap_fight.name"));
 		addInventoryAutorized(invSwap);
 	}
 	

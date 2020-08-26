@@ -19,7 +19,7 @@ public class GuiEditDeck extends AbstractGui {
 	private ItemStack itemBack;
 	
 	public GuiEditDeck(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_edit_deck"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_edit_deck"));
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 		itemBack = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 14, config.getString("back"), null, false);
 	}

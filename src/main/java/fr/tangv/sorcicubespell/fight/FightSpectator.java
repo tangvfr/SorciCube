@@ -130,8 +130,8 @@ public class FightSpectator {
 		this.name = player.getName();
 		this.uuid = player.getUniqueId();
 		this.profile = ((CraftPlayer) player).getProfile();
-		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().gertGuiConfig().getString("gui_historic.name"));
-		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().gertGuiConfig().getString("gui_view_entity.name"));
+		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_historic.name"));
+		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().getGuiConfig().getString("gui_view_entity.name"));
 		this.invAutorized = new Vector<Integer>();
 		addInventoryAutorized(invHistoric);
 		addInventoryAutorized(invViewEntity);
@@ -167,7 +167,7 @@ public class FightSpectator {
 	private void createScoreboard(String nameAlly, String nameEnemie, int healthAlly, int healthEnemie) {
 		this.sc = new Scoreboard();
 		this.scob = new ScoreboardObjective(sc, 
-				fight.getSorci().gertGuiConfig().getString("scoreboard.name")/*displayName*/,
+				fight.getSorci().getGuiConfig().getString("scoreboard.name")/*displayName*/,
 				IScoreboardCriteria.b/*dummy*/
 			);
 		sendPacket(new PacketPlayOutScoreboardObjective(scob, 0/*0 create, 1 remmove, 2 update*/));

@@ -23,7 +23,7 @@ public class GuiSelectDefaultDeck extends AbstractGui {
 	private ItemStack itemDeco;
 	
 	public GuiSelectDefaultDeck(ManagerGui manager) {
-		super(manager, manager.getSorci().gertGuiConfig().getConfigurationSection("gui_select_deck_default"));
+		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_select_deck_default"));
 		String desc = config.getString("lore_select");
 		String dark = manager.getSorci().getEnumTool().factionToString(CardFaction.DARK);
 		String light = manager.getSorci().getEnumTool().factionToString(CardFaction.LIGHT);
