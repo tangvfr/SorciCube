@@ -13,7 +13,7 @@
 
 + path action dead for damage zone entity
 
-last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
++ last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
 
 /- add system spectator
 
