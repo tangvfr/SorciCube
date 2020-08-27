@@ -15,6 +15,7 @@ import fr.tangv.sorcicubespell.card.CardCible;
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.card.CardVisual;
+import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.ItemHead;
 
 public class PlayerFight extends FightSpectator {
@@ -22,6 +23,7 @@ public class PlayerFight extends FightSpectator {
 	private final Inventory invSwap;
     private volatile PlayerFight enemie;
 	private final FightDeck deck;
+	private final PlayerFeature playerFeature;
 	private volatile int mana;
 	private volatile int manaBoost;
 	private volatile int health;
@@ -37,9 +39,10 @@ public class PlayerFight extends FightSpectator {
 	private volatile boolean isAFK;
 	private volatile boolean lossAFK;
 	
-	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first) {
+	public PlayerFight(Fight fight, Player player, PlayerFeature playerFeature, FightDeck deck, boolean first) {
 		super(fight, player, first ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase(), first);
 		this.deck = deck;
+		this.playerFeature = playerFeature;
 		this.mana = 0;
 		this.manaBoost = 0;
 		this.health = Fight.start_health;
@@ -62,6 +65,10 @@ public class PlayerFight extends FightSpectator {
 		//historiquez
 		this.invSwap = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_swap_fight.name"));
 		addInventoryAutorized(invSwap);
+	}
+	
+	public PlayerFeature getPlayerFeature() {
+		return this.playerFeature;
 	}
 	
 	public void noAFK() {

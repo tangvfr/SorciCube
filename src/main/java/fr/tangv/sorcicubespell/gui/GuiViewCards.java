@@ -33,7 +33,7 @@ public class GuiViewCards extends AbstractGuiCards {
 	@Override
 	protected List<Card> listCards(PlayerGui player) {
 		try {
-			PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getPlayer());
+			PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUUID());
 			ArrayList<Card> cards = new ArrayList<Card>();
 			for (String uuidS : playerF.getCardsUnlocks()) {
 				Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuidS));

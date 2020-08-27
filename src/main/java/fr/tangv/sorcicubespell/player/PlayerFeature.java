@@ -47,15 +47,15 @@ public class PlayerFeature {
 		this.level = level;
 	}
 	
-	public int getLevel() {
+	public byte getLevel() {
 		return level;
 	}
 	
-	public boolean isLevel(int level) {
+	public boolean isLevel(byte level) {
 		return this.level >= level;
 	}
 	
-	public void addLevel(int level) {
+	public void addLevel(byte level) {
 		this.level += level;
 	}
 	

@@ -42,7 +42,7 @@ public class CommandGiveCard implements CommandExecutor {
 					);
 				} else {
 					if (sorci.isLobby() || !sorci.getManagerFight().isSpectator(player.getUniqueId())) {
-						PlayerFeature feature = sorci.getManagerPlayers().getPlayerFeature(player);
+						PlayerFeature feature = sorci.getManagerPlayers().getPlayerFeature(player.getUniqueId());
 						if (feature != null) {
 							String uuid = card.getUUID().toString();
 							if (!feature.getCardsUnlocks().contains(uuid))

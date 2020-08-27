@@ -5,7 +5,7 @@ collection: "plugin"
 number_deck_start: 2
 #is lobby
 is_lobby: true
-chat_format: "{displayname}§r§8: §r§f{message}"
+chat_format: "§7Lvl.{level}§f {displayname}§r§8: §r§f{message}"
 #security
 perm_build: "sorcicubespell.build"
 perm_admin: "sorcicubespell.admin"

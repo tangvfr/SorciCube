@@ -3,10 +3,10 @@ package fr.tangv.sorcicubespell.manager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import com.mongodb.client.MongoCollection;
 
@@ -27,15 +27,15 @@ public class ManagerPlayers {
 		this.players = sorci.getMongo().getPlayers();
 	}
 	
-	public boolean containtPlayer(Player player) {
-		Iterator<Document> rep = players.find(Card.toUUIDDocument(player.getUniqueId())).iterator();
+	public boolean containtPlayer(UUID uuid) {
+		Iterator<Document> rep = players.find(Card.toUUIDDocument(uuid)).iterator();
 		return rep.hasNext();
 	}
 	
-	public PlayerFeature getPlayerFeature(Player player) throws Exception {
-		Iterator<Document> rep = players.find(Card.toUUIDDocument(player.getUniqueId())).iterator();
+	public PlayerFeature getPlayerFeature(UUID uuid) throws Exception {
+		Iterator<Document> rep = players.find(Card.toUUIDDocument(uuid)).iterator();
 		if (rep.hasNext())
-			return PlayerFeature.toPlayerFeature(player.getUniqueId(), sorci.getManagerCards(), rep.next());
+			return PlayerFeature.toPlayerFeature(uuid, sorci.getManagerCards(), rep.next());
 		else
 			return null;
 	}
@@ -48,9 +48,9 @@ public class ManagerPlayers {
 		players.findOneAndReplace(playerFeature.toUUIDDocument(), playerFeature.toDocument());
 	}
 	
-	public boolean initPlayer(Player player, CardFaction faction) {
+	public boolean initPlayer(UUID uuid, CardFaction faction) {
 		try {
-			if (this.containtPlayer(player))
+			if (this.containtPlayer(uuid))
 				return false;
 			//define type default deck
 			DeckCards defaultDeck;
@@ -82,7 +82,7 @@ public class ManagerPlayers {
 					cardsUnlocks.add(card.getUUID().toString());
 			}
 			//create and insert playerfeature
-			PlayerFeature playerFeature = new PlayerFeature(player.getUniqueId(),
+			PlayerFeature playerFeature = new PlayerFeature(uuid,
 					defaultDeck,
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),

@@ -82,7 +82,7 @@ public class EventPacket implements Listener, Runnable {
 						Card[] cardTake = manager.packetTakeCard(packet);
 						ItemStack[] itemCards = new ItemStack[cardTake.length];
 						boolean[] newCards = new boolean[cardTake.length];
-						PlayerFeature feature = manager.getSorci().getManagerPlayers().getPlayerFeature(player);
+						PlayerFeature feature = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId());
 						if (feature != null) {
 							for (int i = 0; i < cardTake.length; i++) {
 								if (cardTake[i] == null) {

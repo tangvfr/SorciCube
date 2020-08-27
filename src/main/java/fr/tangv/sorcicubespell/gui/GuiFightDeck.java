@@ -21,7 +21,7 @@ public class GuiFightDeck extends GuiDecks {
 
 	private void chooseDeck(Player player, int number) throws Exception {
 		PlayerGui playerG = getPlayerGui(player);
-		PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player);
+		PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId());
 		if (playerF.getUnlockDecks() >= number) {
 			if (playerF.getDeck(number).isComplet()) {
 				playerG.setDeckEdit(number);

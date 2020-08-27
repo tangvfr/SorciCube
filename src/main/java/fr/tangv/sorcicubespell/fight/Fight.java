@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell.fight;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -13,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.player.PlayerFeature;
+import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.Cooldown;
 import net.minecraft.server.v1_9_R2.Packet;
 public class Fight {
@@ -84,10 +87,12 @@ public class Fight {
 	}
 	
 	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
+		PlayerFeature playerFeature = sorci.getManagerPlayers().getPlayerFeature(player.getUniqueId());
 		return new PlayerFight(
 				this, 
 				player,
-				new FightDeck(sorci.getManagerPlayers().getPlayerFeature(player).getDeck(deck)),
+				playerFeature,
+				new FightDeck(playerFeature.getDeck(deck)),
 				first
 			);
 	}
@@ -206,50 +211,50 @@ public class Fight {
 	public void returnLobby() {
 		player1.returnLobby();
 		player2.returnLobby();
-		
 		//spetator
+		
 	}
 	
 	public void addHistoric(Card card, boolean first) {
 		player1.addHistoric(card, first);
 		player2.addHistoric(card, first);
-		
 		//spetator
+		
 	}
 	
 	public void closeInventory() {
 		player1.closeInventory();
 		player2.closeInventory();
-		
 		//spetator
+		
 	}
 	
 	public void updateViewLifes() {
 		player1.updateViewLifes();
 		player2.updateViewLifes();
-		
 		//spetator
+		
 	}
 	
 	public void alertMessage(String message) {
 		player1.alert(message);
 		player2.alert(message);
-		
 		//spetator
+		
 	}
 	
 	public void sendMessage(String message) {
 		player1.sendMessage(message);
 		player2.sendMessage(message);
-		
 		//spetator
+		
 	}
 	
 	public void sendPacket(Packet<?> packet) {
 		player1.sendPacket(packet);
 		player2.sendPacket(packet);
-		
 		//spetator
+		
 	}
 	
 	public void nextRound() {
@@ -299,16 +304,48 @@ public class Fight {
 			end(player2, player1);
 	}
 	
+	private void endReward(Config lc, PlayerFight player, int money, int exp) {
+		PlayerFeature feature = player.getPlayerFeature();
+		player.sendMessage(
+				sorci.getMessage().getString("message_reward_end_game")
+				.replace("{money}", Integer.toString(money))
+				.replace("{experience}", Integer.toString(exp))
+		);
+		feature.addMoney(money);
+		feature.addExperience(exp);
+		if (!feature.isLevel((byte) lc.getInt("level_max"))) {
+			int expNextLevel = lc.getInt("level_experience."+(feature.getLevel()+1)+".experience");
+			if (feature.hasExperience(expNextLevel)) {
+				feature.removeExperience(expNextLevel);
+				feature.addLevel((byte) 1);
+				int reward = lc.getInt("level_experience."+feature.getLevel()+".reward");
+				feature.addMoney(reward);
+				player.sendMessage(
+						sorci.getMessage().getString("message_change_level")
+						.replace("{level}", Byte.toString(feature.getLevel()))
+						.replace("{money}", Integer.toString(reward))
+				);
+				player.playSound(Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
+			}
+		}
+		sorci.getManagerPlayers().update(feature);
+	}
+	
 	private void end(PlayerFight losser, PlayerFight winner) {
 		this.cooldownEnd.start();
 		bossBar.setColor(ValueFight.V.titleEndColor);
 		bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
 		bossBar.setProgress(cooldownEnd.getProgess());
 		this.isEnd = true;
-		losser.sendEndTitle(sorci.getMessage().getString("message_losser"));
 		winner.sendEndTitle(sorci.getMessage().getString("message_winner"));
-		
+		losser.sendEndTitle(sorci.getMessage().getString("message_losser"));
+		Config lc = sorci.getLevelConfig();
+		if (winner.isOnline())
+			endReward(lc, winner, lc.getInt("money_win"), lc.getInt("experience_win"));
+		if (losser.isOnline())
+			endReward(lc, losser, lc.getInt("money_loss"), lc.getInt("experience_loss"));
 		//spectator
+		
 	}
 	
 	//geting seting

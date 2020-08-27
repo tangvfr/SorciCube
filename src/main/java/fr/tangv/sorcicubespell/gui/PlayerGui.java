@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.gui;
 
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -35,6 +37,10 @@ public class PlayerGui {
 		this.setDeckCardEdit(0);
 		this.setPlayerFeature(null);
 		this.setPreviousGui(null);
+	}
+	
+	public UUID getUUID() {
+		return player.getUniqueId();
 	}
 	
 	public Player getPlayer() {

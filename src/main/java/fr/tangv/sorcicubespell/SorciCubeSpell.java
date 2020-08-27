@@ -44,6 +44,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config levelConfig;
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
+	private ManagerLobby managerLobby;
 	private ManagerCards managerCards;
 	private ManagerGui managerGuiAdmin;
 	private ManagerPlayers managerPlayers;
@@ -90,7 +91,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.managerGuiAdmin = new ManagerGui(this);
 				this.managerPacketCards = new ManagerPacketCards(this);
 				this.managerCreatorFight = new ManagerCreatorFight(this);
-				new ManagerLobby(this);
+				this.managerLobby = new ManagerLobby(this);
 			} else {
 				this.arenaConfig = new Config(this, "arena.yml");
 				this.managerFight = new ManagerFight(this);
@@ -226,6 +227,11 @@ public class SorciCubeSpell extends JavaPlugin {
 	@Nullable
 	public ManagerCreatorFight getManagerCreatorFight() {
 		return managerCreatorFight;
+	}
+	
+	@Nullable
+	public ManagerLobby getManagerLobby() {
+		return managerLobby;
 	}
 	
 }
