@@ -62,15 +62,19 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 				list.add(player.getName());
 		} else if (args.length >= 2) {
 			Enumeration<String> names = manager.getEnumNamePacket();
-			String name = args[1];
-			for (int i = 2; i < args.length; i++)
-				name += " "+args[i];
-			name = name.replace("&", "§");
 			//test the name of packet
 			while (names.hasMoreElements()) {
-				String nameFind = names.nextElement().replace("§", "&");
-				if (nameFind.contains(name))
-					list.add(nameFind);
+				String[] nameFind = names.nextElement().replace("§", "&").split(" ");
+				boolean add = nameFind.length >= args.length-1;
+				if (add) {
+					for (int i = 0; i < args.length-2; i++) {
+						if (!args[i+1].equals(nameFind[i])) {
+							add = false;
+						}
+					}
+					if (add)
+						list.add(args[args.length-2]);
+				}
 			}
 		}
 		return list;
