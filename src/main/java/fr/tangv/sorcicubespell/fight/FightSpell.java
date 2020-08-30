@@ -275,10 +275,12 @@ public class FightSpell {
 							FightEntity entity = (FightEntity) head;
 							if (!entity.isDead()) {
 								CardFeatures features = entity.getCard().getCard().getFeatures();
-								for (CardFeature feat : cardFeature.getFeatures().valueFeatures()) {//<<error give this feature
-									if (features.hasFeature(feat.getType()))
-										features.removeFeature(feat.getType());
-									features.putFeature(feat.clone());
+								for (CardFeature feat : cardFeature.getFeatures().valueFeatures()) {
+									if (feat.getType() == CardFeatureType.HIDE_CARD) {
+										if (features.hasFeature(feat.getType()))
+											features.removeFeature(feat.getType());
+										features.putFeature(feat.clone());
+									}
 								}
 								entity.updateStat();
 							}

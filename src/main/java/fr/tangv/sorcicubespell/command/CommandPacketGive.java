@@ -53,17 +53,25 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String msg, String[] args) {
 		ArrayList<String> list = new ArrayList<String>();
 		if (args.length == 1) {
 			for (Player player : Bukkit.getOnlinePlayers())
 				list.add(player.getName());
-		} else if (args.length == 2) {
+		} else if (args.length >= 2) {
 			Enumeration<String> names = manager.getEnumNamePacket();
-			while (names.hasMoreElements())
-				list.add(names.nextElement().replace("§", "&"));
+			String name = args[1];
+			for (int i = 2; i < args.length; i++)
+				name += " "+args[i];
+			name = name.replace("&", "§");
+			//test the name of packet
+			while (names.hasMoreElements()) {
+				String nameFind = names.nextElement().replace("§", "&");
+				if (nameFind.contains(name))
+					list.add(nameFind);
+			}
 		}
 		return list;
 	}
