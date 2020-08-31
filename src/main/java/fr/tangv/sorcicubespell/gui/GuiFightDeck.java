@@ -1,13 +1,16 @@
 package fr.tangv.sorcicubespell.gui;
 
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import fr.tangv.sorcicubespell.fight.FightStat;
 import fr.tangv.sorcicubespell.fight.FightType;
-import fr.tangv.sorcicubespell.fight.PreFightData;
+import fr.tangv.sorcicubespell.fight.FightData;
 import fr.tangv.sorcicubespell.manager.ManagerCreatorFight;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
@@ -26,7 +29,7 @@ public class GuiFightDeck extends GuiDecks {
 			if (playerF.getDeck(number).isComplet()) {
 				playerG.setDeckEdit(number);
 				ManagerCreatorFight cf = sorci.getManagerCreatorFight();
-				sorci.getManagerPreFightData().removePreFightData(player.getUniqueId());
+				sorci.getManagerPreFightData().removeFightDataPlayer(player.getUniqueId());
 				switch(playerG.getFightType()) {
 					case UNCLASSIFIED:
 						if (cf.getNoClassified() == null) {
@@ -36,17 +39,21 @@ public class GuiFightDeck extends GuiDecks {
 						} else {
 							Player player1 = cf.getNoClassified();
 							cf.setNoClassified(null);
-							sorci.getManagerPreFightData().addPreFightData(
-									new PreFightData(
+							String server = sorci.getNameServerFight();
+							sorci.getManagerPreFightData().addFightData(
+									new FightData(
+											UUID.randomUUID(),
 											player1.getUniqueId(),
 											player.getUniqueId(),
 											getPlayerGui(player1).getDeckEdit(),
 											playerG.getDeckEdit(),
-											FightType.UNCLASSIFIED
+											FightType.UNCLASSIFIED,
+											FightStat.WAITING,
+											server
 										)
 								);
-							sorci.sendPlayerToServer(player, sorci.getNameServerFight());
-							sorci.sendPlayerToServer(player1, sorci.getNameServerFight());
+							sorci.sendPlayerToServer(player, server);
+							sorci.sendPlayerToServer(player1, server);
 							return;
 						}
 						

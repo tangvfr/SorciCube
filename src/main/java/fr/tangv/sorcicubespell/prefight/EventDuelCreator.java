@@ -40,7 +40,7 @@ public class EventDuelCreator implements Listener {
 				PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 				PlayerGui cibleG = sorci.getManagerGui().getPlayerGui(cible);
 				if (cibleG.getInviteDuel() == player) {
-					manager.duelPlayer(playerG, cibleG);
+					manager.duelPlayer(playerG, cibleG, sorci.getNameServerFight());
 				} else if (playerG.getInviteDuel() != cible) {
 					playerG.setInviteDuel(cible);
 					player.sendMessage(messageInvite.replace("{player}", cible.getName()));

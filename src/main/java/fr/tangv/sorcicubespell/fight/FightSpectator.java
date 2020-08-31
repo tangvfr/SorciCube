@@ -273,7 +273,8 @@ public class FightSpectator {
 		Bukkit.getScheduler().runTask(fight.getSorci(), new Runnable() {
 			@Override
 			public void run() {
-				player.showPlayer(spectator.player);
+				if (player != spectator.player && player.isOnline() && spectator.player.isOnline())
+					player.showPlayer(spectator.player);
 			}
 		});
 	}

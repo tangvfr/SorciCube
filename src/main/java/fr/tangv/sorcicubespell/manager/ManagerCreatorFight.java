@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.util.UUID;
 import java.util.Vector;
 
 import org.bukkit.Bukkit;
@@ -7,8 +8,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.fight.FightStat;
 import fr.tangv.sorcicubespell.fight.FightType;
-import fr.tangv.sorcicubespell.fight.PreFightData;
+import fr.tangv.sorcicubespell.fight.FightData;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.prefight.EventDuelCreator;
 
@@ -41,20 +43,23 @@ public class ManagerCreatorFight {
 			player.teleport(locNPC);
 	}
 	
-	public void duelPlayer(PlayerGui player1, PlayerGui player2) {
+	public void duelPlayer(PlayerGui player1, PlayerGui player2, String server) {
 		duelPlayers.remove(player1.getPlayer());
 		duelPlayers.remove(player2.getPlayer());
-		sorci.getManagerPreFightData().addPreFightData(
-				new PreFightData(
+		sorci.getManagerPreFightData().addFightData(
+				new FightData(
+						UUID.randomUUID(),
 						player1.getPlayer().getUniqueId(),
 						player2.getPlayer().getUniqueId(),
 						player1.getDeckEdit(),
 						player2.getDeckEdit(),
-						FightType.DUEL
+						FightType.DUEL,
+						FightStat.WAITING,
+						server
 					)
 			);
-		sorci.sendPlayerToServer(player1.getPlayer(), sorci.getNameServerFight());
-		sorci.sendPlayerToServer(player2.getPlayer(), sorci.getNameServerFight());
+		sorci.sendPlayerToServer(player1.getPlayer(), server);
+		sorci.sendPlayerToServer(player2.getPlayer(), server);
 	}
 	
 	public boolean isInDuel(Player player) {

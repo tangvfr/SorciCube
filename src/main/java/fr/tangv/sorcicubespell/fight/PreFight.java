@@ -6,25 +6,27 @@ import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.util.Cooldown;
 
-public class PreFight extends PreFightData {
+public class PreFight extends FightData {
 
 	private final Player player1;
 	private volatile Player player2;
 	private volatile Cooldown cooldown;
 	
-	public static PreFight createPreFight(Player player, PreFightData data) {
+	public static PreFight createPreFight(Player player, FightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))
-			return new PreFight(player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType());
+			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType(), data.getServer());
 		else
-			return new PreFight(player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType());
+			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType(), data.getServer());
 	}
 	
-	private PreFight(Player player1,
+	private PreFight(UUID fightUUID,
+					Player player1,
 					UUID playerUUID2,
 					int player1DeckUse,
 					int player2DeckUse,
-					FightType fightType) {
-		super(player1.getUniqueId(), playerUUID2, player1DeckUse, player2DeckUse, fightType);
+					FightType fightType,
+					String server) {
+		super(fightUUID, player1.getUniqueId(), playerUUID2, player1DeckUse, player2DeckUse, fightType, FightStat.STARTING, server);
 		this.player1 = player1;
 		this.player2 = null;
 		this.cooldown = new Cooldown(1_000);

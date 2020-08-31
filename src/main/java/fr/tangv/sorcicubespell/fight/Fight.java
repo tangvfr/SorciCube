@@ -1,5 +1,8 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.UUID;
+import java.util.Vector;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -26,6 +29,7 @@ public class Fight {
 	protected static final int max_health = 60;
 	protected static final int start_health = 30;
 	
+	private final UUID fightUUID;
 	private final SorciCubeSpell sorci;
 	private final FightType fightType;
 	private final PlayerFight player1;
@@ -38,16 +42,19 @@ public class Fight {
 	private volatile boolean firstPlay;
 	private boolean isStart;
 	private final BossBar bossBar;
+	private final Vector<FightSpectator> spectators;
 	//end
 	private volatile boolean isEnd;
 	private volatile boolean isDeleted;
 	
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
+		this.fightUUID = preFight.getFightUUID();
 		this.sorci = sorci;
 		this.firstPlay = true;
 		this.isStart = false;
 		this.isDeleted = false;
 		this.isEnd = false;
+		this.spectators = new Vector<FightSpectator>();
 		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
@@ -78,12 +85,30 @@ public class Fight {
 		player2.createScoreboard();
 		player1.getHero().updateStat();
 		player2.getHero().updateStat();
-		sorci.getManagerFight().putFightSpectator(player1);
-		sorci.getManagerFight().putFightSpectator(player2);
 		player1.addInBossBar(bossBar);
 		player2.addInBossBar(bossBar);
 		//start
 		cooldown.loop();
+	}
+	
+	public Vector<FightSpectator> getSpectators() {
+		return spectators;
+	}
+	
+	public void initPacketForViewFight(FightSpectator spectator) {
+		
+	}
+	
+	public void addSpectator(FightSpectator spectator) {
+		spectators.add(spectator);
+	}
+	
+	public void removeSpectator(FightSpectator spectator) {
+		spectators.remove(spectator);
+	}
+	
+	public UUID getFightUUID() {
+		return fightUUID;
 	}
 	
 	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
@@ -332,6 +357,7 @@ public class Fight {
 	}
 	
 	private void end(PlayerFight losser, PlayerFight winner) {
+		sorci.getManagerPreFightData().changeStatFightDataUUID(this.fightUUID, FightStat.END);
 		this.cooldownEnd.start();
 		bossBar.setColor(ValueFight.V.titleEndColor);
 		bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
