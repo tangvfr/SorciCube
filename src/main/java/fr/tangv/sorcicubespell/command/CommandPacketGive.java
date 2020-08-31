@@ -68,12 +68,12 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 				boolean add = nameFind.length >= args.length-1;
 				if (add) {
 					for (int i = 0; i < args.length-2; i++) {
-						if (!args[i+1].equals(nameFind[i])) {
+						if (!args[i+1].equals(nameFind[i]))
 							add = false;
-						}
 					}
-					if (add)
-						list.add(args[args.length-2]);
+					String textAdd = nameFind[args.length-2];
+					if (add && !list.contains(textAdd)) 
+						list.add(textAdd);
 				}
 			}
 		}
