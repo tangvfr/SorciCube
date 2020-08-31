@@ -80,7 +80,7 @@ public class ManagerFight implements Runnable {
 		boolean kick = true;
 		if (playerInstance.containsKey(player.getUniqueId())) {
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
-			if (spectator.isFightPlayer()) {
+			if (spectator.isFightPlayer() && !spectator.getFight().isEnd()) {
 				for (Player other : Bukkit.getOnlinePlayers()) {
 						other.hidePlayer(player);
 						player.hidePlayer(other);
@@ -105,6 +105,12 @@ public class ManagerFight implements Runnable {
 			UUID fightUUID = sorci.getManagerPreFightData().whichSpetate(player.getUniqueId());
 			if (fightUUID != null && fights.containsKey(fightUUID)) {
 				Fight fight = fights.get(fightUUID);
+				if (fight.isEnd()) {
+					Bukkit.getScheduler().runTaskLaterAsynchronously(sorci, () -> {
+						sendLobbyPlayer(player);
+					}, 1);
+					return;
+				}
 				for (Player other : Bukkit.getOnlinePlayers()) {
 					other.hidePlayer(player);
 					player.hidePlayer(other);
