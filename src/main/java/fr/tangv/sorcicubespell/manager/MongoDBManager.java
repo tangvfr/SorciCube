@@ -18,6 +18,7 @@ public class MongoDBManager {
 	private MongoCollection<Document> defaultDeck;
 	private MongoCollection<Document> packets;
 	private MongoCollection<Document> preFights;
+	private MongoCollection<Document> listFights;
 	
 	public MongoDBManager(String uri, String collectionName) throws Exception {
 		//init
@@ -30,6 +31,7 @@ public class MongoDBManager {
 		this.defaultDeck = defineCollection("default_deck");
 		this.packets = defineCollection("packets");
 		this.preFights = defineCollection("pre_fights");
+		this.preFights = defineCollection("list_fights");
 	}
 	
 	private MongoCollection<Document> defineCollection(String collection) {
@@ -65,6 +67,10 @@ public class MongoDBManager {
 	
 	protected MongoCollection<Document> getPreFights() {
 		return preFights;
+	}
+	
+	protected MongoCollection<Document> getListFights() {
+		return listFights;
 	}
 	
 }

@@ -19,3 +19,4 @@
 
 last - add system reconnect
 
+- moy count mana deck

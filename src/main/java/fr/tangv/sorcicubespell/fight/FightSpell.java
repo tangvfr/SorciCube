@@ -276,7 +276,7 @@ public class FightSpell {
 							if (!entity.isDead()) {
 								CardFeatures features = entity.getCard().getCard().getFeatures();
 								for (CardFeature feat : cardFeature.getFeatures().valueFeatures()) {
-									if (feat.getType() == CardFeatureType.HIDE_CARD) {
+									if (feat.getType() != CardFeatureType.HIDE_CARD) {
 										if (features.hasFeature(feat.getType()))
 											features.removeFeature(feat.getType());
 										features.putFeature(feat.clone());
