@@ -45,6 +45,12 @@ public abstract class FightHead {
 		return entity;
 	}
 	
+	public void sendPacketForView(FightSpectator spectator) {
+		spectator.sendPacket(new PacketPlayOutSpawnEntityLiving(entityName));
+		spectator.sendPacket(new PacketPlayOutSpawnEntityLiving(entityHead));
+		spectator.sendPacket(new PacketPlayOutEntityEquipment(entityHead.getId(), EnumItemSlot.HEAD, headItem));
+	}
+	
 	private void sendHeadEntity(EntityArmorStand entity) {
 		fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, headItem));
 	}

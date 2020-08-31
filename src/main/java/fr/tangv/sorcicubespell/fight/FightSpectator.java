@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -135,6 +134,11 @@ public class FightSpectator {
 		this.invAutorized = new Vector<Integer>();
 		addInventoryAutorized(invHistoric);
 		addInventoryAutorized(invViewEntity);
+	}
+	
+	public void newPlayer(Player player) {
+		this.player = player;
+		fight.initPacketForViewFight(this);
 	}
 	
 	public void addInventoryAutorized(Inventory inv) {
@@ -353,8 +357,12 @@ public class FightSpectator {
 		return name;
 	}
 	
-	public void addInBossBar(BossBar bossBar) {
-		bossBar.addPlayer(player);
+	public void addInBossBar() {
+		fight.getBossBar().addPlayer(player);
+	}
+	
+	public void removeInBossBar() {
+		fight.getBossBar().removePlayer(player);
 	}
 	
 	public FightCible getTargetCible() {

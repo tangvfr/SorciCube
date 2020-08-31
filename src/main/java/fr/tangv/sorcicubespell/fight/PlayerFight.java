@@ -67,6 +67,11 @@ public class PlayerFight extends FightSpectator {
 		addInventoryAutorized(invSwap);
 	}
 	
+	public void newPlayer(Player player) {
+		super.newPlayer(player);
+		initHotBar();
+	}
+	
 	public PlayerFeature getPlayerFeature() {
 		return this.playerFeature;
 	}

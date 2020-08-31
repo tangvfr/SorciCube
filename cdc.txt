@@ -15,8 +15,10 @@
 
 + last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
 
-/- add system spectator add chat
+/- add system spectator    finish party lobby
+/- add system reconnect    finish party lobby
 
-last - add system reconnect
+- add system chat  (fs view all in fight, pf view juste enemie)
+
 
 - moy count mana deck

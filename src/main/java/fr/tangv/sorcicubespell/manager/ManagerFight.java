@@ -14,6 +14,7 @@ import fr.tangv.sorcicubespell.fight.Fight;
 import fr.tangv.sorcicubespell.fight.FightArena;
 import fr.tangv.sorcicubespell.fight.FightSpectator;
 import fr.tangv.sorcicubespell.fight.FightStat;
+import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.fight.PreFight;
 import fr.tangv.sorcicubespell.fight.FightData;
 import fr.tangv.sorcicubespell.fight.ValueFight;
@@ -67,6 +68,7 @@ public class ManagerFight implements Runnable {
 		UUID uuid = player.getUniqueId();
 		if (playerInstance.containsKey(uuid)) {
 			FightSpectator spectator = playerInstance.get(uuid);
+			spectator.removeInBossBar();
 			if (!spectator.isFightPlayer()) {
 				spectator.getFight().removeSpectator(spectator);
 				playerInstance.remove(uuid);
@@ -76,11 +78,17 @@ public class ManagerFight implements Runnable {
 	
 	public void playerJoin(Player player) {
 		boolean kick = true;
-		/*if (playerInstance.containsKey(player.getUniqueId())) {
-			
-			kick = false;
-		} else */
-		if (preFights.containsKey(player.getUniqueId())) {
+		if (playerInstance.containsKey(player.getUniqueId())) {
+			FightSpectator spectator = playerInstance.get(player.getUniqueId());
+			if (spectator.isFightPlayer()) {
+				for (Player other : Bukkit.getOnlinePlayers()) {
+						other.hidePlayer(player);
+						player.hidePlayer(other);
+				}
+				((PlayerFight) spectator).newPlayer(player);
+				kick = false;
+			}
+		} else if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
 			preFight.complet(player);
 			kick = false;

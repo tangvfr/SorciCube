@@ -85,10 +85,14 @@ public class Fight {
 		player2.createScoreboard();
 		player1.getHero().updateStat();
 		player2.getHero().updateStat();
-		player1.addInBossBar(bossBar);
-		player2.addInBossBar(bossBar);
+		player1.addInBossBar();
+		player2.addInBossBar();
 		//start
 		cooldown.loop();
+	}
+	
+	protected BossBar getBossBar() {
+		return bossBar;
 	}
 	
 	public Vector<FightSpectator> getSpectators() {
@@ -96,7 +100,17 @@ public class Fight {
 	}
 	
 	public void initPacketForViewFight(FightSpectator spectator) {
-		
+		player1.getHero().sendPacketForView(spectator);
+		player2.getHero().sendPacketForView(spectator);
+		for (int i = 0; i < player1.getMaxEntity(); i++) {
+			player1.getEntity(i).sendPacketForView(spectator);
+			player2.getEntity(i).sendPacketForView(spectator);
+		}
+		spectator.teleportToBase();
+		spectator.showPlayer(player1);
+		spectator.showPlayer(player2);
+		spectator.createScoreboard();
+		spectator.addInBossBar();
 	}
 	
 	public void addSpectator(FightSpectator spectator) {

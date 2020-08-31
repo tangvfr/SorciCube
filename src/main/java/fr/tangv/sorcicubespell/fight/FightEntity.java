@@ -31,6 +31,7 @@ import net.minecraft.server.v1_9_R2.ScoreboardTeam;
 import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 import net.minecraft.server.v1_9_R2.ScoreboardTeamBase.EnumNameTagVisibility;
 import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardTeam;
+import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
 public class FightEntity extends FightHead {
 
@@ -58,6 +59,27 @@ public class FightEntity extends FightHead {
 		this.attackIsPossible = false;
 		this.attacked = false;
 		this.entityStat = createArmorStand("", -0.2D);
+	}
+	
+	@Override
+	public void sendPacketForView(FightSpectator spectator) {
+		super.sendPacketForView(spectator);
+		spectator.sendPacket(new PacketPlayOutSpawnEntityLiving(entityStat));
+		if (isSend) {
+			//create team
+			ScoreboardTeam team = new ScoreboardTeam(((CraftScoreboard) Bukkit.getScoreboardManager().getMainScoreboard()).getHandle(), "GENE");
+			team.setNameTagVisibility(EnumNameTagVisibility.NEVER);
+			ArrayList<String> playerToAdd = new ArrayList<String>();
+			playerToAdd.add(entityPlayer.getName());
+			//send player
+			spectator.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
+			spectator.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
+			spectator.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
+			//send team
+			spectator.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
+			spectator.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
+			spectator.sendPacket(new PacketPlayOutScoreboardTeam(team, playerToAdd, 3));
+		}
 	}
 	
 	private void removePlayer() {
