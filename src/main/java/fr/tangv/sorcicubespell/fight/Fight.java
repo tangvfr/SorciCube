@@ -91,6 +91,15 @@ public class Fight {
 		cooldown.loop();
 	}
 	
+	private static interface ActionSpectator {
+		public void action(FightSpectator spectator);
+	}
+	
+	private void forEachSpeactator(ActionSpectator action) {
+		for (FightSpectator spectator : spectators)
+			action.action(spectator);
+	}
+	
 	protected BossBar getBossBar() {
 		return bossBar;
 	}
@@ -251,49 +260,63 @@ public class Fight {
 		player1.returnLobby();
 		player2.returnLobby();
 		//spetator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.returnLobby();
+		});
 	}
 	
 	public void addHistoric(Card card, boolean first) {
 		player1.addHistoric(card, first);
 		player2.addHistoric(card, first);
 		//spetator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.addHistoric(card, first);
+		});
 	}
 	
 	public void closeInventory() {
 		player1.closeInventory();
 		player2.closeInventory();
 		//spetator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.closeInventory();
+		});
 	}
 	
 	public void updateViewLifes() {
 		player1.updateViewLifes();
 		player2.updateViewLifes();
 		//spetator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.updateViewLifes();
+		});
 	}
 	
 	public void alertMessage(String message) {
 		player1.alert(message);
 		player2.alert(message);
 		//spetator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.alert(message);
+		});
 	}
 	
 	public void sendMessage(String message) {
 		player1.sendMessage(message);
 		player2.sendMessage(message);
 		//spetator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.sendMessage(message);
+		});
 	}
 	
 	public void sendPacket(Packet<?> packet) {
 		player1.sendPacket(packet);
 		player2.sendPacket(packet);
 		//spetator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.sendPacket(packet);
+		});
 	}
 	
 	public void nextRound() {
@@ -385,7 +408,12 @@ public class Fight {
 		if (losser.isOnline())
 			endReward(lc, losser, lc.getInt("money_loss"), lc.getInt("experience_loss"));
 		//spectator
-		
+		forEachSpeactator((FightSpectator spectator) -> {
+			spectator.sendMessage(
+					sorci.getMessage().getString("message_spectator")
+					.replace("{player}", winner.getNamePlayer())
+			);
+		});
 	}
 	
 	//geting seting

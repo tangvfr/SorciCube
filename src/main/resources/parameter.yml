@@ -36,6 +36,7 @@ name_npc:
   default_deck: "§aPremier Deck"
   fight: "§4Gardien"
   leave: "§4Big Man"
+  list_fight: "§6Maitre des combat"
 #location
 location_spawn:
   ==: org.bukkit.Location

@@ -136,6 +136,13 @@ public class FightSpectator {
 		addInventoryAutorized(invViewEntity);
 	}
 	
+	public void initBarSpectator() {
+		Inventory inv = player.getInventory();
+		for (int i = 0; i < 9; i++)
+			inv.setItem(i, ValueFight.V.itemNone);
+		inv.setItem(4, ValueFight.V.itemStickView);
+	}
+	
 	public void newPlayer(Player player) {
 		this.player = player;
 		fight.initPacketForViewFight(this);

@@ -123,6 +123,7 @@ public class ManagerFight implements Runnable {
 				);
 				fight.initPacketForViewFight(spectator);
 				fight.addSpectator(spectator);
+				spectator.initBarSpectator();
 			} else if (player.hasPermission(sorci.getParameter().getString("perm_admin"))) {
 				for (Player other : Bukkit.getOnlinePlayers())
 					other.hidePlayer(player);

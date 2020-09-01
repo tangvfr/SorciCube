@@ -16,19 +16,23 @@ public class ManagerClickNPC {
 	private SorciCubeSpell sorci;
 	private HashMap<String, ClickNPC> clickNPCs;
 	
+	private String getNameNPC(String keyEnd) {
+		return sorci.getParameter().getString("name_npc."+keyEnd);
+	}
+	
 	public ManagerClickNPC(SorciCubeSpell sorci) {
 		this.sorci = sorci;
 		this.clickNPCs = new HashMap<String, ClickNPC>();
 		Location locationSpawn = (Location) sorci.getParameter().get("location_spawn");
 		//init click npc
-		clickNPCs.put(sorci.getParameter().getString("name_npc.edit_deck"), new ClickNPC() {
+		clickNPCs.put(getNameNPC("edit_deck"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
 					sorci.getManagerGui().getGuiEditOrView().open(player);
 			}
 		});
-		clickNPCs.put(sorci.getParameter().getString("name_npc.default_deck"), new ClickNPC() {
+		clickNPCs.put(getNameNPC("default_deck"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
@@ -37,7 +41,7 @@ public class ManagerClickNPC {
 					sorci.getManagerGui().getGuiSelectDefaultDeck().open(player);
 			}
 		});
-		clickNPCs.put(sorci.getParameter().getString("name_npc.return_spawn"), new ClickNPC() {
+		clickNPCs.put(getNameNPC("return_spawn"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				if (!sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
@@ -53,18 +57,24 @@ public class ManagerClickNPC {
 				}
 			}
 		});
-		clickNPCs.put(sorci.getParameter().getString("name_npc.fight"), new ClickNPC() {
+		clickNPCs.put(getNameNPC("fight"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
 					sorci.getManagerGui().getGuiFight().open(player);
 			}
 		});
-		clickNPCs.put(sorci.getParameter().getString("name_npc.leave"), new ClickNPC() {
+		clickNPCs.put(getNameNPC("leave"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				sorci.getManagerCreatorFight().playerLeave(player, false);
 				player.sendMessage(sorci.getMessage().getString("message_leave_fight"));
+			}
+		});
+		clickNPCs.put(getNameNPC("list_fight"), new ClickNPC() {
+			@Override
+			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
+				sorci.getManagerGui().getGuiListFight().open(player);
 			}
 		});
 		//init bukkit
