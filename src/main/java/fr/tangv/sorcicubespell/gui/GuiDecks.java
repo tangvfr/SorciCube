@@ -37,17 +37,14 @@ public class GuiDecks extends AbstractGui {
 		return ItemBuild.buildSkull(url, 1, config.getString("deck").replace("{number}", Integer.toString(number)), null, false);
 	}
 	
-	private void editDeck(Player player, int number) throws Exception {
-		PlayerGui playerG = getPlayerGui(player);
-		PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId());
-		if (playerF.getUnlockDecks() >= number) {
-			playerG.setDeckEdit(number);
-			playerG.setPlayerFeature(playerF);
-			if (playerF.getDeck(number).getFaction() != CardFaction.BASIC) {
-				manager.getGuiEditDeck().open(player);
+	private void editDeck(PlayerGui player, int number) {
+		if (player.getPlayerFeature().getUnlockDecks() >= number) {
+			player.setDeckEdit(number);
+			if (player.getPlayerFeature().getDeck(number).getFaction() != CardFaction.BASIC) {
+				manager.getGuiEditDeck().open(player.getPlayer());
 			} else {
-				playerG.setPreviousGui(this);
-				manager.getGuiCreateDeck().open(player);
+				player.setPreviousGui(this);
+				manager.getGuiCreateDeck().open(player.getPlayer());
 			}
 		}
 	}
@@ -55,17 +52,18 @@ public class GuiDecks extends AbstractGui {
 	@Override
 	public Inventory getInventory(Player player) {
 		try {
-			PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId());
+			PlayerGui playerG = getPlayerGui(player);
+			playerG.setPlayerFeature(manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId()));
 			Inventory inv = Bukkit.createInventory(null, 45, this.name);
 			for (int i = 0; i < 9; i++) {
 				inv.setItem(i, itemDeco);
 				inv.setItem(i+36, itemDeco);
 			}
-			inv.setItem(18, getItemDeck(playerF, 1));
-			inv.setItem(20, getItemDeck(playerF, 2));
-			inv.setItem(22, getItemDeck(playerF, 3));
-			inv.setItem(24, getItemDeck(playerF, 4));
-			inv.setItem(26, getItemDeck(playerF, 5));
+			inv.setItem(18, getItemDeck(playerG.getPlayerFeature(), 1));
+			inv.setItem(20, getItemDeck(playerG.getPlayerFeature(), 2));
+			inv.setItem(22, getItemDeck(playerG.getPlayerFeature(), 3));
+			inv.setItem(24, getItemDeck(playerG.getPlayerFeature(), 4));
+			inv.setItem(26, getItemDeck(playerG.getPlayerFeature(), 5));
 			inv.setItem(40, itemBack);
 			return inv;
 		} catch (Exception e) {
@@ -80,23 +78,23 @@ public class GuiDecks extends AbstractGui {
 			int raw = e.getRawSlot();
 			switch (raw) {
 				case 18://deck 1
-					editDeck(player, 1);
+					editDeck(getPlayerGui(player), 1);
 					break;
 		
 				case 20://deck 2
-					editDeck(player, 2);
+					editDeck(getPlayerGui(player), 2);
 					break;
 					
 				case 22://deck 3
-					editDeck(player, 3);
+					editDeck(getPlayerGui(player), 3);
 					break;
 					
 				case 24://deck 4
-					editDeck(player, 4);
+					editDeck(getPlayerGui(player), 4);
 					break;
 					
 				case 26://deck 5
-					editDeck(player, 5);
+					editDeck(getPlayerGui(player), 5);
 					break;
 					
 				case 40://back

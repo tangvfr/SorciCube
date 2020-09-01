@@ -21,7 +21,7 @@ public class ManagerCreatorFight {
 	private Location locDuel;
 	private Location locNPC;
 	private volatile Vector<Player> duelPlayers;
-	private volatile Player noClassified; 
+	private volatile Player noClassified;
 	
 	public ManagerCreatorFight(SorciCubeSpell sorci) {
 		this.sorci = sorci;
@@ -43,17 +43,25 @@ public class ManagerCreatorFight {
 			player.teleport(locNPC);
 	}
 	
-	public void duelPlayer(PlayerGui player1, PlayerGui player2, String server) {
+	public void duelFightPlayer(PlayerGui player1, PlayerGui player2, String server) {
 		duelPlayers.remove(player1.getPlayer());
 		duelPlayers.remove(player2.getPlayer());
-		sorci.getManagerPreFightData().addFightData(
+		startFightPlayer(player1, player2, server, FightType.DUEL);
+	}
+	
+	public void startFightPlayer(PlayerGui player1, PlayerGui player2, String server, FightType type) {
+		sorci.getManagerFightData().addFightData(
 				new FightData(
 						UUID.randomUUID(),
 						player1.getPlayer().getUniqueId(),
 						player2.getPlayer().getUniqueId(),
 						player1.getDeckEdit(),
 						player2.getDeckEdit(),
-						FightType.DUEL,
+						player1.getPlayerFeature().getDeck(player1.getDeckEdit()).getFaction(),
+						player2.getPlayerFeature().getDeck(player2.getDeckEdit()).getFaction(),
+						player1.getPlayerFeature().getLevel(),
+						player2.getPlayerFeature().getLevel(),
+						type,
 						FightStat.WAITING,
 						server
 					)

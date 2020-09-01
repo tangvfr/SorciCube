@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubespell.fight.FightType;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import fr.tangv.sorcicubespell.util.RenderException;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
 public class GuiFight extends AbstractGui {
@@ -41,14 +42,22 @@ public class GuiFight extends AbstractGui {
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
 		int raw = e.getRawSlot();
-		if (raw == 11) {//noclassified
-			getPlayerGui(player).setFightType(FightType.UNCLASSIFIED);
-			manager.getGuiFightDeck().open(player);
-		} else if (raw == 15) {//duel
-			getPlayerGui(player).setFightType(FightType.DUEL);
-			manager.getGuiFightDeck().open(player);
-		} else if (raw == 22) {//close
-			player.closeInventory();
+		try {
+			if (raw == 11) {//noclassified
+				PlayerGui playerG = getPlayerGui(player);
+				playerG.setFightType(FightType.UNCLASSIFIED);
+				playerG.setPlayerFeature(manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId()));
+				manager.getGuiFightDeck().open(player);
+			} else if (raw == 15) {//duel
+				PlayerGui playerG = getPlayerGui(player);
+				playerG.setFightType(FightType.DUEL);
+				playerG.setPlayerFeature(manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId()));
+				manager.getGuiFightDeck().open(player);
+			} else if (raw == 22) {//close
+				player.closeInventory();
+			}
+		} catch (Exception e2) {
+			Bukkit.getLogger().warning(RenderException.renderException(e2));
 		}
 		e.setCancelled(true);
 	}

@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.fight.FightData;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.RenderException;
@@ -94,24 +95,29 @@ public class ManagerLobby implements Listener {
 		player.setMaxHealth(20);
 		player.setHealth(20);
 		player.setCollidable(false);
-		Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
-			@Override
-			public void run() {
-				teleportPlayerToSpawn(player);
-				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId())) {
-					player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
-					try {
-						initPlayerLevel(player);
-					} catch (Exception e) {
-						Bukkit.getLogger().warning(RenderException.renderException(e));
+		FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
+		if (fightData != null) {
+			sorci.sendPlayerToServer(player, fightData.getServer());
+		} else {
+			Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
+				@Override
+				public void run() {
+					teleportPlayerToSpawn(player);
+					if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId())) {
+						player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
+						try {
+							initPlayerLevel(player);
+						} catch (Exception e) {
+							Bukkit.getLogger().warning(RenderException.renderException(e));
+						}
+					} else {
+						player.sendMessage(sorci.getMessage().getString("message_welcom"));
+						player.setLevel(0);
+						player.setExp(0F);
 					}
-				} else {
-					player.sendMessage(sorci.getMessage().getString("message_welcom"));
-					player.setLevel(0);
-					player.setExp(0F);
 				}
-			}
-		}, 1);
+			}, 1);
+		}
 	}
 	
 	@EventHandler

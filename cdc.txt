@@ -15,10 +15,11 @@
 
 + last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
 
-/- add system spectator    finish party lobby
+//- add system spectator    finish party lobby
 /- add system reconnect    finish party lobby
 
 - add system chat  (fs view all in fight, pf view juste enemie)
 
 
-- moy count mana deck
+- moy count mana deck,    and in fight view level and fight the enemie on FightHero
+- add info in action bar message (xp / xpmax and coin)

@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.manager;
 
 import java.util.UUID;
+import java.util.Vector;
 
 import org.bson.Document;
 
@@ -22,10 +23,26 @@ public class ManagerFightData {
 		this.spetatorFight = sorci.getMongo().getSpetatorFight();
 	}
 	
-	public FightData getFightData(UUID uuid) {
-		MongoCursor<Document> doc = preFightDatas.find(Filters.or(new Document("player1", uuid.toString()), new Document("player2", uuid.toString()))).iterator();
+	public Vector<FightData> getAllFightData() {
+		Vector<FightData> list = new Vector<FightData>();
+		MongoCursor<Document> listFight = preFightDatas.find().iterator();
+		while (listFight.hasNext())
+			list.add(FightData.toFightData(listFight.next()));
+		return list;
+	}
+	
+	public FightData getFightDataPlayer(UUID player) {
+		MongoCursor<Document> doc = preFightDatas.find(Filters.or(new Document("player1", player.toString()), new Document("player2", player.toString()))).iterator();
 		if (doc.hasNext())
-			return FightData.toPreFightData(doc.next());
+			return FightData.toFightData(doc.next());
+		else
+			return null;
+	}
+	
+	public FightData getFightDataFight(UUID fight) {
+		MongoCursor<Document> doc = preFightDatas.find(new Document("fight_uuid", fight.toString())).iterator();
+		if (doc.hasNext())
+			return FightData.toFightData(doc.next());
 		else
 			return null;
 	}
@@ -38,15 +55,15 @@ public class ManagerFightData {
 		preFightDatas.deleteMany(Filters.or(new Document("player1", uuid.toString()), new Document("player2", uuid.toString())));
 	}
 	
-	public void removeFightDataUUID(UUID uuid) {
+	public void removeFightDataFight(UUID uuid) {
 		preFightDatas.deleteMany(new Document("fight_uuid", uuid.toString()));
 	}
 	
-	public boolean changeStatFightDataUUID(UUID uuid, FightStat stat) {
-		FightData data = getFightData(uuid);
+	public boolean changeStatFightDataFight(UUID fight, FightStat stat) {
+		FightData data = getFightDataFight(fight);
 		if (data == null) return false;
 		data.setStat(stat);
-		preFightDatas.updateMany(new Document("fight_uuid", uuid.toString()), data.toDocument());
+		preFightDatas.updateMany(new Document("fight_uuid", fight.toString()), data.toDocument());
 		return true;
 	}
 	

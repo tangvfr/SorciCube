@@ -93,16 +93,16 @@ public class ManagerFight implements Runnable {
 			preFight.complet(player);
 			kick = false;
 		} else {
-			FightData preFightData = sorci.getManagerPreFightData().getFightData(player.getUniqueId());
+			FightData preFightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
 			if (preFightData != null) {
-				sorci.getManagerPreFightData().changeStatFightDataUUID(preFightData.getFightUUID(), FightStat.STARTING);
+				sorci.getManagerFightData().changeStatFightDataFight(preFightData.getFightUUID(), FightStat.STARTING);
 				PreFight preFight = PreFight.createPreFight(player, preFightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
 				kick = false;
 			}
 		}
 		if (kick) {
-			UUID fightUUID = sorci.getManagerPreFightData().whichSpetate(player.getUniqueId());
+			UUID fightUUID = sorci.getManagerFightData().whichSpetate(player.getUniqueId());
 			if (fightUUID != null && fights.containsKey(fightUUID)) {
 				Fight fight = fights.get(fightUUID);
 				if (fight.isEnd()) {
@@ -159,9 +159,9 @@ public class ManagerFight implements Runnable {
 								Fight fight = fights.put(preFight.getFightUUID(), new Fight(sorci, preFight));
 								playerInstance.put(fight.getPlayer1().getUUID(), fight.getPlayer1());
 								playerInstance.put(fight.getPlayer2().getUUID(), fight.getPlayer2());
-								sorci.getManagerPreFightData().changeStatFightDataUUID(fight.getFightUUID(), FightStat.START);
+								sorci.getManagerFightData().changeStatFightDataFight(fight.getFightUUID(), FightStat.START);
 							} catch (Exception e) {
-								sorci.getManagerPreFightData().removeFightDataUUID(preFight.getFightUUID());
+								sorci.getManagerFightData().removeFightDataFight(preFight.getFightUUID());
 								Bukkit.getLogger().warning(RenderException.renderException(e));
 								sendLobbyPlayer(preFight.getPlayer1());
 								sendLobbyPlayer(preFight.getPlayer2());
@@ -172,14 +172,14 @@ public class ManagerFight implements Runnable {
 				} else {
 					sendLobbyPlayer(preFight.getPlayer1());
 				}
-				sorci.getManagerPreFightData().removeFightDataUUID(preFight.getFightUUID());
+				sorci.getManagerFightData().removeFightDataFight(preFight.getFightUUID());
 			}
 		}
 		for (Fight fight : new ArrayList<Fight>(this.fights.values()))
 			try {
 				fight.update();
 				if (fight.isDeleted()) {
-					sorci.getManagerPreFightData().removeFightDataUUID(fight.getFightUUID());
+					sorci.getManagerFightData().removeFightDataFight(fight.getFightUUID());
 					playerInstance.remove(fight.getPlayer1().getUUID());
 					playerInstance.remove(fight.getPlayer2().getUUID());
 					for (FightSpectator spectator : fight.getSpectators())

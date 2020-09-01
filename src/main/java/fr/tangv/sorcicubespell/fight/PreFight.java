@@ -6,31 +6,66 @@ import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubespell.util.Cooldown;
 
-public class PreFight extends FightData {
+public class PreFight {
 
+	private final UUID fightUUID;
 	private final Player player1;
-	private volatile Player player2;
+	private final UUID playerUUID1;
+	private final UUID playerUUID2;
+	private final int player1DeckUse;
+	private final int player2DeckUse;
+	private final FightType fightType;
 	private volatile Cooldown cooldown;
+	private volatile Player player2;
 	
 	public static PreFight createPreFight(Player player, FightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))
-			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType(), data.getServer());
+			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID1(), data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType());
 		else
-			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType(), data.getServer());
+			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID2(), data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType());
 	}
 	
 	private PreFight(UUID fightUUID,
 					Player player1,
+					UUID playerUUID1,
 					UUID playerUUID2,
 					int player1DeckUse,
 					int player2DeckUse,
-					FightType fightType,
-					String server) {
-		super(fightUUID, player1.getUniqueId(), playerUUID2, player1DeckUse, player2DeckUse, fightType, FightStat.STARTING, server);
+					FightType fightType) {
+		this.fightUUID = fightUUID;
 		this.player1 = player1;
+		this.playerUUID1 = playerUUID1;
+		this.playerUUID2 = playerUUID2;
+		this.player1DeckUse = player1DeckUse;
+		this.player2DeckUse = player2DeckUse;
+		this.fightType = fightType;
 		this.player2 = null;
 		this.cooldown = new Cooldown(1_000);
 		cooldown.start();
+	}
+	
+	public UUID getFightUUID() {
+		return fightUUID;
+	}
+	
+	public UUID getPlayerUUID1() {
+		return playerUUID1;
+	}
+	
+	public UUID getPlayerUUID2() {
+		return playerUUID2;
+	}
+	
+	public int getPlayer1DeckUse() {
+		return player1DeckUse;
+	}
+	
+	public int getPlayer2DeckUse() {
+		return player2DeckUse;
+	}
+	
+	public FightType getFightType() {
+		return fightType;
 	}
 	
 	public void complet(Player player2) {

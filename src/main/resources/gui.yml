@@ -98,3 +98,28 @@ boss_bar:
   color_end: "PURPLE"
 scoreboard:
   name: "§cVie des heros"
+#Gui List Fight
+gui_list_fight:
+  name: "§5Combat en cours"
+  unclassied: "§8Non Classé"
+  duel: "§cDuel"
+  close: "§cFermer"
+  stats:
+    waiting: "§6Attente des joueur"
+	  starting: "§6Lancement attente du deuxieme joueur"
+	  start: "§2Combat en cours"
+	  end: "§4Combat fini"
+  lore_fight:
+    - "§c{name_player1} §7Lvl.{level_player1} {faction_player1}"
+    - "  §4vs"
+    - "§c{name_player1} §7Lvl.{level_player2} {faction_player2}"
+    - " "
+    - "§7Etat de la partie: {stat}"
+    - " "
+    - " "
+    - "§8Serveur: {server}"
+    - "§8Combat: {fight_uuid}"
+  duel_number: "§c{number} duel en cours"
+  no_classed_number: "§7{number} non classé en cours"
+  all_number: "§6{number} combat en cours"
+  

@@ -371,7 +371,7 @@ public class Fight {
 	}
 	
 	private void end(PlayerFight losser, PlayerFight winner) {
-		sorci.getManagerPreFightData().changeStatFightDataUUID(this.fightUUID, FightStat.END);
+		sorci.getManagerFightData().changeStatFightDataFight(this.fightUUID, FightStat.END);
 		this.cooldownEnd.start();
 		bossBar.setColor(ValueFight.V.titleEndColor);
 		bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));

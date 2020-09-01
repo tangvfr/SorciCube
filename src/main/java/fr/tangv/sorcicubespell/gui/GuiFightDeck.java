@@ -1,19 +1,14 @@
 package fr.tangv.sorcicubespell.gui;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import fr.tangv.sorcicubespell.fight.FightStat;
 import fr.tangv.sorcicubespell.fight.FightType;
-import fr.tangv.sorcicubespell.fight.FightData;
 import fr.tangv.sorcicubespell.manager.ManagerCreatorFight;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
-import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.RenderException;
 
 public class GuiFightDeck extends GuiDecks {
@@ -24,12 +19,11 @@ public class GuiFightDeck extends GuiDecks {
 
 	private void chooseDeck(Player player, int number) throws Exception {
 		PlayerGui playerG = getPlayerGui(player);
-		PlayerFeature playerF = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId());
-		if (playerF.getUnlockDecks() >= number) {
-			if (playerF.getDeck(number).isComplet()) {
+		if (playerG.getPlayerFeature().getUnlockDecks() >= number) {
+			if (playerG.getPlayerFeature().getDeck(number).isComplet()) {
 				playerG.setDeckEdit(number);
 				ManagerCreatorFight cf = sorci.getManagerCreatorFight();
-				sorci.getManagerPreFightData().removeFightDataPlayer(player.getUniqueId());
+				sorci.getManagerFightData().removeFightDataPlayer(player.getUniqueId());
 				switch(playerG.getFightType()) {
 					case UNCLASSIFIED:
 						if (cf.getNoClassified() == null) {
@@ -39,21 +33,12 @@ public class GuiFightDeck extends GuiDecks {
 						} else {
 							Player player1 = cf.getNoClassified();
 							cf.setNoClassified(null);
-							String server = sorci.getNameServerFight();
-							sorci.getManagerPreFightData().addFightData(
-									new FightData(
-											UUID.randomUUID(),
-											player1.getUniqueId(),
-											player.getUniqueId(),
-											getPlayerGui(player1).getDeckEdit(),
-											playerG.getDeckEdit(),
-											FightType.UNCLASSIFIED,
-											FightStat.WAITING,
-											server
-										)
-								);
-							sorci.sendPlayerToServer(player, server);
-							sorci.sendPlayerToServer(player1, server);
+							manager.getSorci().getManagerCreatorFight().startFightPlayer(
+								getPlayerGui(player1),
+								playerG,
+								manager.getSorci().getNameServerFight(),
+								FightType.UNCLASSIFIED
+							);
 							return;
 						}
 						
