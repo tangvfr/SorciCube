@@ -102,7 +102,7 @@ public class ManagerFight implements Runnable {
 			}
 		}
 		if (kick) {
-			UUID fightUUID = sorci.getManagerFightData().whichSpetate(player.getUniqueId());
+			UUID fightUUID = sorci.getManagerFightData().whichSpectate(player.getUniqueId());
 			if (fightUUID != null && fights.containsKey(fightUUID)) {
 				Fight fight = fights.get(fightUUID);
 				if (fight.isEnd()) {
@@ -189,6 +189,11 @@ public class ManagerFight implements Runnable {
 			} catch (Exception e) {
 				Bukkit.getLogger().warning(RenderException.renderException(e));
 			}
+	}
+	
+	public void stop() {
+		for (Fight fight : new ArrayList<Fight>(this.fights.values()))
+			sorci.getManagerFightData().removeFightDataFight(fight.getFightUUID());
 	}
 	
 	public SorciCubeSpell getSorci() {

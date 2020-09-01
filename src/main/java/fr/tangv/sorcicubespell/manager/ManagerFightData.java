@@ -67,14 +67,14 @@ public class ManagerFightData {
 		return true;
 	}
 	
-	public void addFightSpetate(UUID player, UUID fight) {
+	public void addFightSpectate(UUID player, UUID fight) {
 		Document doc = new Document()
 				.append("player", player.toString())
 				.append("fight", fight.toString());
 		spetatorFight.insertOne(doc);
 	}
 	
-	public UUID whichSpetate(UUID player) {
+	public UUID whichSpectate(UUID player) {
 		Document filter = new Document("player", player.toString());
 		MongoCursor<Document> doc = spetatorFight.find(filter).iterator();
 		if (doc.hasNext()) {

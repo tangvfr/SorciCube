@@ -106,7 +106,8 @@ public class GuiListFight extends AbstractGui implements Runnable {
 				if (index < listFight.size()) {
 					FightData fight = listFight.get(index);
 					if (fight.getStat() == FightStat.START) {
-						manager.getSorci().getManagerFightData().addFightSpetate(player.getUniqueId(), fight.getFightUUID());
+						manager.getSorci().getManagerFightData().whichSpectate(player.getUniqueId());
+						manager.getSorci().getManagerFightData().addFightSpectate(player.getUniqueId(), fight.getFightUUID());
 						manager.getSorci().sendPlayerToServer(player, fight.getServer());
 					}
 				}

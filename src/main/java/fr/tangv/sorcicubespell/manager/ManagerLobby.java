@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.fight.FightData;
+import fr.tangv.sorcicubespell.fight.FightStat;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.RenderException;
@@ -96,7 +97,7 @@ public class ManagerLobby implements Listener {
 		player.setHealth(20);
 		player.setCollidable(false);
 		FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
-		if (fightData != null) {
+		if (fightData != null && fightData.getStat() == FightStat.START) {
 			sorci.sendPlayerToServer(player, fightData.getServer());
 		} else {
 			Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
