@@ -55,22 +55,26 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerFight managerFight;
 	private ManagerCreatorFight managerCreatorFight;
 	
+	private Config newConfig(String name) throws Exception {
+		try {
+			return new Config(this, name);
+		} catch (Exception e) {
+			throw new Exception("Error in config named \""+name+"\"");
+		}
+	}
+	
 	@Override
 	public void onEnable() {
 		//try for bug
 		try {
 			//init lib
 			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"), this);
-			try {
-				//init Config
-				this.message = new Config(this, "message.yml");
-				this.parameter = new Config(this, "parameter.yml");
-				this.enumConfig = new Config(this, "enum.yml");
-				this.guiConfig = new Config(this, "gui.yml");
-				this.levelConfig = new Config(this, "level.yml");
-			} catch (Exception e) {
-				throw new Exception("Error In Config");
-			}
+			//init Config
+			this.message = newConfig("message.yml");
+			this.parameter = newConfig("parameter.yml");
+			this.enumConfig = newConfig("enum.yml");
+			this.guiConfig = newConfig("gui.yml");
+			this.levelConfig = newConfig("level.yml");
 			//is lobby
 			this.isLobby = getParameter().getBoolean("is_lobby");
 			//init tool
