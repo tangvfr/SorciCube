@@ -106,9 +106,9 @@ gui_list_fight:
   close: "§cFermer"
   stats:
     waiting: "§6Attente des joueur"
-	  starting: "§6Lancement attente du deuxieme joueur"
-	  start: "§2Combat en cours"
-	  end: "§4Combat fini"
+    starting: "§6Lancement attente du deuxieme joueur"
+    start: "§2Combat en cours"
+    end: "§4Combat fini"
   lore_fight:
     - "§c{name_player1} §7Lvl.{level_player1} {faction_player1}"
     - "  §4vs"
