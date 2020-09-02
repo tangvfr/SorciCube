@@ -95,7 +95,7 @@ public class Fight {
 		public void action(FightSpectator spectator);
 	}
 	
-	private void forEachSpeactator(ActionSpectator action) {
+	private void forEachSpectator(ActionSpectator action) {
 		for (FightSpectator spectator : spectators)
 			action.action(spectator);
 	}
@@ -260,7 +260,7 @@ public class Fight {
 		player1.returnLobby();
 		player2.returnLobby();
 		//spetator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.returnLobby();
 		});
 	}
@@ -269,7 +269,7 @@ public class Fight {
 		player1.addHistoric(card, first);
 		player2.addHistoric(card, first);
 		//spetator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.addHistoric(card, first);
 		});
 	}
@@ -278,7 +278,7 @@ public class Fight {
 		player1.closeInventory();
 		player2.closeInventory();
 		//spetator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.closeInventory();
 		});
 	}
@@ -287,7 +287,7 @@ public class Fight {
 		player1.updateViewLifes();
 		player2.updateViewLifes();
 		//spetator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.updateViewLifes();
 		});
 	}
@@ -296,7 +296,7 @@ public class Fight {
 		player1.alert(message);
 		player2.alert(message);
 		//spetator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.alert(message);
 		});
 	}
@@ -305,7 +305,14 @@ public class Fight {
 		player1.sendMessage(message);
 		player2.sendMessage(message);
 		//spetator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
+			spectator.sendMessage(message);
+		});
+	}
+	
+	public void sendMessageSpectator(String message) {
+		//spetator
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.sendMessage(message);
 		});
 	}
@@ -314,7 +321,7 @@ public class Fight {
 		player1.sendPacket(packet);
 		player2.sendPacket(packet);
 		//spetator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.sendPacket(packet);
 		});
 	}
@@ -408,7 +415,7 @@ public class Fight {
 		if (losser.isOnline())
 			endReward(lc, losser, lc.getInt("money_loss"), lc.getInt("experience_loss"));
 		//spectator
-		forEachSpeactator((FightSpectator spectator) -> {
+		forEachSpectator((FightSpectator spectator) -> {
 			spectator.sendMessage(
 					sorci.getMessage().getString("message_spectator")
 					.replace("{player}", winner.getNamePlayer())

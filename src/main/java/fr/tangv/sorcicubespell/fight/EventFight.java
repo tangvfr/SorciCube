@@ -37,14 +37,36 @@ public class EventFight implements Listener {
 	private final static double TOLERANCE_MOVE = 3.5;
 	
 	private final ManagerFight manager;
-
+	private final String formatChat;
+	private final String spectatorChat;
+	private final String playerChat;
+	
 	public EventFight(ManagerFight manager) {
 		this.manager = manager;
+		this.formatChat = manager.getSorci().getParameter().getString("chat_format_fight");
+		this.spectatorChat = manager.getSorci().getParameter().getString("spectator_fight");
+		this.playerChat = manager.getSorci().getParameter().getString("player_fight");
 	}
 	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		e.setCancelled(true);
+		if (manager.isSpectator(e.getPlayer().getUniqueId())) {
+			FightSpectator spectator = manager.getSpectator(e.getPlayer().getUniqueId());
+			if (spectator.isFightPlayer()) {
+				spectator.getFight().sendMessage(formatChat
+						.replace("{spectator}", playerChat)
+						.replace("{displayname}", e.getPlayer().getDisplayName())
+						.replace("{message}", e.getMessage())
+					);
+			} else {
+				spectator.getFight().sendMessageSpectator(formatChat
+					.replace("{spectator}", spectatorChat)
+					.replace("{displayname}", e.getPlayer().getDisplayName())
+					.replace("{message}", e.getMessage())
+				);
+			}
+		}
 	}
 	
 	@EventHandler

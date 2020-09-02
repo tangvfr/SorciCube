@@ -9,15 +9,19 @@ chat_format: "§7Lvl.{level}§f {displayname}§r§8: §r§f{message}"
 #security
 perm_build: "sorcicubespell.build"
 perm_admin: "sorcicubespell.admin"
-#/viewcards permission = sorcicubespell.viewcards
-#/packetadd <name> permission = sorcicubespell.packetadd
-#/packetgive <player> <name> permission = sorcicubespell.packetgive
-#/refresh  permission = sorcicubespell.refresh
-#/givecard <name> <uuid> permission = sorcicubespell.givecard
+#/viewcards = sorcicubespell.viewcards
+#/packetadd <name> = sorcicubespell.packetadd
+#/packetgive <player> = <name> sorcicubespell.packetgive
+#/refresh = sorcicubespell.refresh
+#/givecard <name> <uuid> = sorcicubespell.givecard
+#/givearrowhead = sorcicubespell.givearrowhead
 #format time
 format_time_sec: "sec"
 format_time_min: "min "
 #fight
+chat_format_fight: "{spectator} §r§f{displayname}§r§8: §r§f{message}"
+spectator_fight: "§7S."
+player_fight: "§4P."
 cooldown_below_fight: 10
 cooldown_one_round: 180
 cooldown_end: 10

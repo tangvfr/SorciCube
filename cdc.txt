@@ -19,7 +19,7 @@
 + add system reconnect    finish party lobby
 
 
-- add system chat  (fs view all in fight, pf view juste enemie)
++ add system chat  (fs view all in fight, pf view juste enemie)
 
 
 - moy count mana deck,    and in fight view level and fight the enemie on FightHero
