@@ -25,7 +25,7 @@ public class GuiListFight extends AbstractGui implements Runnable {
 	public GuiListFight(ManagerGui manager) {
 		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_list_fight"));
 		this.inv = Bukkit.createInventory(null, 54, this.name);
-		ItemStack decoItem = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, " ", null, false);
+		ItemStack decoItem = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 		for (int i = 0; i < 6; i++)
 			inv.setItem(8+(i*9), decoItem);
 		inv.setItem(53, ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("close"), null, false));
