@@ -108,7 +108,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		if (!this.isLobby) {
+		if (!this.isLobby && managerFight != null) {
 			managerFight.stop();
 		}
 		Bukkit.getScheduler().cancelTasks(this);
