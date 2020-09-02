@@ -53,8 +53,8 @@ public class ManagerCreatorFight {
 		sorci.getManagerFightData().addFightData(
 				new FightData(
 						UUID.randomUUID(),
-						player1.getPlayer().getUniqueId(),
-						player2.getPlayer().getUniqueId(),
+						player1.getUUID(),
+						player2.getUUID(),
 						player1.getDeckEdit(),
 						player2.getDeckEdit(),
 						player1.getPlayerFeature().getDeck(player1.getDeckEdit()).getFaction(),

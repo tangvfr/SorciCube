@@ -39,7 +39,7 @@ public class GuiListFight extends AbstractGui implements Runnable {
 		String levelPlayer1 = Byte.toString(fightData.getLevelPlayer1());
 		String levelPlayer2 = Byte.toString(fightData.getLevelPlayer2());
 		String factionPlayer1 = manager.getSorci().getEnumTool().factionToString(fightData.getFactionDeckPlayer1());
-		String factionPlayer2 = manager.getSorci().getEnumTool().factionToString(fightData.getFactionDeckPlayer1());
+		String factionPlayer2 = manager.getSorci().getEnumTool().factionToString(fightData.getFactionDeckPlayer2());
 		String fightUUID = fightData.getFightUUID().toString();
 		String server = fightData.getServer();
 		ArrayList<String> lore = new ArrayList<String>();

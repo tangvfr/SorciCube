@@ -10,7 +10,6 @@ public class PreFight {
 
 	private final UUID fightUUID;
 	private final Player player1;
-	private final UUID playerUUID1;
 	private final UUID playerUUID2;
 	private final int player1DeckUse;
 	private final int player2DeckUse;
@@ -20,21 +19,19 @@ public class PreFight {
 	
 	public static PreFight createPreFight(Player player, FightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))
-			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID1(), data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType());
+			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType());
 		else
-			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID2(), data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType());
+			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType());
 	}
 	
 	private PreFight(UUID fightUUID,
 					Player player1,
-					UUID playerUUID1,
 					UUID playerUUID2,
 					int player1DeckUse,
 					int player2DeckUse,
 					FightType fightType) {
 		this.fightUUID = fightUUID;
 		this.player1 = player1;
-		this.playerUUID1 = playerUUID1;
 		this.playerUUID2 = playerUUID2;
 		this.player1DeckUse = player1DeckUse;
 		this.player2DeckUse = player2DeckUse;
@@ -49,7 +46,7 @@ public class PreFight {
 	}
 	
 	public UUID getPlayerUUID1() {
-		return playerUUID1;
+		return player1.getUniqueId();
 	}
 	
 	public UUID getPlayerUUID2() {
