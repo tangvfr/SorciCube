@@ -31,7 +31,7 @@ public class MongoDBManager {
 		this.defaultDeck = defineCollection("default_deck");
 		this.packets = defineCollection("packets");
 		this.preFights = defineCollection("pre_fights");
-		this.spetatorFight = defineCollection("petator_fight");
+		this.spetatorFight = defineCollection("spetator_fight");
 	}
 	
 	private MongoCollection<Document> defineCollection(String collection) {
