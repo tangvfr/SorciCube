@@ -100,7 +100,7 @@ public class FightData {
 	}
 	
 	public Document toDocument() {
-		return new Document("uuid", fightUUID.toString())
+		return new Document("fight_uuid", fightUUID.toString())
 				.append("fight_type", fightType.name())
 				.append("player1", playerUUID1.toString())
 				.append("player2", playerUUID2.toString())
@@ -110,12 +110,12 @@ public class FightData {
 				.append("faction_player2", factionPlayer2.name())
 				.append("level_player1", levelPlayer1)
 				.append("level_player2", levelPlayer2)
-				.append("stat", stat.toString())
+				.append("stat", stat.name())
 				.append("server", server);
 	}
 	
 	public static FightData toFightData(Document doc) {
-		return new FightData(UUID.fromString(doc.getString("uuid")),
+		return new FightData(UUID.fromString(doc.getString("fight_uuid")),
 				UUID.fromString(doc.getString("player1")),
 				UUID.fromString(doc.getString("player2")),
 				doc.getInteger("deck_player1"),

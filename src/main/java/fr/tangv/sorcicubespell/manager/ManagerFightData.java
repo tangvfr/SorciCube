@@ -40,7 +40,7 @@ public class ManagerFightData {
 	}
 	
 	public FightData getFightDataFight(UUID fight) {
-		MongoCursor<Document> doc = preFightDatas.find(new Document("uuid", fight.toString())).iterator();
+		MongoCursor<Document> doc = preFightDatas.find(new Document("fight_uuid", fight.toString())).iterator();
 		if (doc.hasNext())
 			return FightData.toFightData(doc.next());
 		else
@@ -56,14 +56,14 @@ public class ManagerFightData {
 	}
 	
 	public void removeFightDataFight(UUID uuid) {
-		preFightDatas.deleteMany(new Document("uuid", uuid.toString()));
+		preFightDatas.findOneAndDelete(new Document("fight_uuid", uuid.toString()));
 	}
 	
 	public boolean changeStatFightDataFight(UUID fight, FightStat stat) {
 		FightData data = getFightDataFight(fight);
 		if (data == null) return false;
 		data.setStat(stat);
-		preFightDatas.updateMany(new Document("uuid", fight.toString()), data.toDocument());
+		preFightDatas.findOneAndReplace(new Document("fight_uuid", fight.toString()), data.toDocument());
 		return true;
 	}
 	

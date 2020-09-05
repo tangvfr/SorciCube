@@ -100,8 +100,8 @@ public class ManagerFight implements Runnable {
 			Bukkit.broadcastMessage("Get fightdata in bbd");
 			if (preFightData != null && preFightData.getStat() == FightStat.WAITING) {
 				Bukkit.broadcastMessage("First player create prefight");
-				sorci.getManagerFightData().changeStatFightDataFight(preFightData.getFightUUID(), FightStat.STARTING);
 				PreFight preFight = PreFight.createPreFight(player, preFightData);
+				sorci.getManagerFightData().changeStatFightDataFight(preFightData.getFightUUID(), FightStat.STARTING);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
 				kick = false;
 			}
