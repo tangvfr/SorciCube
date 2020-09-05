@@ -8,41 +8,39 @@ import fr.tangv.sorcicubespell.util.Cooldown;
 
 public class PreFight {
 
-	private final UUID fightUUID;
+	private final FightData fightData;
 	private final Player player1;
 	private final UUID playerUUID2;
 	private final int player1DeckUse;
 	private final int player2DeckUse;
-	private final FightType fightType;
 	private volatile Cooldown cooldown;
 	private volatile Player player2;
 	
 	public static PreFight createPreFight(Player player, FightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))
-			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType());
+			return new PreFight(data, player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType());
 		else
-			return new PreFight(data.getFightUUID(), player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType());
+			return new PreFight(data, player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType());
 	}
 	
-	private PreFight(UUID fightUUID,
+	private PreFight(FightData fightData,
 					Player player1,
 					UUID playerUUID2,
 					int player1DeckUse,
 					int player2DeckUse,
 					FightType fightType) {
-		this.fightUUID = fightUUID;
+		this.fightData = fightData;
 		this.player1 = player1;
 		this.playerUUID2 = playerUUID2;
 		this.player1DeckUse = player1DeckUse;
 		this.player2DeckUse = player2DeckUse;
-		this.fightType = fightType;
 		this.player2 = null;
 		this.cooldown = new Cooldown(1_000);
 		cooldown.start();
 	}
 	
-	public UUID getFightUUID() {
-		return fightUUID;
+	public FightData getFightData() {
+		return fightData;
 	}
 	
 	public UUID getPlayerUUID1() {
@@ -59,10 +57,6 @@ public class PreFight {
 	
 	public int getPlayer2DeckUse() {
 		return player2DeckUse;
-	}
-	
-	public FightType getFightType() {
-		return fightType;
 	}
 	
 	public void complet(Player player2) {

@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubespell.fight;
 
-import java.util.UUID;
 import java.util.Vector;
 
 import org.bukkit.Bukkit;
@@ -29,9 +28,8 @@ public class Fight {
 	protected static final int max_health = 60;
 	protected static final int start_health = 30;
 	
-	private final UUID fightUUID;
+	private final FightData fightData;
 	private final SorciCubeSpell sorci;
-	private final FightType fightType;
 	private final PlayerFight player1;
 	private final PlayerFight player2;
 	private final FightArena arena;
@@ -48,14 +46,13 @@ public class Fight {
 	private volatile boolean isDeleted;
 	
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
-		this.fightUUID = preFight.getFightUUID();
+		this.fightData = preFight.getFightData();
 		this.sorci = sorci;
 		this.firstPlay = true;
 		this.isStart = false;
 		this.isDeleted = false;
 		this.isEnd = false;
 		this.spectators = new Vector<FightSpectator>();
-		this.fightType = preFight.getFightType();
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.cooldownEnd = new Cooldown((long) sorci.getParameter().getInt("cooldown_end")*1000L);
@@ -128,10 +125,6 @@ public class Fight {
 	
 	public void removeSpectator(FightSpectator spectator) {
 		spectators.remove(spectator);
-	}
-	
-	public UUID getFightUUID() {
-		return fightUUID;
 	}
 	
 	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
@@ -401,7 +394,8 @@ public class Fight {
 	}
 	
 	private void end(PlayerFight losser, PlayerFight winner) {
-		sorci.getManagerFightData().changeStatFightDataFight(this.fightUUID, FightStat.END);
+		fightData.setStat(FightStat.END);
+		sorci.getManagerFightData().updateFightData(fightData);
 		this.cooldownEnd.start();
 		bossBar.setColor(ValueFight.V.titleEndColor);
 		bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
@@ -429,8 +423,8 @@ public class Fight {
 		return sorci;
 	}
 	
-	public FightType getFightType() {
-		return fightType;
+	public FightData getFightData() {
+		return fightData;
 	}
 	
 	public boolean isStart() {

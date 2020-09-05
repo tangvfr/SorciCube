@@ -96,12 +96,13 @@ public class ManagerFight implements Runnable {
 			preFight.complet(player);
 			kick = false;
 		} else {
-			FightData preFightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
+			FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
 			Bukkit.broadcastMessage("Get fightdata in bbd");
-			if (preFightData != null && preFightData.getStat() == FightStat.WAITING) {
+			if (fightData != null && fightData.getStat() == FightStat.WAITING) {
 				Bukkit.broadcastMessage("First player create prefight");
-				PreFight preFight = PreFight.createPreFight(player, preFightData);
-				sorci.getManagerFightData().changeStatFightDataFight(preFightData.getFightUUID(), FightStat.STARTING);
+				fightData.setStat(FightStat.STARTING);
+				sorci.getManagerFightData().updateFightData(fightData);
+				PreFight preFight = PreFight.createPreFight(player, fightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
 				kick = false;
 			}
@@ -157,6 +158,7 @@ public class ManagerFight implements Runnable {
 		for (PreFight preFight : new ArrayList<PreFight>(this.preFights.values())) {
 			if (preFight.updateOutOfDate()) {
 				preFights.remove(preFight.getPlayerUUID2());
+				FightData fightData = preFight.getFightData();
 				if (preFight.isComplet()) {
 					if (!preFight.getPlayer1().isOnline() || !preFight.getPlayer2().isOnline()) {
 						sendLobbyPlayer(preFight.getPlayer1());
@@ -164,12 +166,13 @@ public class ManagerFight implements Runnable {
 					} else {
 						Bukkit.getScheduler().runTask(sorci, () -> {
 							try {
-								Fight fight = fights.put(preFight.getFightUUID(), new Fight(sorci, preFight));
+								Fight fight = fights.put(fightData.getFightUUID(), new Fight(sorci, preFight));
 								playerInstance.put(fight.getPlayer1().getUUID(), fight.getPlayer1());
 								playerInstance.put(fight.getPlayer2().getUUID(), fight.getPlayer2());
-								sorci.getManagerFightData().changeStatFightDataFight(fight.getFightUUID(), FightStat.START);
+								fightData.setStat(FightStat.START);
+								sorci.getManagerFightData().updateFightData(fightData);
 							} catch (Exception e) {
-								sorci.getManagerFightData().removeFightDataFight(preFight.getFightUUID());
+								sorci.getManagerFightData().removeFightDataFight(fightData);
 								Bukkit.getLogger().warning(RenderException.renderException(e));
 								sendLobbyPlayer(preFight.getPlayer1());
 								sendLobbyPlayer(preFight.getPlayer2());
@@ -180,19 +183,19 @@ public class ManagerFight implements Runnable {
 				} else {
 					sendLobbyPlayer(preFight.getPlayer1());
 				}
-				sorci.getManagerFightData().removeFightDataFight(preFight.getFightUUID());
+				sorci.getManagerFightData().removeFightDataFight(fightData);
 			}
 		}
 		for (Fight fight : new ArrayList<Fight>(this.fights.values()))
 			try {
 				fight.update();
 				if (fight.isDeleted()) {
-					sorci.getManagerFightData().removeFightDataFight(fight.getFightUUID());
+					sorci.getManagerFightData().removeFightDataFight(fight.getFightData());
 					playerInstance.remove(fight.getPlayer1().getUUID());
 					playerInstance.remove(fight.getPlayer2().getUUID());
 					for (FightSpectator spectator : fight.getSpectators())
 						playerInstance.remove(spectator.getUUID());
-					fights.remove(fight.getFightUUID());
+					fights.remove(fight.getFightData().getFightUUID());
 				}
 			} catch (Exception e) {
 				Bukkit.getLogger().warning(RenderException.renderException(e));
@@ -201,7 +204,7 @@ public class ManagerFight implements Runnable {
 	
 	public void stop() {
 		for (Fight fight : new ArrayList<Fight>(this.fights.values()))
-			sorci.getManagerFightData().removeFightDataFight(fight.getFightUUID());
+			sorci.getManagerFightData().removeFightDataFight(fight.getFightData().getFightUUID());
 	}
 	
 	public SorciCubeSpell getSorci() {

@@ -11,7 +11,6 @@ import com.mongodb.client.model.Filters;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.fight.FightData;
-import fr.tangv.sorcicubespell.fight.FightStat;
 
 public class ManagerFightData {
 
@@ -47,24 +46,24 @@ public class ManagerFightData {
 			return null;
 	}
 	
-	public void addFightData(FightData preFightData) {
-		preFightDatas.insertOne(preFightData.toDocument());
+	public void addFightData(FightData fightData) {
+		preFightDatas.insertOne(fightData.toDocument());
 	}
 	
 	public void removeFightDataPlayer(UUID uuid) {
 		preFightDatas.deleteMany(Filters.or(new Document("player1", uuid.toString()), new Document("player2", uuid.toString())));
 	}
 	
-	public void removeFightDataFight(UUID uuid) {
-		preFightDatas.findOneAndDelete(new Document("fight_uuid", uuid.toString()));
+	public void removeFightDataFight(UUID fight) {
+		preFightDatas.findOneAndDelete(new Document("fight_uuid", fight.toString()));
 	}
 	
-	public boolean changeStatFightDataFight(UUID fight, FightStat stat) {
-		FightData data = getFightDataFight(fight);
-		if (data == null) return false;
-		data.setStat(stat);
-		preFightDatas.findOneAndReplace(new Document("fight_uuid", fight.toString()), data.toDocument());
-		return true;
+	public void removeFightDataFight(FightData fightData) {
+		preFightDatas.findOneAndDelete(new Document("fight_uuid", fightData.getFightUUID().toString()));
+	}
+	
+	public void updateFightData(FightData fightData) {
+		preFightDatas.findOneAndUpdate(new Document("fight_uuid", fightData.getFightUUID().toString()), fightData.toDocument());
 	}
 	
 	public void removeAllFightData() {
