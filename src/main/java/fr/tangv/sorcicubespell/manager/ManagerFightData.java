@@ -54,16 +54,12 @@ public class ManagerFightData {
 		preFightDatas.deleteMany(Filters.or(new Document("player1", uuid.toString()), new Document("player2", uuid.toString())));
 	}
 	
-	public void removeFightDataFight(UUID fight) {
-		preFightDatas.findOneAndDelete(new Document("fight_uuid", fight.toString()));
-	}
-	
 	public void removeFightDataFight(FightData fightData) {
-		preFightDatas.findOneAndDelete(new Document("fight_uuid", fightData.getFightUUID().toString()));
+		preFightDatas.findOneAndDelete(fightData.toDocumentID());
 	}
 	
 	public void updateFightData(FightData fightData) {
-		preFightDatas.findOneAndUpdate(new Document("fight_uuid", fightData.getFightUUID().toString()), fightData.toDocument());
+		preFightDatas.findOneAndUpdate(fightData.toDocumentID(), fightData.toDocument());
 	}
 	
 	public void removeAllFightData() {

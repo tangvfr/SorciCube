@@ -99,6 +99,12 @@ public class FightData {
 		return fightType;
 	}
 	
+	public Document toDocumentID() {
+		return new Document("fight_uuid", fightUUID.toString())
+				.append("player1", playerUUID1.toString())
+				.append("player2", playerUUID2.toString());
+	}
+	
 	public Document toDocument() {
 		return new Document("fight_uuid", fightUUID.toString())
 				.append("fight_type", fightType.name())

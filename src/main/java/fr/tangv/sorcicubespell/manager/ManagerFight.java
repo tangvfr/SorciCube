@@ -204,7 +204,7 @@ public class ManagerFight implements Runnable {
 	
 	public void stop() {
 		for (Fight fight : new ArrayList<Fight>(this.fights.values()))
-			sorci.getManagerFightData().removeFightDataFight(fight.getFightData().getFightUUID());
+			sorci.getManagerFightData().removeFightDataFight(fight.getFightData());
 	}
 	
 	public SorciCubeSpell getSorci() {
