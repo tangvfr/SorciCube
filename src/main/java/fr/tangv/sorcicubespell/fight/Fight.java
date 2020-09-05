@@ -406,7 +406,7 @@ public class Fight {
 		Config lc = sorci.getLevelConfig();
 		if (winner.isOnline())
 			endReward(lc, winner, lc.getInt("money_win"), lc.getInt("experience_win"));
-		if (losser.isOnline())
+		if (losser.isOnline() && !losser.hasLossAFK())
 			endReward(lc, losser, lc.getInt("money_loss"), lc.getInt("experience_loss"));
 		//spectator
 		forEachSpectator((FightSpectator spectator) -> {

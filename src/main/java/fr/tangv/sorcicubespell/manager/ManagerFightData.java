@@ -51,7 +51,7 @@ public class ManagerFightData {
 	}
 	
 	public void updateFightData(FightData fightData) {
-		preFightDatas.findOneAndUpdate(fightData.toDocumentID(), fightData.toDocument());
+		//preFightDatas.findOneAndUpdate(fightData.toDocumentID(), fightData.toDocument());
 	}
 	
 	public void removeAllFightData() {

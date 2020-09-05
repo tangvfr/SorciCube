@@ -102,6 +102,7 @@ public class ManagerFight implements Runnable {
 				Bukkit.broadcastMessage("First player create prefight");
 				PreFight preFight = PreFight.createPreFight(player, fightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
+				Bukkit.broadcastMessage("JSON: "+fightData.toDocument().toJson());
 				fightData.setStat(FightStat.STARTING);
 				sorci.getManagerFightData().updateFightData(fightData);
 				kick = false;
@@ -166,7 +167,8 @@ public class ManagerFight implements Runnable {
 					} else {
 						Bukkit.getScheduler().runTask(sorci, () -> {
 							try {
-								Fight fight = fights.put(fightData.getFightUUID(), new Fight(sorci, preFight));
+								Fight fight = new Fight(sorci, preFight);
+								fights.put(fightData.getFightUUID(), fight);
 								playerInstance.put(fight.getPlayer1().getUUID(), fight.getPlayer1());
 								playerInstance.put(fight.getPlayer2().getUUID(), fight.getPlayer2());
 								fightData.setStat(FightStat.START);
