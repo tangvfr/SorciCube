@@ -90,6 +90,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerPlayers = new ManagerPlayers(this);
 			this.managerFightData = new ManagerFightData(this);
 			if (this.isLobby) {
+				this.managerFightData.removeAllFightData();
 				this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 				this.managerClickNPC = new ManagerClickNPC(this);
 				this.managerGuiAdmin = new ManagerGui(this);

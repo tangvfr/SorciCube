@@ -100,7 +100,7 @@ public class FightData {
 	}
 	
 	public Document toDocument() {
-		return new Document("fight_uuid", fightUUID.toString())
+		return new Document("uuid", fightUUID.toString())
 				.append("fight_type", fightType.name())
 				.append("player1", playerUUID1.toString())
 				.append("player2", playerUUID2.toString())
@@ -115,7 +115,7 @@ public class FightData {
 	}
 	
 	public static FightData toFightData(Document doc) {
-		return new FightData(UUID.fromString(doc.getString("fight_uuid")),
+		return new FightData(UUID.fromString(doc.getString("uuid")),
 				UUID.fromString(doc.getString("player1")),
 				UUID.fromString(doc.getString("player2")),
 				doc.getInteger("deck_player1"),

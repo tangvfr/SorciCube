@@ -110,6 +110,7 @@ gui_list_fight:
     start: "§2Combat en cours"
     end: "§4Combat fini"
   lore_fight:
+    - " "
     - "§c{name_player1} §7Lvl.{level_player1} {faction_player1}"
     - "  §4vs"
     - "§c{name_player2} §7Lvl.{level_player2} {faction_player2}"
