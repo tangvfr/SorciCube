@@ -101,8 +101,16 @@ public class FightData {
 	
 	public Document toDocumentID() {
 		return new Document("fight_uuid", fightUUID.toString())
+				.append("fight_type", fightType.name())
 				.append("player1", playerUUID1.toString())
-				.append("player2", playerUUID2.toString());
+				.append("player2", playerUUID2.toString())
+				.append("deck_player1", player1DeckUse)
+				.append("deck_player2", player2DeckUse)
+				.append("faction_player1", factionPlayer1.name())
+				.append("faction_player2", factionPlayer2.name())
+				.append("level_player1", levelPlayer1)
+				.append("level_player2", levelPlayer2)
+				.append("server", server);
 	}
 	
 	public Document toDocument() {

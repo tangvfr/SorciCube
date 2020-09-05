@@ -38,14 +38,6 @@ public class ManagerFightData {
 			return null;
 	}
 	
-	public FightData getFightDataFight(UUID fight) {
-		MongoCursor<Document> doc = preFightDatas.find(new Document("fight_uuid", fight.toString())).iterator();
-		if (doc.hasNext())
-			return FightData.toFightData(doc.next());
-		else
-			return null;
-	}
-	
 	public void addFightData(FightData fightData) {
 		preFightDatas.insertOne(fightData.toDocument());
 	}
