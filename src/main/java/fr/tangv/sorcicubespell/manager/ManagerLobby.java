@@ -97,7 +97,9 @@ public class ManagerLobby implements Listener {
 		player.setHealth(20);
 		player.setCollidable(false);
 		FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
+		Bukkit.broadcastMessage("FightData "+player.getName()+" "+(fightData != null));
 		if (fightData != null && fightData.getStat() == FightStat.START) {
+			Bukkit.broadcastMessage(player.getName()+" redirect for Fight");
 			sorci.sendPlayerToServer(player, fightData.getServer());
 		} else {
 			Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
