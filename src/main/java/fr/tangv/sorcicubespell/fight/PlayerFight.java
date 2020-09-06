@@ -69,6 +69,7 @@ public class PlayerFight extends FightSpectator {
 	
 	public void newPlayer(Player player) {
 		super.newPlayer(player);
+		enemie.showPlayer(this);
 		initHotBar();
 	}
 	

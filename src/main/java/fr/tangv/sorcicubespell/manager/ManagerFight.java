@@ -102,7 +102,6 @@ public class ManagerFight implements Runnable {
 				Bukkit.broadcastMessage("First player create prefight");
 				PreFight preFight = PreFight.createPreFight(player, fightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
-				Bukkit.broadcastMessage("JSON: "+fightData.toDocument().toJson());
 				fightData.setStat(FightStat.STARTING);
 				sorci.getManagerFightData().updateFightData(fightData);
 				kick = false;
