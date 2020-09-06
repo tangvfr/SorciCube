@@ -281,13 +281,13 @@ public class FightSpectator {
 	}
 	
 	public void showPlayer(FightSpectator spectator) {
-		Bukkit.getScheduler().runTask(fight.getSorci(), new Runnable() {
+		Bukkit.getScheduler().runTaskLater(fight.getSorci(), new Runnable() {
 			@Override
 			public void run() {
 				if (player != spectator.player && player.isOnline() && spectator.player.isOnline())
 					player.showPlayer(spectator.player);
 			}
-		});
+		}, 1);
 	}
 	
 	public void returnLobby() {

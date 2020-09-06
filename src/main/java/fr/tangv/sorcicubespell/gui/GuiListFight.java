@@ -67,11 +67,15 @@ public class GuiListFight extends AbstractGui implements Runnable {
 	public void run() {
 		listFight = manager.getSorci().getManagerFightData().getAllFightData();
 		int duel = 0;
-		for (int i = 0; i < 48 && i < listFight.size(); i++) {
-			FightData fightData = listFight.get(i);
-			if (fightData.getFightType() == FightType.DUEL)
-				duel++;
-			inv.setItem(i+(i/8), fightDataToItem(fightData));
+		for (int i = 0; i < 48; i++) {
+			ItemStack item = null;
+			if (i < listFight.size()) {
+				FightData fightData = listFight.get(i);
+				if (fightData.getFightType() == FightType.DUEL)
+					duel++;
+				item = fightDataToItem(fightData);
+			}
+			inv.setItem(i+(i/8), item);
 		}
 		int all = listFight.size();
 		int no_classed = all-duel;
@@ -101,11 +105,15 @@ public class GuiListFight extends AbstractGui implements Runnable {
 		if (raw == 53) {
 			player.closeInventory();
 		} else if (raw < 53 && raw >= 0) {
+			player.sendMessage("raw: "+raw);
 			if ((raw+1)%9 != 0) {
+				player.sendMessage("raw: good");
 				int index = raw-(raw/9);
 				if (index < listFight.size()) {
+					player.sendMessage("raw: good index");
 					FightData fight = listFight.get(index);
 					if (fight.getStat() == FightStat.START) {
+						player.sendMessage("raw: index game is start");
 						manager.getSorci().getManagerFightData().whichSpectate(player.getUniqueId());
 						manager.getSorci().getManagerFightData().addFightSpectate(player.getUniqueId(), fight.getFightUUID());
 						manager.getSorci().sendPlayerToServer(player, fight.getServer());
