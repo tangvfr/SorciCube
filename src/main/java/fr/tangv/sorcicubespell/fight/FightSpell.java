@@ -280,6 +280,8 @@ public class FightSpell {
 										if (features.hasFeature(feat.getType()))
 											features.removeFeature(feat.getType());
 										features.putFeature(feat.clone());
+										if (feat.getType() == CardFeatureType.IMMOBILIZATION || feat.getType() == CardFeatureType.STUNNED)
+											entity.setAttackPossible(false);
 									}
 								}
 								entity.updateStat();
