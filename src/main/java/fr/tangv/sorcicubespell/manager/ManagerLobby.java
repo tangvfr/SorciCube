@@ -96,15 +96,13 @@ public class ManagerLobby implements Listener {
 		player.setMaxHealth(20);
 		player.setHealth(20);
 		player.setCollidable(false);
-		FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
-		Bukkit.broadcastMessage("FightData "+player.getName()+" "+(fightData != null));
-		if (fightData != null && fightData.getStat() == FightStat.START) {
-			Bukkit.broadcastMessage(player.getName()+" redirect for Fight");
-			sorci.sendPlayerToServer(player, fightData.getServer());
-		} else {
-			Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
-				@Override
-				public void run() {
+		Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
+			@Override
+			public void run() {
+				FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
+				if (fightData != null && fightData.getStat() == FightStat.START) {
+					sorci.sendPlayerToServer(player, fightData.getServer());
+				} else {
 					teleportPlayerToSpawn(player);
 					if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId())) {
 						player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
@@ -119,8 +117,8 @@ public class ManagerLobby implements Listener {
 						player.setExp(0F);
 					}
 				}
-			}, 1);
-		}
+			}
+		}, 1);
 	}
 	
 	@EventHandler

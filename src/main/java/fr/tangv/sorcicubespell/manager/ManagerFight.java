@@ -78,9 +78,7 @@ public class ManagerFight implements Runnable {
 	
 	public void playerJoin(Player player) {
 		boolean kick = true;
-		Bukkit.broadcastMessage("Player: "+player.getName());
 		if (playerInstance.containsKey(player.getUniqueId())) {
-			Bukkit.broadcastMessage("Already in game");
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
 			if (spectator.isFightPlayer() && !spectator.getFight().isEnd()) {
 				for (Player other : Bukkit.getOnlinePlayers()) {
@@ -91,15 +89,12 @@ public class ManagerFight implements Runnable {
 				kick = false;
 			}
 		} else if (preFights.containsKey(player.getUniqueId())) {
-			Bukkit.broadcastMessage("Prefight second player");
 			PreFight preFight = preFights.get(player.getUniqueId());
 			preFight.complet(player);
 			kick = false;
 		} else {
 			FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
-			Bukkit.broadcastMessage("Get fightdata in bbd");
 			if (fightData != null && fightData.getStat() == FightStat.WAITING) {
-				Bukkit.broadcastMessage("First player create prefight");
 				PreFight preFight = PreFight.createPreFight(player, fightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
 				fightData.setStat(FightStat.STARTING);
@@ -107,7 +102,6 @@ public class ManagerFight implements Runnable {
 				kick = false;
 			}
 		}
-		Bukkit.broadcastMessage("kick: "+kick);
 		if (kick) {
 			UUID fightUUID = sorci.getManagerFightData().whichSpectate(player.getUniqueId());
 			if (fightUUID != null && fights.containsKey(fightUUID)) {
@@ -145,7 +139,6 @@ public class ManagerFight implements Runnable {
 				player.hidePlayer(other);
 			}
 		}
-		Bukkit.broadcastMessage("--------- end ---------");
 	}
 
 	private void sendLobbyPlayer(Player player) {

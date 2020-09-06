@@ -9,7 +9,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 
-import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.fight.FightData;
 
 public class ManagerFightData {
@@ -17,9 +16,9 @@ public class ManagerFightData {
 	private MongoCollection<Document> preFightDatas;
 	private MongoCollection<Document> spetatorFight;
 	
-	public ManagerFightData(SorciCubeSpell sorci) {
-		this.preFightDatas = sorci.getMongo().getPreFights();
-		this.spetatorFight = sorci.getMongo().getSpetatorFight();
+	public ManagerFightData(MongoDBManager manager) {
+		this.preFightDatas = manager.getPreFights();
+		this.spetatorFight = manager.getSpetatorFight();
 	}
 	
 	public Vector<FightData> getAllFightData() {
@@ -47,7 +46,7 @@ public class ManagerFightData {
 	}
 	
 	public void removeFightDataFight(FightData fightData) {
-		preFightDatas.deleteMany(fightData.toDocumentID());//not functional fight
+		preFightDatas.deleteMany(fightData.toDocumentID());
 	}
 	
 	public void updateFightData(FightData fightData) {
