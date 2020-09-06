@@ -4,7 +4,6 @@ import java.util.UUID;
 import java.util.Vector;
 
 import org.bson.Document;
-import org.bukkit.Bukkit;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -48,12 +47,11 @@ public class ManagerFightData {
 	}
 	
 	public void removeFightDataFight(FightData fightData) {
-		preFightDatas.deleteMany(fightData.toDocumentID());
-		Bukkit.broadcastMessage("remove fight: "+fightData.getFightUUID());
+		preFightDatas.deleteMany(fightData.toDocumentID());//not functional fight
 	}
 	
 	public void updateFightData(FightData fightData) {
-		//preFightDatas.findOneAndUpdate(fightData.toDocumentID(), fightData.toDocument());
+		preFightDatas.findOneAndUpdate(fightData.toDocumentID(), fightData.toDocument());//not fonctional fight
 	}
 	
 	public void removeAllFightData() {

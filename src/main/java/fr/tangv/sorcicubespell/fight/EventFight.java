@@ -53,19 +53,21 @@ public class EventFight implements Listener {
 		e.setCancelled(true);
 		if (manager.isSpectator(e.getPlayer().getUniqueId())) {
 			FightSpectator spectator = manager.getSpectator(e.getPlayer().getUniqueId());
+			String message;
 			if (spectator.isFightPlayer()) {
-				spectator.getFight().sendMessage(formatChat
+				message = formatChat
 						.replace("{spectator}", playerChat)
 						.replace("{displayname}", e.getPlayer().getDisplayName())
-						.replace("{message}", e.getMessage())
-					);
+						.replace("{message}", e.getMessage());
+				spectator.getFight().sendMessage(message);
 			} else {
-				spectator.getFight().sendMessageSpectator(formatChat
+				message = formatChat
 					.replace("{spectator}", spectatorChat)
 					.replace("{displayname}", e.getPlayer().getDisplayName())
-					.replace("{message}", e.getMessage())
-				);
+					.replace("{message}", e.getMessage());
+				spectator.getFight().sendMessageSpectator(message);
 			}
+			Bukkit.getConsoleSender().sendMessage(message);
 		}
 	}
 	

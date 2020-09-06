@@ -355,9 +355,11 @@ public class PlayerFight extends FightSpectator {
 				int cardSelected = getCardSelect();
 				if (cardSelected != -1) {
 					Card card = getCardHand(cardSelected);
-					messageActionBar = 
-							CardVisual.renderManaCard(card)+"§r§f \u25b6 "+card.renderName()+"§r§f \u25c0 "+
-							(card.getType() == CardType.ENTITY ? CardVisual.renderStatCard(card) : CardVisual.renderManaCard(card));
+					if (card != null) {
+						messageActionBar = 
+								CardVisual.renderManaCard(card)+"§r§f \u25b6 "+card.renderName()+"§r§f \u25c0 "+
+								(card.getType() == CardType.ENTITY ? CardVisual.renderStatCard(card) : CardVisual.renderManaCard(card));
+					}
 				}
 				setExp(1F);
 			} else {
