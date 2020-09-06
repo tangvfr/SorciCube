@@ -105,15 +105,11 @@ public class GuiListFight extends AbstractGui implements Runnable {
 		if (raw == 53) {
 			player.closeInventory();
 		} else if (raw < 53 && raw >= 0) {
-			player.sendMessage("raw: "+raw);
 			if ((raw+1)%9 != 0) {
-				player.sendMessage("raw: good");
 				int index = raw-(raw/9);
 				if (index < listFight.size()) {
-					player.sendMessage("raw: good index");
 					FightData fight = listFight.get(index);
 					if (fight.getStat() == FightStat.START) {
-						player.sendMessage("raw: index game is start");
 						manager.getSorci().getManagerFightData().whichSpectate(player.getUniqueId());
 						manager.getSorci().getManagerFightData().addFightSpectate(player.getUniqueId(), fight.getFightUUID());
 						manager.getSorci().sendPlayerToServer(player, fight.getServer());
