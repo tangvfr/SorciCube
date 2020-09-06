@@ -50,7 +50,7 @@ public class ManagerFightData {
 	}
 	
 	public void updateFightData(FightData fightData) {
-		//preFightDatas.findOneAndUpdate(fightData.toDocumentID(), fightData.toDocument());//not fonctional fight
+		preFightDatas.findOneAndUpdate(fightData.toDocumentID(), fightData.toDocument());//not fonctional fight
 	}
 	
 	public void removeAllFightData() {

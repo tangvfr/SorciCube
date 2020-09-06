@@ -61,7 +61,7 @@ public class PreFight {
 	
 	public void complet(Player player2) {
 		this.player2 = player2;
-		this.cooldown = new Cooldown(500);
+		this.cooldown = new Cooldown(1_000);
 		cooldown.start();
 	}
 	
