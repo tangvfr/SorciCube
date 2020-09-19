@@ -16,7 +16,7 @@ public class RunnableActionBar implements Runnable {
 	
 	public RunnableActionBar(SorciCubeSpell sorci, ConcurrentHashMap<Player, PlayerGui> playerGuis) {
 		this.lc = sorci.getLevelConfig();
-		this.messageActionBar = sorci.getParameter().getString("");
+		this.messageActionBar = sorci.getParameter().getString("action_bar_message");
 		this.playerGuis = playerGuis;
 	}
 	

@@ -6,7 +6,7 @@ number_deck_start: 2
 #is lobby
 is_lobby: true
 chat_format: "§7Lvl.{level}§f {displayname}§r§8: §r§f{message}"
-action_bar: "§d{exp}§7/§5{exp_max} §dexperiences    §6{money}$"
+action_bar_message: "§d{exp}§7/§5{exp_max} §dexperiences    §6{money}$"
 #security
 perm_build: "sorcicubespell.build"
 perm_admin: "sorcicubespell.admin"
