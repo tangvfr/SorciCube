@@ -13,12 +13,12 @@
 
 * path action dead for damage zone entity
 
-+ last - add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
+* last add system level and experience + coin   (lvl and experience , level bar minecraft and level in chat)
 
-+ add system spectator    finish party lobby
-+ add system reconnect    finish party lobby
+* add system reconnect
 
 
++ add system spectator
 + add system chat  (fs view all in fight, pf view juste enemie)
 
 + add info in action bar message (xp / xpmax and coin)
