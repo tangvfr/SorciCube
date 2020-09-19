@@ -8,7 +8,11 @@ import org.bukkit.inventory.Inventory;
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardComparator;
 import fr.tangv.sorcicubespell.fight.FightType;
+import fr.tangv.sorcicubespell.manager.ManagerPlayers;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
+import fr.tangv.sorcicubespell.util.Config;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class PlayerGui {
 
@@ -110,6 +114,32 @@ public class PlayerGui {
 
 	public void setPlayerFeature(PlayerFeature playerFeature) {
 		this.playerFeature = playerFeature;
+	}
+	
+	public void uploadPlayerFeature(ManagerPlayers manager) {
+		if(playerFeature != null)
+			manager.update(playerFeature);
+		else
+			new Exception("playerFeture is null").printStackTrace();;
+	}
+	
+	public void updateDisplay(Config lc, String messageActionBar) {
+		player.setLevel(playerFeature.getLevel());
+		int exp = 0;
+		int expMax = 0;
+		if (!playerFeature.isLevel((byte) lc.getInt("level_max"))) {
+			exp = playerFeature.getExperience();
+			expMax = lc.getInt("level_experience."+(playerFeature.getLevel()+1)+".experience");
+			player.setExp(playerFeature.getExperience()/(float) expMax);
+		} else {
+			player.setExp(1.0F);
+		}
+		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+				messageActionBar
+					.replace("{exp}", Integer.toString(exp))
+					.replace("{exp_max}", Integer.toString(expMax))
+					.replace("{money}", Integer.toString(playerFeature.getMoney()))
+		));
 	}
 
 	public AbstractGui getPreviousGui() {

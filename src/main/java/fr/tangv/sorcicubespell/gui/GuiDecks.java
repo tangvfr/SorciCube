@@ -53,7 +53,6 @@ public class GuiDecks extends AbstractGui {
 	public Inventory getInventory(Player player) {
 		try {
 			PlayerGui playerG = getPlayerGui(player);
-			playerG.setPlayerFeature(manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId()));
 			Inventory inv = Bukkit.createInventory(null, 45, this.name);
 			for (int i = 0; i < 9; i++) {
 				inv.setItem(i, itemDeco);

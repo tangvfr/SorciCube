@@ -59,7 +59,7 @@ public class GuiSwapCard extends AbstractGuiCards {
 				String uuid = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
 				Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuid));
 				player.getPlayerFeature().getDeck(player.getDeckEdit()).setCard(player.getDeckCardEdit(), card);
-				manager.getSorci().getManagerPlayers().update(player.getPlayerFeature());
+				player.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
 				manager.getSorci().getManagerGui().getGuiEditDeck().open(player.getPlayer());
 			}
 		}

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import com.mongodb.client.MongoCollection;
 
@@ -48,9 +49,9 @@ public class ManagerPlayers {
 		players.findOneAndReplace(playerFeature.toUUIDDocument(), playerFeature.toDocument());
 	}
 	
-	public boolean initPlayer(UUID uuid, CardFaction faction) {
+	public boolean initPlayer(Player player, CardFaction faction) {
 		try {
-			if (this.containtPlayer(uuid))
+			if (this.containtPlayer(player.getUniqueId()))
 				return false;
 			//define type default deck
 			DeckCards defaultDeck;
@@ -82,7 +83,7 @@ public class ManagerPlayers {
 					cardsUnlocks.add(card.getUUID().toString());
 			}
 			//create and insert playerfeature
-			PlayerFeature playerFeature = new PlayerFeature(uuid,
+			PlayerFeature playerFeature = new PlayerFeature(player.getUniqueId(),
 					defaultDeck,
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
@@ -92,6 +93,7 @@ public class ManagerPlayers {
 					cardsUnlocks,
 					0, 0, (byte) 1);
 			this.insert(playerFeature);
+			sorci.getManagerGui().getPlayerGui(player).setPlayerFeature(playerFeature);
 			return true;
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));

@@ -15,6 +15,19 @@ public class ListCards {
 		this.cards = cards;
 	}
 	
+	public int calcAverageCost() {
+		int number = 0;
+		int some = 0;
+		for (int i = 0; i < cards.length; i++) {
+			Card card = cards[i];
+			if (card != null) {
+				some += card.getMana();
+				number++;
+			}
+		}
+		return (number <= 0 || some <= 0) ? 0 : (some*10/number);
+	}
+	
 	public boolean isComplet() {
 		for (Card card : cards)
 			if (card == null)

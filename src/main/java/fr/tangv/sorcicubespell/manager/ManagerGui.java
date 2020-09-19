@@ -21,11 +21,13 @@ import fr.tangv.sorcicubespell.gui.GuiSelectDefaultDeck;
 import fr.tangv.sorcicubespell.gui.GuiSwapCard;
 import fr.tangv.sorcicubespell.gui.GuiViewCards;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
+import fr.tangv.sorcicubespell.player.RunnableActionBar;
 
 public class ManagerGui {
 
 	private SorciCubeSpell sorci;
 	private ConcurrentHashMap<Player, PlayerGui> playerGuis;
+	private RunnableActionBar runnableActionBar;
 	private GuiAdminViewCards guiAdminViewCards;
 	private GuiSelectDefaultDeck guiSelectDefaultDeck;
 	private GuiEditOrView guiEditOrView;
@@ -57,10 +59,16 @@ public class ManagerGui {
 		//spigot init
 		sorci.getCommand("viewcards").setExecutor(new CommandGuiAdminViewCards(this));
 		Bukkit.getPluginManager().registerEvents(new EventGuiPlayer(this), sorci);
+		this.runnableActionBar = new RunnableActionBar(sorci, playerGuis);
+		Bukkit.getScheduler().runTaskTimerAsynchronously(sorci, runnableActionBar, 0, 20);
 	}
 
 	public SorciCubeSpell getSorci() {
 		return sorci;
+	}
+	
+	public void updateDisplayPlayer(PlayerGui player) {
+		runnableActionBar.updateOnePlayer(player);
 	}
 	
 	public PlayerGui getPlayerGui(Player player) {

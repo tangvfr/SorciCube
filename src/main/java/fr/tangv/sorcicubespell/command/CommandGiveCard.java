@@ -13,6 +13,7 @@ import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.fight.FightSpectator;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
+import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 
 public class CommandGiveCard implements CommandExecutor {
@@ -41,16 +42,17 @@ public class CommandGiveCard implements CommandExecutor {
 						.replace("{uuid}", args[1])
 					);
 				} else {
-					if (sorci.isLobby() || !sorci.getManagerFight().isSpectator(player.getUniqueId())) {
-						PlayerFeature feature = sorci.getManagerPlayers().getPlayerFeature(player.getUniqueId());
+					if (sorci.isLobby()) {
+						PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
+						PlayerFeature feature = playerG.getPlayerFeature();
 						if (feature != null) {
 							String uuid = card.getUUID().toString();
 							if (!feature.getCardsUnlocks().contains(uuid))
 								feature.getCardsUnlocks().add(uuid);
-							sorci.getManagerPlayers().update(feature);
+							playerG.uploadPlayerFeature(sorci.getManagerPlayers());
 						}
 						player.getInventory().addItem(CardRender.cardToItem(card, sorci));
-					} else {
+					} else if (sorci.getManagerFight().isSpectator(player.getUniqueId())) {
 						FightSpectator spectator = sorci.getManagerFight().getSpectator(player.getUniqueId());
 						if (spectator.isFightPlayer()) {
 							PlayerFight pf = (PlayerFight) spectator;

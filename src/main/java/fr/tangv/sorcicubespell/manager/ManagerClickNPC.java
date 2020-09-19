@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.npc.ClickNPC;
 import fr.tangv.sorcicubespell.npc.EventClickNPC;
-import fr.tangv.sorcicubespell.util.RenderException;
 
 public class ManagerClickNPC {
 
@@ -49,11 +48,6 @@ public class ManagerClickNPC {
 				else {
 					player.teleport(locationSpawn);
 					player.sendMessage(sorci.getMessage().getString("message_teleport_spawn"));
-					try {
-						sorci.getManagerLobby().initPlayerLevel(player);
-					} catch (Exception e) {
-						Bukkit.getLogger().warning(RenderException.renderException(e));
-					}
 				}
 			}
 		});

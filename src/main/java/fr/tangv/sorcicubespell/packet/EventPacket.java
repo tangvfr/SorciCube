@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.manager.ManagerPacketCards;
 import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.ItemBuild;
@@ -82,7 +83,8 @@ public class EventPacket implements Listener, Runnable {
 						Card[] cardTake = manager.packetTakeCard(packet);
 						ItemStack[] itemCards = new ItemStack[cardTake.length];
 						boolean[] newCards = new boolean[cardTake.length];
-						PlayerFeature feature = manager.getSorci().getManagerPlayers().getPlayerFeature(player.getUniqueId());
+						PlayerGui gui = manager.getSorci().getManagerGui().getPlayerGui(player);
+						PlayerFeature feature = gui.getPlayerFeature();
 						if (feature != null) {
 							for (int i = 0; i < cardTake.length; i++) {
 								if (cardTake[i] == null) {
@@ -100,7 +102,7 @@ public class EventPacket implements Listener, Runnable {
 								}
 								inv.setItem(start+i, itemQuestion);
 							}
-							manager.getSorci().getManagerPlayers().update(feature);
+							gui.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
 							if (item.getAmount() > 1)
 								item.setAmount(item.getAmount()-1);
 							else

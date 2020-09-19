@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 
-public class EventGuiPlayer implements Listener{
+public class EventGuiPlayer implements Listener {
 
 	private ManagerGui manager;
 	
