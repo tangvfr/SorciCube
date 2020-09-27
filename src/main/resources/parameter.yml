@@ -20,6 +20,7 @@ perm_admin: "sorcicubespell.admin"
 format_time_sec: "sec"
 format_time_min: "min "
 #fight
+format_level: "§7Lvl.{level} {faction}"
 chat_format_fight: "{spectator} §r§f{displayname}§r§8: §r§f{message}"
 spectator_fight: "§7S."
 player_fight: "§4P."

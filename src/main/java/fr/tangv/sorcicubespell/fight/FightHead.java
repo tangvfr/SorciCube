@@ -24,14 +24,14 @@ public abstract class FightHead {
 	private final EntityArmorStand entityHead;
 	private volatile net.minecraft.server.v1_9_R2.ItemStack headItem;
 	
-	public FightHead(PlayerFight owner, Location loc) {
+	public FightHead(PlayerFight owner, Location loc, double headHeight) {
 		this.fight = owner.getFight();
 		this.owner = owner;
 		this.loc = loc;
 		//create entity
 		this.world = ((CraftWorld) loc.getWorld()).getHandle();
 		this.entityName = createArmorStand("", 0.1D);
-		this.entityHead = createArmorStand("", 1.3D);
+		this.entityHead = createArmorStand("", headHeight);
 	}
 	
 	protected EntityArmorStand createArmorStand(String name, double decal) {
@@ -41,7 +41,7 @@ public abstract class FightHead {
 		entity.setInvulnerable(true);
 		entity.setInvisible(true);
 		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
-		sendHead(entity, name, false);
+		sendFightHead(entity, name, false);
 		return entity;
 	}
 	
@@ -55,7 +55,7 @@ public abstract class FightHead {
 		fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, headItem));
 	}
 	
-	protected void sendHead(EntityArmorStand entity, String name, boolean already) {
+	protected void sendFightHead(EntityArmorStand entity, String name, boolean already) {
 		if (already)
 			fight.sendPacket(new PacketPlayOutEntityDestroy(entity.getId()));
 		if (name.isEmpty()) {
@@ -79,12 +79,12 @@ public abstract class FightHead {
 	}
 	
 	public void setHead(String head) {
-		sendHead(entityHead, head, true);
+		sendFightHead(entityHead, head, true);
 		sendHeadEntity(entityHead);
 	}
 	
 	public void setName(String name) {
-		sendHead(entityName, name, true);
+		sendFightHead(entityName, name, true);
 	}
 	
 	protected String getName() {

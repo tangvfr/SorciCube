@@ -46,7 +46,7 @@ public class FightEntity extends FightHead {
 	private volatile boolean attacked;
 	
 	public FightEntity(PlayerFight owner, Location loc) {
-		super(owner, loc);
+		super(owner, loc, 1.3D);
 		this.card = null;
 		this.lastCard = null;
 		this.uuid = UUID.randomUUID();
@@ -150,7 +150,7 @@ public class FightEntity extends FightHead {
 	}
 
 	public void setStat(String stat) {
-		super.sendHead(entityStat, stat, true);
+		super.sendFightHead(entityStat, stat, true);
 	}
 	
 	public void setCard(CardEntity card) {

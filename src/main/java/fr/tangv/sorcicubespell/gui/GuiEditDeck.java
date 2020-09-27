@@ -33,7 +33,10 @@ public class GuiEditDeck extends AbstractGui {
 				manager.getSorci().getEnumTool().factionToString(deck.getFaction()), 
 				config.getStringList("lore_faction"), false);
 		ItemStack itemDeck = ItemBuild.buildItem(Material.BOOK, 1, (short) 0, (byte) 0, 
-				config.getString("deck").replace("{number}", Integer.toString(playerG.getDeckEdit())), null, false);
+				config.getString("deck")
+					.replace("{number}", Integer.toString(playerG.getDeckEdit()))
+					.replace("{average_cost}", "§b"+Double.toString(deck.calcAverageCost()/10.0D)+" \u2756")
+				, null, false);
 		//set items
 		inv.setItem(0, itemDeco); inv.setItem(1, itemDeco); inv.setItem(2, itemDeco); inv.setItem(8, itemBack);
 		inv.setItem(9, itemDeco); inv.setItem(10, itemTypeDeck); inv.setItem(11, itemDeco); inv.setItem(17, itemBack);

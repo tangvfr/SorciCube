@@ -6,12 +6,33 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.CardFaction;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import net.minecraft.server.v1_9_R2.EntityArmorStand;
+import net.minecraft.server.v1_9_R2.PacketPlayOutSpawnEntityLiving;
 
 public class FightHero extends FightHead {
 	
+	private EntityArmorStand armorFeaturesPlayer;
+	
 	public FightHero(PlayerFight owner) {
-		super(owner, owner.getLocBase());
+		super(owner, owner.getLocBase(), 1.7D);
 		this.updateStat();
+		String name = owner.getFight().getSorci().getParameter().getString("format_level");
+		FightData data = owner.fight.getFightData();
+		name = (data.getPlayerUUID1().equals(owner.getUUID()))
+		?
+			name.replace("{level}", Byte.toString(data.getLevelPlayer1()))
+			.replace("{faction}", owner.getFight().getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer1()))
+		:
+			name.replace("{level}", Byte.toString(data.getLevelPlayer2()))
+			.replace("{faction}", owner.getFight().getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer2()))
+		;
+		this.armorFeaturesPlayer = this.createArmorStand(name, 0.5D);
+	}
+	
+	@Override
+	public void sendPacketForView(FightSpectator spectator) {
+		super.sendPacketForView(spectator);
+		spectator.sendPacket(new PacketPlayOutSpawnEntityLiving(armorFeaturesPlayer));
 	}
 	
 	public ItemStack renderToItem(boolean ally) {

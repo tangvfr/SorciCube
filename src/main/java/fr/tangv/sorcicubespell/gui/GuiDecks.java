@@ -27,14 +27,18 @@ public class GuiDecks extends AbstractGui {
 	}
 
 	private ItemStack getItemDeck(PlayerFeature playerF, int number) {
-		String url = "";
 		if (playerF.getUnlockDecks() >= number) {
-			DeckCards deckCards = playerF.getDeck(number);
-			url = SkullUrl.getSkullForFaction(deckCards.getFaction());
+			DeckCards deck = playerF.getDeck(number);
+			return ItemBuild.buildSkull(SkullUrl.getSkullForFaction(deck.getFaction()), 1, 
+					config.getString("deck")
+						.replace("{number}", Integer.toString(number))
+						.replace("{average_cost}", "§b"+Double.toString(deck.calcAverageCost()/10.0D)+" \u2756")
+					, null, false);
 		} else {
-			url = SkullUrl.CHEST_GRAY;
+			return ItemBuild.buildSkull(SkullUrl.CHEST_GRAY, 1, 
+					config.getString("deck").replace("{number}", Integer.toString(number))
+					, null, false);
 		}
-		return ItemBuild.buildSkull(url, 1, config.getString("deck").replace("{number}", Integer.toString(number)), null, false);
 	}
 	
 	private void editDeck(PlayerGui player, int number) {

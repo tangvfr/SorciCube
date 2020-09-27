@@ -24,7 +24,8 @@
 + add info in action bar message (xp / xpmax and coin)
 
 
-- average cost mana deck,    and in fight view level and fight the enemie on FightHero
++ average cost mana deck
++ in fight view level and fight the enemie on FightHero
 
 
 - add npc custom name with packet perso by npc (7 packet max)
