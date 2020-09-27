@@ -38,6 +38,7 @@ public class ManagerLobby implements Listener {
 		e.setFormat(formatChat
 				.replace("{displayname}", e.getPlayer().getDisplayName())
 				.replace("{message}", e.getMessage())
+				.replace("{level}", Byte.toString(sorci.getManagerGui().getPlayerGui(e.getPlayer()).getPlayerFeature().getLevel()))
 			);
 	}
 	
