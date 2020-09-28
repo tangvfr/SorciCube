@@ -29,7 +29,7 @@ gui_view_cards:
 #Gui Decks
 gui_decks:
   name: "§5Choisir un Deck"
-  deck: "§2Deck {number} {average_cost}"
+  deck: "§2Deck {number} §7| {average_cost}"
   back: "§cRetour"
 #Gui Edit Deck
 gui_edit_deck:

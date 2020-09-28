@@ -29,13 +29,14 @@ public class GuiEditDeck extends AbstractGui {
 		Inventory inv = Bukkit.createInventory(null, 36 ,this.name);
 		PlayerGui playerG = getPlayerGui(player);
 		DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());
+		String averageCost = "§b"+Double.toString(deck.calcAverageCost()/10.0D)+" \u2756";
 		ItemStack itemTypeDeck = ItemBuild.buildSkull(SkullUrl.getSkullForFaction(deck.getFaction()), 1,
 				manager.getSorci().getEnumTool().factionToString(deck.getFaction()), 
 				config.getStringList("lore_faction"), false);
 		ItemStack itemDeck = ItemBuild.buildItem(Material.BOOK, 1, (short) 0, (byte) 0, 
 				config.getString("deck")
 					.replace("{number}", Integer.toString(playerG.getDeckEdit()))
-					.replace("{average_cost}", "§b"+Double.toString(deck.calcAverageCost()/10.0D)+" \u2756")
+					.replace("{average_cost}", averageCost)
 				, null, false);
 		//set items
 		inv.setItem(0, itemDeco); inv.setItem(1, itemDeco); inv.setItem(2, itemDeco); inv.setItem(8, itemBack);

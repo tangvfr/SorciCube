@@ -36,7 +36,7 @@ public class GuiDecks extends AbstractGui {
 					, null, false);
 		} else {
 			return ItemBuild.buildSkull(SkullUrl.CHEST_GRAY, 1, 
-					config.getString("deck").replace("{number}", Integer.toString(number))
+					config.getString("deck").replace("{number}", Integer.toString(number)).replace("{average_cost}", "")
 					, null, false);
 		}
 	}
