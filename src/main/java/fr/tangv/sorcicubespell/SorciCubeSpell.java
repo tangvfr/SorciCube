@@ -42,6 +42,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config guiConfig;
 	private Config arenaConfig;
 	private Config levelConfig;
+	private Config configNPC;
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
 	private ManagerLobby managerLobby;
@@ -75,6 +76,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.enumConfig = newConfig("enum.yml");
 			this.guiConfig = newConfig("gui.yml");
 			this.levelConfig = newConfig("level.yml");
+			this.configNPC = newConfig("npc.yml");
 			//is lobby
 			this.isLobby = getParameter().getBoolean("is_lobby");
 			//init tool
@@ -187,6 +189,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public Config getLevelConfig() {
 		return levelConfig;
+	}
+	
+	public Config getConfigNPC() {
+		return configNPC;
 	}
 
 	public MongoDBManager getMongo() {

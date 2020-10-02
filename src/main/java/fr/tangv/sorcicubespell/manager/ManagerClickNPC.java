@@ -16,7 +16,7 @@ public class ManagerClickNPC {
 	private HashMap<String, ClickNPC> clickNPCs;
 	
 	private String getNameNPC(String keyEnd) {
-		return sorci.getParameter().getString("name_npc."+keyEnd);
+		return sorci.getConfigNPC().getString(keyEnd);
 	}
 	
 	public ManagerClickNPC(SorciCubeSpell sorci) {
@@ -29,6 +29,13 @@ public class ManagerClickNPC {
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
 					sorci.getManagerGui().getGuiEditOrView().open(player);
+			}
+		});
+		clickNPCs.put(getNameNPC("increase_number_deck"), new ClickNPC() {
+			@Override
+			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
+				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
+					sorci.getManagerGui().getGuiIncreaseDeck().open(player);
 			}
 		});
 		clickNPCs.put(getNameNPC("default_deck"), new ClickNPC() {

@@ -1,0 +1,13 @@
+edit_deck: "§6L'éditeur"
+return_spawn: "§cRetour Spawn"
+default_deck: "§aPremier Deck"
+fight: "§4Gardien"
+leave: "§4Big Man"
+list_fight: "§6Maitre des combat"
+increase_number_deck: "§6Deck Unlock"
+increase_number_deck_price:
+  "1": 0
+  "2": 0
+  "3": 100
+  "4": 500
+  "5": -1

@@ -24,6 +24,10 @@ public abstract class AbstractGui implements Gui {
 		this.sorci = manager.getSorci();
 	}
 
+	public String getMessage(String path) {
+		return manager.getSorci().getMessage().getString(path);
+	}
+	
 	public PlayerGui getPlayerGui(Player player) {
 		return manager.getPlayerGui(player);
 	}

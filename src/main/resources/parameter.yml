@@ -6,7 +6,7 @@ number_deck_start: 2
 #is lobby
 is_lobby: true
 chat_format: "§7Lvl.{level}§f {displayname}§r§8: §r§f{message}"
-action_bar_message: "§d{exp}§7/§5{exp_max} §dexperiences    §6{money}$"
+action_bar_message: "§2Lvl.{level}    §d{exp}§5/§d{exp_max} §dexperiences    §6{money}$"
 #security
 perm_build: "sorcicubespell.build"
 perm_admin: "sorcicubespell.admin"
@@ -35,14 +35,6 @@ round_max_afk: 3
 server_lobby: "lobby"
 server_fight: "fight"
 server_jump: "jump"
-#name npc
-name_npc:
-  edit_deck: "§6L'éditeur"
-  return_spawn: "§cRetour Spawn"
-  default_deck: "§aPremier Deck"
-  fight: "§4Gardien"
-  leave: "§4Big Man"
-  list_fight: "§6Maitre des combat"
 #location
 location_spawn:
   ==: org.bukkit.Location

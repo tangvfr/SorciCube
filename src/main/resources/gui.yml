@@ -123,4 +123,12 @@ gui_list_fight:
   duel_number: "§c{number} duel en cours"
   no_classed_number: "§7{number} non classé en cours"
   all_number: "§6{number} combat en cours"
+#GuiIncreaseDeck
+gui_increase_deck:
+  name: "§9Gui Increase Deck"
+  max: "§5Max Deck Unlock"
+  unlock: "§2Unlock Deck {number}"
+  prenium: "§fFor The Preniums"
+  price_wrong: "§9Price§7: §c{price}$"
+  price_right: "§9Price§7: §a{price}$"
   

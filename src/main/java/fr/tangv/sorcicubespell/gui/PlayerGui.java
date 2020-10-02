@@ -124,7 +124,8 @@ public class PlayerGui {
 	}
 	
 	public void updateDisplay(Config lc, String messageActionBar) {
-		player.setLevel(playerFeature.getLevel());
+		int level = playerFeature.getLevel();
+		player.setLevel(level);
 		int exp = 0;
 		int expMax = 0;
 		if (!playerFeature.isLevel((byte) lc.getInt("level_max"))) {
@@ -136,6 +137,7 @@ public class PlayerGui {
 		}
 		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
 				messageActionBar
+					.replace("{level}", Integer.toString(level))
 					.replace("{exp}", Integer.toString(exp))
 					.replace("{exp_max}", Integer.toString(expMax))
 					.replace("{money}", Integer.toString(playerFeature.getMoney()))
