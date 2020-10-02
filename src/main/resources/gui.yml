@@ -131,4 +131,3 @@ gui_increase_deck:
   prenium: "§fFor The Preniums"
   price_wrong: "§9Price§7: §c{price}$"
   price_right: "§9Price§7: §a{price}$"
-  
