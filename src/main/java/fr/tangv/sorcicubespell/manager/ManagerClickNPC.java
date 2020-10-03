@@ -78,6 +78,7 @@ public class ManagerClickNPC {
 				sorci.getManagerGui().getGuiListFight().open(player);
 			}
 		});
+		
 		//init bukkit
 		Bukkit.getPluginManager().registerEvents(new EventClickNPC(this), sorci);
 	}

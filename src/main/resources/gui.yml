@@ -123,7 +123,7 @@ gui_list_fight:
   duel_number: "§c{number} duel en cours"
   no_classed_number: "§7{number} non classé en cours"
   all_number: "§6{number} combat en cours"
-#GuiIncreaseDeck
+#Gui Increase Deck
 gui_increase_deck:
   name: "§9Gui Increase Deck"
   max: "§5Max Deck Unlock"
@@ -131,3 +131,9 @@ gui_increase_deck:
   prenium: "§fFor The Preniums"
   price_wrong: "§9Price§7: §c{price}$"
   price_right: "§9Price§7: §a{price}$"
+#Gui Seller Packets
+gui_seller_packets:
+  buy: "§2Buy the Packet"
+  name: "§4Name§7: {name}"
+  price: "§ePrice§7: §6{price}"
+  close: "§cFermer"
