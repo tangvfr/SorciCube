@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.npc.ClickNPC;
 import fr.tangv.sorcicubespell.npc.EventClickNPC;
+import fr.tangv.sorcicubespell.npc.SellerPacketsNPC;
 
 public class ManagerClickNPC {
 
@@ -78,7 +79,8 @@ public class ManagerClickNPC {
 				sorci.getManagerGui().getGuiListFight().open(player);
 			}
 		});
-		
+		for (String nameNPC : sorci.getConfigNPC().getConfigurationSection("list_seller_packet_cards").getKeys(false))
+			clickNPCs.put(nameNPC, new SellerPacketsNPC(sorci, nameNPC));
 		//init bukkit
 		Bukkit.getPluginManager().registerEvents(new EventClickNPC(this), sorci);
 	}
