@@ -84,7 +84,10 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 						feature.removeMoney(price);
 						playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
 						player.getInventory().addItem(packetSell.getItemPacket());
-						player.sendMessage(getMessage("message_packet_buy").replace("{name}", packetSell.getPacketCards().getName()));
+						player.sendMessage(getMessage("message_packet_buy")
+								.replace("{name}", packetSell.getPacketCards().getName())
+								.replace("{price}", Integer.toString(price))
+						);
 					} else { 
 						player.sendMessage(getMessage("message_packet_no_money"));
 						player.closeInventory();

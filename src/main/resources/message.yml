@@ -42,6 +42,6 @@ message_change_level: "§aVous venez de passez level §c{level}§a avec une réc
 message_increase_deck_max: "§cVous avez déjà atient le maxiume de deck possible !"
 message_increase_deck_prenium: "§5Seul le prenium vous permet de dévérouillé ce deck !"
 message_increase_deck_no_money: "§cVous avez pas assez d'argent pour acheté ce deck !"
-message_increase_deck_unlock: "§aVous venez de dévérouiller le deck {number} ! Bravo a vous !"
+message_increase_deck_unlock: "§aVous venez de dévérouiller le deck {number} pour {price}$ ! Bravo a vous !"
 message_packet_no_money: "§cVous avez pas assez d'argent pour acheté ce packet de cartes !"
-message_packet_buy: "§aVous venez d'acheté le packet de cartes nommé \"{name}\" !"
+message_packet_buy: "§aVous venez d'acheté le packet de cartes nommé \"{name}\" pour {price}$ !"
