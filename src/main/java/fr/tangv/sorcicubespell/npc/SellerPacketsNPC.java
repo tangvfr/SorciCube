@@ -34,7 +34,7 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 		this.nameNPC = nameNPC;
 		ConfigurationSection packets = sorci.getConfigNPC().getConfigurationSection("list_seller_packet_cards."+nameNPC);
 		for (String packet : packets.getKeys(false))
-			packetsSell.add(new PacketCardsSell(sorci, nameNPC, packets.getInt(packet), this.config));
+			packetsSell.add(new PacketCardsSell(sorci, packet, packets.getInt(packet), this.config));
 	}
 
 	@Override
