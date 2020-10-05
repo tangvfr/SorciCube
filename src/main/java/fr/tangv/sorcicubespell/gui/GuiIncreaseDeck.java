@@ -41,34 +41,39 @@ public class GuiIncreaseDeck extends AbstractGui {
 		} else {
 			name = config.getString("max");
 		}
-		inv.setItem(5, ItemBuild.buildItem(Material.BOOK, 1, (short) 0, (byte) 0, name, lore, false));
+		inv.setItem(4, ItemBuild.buildItem(Material.BOOK, 1, (short) 0, (byte) 0, name, lore, false));
 		return inv;
 	}
 
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
 		e.setCancelled(true);
-		if (e.getRawSlot() == 5) {
-			PlayerGui playerG = getPlayerGui(player);
-			PlayerFeature feature = playerG.getPlayerFeature();
-			int number = feature.getUnlockDecks()+1;
-			if (number <= 5) {
-				int price = priceSection.getInt(Integer.toString(number));
-				if (price >= 0) {
-					if (feature.getMoney() >= price) {
-						feature.removeMoney(price);
-						feature.setUnlockDecks(number);
-						playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
-						player.sendMessage(getMessage("message_increase_deck_unlock").replace("{number}", Integer.toString(number)));
-						this.open(player);
-					} else { 
-						player.sendMessage(getMessage("message_increase_deck_no_money"));
+		int raw = e.getRawSlot();
+		if (raw >= 0 && raw < 9) {
+			if (raw == 4) {
+				PlayerGui playerG = getPlayerGui(player);
+				PlayerFeature feature = playerG.getPlayerFeature();
+				int number = feature.getUnlockDecks()+1;
+				if (number <= 5) {
+					int price = priceSection.getInt(Integer.toString(number));
+					if (price >= 0) {
+						if (feature.getMoney() >= price) {
+							feature.removeMoney(price);
+							feature.setUnlockDecks(number);
+							playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
+							player.sendMessage(getMessage("message_increase_deck_unlock").replace("{number}", Integer.toString(number)));
+							this.open(player);
+						} else { 
+							player.sendMessage(getMessage("message_increase_deck_no_money"));
+						}
+					} else {
+						player.sendMessage(getMessage("message_increase_deck_prenium"));
 					}
 				} else {
-					player.sendMessage(getMessage("message_increase_deck_prenium"));
+					player.sendMessage(getMessage("message_increase_deck_max"));
 				}
 			} else {
-				player.sendMessage(getMessage("message_increase_deck_max"));
+				player.closeInventory();
 			}
 		}
 	}
