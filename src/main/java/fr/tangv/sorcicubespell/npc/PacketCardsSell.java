@@ -30,7 +30,7 @@ public class PacketCardsSell {
 			lore.add(config.getString("price").replace("{price}", Integer.toString(price)));
 			this.itemSell = ItemBuild.buildSkull(SkullUrl.SHOP, 1, config.getString("buy"), lore, false);
 		} else {
-			this.itemError = ItemBuild.buildItem(Material.WRITTEN_BOOK, 1, (short) 0, (byte) 0, config.getString("error"), Arrays.asList(name), false);
+			this.itemError = ItemBuild.buildItem(Material.SIGN, 1, (short) 0, (byte) 0, config.getString("error"), Arrays.asList(name), false);
 		}
 	}
 
