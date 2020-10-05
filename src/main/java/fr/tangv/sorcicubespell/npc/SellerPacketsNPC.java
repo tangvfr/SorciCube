@@ -55,11 +55,11 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 		for (int i = 0; i < 7 && i < packetsSell.size(); i ++) {
 			PacketCardsSell packetSell = packetsSell.get(i);
 			if (packetSell.isValid()) {
-				inv.setItem(i, packetSell.getItemSell());
-				inv.setItem(i+9, packetSell.getItemPacket());
+				inv.setItem(i+1, packetSell.getItemSell());
+				inv.setItem(i+10, packetSell.getItemPacket());
 			} else {
-				inv.setItem(i, this.itemError);
-				inv.setItem(i+9, packetSell.getItemError());
+				inv.setItem(i+1, this.itemError);
+				inv.setItem(i+10, packetSell.getItemError());
 			}
 		}
 		inv.setItem(22, itemClose);
