@@ -34,7 +34,7 @@ public class GuiIncreaseDeck extends AbstractGui {
 			name = config.getString("unlock").replace("{number}", Integer.toString(number));
 			int price = priceSection.getInt(Integer.toString(number));
 			if (price >= 0) {
-				config.getString(feature.getMoney() >= price ? "price_right" : "price_wrong").replace("{price}", Integer.toString(price));
+				lore.add(config.getString(feature.getMoney() >= price ? "price_right" : "price_wrong").replace("{price}", Integer.toString(price)));
 			} else {
 				lore.add(config.getString("prenium"));
 			}
