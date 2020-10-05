@@ -137,3 +137,4 @@ gui_seller_packets:
   name: "§4Name§7: {name}"
   price: "§ePrice§7: §6{price}"
   close: "§cFermer"
+  error: "§4ERROR"

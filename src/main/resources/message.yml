@@ -43,3 +43,5 @@ message_increase_deck_max: "§cVous avez déjà atient le maxiume de deck possib
 message_increase_deck_prenium: "§5Seul le prenium vous permet de dévérouillé ce deck !"
 message_increase_deck_no_money: "§cVous avez pas assez d'argent pour acheté ce deck !"
 message_increase_deck_unlock: "§aVous venez de dévérouiller le deck {number} ! Bravo a vous !"
+message_packet_no_money: "§cVous avez pas assez d'argent pour acheté ce packet de cartes !"
+message_packet_buy: "§aVous venez d'acheté le packet de cartes nommé \"{name}\" !"

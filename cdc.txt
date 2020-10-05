@@ -28,5 +28,5 @@
 + in fight view level and fight the enemie on FightHero
 
 
-- add npc custom name with packet perso by npc (7 packet max)
++ add npc custom name with packet perso by npc (7 packet max)
 + and add npc for increase number deck
