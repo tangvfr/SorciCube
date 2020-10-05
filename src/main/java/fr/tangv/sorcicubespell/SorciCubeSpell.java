@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.command.CommandGiveArrowHead;
 import fr.tangv.sorcicubespell.command.CommandGiveCard;
+import fr.tangv.sorcicubespell.command.CommandMoney;
 import fr.tangv.sorcicubespell.command.CommandRefresh;
 import fr.tangv.sorcicubespell.manager.ManagerCards;
 import fr.tangv.sorcicubespell.manager.ManagerClickNPC;
@@ -99,6 +100,9 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.managerClickNPC = new ManagerClickNPC(this);
 				this.managerCreatorFight = new ManagerCreatorFight(this);
 				this.managerLobby = new ManagerLobby(this);
+				CommandMoney commandMoney = new CommandMoney(this);
+				getCommand("money").setExecutor(commandMoney);
+				getCommand("money").setTabCompleter(commandMoney);
 			} else {
 				this.arenaConfig = new Config(this, "arena.yml");
 				this.managerFight = new ManagerFight(this);

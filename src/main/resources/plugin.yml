@@ -32,3 +32,7 @@ commands:
     usage: /givearrowhead
     description: "Give Head Arrow Were In Fight."
     permission: sorcicubespell.givearrowhead
+  money:
+    usage: /money <player> <action> <argument>
+    description: "Manage the money of player."
+    permission: sorcicubespell.money

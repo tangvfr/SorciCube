@@ -91,6 +91,10 @@ public class PlayerFeature {
 		this.money += money;
 	}
 	
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	
 	public UUID getUUID() {
 		return uuid;
 	}
