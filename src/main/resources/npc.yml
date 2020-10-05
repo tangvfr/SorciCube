@@ -11,13 +11,13 @@ increase_number_deck_price:
   "3": 100
   "4": 500
   "5": -1
-#max number packet sell by one npc is 7 packets
+#max number packet sell by one npc is 7 packets, in the names replace the "." by "§p"
 list_seller_packet_cards:
   "§5Test Seller":
     "§2Packet Test": 100
     "§2Packet Test2": 150
   "§8Serious Seller":
-    "§2packet lvl.1": 100
-    "§2packet lvl.2": 150
-    "§2packet lvl.3": 200
-    "§2packet lvl.4": 300
+    "§2packet lvl§p1": 100
+    "§2packet lvl§p2": 150
+    "§2packet lvl§p3": 200
+    "§2packet lvl§p4": 300

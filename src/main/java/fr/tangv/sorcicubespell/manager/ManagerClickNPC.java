@@ -80,7 +80,7 @@ public class ManagerClickNPC {
 			}
 		});
 		for (String nameNPC : sorci.getConfigNPC().getConfigurationSection("list_seller_packet_cards").getKeys(false))
-			clickNPCs.put(nameNPC, new SellerPacketsNPC(sorci, nameNPC));
+			clickNPCs.put(nameNPC.replace("§p", "."), new SellerPacketsNPC(sorci, nameNPC));
 		//init bukkit
 		Bukkit.getPluginManager().registerEvents(new EventClickNPC(this), sorci);
 	}
