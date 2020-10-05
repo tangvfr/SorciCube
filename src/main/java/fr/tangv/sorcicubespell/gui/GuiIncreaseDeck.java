@@ -68,6 +68,7 @@ public class GuiIncreaseDeck extends AbstractGui {
 							this.open(player);
 						} else { 
 							player.sendMessage(getMessage("message_increase_deck_no_money"));
+							player.closeInventory();
 						}
 					} else {
 						player.sendMessage(getMessage("message_increase_deck_prenium"));
