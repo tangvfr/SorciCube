@@ -14,7 +14,7 @@ public class FightHero extends FightHead {
 	private EntityArmorStand armorFeaturesPlayer;
 	
 	public FightHero(PlayerFight owner) {
-		super(owner, owner.getLocBase(), 1.5D);
+		super(owner, owner.getLocBase(), 1.65D);
 		this.updateStat();
 		String name = owner.getFight().getSorci().getParameter().getString("format_level");
 		FightData data = owner.fight.getFightData();
@@ -26,7 +26,7 @@ public class FightHero extends FightHead {
 			name.replace("{level}", Byte.toString(data.getLevelPlayer2()))
 			.replace("{faction}", owner.getFight().getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer2()))
 		;
-		this.armorFeaturesPlayer = this.createArmorStand(name, 0.3D);
+		this.armorFeaturesPlayer = this.createArmorStand(name, 0.4D);
 	}
 	
 	@Override

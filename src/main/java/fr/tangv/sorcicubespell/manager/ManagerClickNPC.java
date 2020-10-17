@@ -20,6 +20,16 @@ public class ManagerClickNPC {
 		return sorci.getConfigNPC().getString(keyEnd);
 	}
 	
+	private boolean playerIsInit(SorciCubeSpell sorci, Player player, boolean message) {
+		if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId())) {
+			return true;
+		} else {
+			if (message)
+				player.sendMessage(sorci.getMessage().getString("message_initialized_player"));
+			return false;
+		}
+	}
+	
 	public ManagerClickNPC(SorciCubeSpell sorci) {
 		this.sorci = sorci;
 		this.clickNPCs = new HashMap<String, ClickNPC>();
@@ -28,21 +38,21 @@ public class ManagerClickNPC {
 		clickNPCs.put(getNameNPC("edit_deck"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
+				if (playerIsInit(sorci, player, true))
 					sorci.getManagerGui().getGuiEditOrView().open(player);
 			}
 		});
 		clickNPCs.put(getNameNPC("increase_number_deck"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
+				if (playerIsInit(sorci, player, true))
 					sorci.getManagerGui().getGuiIncreaseDeck().open(player);
 			}
 		});
 		clickNPCs.put(getNameNPC("default_deck"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
+				if (playerIsInit(sorci, player, false))
 					player.sendMessage(sorci.getMessage().getString("message_already_select_default_deck"));
 				else
 					sorci.getManagerGui().getGuiSelectDefaultDeck().open(player);
@@ -51,7 +61,7 @@ public class ManagerClickNPC {
 		clickNPCs.put(getNameNPC("return_spawn"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-				if (!sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
+				if (!playerIsInit(sorci, player, false))
 					player.sendMessage(sorci.getMessage().getString("message_need_for_return_spawn"));
 				else {
 					player.teleport(locationSpawn);
@@ -62,7 +72,7 @@ public class ManagerClickNPC {
 		clickNPCs.put(getNameNPC("fight"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-				if (sorci.getManagerPlayers().containtPlayer(player.getUniqueId()))
+				if (playerIsInit(sorci, player, true))
 					sorci.getManagerGui().getGuiFight().open(player);
 			}
 		});
@@ -76,7 +86,8 @@ public class ManagerClickNPC {
 		clickNPCs.put(getNameNPC("list_fight"), new ClickNPC() {
 			@Override
 			public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-				sorci.getManagerGui().getGuiListFight().open(player);
+				if (playerIsInit(sorci, player, true))
+					sorci.getManagerGui().getGuiListFight().open(player);
 			}
 		});
 		for (String nameNPC : sorci.getConfigNPC().getConfigurationSection("list_seller_packet_cards").getKeys(false))

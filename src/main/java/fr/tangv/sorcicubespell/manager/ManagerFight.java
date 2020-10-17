@@ -122,6 +122,7 @@ public class ManagerFight implements Runnable {
 						fight.getPlayer1().getLocBase().clone().add(fight.getPlayer2().getLocBase()).multiply(0.5),
 						true
 				);
+				playerInstance.put(player.getUniqueId(), spectator);
 				fight.initPacketForViewFight(spectator);
 				fight.addSpectator(spectator);
 				spectator.initBarSpectator();

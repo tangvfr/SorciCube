@@ -70,6 +70,8 @@ public class PlayerFight extends FightSpectator {
 	public void newPlayer(Player player) {
 		super.newPlayer(player);
 		enemie.showPlayer(this);
+		for (FightSpectator spectator : fight.getSpectators())
+			spectator.showPlayer(this);
 		initHotBar();
 	}
 	
