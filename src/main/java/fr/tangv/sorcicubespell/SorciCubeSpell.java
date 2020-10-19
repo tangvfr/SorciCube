@@ -112,7 +112,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			getCommand("refresh").setExecutor(new CommandRefresh(this));
 			getCommand("givecard").setExecutor(new CommandGiveCard(this));
 			getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(this));
-			getCommand("tps").setExecutor(new CommandTPS());
+			getCommand("tps").setExecutor(new CommandTPS(this));
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
 			Bukkit.getPluginManager().disablePlugin(this);
