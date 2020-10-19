@@ -36,4 +36,4 @@
 -+ path mode spéctateur,  (chat spectator is bug),  //event et view player reco, 
 +- path bug init inventory , keep item path bug open maitre des combat
 
-- /viewcard add option view hide cards
++ /viewcard add option view hide cards

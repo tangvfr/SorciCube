@@ -28,6 +28,7 @@ public class PlayerGui {
 	private AbstractGui previousGui;
 	private FightType fightType;
 	private Player inviteDuel;
+	private boolean viewHideCards;
 	
 	public PlayerGui(Player player) {
 		this.player = player;
@@ -41,6 +42,7 @@ public class PlayerGui {
 		this.setDeckCardEdit(0);
 		this.setPlayerFeature(null);
 		this.setPreviousGui(null);
+		this.setViewHideCards(false);
 	}
 	
 	public UUID getUUID() {
@@ -63,6 +65,14 @@ public class PlayerGui {
 		return gui;
 	}
 	
+	public boolean isViewHideCards() {
+		return viewHideCards;
+	}
+
+	public void setViewHideCards(boolean viewHideCards) {
+		this.viewHideCards = viewHideCards;
+	}
+
 	public void setGui(AbstractGui gui) {
 		this.gui = gui;
 		this.invOfGui = null;

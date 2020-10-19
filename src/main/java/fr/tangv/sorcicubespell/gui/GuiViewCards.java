@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.card.Card;
+import fr.tangv.sorcicubespell.card.CardFeatureType;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.RenderException;
@@ -36,6 +37,8 @@ public class GuiViewCards extends AbstractGuiCards {
 			for (String uuidS : player.getPlayerFeature().getCardsUnlocks()) {
 				Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuidS));
 				if (card != null) {
+					if (!player.isViewHideCards() && card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD))
+						continue;
 					cards.add(card);
 				}
 			}

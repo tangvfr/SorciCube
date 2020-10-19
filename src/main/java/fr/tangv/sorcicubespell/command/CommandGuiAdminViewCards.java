@@ -19,6 +19,7 @@ public class CommandGuiAdminViewCards implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
+			this.manager.getPlayerGui(player).setViewHideCards((args.length >= 1) ? args[0].equalsIgnoreCase("true") : false);
 			this.manager.getGuiAdminViewCards().open(player);
 			return true;
 		} else {
