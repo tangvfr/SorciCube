@@ -36,7 +36,3 @@ commands:
     usage: /money <player> <action> <argument>
     description: "Manage the money of player."
     permission: sorcicubespell.money
-  tps:
-    usage: /tps <time>
-    description: "Calculate number ticks in one second."
-    permission: sorcicubespell.tps
