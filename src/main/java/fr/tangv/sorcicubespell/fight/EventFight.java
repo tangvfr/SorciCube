@@ -252,7 +252,7 @@ public class EventFight implements Listener {
 												}
 											} else if (player.testHeadValidForAttack(CardCible.ONE_ENTITY_ALLY, card.getCibleFaction(), head)) {
 												player.setFirstSelection(head);
-												player.showHeadForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
+												player.showHeadForAttack(CardCible.ONE_ENTITY_ENEMIE, card.getCibleFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
 												player.getFirstSelection().showHead(ItemHead.SELECTABLE_ENTITY_DAMAGE);
 											}
 										} else if (player.testHeadValidForAttack(card, head)) {

@@ -405,7 +405,7 @@ public class PlayerFight extends FightSpectator {
 				initHeadForEntityPose(card);
 			} else {
 				if (card.getCible() == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE)
-					showHeadForAttack(CardCible.ONE_ENTITY_ALLY, card.getFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
+					showHeadForAttack(CardCible.ONE_ENTITY_ALLY, card.getCibleFaction(), ItemHead.SELECTABLE_ENTITY_AAE);
 				else if (card.getCible().hasChoose())
 					showHeadForAttack(card, ItemHead.SELECTABLE_SPELL);
 				else
