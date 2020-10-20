@@ -123,6 +123,8 @@ public class ManagerFight implements Runnable {
 						true
 				);
 				playerInstance.put(player.getUniqueId(), spectator);
+				player.setAllowFlight(true);
+				player.setFlying(true);
 				fight.initPacketForViewFight(spectator);
 				fight.addSpectator(spectator);
 				spectator.initBarSpectator();

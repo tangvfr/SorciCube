@@ -410,6 +410,8 @@ public class EventFight implements Listener {
 		player.setCollidable(false);
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(new ItemStack[4]);
+		player.setAllowFlight(false);
+		player.setFlying(false);
 		manager.playerJoin(player);
 	}
 	

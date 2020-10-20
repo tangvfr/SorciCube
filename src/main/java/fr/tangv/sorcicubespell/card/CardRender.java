@@ -63,10 +63,12 @@ public class CardRender {
 			if (type.isShow() && features.hasFeature(type) && (card.getType() != CardType.ENTITY || type != CardFeatureType.DAMAGE || card.getCible() != CardCible.ONE_ENEMIE || card.getCibleFaction() != CardFaction.BASIC)) {
 				CardFeature feature = features.getFeature(type);
 				featureReturn = true;
-				lore.add(sorci.getEnumTool().featureToString(feature.getType(), feature.getValue())
-					.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
-					.replace("{cible}", cible)
-				);
+				for (String line: sorci.getEnumTool().featureToString(feature.getType(), feature.getValue())
+						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
+						.replace("{cible}", cible)
+						.split("\n")) {
+					lore.add(line);
+				}
 			}
 		if (featureReturn)
 			lore.add("");
