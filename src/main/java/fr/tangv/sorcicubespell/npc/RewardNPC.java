@@ -9,17 +9,13 @@ import fr.tangv.sorcicubespell.player.PlayerFeature;
 
 public class RewardNPC implements ClickNPC {
 
-	private SorciCubeSpell sorci;
-	private String key;
-	private String nameNPC;
-    private int reward;
-	private String message;
+	private final String key;
+    private final int reward;
+	private final String message;
 	
 	public RewardNPC(SorciCubeSpell sorci, String key) {
-		this.sorci = sorci;
-		ConfigurationSection config = sorci.getConfigNPC().getConfigurationSection("");
+		ConfigurationSection config = sorci.getConfigNPC().getConfigurationSection("npc_rewards."+key);
 		this.key = key;
-		this.nameNPC = config.getString("name_npc");
 		this.reward = config.getInt("reward");
 		this.message = config.getString("message").replace("{reward}", Integer.toString(this.reward));
 	}
@@ -29,11 +25,12 @@ public class RewardNPC implements ClickNPC {
 		PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 		if (playerG.getPlayerFeature() != null) {
 			PlayerFeature feature = playerG.getPlayerFeature();
-			
-			
-			this.message.replace("{player}", player.getName());
-			
-			
+			if (!feature.getRewardNPC().contains(key)) {
+				feature.getRewardNPC().add(key);
+				feature.addMoney(reward);
+				playerG.uploadPlayerFeature(sorci.getManagerPlayers());
+				player.sendMessage(this.message.replace("{player}", player.getName()));
+			}
 		}
 	}
 	

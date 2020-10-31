@@ -157,6 +157,10 @@ public class PlayerFeature {
 		return cardsUnlocks;
 	}
 	
+	public List<String> getRewardNPC() {
+		return rewardNPC;
+	}
+	
 	public Document toDocument() {
 		Document doc = new Document()
 				.append("uuid", uuid.toString())
