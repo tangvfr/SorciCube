@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public class PlayerFeature {
 	private final DeckCards deck5;
 	private volatile int unlockDecks;
 	private final List<String> cardsUnlocks;
+	private final List<String> rewardNPC;
 	private volatile int money;
 	private volatile int experience;
 	private volatile byte level;
@@ -30,6 +32,7 @@ public class PlayerFeature {
 			DeckCards deck5,
 			int unlockDecks,
 			List<String> cardsUnlocks,
+			List<String> rewardNPC,
 			int money,
 			int experience,
 			byte level
@@ -42,6 +45,7 @@ public class PlayerFeature {
 		this.deck4 = deck4;
 		this.deck5 = deck5;
 		this.cardsUnlocks = cardsUnlocks;
+		this.rewardNPC = rewardNPC;
 		this.money = money;
 		this.experience = experience;
 		this.level = level;
@@ -163,6 +167,7 @@ public class PlayerFeature {
 				.append("deck5", deck5.toDocument())
 				.append("deck_unlock", unlockDecks)
 				.append("cards_unlocks", cardsUnlocks)
+				.append("reward_npc", rewardNPC)
 				.append("money", money)
 				.append("experience", experience)
 				.append("level", level)
@@ -178,10 +183,13 @@ public class PlayerFeature {
 		DeckCards deck5 = DeckCards.toDeckCards(manager, doc.get("deck5", Document.class));
 		int unlockDecks = doc.getInteger("deck_unlock");
 		List<String> cardsUnlocks = doc.getList("cards_unlocks", String.class);
+		List<String> rewardNPC = doc.getList("reward_npc", String.class);
 		int money = doc.getInteger("money", 0);
 		int experience = doc.getInteger("experience", 0);
 		byte level = (byte) doc.getInteger("level", 1);
-		return new PlayerFeature(uuid, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks, money, experience, level);
+		return new PlayerFeature(uuid, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks,
+				((rewardNPC == null) ? new ArrayList<String>() : rewardNPC),
+				money, experience, level);
 	}
 	
 	public Document toUUIDDocument() {

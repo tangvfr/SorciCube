@@ -15,7 +15,7 @@ npc_rewards:
   test_1:
     name_npc: "§6Gros PO"
     reward: 30
-    message: "Hey. mon salo tu fait quoi la !"
+    message: "Hey {player}. mon salo tu fait quoi la ! {reward} $"
   test_2:
     name_npc: "§6Gros PO2"
     reward: 40

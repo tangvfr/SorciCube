@@ -91,6 +91,7 @@ public class ManagerPlayers {
 					DeckCards.createDeckCardsEmpty(),
 					sorci.getParameter().getInt("number_deck_start"),
 					cardsUnlocks,
+					new ArrayList<String>(),
 					0, 0, (byte) 1);
 			this.insert(playerFeature);
 			sorci.getManagerGui().getPlayerGui(player).setPlayerFeature(playerFeature);
