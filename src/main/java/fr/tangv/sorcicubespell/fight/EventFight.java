@@ -284,6 +284,7 @@ public class EventFight implements Listener {
 			e.setCancelled(true);
 			FightSpectator spectator = manager.getSpectator(uuid);
 			if (spectator.inventoryIsAutorized(e.getInventory())) {
+				FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
 				if (spectator.isFightPlayer()) {
 					PlayerFight player = (PlayerFight) spectator;
 					if (player.canPlay()) {
@@ -301,7 +302,6 @@ public class EventFight implements Listener {
 								return;
 							}
 						}
-						FightSlot slot = FightSlot.valueOfRaw(e.getRawSlot());
 						if (slot != null)
 							switch (slot) {
 								case CARD_1:
@@ -353,6 +353,9 @@ public class EventFight implements Listener {
 									break;
 							}
 					}
+				} else if (slot == FightSlot.FINISH_ROUND) {
+					spectator.closeInventory();
+					manager.getSorci().sendPlayerToServer((Player) e.getWhoClicked(), manager.getSorci().getNameServerLobby());
 				}
 			} else {
 				spectator.openInvHistoric();

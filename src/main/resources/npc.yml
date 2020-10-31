@@ -11,6 +11,15 @@ increase_number_deck_price:
   "3": 100
   "4": 500
   "5": -1
+npc_rewards:
+  test_1:
+    name_npc: "§6Gros PO"
+    reward: 30
+    message: "Hey. mon salo tu fait quoi la !"
+  test_2:
+    name_npc: "§6Gros PO2"
+    reward: 40
+    message: "Hey. mon salo tu fait quoi la ! tiens {reward} $ !"
 #max number packet sell by one npc is 7 packets, in the names replace the "." by "§p"
 list_seller_packet_cards:
   "§5Test Seller":

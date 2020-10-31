@@ -141,6 +141,7 @@ public class FightSpectator {
 		for (int i = 0; i < 9; i++)
 			inv.setItem(i, ValueFight.V.itemNone);
 		inv.setItem(4, ValueFight.V.itemStickView);
+		inv.setItem(8, ValueFight.V.itemExit);
 	}
 	
 	public void newPlayer(Player player) {

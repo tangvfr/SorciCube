@@ -88,6 +88,9 @@ gui_player:
   buy_desc: "§eClick for buy"
   swap: "§bSwap card."
   swap_desc: "§eClick for swap"
+  back_lobby: "§cGo lobby"
+  back_lobby_desc:
+    - "§eCliquez pour revenir au spawn"
 #View Fight
 boss_bar:
   name: "§eRound {round}, prochain dans {time} !"

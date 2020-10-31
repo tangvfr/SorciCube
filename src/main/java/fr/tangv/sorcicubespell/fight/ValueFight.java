@@ -21,6 +21,7 @@ public class ValueFight {
 	protected final ItemStack itemStickView;
 	protected final ItemStack itemSwap;
 	protected final ItemStack itemBuy;
+	protected final ItemStack itemExit;
 	protected final int maxMana;
 	protected final int startMana;
 	protected final String titleBossBar;
@@ -41,6 +42,7 @@ public class ValueFight {
 				sorci.getGuiConfig().getString("gui_player.buy").replace("{price}", Integer.toString(priceCard))
 				, Arrays.asList(sorci.getGuiConfig().getString("gui_player.buy_desc").replace("{price}", Integer.toString(priceCard))), false);
 		this.itemSwap = ItemBuild.buildItem(Material.SHEARS, 1, (short) 0, (byte) 0, sorci.getGuiConfig().getString("gui_player.swap"), Arrays.asList(sorci.getGuiConfig().getString("gui_player.swap_desc")), false);
+		this.itemExit = ItemBuild.buildItem(Material.DARK_OAK_DOOR_ITEM, 1,  (short) 0, (byte) 0, sorci.getGuiConfig().getString("gui_player.back_lobby"), Arrays.asList(sorci.getGuiConfig().getString("gui_player.back_lobby_desc")), false);
 		//mana
 		this.maxMana = sorci.getParameter().getInt("max_mana");
 		this.startMana = sorci.getParameter().getInt("start_mana");
