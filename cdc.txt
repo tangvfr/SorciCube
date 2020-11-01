@@ -39,3 +39,5 @@
 
 + add Go lobby spectator.
 + add npc reward
+
+- add sphere limit for speactator in fight
