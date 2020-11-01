@@ -41,3 +41,4 @@
 + add npc reward
 
 - add sphere limit for speactator in fight
+- give specificate card, feature
