@@ -104,7 +104,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				getCommand("money").setExecutor(commandMoney);
 				getCommand("money").setTabCompleter(commandMoney);
 			} else {
-				this.arenaConfig = new Config(this, "arena.yml");
+				this.arenaConfig = newConfig("arena.yml");
 				this.managerFight = new ManagerFight(this);
 			}
 			new ManagerSecurity(this);
