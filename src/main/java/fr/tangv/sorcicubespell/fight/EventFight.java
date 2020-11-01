@@ -130,6 +130,19 @@ public class EventFight implements Listener {
 		//end action fight entity
 	}
 	
+	private void resetAndOpenInvHistoric(FightSpectator spectator) {
+		spectator.openInvHistoric();
+		if (spectator.isFightPlayer()) {
+			PlayerFight player = (PlayerFight) spectator;
+			if (player.canPlay()) {
+				player.setCardSelect(-1);
+				player.setFirstSelection(null);
+				player.setEntityAttack(null);
+				player.showEntityAttackPossible();
+			}
+		}
+	}
+	
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
 		UUID uuid = e.getPlayer().getUniqueId();
@@ -140,16 +153,7 @@ public class EventFight implements Listener {
 			if (e.getAction() == Action.LEFT_CLICK_AIR 
 					|| e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				if (!spectator.inventoryIsAutorized(spectator.getInvOpenTop())) {
-					spectator.openInvHistoric();
-					if (spectator.isFightPlayer()) {
-						PlayerFight player = (PlayerFight) spectator;
-						if (player.canPlay()) {
-							player.setCardSelect(-1);
-							player.setFirstSelection(null);
-							player.setEntityAttack(null);
-							player.showEntityAttackPossible();
-						}
-					}
+					resetAndOpenInvHistoric(spectator);
 				}
 				next = false;
 			} else if (spectator.hasStickView()) {
@@ -358,7 +362,7 @@ public class EventFight implements Listener {
 					manager.getSorci().sendPlayerToServer((Player) e.getWhoClicked(), manager.getSorci().getNameServerLobby());
 				}
 			} else {
-				spectator.openInvHistoric();
+				resetAndOpenInvHistoric(spectator);
 			}
 		}
 	}
