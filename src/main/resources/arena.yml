@@ -2,63 +2,63 @@
   world: "arena_test"
   first:
     base:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 0.5
       y: 64.0
       z: 0.0
     entity1:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 6.5
       y: 62.0
       z: 6.5
     entity2:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 3.5
       y: 62.0
       z: 6.5
     entity3:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 0.5
       y: 62.0
       z: 6.5
     entity4:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: -2.5
       y: 62.0
       z: 6.5
     entity5:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: -5.5
       y: 62.0
       z: 6.5
   second:
     base:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 0.5
       y: 64.0
       z: 19.0
     entity1:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: -5.5
       y: 62.0
       z: 12.5
     entity2:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: -2.5
       y: 62.0
       z: 12.5
     entity3:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 0.5
       y: 62.0
       z: 12.5
     entity4:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 3.5
       y: 62.0
       z: 12.5
     entity5:
-      ==: Vector
+      ==: org.bukkit.util.Vector
       x: 6.5
       y: 62.0
       z: 12.5
