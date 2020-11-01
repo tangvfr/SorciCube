@@ -130,7 +130,7 @@ public class ManagerFight implements Runnable {
 				spectator.initBarSpectator();
 			} else if (player.hasPermission(sorci.getParameter().getString("perm_admin"))) {
 				for (Player other : Bukkit.getOnlinePlayers())
-					if (playerInstance.containsKey(other.getUniqueId())) {
+					if (playerInstance.containsKey(other.getUniqueId()))
 						other.hidePlayer(player);
 			} else {
 				Bukkit.getScheduler().runTaskLaterAsynchronously(sorci, () -> {
