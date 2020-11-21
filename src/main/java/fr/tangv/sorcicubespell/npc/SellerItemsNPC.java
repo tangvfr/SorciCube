@@ -72,8 +72,6 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 			} else {
 				player.closeInventory();
 			}
-		} else {
-			player.closeInventory();
 		}
 	}
 
