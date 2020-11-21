@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.command;
 
+import java.io.IOException;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +32,11 @@ public class CommandAddItemInList implements CommandExecutor {
 				if (!name.isEmpty() && !name.contains(".")) {
 					if (sorci.getConfigItemList().get(name) == null) {
 						sorci.getConfigItemList().set(name, item);
+						try {
+							sorci.getConfigItemList().save();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						player.sendMessage(sorci.getMessage().getString("message_itemlist_saved").replace("{name}", name));
 					} else
 						player.sendMessage(sorci.getMessage().getString("message_itemlist_already_name"));
