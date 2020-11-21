@@ -50,6 +50,7 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
+		e.setCancelled(true);
 		int raw = e.getRawSlot();
 		if (raw >= 0 && raw < 9) {
 			int price = items[raw].price;
