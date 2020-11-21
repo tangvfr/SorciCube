@@ -68,6 +68,7 @@ feature:
   invulnerability: "§f§lInsensible pendant \n§f§l{round} tour(s)."
   immobilization: "§f§lImmobilise pendant \n§f§l{round} tour(s)."
   stunned: "§f§lÉtourdi pendant \n§f§l{round} tour(s)."
+  give_card: "§f§lDonne la carte\n§f§l{uuid}"
   if_attacked_exec_one: "§f§l{uuid} \n§f§lquand il subit des dégats."
   if_attacked_exec: "§f§l{uuid} \n§f§là chaque fois qu'il subit des dégats."
   if_attacked_give_one: "§f§l{uuid} \n§f§lquand il subit des dégats."
