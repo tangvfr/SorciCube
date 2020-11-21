@@ -193,6 +193,14 @@ public class FightSpell {
 				//nothing
 			}
 		});
+		actionsSpells.put(CardFeatureType.GIVE_CARD, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
+				Card card = player.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
+				if (card != null)
+					player.giveCard(card, 1);
+			}
+		});
 		actionsSpells.put(CardFeatureType.IF_ATTACKED_EXEC_ONE, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {

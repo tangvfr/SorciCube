@@ -45,7 +45,7 @@ public class PlayerFight extends FightSpectator {
 		this.playerFeature = playerFeature;
 		this.mana = 0;
 		this.manaBoost = 0;
-		this.health = Fight.start_health;
+		this.health = Fight.START_HEALTH;
 		this.cardSelected = -1;
 		this.entityAttack = null;
 		this.firstSelection = null;
@@ -322,8 +322,8 @@ public class PlayerFight extends FightSpectator {
 		if (health <= 0) {
 			this.health = 0;
 			fight.end(this);
-		} else if (health > Fight.max_health) 
-			this.health = Fight.max_health;
+		} else if (health > Fight.MAX_HEALTH) 
+			this.health = Fight.MAX_HEALTH;
 		else
 			this.health = health;
 		fight.updateViewLifes();

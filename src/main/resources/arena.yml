@@ -1,5 +1,6 @@
 "Château Fort":
   world: "chateau_fort"
+  spectator_radius: 25
   first:
     base:
       ==: org.bukkit.util.Vector
@@ -64,6 +65,7 @@
       z: 14.5    
 "Manoir":
   world: "manoir"
+  spectator_radius: 25
   first:
     base:
       ==: org.bukkit.util.Vector
@@ -128,6 +130,7 @@
       z: 14.5            
 "Ferme de Sorcicube":
   world: "ferme"
+  spectator_radius: 25
   first:
     base:
       ==: org.bukkit.util.Vector
@@ -192,6 +195,7 @@
       z: 14.5    
 "Campement":
   world: "camping"
+  spectator_radius: 25
   first:
     base:
       ==: org.bukkit.util.Vector
@@ -256,6 +260,7 @@
       z: 12.5
 "Temple de Guerre":
   world: "japon"
+  spectator_radius: 25
   first:
     base:
       ==: org.bukkit.util.Vector

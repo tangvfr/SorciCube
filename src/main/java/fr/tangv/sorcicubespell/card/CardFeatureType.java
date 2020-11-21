@@ -21,6 +21,7 @@ public enum CardFeatureType {
 	INVULNERABILITY(TypeValue.ROUND, true),
 	IMMOBILIZATION(TypeValue.ROUND, true),
 	STUNNED(TypeValue.ROUND, true),
+	GIVE_CARD(TypeValue.UUID, true),
 	IF_ATTACKED_EXEC_ONE(TypeValue.UUID, true),
 	IF_ATTACKED_EXEC(TypeValue.UUID, true),
 	IF_ATTACKED_GIVE_ONE(TypeValue.UUID, true),

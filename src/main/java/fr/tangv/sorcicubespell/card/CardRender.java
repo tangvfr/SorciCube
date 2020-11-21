@@ -6,22 +6,14 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.card.CardValue.TypeValue;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class CardRender {
 
 	private static String featureToString(SorciCubeSpell sorci, CardFeature feature) {
 		CardFeatureType featureType = feature.getType();
-		if (featureType == CardFeatureType.INVOCATION ||
-				featureType == CardFeatureType.ACTION_DEAD ||
-				featureType == CardFeatureType.ACTION_SPAWN ||
-				featureType == CardFeatureType.METAMORPH_TO ||
-				featureType == CardFeatureType.GIVE_FEATURE_CARD ||
-				featureType == CardFeatureType.IF_ATTACKED_EXEC_ONE ||
-				featureType == CardFeatureType.IF_ATTACKED_EXEC ||
-				featureType == CardFeatureType.IF_ATTACKED_GIVE_ONE ||
-				featureType == CardFeatureType.IF_ATTACKED_GIVE ||
-				featureType == CardFeatureType.EXECUTE) {
+		if (featureType.getTypeValue() == TypeValue.UUID) {
 			Card card = sorci.getManagerCards().getCard(feature.getValue().asUUID());
 			if (card != null) {
 				return card.renderName()+(card.getType() == CardType.ENTITY ? " "+CardVisual.renderStatCard(card) : "");

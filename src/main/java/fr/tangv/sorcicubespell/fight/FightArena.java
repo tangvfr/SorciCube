@@ -10,6 +10,7 @@ public class FightArena {
 
 	private final String name;
 	private final World world;
+	private final int radiusSpectator;
 	private final Location firstBase;
 	private final Location[] firstEntity;
 	private final Location secondBase;
@@ -18,6 +19,7 @@ public class FightArena {
 	public FightArena(String name, ConfigurationSection config) throws Exception {
 		this.name = name;
 		this.world = Bukkit.getWorld(config.getString("world"));
+		this.radiusSpectator = config.getInt(" spectator_radius");
 		this.firstBase = ((Vector) config.get("first.base")).toLocation(world, 0, 0);
 		this.firstEntity = new Location[5];
 		this.firstEntity[0] = ((Vector) config.get("first.entity1")).toLocation(world, 0, 0);
@@ -37,6 +39,8 @@ public class FightArena {
 			errorNull = "Name";
 		else if (this.world == null)
 			errorNull = "World";
+		else if (this.radiusSpectator < 0)
+			errorNull = "Radius Spectator";
 		else if (this.firstBase == null)
 			errorNull = "FirstBase";
 		else if (this.firstEntity == null)
@@ -76,6 +80,10 @@ public class FightArena {
 	
 	public World getWorld() {
 		return world;
+	}
+	
+	public int getRadiusSpectator() {
+		return radiusSpectator;
 	}
 	
 	public Location getFirstBase() {

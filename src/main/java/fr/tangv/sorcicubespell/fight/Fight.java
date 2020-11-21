@@ -25,8 +25,8 @@ public class Fight {
 	//value static
 	private final static double TOLERANCE = 4.6;
 	private final static double TOLERANCE_ENTITY = 1.6;
-	protected static final int max_health = 60;
-	protected static final int start_health = 30;
+	protected static final int MAX_HEALTH = 60;
+	protected static final int START_HEALTH = 30;
 	
 	private final FightData fightData;
 	private final SorciCubeSpell sorci;

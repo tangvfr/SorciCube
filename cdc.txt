@@ -27,8 +27,8 @@
 
 * /viewcard add option view hide cards
 
-+ add system spectator
-+ add system chat  (fs view all in fight, pf view juste enemie)
+* add system spectator
+* add system chat  (fs view all in fight, pf view juste enemie)
 
 + in fight view level and fight the enemie on FightHero
 
@@ -40,5 +40,11 @@
 + add Go lobby spectator.
 + add npc reward
 
-- add sphere limit for speactator in fight
-- give specificate card, feature
++ add sphere limit for speactator in fight
++ give specificate card, feature
+
+-itemlist
+-inventory shop
+-path view head(armorstand)
+
+

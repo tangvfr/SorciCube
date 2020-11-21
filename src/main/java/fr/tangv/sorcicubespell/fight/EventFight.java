@@ -400,6 +400,9 @@ public class EventFight implements Listener {
 						e.setTo(newLoc);
 					}
 				}
+			} else {
+				if (e.getTo().distance(spectator.getLocBase()) > spectator.getFight().getArena().getRadiusSpectator())
+					e.setCancelled(true);
 			}
 		}
 	}
