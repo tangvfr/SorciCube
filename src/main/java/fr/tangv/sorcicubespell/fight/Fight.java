@@ -91,6 +91,7 @@ public class Fight {
 	}
 	
 	private void initHead() {
+		Bukkit.broadcastMessage("§8[§6Test§8] §5Head is send !");
 		player1.initFightHead();
 		player2.initFightHead();
 		player1.getHero().updateStat();
