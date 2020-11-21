@@ -205,7 +205,7 @@ public class PanelNav extends JPanel {
 						Card card = new Card(
 								UUID.randomUUID(), 
 								new CardMaterial(1, 0),
-								"§4NoNameSort",
+								"§4NoNameSpell",
 								CardType.SPELL,
 								CardRarity.COMMUN,
 								CardFaction.BASIC,
