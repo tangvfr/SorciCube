@@ -43,8 +43,8 @@
 + add sphere limit for speactator in fight
 + give specificate card, feature
 
--itemlist
--inventory shop
++itemlist
++inventory shop
 -path view head(armorstand)
 
 

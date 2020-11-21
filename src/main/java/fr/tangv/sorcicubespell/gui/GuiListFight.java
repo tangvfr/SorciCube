@@ -94,7 +94,7 @@ public class GuiListFight extends AbstractGui implements Runnable {
 	}
 
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		return inv;
 	}
 

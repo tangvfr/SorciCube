@@ -10,6 +10,7 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.npc.ClickNPC;
 import fr.tangv.sorcicubespell.npc.EventClickNPC;
 import fr.tangv.sorcicubespell.npc.RewardNPC;
+import fr.tangv.sorcicubespell.npc.SellerItemsNPC;
 import fr.tangv.sorcicubespell.npc.SellerPacketsNPC;
 import fr.tangv.sorcicubespell.util.Config;
 
@@ -93,12 +94,21 @@ public class ManagerClickNPC {
 			}
 		});
 		Config configNPC = sorci.getConfigNPC();
-		//seller
+		//seller packet
 		for (String nameNPC : configNPC.getConfigurationSection("list_seller_packet_cards").getKeys(false))
 			clickNPCs.put(nameNPC.replace("§p", "."), new SellerPacketsNPC(sorci, nameNPC));
 		//rewarder
 		for (String key : configNPC.getConfigurationSection("npc_rewards").getKeys(false))
 			clickNPCs.put(configNPC.getString("npc_rewards."+key+".name_npc"), new RewardNPC(sorci, key));
+		//seller items
+		for (String key : configNPC.getConfigurationSection("npc_seller_item").getKeys(false)) {
+			try {
+				SellerItemsNPC sellerItemsNPC = new SellerItemsNPC(sorci, key);
+				clickNPCs.put(sellerItemsNPC.getNameNPC(), sellerItemsNPC);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		//init bukkit
 		Bukkit.getPluginManager().registerEvents(new EventClickNPC(this), sorci);
 	}

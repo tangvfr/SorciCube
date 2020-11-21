@@ -27,7 +27,7 @@ public class GuiEditOrView extends AbstractGui {
 	}
 
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 27, this.name);
 		inv.setItem(0, itemDeco); inv.setItem(4, itemDeco); inv.setItem(8, itemDeco);
 		inv.setItem(9, itemDeco); inv.setItem(13, itemDeco); inv.setItem(17, itemDeco);

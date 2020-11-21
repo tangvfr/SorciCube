@@ -24,7 +24,7 @@ public class GuiIncreaseDeck extends AbstractGui {
 	}
 	
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, InventoryType.DISPENSER, this.name);
 		String name;
 		ArrayList<String> lore = new ArrayList<String>();

@@ -1,0 +1,7 @@
+"test_item":
+  ==: org.bukkit.inventory.ItemStack
+  type: BARRIER
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: "&4&lTest"

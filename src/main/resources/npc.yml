@@ -25,10 +25,24 @@ npc_rewards:
     name_npc: "§5lol"
     reward: 70
     message: "Hey {player}.  ! {reward} $"
-
 #max number packet sell by one npc is 7 packets, in the names replace the "." by "§p"
 list_seller_packet_cards:
   "§7§lHubert §6[§e€§6]":
     "§b[§8Paquet de Cartes Niv§p §6(§f1§6)§b]": 75
     "§b[§8Paquet de Cartes Niv§p §6(§f2§6)§b]": 125
     "§b[§8Paquet de Cartes Niv§p §6(§f3§6)§b]": 175
+#already nine items sell
+npc_seller_item:
+  test1:
+    name: "§5Vendeur"
+    items_selled:
+      - "none:-1"
+      - "none:-1"
+      - "none:-1"
+      - "none:-1"
+      - "test_item:1000"
+      - "none:-1"
+      - "none:-1"
+      - "none:-1"
+      - "none:-1"
+

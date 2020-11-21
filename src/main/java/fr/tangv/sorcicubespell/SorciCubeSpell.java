@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
+import fr.tangv.sorcicubespell.command.CommandAddItemInList;
 import fr.tangv.sorcicubespell.command.CommandGiveArrowHead;
 import fr.tangv.sorcicubespell.command.CommandGiveCard;
 import fr.tangv.sorcicubespell.command.CommandMoney;
@@ -44,6 +45,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config arenaConfig;
 	private Config levelConfig;
 	private Config configNPC;
+	private Config configItemList;
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
 	private ManagerLobby managerLobby;
@@ -97,8 +99,12 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 				this.managerGuiAdmin = new ManagerGui(this);
 				this.managerPacketCards = new ManagerPacketCards(this);
-				this.managerClickNPC = new ManagerClickNPC(this);
 				this.managerCreatorFight = new ManagerCreatorFight(this);
+				//init for npc
+				this.configItemList = newConfig("itemlist.yml");
+				getCommand("additeminlist").setExecutor(new CommandAddItemInList(this));
+				this.managerClickNPC = new ManagerClickNPC(this);
+				//init for lobby
 				this.managerLobby = new ManagerLobby(this);
 				CommandMoney commandMoney = new CommandMoney(this);
 				getCommand("money").setExecutor(commandMoney);
@@ -197,6 +203,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public Config getConfigNPC() {
 		return configNPC;
+	}
+	
+	public Config getConfigItemList() {
+		return configItemList;
 	}
 
 	public MongoDBManager getMongo() {

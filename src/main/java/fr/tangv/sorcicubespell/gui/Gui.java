@@ -12,11 +12,11 @@ import org.bukkit.inventory.Inventory;
 public interface Gui {
 
 	public default void open(Player player) {
-		player.openInventory(getInventory(player));
+		player.openInventory(createInventory(player));
 	}
 	
 	@Nonnull
-	public Inventory getInventory(Player player);
+	public Inventory createInventory(Player player);
 	public void onDrag(Player player, InventoryDragEvent e);
 	public void onClick(Player player, InventoryClickEvent e);
 	public void onClose(Player player, InventoryCloseEvent e);

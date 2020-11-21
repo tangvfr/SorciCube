@@ -54,7 +54,7 @@ public class GuiDecks extends AbstractGui {
 	}
 	
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		try {
 			PlayerGui playerG = getPlayerGui(player);
 			Inventory inv = Bukkit.createInventory(null, 45, this.name);

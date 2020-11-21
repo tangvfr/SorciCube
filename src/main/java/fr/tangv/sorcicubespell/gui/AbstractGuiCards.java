@@ -46,7 +46,7 @@ public abstract class AbstractGuiCards extends AbstractGui {
 	protected abstract List<Card> listCards(PlayerGui player);
 	
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		try {
 			PlayerGui playerG = getPlayerGui(player);
 			int page = playerG.getPageViewGui();

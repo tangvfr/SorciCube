@@ -28,7 +28,7 @@ public class GuiChangeSort extends AbstractGui {
 	}
 	
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		PlayerGui playerG = getPlayerGui(player);
 		Inventory inv = Bukkit.createInventory(null, 18, this.name);
 		inv.setItem(0, itemDeco);

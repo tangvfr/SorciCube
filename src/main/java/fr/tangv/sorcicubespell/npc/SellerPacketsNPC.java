@@ -44,7 +44,7 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 	}
 	
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 27, this.nameNPC);
 		inv.setItem(0, itemDeco);
 		inv.setItem(8, itemDeco);

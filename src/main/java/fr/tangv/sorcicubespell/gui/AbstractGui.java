@@ -36,7 +36,7 @@ public abstract class AbstractGui implements Gui {
 	public void open(Player player) {
 		PlayerGui playerGA = getPlayerGui(player);
 		playerGA.setGui(this);
-		Inventory inv = this.getInventory(player);
+		Inventory inv = this.createInventory(player);
 		playerGA.setInvOfGui(inv);
 		player.openInventory(inv);
 	}

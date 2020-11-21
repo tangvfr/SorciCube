@@ -141,3 +141,6 @@ gui_seller_packets:
   price: "§6[§e{price}€§6]"
   close: "§c§l> Fermer"
   error: "§4ERROR"
+#Gui Seller Items
+gui_seller_items:
+  lore: ["§6[§e{price}€§6]", "§eCliquez pour acheter cet item"]

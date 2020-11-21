@@ -25,7 +25,7 @@ public class GuiEditDeck extends AbstractGui {
 	}
 	
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 36 ,this.name);
 		PlayerGui playerG = getPlayerGui(player);
 		DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());

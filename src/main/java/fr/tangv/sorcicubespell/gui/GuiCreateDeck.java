@@ -40,7 +40,7 @@ public class GuiCreateDeck extends AbstractGui {
 	}
 
 	@Override
-	public Inventory getInventory(Player player) {
+	public Inventory createInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 45, this.name);
 		for (int i = 0; i < 9; i++) {
 			inv.setItem(i, itemDeco);
