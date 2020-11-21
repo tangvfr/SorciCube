@@ -5,139 +5,139 @@ gui_admin_view_cards:
     sort: "§aTriage"
     previous: "§aPage précedant"
     next: "§aPage suivant"
-    close: "§cFermer"
+    close: "§c§l> Fermer"
     page: "§7Actualisé la page {page}/{max}"
 #Gui select deck default
 gui_select_deck_default:
-  name: "§aChoisi ton premier deck"
-  lore_select: "§2Prendre un deck de type {faction}§2 pour commencé."
+  name: "§a§lChoisis ta classe"
+  lore_select: "§aSelectionne la classe {faction}§r §apour débuter."
 #Gui Edit Or View
 gui_edit_or_view:
-  name: "§5Libraire Choix"
-  deck: "§6Deck"
-  card: "§2Card"
-  close: "§cFermer"
+  name: "§f§lOu veux-tu aller?"
+  deck: "§2§l[§l§aDeck§2§l]"
+  card: "§5§l[§l§dCarte§5§l]"
+  close: "§c§l> Fermer"
 #Gui View Cards
 gui_view_cards:
-  name: "§5Libraire Cartes {page}/{max}"
+  name: "§5§l[§l§dCarte§5§l] §f{page}/{max}"
   item_name:
-    sort: "§aTriage"
-    previous: "§aPage précedant"
-    next: "§aPage suivant"
-    back: "§cRetour"
-    page: "§7Actualisé la page {page}/{max}"
+    sort: "§fTriage"
+    previous: "§f< Page précedente"
+    next: "§fPage suivante >"
+    back: "§c§l> Retour"
+    page: "§fActualiser {page}/{max}"
 #Gui Decks
 gui_decks:
-  name: "§5Choisir un Deck"
-  deck: "§2Deck {number} §7| {average_cost}"
-  back: "§cRetour"
+  name: "§2§l[§l§aDeck§2§l]"
+  deck: "§2§l[§l§aDeck {number}§2§l] §7| {average_cost}"
+  back: "§c§l> Retour"
 #Gui Edit Deck
 gui_edit_deck:
-  name: "§5Libraire Edit Deck"
-  deck: "§2Deck {number} {average_cost}"
-  back: "§cRetour"
+  name: "§f§lCréation de Deck"
+  deck: "§2§l[§l§aDeck {number}§2§l] §7| {average_cost}"
+  back: "§c§l> Retour"
   lore_faction:
-    - "§5Cliquez pour reset et"
-    - "§5Changé de faction le deck"
+    - "§fClique ici pour réinitialiser"
+    - "§fet changer de classe."
 #Gui Swap Card
 gui_swap_card:
-  name: "§5Libraire Edit Carte Deck {page}/{max}"
+  name: "§5§l[§l§dCarte§5§l] §f{page}/{max}"
   item_name:
-    sort: "§aTriage"
-    previous: "§aPage précedant"
-    next: "§aPage suivant"
-    back: "§cRetour"
-    page: "§7Actualisé la page {page}/{max}"
+    sort: "§fTriage"
+    previous: "§f< Page précedente"
+    next: "§fPage suivante >"
+    back: "§c§l> Retour"
+    page: "§fActualiser {page}/{max}"
 #Gui Change Sort
 gui_change_sort:
-  name: "§dChoisir le triage"
-  back: "§cRetour"
+  name: "§f§lChoisir son triage"
+  back: "§c§l> Retour"
 #Gui Create Deck
 gui_create_deck:
-  name: "§4Crée un nouveau deck"
-  back: "§cRetour"
-  lore_select: "§2Crée un deck de type {faction}.§2"
+  name: "§a§lChoisis ta classe"
+  back: "§c§l> Retour"
+  lore_select: "§aSelectionne la classe {faction}§r §apour débuter."
 #Gui Open Packet
 gui_open_packet:
   no_view: "§bMystère"
-  back: "§cFermer"
+  back: "§c§l> Fermer"
 #Gui Fight
 gui_fight:
-  name: "§3Choisir le type de combat"
-  unclassied: "§8Non Classé"
-  duel: "§cDuel"
-  close: "§cFermer"
+  name: "§f§lChoisis ton combat"
+  unclassied: "§4§l[§r§cNon Classé ⚔§4§l]"
+  duel: "§c§l[§r§4Duel ⚔§c§l]"
+  close: "§c§l> Fermer"
 #Gui Historic
 gui_historic:
-  name: "§5Historique"
+  name: "§5§lHistorique"
 #Gui View Entity
 gui_view_entity:
-  name: "§5View Entity"
+  name: "§6Baguette Magique"
 #Gui Swap Fight
 gui_swap_fight:
-  name: "§5Swap Card"
+  name: "§3Échanger une carte?"
 #Gui Of Player
 gui_player:
-  "null": "§fAucune carte"
+  "null": "§f§lAucune carte"
   none: " "
-  next: "§6Next Round"
-  next_desc: "§eClick for action"
-  stick_view: "§5View Entity"
-  stick_view_desc: "§eClick on entity"
-  buy: "§bBuy new card for {price} mana."
-  buy_desc: "§eClick for buy"
-  swap: "§bSwap card."
-  swap_desc: "§eClick for swap"
-  back_lobby: "§cGo lobby"
+  next: "§a§l--> Fin du tour"
+  next_desc: "§fPour passer au round suivant."
+  stick_view: "§6Baguette Magique"
+  stick_view_desc: "§fPermet de regarder la carte des serviteurs."
+  buy: "§bPiocher une nouvelle carte?"
+  buy_desc: "§bpour §9[§l§f{price}§9] §b§lmana."
+  swap: "§3Échanger une carte?"
+  swap_desc: "§fRemplace une carte choisie (1fois/tour)."
+  back_lobby: "§c§l> Retour à SorciCube"
   back_lobby_desc:
-    - "§eCliquez pour revenir au spawn"
+    - "§fPour retourner au village."
 #View Fight
 boss_bar:
-  name: "§eRound {round}, prochain dans {time} !"
+  name: "§eRound N°{round}, prochain dans {time}"
   color: "YELLOW"
-  name_arena: "§f{arena}"
+  name_arena: "§f§l{arena}"
   color_arena: "WHITE"
-  name_end: "Retour au lobby dans {time} !"
+  name_end: "§dRetour au lobby dans {time} !"
   color_end: "PURPLE"
 scoreboard:
-  name: "§cVie des heros"
+  name: "§cVie des héros"
 #Gui List Fight
 gui_list_fight:
-  name: "§5Combat en cours"
-  unclassied: "§8Non Classé"
-  duel: "§cDuel"
-  close: "§cFermer"
+  name: "§f§lListe des combats"
+  unclassied: "§4§l[§r§cNon Classé ⚔§4§l]"
+  duel: "§c§l[§r§4Duel ⚔§c§l]"
+  close: "§c§l> Fermer"
   stats:
-    waiting: "§6Attente des joueur"
-    starting: "§6Lancement attente du deuxieme joueur"
-    start: "§2Combat en cours"
-    end: "§4Combat fini"
+    waiting: "§f§lEn attente des joueurs"
+    starting: "§f§lEn attende du second joueur"
+    start: "§2§l[§aDébut du combat ⚔§2§l]"
+    end: "§8§l[§7Fin du combat ⚔§8§l]"
   lore_fight:
     - " "
-    - "§c{name_player1} §7Lvl.{level_player1} {faction_player1}"
-    - "  §4vs"
-    - "§c{name_player2} §7Lvl.{level_player2} {faction_player2}"
+    - "§f§l{name_player1} §7Niveau.§b[§f§l{level_player1}§b] {faction_player1}"
+    - "  §4§lV.S"
+    - "§f§l{name_player2} §7Niveau.§b[§f§l{level_player2}§b] {faction_player2}"
     - " "
-    - "§7Etat de la partie: {stat}"
+    - "§f§lStatue de la partie : {stat}"
     - " "
     - " "
-    - "§8Serveur: {server}"
-    - "§8Combat: {fight_uuid}"
-  duel_number: "§c{number} duel en cours"
-  no_classed_number: "§7{number} non classé en cours"
-  all_number: "§6{number} combat en cours"
+    - "§f§lArène : {server}"
+    - "§f§lCombat : {fight_uuid}"
+  duel_number: "§c§l[§r§4{number} duel(s) ⚔§c§l]"
+  no_classed_number: "§4§l[§r§c{number} non classé(s) ⚔§4§l]"
+  all_number: "§6§l[§r§e{number} combat(s) en cours ⚔§6§l]"
 #Gui Increase Deck
 gui_increase_deck:
-  name: "§9Gui Increase Deck"
-  max: "§5Max Deck Unlock"
-  unlock: "§2Unlock Deck {number}"
-  prenium: "§fFor The Preniums"
-  price_wrong: "§9Price§7: §c{price}$"
-  price_right: "§9Price§7: §a{price}$"
+  name: "§f§lUn Deck supplémentaire?"
+  max: "§fNombre de deck maximum atteint!"
+  unlock: "§f§lDéverouiller le §a[§2Deck {number}§a]"
+  prenium: "§7§lUniquement pour les §9§lSorciers"
+  price_wrong: "§6[§e{price}€§6]"
+  price_right: "§6[§e{price}€§6]"
 #Gui Seller Packets
 gui_seller_packets:
-  buy: "§2Buy the Packet"
-  name: "§4Name§7: {name}"
-  price: "§ePrice§7: §6{price}"
-  close: "§cFermer"
+  buy: "§f§lAcheter ce paquet?"
+  name: "{name}"
+  price: "§6[§e{price}€§6]"
+  close: "§c§l> Fermer"
   error: "§4ERROR"

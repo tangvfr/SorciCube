@@ -1,10 +1,11 @@
-edit_deck: "§6L'éditeur"
+edit_deck: "§7§lAlphonse §2[§a+§2]"
+edit_deck: "§7§lClothilde §2[§a+§2]"
 return_spawn: "§cRetour Spawn"
 default_deck: "§aPremier Deck"
-fight: "§4Gardien"
+fight: "§7§lErling §4[§c⚔§4]"
 leave: "§4Big Man"
-list_fight: "§6Maitre des combat"
-increase_number_deck: "§6Deck Unlock"
+list_fight: "§7§lDaniel §3[§b☼§3]"
+increase_number_deck: "§7§lTheobald §6[§e€§6]"
 increase_number_deck_price:
   "1": 0
   "2": 0
@@ -15,18 +16,19 @@ npc_rewards:
   test_1:
     name_npc: "§6Gros PO"
     reward: 30
-    message: "Hey {player}. mon salo tu fait quoi la ! {reward} $"
+    message: "Hey {player}. monee salo tu fait quoi la ! {reward} $"
   test_2:
-    name_npc: "§6Gros PO2"
-    reward: 40
-    message: "Hey. mon salo tu fait quoi la ! tiens {reward} $ !"
+    name_npc: "§7§lGuy"
+    reward: 70
+    message: "Hey {player}.  ! {reward} $"
+  test_3:
+    name_npc: "§5lol"
+    reward: 70
+    message: "Hey {player}.  ! {reward} $"
+
 #max number packet sell by one npc is 7 packets, in the names replace the "." by "§p"
 list_seller_packet_cards:
-  "§5Test Seller":
-    "§2Packet Test": 100
-    "§2Packet Test2": 150
-  "§8Serious Seller":
-    "§2packet lvl§p1": 100
-    "§2packet lvl§p2": 150
-    "§2packet lvl§p3": 200
-    "§2packet lvl§p4": 300
+  "§7§lHubert §6[§e€§6]":
+    "§b[§8Paquet de Cartes Niv§p §6(§f1§6)§b]": 75
+    "§b[§8Paquet de Cartes Niv§p §6(§f2§6)§b]": 125
+    "§b[§8Paquet de Cartes Niv§p §6(§f3§6)§b]": 175

@@ -1,12 +1,12 @@
 #mongodb
-mongodb: "mongodb://ect..."
+mongodb: "mongodb://plugin:J_73%263TmHcxF2h%23%26tJ2*@sorcicube.fr:27017/?authSource=plugin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"
 collection: "plugin"
 #deck
 number_deck_start: 2
 #is lobby
 is_lobby: true
-chat_format: "§7Lvl.{level}§f {displayname}§r§8: §r§f{message}"
-action_bar_message: "§2Lvl.{level}    §d{exp}§5/§d{exp_max} §dexperiences    §6{money}$"
+chat_format: "§7Niveau.§b[§f§l{level}§b]§f {displayname}§r§7 : §r§f{message}"
+action_bar_message: "§7Niveau.§b[§f§l{level}§b]    §5[§d{exp}§5/§d{exp_max}§5] §dXP    §6[§e{money}€§6]"
 #security
 perm_build: "sorcicubespell.build"
 perm_admin: "sorcicubespell.admin"
@@ -20,13 +20,13 @@ perm_admin: "sorcicubespell.admin"
 format_time_sec: "sec"
 format_time_min: "min "
 #fight
-format_level: "§7Lvl.{level} {faction}"
+format_level: "§7Niveau.§b[§f§l{level}§b] {faction}"
 chat_format_fight: "{spectator} §r§f{displayname}§r§8: §r§f{message}"
 spectator_fight: "§7S."
 player_fight: "§4P."
-cooldown_below_fight: 10
-cooldown_one_round: 180
-cooldown_end: 10
+cooldown_below_fight: 5
+cooldown_one_round: 90
+cooldown_end: 5
 max_mana: 12
 start_mana: 2
 price_card: 5
@@ -38,48 +38,48 @@ server_jump: "jump"
 #location
 location_spawn:
   ==: org.bukkit.Location
-  world: "world"
-  x: 0.5
-  y: 100.0
-  z: 0.5
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
   pitch: 0.0
-  yaw: 0.0
+  yaw: 180.0
 location_tuto:
   ==: org.bukkit.Location
-  world: "world"
-  x: 100.5
-  y: 100.0
-  z: 100.5
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
   pitch: 0.0
-  yaw: 0.0
+  yaw: 180.0
 location_noclassified:
   ==: org.bukkit.Location
-  world: "world"
-  x: 100.5
-  y: 100.0
-  z: 200.5
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
   pitch: 0.0
-  yaw: 0.0
+  yaw: 180.0
 location_duel:
   ==: org.bukkit.Location
-  world: "world"
-  x: 100.5
-  y: 100.0
-  z: 0.5
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
   pitch: 0.0
-  yaw: 0.0
+  yaw: 180.0
 location_npc:
   ==: org.bukkit.Location
-  world: "world"
-  x: 0.5
-  y: 100.0
-  z: 0.5
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
   pitch: 0.0
-  yaw: 0.0
+  yaw: 180.0
 #message
 join_message: "§8[§2+§8] §7{player}"
 quit_message: "§8[§4-§8] §7{player}"
 #packet
-packet_lore: "§8Packet of cards"
+packet_lore: "§8Paquet de Cartes"
 packet_format: "{name}§r§7: §d{value}§6%"
 packet_size: "§6Nombre de Carte(s)§7: §d{value}"
