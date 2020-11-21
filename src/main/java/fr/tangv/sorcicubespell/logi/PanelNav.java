@@ -195,7 +195,7 @@ public class PanelNav extends JPanel {
 		private static final long serialVersionUID = 777350512568935632L;
 		
 		public ListPopupMenu(CardsPanel cardsPanel) {
-			JMenuItem itemCreateSort = new JMenuItem("Create Card Sort");
+			JMenuItem itemCreateSort = new JMenuItem("Create Card Spell");
 			itemCreateSort.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
