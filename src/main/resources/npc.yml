@@ -35,7 +35,7 @@ npc_messages:
   my_lolo:
     name_npc: "§5lolo"
     messages:
-      - "Hey {player}, my name is Lolo.
+      - "Hey {player}, my name is Lolo."
       - "Hey {player}, have you a bear."
 #max number packet sell by one npc is 7 packets, in the names replace the "." by "§p"
 list_seller_packet_cards:
