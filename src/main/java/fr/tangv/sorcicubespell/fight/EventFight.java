@@ -124,10 +124,14 @@ public class EventFight implements Listener {
 		if (cAttack > 0)
 			entity.damage(cAttack);
 		//excuting action
-		if (head instanceof FightEntity)
+		if (head instanceof FightEntity) {
+			Bukkit.broadcastMessage("§6[§aDebug§6] attacking excuting !");
 			((FightEntity) head).executingAction();
-		if (cAttack > 0)
+		}
+		if (cAttack > 0) {
+			Bukkit.broadcastMessage("§6[§aDebug§6] c attacking excuting !");
 			entity.executingAction();
+		}
 		//end action fight entity
 	}
 	
