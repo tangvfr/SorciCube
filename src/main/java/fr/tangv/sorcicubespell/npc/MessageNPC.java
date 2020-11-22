@@ -16,7 +16,8 @@ public class MessageNPC implements ClickNPC {
 	
 	@Override
 	public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-		player.sendMessage(this.messages.get((int) (Math.random()*messages.size())).replace("{player}", player.getName()));
+		if (messages.size() > 0)
+			player.sendMessage(this.messages.get((int) (Math.random()*messages.size())).replace("{player}", player.getName()));
 	}
 	
 }

@@ -103,7 +103,7 @@ public class ManagerClickNPC {
 			clickNPCs.put(configNPC.getString("npc_rewards."+key+".name_npc"), new RewardNPC(sorci, key));
 		//messager
 		for (String key : configNPC.getConfigurationSection("npc_messages").getKeys(false))
-			clickNPCs.put(configNPC.getString("npc_messages."+key+".name_npc"), new MessageNPC(configNPC.getStringList("npc_messages."+key+".message")));
+			clickNPCs.put(configNPC.getString("npc_messages."+key+".name_npc"), new MessageNPC(configNPC.getStringList("npc_messages."+key+".messages")));
 		//seller items
 		for (String key : configNPC.getConfigurationSection("npc_seller_item").getKeys(false)) {
 			try {
