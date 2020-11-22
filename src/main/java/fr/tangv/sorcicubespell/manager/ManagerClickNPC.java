@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.npc.ClickNPC;
 import fr.tangv.sorcicubespell.npc.EventClickNPC;
+import fr.tangv.sorcicubespell.npc.MessageNPC;
 import fr.tangv.sorcicubespell.npc.RewardNPC;
 import fr.tangv.sorcicubespell.npc.SellerItemsNPC;
 import fr.tangv.sorcicubespell.npc.SellerPacketsNPC;
@@ -100,6 +101,9 @@ public class ManagerClickNPC {
 		//rewarder
 		for (String key : configNPC.getConfigurationSection("npc_rewards").getKeys(false))
 			clickNPCs.put(configNPC.getString("npc_rewards."+key+".name_npc"), new RewardNPC(sorci, key));
+		//messager
+		for (String key : configNPC.getConfigurationSection("npc_messages").getKeys(false))
+			clickNPCs.put(configNPC.getString("npc_messages."+key+".name_npc"), new MessageNPC(configNPC.getString("npc_messages."+key+".message")));
 		//seller items
 		for (String key : configNPC.getConfigurationSection("npc_seller_item").getKeys(false)) {
 			try {
