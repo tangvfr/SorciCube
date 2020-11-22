@@ -46,5 +46,6 @@
 +itemlist
 +inventory shop
 -path view head(armorstand)
+-path bug eat food
 
 
