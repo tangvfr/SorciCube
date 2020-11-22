@@ -79,7 +79,6 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.enumConfig = newConfig("enum.yml");
 			this.guiConfig = newConfig("gui.yml");
 			this.levelConfig = newConfig("level.yml");
-			this.configNPC = newConfig("npc.yml");
 			//is lobby
 			this.isLobby = getParameter().getBoolean("is_lobby");
 			//init tool
@@ -102,6 +101,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				this.managerCreatorFight = new ManagerCreatorFight(this);
 				//init for npc
 				this.configItemList = newConfig("itemlist.yml");
+				this.configNPC = newConfig("npc.yml");
 				getCommand("additeminlist").setExecutor(new CommandAddItemInList(this));
 				this.managerClickNPC = new ManagerClickNPC(this);
 				//init for lobby
