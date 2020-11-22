@@ -61,7 +61,7 @@ public class Fight {
 		this.cooldown = new Cooldown(1_000);
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.cooldownEnd = new Cooldown((long) sorci.getParameter().getInt("cooldown_end")*1000L);
-		this.round = -sorci.getParameter().getInt("cooldown_below_fight")-1;
+		this.round = -sorci.getParameter().getInt("cooldown_before_fight")-1;
 		this.round2Max = round/2;
 		this.arena = sorci.getManagerFight().pickArena();
 		this.bossBar = Bukkit.createBossBar(

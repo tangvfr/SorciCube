@@ -24,7 +24,7 @@ format_level: "§7Niveau.§b[§f§l{level}§b] {faction}"
 chat_format_fight: "{spectator} §r§f{displayname}§r§8: §r§f{message}"
 spectator_fight: "§7S."
 player_fight: "§4P."
-cooldown_below_fight: 5
+cooldown_before_fight: 10
 cooldown_one_round: 90
 cooldown_end: 5
 max_mana: 12
