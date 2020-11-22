@@ -47,5 +47,5 @@
 +inventory shop
 -path view head(armorstand)
 -path bug eat food
-
+-remove message debug init head
 
