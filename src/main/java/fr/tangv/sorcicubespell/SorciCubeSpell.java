@@ -94,14 +94,14 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.managerPlayers = new ManagerPlayers(this);
 			this.managerFightData = new ManagerFightData(this.mongo);
 			if (this.isLobby) {
+				this.configItemList = newConfig("itemlist.yml");
+				this.configNPC = newConfig("npc.yml");
 				this.managerFightData.removeAllFightData();
 				this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
 				this.managerGuiAdmin = new ManagerGui(this);
 				this.managerPacketCards = new ManagerPacketCards(this);
 				this.managerCreatorFight = new ManagerCreatorFight(this);
 				//init for npc
-				this.configItemList = newConfig("itemlist.yml");
-				this.configNPC = newConfig("npc.yml");
 				getCommand("additeminlist").setExecutor(new CommandAddItemInList(this));
 				this.managerClickNPC = new ManagerClickNPC(this);
 				//init for lobby
