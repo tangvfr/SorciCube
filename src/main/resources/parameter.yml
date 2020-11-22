@@ -26,7 +26,7 @@ spectator_fight: "§7S."
 player_fight: "§4P."
 cooldown_before_fight: 10
 cooldown_one_round: 90
-cooldown_end: 5
+cooldown_end: 10
 max_mana: 12
 start_mana: 2
 price_card: 5
