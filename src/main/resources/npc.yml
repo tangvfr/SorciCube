@@ -30,10 +30,13 @@ npc_rewards:
 npc_messages:
   testage:
     name_npc: "§7§lGuy M"
-    message: "Hey {player} !"
+    messages:
+      - "Hey {player} !"
   my_lolo:
     name_npc: "§5lolo"
-    message: "Hey {player}, my name is Lolo."
+    messages:
+      - "Hey {player}, my name is Lolo.
+      - "Hey {player}, have you a bear."
 #max number packet sell by one npc is 7 packets, in the names replace the "." by "§p"
 list_seller_packet_cards:
   "§7§lHubert §6[§e€§6]":
