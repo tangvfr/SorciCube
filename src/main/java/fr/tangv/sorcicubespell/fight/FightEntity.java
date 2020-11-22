@@ -192,7 +192,8 @@ public class FightEntity extends FightHead {
 	public void executingAction() {
 		if (lastCard != null) {
 			lastCard.excuteAction(this);
-			lastCard = null;
+			if (card == null)
+				lastCard = null;
 		}
 	}
 	

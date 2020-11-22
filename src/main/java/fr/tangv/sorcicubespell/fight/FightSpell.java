@@ -330,7 +330,6 @@ public class FightSpell {
 	}
 	
 	private static void excutingActionFightEntity(PlayerFight player) {
-		Bukkit.broadcastMessage("§6[§aDebug§6] spell attacking excuting !");
 		for (int i = 0; i < player.getMaxEntity(); i++) {
 			player.getEntity(i).executingAction();
 			player.getEnemie().getEntity(i).executingAction();

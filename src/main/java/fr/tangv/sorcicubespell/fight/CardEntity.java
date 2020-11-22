@@ -1,9 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
-import java.util.Arrays;
 import java.util.Vector;
-
-import org.bukkit.Bukkit;
 
 import fr.tangv.sorcicubespell.card.Card;
 import fr.tangv.sorcicubespell.card.CardFeature;
@@ -136,7 +133,7 @@ public class CardEntity {
 	
 	public void excuteAction(FightEntity entity) {
 		PlayerFight player = entity.getOwner();
-		Bukkit.broadcastMessage("§e[§aDebug§e] "+entity.getNameInChat()+" "+Arrays.toString(actions));
+		//Bukkit.broadcastMessage("§e[§aDebug§e] "+entity.getNameInChat()+" "+Arrays.toString(actions));
 		if (actions[0]) {
 			actions[0] = false;
 			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC_ONE), "message_is_attack_one");
