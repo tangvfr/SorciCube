@@ -30,22 +30,21 @@
 * add system spectator
 * add system chat  (fs view all in fight, pf view juste enemie)
 
-+ in fight view level and fight the enemie on FightHero
+* in fight view level and fight the enemie on FightHero
 
-+ monter (en hauteur) le lvl et type de dekc use
-+ message npc inacessible
--+ path mode spéctateur,  (chat spectator is bug),  //event et view player reco, 
-+- path bug init inventory , keep item path bug open maitre des combat
+* monter (en hauteur) le lvl et type de dekc use
+* message npc inacessible
+* path mode spéctateur,  (chat spectator is bug),  //event et view player reco, 
+* path bug init inventory , keep item path bug open maitre des combat
 
-+ add Go lobby spectator.
-+ add npc reward
+* add npc reward
+* give specificate card, feature
+
+* itemlist
+* inventory shop
 
 + add sphere limit for speactator in fight
-+ give specificate card, feature
++ add Go lobby spectator.
 
-+itemlist
-+inventory shop
--path view head(armorstand)
--path bug eat food
--remove message debug init head
+- path bug eat food
 
