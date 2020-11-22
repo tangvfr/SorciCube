@@ -10,7 +10,6 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -56,11 +55,6 @@ public class ManagerSecurity implements Listener {
 	public void onDrop(PlayerDropItemEvent e) {
 		if (!isAuto(e.getPlayer()))
 			e.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onFood(FoodLevelChangeEvent e) {
-		e.setCancelled(true);
 	}
 	
 	@EventHandler

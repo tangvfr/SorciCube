@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
@@ -423,6 +424,11 @@ public class EventFight implements Listener {
 		player.setAllowFlight(false);
 		player.setFlying(false);
 		manager.playerJoin(player);
+	}
+	
+	@EventHandler
+	public void onFood(FoodLevelChangeEvent e) {
+		e.setCancelled(true);
 	}
 	
 	@EventHandler

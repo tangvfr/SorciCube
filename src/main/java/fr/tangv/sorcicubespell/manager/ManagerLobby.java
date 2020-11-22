@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -101,6 +102,14 @@ public class ManagerLobby implements Listener {
 				}
 			}
 		}, 1);
+	}
+	
+	
+	@EventHandler
+	public void onFood(FoodLevelChangeEvent e) {
+		if (e.getFoodLevel() < 19) {
+			e.setFoodLevel(19);
+		}
 	}
 	
 	@EventHandler
