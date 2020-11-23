@@ -3,8 +3,10 @@ package fr.tangv.sorcicubespell.manager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -35,9 +37,13 @@ public class ManagerSecurity implements Listener {
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
-		Bukkit.broadcastMessage("§8[§aDebug§8] §6interact "+e.getAction().name()+" edible "+(!e.hasItem() ? "none" : e.getItem().getType().isEdible()));
 		if (!isAuto(e.getPlayer()))
-			e.setCancelled(true);
+			if (e.hasItem() && e.getItem().getType().isEdible() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+				e.setUseItemInHand(Result.DEFAULT);
+				e.setUseInteractedBlock(Result.DENY);
+			} else {
+				e.setCancelled(true);
+			}
 	}
 	
 	@EventHandler
