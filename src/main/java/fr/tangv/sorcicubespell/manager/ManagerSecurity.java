@@ -35,7 +35,7 @@ public class ManagerSecurity implements Listener {
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
-		Bukkit.broadcastMessage("§8[§aDebug§8] §6interact event named \""+e.getEventName()+"\" edible "+(!e.hasItem() ? "none" : e.getItem().getType().isEdible()));
+		Bukkit.broadcastMessage("§8[§aDebug§8] §6interact "+e.getAction().name()+" edible "+(!e.hasItem() ? "none" : e.getItem().getType().isEdible()));
 		if (!isAuto(e.getPlayer()))
 			e.setCancelled(true);
 	}
