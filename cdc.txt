@@ -42,9 +42,10 @@
 
 * itemlist
 * inventory shop
+* path bug eat food
 
 + add sphere limit for speactator in fight
 + add Go lobby spectator.
 
-- path bug eat food
+- add selled cart
 
