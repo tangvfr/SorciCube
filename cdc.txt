@@ -47,5 +47,5 @@
 + add sphere limit for speactator in fight
 + add Go lobby spectator.
 
-- add selled cart
++ add selled cart
 

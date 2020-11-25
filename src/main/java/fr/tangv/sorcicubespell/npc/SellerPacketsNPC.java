@@ -13,28 +13,31 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.AbstractGui;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
-import fr.tangv.sorcicubespell.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
 public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 
 	private String nameNPC;
-	private Vector<PacketCardsSell> packetsSell;
+	private Vector<PCSell> pcSells;
 	private ItemStack itemDeco;
 	private ItemStack itemClose;
 	private ItemStack itemError;
 	
-	public SellerPacketsNPC(SorciCubeSpell sorci, String nameNPC) {
+	public SellerPacketsNPC(SorciCubeSpell sorci, String keyNPC) {
 		super(sorci.getManagerGui(), sorci.getGuiConfig().getConfigurationSection("gui_seller_packets"));
-		this.packetsSell = new Vector<PacketCardsSell>();
+		this.pcSells = new Vector<PCSell>();
 		this.itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 		this.itemClose = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("close"), null, false);
 		this.itemError = ItemBuild.buildItem(Material.BARRIER, 1, (short) 0, (byte) 15, config.getString("error"), null, false);
-		this.nameNPC = nameNPC;
-		ConfigurationSection packets = sorci.getConfigNPC().getConfigurationSection("list_seller_packet_cards."+nameNPC);
-		for (String packet : packets.getKeys(false))
-			packetsSell.add(new PacketCardsSell(sorci, packet.replace("§p", "."), packets.getInt(packet), this.config));
+		this.nameNPC = sorci.getConfigNPC().getString("list_seller_packet_cards."+keyNPC+".name_npc");
+		ConfigurationSection list = sorci.getConfigNPC().getConfigurationSection("list_seller_packet_cards."+keyNPC+".list");
+		for (String key : list.getKeys(false)) {
+			boolean card = list.getBoolean(key+".card");
+			int price = list.getInt(key+".price");
+			String id = list.getString(key+".id");
+			pcSells.add(card ? new CardSell(sorci, config, price, id) : new PacketCardsSell(sorci, config, price, id));
+		}
 	}
 
 	@Override
@@ -52,18 +55,22 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 		inv.setItem(17, itemDeco);
 		for (int i = 18; i < 27; i++)
 			inv.setItem(i, itemDeco);
-		for (int i = 0; i < 7 && i < packetsSell.size(); i ++) {
-			PacketCardsSell packetSell = packetsSell.get(i);
-			if (packetSell.isValid()) {
-				inv.setItem(i+1, packetSell.getItemSell());
-				inv.setItem(i+10, packetSell.getItemPacket());
+		inv.setItem(22, itemClose);
+		updateInv(inv, player);
+		return inv;
+	}
+	
+	private void updateInv(Inventory inv, Player player) {
+		for (int i = 0; i < 7 && i < pcSells.size(); i ++) {
+			PCSell pcSell =  pcSells.get(i);
+			if (pcSell.isValid()) {
+				inv.setItem(i+1, pcSell.getItemSell(this.getPlayerGui(player)));
+				inv.setItem(i+10, pcSell.getItemView());
 			} else {
 				inv.setItem(i+1, this.itemError);
-				inv.setItem(i+10, packetSell.getItemError());
+				inv.setItem(i+10, pcSell.getItemView());
 			}
 		}
-		inv.setItem(22, itemClose);
-		return inv;
 	}
 
 	@Override
@@ -74,20 +81,13 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 			player.closeInventory();
 		} else if (raw > 0 && raw < 9) {
 			int number = raw-1;
-			if (number < packetsSell.size()) {
-				PacketCardsSell packetSell = packetsSell.get(number);
-				if (packetSell.isValid()) {
-					int price = packetSell.getPrice();
+			if (number < pcSells.size()) {
+				PCSell pcSell =  pcSells.get(number);
+				if (pcSell.isValid()) {
 					PlayerGui playerG = getPlayerGui(player);
-					PlayerFeature feature = playerG.getPlayerFeature();
-					if (feature.getMoney() >= price) {
-						feature.removeMoney(price);
-						playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
-						player.getInventory().addItem(packetSell.getItemPacket());
-						player.sendMessage(getMessage("message_packet_buy")
-								.replace("{name}", packetSell.getPacketCards().getName())
-								.replace("{price}", Integer.toString(price))
-						);
+					if (pcSell.hasMoney(playerG)) {
+						if(pcSell.buy(playerG))
+							updateInv(e.getInventory(), player);
 					} else { 
 						player.sendMessage(getMessage("message_packet_no_money"));
 						player.closeInventory();

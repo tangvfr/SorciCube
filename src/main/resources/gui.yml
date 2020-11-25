@@ -136,9 +136,18 @@ gui_increase_deck:
   price_right: "§6[§e{price}€§6]"
 #Gui Seller Packets
 gui_seller_packets:
-  buy: "§f§lAcheter ce paquet?"
-  name: "{name}"
-  price: "§6[§e{price}€§6]"
+  packet_buy: "§f§lAcheter ce paquet ?"
+  packet_name_right: "{name}"
+  packet_price_right: "§6[§a{price}€§6]"
+  packet_name_wrong: "{name}"
+  packet_price_wrong: "§6[§c{price}€§6]"
+  packet_error: "§4ERROR PACKET"
+  card_buy: "§f§lDéverouillé cet card ?"
+  card_name_right: "{name}"
+  card_price_right: "§6[§a{price}€§6]"
+  card_name_wrong: "{name}"
+  card_price_wrong: "§6[§c{price}€§6]"
+  card_error: "§4ERROR Card"
   close: "§c§l> Fermer"
   error: "§4ERROR"
 #Gui Seller Items

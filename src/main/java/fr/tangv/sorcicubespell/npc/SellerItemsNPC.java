@@ -21,7 +21,7 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 	public SellerItemsNPC(SorciCubeSpell sorci, String name) throws Exception {
 		super(sorci.getManagerGui(), sorci.getGuiConfig().getConfigurationSection("gui_seller_items"));
 		ConfigurationSection config = sorci.getConfigNPC().getConfigurationSection("npc_seller_item."+name);
-		this.nameNPC = config.getString("name");
+		this.nameNPC = config.getString("name_npc");
 		List<String> items_selled = config.getStringList("items_selled");
 		if (items_selled.size() != 9)
 			throw new Exception("List \"item_selled\" of \""+name+"\" is invalid !");

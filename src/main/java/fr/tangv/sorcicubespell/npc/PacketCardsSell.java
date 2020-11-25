@@ -1,61 +1,44 @@
 package fr.tangv.sorcicubespell.npc;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.packet.PacketCards;
 import fr.tangv.sorcicubespell.util.ItemBuild;
-import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class PacketCardsSell {
+public class PacketCardsSell extends PCSell {
 
 	private PacketCards packetCards;
-	private ItemStack itemPacket;
-	private ItemStack itemSell;
-	private ItemStack itemError;
-	private int price;
 	
-	public PacketCardsSell(SorciCubeSpell sorci, String name, int price, ConfigurationSection config) {
-		this.price = price;
-		this.packetCards = sorci.getManagerPacketCards().getPacketCards(name);
+	public PacketCardsSell(SorciCubeSpell sorci, ConfigurationSection config, int price, String id) {
+		super(sorci, config, price);
+		this.packetCards = sorci.getManagerPacketCards().getPacketCards(id);
 		if (this.isValid()) {
-			this.itemPacket = sorci.getManagerPacketCards().packetToItem(this.packetCards);
-			ArrayList<String> lore = new ArrayList<String>();
-			lore.add(config.getString("name").replace("{name}", name));
-			lore.add(config.getString("price").replace("{price}", Integer.toString(price)));
-			this.itemSell = ItemBuild.buildSkull(SkullUrl.SHOP, 1, config.getString("buy"), lore, false);
-		} else {
-			this.itemError = ItemBuild.buildItem(Material.SIGN, 1, (short) 0, (byte) 0, config.getString("error"), Arrays.asList(name), false);
-		}
-	}
-
-	public PacketCards getPacketCards() {
-		return packetCards;
-	}
-
-	public ItemStack getItemPacket() {
-		return itemPacket;
+			this.itemView = sorci.getManagerPacketCards().packetToItem(this.packetCards);
+			this.initItemSell("pakcet", packetCards.getName());
+		} else
+			this.itemView = ItemBuild.buildItem(Material.SIGN, 1, (short) 0, (byte) 0, config.getString("packet_error"), Arrays.asList(id), false);
 	}
 	
-	public ItemStack getItemError() {
-		return itemError;
+	@Override
+	public boolean buy(PlayerGui player) {
+		player.getPlayerFeature().removeMoney(price);
+		player.uploadPlayerFeature(sorci.getManagerPlayers());
+		player.getPlayer().getInventory().addItem(this.itemView);
+		player.getPlayer().sendMessage(getMessage("message_packet_buy_packet")
+				.replace("{name}", packetCards.getName())
+				.replace("{price}", Integer.toString(price))
+		);
+		return true;
 	}
-
-	public ItemStack getItemSell() {
-		return itemSell;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
+	
+	@Override
 	public boolean isValid() {
-		return this.packetCards != null;
+		return packetCards != null;
 	}
-	
+
 }

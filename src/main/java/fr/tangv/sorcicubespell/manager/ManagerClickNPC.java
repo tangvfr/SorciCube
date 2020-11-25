@@ -96,8 +96,8 @@ public class ManagerClickNPC {
 		});
 		Config configNPC = sorci.getConfigNPC();
 		//seller packet
-		for (String nameNPC : configNPC.getConfigurationSection("list_seller_packet_cards").getKeys(false))
-			clickNPCs.put(nameNPC.replace("§p", "."), new SellerPacketsNPC(sorci, nameNPC));
+		for (String key : configNPC.getConfigurationSection("list_seller_packet_cards").getKeys(false))
+			clickNPCs.put(configNPC.getString("list_seller_packet_cards."+key+".name_npc"), new SellerPacketsNPC(sorci, key));
 		//rewarder
 		for (String key : configNPC.getConfigurationSection("npc_rewards").getKeys(false))
 			clickNPCs.put(configNPC.getString("npc_rewards."+key+".name_npc"), new RewardNPC(sorci, key));
