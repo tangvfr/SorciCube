@@ -36,7 +36,7 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 			boolean card = list.getBoolean(key+".card");
 			int price = list.getInt(key+".price");
 			String id = list.getString(key+".id");
-			pcSells.add(card ? new CardSell(sorci, config, price, id) : new PacketCardsSell(sorci, config, price, id));
+			pcSells.add(card ? new CardSell(sorci, this.config, price, id) : new PacketCardsSell(sorci, this.config, price, id));
 		}
 	}
 

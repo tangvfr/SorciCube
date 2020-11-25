@@ -19,9 +19,10 @@ public class PacketCardsSell extends PCSell {
 		this.packetCards = sorci.getManagerPacketCards().getPacketCards(id);
 		if (this.isValid()) {
 			this.itemView = sorci.getManagerPacketCards().packetToItem(this.packetCards);
-			this.initItemSell("pakcet", packetCards.getName());
-		} else
+			this.initItemSell("packet", this.packetCards.getName());
+		} else {
 			this.itemView = ItemBuild.buildItem(Material.SIGN, 1, (short) 0, (byte) 0, config.getString("packet_error"), Arrays.asList(id), false);
+		}
 	}
 	
 	@Override

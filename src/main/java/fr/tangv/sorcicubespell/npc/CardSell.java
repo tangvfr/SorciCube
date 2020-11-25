@@ -27,8 +27,9 @@ public class CardSell extends PCSell {
 		if (this.isValid()) {
 			this.itemView = CardRender.cardToItem(card, sorci);
 			this.initItemSell("card", card.renderName());
-		} else
+		} else {
 			this.itemView = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, config.getString("card_error"), Arrays.asList(id), false);
+		}
 	}
 	
 	@Override
