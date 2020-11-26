@@ -27,7 +27,7 @@ public class TrashNPC extends AbstractGui implements ClickNPC {
 	
 	@Override
 	public Inventory createInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(null, InventoryType.DROPPER, this.name);
+		Inventory inv = Bukkit.createInventory(null, InventoryType.DISPENSER, this.name);
 		inv.setItem(6, itemDeco);
 		inv.setItem(7, itemDumped);
 		inv.setItem(8, itemDeco);
