@@ -42,7 +42,7 @@ public class TrashNPC extends AbstractGui implements ClickNPC {
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
 		int raw = e.getRawSlot();
-		if (raw == 6 || raw == 7 || raw < 0) {
+		if (raw == 6 || raw == 8 || raw < 0) {
 			e.setCancelled(true);
 			player.closeInventory();
 		} else if (raw == 7) {
