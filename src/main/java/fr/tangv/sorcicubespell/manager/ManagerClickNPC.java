@@ -13,6 +13,7 @@ import fr.tangv.sorcicubespell.npc.MessageNPC;
 import fr.tangv.sorcicubespell.npc.RewardNPC;
 import fr.tangv.sorcicubespell.npc.SellerItemsNPC;
 import fr.tangv.sorcicubespell.npc.SellerPacketsNPC;
+import fr.tangv.sorcicubespell.npc.TrashNPC;
 import fr.tangv.sorcicubespell.util.Config;
 
 public class ManagerClickNPC {
@@ -94,6 +95,9 @@ public class ManagerClickNPC {
 					sorci.getManagerGui().getGuiListFight().open(player);
 			}
 		});
+		//trash
+		clickNPCs.put(getNameNPC("trash"), new TrashNPC(sorci));
+		//init config
 		Config configNPC = sorci.getConfigNPC();
 		//seller packet
 		for (String key : configNPC.getConfigurationSection("list_seller_packet_cards").getKeys(false))

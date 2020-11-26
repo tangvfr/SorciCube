@@ -154,3 +154,7 @@ gui_seller_packets:
 gui_seller_items:
   lore_right: ["§6[§a{price}€§6]", "§eCliquez pour acheter cet item"]
   lore_wrong: ["§6[§c{price}€§6]", "§eCliquez pour acheter cet item"]
+#Gui Trash
+gui_trash:
+  name: "§c§lTrash"
+  dumped: "§c§l> Dumped"
