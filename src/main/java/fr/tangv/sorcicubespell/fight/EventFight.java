@@ -96,7 +96,10 @@ public class EventFight implements Listener {
 				.replace("{card}", card.renderName())
 		);
 		run.run();
+		//init hot bar
 		player.initHotBar();
+		player.getEnemie().initHotBar();
+		//reset para
 		player.setFirstSelection(null);
 		player.setEntityAttack(null);
 		player.showEntityAttackPossible();
@@ -128,7 +131,9 @@ public class EventFight implements Listener {
 			((FightEntity) head).executingAction();
 		if (cAttack > 0)
 			entity.executingAction();
-		//end action fight entity
+		//init hot bar
+		entity.owner.initHotBar();
+		entity.owner.getEnemie().initHotBar();
 	}
 	
 	private void resetAndOpenInvHistoric(FightSpectator spectator) {
@@ -380,7 +385,7 @@ public class EventFight implements Listener {
 					((PlayerFight) spectator).noAFK();
 			}
 		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
-				e.setCancelled(true);
+			e.setCancelled(true);
 		}
 	}
 	

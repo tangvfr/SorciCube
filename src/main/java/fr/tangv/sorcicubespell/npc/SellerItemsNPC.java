@@ -11,7 +11,6 @@ import org.bukkit.inventory.Inventory;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.AbstractGui;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
-import fr.tangv.sorcicubespell.player.PlayerFeature;
 
 public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 
@@ -43,9 +42,13 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 	@Override
 	public Inventory createInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 9, nameNPC);
-		for (int i = 0; i < 9; i++)
-			inv.setItem(i, items[i].itemShop);
+		updateInventory(inv, getPlayerGui(player));
 		return inv;
+	}
+	
+	private void updateInventory(Inventory inv, PlayerGui player) {
+		for (int i = 0; i < 9; i++)
+			inv.setItem(i, items[i].getItemShop(player));
 	}
 
 	@Override
@@ -53,18 +56,18 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 		e.setCancelled(true);
 		int raw = e.getRawSlot();
 		if (raw >= 0 && raw < 9) {
-			int price = items[raw].price;
-			if (price > 0) {
+			ItemSell item = items[raw];
+			if (!item.isDeco()) {
 				PlayerGui playerG = getPlayerGui(player);
-				PlayerFeature feature = playerG.getPlayerFeature();
-				if (feature.getMoney() >= price) {
-					feature.removeMoney(price);
+				if (item.hasMoney(playerG)) {
+					playerG.getPlayerFeature().removeMoney(item.getPrice());
 					playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
-					player.getInventory().addItem(items[raw].item);
+					player.getInventory().addItem(item.getItem());
 					player.sendMessage(getMessage("message_seller_items_buy")
-							.replace("{name}", items[raw].itemName)
-							.replace("{price}", Integer.toString(price))
+							.replace("{name}", item.getName())
+							.replace("{price}", Integer.toString(item.getPrice()))
 					);
+					updateInventory(e.getInventory(), playerG);
 				} else { 
 					player.sendMessage(getMessage("message_seller_items_no_money"));
 					player.closeInventory();

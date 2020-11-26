@@ -152,4 +152,5 @@ gui_seller_packets:
   error: "§4ERROR"
 #Gui Seller Items
 gui_seller_items:
-  lore: ["§6[§e{price}€§6]", "§eCliquez pour acheter cet item"]
+  lore_right: ["§6[§a{price}€§6]", "§eCliquez pour acheter cet item"]
+  lore_wrong: ["§6[§c{price}€§6]", "§eCliquez pour acheter cet item"]

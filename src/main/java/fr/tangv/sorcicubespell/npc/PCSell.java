@@ -44,7 +44,7 @@ public abstract class PCSell {
 	}
 	
 	public boolean hasMoney(PlayerGui player) {
-		return player.getPlayerFeature().getMoney() >= price;
+		return player.getPlayerFeature().hasMoney(price);
 	}
 	
 	public ItemStack getItemView() {
