@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.npc;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -42,7 +43,9 @@ public class TrashNPC extends AbstractGui implements ClickNPC {
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
 		int raw = e.getRawSlot();
-		if (raw == 6 || raw == 8 || raw < 0) {
+		if (e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY)
+			e.setCancelled(true);
+		else if (raw == 6 || raw == 8 || raw < 0) {
 			e.setCancelled(true);
 			player.closeInventory();
 		} else if (raw == 7) {
