@@ -108,10 +108,10 @@ gui_list_fight:
   duel: "§c§l[§r§4Duel ⚔§c§l]"
   close: "§c§l> Fermer"
   stats:
-    waiting: "§f§lEn attente des joueurs"
-    starting: "§f§lEn attende du second joueur"
-    start: "§2§l[§aDébut du combat ⚔§2§l]"
-    end: "§8§l[§7Fin du combat ⚔§8§l]"
+    waiting: "§8§l[§aAttent un joueur ⚔§8§l]"
+    starting: "§8§l[§aAttent le second joueur ⚔§8§l]"
+    start: "§4§l[§cCombat en cours ⚔§4§l]"
+    end: "§8§l[§6Fin du combat ⚔§8§l]"
   lore_fight:
     - " "
     - "§f§l{name_player1} §7Niveau.§b[§f§l{level_player1}§b] {faction_player1}"
