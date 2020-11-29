@@ -21,23 +21,24 @@ import fr.tangv.sorcicubespell.util.ItemHead;
 public class PlayerFight extends FightSpectator {
 
 	private final Inventory invSwap;
-    private volatile PlayerFight enemie;
+    private PlayerFight enemie;
 	private final FightDeck deck;
 	private final PlayerFeature playerFeature;
-	private volatile int mana;
-	private volatile int manaBoost;
-	private volatile int health;
-	private volatile int cardSelected;
-	private volatile FightEntity[] entity;
-	private volatile FightHero hero;
+	private int mana;
+	private int manaBoost;
+	private int health;
+	private int cardSelected;
+	private FightEntity[] entity;
+	private FightHero hero;
 	private final Location[] entityLoc;
 	private final Card[] cardHand;
-	private volatile FightEntity entityAttack;
-	private volatile FightHead firstSelection;
-	private volatile boolean alreadySwap;
-	private volatile byte roundAFK;
-	private volatile boolean isAFK;
-	private volatile boolean lossAFK;
+	private FightEntity entityAttack;
+	private FightHead firstSelection;
+	private boolean alreadySwap;
+	private byte roundAFK;
+	private boolean isAFK;
+	private boolean lossAFK;
+	private boolean isDead;
 	
 	public PlayerFight(Fight fight, Player player, PlayerFeature playerFeature, FightDeck deck, boolean first) {
 		super(fight, player, first ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase(), first);
@@ -53,6 +54,7 @@ public class PlayerFight extends FightSpectator {
 		this.roundAFK = 0;
 		this.isAFK = true;
 		this.lossAFK = false;
+		this.isDead = false;
 		//entity loc
 		if (first) {
 			this.entityLoc = fight.getArena().getFirstEntity();
@@ -65,6 +67,15 @@ public class PlayerFight extends FightSpectator {
 		//historiquez
 		this.invSwap = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_swap_fight.name"));
 		addInventoryAutorized(invSwap);
+	}
+	
+	public void checkPlayerIsDead() {
+		if (isDead)
+			fight.end(this);
+	}
+	
+	public boolean isDead() {
+		return isDead;
 	}
 	
 	public void newPlayer(Player player) {
@@ -85,10 +96,6 @@ public class PlayerFight extends FightSpectator {
 	
 	public boolean hasLossAFK() {
 		return this.lossAFK;
-	}
-	
-	public boolean dontHasLife() {
-		return health <= 0;
 	}
 
 	public void addRoundAFK() {
@@ -323,9 +330,11 @@ public class PlayerFight extends FightSpectator {
 	}
 
 	public void setHealth(int health) {
-		if (health <= 0) {
+		if (isDead)
 			this.health = 0;
-			fight.end(this);
+		else if (health <= 0) {
+			this.health = 0;
+			this.isDead = true;
 		} else if (health > Fight.MAX_HEALTH) 
 			this.health = Fight.MAX_HEALTH;
 		else

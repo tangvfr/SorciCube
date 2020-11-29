@@ -131,6 +131,8 @@ public class EventFight implements Listener {
 			((FightEntity) head).executingAction();
 		if (cAttack > 0)
 			entity.executingAction();
+		fight.getPlayer1().checkPlayerIsDead();
+		fight.getPlayer2().checkPlayerIsDead();
 		//init hot bar
 		entity.owner.initHotBar();
 		entity.owner.getEnemie().initHotBar();
@@ -234,6 +236,8 @@ public class EventFight implements Listener {
 												try {
 													entity.setCard(new CardEntity(card));
 													entity.executingAction();
+													player.checkPlayerIsDead();
+													player.getEnemie().checkPlayerIsDead();
 												} catch (Exception e1) {
 													Bukkit.getLogger().warning(RenderException.renderException(e1));
 												}

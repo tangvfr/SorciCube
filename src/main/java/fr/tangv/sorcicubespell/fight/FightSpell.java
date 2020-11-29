@@ -334,6 +334,8 @@ public class FightSpell {
 		for (int i = 0; i < player.getMaxEntity(); i++) {
 			player.getEntity(i).executingAction();
 			player.getEnemie().getEntity(i).executingAction();
+			player.checkPlayerIsDead();
+			player.getEnemie().checkPlayerIsDead();
 		}
 	}
 	

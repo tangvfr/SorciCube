@@ -8,7 +8,7 @@ message_welcom: "§f-§6~§f-§6~§f-§6~§f-§6~§f-§6~§f-§6~§f-§6~§f-§6
 
                      §fBienvenue sur §eSorci§6Cube §f!
 
-§fNous sommes ravi de vous accueillir sur notre Serveur.
+§fNous sommes ravis de vous accueillir sur notre Serveur.
 On remercie aussi énormement ceux qui font vivre le Serveur
 et nous souhaitons un agréable moment sur SorciCube.
 
@@ -43,10 +43,11 @@ message_duel_cancel_invite: "§c§lInvitation annulée!"
 message_leave_fight: "§cVous venez de quitter la file d'attente pour combattre!"
 message_round: "\n§eRound N°{round} !\n"
 message_mana_insufficient: "§bVous n'avez pas assez de mana!"
-message_spectator: "\n§6{player} a gagné !\n"
-message_winner: "\n§2§lVictoire!\n"
+message_spectator: "\n§7§l{playerw}§6§l a gagné contre §7§l{playerl}§6§l !\n"
+message_spectator_equality: "\n§7§l{playerw}§6§l et §7§l{playerl}§6§l ont fait une égalité.\n"
+message_winner: "\n§2§lVictoire !\n"
 message_losser: "\n§4§lDéfaite...\n"
-message_equality: "\n§7§lEgalité...\n"
+message_equality: "\n§7§lEgalité\n"
 message_refresh: "§8[§3SorciCubeSpell§8] §aLe refresh des cartes a été effetué !"
 message_invalid_card: "§c§lCarte introuvable \"{uuid}\"!"
 message_give_card: "§8[§3SorciCubeSpell §4Admin§8] §aLa carte \"{card}§r§a\" à été donnez à \"{player}\" !"
