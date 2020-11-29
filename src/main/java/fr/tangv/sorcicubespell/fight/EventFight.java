@@ -407,8 +407,6 @@ public class EventFight implements Listener {
 					}
 				}
 			} else {
-				Bukkit.broadcastMessage("Spec: "+spectator.getLocBase()+" to "+e.getTo());
-				Bukkit.broadcastMessage("Radius: "+spectator.getFight().getArena().getRadiusSpectator()+" Dis:"+e.getTo().distance(spectator.getLocBase()));
 				if (!spectator.getLocBase().getWorld().equals(e.getTo().getWorld()) 
 						|| e.getTo().distance(spectator.getLocBase()) > spectator.getFight().getArena().getRadiusSpectator()) {
 					e.setCancelled(true);
