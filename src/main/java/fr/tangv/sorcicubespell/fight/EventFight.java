@@ -407,8 +407,10 @@ public class EventFight implements Listener {
 					}
 				}
 			} else {
-				if (e.getTo().distance(spectator.getLocBase()) > spectator.getFight().getArena().getRadiusSpectator())
+				if (!spectator.getLocBase().getWorld().equals(e.getTo().getWorld()) 
+						|| e.getTo().distance(spectator.getLocBase()) > spectator.getFight().getArena().getRadiusSpectator()) {
 					e.setCancelled(true);
+				}
 			}
 		}
 	}
