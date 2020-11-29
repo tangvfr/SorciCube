@@ -86,6 +86,10 @@ public class PlayerFight extends FightSpectator {
 	public boolean hasLossAFK() {
 		return this.lossAFK;
 	}
+	
+	public boolean dontHasLife() {
+		return health <= 0;
+	}
 
 	public void addRoundAFK() {
 		if (isAFK) {

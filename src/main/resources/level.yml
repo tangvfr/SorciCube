@@ -2,6 +2,8 @@ experience_win: 15
 money_win: 20
 experience_loss: 5
 money_loss: 5
+experience_equality: 10
+money_equality: 10
 level_max: 50
 level_experience:
   '2':

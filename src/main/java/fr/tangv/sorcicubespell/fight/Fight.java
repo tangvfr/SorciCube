@@ -416,13 +416,23 @@ public class Fight {
 		bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));
 		bossBar.setProgress(cooldownEnd.getProgess());
 		this.isEnd = true;
-		winner.sendEndTitle(sorci.getMessage().getString("message_winner"));
-		losser.sendEndTitle(sorci.getMessage().getString("message_losser"));
-		Config lc = sorci.getLevelConfig();
-		if (winner.isOnline())
-			endReward(lc, winner, lc.getInt("money_win"), lc.getInt("experience_win"));
-		if (losser.isOnline() && !losser.hasLossAFK())
-			endReward(lc, losser, lc.getInt("money_loss"), lc.getInt("experience_loss"));
+		if (losser.dontHasLife() && winner.dontHasLife()) {
+			winner.sendEndTitle(sorci.getMessage().getString("message_equality"));
+			losser.sendEndTitle(sorci.getMessage().getString("message_equality"));
+			Config lc = sorci.getLevelConfig();
+			if (winner.isOnline())
+				endReward(lc, winner, lc.getInt("money_equality"), lc.getInt("experience_equality"));
+			if (losser.isOnline() && !losser.hasLossAFK())
+				endReward(lc, losser, lc.getInt("money_equality"), lc.getInt("experience_equality"));
+		} else {
+			winner.sendEndTitle(sorci.getMessage().getString("message_winner"));
+			losser.sendEndTitle(sorci.getMessage().getString("message_losser"));
+			Config lc = sorci.getLevelConfig();
+			if (winner.isOnline())
+				endReward(lc, winner, lc.getInt("money_win"), lc.getInt("experience_win"));
+			if (losser.isOnline() && !losser.hasLossAFK())
+				endReward(lc, losser, lc.getInt("money_loss"), lc.getInt("experience_loss"));
+		}
 		//spectator
 		forEachSpectator((FightSpectator spectator) -> {
 			spectator.sendMessage(
