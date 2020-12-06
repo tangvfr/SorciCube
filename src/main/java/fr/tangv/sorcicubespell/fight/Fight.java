@@ -42,6 +42,7 @@ public class Fight {
 	private boolean isStart;
 	private final BossBar bossBar;
 	private final Vector<FightSpectator> spectators;
+	private boolean init;
 	//end
 	private volatile boolean isEnd;
 	private volatile boolean isDeleted;
@@ -49,6 +50,7 @@ public class Fight {
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
 		this.fightData = preFight.getFightData();
 		this.sorci = sorci;
+		this.init = false;
 		this.firstPlay = true;
 		this.isStart = false;
 		this.isDeleted = false;
@@ -82,6 +84,7 @@ public class Fight {
 		player2.getHero().updateStat();
 		//start
 		cooldown.loop();
+		this.init = true;
 	}
 	
 	private static interface ActionSpectator {
@@ -322,12 +325,14 @@ public class Fight {
 	}
 	
 	public void sendPacket(Packet<?> packet) {
-		player1.sendPacket(packet);
-		player2.sendPacket(packet);
-		//spetator
-		forEachSpectator((FightSpectator spectator) -> {
-			spectator.sendPacket(packet);
-		});
+		if (this.init) {
+			player1.sendPacket(packet);
+			player2.sendPacket(packet);
+			//spetator
+			forEachSpectator((FightSpectator spectator) -> {
+				spectator.sendPacket(packet);
+			});
+		}
 	}
 	
 	public void nextRound() {
