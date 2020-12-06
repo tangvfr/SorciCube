@@ -11,7 +11,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+
 import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.hanging.HangingBreakEvent.RemoveCause;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -31,7 +33,8 @@ public class ManagerSecurity implements Listener {
 	
 	@EventHandler
 	public void onTable(HangingBreakEvent e) {
-		e.setCancelled(true);
+		if (e.getCause() != RemoveCause.ENTITY)
+			e.setCancelled(true);
 	}
 	
 	@EventHandler
