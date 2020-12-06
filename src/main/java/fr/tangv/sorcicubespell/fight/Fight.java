@@ -60,7 +60,7 @@ public class Fight {
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.cooldownEnd = new Cooldown((long) sorci.getParameter().getInt("cooldown_end")*1000L);
 		this.round = -sorci.getParameter().getInt("cooldown_before_fight")-1;
-		this.waitView = sorci.getParameter().getLong("wait_view_fight");
+		this.waitView = sorci.getParameter().getInt("wait_view_fight");
 		this.arena = sorci.getManagerFight().pickArena();
 		this.bossBar = Bukkit.createBossBar(
 				sorci.getGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
@@ -368,6 +368,7 @@ public class Fight {
 		//afk
 		player.addRoundAFK();
 		player.getEnemie().addRoundAFK();
+		player.playSound(Sound.BLOCK_NOTE_HARP, 1F, 1.5F);
 	}
 	
 	//for end
