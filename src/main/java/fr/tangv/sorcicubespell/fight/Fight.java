@@ -74,14 +74,10 @@ public class Fight {
 			this.player1 = createPlayerFight(preFight.getPlayer2(), preFight.getPlayer2DeckUse(), true);
 		}
 		//init player
-		player1.teleportToBase();
-		player2.teleportToBase();
 		player1.setEnemie(player2);
 		player2.setEnemie(player1);
-		player1.createScoreboard();
-		player2.createScoreboard();
-		player1.addInBossBar();
-		player2.addInBossBar();
+		player1.initForViewFight();
+		player2.initForViewFight();
 		player1.getHero().updateStat();
 		player2.getHero().updateStat();
 		//start

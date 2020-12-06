@@ -123,6 +123,7 @@ public class FightSpectator {
 	private ScoreboardObjective scob;
 	
 	public FightSpectator(Fight fight, Player player, Location locBase, boolean first) {
+		this.player = player;
 		this.fight = fight;
 		this.locBase = locBase;
 		this.first = first;
@@ -134,7 +135,6 @@ public class FightSpectator {
 		this.invAutorized = new Vector<Integer>();
 		addInventoryAutorized(invHistoric);
 		addInventoryAutorized(invViewEntity);
-		newPlayer(player);
 	}
 	
 	public void initBarSpectator() {
@@ -145,10 +145,14 @@ public class FightSpectator {
 		inv.setItem(8, ValueFight.V.itemExit);
 	}
 	
-	public void newPlayer(Player player) {
-		this.player = player;
+	public void initForViewFight() {
 		fight.initForViewFight(this);
 		this.waitView = System.currentTimeMillis()+fight.waitView;
+	}
+	
+	public void newPlayer(Player player) {
+		this.player = player;
+		initForViewFight();
 	}
 	
 	public void updatePacket() {

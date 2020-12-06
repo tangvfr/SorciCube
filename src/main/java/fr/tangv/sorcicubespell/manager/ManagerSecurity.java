@@ -11,6 +11,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 
@@ -25,6 +27,19 @@ public class ManagerSecurity implements Listener {
 	
 	private boolean isAuto(Player player) {
 		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission(sorci.getParameter().getString("perm_build"));
+	}
+	
+	@EventHandler
+	public void onTable(HangingBreakEvent e) {
+		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onTable(HangingBreakByEntityEvent e) {
+		if (e.getRemover() instanceof Player && isAuto((Player) e.getRemover()))
+			e.setCancelled(false);
+		else
+			e.setCancelled(true);
 	}
 	
 	@EventHandler
