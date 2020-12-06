@@ -75,7 +75,7 @@ public class PlayerFight extends FightSpectator {
 	}
 	
 	public void checkPlayerIsDead() {
-		if (isDead)
+		if (isDead && !fight.isEnd())
 			fight.end(this);
 	}
 	
