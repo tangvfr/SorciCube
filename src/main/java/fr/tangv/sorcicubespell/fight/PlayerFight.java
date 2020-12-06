@@ -67,6 +67,11 @@ public class PlayerFight extends FightSpectator {
 		//historiquez
 		this.invSwap = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_swap_fight.name"));
 		addInventoryAutorized(invSwap);
+		//init fightHead
+		this.entity = new FightEntity[entityLoc.length];
+		for (int i = 0; i < entityLoc.length; i++)
+			this.entity[i] = new FightEntity(this, entityLoc[i]);
+		this.hero = new FightHero(this);
 	}
 	
 	public void checkPlayerIsDead() {
@@ -162,13 +167,6 @@ public class PlayerFight extends FightSpectator {
 	
 	public void setEntityAttack(FightEntity entityAttack) {
 		this.entityAttack = entityAttack; 
-	}
-	
-	public void initFightHead() {
-		this.entity = new FightEntity[entityLoc.length];
-		for (int i = 0; i < entityLoc.length; i++)
-			this.entity[i] = new FightEntity(this, entityLoc[i]);
-		this.hero = new FightHero(this);
 	}
 	
 	//param number is number card pick

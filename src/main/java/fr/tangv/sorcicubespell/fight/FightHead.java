@@ -41,7 +41,7 @@ public abstract class FightHead {
 		entity.setInvulnerable(true);
 		entity.setInvisible(true);
 		entity.setLocation(loc.getX(), loc.getY()+decal, loc.getZ(), loc.getYaw(), loc.getPitch());
-		sendFightHead(entity, name, false);
+		//sendFightHead(entity, name, false);
 		return entity;
 	}
 	

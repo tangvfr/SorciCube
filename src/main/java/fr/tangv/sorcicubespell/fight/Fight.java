@@ -34,7 +34,7 @@ public class Fight {
 	private final PlayerFight player2;
 	private final FightArena arena;
 	private int round;
-	private final int round2Max;
+	protected final long waitView;
 	private final Cooldown cooldown;
 	private final Cooldown cooldownEnd;
 	private final Cooldown cooldownRound;
@@ -46,13 +46,9 @@ public class Fight {
 	private volatile boolean isEnd;
 	private volatile boolean isDeleted;
 	
-	//init
-	private boolean headIsInit;
-	
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
 		this.fightData = preFight.getFightData();
 		this.sorci = sorci;
-		this.headIsInit = false;
 		this.firstPlay = true;
 		this.isStart = false;
 		this.isDeleted = false;
@@ -62,7 +58,7 @@ public class Fight {
 		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
 		this.cooldownEnd = new Cooldown((long) sorci.getParameter().getInt("cooldown_end")*1000L);
 		this.round = -sorci.getParameter().getInt("cooldown_before_fight")-1;
-		this.round2Max = round/2;
+		this.waitView = sorci.getParameter().getLong("wait_view_fight");
 		this.arena = sorci.getManagerFight().pickArena();
 		this.bossBar = Bukkit.createBossBar(
 				sorci.getGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
@@ -86,17 +82,10 @@ public class Fight {
 		player2.createScoreboard();
 		player1.addInBossBar();
 		player2.addInBossBar();
-		//start
-		cooldown.loop();
-	}
-	
-	private void initHead() {
-		//Bukkit.broadcastMessage("§8[§6Test§8] §5Head is send !");
-		player1.initFightHead();
-		player2.initFightHead();
 		player1.getHero().updateStat();
 		player2.getHero().updateStat();
-		this.headIsInit = true;
+		//start
+		cooldown.loop();
 	}
 	
 	private static interface ActionSpectator {
@@ -116,20 +105,21 @@ public class Fight {
 		return spectators;
 	}
 	
-	public void initPacketForViewFight(FightSpectator spectator) {
-		if (headIsInit) {
-			player1.getHero().sendPacketForView(spectator);
-			player2.getHero().sendPacketForView(spectator);
-			for (int i = 0; i < player1.getMaxEntity(); i++) {
-				player1.getEntity(i).sendPacketForView(spectator);
-				player2.getEntity(i).sendPacketForView(spectator);
-			}
-		}
+	public void initForViewFight(FightSpectator spectator) {
 		spectator.teleportToBase();
 		spectator.showPlayer(player1);
 		spectator.showPlayer(player2);
 		spectator.createScoreboard();
 		spectator.addInBossBar();
+	}
+	
+	public void sendPacketForViewFight(FightSpectator spectator) {
+		player1.getHero().sendPacketForView(spectator);
+		player2.getHero().sendPacketForView(spectator);
+		for (int i = 0; i < player1.getMaxEntity(); i++) {
+			player1.getEntity(i).sendPacketForView(spectator);
+			player2.getEntity(i).sendPacketForView(spectator);
+		}
 	}
 	
 	public void addSpectator(FightSpectator spectator) {
@@ -162,8 +152,8 @@ public class Fight {
 						nextRound();
 						cooldown.stop();
 					} else {
-						if (headIsInit == false && round2Max <= round)
-							initHead();
+						/*if (headIsInit == false && round2Max <= round)
+							initHead();*/
 						alertMessage(
 								sorci.getMessage().getString("message_below_start_game")
 								.replace("{time}", Integer.toString(Math.abs(round+1)))
@@ -195,6 +185,7 @@ public class Fight {
 				bossBar.setProgress(cooldownEnd.getProgess());
 			}
 		}
+		updatePacket();
 	}
 	
 	private boolean locEntityInTolerance(Location locPos, Location locBase) {
@@ -264,6 +255,15 @@ public class Fight {
 		return CardRender.cardToItem(card, sorci);
 	}
 
+	public void updatePacket() {
+		player1.updatePacket();
+		player2.updatePacket();
+		//spetator
+		forEachSpectator((FightSpectator spectator) -> {
+			spectator.updatePacket();
+		});
+	}
+	
 	public void returnLobby() {
 		player1.returnLobby();
 		player2.returnLobby();

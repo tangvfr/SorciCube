@@ -125,7 +125,8 @@ public class ManagerFight implements Runnable {
 				playerInstance.put(player.getUniqueId(), spectator);
 				player.setAllowFlight(true);
 				player.setFlying(true);
-				fight.initPacketForViewFight(spectator);
+				fight.initForViewFight(spectator);
+				fight.sendPacketForViewFight(spectator);
 				fight.addSpectator(spectator);
 				spectator.initBarSpectator();
 			} else if (player.hasPermission(sorci.getParameter().getString("perm_admin"))) {

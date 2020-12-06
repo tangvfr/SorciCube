@@ -107,23 +107,23 @@ public class FightSpectator {
 	protected final Fight fight;
 	private final Inventory invHistoric;
 	private final Inventory invViewEntity;
-	private volatile Player player;
+	private Player player;
 	private final Location locBase;
 	private final String name;
 	private final UUID uuid;
 	private final GameProfile profile;
 	protected final boolean first;
 	private final Vector<Integer> invAutorized;
+	private long waitView;
 	
 	//scoreboard
-	private volatile String[] lastScoreMy;
-	private volatile String[] lastScoreEnemie;
-	private volatile Scoreboard sc;
-	private volatile ScoreboardObjective scob;
+	private String[] lastScoreMy;
+	private String[] lastScoreEnemie;
+	private Scoreboard sc;
+	private ScoreboardObjective scob;
 	
 	public FightSpectator(Fight fight, Player player, Location locBase, boolean first) {
 		this.fight = fight;
-		this.player = player;
 		this.locBase = locBase;
 		this.first = first;
 		this.name = player.getName();
@@ -134,6 +134,7 @@ public class FightSpectator {
 		this.invAutorized = new Vector<Integer>();
 		addInventoryAutorized(invHistoric);
 		addInventoryAutorized(invViewEntity);
+		newPlayer(player);
 	}
 	
 	public void initBarSpectator() {
@@ -146,7 +147,17 @@ public class FightSpectator {
 	
 	public void newPlayer(Player player) {
 		this.player = player;
-		fight.initPacketForViewFight(this);
+		fight.initForViewFight(this);
+		this.waitView = System.currentTimeMillis()+fight.waitView;
+	}
+	
+	public void updatePacket() {
+		if (this.waitView != -1) {
+			if (this.waitView >= System.currentTimeMillis()) {
+				this.waitView = -1;
+				fight.sendPacketForViewFight(this);
+			}
+		}
 	}
 	
 	public void addInventoryAutorized(Inventory inv) {

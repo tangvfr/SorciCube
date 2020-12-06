@@ -26,7 +26,7 @@ public class FightHero extends FightHead {
 			name.replace("{level}", Byte.toString(data.getLevelPlayer2()))
 			.replace("{faction}", owner.getFight().getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer2()))
 		;
-		this.armorFeaturesPlayer = this.createArmorStand(name, 0.4D);
+		this.armorFeaturesPlayer = createArmorStand(name, 0.4D);
 	}
 	
 	@Override
