@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 import org.bukkit.event.hanging.HangingBreakEvent;
@@ -47,6 +48,11 @@ public class ManagerSecurity implements Listener {
 	
 	@EventHandler
 	public void onExplosion(BlockExplodeEvent e) {
+		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onExplosion(EntityExplodeEvent e) {
 		e.setCancelled(true);
 	}
 	
