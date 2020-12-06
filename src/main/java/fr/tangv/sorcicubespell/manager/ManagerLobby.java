@@ -6,8 +6,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.Event.Result;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -34,6 +37,10 @@ public class ManagerLobby implements Listener {
 		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
 	
+	private boolean isAuto(Player player) {
+		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission(sorci.getParameter().getString("perm_build"));
+	}
+	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		e.setFormat(formatChat
@@ -41,6 +48,17 @@ public class ManagerLobby implements Listener {
 				.replace("{message}", e.getMessage())
 				.replace("{level}", Byte.toString(sorci.getManagerGui().getPlayerGui(e.getPlayer()).getPlayerFeature().getLevel()))
 			);
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent e) {
+		if (!isAuto(e.getPlayer()))
+			if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+				e.setUseItemInHand(Result.DEFAULT);
+				e.setUseInteractedBlock(Result.DENY);
+			} else {
+				e.setCancelled(true);
+			}
 	}
 	
 	private void teleportPlayerToSpawn(Player player) {
