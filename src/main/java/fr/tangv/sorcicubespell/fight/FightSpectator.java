@@ -124,6 +124,7 @@ public class FightSpectator {
 	
 	public FightSpectator(Fight fight, Player player, Location locBase, boolean first) {
 		this.player = player;
+		this.waitView = -1;
 		this.fight = fight;
 		this.locBase = locBase;
 		this.first = first;
@@ -157,7 +158,7 @@ public class FightSpectator {
 	
 	public void updatePacket() {
 		if (this.waitView != -1) {
-			if (this.waitView >= System.currentTimeMillis()) {
+			if (this.waitView <= System.currentTimeMillis()) {
 				this.waitView = -1;
 				fight.sendPacketForViewFight(this);
 			}
