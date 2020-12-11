@@ -1,5 +1,5 @@
 #mongodb
-mongodb: "mongodb://plugin:J_73%263TmHcxF2h%23%26tJ2*@sorcicube.fr:27017/?authSource=plugin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"
+mongodb: ""
 collection: "plugin"
 #deck
 number_deck_start: 2
