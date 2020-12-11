@@ -18,14 +18,26 @@ npc_rewards:
     name_npc: "§6Gros PO"
     reward: 30
     message: "Hey {player}. monee salo tu fait quoi la ! {reward} $"
-  test_2:
-    name_npc: "§7§lGuy"
+  escroc:
+    name_npc: "§7§l§4!"
     reward: 70
-    message: "Hey {player}.  ! {reward} $"
+    message: "{player} comment tu m'as trouvé ici? Prends ces {reward} pièces d'or et parles-en à personne..."
   patron:
     name_npc: "§7§lpatron"
     reward: 15
-    message: "§7§lDider le Patron §f: ...oh ... je vais aller me coucher... je sais que les autres travaillent encore mais j'en peux plus.. tiens §6[§e{reward}§6]€§f et laisse moi dormir"
+    message: "§7§lDider le Patron §f: ...oh ... je vais aller me coucher... je sais que les autres travaillent encore mais j'en peux plus.. tiens §6[§e{reward}€§6]§f et laisse moi dormir"
+  sacripanarbr:
+    name_npc: "§6§l§4!"
+    reward: 35
+    message: "Toi aussi tu aimes grimper dans les arbres? Pour le coup, jolie prestation pour m'avoir retrouvé! Tiens je te donne {reward} pièces..."
+  echan:
+    name_npc: "§1§4!"
+    reward: 15
+    message: "Jeune soricer en crise..? Tiens §6[§e{reward}€§6]§f!"
+  mec:
+    name_npc: "§2§4!"
+    reward: 10
+    message: "Oh zut j'étais si bien caché dans le grenier.. fais-en ce que tu veux de ces §6[§e{reward}€§6]§f!"
 #NPC message
 npc_messages:
   testage:
@@ -52,6 +64,20 @@ npc_messages:
       - "§7§lJulien§f : Notre caserne est réputé pour nos archers et nos chevaliers"
       - "§7§lJulien§f : Tobi est notre chef dans cette caserne"
       - "§7§lJulien§f : Nos conditions de vies sont dures... tous le monde dort dans la même chambre, c'est pas l'hôtel ici!"
+  aline:
+    name_npc: "§7§lAline"
+    messages:
+      - "§7§lAline§f : Si tu cherches le Seigneur {player}, il suffit de monter les escaliers"
+      - "§7§lAline§f : Il y a aussi la salle des Conseils, il suffit de grimper l'échelle"
+      - "§7§lAline§f : Les gardes royaux te surveilleront mais ne t'agresserons pas!"
+      - "§7§lAline§f : Le village est un endroit sûr... ta sécurité est notre affaire"
+  arnold:
+    name_npc: "§7§lArnold"
+    messages:
+      - "§7§lArnold§f : La taverne de Patrice est l'un des meilleurs endroits de cette ville"
+      - "§7§lArnold§f : Notre village devient de plus en plus rempli de sorciers!"
+      - "§7§lArnold§f : Parle avec tout le monde, c'est poli et certains t'offrent même des petites récompenses"
+      - "§7§lArnold§f : Bon moi je vais peut-être un petit tour chez Patrice, sa bière est incroyable!"
 #List Seller Packet Cards And Cards
 #max number packet sell by one npc is 7 packets
 list_seller_packet_cards:
@@ -77,10 +103,42 @@ list_seller_packet_cards:
         card: false
         price: 130
         id: "§b[§8Paquet de Cartes §6§lLumière§b]"
-      une_carte:
+  erdo:
+    name_npc: "§7§lErdo §6[§e€§6]"
+    list:
+      carteobscure:
+        card: false
+        price: 130
+        id: "§b[§8Paquet de Cartes §8§lObscure§b]"
+  arthur:
+    name_npc: "§7§lArthur §6[§e€§6]"
+    list:
+      nature:
+        card: false
+        price: 130
+        id: "§b[§8Paquet de Cartes §2§lNature§b]"
+  john:
+    name_npc: "§7§lJohn §6[§e€§6]"
+    list:
+      toxique:
+        card: false
+        price: 130
+        id: "§b[§8Paquet de Cartes §5§lToxique§b]"
+  tobi:
+    name_npc: "§7§lTobi §6[§e€§6]"
+    list:
+      cartechevalier1:
         card: true
-        price: 500
-        id: "80643176-be3f-42d6-b81d-d0b5ee14c101"
+        price: 125
+        id: "b856d078-d0af-4ddb-bcbc-9f9637f988db"
+      cartechevalier2:
+        card: true
+        price: 125
+        id: "66a692cc-9cc6-4a8f-a88a-2d0d59fcb4db"
+      cartechevalier3:
+        card: true
+        price: 125
+        id: "00a6c128-f771-40fb-8cb8-bdd1af435161"
 #NPC Seller Item
 #already nine items sell
 npc_seller_item:
@@ -100,13 +158,13 @@ npc_seller_item:
     name_npc: "§7§lBorgue §6[§e€§6]"
     items_selled:
       - "none:-1"
-      - "none:-1"
-      - "casque1:75"
-      - "none:-1"
+      - "heaume1:100"
       - "none:-1"
       - "none:-1"
-      - "casquefer:150"
+      - "heaume2:130"
       - "none:-1"
+      - "none:-1"
+      - "heaume4:150"
       - "none:-1"
   boulanger1:
     name_npc: "§7§lGerald §6[§e€§6]"
@@ -143,6 +201,42 @@ npc_seller_item:
       - "none:-1"
       - "none:-1"
       - "poisson3:2"
+      - "none:-1"
+  forgeron2:
+    name_npc: "§7§lKerian §6[§e€§6]"
+    items_selled:
+      - "none:-1"
+      - "none:-1"
+      - "casque1:75"
+      - "none:-1"
+      - "none:-1"
+      - "none:-1"
+      - "casquefer:150"
+      - "none:-1"
+      - "none:-1"
+  cuisinierroi:
+    name_npc: "§7§lBob §6[§e€§6]"
+    items_selled:
+      - "none:-1"
+      - "none:-1"
+      - "viande1:2"
+      - "none:-1"
+      - "none:-1"
+      - "none:-1"
+      - "viande2:2"
+      - "none:-1"
+      - "none:-1"
+  patrice:
+    name_npc: "§7§lPatrice §6[§e€§6]"
+    items_selled:
+      - "none:-1"
+      - "Biere:1"
+      - "none:-1"
+      - "none:-1"
+      - "vodka:2"
+      - "none:-1"
+      - "none:-1"
+      - "PatriceDrink:3"
       - "none:-1"
   
 
