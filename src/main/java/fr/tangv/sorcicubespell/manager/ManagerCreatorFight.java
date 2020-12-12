@@ -16,11 +16,11 @@ import fr.tangv.sorcicubespell.prefight.EventDuelCreator;
 
 public class ManagerCreatorFight {
 
-	private SorciCubeSpell sorci;
-	private Location locNoClassified;
-	private Location locDuel;
-	private Location locNPC;
-	private volatile Vector<Player> duelPlayers;
+	private final SorciCubeSpell sorci;
+	private final Location locNoClassified;
+	private final Location locDuel;
+	private final Location locNPC;
+	private final Vector<Player> duelPlayers;
 	private volatile Player noClassified;
 	
 	public ManagerCreatorFight(SorciCubeSpell sorci) {

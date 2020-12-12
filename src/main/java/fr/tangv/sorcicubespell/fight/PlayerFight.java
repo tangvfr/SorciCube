@@ -21,24 +21,24 @@ import fr.tangv.sorcicubespell.util.ItemHead;
 public class PlayerFight extends FightSpectator {
 
 	private final Inventory invSwap;
-    private PlayerFight enemie;
+    private volatile PlayerFight enemie;
 	private final FightDeck deck;
 	private final PlayerFeature playerFeature;
-	private int mana;
-	private int manaBoost;
-	private int health;
-	private int cardSelected;
-	private FightEntity[] entity;
-	private FightHero hero;
+	private volatile int mana;
+	private volatile int manaBoost;
+	private volatile int health;
+	private volatile int cardSelected;
+	private volatile FightEntity[] entity;
+	private volatile FightHero hero;
 	private final Location[] entityLoc;
 	private final Card[] cardHand;
-	private FightEntity entityAttack;
-	private FightHead firstSelection;
-	private boolean alreadySwap;
-	private byte roundAFK;
-	private boolean isAFK;
-	private boolean lossAFK;
-	private boolean isDead;
+	private volatile FightEntity entityAttack;
+	private volatile FightHead firstSelection;
+	private volatile boolean alreadySwap;
+	private volatile byte roundAFK;
+	private volatile boolean isAFK;
+	private volatile boolean lossAFK;
+	private volatile boolean isDead;
 	
 	public PlayerFight(Fight fight, Player player, PlayerFeature playerFeature, FightDeck deck, boolean first) {
 		super(fight, player, first ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase(), first);

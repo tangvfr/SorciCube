@@ -25,24 +25,24 @@ public class Fight {
 	//value static
 	private final static double TOLERANCE = 4.6;
 	private final static double TOLERANCE_ENTITY = 1.6;
-	protected static final int MAX_HEALTH = 60;
-	protected static final int START_HEALTH = 30;
+	protected final static int MAX_HEALTH = 60;
+	protected final static int START_HEALTH = 30;
 	
 	private final FightData fightData;
 	private final SorciCubeSpell sorci;
 	private final PlayerFight player1;
 	private final PlayerFight player2;
 	private final FightArena arena;
-	private int round;
+	private volatile int round;
 	protected final long waitView;
 	private final Cooldown cooldown;
 	private final Cooldown cooldownEnd;
 	private final Cooldown cooldownRound;
 	private volatile boolean firstPlay;
-	private boolean isStart;
+	private volatile boolean isStart;
 	private final BossBar bossBar;
 	private final Vector<FightSpectator> spectators;
-	private boolean init;
+	private volatile boolean init;
 	//end
 	private volatile boolean isEnd;
 	private volatile boolean isDeleted;

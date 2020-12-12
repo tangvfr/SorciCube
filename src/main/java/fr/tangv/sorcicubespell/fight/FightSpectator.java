@@ -107,18 +107,18 @@ public class FightSpectator {
 	protected final Fight fight;
 	private final Inventory invHistoric;
 	private final Inventory invViewEntity;
-	private Player player;
+	private volatile Player player;
 	private final Location locBase;
 	private final String name;
 	private final UUID uuid;
 	private final GameProfile profile;
 	protected final boolean first;
 	private final Vector<Integer> invAutorized;
-	private long waitView;
+	private volatile long waitView;
 	
 	//scoreboard
-	private String[] lastScoreMy;
-	private String[] lastScoreEnemie;
+	private volatile String[] lastScoreMy;
+	private volatile String[] lastScoreEnemie;
 	private Scoreboard sc;
 	private ScoreboardObjective scob;
 	
