@@ -18,7 +18,7 @@ public class FightData {
 	private final int player1DeckUse;
 	private final int player2DeckUse;
 	private final FightType fightType;
-	private volatile FightStat stat;
+	private FightStat stat;
 	private final String server;
 	
 	public FightData(UUID fightUUID,

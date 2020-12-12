@@ -38,12 +38,12 @@ public class FightEntity extends FightHead {
 	private final EntityPlayer entityPlayer;
 	private final EntityArmorStand entityStat;
 	private final UUID uuid;
-	private volatile CardEntity card;
-	private volatile CardEntity lastCard;
-	private volatile CardSkin skin;
-	private volatile boolean isSend;
-	private volatile boolean attackIsPossible;
-	private volatile boolean attacked;
+	private CardEntity card;
+	private CardEntity lastCard;
+	private CardSkin skin;
+	private boolean isSend;
+	private boolean attackIsPossible;
+	private boolean attacked;
 	
 	public FightEntity(PlayerFight owner, Location loc) {
 		super(owner, loc, 1.3D);

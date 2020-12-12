@@ -33,19 +33,19 @@ public class Fight {
 	private final PlayerFight player1;
 	private final PlayerFight player2;
 	private final FightArena arena;
-	private volatile int round;
+	private int round;
 	protected final long waitView;
 	private final Cooldown cooldown;
 	private final Cooldown cooldownEnd;
 	private final Cooldown cooldownRound;
-	private volatile boolean firstPlay;
-	private volatile boolean isStart;
+	private boolean firstPlay;
+	private boolean isStart;
 	private final BossBar bossBar;
 	private final Vector<FightSpectator> spectators;
-	private volatile boolean init;
+	private boolean init;
 	//end
-	private volatile boolean isEnd;
-	private volatile boolean isDeleted;
+	private boolean isEnd;
+	private boolean isDeleted;
 	
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
 		this.fightData = preFight.getFightData();

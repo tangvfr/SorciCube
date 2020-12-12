@@ -22,7 +22,7 @@ public abstract class FightHead {
 	protected final WorldServer world;
 	private final EntityArmorStand entityName;
 	private final EntityArmorStand entityHead;
-	private volatile net.minecraft.server.v1_9_R2.ItemStack headItem;
+	private net.minecraft.server.v1_9_R2.ItemStack headItem;
 	
 	public FightHead(PlayerFight owner, Location loc, double headHeight) {
 		this.fight = owner.getFight();

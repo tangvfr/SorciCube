@@ -13,7 +13,7 @@ public class PreFight {
 	private final UUID playerUUID2;
 	private final int player1DeckUse;
 	private final int player2DeckUse;
-	private volatile Cooldown cooldown;
+	private Cooldown cooldown;
 	private volatile Player player2;
 	
 	public static PreFight createPreFight(Player player, FightData data) {
