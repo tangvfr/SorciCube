@@ -6,7 +6,7 @@ public class TestTools {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("TestTools");
-		frame.setContentPane(new PanelTools());
+		frame.setContentPane(new ImageTool());
 		frame.setResizable(false);
 		frame.pack();
 		frame.setLocationRelativeTo(null);

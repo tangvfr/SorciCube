@@ -13,12 +13,14 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubespell.card.CardSkin;
 import fr.tangv.sorcicubespell.logi.ClickListener;
+import fr.tangv.sorcicubespell.logi.tools.ImageTool;
 
 public abstract class DialogSkin extends DialogBase<JTextField> {
 	
@@ -56,6 +58,17 @@ public abstract class DialogSkin extends DialogBase<JTextField> {
 			}
 		});
 		panDown.add(btn);
+		//image tool
+		panDown.add(new CompEmpty(10, 10));
+		JButton btnTool = new JButton("Image Tool");
+		btnTool.setFocusable(false);
+		btnTool.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(DialogSkin.this, new ImageTool(), "Image Tool", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		panDown.add(btnTool);
 		this.pack();
 		this.setLocationRelativeTo(owner);
 	}

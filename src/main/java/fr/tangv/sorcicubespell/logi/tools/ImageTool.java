@@ -21,14 +21,14 @@ import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubespell.logi.ClickListener;
 
-public class PanelTools extends JPanel {
+public class ImageTool extends JPanel {
 
 	private static final long serialVersionUID = 1092030512998823501L;
 	private JButton fileBtn;
 	private JButton renderBtn;
 	private JTextField urlText;
 	
-	public PanelTools() {
+	public ImageTool() {
 		this.setLayout(new BorderLayout(5, 5));
 		this.setBorder(new TitledBorder("Image Format Tool"));
 		Dimension dim = new Dimension(500, 110);
@@ -51,7 +51,7 @@ public class PanelTools extends JPanel {
 				}
 				fc.setSelectedFile(file);
 				fc.setCurrentDirectory(file);
-				if (fc.showOpenDialog(PanelTools.this) == JFileChooser.APPROVE_OPTION) {
+				if (fc.showOpenDialog(ImageTool.this) == JFileChooser.APPROVE_OPTION) {
 					urlText.setText(fc.getSelectedFile().getPath());
 				}
 			}
@@ -63,15 +63,17 @@ public class PanelTools extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				String text = urlText.getText();
 				if (text.isEmpty())
-					JOptionPane.showMessageDialog(PanelTools.this, "Path is empty !", "Tool Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ImageTool.this, "Path is empty !", "Tool Error", JOptionPane.ERROR_MESSAGE);
 				else
 					try {
 						BufferedImage img = text.startsWith("http") ? ImageIO.read(new URL(text).openStream()) : ImageIO.read(new File(text));
 						if (img.getWidth() == 64 && (img.getHeight() == 32 || img.getHeight() == 64)) {
 							BufferedImage render = new BufferedImage(64, 32, BufferedImage.TYPE_4BYTE_ABGR);
 							Graphics g = render.getGraphics();
+							//head
 							g.drawImage(img.getSubimage(0, 0, 32, 16), 0, 0, null);
 							g.drawImage(img.getSubimage(32, 0, 32, 16), 0, 0, null);
+							//body
 							g.drawImage(img.getSubimage(0, 16, 64, 16), 0, 16, null);
 							if (img.getHeight() == 64)
 								g.drawImage(img.getSubimage(0, 32, 64, 16), 0, 16, null);
@@ -83,7 +85,7 @@ public class PanelTools extends JPanel {
 							dg.setColor(Color.LIGHT_GRAY);
 							dg.fillPolygon(new int[] {72, 88, 72}, new int[] {29, 32, 36}, 3);
 							dg.dispose();
-							if (JOptionPane.showConfirmDialog(PanelTools.this, new JLabel(new ImageIcon(demo.getScaledInstance(160*5, 64*5, BufferedImage.SCALE_DEFAULT))), "Tool Render" , JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+							if (JOptionPane.showConfirmDialog(ImageTool.this, new JLabel(new ImageIcon(demo.getScaledInstance(160*5, 64*5, BufferedImage.SCALE_DEFAULT))), "Tool Render" , JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 								return;
 							JFileChooser fc = new JFileChooser();
 							fc.setMultiSelectionEnabled(false);
@@ -95,29 +97,29 @@ public class PanelTools extends JPanel {
 								e1.printStackTrace();
 							}
 							fc.setSelectedFile(cd);
-							if (fc.showSaveDialog(PanelTools.this) == JFileChooser.APPROVE_OPTION) {
+							if (fc.showSaveDialog(ImageTool.this) == JFileChooser.APPROVE_OPTION) {
 								String path = fc.getSelectedFile().getPath();
 								if (!path.endsWith(".png"))
 									path += ".png";
 								File file = new File(path);
 								if (file.exists()) {
 									if (!file.isFile()) {
-										JOptionPane.showMessageDialog(PanelTools.this, "File is folder!", "Tool Error", JOptionPane.ERROR_MESSAGE);
+										JOptionPane.showMessageDialog(ImageTool.this, "File is folder!", "Tool Error", JOptionPane.ERROR_MESSAGE);
 										return;
 									} else {
-										if (JOptionPane.showConfirmDialog(PanelTools.this, "Do you sure replace that file !", "Tool Replace" , JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+										if (JOptionPane.showConfirmDialog(ImageTool.this, "Do you sure replace that file !", "Tool Replace" , JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 											return;
 									}
 								} else {
 									file.createNewFile();
 								}
-								ImageIO.write(render, "png", file);
+								ImageIO.write(render, "PNG", file);
 							}
 						} else {
-							JOptionPane.showMessageDialog(PanelTools.this, "Image size invalid !", "Tool Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(ImageTool.this, "Image size invalid !", "Tool Error", JOptionPane.ERROR_MESSAGE);
 						}
 					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(PanelTools.this, e1.getMessage(), "Tool Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(ImageTool.this, e1.getMessage(), "Tool Error", JOptionPane.ERROR_MESSAGE);
 					}
 			}
 		});
