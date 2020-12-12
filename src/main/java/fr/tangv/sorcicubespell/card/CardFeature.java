@@ -5,7 +5,7 @@ import org.bson.Document;
 public class CardFeature {
 
 	private final CardFeatureType type;
-	private volatile CardValue value;
+	private CardValue value;
 	
 	public CardFeature(CardFeatureType type, CardValue value) {
 		this.type = type;

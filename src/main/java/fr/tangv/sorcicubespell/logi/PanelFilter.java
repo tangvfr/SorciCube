@@ -31,6 +31,7 @@ public class PanelFilter extends JScrollPane {
 	private PanelFilterBoolean filterIsInvulnerability;
 	private PanelFilterBoolean filterIsImmobilization;
 	private PanelFilterBoolean filterIsStunned;
+	private PanelFilterBoolean filterInvalidMaterial;
 	
 	public PanelFilter() throws Exception {
 		//init value
@@ -47,6 +48,7 @@ public class PanelFilter extends JScrollPane {
 		this.filterIsInvulnerability = new PanelFilterBoolean("Is Invulnerability", "True", "False", "Any");
 		this.filterIsImmobilization = new PanelFilterBoolean("Is Immobilization", "True", "False", "Any");
 		this.filterIsStunned = new PanelFilterBoolean("Is Stunned", "True", "False", "Any");
+		this.filterInvalidMaterial = new PanelFilterBoolean("Invalid Material", "True", "False", "Any");
 		//init gui
 		JPanel pan = new JPanel();
 		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
@@ -65,6 +67,7 @@ public class PanelFilter extends JScrollPane {
 		pan.add(filterIsInvulnerability);
 		pan.add(filterIsImmobilization);
 		pan.add(filterIsStunned);
+		pan.add(filterInvalidMaterial);
 		pan.add(filterCible);
 		//scroll pan
 		this.setViewportView(pan);
@@ -91,8 +94,9 @@ public class PanelFilter extends JScrollPane {
 				&& filterIsExited.isGood(card.getFeatures().hasFeature(CardFeatureType.EXCITED))
 				&& filterIsInvulnerability.isGood(card.getFeatures().hasFeature(CardFeatureType.INVULNERABILITY))
 				&& filterIsImmobilization.isGood(card.getFeatures().hasFeature(CardFeatureType.IMMOBILIZATION))
-				&& filterIsStunned.isGood(card.getFeatures().hasFeature(CardFeatureType.STUNNED)))
-			{
+				&& filterIsStunned.isGood(card.getFeatures().hasFeature(CardFeatureType.STUNNED))
+				&& filterInvalidMaterial.isGood(card.getMaterial().isInvalid())
+			) {
 				cards.add(card);
 			}
 		}

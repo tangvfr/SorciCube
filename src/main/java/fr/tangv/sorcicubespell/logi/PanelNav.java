@@ -144,6 +144,8 @@ public class PanelNav extends JPanel {
 	}
 	
 	public static String renderHTMLCard(Card card, String prefix) {
+		if (card.getMaterial().isInvalid())
+			prefix += "<span color=\"#EC1F03\">[Material*]</span>";
 		if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD))
 			prefix += "<span color=\"#E60FB8\">[Hide]</span>";
 		prefix += (card.getType() == CardType.ENTITY ? 
