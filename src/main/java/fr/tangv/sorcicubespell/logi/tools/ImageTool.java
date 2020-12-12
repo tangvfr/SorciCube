@@ -92,7 +92,7 @@ public class ImageTool extends JPanel {
 							File cd = new File("./render.png");
 							try {
 								if (!urlText.getText().startsWith("http"))
-									cd = new File(urlText.getText().replace(".png", "")+"-format.png");
+									cd = new File(urlText.getText().replace(".png", "")+"-render.png");
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
