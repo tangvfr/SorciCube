@@ -3,11 +3,16 @@ package fr.tangv.sorcicubespell.logi;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Vector;
@@ -16,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,6 +45,7 @@ import fr.tangv.sorcicubespell.card.CardType;
 import fr.tangv.sorcicubespell.card.CardValue;
 import fr.tangv.sorcicubespell.card.CardVisual;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
+import fr.tangv.sorcicubespell.logi.tools.ImageTool;
 
 public class PanelNav extends JPanel {
 
@@ -145,7 +152,7 @@ public class PanelNav extends JPanel {
 	
 	public static String renderHTMLCard(Card card, String prefix) {
 		if (card.getMaterial().isInvalid())
-			prefix += "<span color=\"#0652E9\">[Material*]</span>";
+			prefix += "<span color=\"#0652E9\">*IM*</span>";
 		if (card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD))
 			prefix += "<span color=\"#E60FB8\">[Hide]</span>";
 		prefix += (card.getType() == CardType.ENTITY ? 
@@ -292,6 +299,34 @@ public class PanelNav extends JPanel {
 				}
 			});
 			this.add(itemSort);
+			//tools sub menu
+			JMenu tools = new JMenu("Tools");
+			JMenuItem mineskin = new JMenuItem("mineskin.org");
+			mineskin.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (e.getID() == 1001) {
+						if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE))
+							try {
+								Desktop.getDesktop().browse(new URI("https://mineskin.org/"));
+							} catch (IOException | URISyntaxException e1) {
+								e1.printStackTrace();
+							}
+					}
+				}
+			});
+			tools.add(mineskin);
+			JMenuItem imageTool = new JMenuItem("Image Tool");
+			imageTool.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (e.getID() == 1001) {
+						JOptionPane.showMessageDialog(PanelNav.this, new ImageTool(), "Image Tool", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			});
+			tools.add(imageTool);
+			this.add(tools);
 		}
 		
 	}

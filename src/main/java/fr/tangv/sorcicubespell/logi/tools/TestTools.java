@@ -10,6 +10,7 @@ public class TestTools {
 		frame.setResizable(false);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 
