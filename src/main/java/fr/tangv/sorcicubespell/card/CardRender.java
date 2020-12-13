@@ -43,11 +43,11 @@ public class CardRender {
 		ArrayList<String> lore = new ArrayList<String>();
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {
-			lore.add("  "+CardVisual.renderStatCard(card));
+			lore.add("§r  "+CardVisual.renderStatCard(card));
 		}
 		//rarity and faction
 		lore.add("");
-		lore.add(sorci.getEnumTool().rarityToString(card.getRarity())+"§r§f§l \u2807 "+sorci.getEnumTool().factionToString(card.getFaction()));
+		lore.add("§r"+sorci.getEnumTool().rarityToString(card.getRarity())+"§r§f§l \u2807 "+sorci.getEnumTool().factionToString(card.getFaction()));
 		lore.add("");
 		//features
 		boolean featureReturn = false;
@@ -55,25 +55,25 @@ public class CardRender {
 			if (type.isShow() && features.hasFeature(type) && (card.getType() != CardType.ENTITY || type != CardFeatureType.DAMAGE || card.getCible() != CardCible.ONE_ENEMIE || card.getCibleFaction() != CardFaction.BASIC)) {
 				CardFeature feature = features.getFeature(type);
 				featureReturn = true;
-				for (String line: sorci.getEnumTool().featureToString(feature.getType(), feature.getValue())
+				for (String line : sorci.getEnumTool().featureToString(feature.getType(), feature.getValue())
 						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
 						.replace("{cible}", cible)
 						.split("\n")) {
-					lore.add(line);
+					lore.add("§r"+line);
 				}
 			}
 		if (featureReturn)
 			lore.add("");
 		//lore
 		for (int i = 0; i < card.getDescription().size(); i++)
-			lore.add(card.getDescription().get(i));
+			lore.add("§r"+card.getDescription().get(i));
 		if (card.getDescription().size() >= 1)
 			lore.add("");
 		//type
-		lore.add("  "+sorci.getEnumTool().typeToString(card.getType()));
+		lore.add("§r  "+sorci.getEnumTool().typeToString(card.getType()));
 		lore.add("");
 		//id
-		lore.add("§8Id: "+card.getUUID());
+		lore.add("§r§8Id: "+card.getUUID());
 		//return item
 		CardMaterial material = card.getMaterial();
 		if (material.hasSkin())
