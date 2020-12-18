@@ -3,6 +3,7 @@ package fr.tangv.sorcicubeapi.requests;
 public enum TypeData {
 
 	JSON(),
-	TEXT();
+	TEXT(),
+	ARRAY_TEXT();
 	
 }
