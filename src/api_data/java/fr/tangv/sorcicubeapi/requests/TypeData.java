@@ -4,6 +4,7 @@ public enum TypeData {
 
 	JSON(),
 	TEXT(),
-	ARRAY_TEXT();
+	ARRAY_TEXT(),
+	NOTHING();
 	
 }
