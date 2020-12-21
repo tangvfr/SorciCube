@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapi.requests;
+package fr.tangv.sorcicubeapi.requests.util;
 
 public enum TypeRequest {
 
