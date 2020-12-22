@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapi.file;
+package fr.tangv.sorcicubeapi.files;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,7 +36,7 @@ public class FileManager {
 	}
 	
 	public boolean delete(String name) {
-		return files.get(name).delete();
+		return files.remove(name).delete();
 	}
 	
 	public void update(String name, String data) throws Exception {

@@ -1,12 +1,10 @@
-package fr.tangv.sorcicubeapi.file;
+package fr.tangv.sorcicubeapi.files;
 
 import java.io.CharArrayWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 

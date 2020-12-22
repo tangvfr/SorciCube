@@ -1,12 +1,12 @@
-package fr.tangv.sorcicubeapi.client;
+package fr.tangv.sorcicubeapi.clients;
 
-public enum TypeClient {
+public enum ClientType {
 
-	Config(0b0000_0001);
+	Spigot(0b0000_0001);
 	
 	public final int mask;
 	
-	private TypeClient(int mask) {
+	private ClientType(int mask) {
 		this.mask = mask;
 	}
 	
