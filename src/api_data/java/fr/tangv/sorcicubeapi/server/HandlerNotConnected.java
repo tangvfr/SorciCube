@@ -9,12 +9,12 @@ import fr.tangv.sorcicubeapi.requests.RequestException;
 import fr.tangv.sorcicubeapi.requests.RequestHandlerInterface;
 import fr.tangv.sorcicubeapi.requests.RequestType;
 
-public class RequestHandlerDontConnected implements RequestHandlerInterface {
+public class HandlerNotConnected implements RequestHandlerInterface {
 
 	private final Request dontAuthentified;
-	private final ClientManager manager;
+	private final ClientsManager manager;
 	
-	public RequestHandlerDontConnected(ClientManager manager) throws RequestException {
+	public HandlerNotConnected(ClientsManager manager) throws RequestException {
 		this.dontAuthentified = new Request(RequestType.DONT_AUTHENTIFIED, "This action is invalid, you dont are authentified !", "");
 		this.manager = manager;
 	}
@@ -25,13 +25,19 @@ public class RequestHandlerDontConnected implements RequestHandlerInterface {
 			ClientIdentification clientID = ClientIdentification.toClientIdentification(Document.parse(request.data));
 			if (!clientID.isValid()) {
 				client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED, "ClientIdentification", "ClientIdentification is wrong !"));
-			} else if (!ClientManager.VERSION_PROTOCOL.equals(clientID.version)) {
+			} else if (!ClientsManager.VERSION_PROTOCOL.equals(clientID.version)) {
 				client.setClientID(clientID);
-				manager.authentification(client);
+				client.sendRequest(
+					manager.authentification(client)
+					? 
+					new Request(RequestType.AUTHENTIFIED, clientID.name, "")
+					:
+					new Request(RequestType.IDENTIFICATION_REFUSED,	"Authentification", "Token is wrong")
+				);
 			} else {
 				client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED, "VersionProtocol", 
 												"Version of protocol is invalid, server version is \""
-												+ClientManager.VERSION_PROTOCOL+
+												+ClientsManager.VERSION_PROTOCOL+
 												"\" and your client version is \""
 												+clientID.version+
 												"\"."));

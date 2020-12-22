@@ -2,18 +2,24 @@ package fr.tangv.sorcicubeapi.requests;
 
 public enum RequestType {
 	
-	//SERVER
+	/*
+	 * SERVER
+	 */
 	
 	//ERROR
 	ERROR(RequestDataType.TEXT),
 	//IDENTIFICATION
 	DONT_AUTHENTIFIED(RequestDataType.NOTHING),
 	AUTHENTIFIED(RequestDataType.NOTHING),
+	ALREADY_AUTHENTIFIED(RequestDataType.NOTHING),
 	IDENTIFICATION_REFUSED(RequestDataType.TEXT),
-	KICK_BY_SERVER(RequestDataType.TEXT),
+	//DISCONNECT ACRTIONS
+	KICK(RequestDataType.TEXT),
 	CLOSED_SERVER(RequestDataType.NOTHING),
 	
-	//CLIENT
+	/*
+	 * CLIENT
+	 */
 	
 	//PLAYER
 	PLAYER_INIT(RequestDataType.JSON),

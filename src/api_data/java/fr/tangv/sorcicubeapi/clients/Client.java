@@ -19,15 +19,16 @@ public class Client extends Thread {
 	private final long timeConnect;
 	
 	//stream
-	private Scanner in;
-	private OutputStreamWriter out;
-	private volatile boolean connected;
+	private final Scanner in;
+	private final OutputStreamWriter out;
 	
 	private volatile ClientIdentification clientID;
 	
-	public Client(Socket socket) {
+	public Client(Socket socket) throws IOException {
 		this.socket = socket;
 		this.timeConnect = System.currentTimeMillis();
+		this.in = new Scanner(socket.getInputStream(), StandardCharsets.US_ASCII.displayName());
+		this.out = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.US_ASCII);
 	}
 	
 	//seter geter
@@ -65,7 +66,7 @@ public class Client extends Thread {
 	//stream
 	
 	public boolean isConnected() {
-		return connected;
+		return socket.isConnected();
 	}
 	
 	public synchronized void sendRequest(Request request) throws IOException {
@@ -79,37 +80,29 @@ public class Client extends Thread {
 	
 	@Override
 	public void run() {
-		try {
-			this.in = new Scanner(socket.getInputStream(), StandardCharsets.US_ASCII.displayName());
-			this.out = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.US_ASCII);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			while (socket.isConnected()) {
+		while (socket.isConnected()) {
+			try {
+				Request request = new Request(in.nextLine());
+				if (handler != null)
+					handler.handlingRequest(this, request);
+			} catch (RequestException e) {
+				e.printStackTrace();
 				try {
-					Request request = new Request(in.nextLine());
-					if (handler != null)
-						handler.handlingRequest(this, request);
-				} catch (RequestException e) {
+					sendRequest(new Request(RequestType.ERROR, "Invalid_Request", e.getMessage()));
+				} catch (RequestException | IOException e2) {
+					e2.printStackTrace();
+				}
+			} catch (Exception e) {
+				if (socket.isConnected()) {
 					e.printStackTrace();
 					try {
-						sendRequest(new Request(RequestType.ERROR, "Invalid_Request", e.getMessage()));
+						sendRequest(new Request(RequestType.ERROR, "Error Exception", e.getMessage()));
 					} catch (RequestException | IOException e2) {
 						e2.printStackTrace();
-					}
-				} catch (Exception e) {
-					if (socket.isConnected()) {
-						e.printStackTrace();
-						try {
-							sendRequest(new Request(RequestType.ERROR, "Error Exception", e.getMessage()));
-						} catch (RequestException | IOException e2) {
-							e2.printStackTrace();
-						}
 					}
 				}
 			}
 		}
-		this.connected = false;
 	}
 	
 }

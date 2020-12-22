@@ -2,16 +2,17 @@ package fr.tangv.sorcicubeapi.clients;
 
 public enum ClientType {
 
-	Spigot(0b0000_0001);
+	SPIGOT((byte) 		0b0000_0001),
+	APPLICATION((byte) 	0b0000_0010);
 	
-	public final int mask;
+	public final byte mask;
 	
-	private ClientType(int mask) {
+	private ClientType(byte mask) {
 		this.mask = mask;
 	}
 	
-	public boolean isThisType(int type) {
-		return (type & mask) > 0;
+	public boolean isThisType(byte type) {
+		return (type & mask) != 0;
 	}
 	
 }
