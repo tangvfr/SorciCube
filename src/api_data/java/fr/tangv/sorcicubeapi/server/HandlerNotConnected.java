@@ -25,19 +25,18 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 			ClientIdentification clientID = ClientIdentification.toClientIdentification(Document.parse(request.data));
 			if (!clientID.isValid()) {
 				client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED, "ClientIdentification", "ClientIdentification is wrong !"));
-			} else if (!ClientsManager.VERSION_PROTOCOL.equals(clientID.version)) {
+			} else if (!Client.VERSION_PROTOCOL.equals(clientID.version)) {
 				client.setClientID(clientID);
-				client.sendRequest(
-					manager.authentification(client)
-					? 
-					new Request(RequestType.AUTHENTIFIED, clientID.name, "")
-					:
-					new Request(RequestType.IDENTIFICATION_REFUSED,	"Authentification", "Token is wrong")
-				);
+				if (manager.authentification(client)) {
+					client.sendRequest(new Request(RequestType.AUTHENTIFIED, clientID.name, ""));
+				} else {
+					client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED,	"Authentification", "Token is wrong"));
+					client.close();
+				}
 			} else {
 				client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED, "VersionProtocol", 
 												"Version of protocol is invalid, server version is \""
-												+ClientsManager.VERSION_PROTOCOL+
+												+Client.VERSION_PROTOCOL+
 												"\" and your client version is \""
 												+clientID.version+
 												"\"."));

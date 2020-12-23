@@ -2,7 +2,7 @@ package fr.tangv.sorcicubeapi.requests;
 
 import java.util.Base64;
 
-import fr.tangv.sorcicubeapi.SorcicubeApi;
+import fr.tangv.sorcicubeapi.clients.Client;
 
 public class Request {
 	
@@ -20,7 +20,7 @@ public class Request {
 			this.name = r[1];
 			if (name.contains(" ") || name.contains("\n") || name.contains("\r"))
 				throw new Exception("");
-			this.data = new String(Base64.getDecoder().decode(r[2]), SorcicubeApi.CHARSET);
+			this.data = new String(Base64.getDecoder().decode(r[2]), Client.CHARSET);
 			this.request = request;
 		} catch (Exception e) {
 			throw new RequestException("Format of request is invalid");
@@ -35,7 +35,7 @@ public class Request {
 		if (data == null)
 			throw new RequestException("Data is Null");
 		this.data = data;
-		this.request = typeRequest.name()+" "+name+" "+Base64.getEncoder().encode(data.getBytes(SorcicubeApi.CHARSET));
+		this.request = typeRequest.name()+" "+name+" "+Base64.getEncoder().encode(data.getBytes(Client.CHARSET));
 	}
 	
 }

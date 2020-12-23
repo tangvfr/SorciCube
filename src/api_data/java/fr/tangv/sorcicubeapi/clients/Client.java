@@ -3,6 +3,7 @@ package fr.tangv.sorcicubeapi.clients;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -11,8 +12,11 @@ import fr.tangv.sorcicubeapi.requests.RequestException;
 import fr.tangv.sorcicubeapi.requests.RequestHandlerInterface;
 import fr.tangv.sorcicubeapi.requests.RequestType;
 
-public class Client extends Thread {
+public abstract class Client extends Thread {
 
+	public final static Charset CHARSET = StandardCharsets.UTF_16BE;
+	public static final String VERSION_PROTOCOL = "0.1-beta";
+	
 	//init
 	private volatile RequestHandlerInterface handler;
 	private final Socket socket;
@@ -74,9 +78,11 @@ public class Client extends Thread {
 		out.flush();
 	}
 	
-	public void disconnect() throws IOException {
+	public void close() throws IOException {
 		socket.close();
 	}
+	
+	public abstract void disconnected();
 	
 	@Override
 	public void run() {
@@ -103,6 +109,7 @@ public class Client extends Thread {
 				}
 			}
 		}
+		this.disconnected();
 	}
 	
 }

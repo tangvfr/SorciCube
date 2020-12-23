@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 
-import fr.tangv.sorcicubeapi.SorcicubeApi;
+import fr.tangv.sorcicubeapi.clients.Client;
 
 public class File {
 	
@@ -32,7 +32,7 @@ public class File {
 	}
 	
 	public synchronized void loadData() throws IOException {
-		InputStreamReader in = new InputStreamReader(new FileInputStream(file), SorcicubeApi.CHARSET);
+		InputStreamReader in = new InputStreamReader(new FileInputStream(file), Client.CHARSET);
 		CharArrayWriter data = new CharArrayWriter();
 		char[] chars = new char[1024];
 		int len;
@@ -44,7 +44,7 @@ public class File {
 	
 	public synchronized void writeData(String data) throws IOException {
 		this.data = data;
-		OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), SorcicubeApi.CHARSET);
+		OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), Client.CHARSET);
 		out.write(data);
 		out.close();
 	}
