@@ -8,7 +8,11 @@
   <groupId>fr.tangv.sorcicubecore</groupId>
   <artifactId>SorciCubeCore</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
+
+  <modules>
+	<module>../SorciCubeSpell</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
