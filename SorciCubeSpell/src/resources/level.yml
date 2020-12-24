@@ -1,0 +1,155 @@
+experience_win: 15
+money_win: 20
+experience_loss: 5
+money_loss: 5
+experience_equality: 10
+money_equality: 10
+level_max: 50
+level_experience:
+  '2':
+    experience: 40
+    reward: 13
+  '3':
+    experience: 44
+    reward: 15
+  '4':
+    experience: 48
+    reward: 16
+  '5':
+    experience: 53
+    reward: 18
+  '6':
+    experience: 59
+    reward: 20
+  '7':
+    experience: 64
+    reward: 21
+  '8':
+    experience: 71
+    reward: 24
+  '9':
+    experience: 78
+    reward: 26
+  '10':
+    experience: 86
+    reward: 29
+  '11':
+    experience: 94
+    reward: 31
+  '12':
+    experience: 104
+    reward: 35
+  '13':
+    experience: 114
+    reward: 38
+  '14':
+    experience: 126
+    reward: 42
+  '15':
+    experience: 138
+    reward: 46
+  '16':
+    experience: 152
+    reward: 51
+  '17':
+    experience: 167
+    reward: 56
+  '18':
+    experience: 184
+    reward: 61
+  '19':
+    experience: 202
+    reward: 67
+  '20':
+    experience: 222
+    reward: 74
+  '21':
+    experience: 245
+    reward: 82
+  '22':
+    experience: 269
+    reward: 90
+  '23':
+    experience: 296
+    reward: 99
+  '24':
+    experience: 326
+    reward: 109
+  '25':
+    experience: 358
+    reward: 119
+  '26':
+    experience: 394
+    reward: 131
+  '27':
+    experience: 433
+    reward: 144
+  '28':
+    experience: 477
+    reward: 159
+  '29':
+    experience: 524
+    reward: 175
+  '30':
+    experience: 577
+    reward: 192
+  '31':
+    experience: 635
+    reward: 212
+  '32':
+    experience: 698
+    reward: 233
+  '33':
+    experience: 768
+    reward: 256
+  '34':
+    experience: 845
+    reward: 282
+  '35':
+    experience: 929
+    reward: 310
+  '36':
+    experience: 1022
+    reward: 341
+  '37':
+    experience: 1124
+    reward: 375
+  '38':
+    experience: 1237
+    reward: 412
+  '39':
+    experience: 1360
+    reward: 453
+  '40':
+    experience: 1496
+    reward: 499
+  '41':
+    experience: 1646
+    reward: 549
+  '42':
+    experience: 1810
+    reward: 603
+  '43':
+    experience: 1991
+    reward: 664
+  '44':
+    experience: 2191
+    reward: 730
+  '45':
+    experience: 2410
+    reward: 803
+  '46':
+    experience: 2651
+    reward: 884
+  '47':
+    experience: 2916
+    reward: 972
+  '48':
+    experience: 3207
+    reward: 1069
+  '49':
+    experience: 3528
+    reward: 1176
+  '50':
+    experience: 3881
+    reward: 1294

@@ -11,7 +11,7 @@ public class ManagerCards {
 	//private MongoCollection<Document> cardsCol;
 	private ConcurrentHashMap<UUID, Card> cards;
 	
-	public ManagerCards(MongoDBManager manager) {
+	public ManagerCards(MongoDBManager mongo) {
 		//this.cardsCol = manager.getCards();
 		refresh();
 	}

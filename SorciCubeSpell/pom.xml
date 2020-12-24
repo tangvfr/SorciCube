@@ -7,7 +7,7 @@
 
   <groupId>fr.tangv.sorcicubespell</groupId>
   <artifactId>SorciCubeSpell</artifactId>
-  <version>0.1.0-${git.commit.id.abbrev}-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -18,16 +18,17 @@
 
   <build>
     <defaultGoal>package</defaultGoal>
-    <sourceDirectory>src/main/java</sourceDirectory>
+    <sourceDirectory>src/java</sourceDirectory>
     <directory>target</directory>
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
+        <directory>src/resources</directory>
         <filtering>true</filtering>
       </resource>
     </resources>
-    <plugins>
-     	<plugin>
+  </build>
+  
+  <!-- <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
               <configuration>
                   <archive>
@@ -49,43 +50,29 @@
                       </goals>
                   </execution>
               </executions>
-          </plugin>
-          <plugin>
-            <groupId>pl.project13.maven</groupId>
-            <artifactId>git-commit-id-plugin</artifactId>
-            <version>2.2.4</version>
-            <executions>
-                <execution>
-                    <phase>validate</phase>
-                    <goals>
-                        <goal>revision</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <dateFormat>yyyyMMdd-HHmmss</dateFormat>
-                <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-                <generateGitPropertiesFile>false</generateGitPropertiesFile>
-            </configuration>
-        </plugin>
-    </plugins>
-  </build>
+          </plugin> -->
 
-  <dependencies>
-      <!--MongoDB API-->
-      <dependency>
-          <groupId>org.mongodb</groupId>
-          <artifactId>mongodb-driver-sync</artifactId>
-          <version>4.0.3</version>
-      </dependency>
-      <!--Spigot API-->
-      <dependency>
-         <groupId>spigot</groupId>
-         <artifactId>spigot</artifactId>
-         <scope>system</scope>
-         <version>1.9.4</version>
-         <systemPath>${project.basedir}/libs/spigot-1.9.4-R0.1-SNAPSHOT-latest.jar</systemPath>
-      </dependency>
-  </dependencies>
+	<dependencies>
+        <!--MongoDB API-->
+        <!--<dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.0.3</version>
+        </dependency>-->
+        <!--Spigot API-->
+        <dependency>
+            <groupId>spigot</groupId>
+            <artifactId>spigot</artifactId>
+            <scope>system</scope>
+            <version>1.9.4</version>
+            <systemPath>${project.basedir}/libs/spigot-1.9.4-R0.1-SNAPSHOT-latest.jar</systemPath>
+        </dependency>
+        <!--SorciCubeCore-->
+        <dependency>
+            <groupId>fr.tangv.sorcicubecore</groupId>
+            <artifactId>SorciCubeCore</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

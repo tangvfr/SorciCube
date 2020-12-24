@@ -5,7 +5,7 @@ import java.util.UUID;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 
-public interface ManagerPlayers {
+public class ManagerPlayers {
 
 	/*private MongoCollection<Document> players;
 	private SorciCubeSpell sorci;
@@ -16,14 +16,14 @@ public interface ManagerPlayers {
 	}
 	*/
 	
-	public boolean containtPlayer(UUID uuid);
+	public boolean containtPlayer(UUID uuid) {return false;};
 	
-	public PlayerFeature getPlayerFeature(UUID uuid) throws Exception;
+	public PlayerFeature getPlayerFeature(UUID uuid) throws Exception {return null;};
 	
-	public void update(PlayerFeature playerFeature);
+	public void update(PlayerFeature playerFeature) {};
 	
 	//return null if failing
-	public PlayerFeature initPlayer(UUID player, CardFaction faction);
+	public PlayerFeature initPlayer(UUID player, CardFaction faction) {return null;};
 	/* server this {
 		try {
 			if (this.containtPlayer(player))
@@ -69,11 +69,9 @@ public interface ManagerPlayers {
 					new ArrayList<String>(),
 					0, 0, (byte) 1);
 			this.insert(playerFeature);
-			sorci.getManagerGui().getPlayerGui(player).setPlayerFeature(playerFeature);
-			return true;
 		} catch (Exception e) {
 			Bukkit.getLogger().warning(RenderException.renderException(e));
-			return false;
+			return null;
 		}
 	}*/
 	
