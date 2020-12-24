@@ -2,13 +2,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>fr.tangv.sorcicubespell</groupId>
-  <artifactId>SorciCubeSpell</artifactId>
-  <version>0.0.43-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
   <name>SorciCubeSpell</name>
   <url>https://www.tangv.fr</url>
+
+  <groupId>fr.tangv.sorcicubespell</groupId>
+  <artifactId>SorciCubeSpell</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,16 +27,28 @@
     </resources>
     <plugins>
      	<plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-				<archive>
-					<manifest>
-						<mainClass>fr.tangv.sorcicubespell.logi.ManagerLogi</mainClass>
-					</manifest>
-				</archive>
-			</configuration>
-		</plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+              <configuration>
+                  <archive>
+                      <manifest>
+                          <addClasspath>true</addClasspath>
+                          <mainClass>fr.tangv.sorcicubespell.logi.ManagerLogi</mainClass>
+                      </manifest>
+                  </archive>
+                  <descriptorRefs>
+                      <descriptorRef>jar-with-dependencies</descriptorRef>
+                  </descriptorRefs>
+              </configuration>
+              <executions>
+                  <execution>
+                      <id>make-my-jar-with-dependencies</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>single</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
     </plugins>
   </build>
 
@@ -53,7 +65,7 @@
          <artifactId>spigot</artifactId>
          <scope>system</scope>
          <version>1.9.4</version>
-         <systemPath>${basedir}/src/lib/spigot-1.9.4-R0.1-SNAPSHOT-latest.jar</systemPath>
+         <systemPath>${basedir}/libs/spigot-1.9.4-R0.1-SNAPSHOT-latest.jar</systemPath>
       </dependency>
   </dependencies>
 
