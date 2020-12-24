@@ -1,0 +1,86 @@
+#mongodb
+mongodb: ""
+collection: "plugin"
+#deck
+number_deck_start: 2
+#is lobby
+is_lobby: true
+chat_format: "§7Niveau.§b[§f§l{level}§b]§f {displayname}§r§7 : §r§f{message}"
+action_bar_message: "§7Niveau.§b[§f§l{level}§b]    §5[§d{exp}§5/§d{exp_max}§5] §dXP    §6[§e{money}€§6]"
+#security
+perm_build: "sorcicubespell.build"
+perm_admin: "sorcicubespell.admin"
+#/viewcards = sorcicubespell.viewcards
+#/packetadd <name> = sorcicubespell.packetadd
+#/packetgive <player> = <name> sorcicubespell.packetgive
+#/refresh = sorcicubespell.refresh
+#/givecard <name> <uuid> = sorcicubespell.givecard
+#/givearrowhead = sorcicubespell.givearrowhead
+#format time
+format_time_sec: "sec"
+format_time_min: "min "
+#fight
+format_level: "§7Niveau.§b[§f§l{level}§b] {faction}"
+chat_format_fight: "{spectator} §r§f{displayname}§r§8: §r§f{message}"
+spectator_fight: "§7S."
+player_fight: "§4P."
+cooldown_before_fight: 10
+cooldown_one_round: 90
+cooldown_end: 5
+max_mana: 12
+start_mana: 2
+price_card: 5
+round_max_afk: 3
+wait_view_fight: 5000
+#server
+server_lobby: "lobby"
+server_fight: "fight"
+server_jump: "jump"
+#location
+location_spawn:
+  ==: org.bukkit.Location
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
+  pitch: 0.0
+  yaw: 180.0
+location_tuto:
+  ==: org.bukkit.Location
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
+  pitch: 0.0
+  yaw: 180.0
+location_noclassified:
+  ==: org.bukkit.Location
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
+  pitch: 0.0
+  yaw: 180.0
+location_duel:
+  ==: org.bukkit.Location
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
+  pitch: 0.0
+  yaw: 180.0
+location_npc:
+  ==: org.bukkit.Location
+  world: "sorcicube"
+  x: -215.5
+  y: 4.0
+  z: 26.5
+  pitch: 0.0
+  yaw: 180.0
+#message
+join_message: "§8[§2+§8] §7{player}"
+quit_message: "§8[§4-§8] §7{player}"
+#packet
+packet_lore: "§8Paquet de Cartes"
+packet_format: "{name}§r§7: §d{value}§6%"
+packet_size: "§6Nombre de Carte(s)§7: §d{value}"

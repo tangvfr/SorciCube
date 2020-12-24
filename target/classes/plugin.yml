@@ -1,0 +1,42 @@
+name: SorciCubeSpell
+prefix: SorciCubeSpell
+softdepend: ["LuckPerms", "Multiverse-Core"]
+description: "This is an plugin to implement the spell of server SorciCube."
+version: 0.1.0-01ac381-SNAPSHOT
+api-version: 1.9.4
+author: Tangv
+website: www.tangv.fr
+main: fr.tangv.sorcicubespell.SorciCubeSpell
+commands:
+  viewcards:
+    usage: /viewcards <view hide cards, true or false>
+    description: "Open gui with the list of the cards."
+    permission: sorcicubespell.viewcards
+  packetadd:
+    usage: /packetadd <name>
+    description: "Add new packet card."
+    permission: sorcicubespell.packetadd
+  packetgive:
+    usage: /packetgive <player> <name>
+    description: "Give packet card of a player."
+    permission: sorcicubespell.packetgive
+  refresh:
+    usage: /refresh
+    description: "Refresh the cards."
+    permission: sorcicubespell.refresh
+  givecard:
+    usage: /givecard <name> <uuid>
+    description: "Give card specify."
+    permission: sorcicubespell.givecard
+  givearrowhead:
+    usage: /givearrowhead
+    description: "Give Head Arrow Were In Fight."
+    permission: sorcicubespell.givearrowhead
+  money:
+    usage: /money <player> <action> <money>
+    description: "Manage the money of player."
+    permission: sorcicubespell.money
+  additeminlist:
+    usage: /additeminlist <name>
+    description: "Add item main hand to config itemlist"
+    permission: sorcicubespell.additeminlist

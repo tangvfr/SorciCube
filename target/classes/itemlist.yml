@@ -1,0 +1,333 @@
+test_item:
+  ==: org.bukkit.inventory.ItemStack
+  type: BARRIER
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: '&4&lTest'
+pain_mangeable:
+  ==: org.bukkit.inventory.ItemStack
+  type: BREAD
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §6Pain
+    lore:
+    - cclol
+    - pipi
+ChevalierForestier:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    display-name: §8[§2Chevalier Forêstier§8]§r §b5 ❖
+    lore:
+    - '  §e2 ⚔  §c6 ♥  §7☗'
+    - ''
+    - §8§lCommune§r§f§l ⠇ §2§l§nNature
+    - ''
+    - §f§lIncitation
+    - ''
+    - '  §f[§9Serviteur§f]'
+    - ''
+    - '§8Id: b856d078-d0af-4ddb-bcbc-9f9637f988db'
+    ItemFlags: !!set
+      HIDE_PLACED_ON: null
+      HIDE_ENCHANTS: null
+      HIDE_UNBREAKABLE: null
+      HIDE_POTION_EFFECTS: null
+      HIDE_ATTRIBUTES: null
+      HIDE_DESTROYS: null
+    internal: H4sIAAAAAAAAAEWQS4+bMBSFPZUqpag/o9tImFfpYhbTgSGgYBfCI3gHNgk2dhKFBEJ+fZluuri60rnnk865GgAa+L7r71L+uZ4PXLYr8CVk4Ac8mLBxHGfd6K67tkxG17V1gGvHtG3Lcqlb01YD2gJd2uuNt8M3sLq1j9v92g4aAOBlBb4Wtby3L6ydI70uoaRm2jX7N46FD5E4TrFXPZCXGLHIh/D0e24McmmCIiLvoROK41w9qwmpGC4bxiLl6NlblegfVebPxEMdEr6BM2qGfOJ0E41EyYHkdteUOcc8wo2Zfs5IlRzZHmFSwvGf15CnRn3obB/JXBUPVsqZlAnHp3Rm5WeWVLabFFJVPENx+RlKtN3l1nIf+MIMoTjzepPq1DuPW/O/d6vgpVGFoOpDsXf7TvbJyILCYptiJjtXR15uVqVvE092VZYYSPTG0t+Og9jAQdqhJ5LEO9o4yGcc+BNeeqInNYlg3aJPcfb2IFmlE4+phTFxgPrwBH8dktfX5ePgL1Din/7MAQAA
+casque1:
+  ==: org.bukkit.inventory.ItemStack
+  type: CHAINMAIL_HELMET
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aHeaume en maille§2]
+casquefer:
+  ==: org.bukkit.inventory.ItemStack
+  type: IRON_HELMET
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aCasque en métal§2]
+Pain:
+  ==: org.bukkit.inventory.ItemStack
+  type: BREAD
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aPain§2]
+Cookie:
+  ==: org.bukkit.inventory.ItemStack
+  type: COOKIE
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aCookie§2]
+poisson1:
+  ==: org.bukkit.inventory.ItemStack
+  type: RAW_FISH
+  damage: 2
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aPoisson frais§2]
+poisson2:
+  ==: org.bukkit.inventory.ItemStack
+  type: COOKED_FISH
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aMerlu cuit§2]
+poisson3:
+  ==: org.bukkit.inventory.ItemStack
+  type: COOKED_FISH
+  damage: 1
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aSaumon cuit§2]
+viande1:
+  ==: org.bukkit.inventory.ItemStack
+  type: GRILLED_PORK
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aViande de Porc§2]
+viande2:
+  ==: org.bukkit.inventory.ItemStack
+  type: COOKED_BEEF
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: §2[§aViande du Roi§2]
+heaume1:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    display-name: §2[§aHeaume solide§2]
+    internal: H4sIAAAAAAAAAE2PzU6DQBhFP01MkPgYbkmGX2HRBVFJh3SoUApldkAH6TCDDQUtfS4fUJYu7uLm3LO4KoAKT7tuEuJj+GpOgilwj4/wzDzXrmuj1vRKNzXLMivNrRymeQiVpesw0zEaFdRFOrNhPLHLIygju47TwC4qANwp8JCVYmLwy+YQ0UOLjodQ1DN2lp7ukNhifn7BfTZXr9jBcuFr39nM3r+tPZa5LQozbGkfT5XM0MZMBFsnei3331GOrW3a8ihPOvLmIyILi3J/pjJoqYxtkhJEjD0qbrQrOLlG6bsVGYEkadAuETT9vBW8+CG8swknNpFJh3vda+LVankAfx9PVVccAQAA
+heaume2:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    display-name: §2[§aCasque de Sorcicube§2]
+    internal: H4sIAAAAAAAAAE2Py06DQBiFf01MkPgYbkkGh0tYuDBq6JDO1KGU247LkAJDbSjYwnP5gM7SnNXJ953F0QF0eNr3s5Rf43fTSqHBPanhua6waVZYGKKwLMNyG8coBPIMG7le6bmN65ZYB12NzmKcWnF5BG0St2kexUUHgDsNHuJCzgJ+xRKgPD2iOg1ktRBH9WiP5I50Z5ec4qV8Jw4ZFN+8OdvF++faU5HYMsPBMT/xuRxitMWhFJvQrIbDDxvynq4qPjWZH8pdxDGNDleWkKtiMotCSbsK5cknzjpi04S1rOsxHfiN+XnLBm7lHxzRlZvZWr0w5bM28JoUvaoH8Ael+zk3HAEAAA==
+heaume3:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    display-name: §2[§aHeaume d'acier§2]
+    internal: H4sIAAAAAAAAAE2Py06DQBiFf01MkPgYbkkGh0tYuDBq6JDO1KGU247LkAJDbSjYwnP5gM7SnNXJ953F0QF0eNr3s5Rf43fTSqHBPanhua6waVZYGKKwLMNyG8coBPIMG7le6bmN65ZYB12NzmKcWnF5BG0St2kexUUHgDsNHuJCzgJ+xRKgPD2iOg1ktRBH9WiP5I50Z5ec4qV8Jw4ZFN+8OdvF++faU5HYMsPBMT/xuRxitMWhFJvQrIbDDxvynq4qPjWZH8pdxDGNDleWkKtiMotCSbsK5cknzjpi04S1rOsxHfiN+XnLBm7lHxzRlZvZWr0w5bM28JoUvaoH8Ael+zk3HAEAAA==
+heaume4:
+  ==: org.bukkit.inventory.ItemStack
+  type: SKULL_ITEM
+  damage: 3
+  meta:
+    ==: ItemMeta
+    meta-type: SKULL
+    display-name: §2[§aHeaume d'acier§2]
+    internal: H4sIAAAAAAAAAE2PvW6DMBzE/61UiaI+Rlckxw4kHjJETUWMAhRCk9gbH0YB7DRKoAWeqw9Yxg433P3uhjMBTHjZN51SH7evslLSgEdWwOsc00VZ2o6Vpziz5jaVVoaX1MqXJUKU0BITbII5ja7y1lby/gxGK/u2u8m7CQAPBjwdUtVJ+JWDh8TpjIqTp/KBOZNP9kiFrL4u2OUwZG/MYXri27WzG+i/rt2mR1tx4p3FJeoyfUA7Eiu5jWe5/vwO6sgWx6DxXdYLlw/hpjiLxKv4kfUc+wPX0Sx0Re27U6bfSZAoHboRmjTysfkJdET8UdRik2NRx0ok65FdZrSMVqvpAfwBu4eNdxwBAAA=
+Biere:
+  ==: org.bukkit.inventory.ItemStack
+  type: POTION
+  meta:
+    ==: ItemMeta
+    meta-type: POTION
+    display-name: §2[§aBière§2]
+    potion-type: water
+    custom-effects:
+    - ==: PotionEffect
+      effect: 1
+      duration: 20
+      amplifier: 6
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 2
+      duration: 60
+      amplifier: 3
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 9
+      duration: 60
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 14
+      duration: 20
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 15
+      duration: 40
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 17
+      duration: 20
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 24
+      duration: 60
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 25
+      duration: 20
+      amplifier: 0
+      ambient: false
+      has-particles: false
+vodka:
+  ==: org.bukkit.inventory.ItemStack
+  type: POTION
+  meta:
+    ==: ItemMeta
+    meta-type: POTION
+    display-name: §2[§aRhum§2]
+    potion-type: fire_resistance
+    custom-effects:
+    - ==: PotionEffect
+      effect: 1
+      duration: 40
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 2
+      duration: 40
+      amplifier: 5
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 4
+      duration: 80
+      amplifier: 9
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 8
+      duration: 60
+      amplifier: 1
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 9
+      duration: 120
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 14
+      duration: 20
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 15
+      duration: 100
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 17
+      duration: 20
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 22
+      duration: 20
+      amplifier: 16
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 24
+      duration: 120
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 25
+      duration: 20
+      amplifier: 1
+      ambient: false
+      has-particles: false
+PatriceDrink:
+  ==: org.bukkit.inventory.ItemStack
+  type: POTION
+  meta:
+    ==: ItemMeta
+    meta-type: POTION
+    display-name: §2[§aPatriceDrink§2]
+    potion-type: regeneration
+    custom-effects:
+    - ==: PotionEffect
+      effect: 1
+      duration: 160
+      amplifier: 14
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 2
+      duration: 40
+      amplifier: 14
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 4
+      duration: 120
+      amplifier: 9
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 8
+      duration: 60
+      amplifier: 4
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 9
+      duration: 200
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 15
+      duration: 200
+      amplifier: 0
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 22
+      duration: 20
+      amplifier: 29
+      ambient: false
+      has-particles: false
+    - ==: PotionEffect
+      effect: 24
+      duration: 200
+      amplifier: 0
+      ambient: false
+      has-particles: false
