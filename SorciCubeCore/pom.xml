@@ -1,38 +1,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+  	<modelVersion>4.0.0</modelVersion>
 
-  <name>SorciCubeCore</name>
-  <url>https://www.tangv.fr</url>
+  	<name>SorciCubeCore</name>
+  	<url>https://www.tangv.fr</url>
 
-  <groupId>fr.tangv.sorcicubecore</groupId>
-  <artifactId>SorciCubeCore</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+	<groupId>SorciCube</groupId>
+  	<artifactId>SorciCubeCore</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	<packaging>jar</packaging>
 
-  <modules>
-	<module>../SorciCubeSpell</module>
-  </modules>
+  	<properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<maven.compiler.target>1.8</maven.compiler.target>
+    	<maven.compiler.source>1.8</maven.compiler.source>
+  	</properties>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
-  </properties>
+  	<build>
+   	 	<defaultGoal>package</defaultGoal>
+    	<sourceDirectory>src/java</sourceDirectory>
+    	<directory>target</directory>
+ 	</build>
 
-  <build>
-    <defaultGoal>package</defaultGoal>
-    <sourceDirectory>src/java</sourceDirectory>
-    <directory>target</directory>
-  </build>
-
-  <dependencies>
-      <!--BSON Library-->
-      <dependency>
-          <groupId>org.mongodb</groupId>
-          <artifactId>bson</artifactId>
-          <version>4.1.1</version>
-      </dependency>
-  </dependencies>
+  	<dependencies>
+      	<!--BSON Library-->
+      	<dependency>
+          	<groupId>org.mongodb</groupId>
+          	<artifactId>bson</artifactId>
+          	<version>4.1.1</version>
+      	</dependency>
+  	</dependencies>
 
 </project>
