@@ -41,5 +41,5 @@ public class PacketCardsSell extends PCSell {
 	public boolean isValid() {
 		return packetCards != null;
 	}
-
+	
 }
