@@ -28,13 +28,6 @@
 	    </resources>
 	</build>
 
-  	<repositories>
-       <repository>
-           <id>spigot-repo</id>
-           <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-       </repository>
-   	</repositories>
-
 	<dependencies>
 		<!--Spigot API-->
 	   	<dependency>
@@ -43,28 +36,13 @@
 			<version>1.9.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 	   	</dependency>
-		
-        <!--MongoDB API-->
-        <!--<dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-sync</artifactId>
-            <version>4.0.3</version>
-        </dependency>-->
-        <!--Spigot API->
-        <dependency>
-            <groupId>spigot</groupId>
-            <artifactId>spigot</artifactId>
-            <scope>system</scope>
-            <version>1.9.4</versi"pom.xml"on>
-            <systemPath>${project.basedir}/libs/spigot-1.9.4-R0.1-SNAPSHOT-latest.jar</systemPath>
-        </dependency>-->
-        
-        <!-- https://mvnrepository.com/artifact/com.github.azbh111/spigot-1.9.4 ->
+		<!--CraftBukkit API-->
 		<dependency>
-		    <groupId>com.github.azbh111</groupId>
-		    <artifactId>spigot-1.9.4</artifactId>
-		    <version>R</version>
-		</dependency>-->
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.9.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <!--SorciCubeCore-->
         <dependency>
         	<groupId>SorciCube</groupId>
