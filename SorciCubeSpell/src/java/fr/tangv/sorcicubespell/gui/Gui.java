@@ -1,7 +1,5 @@
 package fr.tangv.sorcicubespell.gui;
 
-import javax.annotation.Nonnull;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -15,7 +13,6 @@ public interface Gui {
 		player.openInventory(createInventory(player));
 	}
 	
-	@Nonnull
 	public Inventory createInventory(Player player);
 	public void onDrag(Player player, InventoryDragEvent e);
 	public void onClick(Player player, InventoryClickEvent e);

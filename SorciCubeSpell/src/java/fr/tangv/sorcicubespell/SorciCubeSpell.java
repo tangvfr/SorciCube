@@ -4,8 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 
-import javax.annotation.Nullable;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -217,7 +215,6 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerCards;
 	}
 	
-	@Nullable
 	public ManagerGui getManagerGui() {
 		return managerGuiAdmin;
 	}
@@ -226,17 +223,14 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerPlayers;
 	}
 	
-	@Nullable
 	public ManagerDefaultDeck getManagerDefaultDeck() {
 		return managerDefaultDeck;
 	}
 	
-	@Nullable
 	public ManagerClickNPC getManagerClickNPC() {
 		return managerClickNPC;
 	}
 	
-	@Nullable
 	public ManagerPakcetCards getManagerPakcetCards() {
 		return managerPakcetCards;
 	}
@@ -245,17 +239,14 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerFightData;
 	}
 	
-	@Nullable
 	public ManagerFight getManagerFight() {
 		return managerFight;
 	}
 	
-	@Nullable
 	public ManagerCreatorFight getManagerCreatorFight() {
 		return managerCreatorFight;
 	}
 	
-	@Nullable
 	public ManagerLobby getManagerLobby() {
 		return managerLobby;
 	}
