@@ -15,7 +15,7 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public abstract class Client extends Thread {
 
 	public final static Charset CHARSET = StandardCharsets.UTF_16BE;
-	public static final String VERSION_PROTOCOL = "0.1-beta";
+	public static final String VERSION_PROTOCOL = "0.1";
 	
 	//init
 	private volatile RequestHandlerInterface handler;
@@ -87,14 +87,16 @@ public abstract class Client extends Thread {
 	@Override
 	public void run() {
 		while (socket.isConnected()) {
+			int id = -1;
 			try {
 				Request request = new Request(in.nextLine());
+				id = request.id;
 				if (handler != null)
 					handler.handlingRequest(this, request);
 			} catch (RequestException e) {
 				e.printStackTrace();
 				try {
-					sendRequest(new Request(RequestType.ERROR, "Invalid_Request", e.getMessage()));
+					sendRequest(new Request(RequestType.ERROR, id, "Invalid_Request", e.getMessage()));
 				} catch (RequestException | IOException e2) {
 					e2.printStackTrace();
 				}
@@ -102,7 +104,7 @@ public abstract class Client extends Thread {
 				if (socket.isConnected()) {
 					e.printStackTrace();
 					try {
-						sendRequest(new Request(RequestType.ERROR, "Error Exception", e.getMessage()));
+						sendRequest(new Request(RequestType.ERROR, id, "Error Exception", e.getMessage()));
 					} catch (RequestException | IOException e2) {
 						e2.printStackTrace();
 					}
