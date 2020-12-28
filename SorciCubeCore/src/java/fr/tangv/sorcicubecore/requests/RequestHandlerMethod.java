@@ -17,10 +17,10 @@ public class RequestHandlerMethod {
 		this.method = method;
 		if (anot.type() != null) {
 			Class<?>[] pt = method.getParameterTypes();
-			if (pt.length == 2 && pt[0] == Client.class && pt[1] == Request.class)
-				if (!method.getReturnType().equals(Void.TYPE))
+			if (pt.length == 2 && pt[0] == Client.class && pt[1] == Request.class) {
+				if (method.getReturnType() != Void.TYPE)
 					throw new RequestHandlerException("RequestAnnotation don't have RequestType");
-			else
+			} else
 				throw new RequestHandlerException("RequestAnnotation parameters of method is invalid");
 		} else
 			throw new RequestHandlerException("RequestAnnotation don't has RequestType");
