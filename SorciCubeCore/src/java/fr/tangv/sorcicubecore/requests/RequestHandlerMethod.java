@@ -26,7 +26,7 @@ public class RequestHandlerMethod {
 	}
 	
 	public void execute(Client client, Request request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		if (anot.name() == null || anot.name().equals(request.name))
+		if (anot.name().equals("") || anot.name().equals(request.name))
 			method.invoke(handler, new Object[]{client, request});
 	}
 	

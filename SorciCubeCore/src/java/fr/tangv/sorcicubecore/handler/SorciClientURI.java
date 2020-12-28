@@ -18,6 +18,10 @@ public class SorciClientURI {
 		return "sc://"+Integer.toHexString(Byte.toUnsignedInt(types))+":"+name+":"+token+"@"+addr.getHostName()+((port > 0) ? ":"+port : "");
 	}
 	
+	public SorciClientURI(String uri) throws NumberFormatException, UnknownHostException, URISyntaxException {
+		this(new URI(uri));
+	}
+	
 	public SorciClientURI(URI uri) throws URISyntaxException, UnknownHostException, NumberFormatException {
 		String scheme = uri.getScheme();
 		String host = uri.getHost();

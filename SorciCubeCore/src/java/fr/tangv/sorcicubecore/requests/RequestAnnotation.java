@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 public @interface RequestAnnotation {
 
 	RequestType type();
-	String name();
+	String name() default "";
 	
 }
