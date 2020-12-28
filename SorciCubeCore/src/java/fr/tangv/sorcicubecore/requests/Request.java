@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubecore.requests;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import fr.tangv.sorcicubecore.clients.Client;
@@ -10,7 +11,6 @@ public class Request {
 	public final int id;
 	public final String name;
 	public final String data;
-	public final String request;
 	
 	public static int randomID() {
 		return (int) (Math.random()*Integer.MAX_VALUE);
@@ -24,12 +24,11 @@ public class Request {
 			this.typeRequest = RequestType.valueOf(r[0]);
 			this.id = Integer.parseInt(r[1]);
 			this.name = r[2];
-			if (name.contains(" ") || name.contains("\n") || name.contains("\r"))
+			if (name.contains(" ") || name.contains("\n") || name.contains("\r") || name.isEmpty())
 				throw new Exception("");
 			this.data = new String(Base64.getDecoder().decode(r[3]), Client.CHARSET);
-			this.request = request;
 		} catch (Exception e) {
-			throw new RequestException(request+"\nFormat of request is invalid");
+			throw new RequestException("Format of request is invalid: "+request);
 		}
 	}
 	
@@ -39,10 +38,17 @@ public class Request {
 		this.name = name;
 		if (name.contains(" ") || name.contains("\n") || name.contains("\r"))
 			throw new RequestException("Name of request is invalid");
-		if (data == null)
+		if (typeRequest.getTypeData() != RequestDataType.NOTHING && (data == null || data.isEmpty()))
 			throw new RequestException("Data is Null");
 		this.data = data;
-		this.request = typeRequest.name()+" "+name+" "+Base64.getEncoder().encode(data.getBytes(Client.CHARSET));
+	}
+	
+	public String toRequest() {
+		return typeRequest.name()+" "+id+" "+name+" "+new String(Base64.getEncoder().encode((typeRequest.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name()).getBytes(Client.CHARSET)), StandardCharsets.US_ASCII);
+	}
+	
+	public String toRequestNoData() {
+		return typeRequest.name()+" "+id+" "+name+" Data["+(typeRequest.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name().length())+"]";
 	}
 	
 }

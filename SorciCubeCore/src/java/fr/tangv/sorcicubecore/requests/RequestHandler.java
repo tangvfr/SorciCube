@@ -22,8 +22,8 @@ public class RequestHandler implements RequestHandlerInterface {
 		if (handler.hashCode() == this.hashCode())
 			throw new RequestHandlerException("Self registered don't possible !");
 		for (Method method : handler.getClass().getMethods()) {
-			if (method.isAnnotationPresent(RequestAnnotation.class)) {
-				RequestAnnotation anot = method.getAnnotation(RequestAnnotation.class);
+			RequestAnnotation anot = method.getAnnotation(RequestAnnotation.class);
+			if (anot != null) {
 				RequestHandlerMethod rhm = new RequestHandlerMethod(handler, method, anot);
 				requestHandlersList.get(anot.type()).add(rhm);
 			}

@@ -70,11 +70,11 @@ public abstract class Client extends Thread {
 	//stream
 	
 	public boolean isConnected() {
-		return socket.isConnected();
+		return socket.isConnected() && in.hasNext();
 	}
 	
 	public synchronized void sendRequest(Request request) throws IOException {
-		out.write(request.request+"\n");
+		out.write(request.toRequest()+"\n");
 		out.flush();
 	}
 	
@@ -86,7 +86,7 @@ public abstract class Client extends Thread {
 	
 	@Override
 	public void run() {
-		while (socket.isConnected()) {
+		while (isConnected() && in.hasNext()) {
 			int id = -1;
 			try {
 				Request request = new Request(in.nextLine());
@@ -101,10 +101,10 @@ public abstract class Client extends Thread {
 					e2.printStackTrace();
 				}
 			} catch (Exception e) {
-				if (socket.isConnected()) {
+				if (isConnected()) {
 					e.printStackTrace();
 					try {
-						sendRequest(new Request(RequestType.ERROR, id, "Error Exception", e.getMessage()));
+						sendRequest(new Request(RequestType.ERROR, id, "Error_Exception", e.getMessage()));
 					} catch (RequestException | IOException e2) {
 						e2.printStackTrace();
 					}

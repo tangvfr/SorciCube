@@ -18,11 +18,12 @@ public class RequestHandlerMethod {
 		if (anot.type() != null) {
 			Class<?>[] pt = method.getParameterTypes();
 			if (pt.length == 2 && pt[0] == Client.class && pt[1] == Request.class)
-				System.out.println("type retrun: "+method.getReturnType());
+				if (!method.getReturnType().equals(Void.TYPE))
+					throw new RequestHandlerException("RequestAnnotation don't have RequestType");
 			else
-				throw new RequestHandlerException("RequestAnnotation don't have RequestType");
+				throw new RequestHandlerException("RequestAnnotation parameters of method is invalid");
 		} else
-			throw new RequestHandlerException("RequestAnnotation don't have RequestType");
+			throw new RequestHandlerException("RequestAnnotation don't has RequestType");
 	}
 	
 	public void execute(Client client, Request request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
