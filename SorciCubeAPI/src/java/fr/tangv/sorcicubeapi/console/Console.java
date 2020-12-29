@@ -18,9 +18,7 @@ public class Console extends Thread {
 		Scanner in = new Scanner(System.in);
 		while (sorci.serverIsStart()) {
 			try {
-				System.out.println("wait");
 				String input = in.nextLine();
-				System.out.println("input");
 				int fs = input.indexOf((int) (' '));
 				String cmd = input.substring(0, fs);
 				//String[] args = (input.length() >= fs+1) ? input.substring(fs+1).split(" ") : new String[0];
