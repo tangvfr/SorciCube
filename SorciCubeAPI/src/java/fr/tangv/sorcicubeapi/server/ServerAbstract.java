@@ -12,7 +12,11 @@ public abstract class ServerAbstract extends Thread {
 		ServerProperties properties = getProperties();
 		ClientsManager manager = getClientsManager();
 		try {
-			this.server = new ServerSocket(properties.port, properties.backLog, properties.bindIP);
+			try {
+				this.server = new ServerSocket(properties.port, properties.backLog, properties.bindIP);
+			} catch (IOException e1) {
+				throw new IOException("ServerSokcet already started to this port !");
+			}
 			manager.start();
 			while (!server.isClosed())
 				manager.newClient(server.accept());

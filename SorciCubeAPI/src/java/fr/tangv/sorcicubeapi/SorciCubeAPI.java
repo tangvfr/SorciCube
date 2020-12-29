@@ -2,10 +2,8 @@ package fr.tangv.sorcicubeapi;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -48,6 +46,7 @@ public class SorciCubeAPI extends ServerAbstract {
 		this.start();
 		this.console = new Console(this);
 		this.console.start();
+		System.out.println("Server is start on: port "+properties.port+", bindIP "+properties.bindIP+", backLog "+properties.backLog);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -133,6 +132,10 @@ public class SorciCubeAPI extends ServerAbstract {
 
 	public HandlerInit getHandlerInit() {
 		return handlerInit;
+	}
+
+	public ConcurrentHashMap<String, String> getTokens() {
+		return tokens;
 	}
 	
 }

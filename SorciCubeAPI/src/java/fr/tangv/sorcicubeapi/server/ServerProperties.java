@@ -32,11 +32,11 @@ public class ServerProperties {
 	
 	public static ServerProperties toServerProperties(Document doc) throws UnknownHostException {
 		return new ServerProperties(
-					doc.getInteger("port"), 
-					doc.getInteger("backLog"), 
-					InetAddress.getByName(doc.getString("bindIP")), 
-					doc.getLong("cooldownConnexion"), 
-					doc.getLong("timeChecking")
+					doc.getInteger("port"),
+					doc.getInteger("backLog"),
+					InetAddress.getByName(doc.getString("bindIP")),
+					doc.getInteger("cooldownConnexion"),
+					doc.getInteger("timeChecking")
 				);
 	}
 	
