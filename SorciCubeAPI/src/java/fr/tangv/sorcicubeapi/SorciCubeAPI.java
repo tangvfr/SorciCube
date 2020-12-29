@@ -53,10 +53,9 @@ public class SorciCubeAPI extends ServerAbstract {
 		this.console.start();
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void stoped() {
-		this.console.stop();
+		this.console.closeScanner();
 	}
 	
 	public String generatedTokens(String desc) {

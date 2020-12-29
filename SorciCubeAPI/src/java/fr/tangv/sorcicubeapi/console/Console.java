@@ -8,14 +8,19 @@ import fr.tangv.sorcicubeapi.SorciCubeAPI;
 public class Console extends Thread {
 
 	private SorciCubeAPI sorci;
+	private Scanner in;
 	
 	public Console(SorciCubeAPI sorci) {
 		this.sorci = sorci;
+		this.in = new Scanner(System.in);
+	}
+	
+	public void closeScanner() {
+		//interuct this Thread
 	}
 	
 	@Override
 	public void run() {
-		Scanner in = new Scanner(System.in);
 		while (sorci.serverIsStart()) {
 			try {
 				String input = in.nextLine();
@@ -62,6 +67,7 @@ public class Console extends Thread {
 					System.out.println("Tokens is loaded !");
 				} else if (cmd.equalsIgnoreCase("reloadconfig")) {
 					System.out.println("This command is not disponible !");
+				} else if (cmd.equalsIgnoreCase("nothing")) {
 				} else {
 					System.out.println("Enter command \"help\" for helping !");
 				}
