@@ -11,11 +11,9 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 
 public class HandlerNotConnected implements RequestHandlerInterface {
 
-	private final Request dontAuthentified;
 	private final ClientsManager manager;
 	
 	public HandlerNotConnected(ClientsManager manager) throws RequestException {
-		this.dontAuthentified = new Request(RequestType.DONT_AUTHENTIFIED, -2, "This action is invalid, you dont are authentified !", "");
 		this.manager = manager;
 	}
 	
@@ -42,7 +40,7 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 												"\"."));
 			}
 		} else {
-			client.sendRequest(dontAuthentified);
+			client.sendRequest(new Request(RequestType.DONT_AUTHENTIFIED, request.id, "NotAuthentified" ,"This action is invalid, you dont are authentified !"));
 		}
 	}
 

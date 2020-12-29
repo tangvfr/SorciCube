@@ -23,7 +23,7 @@ public enum RequestType {
 	
 	//PLAYER
 	PLAYER_INIT(RequestDataType.JSON),
-	PLAYER_GET(RequestDataType.NOTHING),
+	PLAYER_GET(RequestDataType.JSON),
 	PLAYER_EXIST(RequestDataType.NOTHING),
 	PLAYER_UPDATE(RequestDataType.JSON),
 	//IDENTIFICATION

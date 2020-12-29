@@ -1,10 +1,8 @@
 package fr.tangv.sorcicubecore.files;
 
-import java.io.CharArrayWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import fr.tangv.sorcicubecore.clients.Client;
@@ -31,14 +29,11 @@ public class File {
 	}
 	
 	public synchronized void loadData() throws IOException {
-		InputStreamReader in = new InputStreamReader(new FileInputStream(file), Client.CHARSET);
-		CharArrayWriter data = new CharArrayWriter();
-		char[] chars = new char[16_384];//16kio
-		int len;
-		while ((len = in.read(chars)) != -1)
-			data.write(chars, 0, len);
+		FileInputStream in = new FileInputStream(file);
+		byte[] data = new byte[(int) file.length()];
+		in.read(data);
 		in.close();
-		this.data = new String(data.toCharArray());
+		this.data = new String(data, Client.CHARSET);
 	}
 	
 	public synchronized void writeData(String data) throws IOException {

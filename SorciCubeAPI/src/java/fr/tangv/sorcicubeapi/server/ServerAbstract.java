@@ -23,7 +23,7 @@ public abstract class ServerAbstract extends Thread {
 		this.server = null;
 	}
 	
-	public boolean serverIsStart() {
+	public synchronized boolean serverIsStart() {
 		return server != null;
 	}
 	

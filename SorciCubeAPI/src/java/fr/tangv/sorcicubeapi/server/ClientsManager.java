@@ -27,7 +27,7 @@ public class ClientsManager extends Thread {
 	private final RequestHandler handler;
 	private final HandlerNotConnected handlerNotConnected;
 	
-	public ClientsManager(ServerAbstract server) throws RequestException {
+	public ClientsManager(ServerAbstract server) throws RequestException, RequestHandlerException {
 		this.server = server;
 		this.cooldownConnexion = server.getProperties().cooldownConnexion;
 		this.timeChecking = server.getProperties().timeChecking;
@@ -35,6 +35,15 @@ public class ClientsManager extends Thread {
 		this.clientsNotAuthentified = new Vector<Client>();
 		this.handlerNotConnected = new HandlerNotConnected(this);
 		this.handler = new RequestHandler();
+		this.handler.registered(new RequestHandlerInterface() {
+			
+			@Override
+			public void handlingRequest(Client client, Request request) throws Exception {
+				if (request.typeRequest == RequestType.IDENTIFICATION)
+					client.sendRequest(new Request(RequestType.ALREADY_AUTHENTIFIED, request.id, "AlreadyAuthentified", ""));
+			}
+			
+		});
 		this.requestCooldown = new Request(RequestType.COOLDOWN_AUTHENTIFIED, -2, "COOLDOWN_AUTHENTIFIED", "");
 	}
 	

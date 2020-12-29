@@ -2,6 +2,7 @@ package fr.tangv.sorcicubecore.clients;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -69,8 +70,12 @@ public abstract class Client extends Thread {
 	
 	//stream
 	
+	public InetAddress getInetAddress() {
+		return socket.getInetAddress();
+	}
+	
 	public boolean isConnected() {
-		return socket.isConnected() && in.hasNext();
+		return socket.isConnected() && in.hasNextLine();
 	}
 	
 	public synchronized void sendRequest(Request request) throws IOException {
@@ -86,7 +91,7 @@ public abstract class Client extends Thread {
 	
 	@Override
 	public void run() {
-		while (isConnected() && in.hasNext()) {
+		while (isConnected()) {
 			int id = -1;
 			try {
 				Request request = new Request(in.nextLine());
