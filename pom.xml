@@ -12,6 +12,7 @@
 	<modules>
 		<module>SorciCubeCore</module>
 		<module>SorciCubeSpell</module>
+		<module>SorciCubeAPI</module>
 	</modules>
 	
 	<build>
