@@ -20,6 +20,8 @@ public class Console extends Thread {
 			try {
 				String input = in.nextLine();
 				int fs = input.indexOf((int) (' '));
+				if (fs == -1)
+					fs = input.length();
 				String cmd = input.substring(0, fs);
 				//String[] args = (input.length() >= fs+1) ? input.substring(fs+1).split(" ") : new String[0];
 				String arg = (input.length() >= fs+1) ? input.substring(fs+1) : "";
