@@ -14,17 +14,23 @@ public abstract class ServerAbstract extends Thread {
 		try {
 			try {
 				this.server = new ServerSocket(properties.port, properties.backLog, properties.bindIP);
-			} catch (IOException e1) {
-				throw new IOException("ServerSokcet already started to this port !");
+			} catch (Exception e1) {
+				System.out.println("ServerSokcet already started to this port !");
 			}
 			manager.start();
+			started();
 			while (!server.isClosed())
 				manager.newClient(server.accept());
-		} catch (IOException e) {
-			if (!server.isClosed())
+		} catch (Exception e) {
+			if (serverIsStart() && !server.isClosed())
 				e.printStackTrace();
 		}
+		if (server != null && !server.isClosed())
+			try {
+				server.close();
+			} catch (IOException e) {}
 		this.server = null;
+		stoped();
 	}
 	
 	public synchronized boolean serverIsStart() {
@@ -33,10 +39,12 @@ public abstract class ServerAbstract extends Thread {
 	
 	public synchronized void stopServer() throws IOException {
 		if (server == null)
-			throw new NullPointerException("Server is down");
+			throw new NullPointerException("Server already down !");
 		server.close();
 	}
 	
+	public abstract void started();
+	public abstract void stoped();
 	public abstract boolean hasToken(String token);
 	public abstract ServerProperties getProperties();
 	public abstract ClientsManager getClientsManager();

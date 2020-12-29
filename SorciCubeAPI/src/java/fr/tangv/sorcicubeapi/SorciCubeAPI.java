@@ -43,16 +43,19 @@ public class SorciCubeAPI extends ServerAbstract {
 		this.tokens = new ConcurrentHashMap<String, String>();
 		loadTokens();
 		this.handlerInit = new HandlerInit(this);
-		this.start();
 		this.console = new Console(this);
-		this.console.start();
+		this.start();
 		System.out.println("Server is start on: port "+properties.port+", bindIP "+properties.bindIP+", backLog "+properties.backLog);
+	}
+	
+	@Override
+	public void started() {
+		this.console.start();
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public synchronized void stopServer() throws IOException {
-		super.stopServer();
+	public void stoped() {
 		this.console.stop();
 	}
 	
