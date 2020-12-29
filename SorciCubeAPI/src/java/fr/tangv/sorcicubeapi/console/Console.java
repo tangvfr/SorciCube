@@ -29,8 +29,13 @@ public class Console extends Thread {
 					System.out.println("Server is Stopped !");
 					sorci.stopServer();
 				} else if (cmd.equalsIgnoreCase("help")) {
-					System.out.println("Help:");
-					
+					System.out.println("Help:\r\n" + 
+							" - help\r\n" + 
+							" - stop\r\n" + 
+							" - tokens\r\n" + 
+							" - newtoken <description>\r\n" + 
+							" - loadtokens\r\n" + 
+							" - reloadconfig");
 				} else if (cmd.equalsIgnoreCase("tokens")) {
 					ConcurrentHashMap<String, String> tokens = sorci.getTokens();
 					System.out.println("Tokens: "+tokens.size());
