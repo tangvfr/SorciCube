@@ -35,7 +35,7 @@ public class SorciClient extends Client implements RequestHandlerInterface {
 	
 	@Override
 	public void disconnected() {
-		System.out.println("Is Stopped !!!!!!!!!!!!!!!!!!");
+		System.out.println("You are disconnected !");
 	}
 
 	@Override
@@ -44,9 +44,37 @@ public class SorciClient extends Client implements RequestHandlerInterface {
 		
 	}
 
+	@RequestAnnotation(type=RequestType.KICK)
+	public void kicked(Client client, Request request) {
+		try {
+			this.close();
+		} catch (IOException e) {}
+		System.out.println("You are kicked !");
+	}
+	
+	@RequestAnnotation(type=RequestType.IDENTIFICATION_REFUSED)
+	public void wrongAuth(Client client, Request request) {
+		System.out.println("Wrong identification because "+request.data);
+	}
+	
+	@RequestAnnotation(type=RequestType.COOLDOWN_AUTHENTIFIED)
+	public void cooldownAuth(Client client, Request request) {
+		System.out.println("You are pass cooldown for authentified !");
+	}
+	
+	@RequestAnnotation(type=RequestType.ALREADY_AUTHENTIFIED)
+	public void alreadyAuth(Client client, Request request) {
+		System.out.println("You are already authentified !");
+	}
+	
+	@RequestAnnotation(type=RequestType.DONT_AUTHENTIFIED)
+	public void dontAuth(Client client, Request request) {
+		System.out.println("You are don't authentified !");
+	}
+	
 	@RequestAnnotation(type=RequestType.AUTHENTIFIED)
-	public void tamere(Client client, Request request) {
-		System.out.println("You are authen");
+	public void auth(Client client, Request request) {
+		System.out.println("You are authentified !");
 	}
 	
 	public static void main(String[] args) {

@@ -1,19 +1,69 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>SorciCubeAPI</groupId>
-  <artifactId>SorciCubeAPI</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>fr.tangv.sorcicube</groupId>
+		<artifactId>SorciCube</artifactId>
+		<version>0.1.0</version>
+	</parent>
+	
+	<artifactId>SorciCubeAPI</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <maven.compiler.target>1.8</maven.compiler.target>
+	    <maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+	
+	<build>
+	    <defaultGoal>package</defaultGoal>
+	    <sourceDirectory>src/java</sourceDirectory>
+	    <directory>target</directory>
+	    <!--<resources>
+	    	<resource>
+	        	<directory>src/resources</directory>
+	        	<filtering>true</filtering>
+	    	</resource>
+	    </resources>-->
+	    <plugins>
+	 		<plugin>
+	 			<artifactId>maven-assembly-plugin</artifactId>
+	 			<configuration>
+	 				<archive>
+						<manifest>
+	 						<mainClass>fr.tangv.sorcicubeapi.SorciCubeAPI</mainClass>
+	 					</manifest>
+	 				</archive>
+	 				<descriptorRefs>
+	 					<descriptorRef>jar-with-dependencies</descriptorRef>
+	 				</descriptorRefs>
+	 				<finalName>${project.artifactId}-${project.version}.${git.commit.id.abbrev}</finalName>
+	 				<appendAssemblyId>false</appendAssemblyId>
+	 			</configuration>
+	 			<executions>
+				 	<execution>
+				 		<id>make-assembly</id>
+				 		<phase>package</phase>
+				 		<goals>
+				 			<goal>single</goal>
+				 		</goals>
+				 	</execution>
+				</executions>
+	 		</plugin>
+	 	</plugins>
+	</build>
+
+	<dependencies>
+        <!--SorciCubeCore-->
+        <dependency>
+        	<groupId>fr.tangv.sorcicube</groupId>
+        	<artifactId>SorciCubeCore</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+  			<scope>compile</scope>
+        </dependency>
+    </dependencies>
+
 </project>
