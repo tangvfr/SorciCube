@@ -15,10 +15,6 @@ public class Console extends Thread {
 		this.in = new Scanner(System.in);
 	}
 	
-	public void closeScanner() {
-		//interuct this Thread
-	}
-	
 	@Override
 	public void run() {
 		while (sorci.serverIsStart()) {
@@ -67,7 +63,6 @@ public class Console extends Thread {
 					System.out.println("Tokens is loaded !");
 				} else if (cmd.equalsIgnoreCase("reloadconfig")) {
 					System.out.println("This command is not disponible !");
-				} else if (cmd.equalsIgnoreCase("nothing")) {
 				} else {
 					System.out.println("Enter command \"help\" for helping !");
 				}
