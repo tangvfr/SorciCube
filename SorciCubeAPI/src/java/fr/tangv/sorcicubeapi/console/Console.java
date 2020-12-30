@@ -42,7 +42,10 @@ public class Console extends Thread {
 							" - clients");
 				} else if (cmd.equalsIgnoreCase("tokens")) {
 					ConcurrentHashMap<String, String> tokens = sorci.getTokens();
-					System.out.println("Tokens: "+tokens.size());
+					int size = tokens.size();
+					System.out.println("Tokens: "+size);
+					if (size > 0)
+						System.out.println("  ------------");
 					for (String token : tokens.keySet()) {
 						System.out.println("  Description: "+tokens.get(token));
 						System.out.println("  "+token);
