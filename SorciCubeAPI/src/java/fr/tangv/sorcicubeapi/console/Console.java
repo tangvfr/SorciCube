@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
+import fr.tangv.sorcicubecore.clients.Client;
+import fr.tangv.sorcicubecore.clients.ClientIdentification;
 
 public class Console extends Thread {
 
@@ -36,7 +38,8 @@ public class Console extends Thread {
 							" - tokens\r\n" + 
 							" - newtoken <description>\r\n" + 
 							" - loadtokens\r\n" + 
-							" - reloadconfig");
+							" - reloadconfig\r\n"+
+							" - clients");
 				} else if (cmd.equalsIgnoreCase("tokens")) {
 					ConcurrentHashMap<String, String> tokens = sorci.getTokens();
 					System.out.println("Tokens: "+tokens.size());
@@ -45,7 +48,7 @@ public class Console extends Thread {
 						System.out.println("  "+token);
 						System.out.println("  ------------");
 					}
-					System.out.println("------END-----");
+					System.out.println("-----END-----");
 				} else if (cmd.equalsIgnoreCase("newtoken")) {
 					if (!arg.isEmpty()) {
 						String desc = arg;
@@ -54,7 +57,7 @@ public class Console extends Thread {
 						System.out.println("NewToken: ");
 						System.out.println("  Description: "+desc);
 						System.out.println("  "+token);
-						System.out.println("------END-----");
+						System.out.println("-----END-----");
 					} else {
 						System.out.println("newtoken <description>");
 					}
@@ -63,6 +66,16 @@ public class Console extends Thread {
 					System.out.println("Tokens is loaded !");
 				} else if (cmd.equalsIgnoreCase("reloadconfig")) {
 					System.out.println("This command is not disponible !");
+				} else if (cmd.equalsIgnoreCase("clients")) {
+					System.out.println("Clients: "+sorci.getClientsManager().getClients().size());
+					for (Client client : sorci.getClientsManager().getClients()) {
+						ClientIdentification cID = client.getClientID();
+						String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
+						if (hex.length() == 2)
+							hex = '0'+hex;
+						System.out.println("  |"+hex+"| "+cID.name+" -> "+cID.token);
+					}
+					System.out.println("-----END-----");
 				} else {
 					System.out.println("Enter command \"help\" for helping !");
 				}

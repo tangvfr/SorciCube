@@ -40,8 +40,7 @@ public class SorciClient extends Client implements RequestHandlerInterface {
 
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {
-		System.out.println(request.id+": "+request.typeRequest+" n:"+request.name+"\ndata: "+request.data);
-		
+		//System.out.println(request.id+": "+request.typeRequest+" n:"+request.name+"\ndata: "+request.data);
 	}
 
 	@RequestAnnotation(type=RequestType.KICK)
@@ -79,7 +78,8 @@ public class SorciClient extends Client implements RequestHandlerInterface {
 	
 	public static void main(String[] args) {
 		try {
-			SorciClient sc = new SorciClient("sc://04:TestSorciClient:cacaou@localhost:8367");
+			String token = "8tW3cFg4xgrGoybGzcPcwKMhadJmBEOhCMexlctqD4yCJxk6j1oS6MDngpTyQJKn";
+			SorciClient sc = new SorciClient("sc://04:TestSorciClient:"+token+"@localhost:8367");
 			sc.start();
 		} catch (NumberFormatException | IOException | URISyntaxException | RequestHandlerException | RequestException e) {
 			e.printStackTrace();

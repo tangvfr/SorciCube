@@ -117,5 +117,9 @@ public class ClientsManager extends Thread {
 		} else
 			return false;
 	}
+
+	public Vector<Client> getClients() {
+		return clients;
+	}
 	
 }
