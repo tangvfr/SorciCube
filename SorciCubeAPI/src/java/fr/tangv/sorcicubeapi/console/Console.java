@@ -71,13 +71,13 @@ public class Console extends Thread {
 					for (Client client : sorci.getClientsManager().getClients()) {
 						ClientIdentification cID = client.getClientID();
 						String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
-						if (hex.length() == 2)
+						if (hex.length() == 1)
 							hex = '0'+hex;
-						System.out.println("  |"+hex+"| "+cID.name+" -> "+cID.token);
+						System.out.println("  | 0x"+hex+" | "+cID.name+" -> "+cID.token);
 					}
 					System.out.println("-----END-----");
 				} else {
-					System.out.println("Enter command \"help\" for helping !");
+					System.out.println("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
 				}
 			} catch (Exception e) {
 				System.out.println("Error Console: "+e.getMessage());
