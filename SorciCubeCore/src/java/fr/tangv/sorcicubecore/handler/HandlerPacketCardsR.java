@@ -6,11 +6,11 @@ import fr.tangv.sorcicubecore.packet.PacketCards;
 
 import java.util.Enumeration;
 
-public class HandlerPacketCards {
+public class HandlerPacketCardsR {
 
 	public ConcurrentHashMap<String, PacketCards> packets;
 	
-	public HandlerPacketCards() {
+	public HandlerPacketCardsR() {
 		/*this.sorci = sorci;
 		this.packetsMongo = sorci.getMongo().getPackets();
 		this.refresh();*/
