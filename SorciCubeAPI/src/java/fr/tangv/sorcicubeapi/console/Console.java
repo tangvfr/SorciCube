@@ -76,7 +76,7 @@ public class Console extends Thread {
 						String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
 						if (hex.length() == 1)
 							hex = '0'+hex;
-						System.out.println("  | "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
+						System.out.println("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
 					}
 					System.out.println("-----END-----");
 				} else {
