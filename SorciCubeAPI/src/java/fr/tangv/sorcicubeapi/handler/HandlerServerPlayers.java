@@ -91,7 +91,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	}
 	
 	@RequestAnnotation(type=RequestType.PLAYER_UPDATE)
-	public void update(Client client, Request request) throws IOException, RequestException, Exception {
+	public void update(Client client, Request request) throws IOException, RequestException {
 		try {
 			PlayerFeature.toPlayerFeature(UUID.fromString(request.name), manager, Document.parse(request.data));
 			fm.update(request.name, request.data);
