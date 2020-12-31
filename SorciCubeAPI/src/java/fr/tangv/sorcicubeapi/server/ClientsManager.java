@@ -39,7 +39,7 @@ public class ClientsManager extends Thread {
 			
 			@Override
 			public void handlingRequest(Client client, Request request) throws Exception {
-				if (request.typeRequest == RequestType.IDENTIFICATION)
+				if (request.requestType == RequestType.IDENTIFICATION)
 					client.sendRequest(new Request(RequestType.ALREADY_AUTHENTIFIED, request.id, "AlreadyAuthentified", ""));
 			}
 			

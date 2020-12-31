@@ -19,7 +19,7 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 	
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {
-		if (request.typeRequest == RequestType.IDENTIFICATION) {
+		if (request.requestType == RequestType.IDENTIFICATION) {
 			ClientIdentification clientID = ClientIdentification.toClientIdentification(Document.parse(request.data));
 			if (!clientID.isValid()) {
 				client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED, request.id, "ClientIdentification", "ClientIdentification is wrong !"));

@@ -7,7 +7,7 @@ import fr.tangv.sorcicubecore.clients.Client;
 
 public class Request {
 	
-	public final RequestType typeRequest;
+	public final RequestType requestType;
 	public final int id;
 	public final String name;
 	public final String data;
@@ -21,7 +21,7 @@ public class Request {
 		if (r.length != 4)
 			throw new RequestException("Format space in request is invalid");
 		try {
-			this.typeRequest = RequestType.valueOf(r[0]);
+			this.requestType = RequestType.valueOf(r[0]);
 			this.id = Integer.parseInt(r[1]);
 			this.name = r[2];
 			if (name.contains(" ") || name.contains("\n") || name.contains("\r") || name.isEmpty())
@@ -32,23 +32,31 @@ public class Request {
 		}
 	}
 	
-	public Request(RequestType typeRequest, int id, String name, String data) throws RequestException {
-		this.typeRequest = typeRequest;
+	public Request(RequestType requestType, int id, String name, String data) throws RequestException {
+		this.requestType = requestType;
 		this.id = id;
 		this.name = name;
 		if (name.contains(" ") || name.contains("\n") || name.contains("\r"))
 			throw new RequestException("Name of request is invalid");
-		if (typeRequest.getTypeData() != RequestDataType.NOTHING && (data == null || data.isEmpty()))
+		if (requestType.getTypeData() != RequestDataType.NOTHING && (data == null || data.isEmpty()))
 			throw new RequestException("Data is Null");
 		this.data = data;
 	}
 	
+	public Request createReponse(RequestType typeRequest, String data) throws RequestException {
+		return new Request(typeRequest, id, name, data);
+	}
+	
+	public Request createReponse(RequestType typeRequest, String name, String data) throws RequestException {
+		return new Request(typeRequest, id, name, data);
+	}
+	
 	public String toRequest() {
-		return typeRequest.name()+" "+id+" "+name+" "+new String(Base64.getEncoder().encode((typeRequest.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name()).getBytes(Client.CHARSET)), StandardCharsets.US_ASCII);
+		return requestType.name()+" "+id+" "+name+" "+new String(Base64.getEncoder().encode((requestType.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name()).getBytes(Client.CHARSET)), StandardCharsets.US_ASCII);
 	}
 	
 	public String toRequestNoData() {
-		return typeRequest.name()+" "+id+" "+name+" Data["+(typeRequest.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name().length())+"]";
+		return requestType.name()+" "+id+" "+name+" Data["+(requestType.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name().length())+"]";
 	}
 	
 }

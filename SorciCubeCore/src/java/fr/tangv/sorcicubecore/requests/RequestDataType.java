@@ -5,7 +5,6 @@ public enum RequestDataType {
 	JSON(),
 	YAML(),
 	TEXT(),
-	ARRAY_TEXT(),
 	NOTHING();
 	
 }

@@ -35,7 +35,7 @@ public class RequestHandler implements RequestHandlerInterface {
 	public void handlingRequest(Client client, Request request) throws Exception {
 		for (RequestHandlerInterface handler : requestHandlers)
 			handler.handlingRequest(client, request);
-		for (RequestHandlerMethod method : requestHandlersList.get(request.typeRequest))
+		for (RequestHandlerMethod method : requestHandlersList.get(request.requestType))
 			method.execute(client, request);
 	}
 	

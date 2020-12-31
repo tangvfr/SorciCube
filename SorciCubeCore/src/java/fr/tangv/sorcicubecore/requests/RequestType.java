@@ -6,8 +6,12 @@ public enum RequestType {
 	 * SERVER
 	 */
 	
-	//ERROR
+	//DATA
 	ERROR(RequestDataType.TEXT),
+	SUCCESSFUL(RequestDataType.NOTHING),
+	//PLAYER
+	PLAYER_REPONSE(RequestDataType.JSON),
+	PLAYER_EXITSTED(RequestDataType.TEXT),
 	//IDENTIFICATION
 	DONT_AUTHENTIFIED(RequestDataType.NOTHING),
 	AUTHENTIFIED(RequestDataType.NOTHING),
@@ -23,7 +27,7 @@ public enum RequestType {
 	
 	//PLAYER
 	PLAYER_INIT(RequestDataType.JSON),
-	PLAYER_GET(RequestDataType.JSON),
+	PLAYER_GET(RequestDataType.NOTHING),
 	PLAYER_EXIST(RequestDataType.NOTHING),
 	PLAYER_UPDATE(RequestDataType.JSON),
 	//IDENTIFICATION

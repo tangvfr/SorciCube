@@ -7,6 +7,7 @@ public class HandlerInit {
 
 	public HandlerInit(SorciCubeAPI sorci) {
 		ClientsManager cm = sorci.getClientsManager();
+		cm.registered(new HandlerServerPlayers(this));
 		
 	}
 	
