@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.handler;
+package fr.tangv.sorcicubecore.sorciclient;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -17,24 +17,31 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 
 public abstract class SorciClient extends Client implements RequestHandlerInterface {
 	
+	private final HandlerReponse handlerReponse;
 	private volatile PrintStream out;
 	
-	public SorciClient(String uri) throws IOException, NumberFormatException, URISyntaxException, RequestHandlerException, RequestException {
-		this(new SorciClientURI(uri));
+	public SorciClient(String uri, long timeoutReponse) throws IOException, NumberFormatException, URISyntaxException, RequestHandlerException, RequestException {
+		this(new SorciClientURI(uri), timeoutReponse);
 	}
 	
-	public SorciClient(URI uri) throws IOException, NumberFormatException, URISyntaxException, RequestHandlerException, RequestException {
-		this(new SorciClientURI(uri));
+	public SorciClient(URI uri, long timeoutReponse) throws IOException, NumberFormatException, URISyntaxException, RequestHandlerException, RequestException {
+		this(new SorciClientURI(uri), timeoutReponse);
 	}
 	
-	public SorciClient(SorciClientURI uri) throws IOException, RequestHandlerException, RequestException {
+	public SorciClient(SorciClientURI uri, long timeoutReponse) throws IOException, RequestHandlerException, RequestException {
 		super(new Socket(uri.getAddr(), uri.getPort()));
 		this.setClientID(uri.getClientID());
+		this.handlerReponse = new HandlerReponse(this, timeoutReponse);
 		RequestHandler handler = new RequestHandler();
 		handler.registered(this);
+		handler.registered(handlerReponse);
 		this.setHandler(handler);
 		sendRequest(new Request(RequestType.IDENTIFICATION, Request.randomID(), "identification", this.getClientID().toDocument().toJson()));
 		this.out = System.out;
+	}
+	
+	public Request sendRequestReponse(Request request) throws IOException {
+		return this.handlerReponse.sendRequestReponse(request);
 	}
 	
 	public void setPrintStream(PrintStream out) {
@@ -50,7 +57,8 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 		this.out.println("You are disconnected !");
 		disconnected();
 	}
-	
+
+	public abstract void connected();
 	public abstract void disconnected();
 
 	@Override
@@ -89,12 +97,14 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 	@RequestAnnotation(type=RequestType.AUTHENTIFIED)
 	public void auth(Client client, Request request) {
 		this.out.println("You are authentified !");
+		this.connected();
 	}
 	
 	public static void main(String[] args) {
 		try {
 			String token = "8tW3cFg4xgrGoybGzcPcwKMhadJmBEOhCMexlctqD4yCJxk6j1oS6MDngpTyQJKn";
-			SorciClient sc = new SorciClient("sc://04:TestSorciClient:"+token+"@localhost:8367") {
+			SorciClient sc = new SorciClient("sc://04:TestSorciClient:"+token+"@localhost:8367", 10_000) {
+				@Override public void connected() {}
 				@Override public void disconnected() {}
 			};
 			sc.start();

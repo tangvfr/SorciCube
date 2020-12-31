@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.handler;
+package fr.tangv.sorcicubecore.sorciclient;
 
 import java.net.InetAddress;
 import java.net.URI;

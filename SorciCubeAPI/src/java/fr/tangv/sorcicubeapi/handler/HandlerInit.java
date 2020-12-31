@@ -8,9 +8,14 @@ import fr.tangv.sorcicubecore.requests.RequestHandlerException;
 
 public class HandlerInit {
 
+	
+	
 	public HandlerInit(SorciCubeAPI sorci) throws RequestHandlerException, IOException {
+		
+		//add config server
+		
 		ClientsManager cm = sorci.getClientsManager();
-		cm.registered(new HandlerServerPlayers());
+		cm.registered(new HandlerServerPlayers(22));
 		
 	}
 	
