@@ -2,12 +2,12 @@ package fr.tangv.sorcicubecore.player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bson.Document;
 
 import fr.tangv.sorcicubecore.card.Card;
-import fr.tangv.sorcicubecore.handler.ManagerCards;
 
 public class PlayerFeature {
 
@@ -179,7 +179,7 @@ public class PlayerFeature {
 		return doc;
 	}
 	
-	public static PlayerFeature toPlayerFeature(UUID uuid, ManagerCards manager, Document doc) throws Exception {
+	public static PlayerFeature toPlayerFeature(UUID uuid, Map<UUID, Card> manager, Document doc) throws Exception {
 		DeckCards deck1 = DeckCards.toDeckCards(manager, doc.get("deck1", Document.class));
 		DeckCards deck2 = DeckCards.toDeckCards(manager, doc.get("deck2", Document.class));
 		DeckCards deck3 = DeckCards.toDeckCards(manager, doc.get("deck3", Document.class));

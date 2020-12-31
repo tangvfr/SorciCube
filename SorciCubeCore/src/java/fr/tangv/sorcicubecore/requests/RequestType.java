@@ -11,7 +11,7 @@ public enum RequestType {
 	SUCCESSFUL(RequestDataType.NOTHING),
 	//PLAYER
 	PLAYER_REPONSE(RequestDataType.JSON),
-	PLAYER_EXITSTED(RequestDataType.TEXT),
+	PLAYER_EXITSTING(RequestDataType.TEXT),
 	//IDENTIFICATION
 	DONT_AUTHENTIFIED(RequestDataType.NOTHING),
 	AUTHENTIFIED(RequestDataType.NOTHING),
@@ -26,7 +26,7 @@ public enum RequestType {
 	 */
 	
 	//PLAYER
-	PLAYER_INIT(RequestDataType.JSON),
+	PLAYER_INIT(RequestDataType.TEXT),
 	PLAYER_GET(RequestDataType.NOTHING),
 	PLAYER_EXIST(RequestDataType.NOTHING),
 	PLAYER_UPDATE(RequestDataType.JSON),

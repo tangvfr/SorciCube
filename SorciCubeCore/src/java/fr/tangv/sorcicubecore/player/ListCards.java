@@ -1,11 +1,11 @@
 package fr.tangv.sorcicubecore.player;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.bson.Document;
 
 import fr.tangv.sorcicubecore.card.Card;
-import fr.tangv.sorcicubecore.handler.ManagerCards;
 
 public class ListCards {
 
@@ -59,7 +59,7 @@ public class ListCards {
 		return doc;
 	}
 	
-	public static ListCards toListCards(ManagerCards manager, Document doc) {
+	public static ListCards toListCards(Map<UUID, Card> manager, Document doc) {
 		int numberCard = doc.getInteger("size", 0);
 		Card[] cards = new Card[numberCard];
 		for (int i = 0; i < numberCard; i++) {
@@ -67,7 +67,7 @@ public class ListCards {
 			if ("none".equals(uuid))
 				cards[i] = null;
 			else
-				cards[i] = manager.getCard(UUID.fromString(uuid));
+				cards[i] = manager.get(UUID.fromString(uuid));
 		}
 		return new ListCards(cards);
 	}

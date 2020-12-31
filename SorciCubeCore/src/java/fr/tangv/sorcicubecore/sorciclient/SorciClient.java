@@ -40,8 +40,15 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 		this.out = System.out;
 	}
 	
-	public Request sendRequestReponse(Request request) throws IOException {
-		return this.handlerReponse.sendRequestReponse(request);
+	public Request sendRequestReponse(Request request, RequestType reponseType) throws IOException, ReponseRequestException {
+		Request reponse = this.handlerReponse.sendRequestReponse(request);
+		if (reponse == null)
+			throw new ReponseRequestException("Error with ReponseRequest is null !");
+		if (reponse.requestType == RequestType.ERROR)
+			throw new ReponseRequestException("Error ReponseRequest: "+reponse.data);
+		if (reponse.requestType != reponseType)
+			throw new ReponseRequestException("Error type of ReponseRequest is invalid !");
+		return reponse;
 	}
 	
 	public void setPrintStream(PrintStream out) {

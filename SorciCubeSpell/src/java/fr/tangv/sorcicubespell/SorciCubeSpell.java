@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.tangv.sorcicubecore.handler.ManagerCards;
 import fr.tangv.sorcicubecore.handler.ManagerDefaultDeck;
 import fr.tangv.sorcicubecore.handler.ManagerFightData;
-import fr.tangv.sorcicubecore.handler.ManagerPlayers;
+import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.handler.MongoDBManager;
 import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.command.CommandAddItemInList;
@@ -49,7 +49,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerLobby managerLobby;
 	private ManagerCards managerCards;
 	private ManagerGui managerGuiAdmin;
-	private ManagerPlayers managerPlayers;
+	private HandlerPlayers managerPlayers;
 	private ManagerDefaultDeck managerDefaultDeck;
 	private ManagerClickNPC managerClickNPC;
 	private ManagerPakcetCards managerPakcetCards;
@@ -89,7 +89,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			//init manager
 			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("collection"));
 			this.managerCards = new ManagerCards(mongo);
-			this.managerPlayers = new ManagerPlayers();
+			this.managerPlayers = new HandlerPlayers();
 			this.managerFightData = new ManagerFightData();
 			if (this.isLobby) {
 				this.configItemList = newConfig("itemlist.yml");
@@ -219,7 +219,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerGuiAdmin;
 	}
 	
-	public ManagerPlayers getManagerPlayers() {
+	public HandlerPlayers getManagerPlayers() {
 		return managerPlayers;
 	}
 	

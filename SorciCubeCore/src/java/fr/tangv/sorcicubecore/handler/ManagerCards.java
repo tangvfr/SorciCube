@@ -9,15 +9,16 @@ import fr.tangv.sorcicubecore.card.Card;
 public class ManagerCards {
 
 	//private MongoCollection<Document> cardsCol;
-	private ConcurrentHashMap<UUID, Card> cards;
+	private final ConcurrentHashMap<UUID, Card> cards;
 	
 	public ManagerCards(MongoDBManager mongo) {
+		this.cards = new ConcurrentHashMap<UUID, Card>();
 		//this.cardsCol = manager.getCards();
 		refresh();
 	}
 	
 	public void refresh() {
-		/*this.cards = new ConcurrentHashMap<UUID, Card>();
+		/*this.cards.clear();
 		for (Document doc : cardsCol.find()) {
 			Card card = Card.toCard(doc);
 			cards.put(card.getUUID(), card);

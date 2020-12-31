@@ -2,7 +2,7 @@ package fr.tangv.sorcicubeapi.handler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bson.Document;
@@ -22,11 +22,13 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
-	private int manyStartDecks;
+	private final int manyStartDecks;
+	private final Map<UUID, Card> manager;
 	
-	public HandlerServerPlayers(int manyStartDecks) throws IOException {
+	public HandlerServerPlayers(int manyStartDecks, Map<UUID, Card> manager) throws IOException {
 		this.fm = new RamFilesManager("./players");
 		this.manyStartDecks = manyStartDecks;
+		this.manager = manager;
 	}
 	
 	@Override
@@ -36,10 +38,9 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	@RequestAnnotation(type=RequestType.PLAYER_INIT)
 	public void init(Client client, Request request) throws IOException, RequestException {
 		try {
-			Document doc = Document.parse(request.data);
-			String player = request.name;
-			CardFaction faction = CardFaction.valueOf(doc.getString("faction"));
-			if (fm.has(player))
+			UUID player = UUID.fromString(request.name);
+			CardFaction faction = CardFaction.valueOf(request.data);
+			if (fm.has(player.toString()))
 				throw new Exception("Player already registred !");
 			//define type default deck
 			DeckCards defaultDeck = null;//remove this
@@ -71,7 +72,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					cardsUnlocks.add(card.getUUID().toString());
 			}
 			//create and insert playerfeature
-			PlayerFeature playerFeature = new PlayerFeature(UUID.fromString(player),
+			PlayerFeature playerFeature = new PlayerFeature(player,
 					defaultDeck,
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
@@ -81,19 +82,21 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					cardsUnlocks,
 					new ArrayList<String>(),
 					0, 0, (byte) 1);
-			fm.insert(request.name, playerFeature.toDocument().toJson());
-			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
+			String playerJson = playerFeature.toDocument().toJson();
+			fm.insert(player.toString(), playerJson);
+			client.sendRequest(request.createReponse(RequestType.PLAYER_REPONSE, playerJson));
 		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}
 	}
 	
 	@RequestAnnotation(type=RequestType.PLAYER_UPDATE)
-	public void update(Client client, Request request) throws IOException, RequestException {
+	public void update(Client client, Request request) throws IOException, RequestException, Exception {
 		try {
+			PlayerFeature.toPlayerFeature(UUID.fromString(request.name), manager, Document.parse(request.data));
 			fm.update(request.name, request.data);
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}
 	}
@@ -102,14 +105,14 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	public void get(Client client, Request request) throws IOException, RequestException {
 		try {
 			client.sendRequest(request.createReponse(RequestType.PLAYER_REPONSE, fm.get(request.name).getData()));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}
 	}
 
 	@RequestAnnotation(type=RequestType.PLAYER_EXIST)
 	public void exist(Client client, Request request) throws IOException, RequestException {
-		client.sendRequest(request.createReponse(RequestType.PLAYER_EXITSTED, Boolean.toString(fm.has(request.name))));
+		client.sendRequest(request.createReponse(RequestType.PLAYER_EXITSTING, Boolean.toString(fm.has(request.name))));
 	}
 	
 }

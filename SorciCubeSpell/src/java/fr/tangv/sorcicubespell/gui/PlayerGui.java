@@ -8,7 +8,7 @@ import org.bukkit.inventory.Inventory;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardComparator;
 import fr.tangv.sorcicubecore.fight.FightType;
-import fr.tangv.sorcicubecore.handler.ManagerPlayers;
+import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubespell.util.Config;
 import net.md_5.bungee.api.ChatMessageType;
@@ -126,7 +126,7 @@ public class PlayerGui {
 		this.playerFeature = playerFeature;
 	}
 	
-	public void uploadPlayerFeature(ManagerPlayers manager) {
+	public void uploadPlayerFeature(HandlerPlayers manager) {
 		if(playerFeature != null)
 			manager.update(playerFeature);
 		else

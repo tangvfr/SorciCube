@@ -15,7 +15,7 @@ public class HandlerInit {
 		//add config server
 		
 		ClientsManager cm = sorci.getClientsManager();
-		cm.registered(new HandlerServerPlayers(22));
+		//cm.registered(new HandlerServerPlayers());
 		
 	}
 	
