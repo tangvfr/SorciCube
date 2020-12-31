@@ -12,13 +12,13 @@ public class File {
 	private volatile String data;
 	private final java.io.File file;
 	
-	public File(java.io.File file) throws Exception {
+	public File(java.io.File file) throws IOException {
 		this.file = file;
 		if (file.exists()) {
 			if (file.isFile()) {
 				loadData();
 			} else
-				throw new Exception("That don't is File !");
+				throw new IOException("That don't is File !");
 		} else {
 			file.createNewFile();
 		}

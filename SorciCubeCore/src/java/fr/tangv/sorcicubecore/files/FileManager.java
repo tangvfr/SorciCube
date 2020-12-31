@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubecore.files;
 
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FileManager {
@@ -9,7 +10,7 @@ public class FileManager {
 	private ConcurrentHashMap<String, File> files;
 	private java.io.File folder;
 	
-	public FileManager(String pathFolder) throws Exception {
+	public FileManager(String pathFolder) throws IOException {
 		this.files = new ConcurrentHashMap<String, File>();
 		this.folder = new java.io.File("."+SEPARATOR+"data"+SEPARATOR+pathFolder);
 		if (folder.exists()) {
@@ -17,7 +18,7 @@ public class FileManager {
 				for (java.io.File file : folder.listFiles())
 					files.put(file.getName(), new File(file));
 			} else
-				throw new Exception("That don't is folder !");
+				throw new IOException("That don't is folder !");
 		} else {
 			folder.mkdirs();
 		}
@@ -31,7 +32,7 @@ public class FileManager {
 		return files.get(name);
 	}
 	
-	public void insert(String name, String data) throws Exception {
+	public void insert(String name, String data) throws IOException {
 		files.put(name, new File(new java.io.File(folder.getPath()+SEPARATOR+name)));
 	}
 	
@@ -39,7 +40,7 @@ public class FileManager {
 		return files.remove(name).delete();
 	}
 	
-	public void update(String name, String data) throws Exception {
+	public void update(String name, String data) throws IOException {
 		files.get(name).writeData(data);;
 	}
 	

@@ -14,7 +14,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	public FileManager fm;
 	
-	public HandlerServerPlayers() throws Exception {
+	public HandlerServerPlayers() throws IOException {
 		this.fm = new FileManager("./players");
 	}
 	
@@ -26,7 +26,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 		try {
 			fm.insert(request.name, request.data);
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}
 	}
@@ -36,7 +36,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 		try {
 			fm.update(request.name, request.data);
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}
 	}
@@ -45,7 +45,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	public void get(Client client, Request request) throws IOException, RequestException {
 		try {
 			client.sendRequest(request.createReponse(RequestType.PLAYER_REPONSE, fm.get(request.name).getData()));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}
 	}
