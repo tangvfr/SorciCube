@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.files;
+package fr.tangv.sorcicubecore.ramfiles;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,12 +7,12 @@ import java.io.OutputStreamWriter;
 
 import fr.tangv.sorcicubecore.clients.Client;
 
-public class File {
+public class RamFile {
 	
 	private volatile String data;
 	private final java.io.File file;
 	
-	public File(java.io.File file) throws IOException {
+	public RamFile(java.io.File file) throws IOException {
 		this.file = file;
 		if (file.exists()) {
 			if (file.isFile()) {

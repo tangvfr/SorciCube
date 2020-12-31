@@ -18,7 +18,7 @@ public class ManagerPlayers {
 	
 	public boolean containtPlayer(UUID uuid) {return false;};
 	
-	public PlayerFeature getPlayerFeature(UUID uuid) throws Exception {return null;};
+	public PlayerFeature getPlayer(UUID uuid) throws Exception {return null;};
 	
 	public void update(PlayerFeature playerFeature) {};
 	

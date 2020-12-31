@@ -134,7 +134,7 @@ public class Fight {
 	}
 	
 	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
-		PlayerFeature playerFeature = sorci.getManagerPlayers().getPlayerFeature(player.getUniqueId());
+		PlayerFeature playerFeature = sorci.getManagerPlayers().getPlayer(player.getUniqueId());
 		return new PlayerFight(
 				this, 
 				player,

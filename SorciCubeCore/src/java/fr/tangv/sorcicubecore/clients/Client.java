@@ -87,7 +87,7 @@ public abstract class Client extends Thread {
 		socket.close();
 	}
 	
-	public abstract void disconnected();
+	public abstract void disconnect();
 	
 	@Override
 	public void run() {
@@ -116,7 +116,7 @@ public abstract class Client extends Thread {
 				}
 			}
 		}
-		this.disconnected();
+		this.disconnect();
 	}
 	
 }

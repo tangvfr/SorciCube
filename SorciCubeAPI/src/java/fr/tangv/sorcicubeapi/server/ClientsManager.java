@@ -58,7 +58,7 @@ public class ClientsManager extends Thread {
 		}
 
 		@Override
-		public void disconnected() {
+		public void disconnect() {
 			if (clientsNotAuthentified.contains(this))
 				clientsNotAuthentified.remove(this);
 			if (clients.contains(this))

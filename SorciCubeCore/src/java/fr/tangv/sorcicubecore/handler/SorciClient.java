@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubecore.handler;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +15,9 @@ import fr.tangv.sorcicubecore.requests.RequestHandlerException;
 import fr.tangv.sorcicubecore.requests.RequestHandlerInterface;
 import fr.tangv.sorcicubecore.requests.RequestType;
 
-public class SorciClient extends Client implements RequestHandlerInterface {
+public abstract class SorciClient extends Client implements RequestHandlerInterface {
+	
+	private volatile PrintStream out;
 	
 	public SorciClient(String uri) throws IOException, NumberFormatException, URISyntaxException, RequestHandlerException, RequestException {
 		this(new SorciClientURI(uri));
@@ -31,16 +34,28 @@ public class SorciClient extends Client implements RequestHandlerInterface {
 		handler.registered(this);
 		this.setHandler(handler);
 		sendRequest(new Request(RequestType.IDENTIFICATION, Request.randomID(), "identification", this.getClientID().toDocument().toJson()));
+		this.out = System.out;
+	}
+	
+	public void setPrintStream(PrintStream out) {
+		this.out = out;
+	}
+	
+	public PrintStream getPrintStream() {
+		return this.out;
 	}
 	
 	@Override
-	public void disconnected() {
-		System.out.println("You are disconnected !");
+	public void disconnect() {
+		this.out.println("You are disconnected !");
+		disconnected();
 	}
+	
+	public abstract void disconnected();
 
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {
-		//System.out.println(request.id+": "+request.typeRequest+" n:"+request.name+"\ndata: "+request.data);
+		//this.out.println(request.id+": "+request.typeRequest+" n:"+request.name+"\ndata: "+request.data);
 	}
 
 	@RequestAnnotation(type=RequestType.KICK)
@@ -48,38 +63,40 @@ public class SorciClient extends Client implements RequestHandlerInterface {
 		try {
 			this.close();
 		} catch (IOException e) {}
-		System.out.println("You are kicked !");
+		this.out.println("You are kicked !");
 	}
 	
 	@RequestAnnotation(type=RequestType.IDENTIFICATION_REFUSED)
 	public void wrongAuth(Client client, Request request) {
-		System.out.println("Wrong identification because "+request.data);
+		this.out.println("Wrong identification because "+request.data);
 	}
 	
 	@RequestAnnotation(type=RequestType.COOLDOWN_AUTHENTIFIED)
 	public void cooldownAuth(Client client, Request request) {
-		System.out.println("You are pass cooldown for authentified !");
+		this.out.println("You are pass cooldown for authentified !");
 	}
 	
 	@RequestAnnotation(type=RequestType.ALREADY_AUTHENTIFIED)
 	public void alreadyAuth(Client client, Request request) {
-		System.out.println("You are already authentified !");
+		this.out.println("You are already authentified !");
 	}
 	
 	@RequestAnnotation(type=RequestType.DONT_AUTHENTIFIED)
 	public void dontAuth(Client client, Request request) {
-		System.out.println("You are don't authentified !");
+		this.out.println("You are don't authentified !");
 	}
 	
 	@RequestAnnotation(type=RequestType.AUTHENTIFIED)
 	public void auth(Client client, Request request) {
-		System.out.println("You are authentified !");
+		this.out.println("You are authentified !");
 	}
 	
 	public static void main(String[] args) {
 		try {
 			String token = "8tW3cFg4xgrGoybGzcPcwKMhadJmBEOhCMexlctqD4yCJxk6j1oS6MDngpTyQJKn";
-			SorciClient sc = new SorciClient("sc://04:TestSorciClient:"+token+"@localhost:8367");
+			SorciClient sc = new SorciClient("sc://04:TestSorciClient:"+token+"@localhost:8367") {
+				@Override public void disconnected() {}
+			};
 			sc.start();
 		} catch (NumberFormatException | IOException | URISyntaxException | RequestHandlerException | RequestException e) {
 			e.printStackTrace();

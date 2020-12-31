@@ -3,7 +3,7 @@ package fr.tangv.sorcicubeapi.handler;
 import java.io.IOException;
 
 import fr.tangv.sorcicubecore.clients.Client;
-import fr.tangv.sorcicubecore.files.FileManager;
+import fr.tangv.sorcicubecore.ramfiles.RamFilesManager;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestAnnotation;
 import fr.tangv.sorcicubecore.requests.RequestException;
@@ -12,10 +12,10 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 
 public class HandlerServerPlayers implements RequestHandlerInterface {
 
-	public FileManager fm;
+	public RamFilesManager fm;
 	
 	public HandlerServerPlayers() throws IOException {
-		this.fm = new FileManager("./players");
+		this.fm = new RamFilesManager("./players");
 	}
 	
 	@Override

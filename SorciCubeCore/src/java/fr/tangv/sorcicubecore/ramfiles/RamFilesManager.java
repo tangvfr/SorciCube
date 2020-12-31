@@ -1,22 +1,22 @@
-package fr.tangv.sorcicubecore.files;
+package fr.tangv.sorcicubecore.ramfiles;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class FileManager {
+public class RamFilesManager {
 
 	private final static char SEPARATOR = java.io.File.separatorChar;
 	
-	private ConcurrentHashMap<String, File> files;
+	private ConcurrentHashMap<String, RamFile> files;
 	private java.io.File folder;
 	
-	public FileManager(String pathFolder) throws IOException {
-		this.files = new ConcurrentHashMap<String, File>();
+	public RamFilesManager(String pathFolder) throws IOException {
+		this.files = new ConcurrentHashMap<String, RamFile>();
 		this.folder = new java.io.File("."+SEPARATOR+"data"+SEPARATOR+pathFolder);
 		if (folder.exists()) {
 			if (folder.isDirectory()) {
 				for (java.io.File file : folder.listFiles())
-					files.put(file.getName(), new File(file));
+					files.put(file.getName(), new RamFile(file));
 			} else
 				throw new IOException("That don't is folder !");
 		} else {
@@ -28,12 +28,12 @@ public class FileManager {
 		return files.containsKey(name);
 	}
 	
-	public File get(String name) {
+	public RamFile get(String name) {
 		return files.get(name);
 	}
 	
 	public void insert(String name, String data) throws IOException {
-		files.put(name, new File(new java.io.File(folder.getPath()+SEPARATOR+name)));
+		files.put(name, new RamFile(new java.io.File(folder.getPath()+SEPARATOR+name)));
 	}
 	
 	public boolean delete(String name) {
