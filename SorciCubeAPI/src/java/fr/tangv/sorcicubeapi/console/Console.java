@@ -76,7 +76,7 @@ public class Console extends Thread {
 						String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
 						if (hex.length() == 1)
 							hex = '0'+hex;
-						System.out.println("  | 0x"+hex+" | "+cID.name+" -> "+cID.token);
+						System.out.println("  | "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
 					}
 					System.out.println("-----END-----");
 				} else {
@@ -87,6 +87,23 @@ public class Console extends Thread {
 			}
 		}
 		in.close();
+	}
+	
+	private String complet(String src, int lenght, char c) {
+		while (src.length() < lenght)
+			src = c+src;
+		return src;
+	}
+	
+	private String complet(long src, int lenght) {
+		return complet(Long.toString(src), lenght, '0');
+	}
+	
+	private String formatTime(long time) {
+		long h = time/3600_000;
+		long m = (time%3600_000)/60_000;
+		long s = ((time%3600_000)%60_000)/1000;
+		return complet(h, 4)+":"+complet(m, 2)+":"+complet(s, 2);
 	}
 	
 }
