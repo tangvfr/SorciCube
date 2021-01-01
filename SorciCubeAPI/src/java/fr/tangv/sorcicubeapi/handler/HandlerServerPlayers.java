@@ -23,11 +23,13 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	private final RamFilesManager fm;
 	private final int manyStartDecks;
 	private final HandlerServerCards cards;
+	private final HandlerDefaultDeck defaultDeck;
 	
-	public HandlerServerPlayers(int manyStartDecks, HandlerServerCards cards) throws IOException {
+	public HandlerServerPlayers(int manyStartDecks, HandlerServerCards cards, HandlerDefaultDeck defaultDeck) throws IOException {
 		this.fm = new RamFilesManager("./players");
 		this.manyStartDecks = manyStartDecks;
 		this.cards = cards;
+		this.defaultDeck = defaultDeck;
 	}
 	
 	@Override
@@ -42,22 +44,22 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 			if (fm.has(player.toString()))
 				throw new Exception("Player already registred !");
 			//define type default deck
-			DeckCards defaultDeck = null;//remove this
+			DeckCards defaultDeck;
 			switch (faction) {
 				case DARK:
-					//defaultDeck = sorci.getManagerDefaultDeck().getDeckDark();
+					defaultDeck = this.defaultDeck.getDeckDark();
 					break;
 					
 				case LIGHT:
-					//defaultDeck = sorci.getManagerDefaultDeck().getDeckLight();
+					defaultDeck = this.defaultDeck.getDeckLight();
 					break;
 					
 				case NATURE:
-					//defaultDeck = sorci.getManagerDefaultDeck().getDeckNature();
+					defaultDeck = this.defaultDeck.getDeckNature();
 					break;
 					
 				case TOXIC:
-					//defaultDeck = sorci.getManagerDefaultDeck().getDeckToxic();
+					defaultDeck = this.defaultDeck.getDeckToxic();
 					break;
 	
 				default:

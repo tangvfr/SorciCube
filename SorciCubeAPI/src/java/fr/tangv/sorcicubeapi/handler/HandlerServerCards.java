@@ -23,9 +23,10 @@ public class HandlerServerCards implements RequestHandlerInterface {
 	private final ConcurrentHashMap<UUID, Card> cards;//---------------
 	private final File file;
 	
-	public HandlerServerCards() {
+	public HandlerServerCards() throws IOException {
 		this.file = new File("./cards.json");
 		this.cards = new ConcurrentHashMap<UUID, Card>();
+		load();
 	}
 	
 	public synchronized void load() throws IOException {
