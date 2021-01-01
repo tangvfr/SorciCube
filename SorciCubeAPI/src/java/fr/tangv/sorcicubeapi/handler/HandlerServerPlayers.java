@@ -2,7 +2,6 @@ package fr.tangv.sorcicubeapi.handler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.UUID;
 
 import org.bson.Document;
@@ -23,12 +22,12 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
 	private final int manyStartDecks;
-	private final Map<UUID, Card> manager;
+	private final HandlerServerCards cards;
 	
-	public HandlerServerPlayers(int manyStartDecks, Map<UUID, Card> manager) throws IOException {
+	public HandlerServerPlayers(int manyStartDecks, HandlerServerCards cards) throws IOException {
 		this.fm = new RamFilesManager("./players");
 		this.manyStartDecks = manyStartDecks;
-		this.manager = manager;
+		this.cards = cards;
 	}
 	
 	@Override
@@ -93,7 +92,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	@RequestAnnotation(type=RequestType.PLAYER_UPDATE)
 	public void update(Client client, Request request) throws IOException, RequestException {
 		try {
-			PlayerFeature.toPlayerFeature(UUID.fromString(request.name), manager, Document.parse(request.data));
+			PlayerFeature.toPlayerFeature(UUID.fromString(request.name), cards.getCards(), Document.parse(request.data));
 			fm.update(request.name, request.data);
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 		} catch (Exception e) {

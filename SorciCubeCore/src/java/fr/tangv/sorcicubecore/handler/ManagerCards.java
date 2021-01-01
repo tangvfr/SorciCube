@@ -44,18 +44,15 @@ public class ManagerCards {
 			return null;
 	}
 	
-	public boolean insert(Card card) {
-		return false;
+	public void insert(Card card) {
 		//cardsCol.insertOne(card.toDocument());
 	}
 	
-	public boolean update(Card card) {
-		return false;
+	public void update(Card card) {
 		//cardsCol.findOneAndReplace(card.toUUIDDocument(), card.toDocument());
 	}
 	
-	public boolean delete(Card card) {
-		return false;
+	public void delete(Card card) {
 		//cardsCol.findOneAndDelete(card.toUUIDDocument());
 	}
 	

@@ -1,15 +1,18 @@
-package fr.tangv.sorcicubecore.handler;
+package fr.tangv.sorcicubeapi.handler;
 
+import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.player.DeckCards;
+import fr.tangv.sorcicubecore.requests.Request;
+import fr.tangv.sorcicubecore.requests.RequestHandlerInterface;
 
-public class ManagerDefaultDeck {
+public class HandlerDefaultDeck implements RequestHandlerInterface { {
 
 	private DeckCards deckDark;
 	private DeckCards deckLight;
 	private DeckCards deckNature;
 	private DeckCards deckToxic;
 	
-	public ManagerDefaultDeck(MongoDBManager manager, ManagerCards managerCards) throws Exception {
+	public HandlerDefaultDeck() throws Exception {
 		/*MongoCollection<Document> defaultDeck = manager.getDefaultDeck();
 		Document doc = new Document("default_deck", "default_deck");
 		MongoCursor<Document> FDD = defaultDeck.find(doc).iterator();
@@ -47,5 +50,10 @@ public class ManagerDefaultDeck {
 	public DeckCards getDeckToxic() {
 		return this.deckToxic;
 	}
+
+	@Override
+	public void handlingRequest(Client client, Request request) throws Exception {}
+	
+	
 	
 }
