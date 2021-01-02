@@ -37,4 +37,31 @@ public class HandlerDefaultDeck {
 		this.deckToxic = DeckCards.toDeckCards(cards.originalCards(), doc.get("deck_toxic", Document.class));
 	}
 	
+	public void update() throws IOException, ReponseRequestException, RequestException {
+		sorci.sendRequestReponse(new Request(RequestType.DEFAULT_DECK_UPDATE, Request.randomID(), "UPDATE",
+				new Document()
+				.append("deck_dark", deckDark.toDocument())
+				.append("deck_light", deckLight.toDocument())
+				.append("deck_nature", deckNature.toDocument())
+				.append("deck_toxic", deckToxic.toDocument())
+			.toJson()
+		),RequestType.SUCCESSFUL);
+	}
+
+	public DeckCards getDeckDark() {
+		return deckDark;
+	}
+
+	public DeckCards getDeckLight() {
+		return deckLight;
+	}
+
+	public DeckCards getDeckNature() {
+		return deckNature;
+	}
+
+	public DeckCards getDeckToxic() {
+		return deckToxic;
+	}
+	
 }

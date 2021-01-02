@@ -98,7 +98,7 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 	
 	@RequestAnnotation(type=RequestType.DONT_AUTHENTIFIED)
 	public void dontAuth(Client client, Request request) {
-		this.out.println("You are don't authentified !");
+		this.out.println("You are don't authentified for this action !");
 	}
 	
 	@RequestAnnotation(type=RequestType.AUTHENTIFIED)

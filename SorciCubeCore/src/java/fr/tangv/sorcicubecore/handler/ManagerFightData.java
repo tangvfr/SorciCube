@@ -1,19 +1,23 @@
 package fr.tangv.sorcicubecore.handler;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.Vector;
 
 import fr.tangv.sorcicubecore.fight.FightData;
+import fr.tangv.sorcicubecore.requests.Request;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.requests.RequestType;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class ManagerFightData {
 
-	/*private MongoCollection<Document> preFightDatas;
-	private MongoCollection<Document> spetatorFight;
+	private final SorciClient sorci;
 	
-	public ManagerFightData(MongoDBManager manager) {
-		this.preFightDatas = manager.getPreFights();
-		this.spetatorFight = manager.getSpetatorFight();
-	}*/
+	public ManagerFightData(SorciClient sorci) {
+		this.sorci = sorci;
+	}
 	
 	public Vector<FightData> getAllFightData() {
 		/*Vector<FightData> list = new Vector<FightData>();
@@ -52,21 +56,17 @@ public class ManagerFightData {
 		//preFightDatas.deleteMany(new Document());
 	}
 	
-	public void addFightSpectate(UUID player, UUID fight) {
-		/*Document doc = new Document()
-				.append("player", player.toString())
-				.append("fight", fight.toString());
-		spetatorFight.insertOne(doc);*/
+	public void addFightSpectate(UUID player, UUID fight) throws IOException, ReponseRequestException, RequestException {
+		sorci.sendRequestReponse(new Request(RequestType.SPECTATOR_ADD, Request.randomID(), player.toString(), fight.toString()),
+				RequestType.SUCCESSFUL);
 	}
 	
-	public UUID whichSpectate(UUID player) {
-		/*Document filter = new Document("player", player.toString());
-		MongoCursor<Document> doc = spetatorFight.find(filter).iterator();
-		if (doc.hasNext()) {
-			spetatorFight.deleteMany(filter);
-			return UUID.fromString(doc.next().getString("fight"));
-		} else*/
+	public UUID whichSpectate(UUID player) throws IOException, ReponseRequestException, RequestException {
+		Request reponse = sorci.sendRequestReponse(new Request(RequestType.SPECTATOR_PEEK, Request.randomID(), player.toString(), null),
+				RequestType.SPECTATOR_UUID);
+		if (reponse.data.equals("null"))
 			return null;
+		return UUID.fromString(reponse.data);
 	}
 	
 }

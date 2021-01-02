@@ -6,22 +6,22 @@ public class CardVisual {
 		CardFeatures features = card.getFeatures();
 		String string = "";
 		if (features.hasFeature(CardFeatureType.DAMAGE))
-			string += "ยงe"+features.getFeature(CardFeatureType.DAMAGE).getValue().toString()+" \u2694";
+			string += "งe"+features.getFeature(CardFeatureType.DAMAGE).getValue().toString()+" \u2694";
 		if (features.hasFeature(CardFeatureType.HEALTH))
-			string += "  ยงc"+features.getFeature(CardFeatureType.HEALTH).getValue().toString()+" \u2665";
+			string += "  งc"+features.getFeature(CardFeatureType.HEALTH).getValue().toString()+" \u2665";
 		if (features.hasFeature(CardFeatureType.INCITEMENT))
-			string += "  ยง7\u2617";
+			string += "  ง7\u2617";
 		if (features.hasFeature(CardFeatureType.IMMOBILIZATION))
-			string += "  ยงb\u2744";
+			string += "  งb\u2744";
 		if (features.hasFeature(CardFeatureType.STUNNED))
-			string += "  ยง6\u0040";
+			string += "  ง6\u0040";
 		if (features.hasFeature(CardFeatureType.INVULNERABILITY))
-			string += "  ยงd\u267e";
+			string += "  งd\u267e";
 		return string;
 	}
 	
 	public static String renderManaCard(Card card) {
-		return "ยงb"+card.getMana()+" \u2756";
+		return "งb"+card.getMana()+" \u2756";
 	}
 	
 }

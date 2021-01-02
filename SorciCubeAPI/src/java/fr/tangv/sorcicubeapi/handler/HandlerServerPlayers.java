@@ -21,13 +21,13 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
-	private final int manyStartDecks;
+	private final HandlerConfig config;
 	private final HandlerServerCards cards;
 	private final HandlerDefaultDeck defaultDeck;
 	
-	public HandlerServerPlayers(int manyStartDecks, HandlerServerCards cards, HandlerDefaultDeck defaultDeck) throws IOException {
+	public HandlerServerPlayers(HandlerConfig config, HandlerServerCards cards, HandlerDefaultDeck defaultDeck) throws IOException {
 		this.fm = new RamFilesManager("./players");
-		this.manyStartDecks = manyStartDecks;
+		this.config = config;
 		this.cards = cards;
 		this.defaultDeck = defaultDeck;
 	}
@@ -79,7 +79,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
-					this.manyStartDecks,
+					this.config.getManyStartDecks(),
 					cardsUnlocks,
 					new ArrayList<String>(),
 					0, 0, (byte) 1);

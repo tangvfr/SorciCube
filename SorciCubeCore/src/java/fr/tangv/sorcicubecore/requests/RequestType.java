@@ -16,6 +16,8 @@ public enum RequestType {
 	CARDS_LIST(RequestDataType.JSON),
 	//DEFAULT DECK
 	DEFAULT_DECK_REPONSE(RequestDataType.JSON),
+	//SPECTATOR
+	SPECTATOR_UUID(RequestDataType.TEXT),
 	//IDENTIFICATION
 	DONT_AUTHENTIFIED(RequestDataType.NOTHING),
 	AUTHENTIFIED(RequestDataType.NOTHING),
@@ -34,6 +36,9 @@ public enum RequestType {
 	PLAYER_GET(RequestDataType.NOTHING),
 	PLAYER_EXIST(RequestDataType.NOTHING),
 	PLAYER_UPDATE(RequestDataType.JSON),
+	//SPECTATOR
+	SPECTATOR_ADD(RequestDataType.TEXT),
+	SPECTATOR_PEEK(RequestDataType.NOTHING),
 	//CARDS
 	CARDS_INSERT(RequestDataType.JSON),
 	CARDS_UPDATE(RequestDataType.JSON),

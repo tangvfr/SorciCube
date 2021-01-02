@@ -5,8 +5,6 @@ import java.util.UUID;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.lang.model.SourceVersion;
-
 import org.bson.Document;
 
 import fr.tangv.sorcicubecore.card.Card;
