@@ -9,8 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubecore.handler.HandlerCards;
+import fr.tangv.sorcicubecore.handler.HandlerDefaultDeck;
 import fr.tangv.sorcicubecore.handler.ManagerDefaultDeck;
-import fr.tangv.sorcicubecore.handler.ManagerFightData;
+import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.handler.MongoDBManager;
 import fr.tangv.sorcicubecore.util.RenderException;
@@ -45,15 +46,14 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config configNPC;
 	private Config configItemList;
 	private EnumTool enumTool;
-	private MongoDBManager mongo;
 	private ManagerLobby managerLobby;
 	private HandlerCards managerCards;
 	private ManagerGui managerGuiAdmin;
 	private HandlerPlayers managerPlayers;
-	private ManagerDefaultDeck managerDefaultDeck;
+	private HandlerDefaultDeck managerDefaultDeck;
 	private ManagerClickNPC managerClickNPC;
 	private ManagerPakcetCards managerPakcetCards;
-	private ManagerFightData managerFightData;
+	private HandlerFightData managerFightData;
 	private ManagerFight managerFight;
 	private ManagerCreatorFight managerCreatorFight;
 	
@@ -90,7 +90,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("collection"));
 			this.managerCards = new HandlerCards(mongo);
 			this.managerPlayers = new HandlerPlayers();
-			this.managerFightData = new ManagerFightData();
+			this.managerFightData = new HandlerFightData();
 			if (this.isLobby) {
 				this.configItemList = newConfig("itemlist.yml");
 				this.configNPC = newConfig("npc.yml");
@@ -235,7 +235,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerPakcetCards;
 	}
 	
-	public ManagerFightData getManagerFightData() {
+	public HandlerFightData getManagerFightData() {
 		return managerFightData;
 	}
 	
