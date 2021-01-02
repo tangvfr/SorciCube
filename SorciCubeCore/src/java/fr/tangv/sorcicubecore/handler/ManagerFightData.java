@@ -52,10 +52,6 @@ public class ManagerFightData {
 		addFightData(fightData);
 	}
 	
-	public void removeAllFightData() {
-		//preFightDatas.deleteMany(new Document());
-	}
-	
 	public void addFightSpectate(UUID player, UUID fight) throws IOException, ReponseRequestException, RequestException {
 		sorci.sendRequestReponse(new Request(RequestType.SPECTATOR_ADD, Request.randomID(), player.toString(), fight.toString()),
 				RequestType.SUCCESSFUL);

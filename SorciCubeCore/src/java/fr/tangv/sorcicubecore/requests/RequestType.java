@@ -18,6 +18,8 @@ public enum RequestType {
 	DEFAULT_DECK_REPONSE(RequestDataType.JSON),
 	//SPECTATOR
 	SPECTATOR_UUID(RequestDataType.TEXT),
+	//FIGHT_DATA
+	
 	//IDENTIFICATION
 	DONT_AUTHENTIFIED(RequestDataType.NOTHING),
 	AUTHENTIFIED(RequestDataType.NOTHING),
@@ -47,6 +49,8 @@ public enum RequestType {
 	//DEFAULT DECK
 	DEFAULT_DECK_GET(RequestDataType.NOTHING),
 	DEFAULT_DECK_UPDATE(RequestDataType.JSON),
+	//FIGHT_DATA
+	
 	//IDENTIFICATION
 	IDENTIFICATION(RequestDataType.JSON);
 	
