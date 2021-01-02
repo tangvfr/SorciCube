@@ -1,9 +1,6 @@
 /.settings
 /target
 
-properties.json
-tokens
-
 *.classpath
 *.project
 
