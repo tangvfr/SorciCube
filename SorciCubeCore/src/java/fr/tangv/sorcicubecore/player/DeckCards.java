@@ -13,14 +13,14 @@ public class DeckCards extends ListCards {
 	public final static int size = 20;
 	private CardFaction faction;
 	
-	public DeckCards(ListCards listCards, CardFaction faction) throws Exception {
+	public DeckCards(ListCards listCards, CardFaction faction) throws DeckException {
 		this(listCards.getCards(), faction);
 	}
 	
-	public DeckCards(Card[] cards, CardFaction faction) throws Exception {
+	public DeckCards(Card[] cards, CardFaction faction) throws DeckException {
 		super(cards);
 		if (cards.length != size)
-			throw new Exception("Size deck is different of "+size+" cards !");
+			throw new DeckException("Size deck is different of "+size+" cards !");
 		this.faction = faction;
 	}
 	
@@ -39,17 +39,17 @@ public class DeckCards extends ListCards {
 		return doc;
 	}
 	
-	public static DeckCards toDeckCards(Map<UUID, Card> manager, Document doc) throws Exception {
+	public static DeckCards toDeckCards(Map<UUID, Card> manager, Document doc) throws DeckException {
 		ListCards listCards = ListCards.toListCards(manager, doc);
 		CardFaction faction = CardFaction.valueOf(doc.getString("faction"));
 		return new DeckCards(listCards, faction);
 	}
 	
-	public static DeckCards createDeckCardsEmpty() throws Exception {
+	public static DeckCards createDeckCardsEmpty() throws DeckException {
 		return createDeckCardsEmpty(CardFaction.BASIC);
 	}
 	
-	public static DeckCards createDeckCardsEmpty(CardFaction faction) throws Exception {
+	public static DeckCards createDeckCardsEmpty(CardFaction faction) throws DeckException {
 		return new DeckCards(new Card[DeckCards.size], faction);
 	}
 	

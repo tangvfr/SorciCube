@@ -16,10 +16,10 @@ import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 public class HandlerPlayers {
 
 	private final SorciClient sorci;
-	private final ManagerCards managerCards;
+	private final HandlerCards managerCards;
 	
 	
-	public HandlerPlayers(SorciClient sorci, ManagerCards managerCards) {
+	public HandlerPlayers(SorciClient sorci, HandlerCards managerCards) {
 		this.sorci = sorci;
 		this.managerCards = managerCards;
 	}

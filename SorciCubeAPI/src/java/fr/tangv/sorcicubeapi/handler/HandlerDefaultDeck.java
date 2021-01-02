@@ -10,6 +10,7 @@ import org.bson.Document;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.player.DeckCards;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestAnnotation;
 import fr.tangv.sorcicubecore.requests.RequestException;
@@ -25,13 +26,13 @@ public class HandlerDefaultDeck implements RequestHandlerInterface {
 	private final File file;
 	private final HandlerServerCards cards;
 	
-	public HandlerDefaultDeck(HandlerServerCards cards) throws IOException, Exception {
+	public HandlerDefaultDeck(HandlerServerCards cards) throws IOException, DeckException {
 		this.cards = cards;
 		this.file = new File("./default_deck.json");
 		load();
 	}
 	
-	public synchronized void load() throws IOException, Exception {
+	public synchronized void load() throws IOException, DeckException {
 		if (!file.exists()) {
 			file.createNewFile();
 			this.deckDark = DeckCards.createDeckCardsEmpty(CardFaction.DARK);

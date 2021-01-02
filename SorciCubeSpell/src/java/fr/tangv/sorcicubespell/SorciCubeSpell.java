@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.tangv.sorcicubecore.handler.ManagerCards;
+import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.handler.ManagerDefaultDeck;
 import fr.tangv.sorcicubecore.handler.ManagerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
@@ -47,7 +47,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private EnumTool enumTool;
 	private MongoDBManager mongo;
 	private ManagerLobby managerLobby;
-	private ManagerCards managerCards;
+	private HandlerCards managerCards;
 	private ManagerGui managerGuiAdmin;
 	private HandlerPlayers managerPlayers;
 	private ManagerDefaultDeck managerDefaultDeck;
@@ -88,7 +88,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.nameServerJump = this.parameter.getString("server_jump");
 			//init manager
 			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("collection"));
-			this.managerCards = new ManagerCards(mongo);
+			this.managerCards = new HandlerCards(mongo);
 			this.managerPlayers = new HandlerPlayers();
 			this.managerFightData = new ManagerFightData();
 			if (this.isLobby) {
@@ -211,7 +211,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return mongo;
 	}
 	
-	public ManagerCards getManagerCards() {
+	public HandlerCards getManagerCards() {
 		return managerCards;
 	}
 	

@@ -41,6 +41,7 @@ public class HandlerServerCards implements RequestHandlerInterface {
 				in.close();
 				Document d = Document.parse(new String(buf, Client.CHARSET));
 				buf = new byte[0];
+				cards.clear();
 				for (Document doc : d.getList("cards", Document.class)) {
 					Card card = Card.toCard(doc);
 					cards.put(card.getUUID(), card);
@@ -88,23 +89,13 @@ public class HandlerServerCards implements RequestHandlerInterface {
 		}
 	}
 	
-	@RequestAnnotation(type=RequestType.CARDS_GET)
-	public void get(Client client, Request request) throws IOException, RequestException {
-		try {
-			Card card = cards.get(UUID.fromString(request.name));
-			client.sendRequest(request.createReponse(RequestType.CARDS_REPONSE, (card == null) ? "null" : card.toDocument().toJson()));
-		} catch (Exception e) {
-			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
-		}
-	}
-	
 	@RequestAnnotation(type=RequestType.CARDS_GET_ALL)
 	public void getAll(Client client, Request request) throws IOException, RequestException {
 		try {
 			ArrayList<Document> list = new ArrayList<Document>();
 			for (Card card : cards.values())
 				list.add(card.toDocument());
-			client.sendRequest(request.createReponse(RequestType.CARDS_REPONSE, new Document("cards", list).toJson()));
+			client.sendRequest(request.createReponse(RequestType.CARDS_LIST, new Document("cards", list).toJson()));
 		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}

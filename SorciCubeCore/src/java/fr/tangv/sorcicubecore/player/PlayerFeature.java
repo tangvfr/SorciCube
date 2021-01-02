@@ -179,7 +179,7 @@ public class PlayerFeature {
 		return doc;
 	}
 	
-	public static PlayerFeature toPlayerFeature(UUID uuid, Map<UUID, Card> manager, Document doc) throws Exception {
+	public static PlayerFeature toPlayerFeature(UUID uuid, Map<UUID, Card> manager, Document doc) throws DeckException {
 		DeckCards deck1 = DeckCards.toDeckCards(manager, doc.get("deck1", Document.class));
 		DeckCards deck2 = DeckCards.toDeckCards(manager, doc.get("deck2", Document.class));
 		DeckCards deck3 = DeckCards.toDeckCards(manager, doc.get("deck3", Document.class));

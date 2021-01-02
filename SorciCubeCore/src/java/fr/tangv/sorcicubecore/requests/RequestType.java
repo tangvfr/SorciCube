@@ -13,7 +13,7 @@ public enum RequestType {
 	PLAYER_REPONSE(RequestDataType.JSON),
 	PLAYER_EXITSTING(RequestDataType.TEXT),
 	//CARDS
-	CARDS_REPONSE(RequestDataType.JSON),
+	CARDS_LIST(RequestDataType.JSON),
 	//DEFAULT DECK
 	DEFAULT_DECK_REPONSE(RequestDataType.JSON),
 	//IDENTIFICATION
@@ -37,7 +37,6 @@ public enum RequestType {
 	//CARDS
 	CARDS_INSERT(RequestDataType.JSON),
 	CARDS_UPDATE(RequestDataType.JSON),
-	CARDS_GET(RequestDataType.NOTHING),
 	CARDS_GET_ALL(RequestDataType.NOTHING),
 	CARDS_DELETE(RequestDataType.NOTHING),
 	//DEFAULT DECK
