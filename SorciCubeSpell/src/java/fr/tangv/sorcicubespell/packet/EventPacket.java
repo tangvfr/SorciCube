@@ -103,7 +103,7 @@ public class EventPacket implements Listener, Runnable {
 								}
 								inv.setItem(start+i, itemQuestion);
 							}
-							gui.uploadPlayerFeature(manger.getSorci().getManagerPlayers());
+							gui.uploadPlayerFeature(manger.getSorci().getHandlerPlayers());
 							if (item.getAmount() > 1)
 								item.setAmount(item.getAmount()-1);
 							else

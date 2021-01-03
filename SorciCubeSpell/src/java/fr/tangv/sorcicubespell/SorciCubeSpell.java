@@ -2,18 +2,26 @@ package fr.tangv.sorcicubespell;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.tangv.sorcicubecore.clients.Client;
+import fr.tangv.sorcicubecore.clients.ClientIdentification;
+import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
+import fr.tangv.sorcicubecore.handler.HandlerConfigYAML;
 import fr.tangv.sorcicubecore.handler.HandlerDefaultDeck;
-import fr.tangv.sorcicubecore.handler.ManagerDefaultDeck;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
-import fr.tangv.sorcicubecore.handler.MongoDBManager;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.SorciClient;
+import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.command.CommandAddItemInList;
 import fr.tangv.sorcicubespell.command.CommandGiveArrowHead;
@@ -29,14 +37,20 @@ import fr.tangv.sorcicubespell.manager.ManagerPakcetCards;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
-import fr.tangv.sorcicubespell.util.LibLoader;
 
 public class SorciCubeSpell extends JavaPlugin {
 
+	//stats
+	private static final long TIMEOUT = 10_000;
 	private boolean isLobby;
+	private String nameServer;
+	
+	//server
 	private String nameServerLobby;
 	private String nameServerFight;
 	private String nameServerJump;
+	
+	//config
 	private Config message;
 	private Config parameter;
 	private Config enumConfig;
@@ -45,23 +59,32 @@ public class SorciCubeSpell extends JavaPlugin {
 	private Config levelConfig;
 	private Config configNPC;
 	private Config configItemList;
-	private EnumTool enumTool;
-	private ManagerLobby managerLobby;
-	private HandlerCards managerCards;
-	private ManagerGui managerGuiAdmin;
-	private HandlerPlayers managerPlayers;
-	private HandlerDefaultDeck managerDefaultDeck;
-	private ManagerClickNPC managerClickNPC;
+	
+	//handler
 	private ManagerPakcetCards managerPakcetCards;
-	private HandlerFightData managerFightData;
+	private HandlerPlayers handlerPlayers;
+	private HandlerDefaultDeck handlerDefaultDeck;
+	private HandlerCards handlerCards;
+	private HandlerFightData handlerFightData;
+	private HandlerConfigYAML handlerConfigYAML;
+	
+	//manager
+	private ManagerLobby managerLobby;
+	private ManagerGui managerGuiAdmin;
+	private ManagerClickNPC managerClickNPC;
 	private ManagerFight managerFight;
 	private ManagerCreatorFight managerCreatorFight;
 	
+	//tools
+	private EnumTool enumTool;
+	
 	private Config newConfig(String name) throws Exception {
 		try {
-			return new Config(this, name);
-		} catch (Exception e) {
+			return new Config(handlerConfigYAML, name);
+		} catch (InvalidConfigurationException e) {
 			throw new Exception("Error in config named \""+name+"\"");
+		} catch (IOException | ReponseRequestException | RequestException e) {
+			throw new Exception(e.getCause());
 		}
 	}
 	
@@ -69,16 +92,41 @@ public class SorciCubeSpell extends JavaPlugin {
 	public void onEnable() {
 		//try for bug
 		try {
-			//init lib
-			LibLoader.loadLibs(new File(this.getDataFolder().getAbsolutePath()+File.separatorChar+"libs"), this);
+			//init env
+			this.isLobby = !Boolean.parseBoolean(System.getenv("SC_FIGHT"));
+			this.nameServer = System.getenv("SC_NAME_SERVER");
+			String tokenServer = System.getenv("SC_TOKEN_SERVER");
+			String hostAPI = System.getenv("SC_HOST_API");
+			int portAPI = Integer.parseInt(System.getenv("SC_PORT_API"));
+			//init client
+			SorciClient client = new SorciClient(
+					new SorciClientURI(InetAddress.getByName(hostAPI), portAPI,
+							new ClientIdentification(Client.VERSION_PROTOCOL, ClientType.SPIGOT.mask, nameServer, tokenServer)),
+					TIMEOUT
+			) {
+				@Override
+				public void disconnected() {
+					Bukkit.getLogger().warning("SorciClient is disconnected !");
+					Bukkit.getPluginManager().disablePlugin(SorciCubeSpell.this);
+				}
+				
+				@Override
+				public void connected() {
+					nameServer.notify();
+				}
+			};
+			client.start();
+			nameServer.wait(TIMEOUT);
+			if (!client.isAuthentified())
+				throw new Exception("SorciClient is not connected !");
+			//handler for config
+			this.handlerConfigYAML = new HandlerConfigYAML(client);
 			//init Config
 			this.message = newConfig("message.yml");
 			this.parameter = newConfig("parameter.yml");
 			this.enumConfig = newConfig("enum.yml");
 			this.guiConfig = newConfig("gui.yml");
 			this.levelConfig = newConfig("level.yml");
-			//is lobby
-			this.isLobby = getParameter().getBoolean("is_lobby");
 			//init tool
 			this.enumTool = new EnumTool(this.enumConfig);
 			//init for change server
@@ -86,18 +134,17 @@ public class SorciCubeSpell extends JavaPlugin {
 			this.nameServerLobby = this.parameter.getString("server_lobby");
 			this.nameServerFight = this.parameter.getString("server_fight");
 			this.nameServerJump = this.parameter.getString("server_jump");
-			//init manager
-			this.mongo = new MongoDBManager(parameter.getString("mongodb"), parameter.getString("collection"));
-			this.managerCards = new HandlerCards(mongo);
-			this.managerPlayers = new HandlerPlayers();
-			this.managerFightData = new HandlerFightData();
+			//init handler
+			this.handlerCards = new HandlerCards(client);
+			this.handlerPlayers = new HandlerPlayers(client, handlerCards);
+			this.handlerFightData = new HandlerFightData(client);
 			if (this.isLobby) {
 				this.configItemList = newConfig("itemlist.yml");
 				this.configNPC = newConfig("npc.yml");
-				this.managerFightData.removeAllFightData();
-				this.managerDefaultDeck = new ManagerDefaultDeck(this.mongo, this.managerCards);
+				this.handlerFightData.removeAllFightDataServer(nameServer);
+				this.handlerDefaultDeck = new HandlerDefaultDeck(client, this.handlerCards);
 				this.managerGuiAdmin = new ManagerGui(this);
-				this.managerPakcetCards = new ManagerPakcetCards(this);
+				this.managerPakcetCards = new ManagerPakcetCards(client, this);
 				this.managerCreatorFight = new ManagerCreatorFight(this);
 				//init for npc
 				getCommand("additeminlist").setExecutor(new CommandAddItemInList(this));
@@ -155,10 +202,18 @@ public class SorciCubeSpell extends JavaPlugin {
 		return format;
 	}
 	
+	//stats
+	
 	public boolean isLobby() {
 		return isLobby;
 	}
 	
+	public String getNameServer() {
+		return nameServer;
+	}
+	
+	//server
+
 	public String getNameServerLobby() {
 		return nameServerLobby;
 	}
@@ -171,16 +226,14 @@ public class SorciCubeSpell extends JavaPlugin {
 		return nameServerJump;
 	}
 	
+	//config
+	
 	public Config getMessage() {
 		return message;
 	}
 	
 	public Config getParameter() {
 		return parameter;
-	}
-
-	public EnumTool getEnumTool() {
-		return enumTool;
 	}
 
 	public Config getEnumConfig() {
@@ -206,49 +259,59 @@ public class SorciCubeSpell extends JavaPlugin {
 	public Config getConfigItemList() {
 		return configItemList;
 	}
-
-	public MongoDBManager getMongo() {
-		return mongo;
-	}
 	
-	public HandlerCards getManagerCards() {
-		return managerCards;
-	}
-	
-	public ManagerGui getManagerGui() {
-		return managerGuiAdmin;
-	}
-	
-	public HandlerPlayers getManagerPlayers() {
-		return managerPlayers;
-	}
-	
-	public ManagerDefaultDeck getManagerDefaultDeck() {
-		return managerDefaultDeck;
-	}
-	
-	public ManagerClickNPC getManagerClickNPC() {
-		return managerClickNPC;
-	}
+	//handler
 	
 	public ManagerPakcetCards getManagerPakcetCards() {
 		return managerPakcetCards;
 	}
 	
-	public HandlerFightData getManagerFightData() {
-		return managerFightData;
+	public HandlerPlayers getHandlerPlayers() {
+		return handlerPlayers;
 	}
 	
-	public ManagerFight getManagerFight() {
-		return managerFight;
+	public HandlerDefaultDeck getHandlerDefaultDeck() {
+		return handlerDefaultDeck;
 	}
 	
+	public HandlerFightData getHandlerFightData() {
+		return handlerFightData;
+	}
+	
+	public HandlerCards getHandlerCards() {
+		return handlerCards;
+	}
+	
+	public HandlerConfigYAML getHandlerConfigYAML() {
+		return handlerConfigYAML;
+	}
+	
+	//manager
+
 	public ManagerCreatorFight getManagerCreatorFight() {
 		return managerCreatorFight;
 	}
 	
 	public ManagerLobby getManagerLobby() {
 		return managerLobby;
+	}
+	
+	public ManagerGui getManagerGui() {
+		return managerGuiAdmin;
+	}
+	
+	public ManagerClickNPC getManagerClickNPC() {
+		return managerClickNPC;
+	}
+	
+	public ManagerFight getManagerFight() {
+		return managerFight;
+	}
+	
+	//tools
+	
+	public EnumTool getEnumTool() {
+		return enumTool;
 	}
 	
 }

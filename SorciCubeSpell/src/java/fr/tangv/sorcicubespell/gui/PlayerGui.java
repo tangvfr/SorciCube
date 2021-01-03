@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.gui;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
@@ -10,6 +11,8 @@ import fr.tangv.sorcicubecore.card.CardComparator;
 import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.util.Config;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -126,11 +129,15 @@ public class PlayerGui {
 		this.playerFeature = playerFeature;
 	}
 	
-	public void uploadPlayerFeature(HandlerPlayers manager) {
+	public void uploadPlayerFeature(HandlerPlayers handler) {
 		if(playerFeature != null)
-			manager.update(playerFeature);
+			try {
+				handler.update(playerFeature);
+			} catch (IOException | ReponseRequestException | RequestException e) {
+				e.printStackTrace();
+			}
 		else
-			new Exception("playerFeture is null").printStackTrace();;
+			new Exception("PlayerFeature is null !").printStackTrace();;
 	}
 	
 	public void updateDisplay(Config lc, String messageActionBar) {

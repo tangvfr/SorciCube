@@ -60,7 +60,7 @@ public class GuiIncreaseDeck extends AbstractGui {
 						if (feature.getMoney() >= price) {
 							feature.removeMoney(price);
 							feature.setUnlockDecks(number);
-							playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
+							playerG.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
 							player.sendMessage(getMessage("message_increase_deck_unlock")
 									.replace("{number}", Integer.toString(number))
 									.replace("{price}", Integer.toString(price))

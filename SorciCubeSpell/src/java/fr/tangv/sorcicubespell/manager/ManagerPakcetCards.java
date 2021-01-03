@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +17,9 @@ import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.handler.HandlerPacketCards;
 import fr.tangv.sorcicubecore.packet.PacketCards;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.command.CommandPacketGive;
 import fr.tangv.sorcicubespell.packet.EventPacket;
@@ -25,7 +29,8 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 	
 	public SorciCubeSpell sorci;
 
-	public ManagerPakcetCards(SorciCubeSpell sorci) {
+	public ManagerPakcetCards(SorciClient sorciClient, SorciCubeSpell sorci) throws IOException, ReponseRequestException, RequestException {
+		super(sorciClient);
 		this.sorci = sorci;
 		//command
 		CommandPacketGive commandPacketGive = new CommandPacketGive(this);
@@ -113,7 +118,7 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 	public Card[] packetTakeCard(PacketCards packet) throws Exception {
 		Random random = new Random();
 		Card[] cards = new Card[packet.getSize()];
-		Vector<Card> collectionCards = sorci.getManagerCards().cloneCardsValue();
+		Vector<Card> collectionCards = sorci.getHandlerCards().cloneCardsValue();
 		for (int i = 0; i < cards.length; i++) {
 			CardFaction faction = CardFaction.values()[chooseIndex(packet.getFaction(), random)];
 			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity(), random)];

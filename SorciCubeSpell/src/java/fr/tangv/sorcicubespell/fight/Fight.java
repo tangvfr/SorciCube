@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.io.IOException;
 import java.util.Vector;
 
 import org.bukkit.Bukkit;
@@ -19,11 +20,14 @@ import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightDeck;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.util.Cooldown;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.util.Config;
 import net.minecraft.server.v1_9_R2.Packet;
+
 public class Fight {
 	
 	//value static
@@ -134,7 +138,7 @@ public class Fight {
 	}
 	
 	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
-		PlayerFeature playerFeature = sorci.getManagerPlayers().getPlayer(player.getUniqueId());
+		PlayerFeature playerFeature = sorci.getHandlerPlayers().getPlayer(player.getUniqueId());
 		return new PlayerFight(
 				this, 
 				player,
@@ -144,7 +148,7 @@ public class Fight {
 			);
 	}
 	
-	public void update() {
+	public void update() throws IOException, ReponseRequestException, RequestException {
 		if (!isEnd) {
 			if (round < 0) {
 				if (cooldown.update()) {
@@ -339,7 +343,7 @@ public class Fight {
 		}
 	}
 	
-	public void nextRound() {
+	public void nextRound() throws IOException, ReponseRequestException, RequestException {
 		round += 1;
 		cooldownRound.start();
 		this.firstPlay = round%2 == 0;
@@ -380,14 +384,14 @@ public class Fight {
 		return isEnd;
 	}
 	
-	public void end(PlayerFight losser) {
+	public void end(PlayerFight losser) throws IOException, ReponseRequestException, RequestException {
 		if (player1 == losser)
 			end(player1, player2);
 		else
 			end(player2, player1);
 	}
 	
-	private void endReward(Config lc, PlayerFight player, int money, int exp) {
+	private void endReward(Config lc, PlayerFight player, int money, int exp) throws IOException, ReponseRequestException, RequestException {
 		PlayerFeature feature = player.getPlayerFeature();
 		player.sendMessage(
 				sorci.getMessage().getString("message_reward_end_game")
@@ -411,12 +415,12 @@ public class Fight {
 				player.playSound(Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
 			}
 		}
-		sorci.getManagerPlayers().update(feature);
+		sorci.getHandlerPlayers().update(feature);
 	}
 	
-	private void end(PlayerFight losser, PlayerFight winner) {
+	private void end(PlayerFight losser, PlayerFight winner) throws IOException, ReponseRequestException, RequestException {
 		fightData.setStat(FightStat.END);
-		sorci.getManagerFightData().updateFightData(fightData);
+		sorci.getHandlerFightData().updateFightData(fightData);
 		this.cooldownEnd.start();
 		bossBar.setColor(ValueFight.V.titleEndColor);
 		bossBar.setTitle(ValueFight.V.titleEnd.replace("{time}", sorci.formatTime(cooldownEnd.getTimeRemaining())));

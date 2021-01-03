@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
@@ -29,6 +30,8 @@ import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.fight.FightSlot;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
@@ -294,7 +297,7 @@ public class EventFight implements Listener {
 	}
 	
 	@EventHandler
-	public void onClickInv(InventoryClickEvent e) {
+	public void onClickInv(InventoryClickEvent e) throws IOException, ReponseRequestException, RequestException {
 		UUID uuid = e.getWhoClicked().getUniqueId();
 		if (manager.isSpectator(uuid)) {
 			e.setCancelled(true);
@@ -422,7 +425,7 @@ public class EventFight implements Listener {
 	}
 	
 	@EventHandler
-	public void onJoin(PlayerJoinEvent e) {
+	public void onJoin(PlayerJoinEvent e) throws IOException, ReponseRequestException, RequestException {
 		Player player = e.getPlayer();
 		e.setJoinMessage("");
 		player.setGameMode(GameMode.ADVENTURE);

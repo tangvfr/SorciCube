@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.gui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -13,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.fight.FightType;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -65,7 +68,11 @@ public class GuiListFight extends AbstractGui implements Runnable {
 	
 	@Override
 	public void run() {
-		listFight = manager.getSorci().getManagerFightData().getAllFightData();
+		try {
+			listFight = manager.getSorci().getHandlerFightData().getAllFightData();
+		} catch (IOException | ReponseRequestException | RequestException e) {
+			e.printStackTrace();
+		}
 		int duel = 0;
 		for (int i = 0; i < 48; i++) {
 			ItemStack item = null;
@@ -110,8 +117,12 @@ public class GuiListFight extends AbstractGui implements Runnable {
 				if (index < listFight.size()) {
 					FightData fight = listFight.get(index);
 					if (fight.getStat() == FightStat.START) {
-						manager.getSorci().getManagerFightData().whichSpectate(player.getUniqueId());
-						manager.getSorci().getManagerFightData().addFightSpectate(player.getUniqueId(), fight.getFightUUID());
+						try {
+							manager.getSorci().getHandlerFightData().whichSpectate(player.getUniqueId());
+							manager.getSorci().getHandlerFightData().addFightSpectate(player.getUniqueId(), fight.getFightUUID());
+						} catch (IOException | ReponseRequestException | RequestException e1) {
+							e1.printStackTrace();
+						}
 						manager.getSorci().sendPlayerToServer(player, fight.getServer());
 					}
 				}

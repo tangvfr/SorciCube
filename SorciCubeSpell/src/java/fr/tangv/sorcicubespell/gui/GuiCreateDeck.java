@@ -89,7 +89,7 @@ public class GuiCreateDeck extends AbstractGui {
 		for (int i = 0; i < deck.size(); i++)
 			deck.setCard(i, null);
 		deck.setFaction(faction);
-		playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
+		playerG.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
 		playerG.getPreviousGui().open(player);
 	}
 	

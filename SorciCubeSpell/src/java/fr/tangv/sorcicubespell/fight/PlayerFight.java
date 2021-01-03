@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
@@ -19,6 +20,8 @@ import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.fight.FightDeck;
 import fr.tangv.sorcicubecore.fight.FightSlot;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.util.ItemHead;
 
 public class PlayerFight extends FightSpectator {
@@ -79,7 +82,11 @@ public class PlayerFight extends FightSpectator {
 	
 	public void checkPlayerIsDead() {
 		if (isDead && !fight.isEnd())
-			fight.end(this);
+			try {
+				fight.end(this);
+			} catch (IOException | ReponseRequestException | RequestException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	public boolean isDead() {
@@ -106,7 +113,7 @@ public class PlayerFight extends FightSpectator {
 		return this.lossAFK;
 	}
 
-	public void addRoundAFK() {
+	public void addRoundAFK() throws IOException, ReponseRequestException, RequestException {
 		if (isAFK) {
 			this.roundAFK++;
 			if (roundAFK >= ValueFight.V.roundMaxAFK && !fight.isEnd()) {

@@ -23,7 +23,7 @@ public class CardRender {
 	private static String featureToString(SorciCubeSpell sorci, CardFeature feature) {
 		CardFeatureType featureType = feature.getType();
 		if (featureType.getTypeValue() == TypeValue.UUID) {
-			Card card = sorci.getManagerCards().getCard(feature.getValue().asUUID());
+			Card card = sorci.getHandlerCards().getCard(feature.getValue().asUUID());
 			if (card != null) {
 				return card.renderName()+(card.getType() == CardType.ENTITY ? " "+CardVisual.renderStatCard(card) : "");
 			} else

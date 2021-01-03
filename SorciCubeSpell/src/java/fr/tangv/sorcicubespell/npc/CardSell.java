@@ -20,7 +20,7 @@ public class CardSell extends PCSell {
 	public CardSell(SorciCubeSpell sorci, ConfigurationSection config, int price, String id) {
 		super(sorci, config, price);
 		try {
-			this.card = sorci.getManagerCards().getCard(UUID.fromString(id));
+			this.card = sorci.getHandlerCards().getCard(UUID.fromString(id));
 		} catch (Exception e) {
 			this.card = null;
 		}
@@ -39,7 +39,7 @@ public class CardSell extends PCSell {
 		if (!feature.getCardsUnlocks().contains(cardID)) {
 			feature.removeMoney(price);
 			feature.getCardsUnlocks().add(cardID);
-			player.uploadPlayerFeature(sorci.getManagerPlayers());
+			player.uploadPlayerFeature(sorci.getHandlerPlayers());
 			player.getPlayer().sendMessage(getMessage("message_packet_buy_card")
 					.replace("{name}", card.renderName())
 					.replace("{price}", Integer.toString(price))

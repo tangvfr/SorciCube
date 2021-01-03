@@ -28,7 +28,7 @@ public class RewardNPC implements ClickNPC {
 			if (!feature.getRewardNPC().contains(key)) {
 				feature.getRewardNPC().add(key);
 				feature.addMoney(reward);
-				playerG.uploadPlayerFeature(sorci.getManagerPlayers());
+				playerG.uploadPlayerFeature(sorci.getHandlerPlayers());
 				player.sendMessage(this.message.replace("{player}", player.getName()));
 			}
 		}

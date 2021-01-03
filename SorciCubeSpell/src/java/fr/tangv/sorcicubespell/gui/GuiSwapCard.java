@@ -36,7 +36,7 @@ public class GuiSwapCard extends AbstractGuiCards {
 		DeckCards deck = playerF.getDeck(player.getDeckEdit());
 		ArrayList<Card> cards = new ArrayList<Card>();
 		for (String uuidS : playerF.getCardsUnlocks()) {
-			Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuidS));
+			Card card = manager.getSorci().getHandlerCards().getCard(UUID.fromString(uuidS));
 			if (card != null) {
 				if (card.getFaction() == CardFaction.BASIC || card.getFaction() == deck.getFaction()) {
 					cards.add(card);
@@ -57,9 +57,9 @@ public class GuiSwapCard extends AbstractGuiCards {
 			List<String> lore = item.getItemMeta().getLore();
 			if (lore.size() >= 1) {
 				String uuid = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
-				Card card = manager.getSorci().getManagerCards().getCard(UUID.fromString(uuid));
+				Card card = manager.getSorci().getHandlerCards().getCard(UUID.fromString(uuid));
 				player.getPlayerFeature().getDeck(player.getDeckEdit()).setCard(player.getDeckCardEdit(), card);
-				player.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
+				player.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
 				manager.getSorci().getManagerGui().getGuiEditDeck().open(player.getPlayer());
 			}
 		}

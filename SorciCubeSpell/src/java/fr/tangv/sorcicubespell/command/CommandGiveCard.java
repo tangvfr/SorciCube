@@ -35,7 +35,7 @@ public class CommandGiveCard implements CommandExecutor {
 					.replace("{player}", args[0])
 				);
 			} else {
-				Card card = sorci.getManagerCards().getCard(UUID.fromString(args[1]));
+				Card card = sorci.getHandlerCards().getCard(UUID.fromString(args[1]));
 				if (card == null) {
 					sender.sendMessage(
 						sorci.getMessage().getString("message_invalid_card")
@@ -49,7 +49,7 @@ public class CommandGiveCard implements CommandExecutor {
 							String uuid = card.getUUID().toString();
 							if (!feature.getCardsUnlocks().contains(uuid))
 								feature.getCardsUnlocks().add(uuid);
-							playerG.uploadPlayerFeature(sorci.getManagerPlayers());
+							playerG.uploadPlayerFeature(sorci.getHandlerPlayers());
 						}
 						player.getInventory().addItem(CardRender.cardToItem(card, sorci));
 					} else if (sorci.getManagerFight().isSpectator(player.getUniqueId())) {

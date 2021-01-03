@@ -58,7 +58,7 @@ public class CardEntity {
 	}
 	
 	private void actionCard(PlayerFight owner, String nameEntity, CardFeature feature, String messageKey) {
-		Card card = owner.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
+		Card card = owner.getFight().getSorci().getHandlerCards().getCard(feature.getValue().asUUID());
 		if (card != null) {
 			Vector<FightHead> heads = FightCibles.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction());
 			if (messageKey != null) {
@@ -74,7 +74,7 @@ public class CardEntity {
 	}
 	
 	private void giveCard(PlayerFight owner ,String nameEntity, FightEntity entity, CardFeature feature, String messageKey) {
-		Card card = owner.getFight().getSorci().getManagerCards().getCard(feature.getValue().asUUID());
+		Card card = owner.getFight().getSorci().getHandlerCards().getCard(feature.getValue().asUUID());
 		if (card != null) {
 			sendMessageAction(owner, nameEntity, messageKey, card.renderName());
 			FightSpell.startActionFeature(owner, new CardFeature(CardFeatureType.GIVE_FEATURE_CARD, feature.getValue()), entity);

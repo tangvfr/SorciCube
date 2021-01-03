@@ -64,7 +64,7 @@ public class CommandMoney implements CommandExecutor, TabCompleter {
 									default:
 										return false;
 								}
-								playerG.uploadPlayerFeature(sorci.getManagerPlayers());
+								playerG.uploadPlayerFeature(sorci.getHandlerPlayers());
 								sender.sendMessage(sorci.getMessage().getString(messageName)
 										.replace("{player}", player.getName())
 										.replace("{money}", Integer.toString(value))

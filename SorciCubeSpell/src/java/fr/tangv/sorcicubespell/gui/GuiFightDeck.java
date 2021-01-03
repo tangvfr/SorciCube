@@ -23,7 +23,7 @@ public class GuiFightDeck extends GuiDecks {
 			if (playerG.getPlayerFeature().getDeck(number).isComplet()) {
 				playerG.setDeckEdit(number);
 				ManagerCreatorFight cf = sorci.getManagerCreatorFight();
-				sorci.getManagerFightData().removeFightDataPlayer(player.getUniqueId());
+				sorci.getHandlerFightData().removeFightDataPlayer(player.getUniqueId());
 				switch(playerG.getFightType()) {
 					case UNCLASSIFIED:
 						if (cf.getNoClassified() == null) {

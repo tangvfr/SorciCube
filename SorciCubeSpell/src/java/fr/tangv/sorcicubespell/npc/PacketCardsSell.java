@@ -28,7 +28,7 @@ public class PacketCardsSell extends PCSell {
 	@Override
 	public boolean buy(PlayerGui player) {
 		player.getPlayerFeature().removeMoney(price);
-		player.uploadPlayerFeature(sorci.getManagerPlayers());
+		player.uploadPlayerFeature(sorci.getHandlerPlayers());
 		player.getPlayer().getInventory().addItem(this.itemView);
 		player.getPlayer().sendMessage(getMessage("message_packet_buy_packet")
 				.replace("{name}", packetCards.getName())

@@ -18,6 +18,7 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public abstract class SorciClient extends Client implements RequestHandlerInterface {
 	
 	private final HandlerReponse handlerReponse;
+	private volatile boolean isAuthentified;
 	private volatile PrintStream out;
 	
 	public SorciClient(String uri, long timeoutReponse) throws IOException, NumberFormatException, URISyntaxException, RequestHandlerException, RequestException {
@@ -36,8 +37,9 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 		handler.registered(this);
 		handler.registered(handlerReponse);
 		this.setHandler(handler);
+		this.out = null;
+		this.isAuthentified = false;
 		sendRequest(new Request(RequestType.IDENTIFICATION, Request.randomID(), "identification", this.getClientID().toDocument().toJson()));
-		this.out = System.out;
 	}
 	
 	public Request sendRequestReponse(Request request, RequestType reponseType) throws IOException, ReponseRequestException {
@@ -59,9 +61,13 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 		return this.out;
 	}
 	
+	public synchronized boolean isAuthentified() {
+		return isAuthentified;
+	}
+
 	@Override
 	public void disconnect() {
-		this.out.println("You are disconnected !");
+		if (this.out != null) this.out.println("You are disconnected !");
 		disconnected();
 	}
 
@@ -78,32 +84,33 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 		try {
 			this.close();
 		} catch (IOException e) {}
-		this.out.println("You are kicked !");
+		if (this.out != null) this.out.println("You are kicked !");
 	}
 	
 	@RequestAnnotation(type=RequestType.IDENTIFICATION_REFUSED)
 	public void wrongAuth(Client client, Request request) {
-		this.out.println("Wrong identification because "+request.data);
+		if (this.out != null) this.out.println("Wrong identification because "+request.data);
 	}
 	
 	@RequestAnnotation(type=RequestType.COOLDOWN_AUTHENTIFIED)
 	public void cooldownAuth(Client client, Request request) {
-		this.out.println("You are pass cooldown for authentified !");
+		if (this.out != null) this.out.println("You are pass cooldown for authentified !");
 	}
 	
 	@RequestAnnotation(type=RequestType.ALREADY_AUTHENTIFIED)
 	public void alreadyAuth(Client client, Request request) {
-		this.out.println("You are already authentified !");
+		if (this.out != null) this.out.println("You are already authentified !");
 	}
 	
 	@RequestAnnotation(type=RequestType.DONT_AUTHENTIFIED)
 	public void dontAuth(Client client, Request request) {
-		this.out.println("You are don't authentified for this action !");
+		if (this.out != null) this.out.println("You are don't authentified for this action !");
 	}
 	
 	@RequestAnnotation(type=RequestType.AUTHENTIFIED)
 	public void auth(Client client, Request request) {
-		this.out.println("You are authentified !");
+		if (this.out != null) this.out.println("You are authentified !");
+		this.isAuthentified = true;
 		this.connected();
 	}
 	

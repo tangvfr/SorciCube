@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Vector;
@@ -14,6 +15,8 @@ import fr.tangv.sorcicubespell.fight.Fight;
 import fr.tangv.sorcicubespell.fight.FightArena;
 import fr.tangv.sorcicubespell.fight.FightSpectator;
 import fr.tangv.sorcicubecore.fight.FightStat;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.fight.PreFight;
 import fr.tangv.sorcicubecore.fight.FightData;
@@ -76,7 +79,7 @@ public class ManagerFight implements Runnable {
 		}
 	}
 	
-	public void playerJoin(Player player) {
+	public void playerJoin(Player player) throws IOException, ReponseRequestException, RequestException {
 		boolean kick = true;
 		if (playerInstance.containsKey(player.getUniqueId())) {
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
@@ -93,17 +96,17 @@ public class ManagerFight implements Runnable {
 			preFight.complet(player);
 			kick = false;
 		} else {
-			FightData fightData = sorci.getManagerFightData().getFightDataPlayer(player.getUniqueId());
+			FightData fightData = sorci.getHandlerFightData().getFightDataPlayer(player.getUniqueId());
 			if (fightData != null && fightData.getStat() == FightStat.WAITING) {
 				PreFight preFight = PreFight.createPreFight(player, fightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
 				fightData.setStat(FightStat.STARTING);
-				sorci.getManagerFightData().updateFightData(fightData);
+				sorci.getHandlerFightData().updateFightData(fightData);
 				kick = false;
 			}
 		}
 		if (kick) {
-			UUID fightUUID = sorci.getManagerFightData().whichSpectate(player.getUniqueId());
+			UUID fightUUID = sorci.getHandlerFightData().whichSpectate(player.getUniqueId());
 			if (fightUUID != null && fights.containsKey(fightUUID)) {
 				Fight fight = fights.get(fightUUID);
 				if (fight.isEnd()) {
@@ -168,9 +171,13 @@ public class ManagerFight implements Runnable {
 								playerInstance.put(fight.getPlayer1().getUUID(), fight.getPlayer1());
 								playerInstance.put(fight.getPlayer2().getUUID(), fight.getPlayer2());
 								fightData.setStat(FightStat.START);
-								sorci.getManagerFightData().updateFightData(fightData);
+								sorci.getHandlerFightData().updateFightData(fightData);
 							} catch (Exception e) {
-								sorci.getManagerFightData().removeFightDataFight(fightData);
+								try {
+									sorci.getHandlerFightData().removeFightDataFight(fightData);
+								} catch (IOException | ReponseRequestException | RequestException e1) {
+									e1.printStackTrace();
+								}
 								Bukkit.getLogger().warning(RenderException.renderException(e));
 								sendLobbyPlayer(preFight.getPlayer1());
 								sendLobbyPlayer(preFight.getPlayer2());
@@ -181,14 +188,18 @@ public class ManagerFight implements Runnable {
 				} else {
 					sendLobbyPlayer(preFight.getPlayer1());
 				}
-				sorci.getManagerFightData().removeFightDataFight(fightData);
+				try {
+					sorci.getHandlerFightData().removeFightDataFight(fightData);
+				} catch (IOException | ReponseRequestException | RequestException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		for (Fight fight : new ArrayList<Fight>(this.fights.values()))
 			try {
 				fight.update();
 				if (fight.isDeleted()) {
-					sorci.getManagerFightData().removeFightDataFight(fight.getFightData());
+					sorci.getHandlerFightData().removeFightDataFight(fight.getFightData());
 					playerInstance.remove(fight.getPlayer1().getUUID());
 					playerInstance.remove(fight.getPlayer2().getUUID());
 					for (FightSpectator spectator : fight.getSpectators())
@@ -201,8 +212,11 @@ public class ManagerFight implements Runnable {
 	}
 	
 	public void stop() {
-		for (Fight fight : new ArrayList<Fight>(this.fights.values()))
-			sorci.getManagerFightData().removeFightDataFight(fight.getFightData());
+		try {
+			sorci.getHandlerFightData().removeAllFightDataServer(sorci.getNameServer());
+		} catch (IOException | ReponseRequestException | RequestException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public SorciCubeSpell getSorci() {

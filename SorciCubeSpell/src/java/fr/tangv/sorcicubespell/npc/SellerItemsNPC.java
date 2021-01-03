@@ -61,7 +61,7 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 				PlayerGui playerG = getPlayerGui(player);
 				if (item.hasMoney(playerG)) {
 					playerG.getPlayerFeature().removeMoney(item.getPrice());
-					playerG.uploadPlayerFeature(manager.getSorci().getManagerPlayers());
+					playerG.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
 					player.getInventory().addItem(item.getItem());
 					player.sendMessage(getMessage("message_seller_items_buy")
 							.replace("{name}", item.getName())

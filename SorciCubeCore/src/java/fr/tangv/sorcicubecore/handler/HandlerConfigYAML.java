@@ -16,7 +16,7 @@ public class HandlerConfigYAML {
 		this.sorci = sorci;
 	}
 	
-	public String getConfig(String name) throws IOException, ReponseRequestException, RequestException, Exception {
+	public String getConfig(String name) throws IOException, ReponseRequestException, RequestException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.CONFIG_SERVER_GET, Request.randomID(), name, null),
 				RequestType.CONFIG_SERVER_CONFIG

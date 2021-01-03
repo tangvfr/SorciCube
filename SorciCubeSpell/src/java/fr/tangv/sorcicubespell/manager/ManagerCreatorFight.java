@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -10,6 +11,8 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.fight.FightType;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.prefight.EventDuelCreator;
@@ -50,24 +53,30 @@ public class ManagerCreatorFight {
 	}
 	
 	public void startFightPlayer(PlayerGui player1, PlayerGui player2, String server, FightType type) {
-		sorci.getManagerFightData().addFightData(
-				new FightData(
-						UUID.randomUUID(),
-						player1.getUUID(),
-						player2.getUUID(),
-						player1.getDeckEdit(),
-						player2.getDeckEdit(),
-						player1.getPlayerFeature().getDeck(player1.getDeckEdit()).getFaction(),
-						player2.getPlayerFeature().getDeck(player2.getDeckEdit()).getFaction(),
-						player1.getPlayerFeature().getLevel(),
-						player2.getPlayerFeature().getLevel(),
-						type,
-						FightStat.WAITING,
-						server
-					)
-			);
-		sorci.sendPlayerToServer(player1.getPlayer(), server);
-		sorci.sendPlayerToServer(player2.getPlayer(), server);
+		try {
+			sorci.getHandlerFightData().addFightData(
+					new FightData(
+							UUID.randomUUID(),
+							player1.getUUID(),
+							player2.getUUID(),
+							player1.getDeckEdit(),
+							player2.getDeckEdit(),
+							player1.getPlayerFeature().getDeck(player1.getDeckEdit()).getFaction(),
+							player2.getPlayerFeature().getDeck(player2.getDeckEdit()).getFaction(),
+							player1.getPlayerFeature().getLevel(),
+							player2.getPlayerFeature().getLevel(),
+							type,
+							FightStat.WAITING,
+							server
+						)
+				);
+			sorci.sendPlayerToServer(player1.getPlayer(), server);
+			sorci.sendPlayerToServer(player2.getPlayer(), server);
+		} catch (IOException | ReponseRequestException | RequestException e) {
+			e.printStackTrace();
+			player1.getPlayer().sendMessage(e.getMessage());
+			player2.getPlayer().sendMessage(e.getMessage());
+		}
 	}
 	
 	public boolean isInDuel(Player player) {
