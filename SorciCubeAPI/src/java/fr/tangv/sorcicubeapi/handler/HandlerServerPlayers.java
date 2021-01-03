@@ -21,11 +21,11 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
-	private final HandlerConfig config;
+	private final HandlerServerConfig config;
 	private final HandlerServerCards cards;
-	private final HandlerDefaultDeck defaultDeck;
+	private final HandlerServerDefaultDeck defaultDeck;
 	
-	public HandlerServerPlayers(HandlerConfig config, HandlerServerCards cards, HandlerDefaultDeck defaultDeck) throws IOException {
+	public HandlerServerPlayers(HandlerServerConfig config, HandlerServerCards cards, HandlerServerDefaultDeck defaultDeck) throws IOException {
 		this.fm = new RamFilesManager("./players");
 		this.config = config;
 		this.cards = cards;

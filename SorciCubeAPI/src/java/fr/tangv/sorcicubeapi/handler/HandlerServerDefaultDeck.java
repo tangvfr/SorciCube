@@ -17,7 +17,7 @@ import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestHandlerInterface;
 import fr.tangv.sorcicubecore.requests.RequestType;
 
-public class HandlerDefaultDeck implements RequestHandlerInterface {
+public class HandlerServerDefaultDeck implements RequestHandlerInterface {
 
 	private volatile DeckCards deckDark;
 	private volatile DeckCards deckLight;
@@ -26,7 +26,7 @@ public class HandlerDefaultDeck implements RequestHandlerInterface {
 	private final File file;
 	private final HandlerServerCards cards;
 	
-	public HandlerDefaultDeck(HandlerServerCards cards) throws IOException, DeckException {
+	public HandlerServerDefaultDeck(HandlerServerCards cards) throws IOException, DeckException {
 		this.cards = cards;
 		this.file = new File("./default_deck.json");
 		load();

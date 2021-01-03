@@ -2,11 +2,11 @@ package fr.tangv.sorcicubeapi.handler;
 
 import org.bson.Document;
 
-public class HandlerConfig {
+public class HandlerServerConfig {
 
 	private volatile Document doc;
 	
-	public HandlerConfig() {
+	public HandlerServerConfig() {
 		
 		reload();
 	}
@@ -16,7 +16,7 @@ public class HandlerConfig {
 	}
 	
 	public int getManyStartDecks() {
-		return doc.getInteger("comany_start_decks");
+		return doc.getInteger("many_start_decks");
 	}
 	
 }
