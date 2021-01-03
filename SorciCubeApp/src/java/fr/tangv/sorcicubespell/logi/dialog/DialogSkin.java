@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import fr.tangv.sorcicubespell.card.CardSkin;
+import fr.tangv.sorcicubecore.card.CardSkin;
 import fr.tangv.sorcicubespell.logi.ClickListener;
 import fr.tangv.sorcicubespell.logi.tools.ImageTool;
 

@@ -2,8 +2,8 @@ package fr.tangv.sorcicubespell.logi;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.util.TextList;
+import fr.tangv.sorcicubecore.card.Card;
+import fr.tangv.sorcicubecore.util.TextList;
 
 public class ModelEditCard extends AbstractTableModel {
 
