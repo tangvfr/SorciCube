@@ -25,6 +25,7 @@ public enum RequestType {
 	CONFIG_SERVER_CONFIG(RequestDataType.YAML),
 	//PACKETS
 	PACKETS_LIST(RequestDataType.JSON),
+	PACKETS_NEWED(RequestDataType.JSON),
 	//IDENTIFICATION
 	DONT_AUTHENTIFIED(RequestDataType.NOTHING),
 	AUTHENTIFIED(RequestDataType.NOTHING),
@@ -66,8 +67,9 @@ public enum RequestType {
 	CONFIG_SERVER_GET(RequestDataType.NOTHING),
 	CONFIG_SERVER_UPDATE(RequestDataType.YAML),
 	//PACKETS
-	PACKETS_NEW(RequestDataType.NOTHING),
-	PACKETS_UPDATE(RequestDataType.JSON),
+	PACKETS_NEW(RequestDataType.TEXT),
+	PACKETS_REMOVE(RequestDataType.TEXT),
+	PACKETS_UPDATE(RequestDataType.JSON),//name = last name in base 64
 	PACKETS_GET_ALL(RequestDataType.NOTHING),
 	//IDENTIFICATION
 	IDENTIFICATION(RequestDataType.JSON);

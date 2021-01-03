@@ -14,14 +14,14 @@ import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.card.CardFeatureType;
 import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.card.CardType;
-import fr.tangv.sorcicubecore.handler.HandlerPacketCardsR;
+import fr.tangv.sorcicubecore.handler.HandlerPacketCards;
 import fr.tangv.sorcicubecore.packet.PacketCards;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.command.CommandPacketGive;
 import fr.tangv.sorcicubespell.packet.EventPacket;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 
-public class ManagerPakcetCards extends HandlerPacketCardsR {
+public class ManagerPakcetCards extends HandlerPacketCards {
 	
 	public SorciCubeSpell sorci;
 

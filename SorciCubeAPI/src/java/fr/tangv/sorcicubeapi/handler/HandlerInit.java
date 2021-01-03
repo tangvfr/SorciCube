@@ -16,6 +16,7 @@ public class HandlerInit {
 		HandlerServerFightData fightData = new HandlerServerFightData();
 		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck);
 		HandlerServerConfigYAML yaml = new HandlerServerConfigYAML();
+		HandlerServerPacketCards packets = new HandlerServerPacketCards();
 		//registred
 		ClientsManager cm = sorci.getClientsManager();
 		cm.registered(cards);
@@ -23,6 +24,7 @@ public class HandlerInit {
 		cm.registered(fightData);
 		cm.registered(players);
 		cm.registered(yaml);
+		cm.registered(packets);
 	}
 	
 }
