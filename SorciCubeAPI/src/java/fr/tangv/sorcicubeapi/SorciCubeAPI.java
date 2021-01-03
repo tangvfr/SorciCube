@@ -18,6 +18,7 @@ import fr.tangv.sorcicubeapi.server.ServerAbstract;
 import fr.tangv.sorcicubeapi.server.ServerProperties;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.Token;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestHandlerException;
 
@@ -26,7 +27,7 @@ public class SorciCubeAPI extends ServerAbstract {
 	public static void main(String[] args) {
 		try {
 			new SorciCubeAPI();
-		} catch (IOException | RequestException | RequestHandlerException e) {
+		} catch (IOException | RequestException | RequestHandlerException | DeckException e) {
 			e.printStackTrace();
 		}
 	}
@@ -37,7 +38,7 @@ public class SorciCubeAPI extends ServerAbstract {
 	private final ClientsManager manager;
 	private final ConcurrentHashMap<String, String> tokens;
 	
-	public SorciCubeAPI() throws UnknownHostException, IOException, RequestException, RequestHandlerException {
+	public SorciCubeAPI() throws UnknownHostException, IOException, RequestException, RequestHandlerException, DeckException {
 		this.properties = ServerProperties.toServerProperties(getDocumentProperties());
 		this.manager = new ClientsManager(this);
 		this.tokens = new ConcurrentHashMap<String, String>();

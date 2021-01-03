@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import org.bson.Document;
-
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
@@ -21,14 +19,10 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
-	private final HandlerServerConfig config;
-	private final HandlerServerCards cards;
 	private final HandlerServerDefaultDeck defaultDeck;
 	
-	public HandlerServerPlayers(HandlerServerConfig config, HandlerServerCards cards, HandlerServerDefaultDeck defaultDeck) throws IOException {
+	public HandlerServerPlayers(HandlerServerDefaultDeck defaultDeck) throws IOException {
 		this.fm = new RamFilesManager("./players");
-		this.config = config;
-		this.cards = cards;
 		this.defaultDeck = defaultDeck;
 	}
 	
@@ -79,7 +73,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
-					this.config.getManyStartDecks(),
+					2,
 					cardsUnlocks,
 					new ArrayList<String>(),
 					0, 0, (byte) 1);
@@ -94,7 +88,6 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	@RequestAnnotation(type=RequestType.PLAYER_UPDATE)
 	public void update(Client client, Request request) throws IOException, RequestException {
 		try {
-			PlayerFeature.toPlayerFeature(UUID.fromString(request.name), cards.getCards(), Document.parse(request.data));
 			fm.update(request.name, request.data);
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 		} catch (Exception e) {

@@ -18,7 +18,6 @@ public class HandlerPlayers {
 	private final SorciClient sorci;
 	private final HandlerCards managerCards;
 	
-	
 	public HandlerPlayers(SorciClient sorci, HandlerCards managerCards) {
 		this.sorci = sorci;
 		this.managerCards = managerCards;
