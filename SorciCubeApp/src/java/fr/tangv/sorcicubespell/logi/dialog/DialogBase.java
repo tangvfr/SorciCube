@@ -6,14 +6,18 @@ import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.logi.ClickListener;
 
 public abstract class DialogBase<T extends Component> extends JDialog {
@@ -35,7 +39,11 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		btnOk.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				DialogBase.this.eventOk(comp);
+				try {
+					DialogBase.this.eventOk(comp);
+				} catch (IOException | ReponseRequestException | RequestException e1) {
+					JOptionPane.showMessageDialog(DialogBase.this, "Error: "+e1.getMessage(), "EvneOK DialogBase", JOptionPane.ERROR_MESSAGE);
+				}
 				DialogBase.this.processWindowEvent(new WindowEvent(DialogBase.this, WindowEvent.WINDOW_CLOSING));
 			}
 		});
@@ -53,7 +61,11 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		this.panUp = new JPanel();
 		panUp.setLayout(new BorderLayout());
 		panUp.add(new JLabel(label+": "), BorderLayout.WEST);
-		this.initComp(comp);
+		try {
+			this.initComp(comp);
+		} catch (IOException | ReponseRequestException | RequestException e1) {
+			JOptionPane.showMessageDialog(DialogBase.this, "Error: "+e1.getMessage(), "Init DialogBase", JOptionPane.ERROR_MESSAGE);
+		}
 		panUp.add(comp, BorderLayout.CENTER);
 		panUp.setBorder(new EmptyBorder(10, 10, 10, 10));
 		this.add(panUp);
@@ -79,8 +91,8 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		super.processWindowEvent(e);
 	}
 	
-	public abstract void eventOk(T comp);
+	public abstract void eventOk(T comp) throws IOException, ReponseRequestException, RequestException;
 	
-	protected void initComp(T comp) {};
+	protected void initComp(T comp) throws IOException, ReponseRequestException, RequestException {};
 	
 }

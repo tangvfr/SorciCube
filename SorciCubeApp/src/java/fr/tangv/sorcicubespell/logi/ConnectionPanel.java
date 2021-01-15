@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.MouseEvent;
+import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,13 +15,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
+
 public class ConnectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 8194724955087227091L;
 	private JButton btnConnection;
 	private JButton btnReset;
-	private JTextField mongoURI;
-	private JTextField database;
+	private JTextField scURI;
 	private JLabel message;
 	private JPanel centerPan;
 	
@@ -30,13 +33,14 @@ public class ConnectionPanel extends JPanel {
 		btnConnection.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String uri = mongoURI.getText();
-				String db = database.getText();
-				if (!uri.isEmpty() && !db.isEmpty()) {
+				try {
+					SorciClientURI uri = new SorciClientURI(scURI.getText());
 					message.setText(" ");
-					fl.tryConnection(uri, db);
-				} else
-					setMessage("MongoURI or Database is empty !", Color.RED);
+					fl.tryConnection(uri);
+				} catch (NumberFormatException | UnknownHostException | URISyntaxException e1) {
+					message.setText("Error: "+e1.getMessage());
+					message.setForeground(Color.MAGENTA);
+				}
 			}
 		});
 		//btnreset
@@ -45,15 +49,12 @@ public class ConnectionPanel extends JPanel {
 		btnReset.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				mongoURI.setText("");
-				database.setText("");
+				scURI.setText("");
 				message.setText(" ");
 			}
 		});
-		//mongoURI
-		mongoURI = new JTextField("");
-		//database
-		database = new JTextField("plugin");
+		//scURI
+		scURI = new JTextField("");
 		//message
 		message = new JLabel(" ");
 		message.setHorizontalAlignment(JLabel.CENTER);
@@ -62,10 +63,8 @@ public class ConnectionPanel extends JPanel {
 		centerPan.setLayout(new GridLayout(6, 1, 0, 5));
 		centerPan.setBorder(new TitledBorder("Connection"));
 		//add in centerPan
-		this.centerPan.add(new Label("MongoURI:"));
-		this.centerPan.add(mongoURI);
-		this.centerPan.add(new Label("Collection:"));
-		this.centerPan.add(database);
+		this.centerPan.add(new Label("SorciClientURI:"));
+		this.centerPan.add(scURI);
 		this.centerPan.add(btnConnection);
 		this.centerPan.add(btnReset);
 		//frame

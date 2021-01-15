@@ -8,12 +8,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.card.CardCible;
-import fr.tangv.sorcicubespell.card.CardFaction;
-import fr.tangv.sorcicubespell.card.CardFeatureType;
-import fr.tangv.sorcicubespell.card.CardRarity;
-import fr.tangv.sorcicubespell.card.CardType;
+import fr.tangv.sorcicubecore.card.Card;
+import fr.tangv.sorcicubecore.card.CardCible;
+import fr.tangv.sorcicubecore.card.CardFaction;
+import fr.tangv.sorcicubecore.card.CardFeatureType;
+import fr.tangv.sorcicubecore.card.CardRarity;
+import fr.tangv.sorcicubecore.card.CardType;
 
 public class PanelFilter extends JScrollPane {
 

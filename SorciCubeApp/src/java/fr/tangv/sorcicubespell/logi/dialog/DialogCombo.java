@@ -1,10 +1,14 @@
 package fr.tangv.sorcicubespell.logi.dialog;
 
 import java.awt.Window;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
+
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 
 public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBox<String>> {
 
@@ -26,7 +30,7 @@ public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBo
 	}
 
 	@Override
-	public void eventOk(JComboBox<String> comp) {
+	public void eventOk(JComboBox<String> comp) throws IOException, ReponseRequestException, RequestException {
 		this.eventOk(this.valueOf((String) comp.getSelectedItem()));
 	}
 	
@@ -42,6 +46,6 @@ public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBo
 		return null;
 	}
 
-	public abstract void eventOk(T enumCombo);
+	public abstract void eventOk(T enumCombo) throws IOException, ReponseRequestException, RequestException;
 	
 }

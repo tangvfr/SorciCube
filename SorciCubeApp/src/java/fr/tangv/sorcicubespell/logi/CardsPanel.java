@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.logi;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -11,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class CardsPanel extends JPanel {
@@ -72,7 +75,7 @@ public class CardsPanel extends JPanel {
 		return nav;
 	}
 	
-	public void refresh() {
+	public void refresh() throws IOException, ReponseRequestException, RequestException {
 		this.cards.refresh();
 		this.nav.refresh();
 		if (card != null) {

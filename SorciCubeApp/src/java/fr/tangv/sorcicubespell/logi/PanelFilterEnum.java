@@ -12,7 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import fr.tangv.sorcicubespell.card.CardCible;
+import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubespell.logi.dialog.CompEmpty;
 
 public class PanelFilterEnum<T extends Enum<?>> extends JPanel {

@@ -32,18 +32,20 @@ import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
-import fr.tangv.sorcicubespell.card.Card;
-import fr.tangv.sorcicubespell.card.CardCible;
-import fr.tangv.sorcicubespell.card.CardComparator;
-import fr.tangv.sorcicubespell.card.CardFaction;
-import fr.tangv.sorcicubespell.card.CardFeature;
-import fr.tangv.sorcicubespell.card.CardFeatureType;
-import fr.tangv.sorcicubespell.card.CardFeatures;
-import fr.tangv.sorcicubespell.card.CardMaterial;
-import fr.tangv.sorcicubespell.card.CardRarity;
-import fr.tangv.sorcicubespell.card.CardType;
-import fr.tangv.sorcicubespell.card.CardValue;
-import fr.tangv.sorcicubespell.card.CardVisual;
+import fr.tangv.sorcicubecore.card.Card;
+import fr.tangv.sorcicubecore.card.CardCible;
+import fr.tangv.sorcicubecore.card.CardComparator;
+import fr.tangv.sorcicubecore.card.CardFaction;
+import fr.tangv.sorcicubecore.card.CardFeature;
+import fr.tangv.sorcicubecore.card.CardFeatureType;
+import fr.tangv.sorcicubecore.card.CardFeatures;
+import fr.tangv.sorcicubecore.card.CardMaterial;
+import fr.tangv.sorcicubecore.card.CardRarity;
+import fr.tangv.sorcicubecore.card.CardType;
+import fr.tangv.sorcicubecore.card.CardValue;
+import fr.tangv.sorcicubecore.card.CardVisual;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
 import fr.tangv.sorcicubespell.logi.tools.ImageTool;
 
@@ -69,7 +71,7 @@ public class PanelNav extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				search.setText("");
-				cartsPanel.refresh();
+				PanelNav.this.refrechCardPanel();
 			}
 		});
 		clear.setForeground(Color.RED);
@@ -94,7 +96,7 @@ public class PanelNav extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					cartsPanel.refresh();
+					PanelNav.this.refrechCardPanel();
 				}
 			}
 		});
@@ -103,7 +105,7 @@ public class PanelNav extends JPanel {
 		refrech.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cartsPanel.refresh();
+				PanelNav.this.refrechCardPanel();
 			}
 		});
 		refrech.setFocusable(false);
@@ -112,7 +114,7 @@ public class PanelNav extends JPanel {
 		disconnect.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cartsPanel.getFrameLogi().showConnection();
+				cartsPanel.getFrameLogi().showConnection("Button Disconected", Color.GREEN);
 			}
 		});
 		disconnect.setFocusable(false);
@@ -225,9 +227,13 @@ public class PanelNav extends JPanel {
 								new ArrayList<String>(),
 								false
 							);
-						cardsPanel.getCards().insert(card);
-						cardsPanel.setCard(card);
-						cardsPanel.refresh();
+						try {
+							cardsPanel.getCards().insert(card);
+							cardsPanel.setCard(card);
+							cardsPanel.refresh();
+						} catch (IOException | ReponseRequestException | RequestException e1) {
+							JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Create Card Spell", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			});
@@ -255,9 +261,13 @@ public class PanelNav extends JPanel {
 								new ArrayList<String>(),
 								false
 							);
-						cardsPanel.getCards().insert(card);
-						cardsPanel.setCard(card);
-						cardsPanel.refresh();
+						try {
+							cardsPanel.getCards().insert(card);
+							cardsPanel.setCard(card);
+							cardsPanel.refresh();
+						} catch (IOException | ReponseRequestException | RequestException e1) {
+							JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Create Card Entity", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			});
@@ -270,9 +280,13 @@ public class PanelNav extends JPanel {
 						Card card = list.getSelectedValue();
 						if (card != null) {
 							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure delete card nommed \""+card.getName()+"\" ?", "Delete card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-								cardsPanel.getCards().delete(card);
-								cardsPanel.setCard(null);
-								cardsPanel.refresh();
+								try {
+									cardsPanel.getCards().delete(card);
+									cardsPanel.setCard(null);
+									cardsPanel.refresh();
+								} catch (IOException | ReponseRequestException | RequestException e1) {
+									JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Delete Card", JOptionPane.ERROR_MESSAGE);
+								}
 							}
 						} else {
 							JOptionPane.showMessageDialog(PanelNav.this, "No selected card ?", "Delete Card", JOptionPane.ERROR_MESSAGE);
@@ -290,10 +304,11 @@ public class PanelNav extends JPanel {
 							private static final long serialVersionUID = 944290591647698175L;
 									
 							@Override
-							public void eventOk(CardComparator newSort) {
+							public void eventOk(CardComparator newSort) throws IOException, ReponseRequestException, RequestException  {
 								sort = newSort;
 								cardsPanel.refresh();
 							}
+							
 						}; 
 					}
 				}
@@ -329,6 +344,14 @@ public class PanelNav extends JPanel {
 			this.add(tools);
 		}
 		
+	}
+	
+	private void refrechCardPanel() {
+		try {
+			cartsPanel.refresh();
+		} catch (IOException | ReponseRequestException | RequestException e) {
+			JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e.getMessage(), "Error refrech", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 }
