@@ -31,7 +31,7 @@ public class HandlerInit {
 		cm.registered(new RequestHandlerInterface() {
 			@Override
 			public void handlingRequest(Client client, Request request) throws Exception {
-				System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+":"+" <recieve< "+request.toRequestNoData());
+				System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <recieve< "+request.toRequestNoData());
 			}
 		});
 	}
