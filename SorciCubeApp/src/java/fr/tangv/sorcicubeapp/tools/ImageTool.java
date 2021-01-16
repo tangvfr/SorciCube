@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import fr.tangv.sorcicubeapp.ClickListener;
+import fr.tangv.sorcicubeapp.utils.ClickListener;
 
 public class ImageTool extends JPanel {
 

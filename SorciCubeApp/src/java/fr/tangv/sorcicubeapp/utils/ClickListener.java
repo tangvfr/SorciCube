@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.utils;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

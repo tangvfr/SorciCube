@@ -47,15 +47,15 @@ public class SorciClientURI {
 			throw new URISyntaxException(uri.toString(), "ClientIdentification is not valid !");
 	}
 	
-	public SorciClientURI(InetAddress addr, int port, byte types, String name, String token) throws Exception {
+	public SorciClientURI(InetAddress addr, int port, byte types, String name, String token) throws URISyntaxException, UnknownHostException, NumberFormatException {
 		this(addr, port, new ClientIdentification(Client.VERSION_PROTOCOL, types, name, token));
 	}
 	
-	public SorciClientURI(InetAddress addr, int port, ClientIdentification cID) throws Exception {
+	public SorciClientURI(InetAddress addr, int port, ClientIdentification cID) throws URISyntaxException, UnknownHostException, NumberFormatException {
 		this.addr = addr;
 		this.port = port;
 		if (!cID.isValid())
-			throw new Exception("ClientIdentification is not valid !");
+			throw new URISyntaxException("", "ClientIdentification is not valid !");
 		this.cID = cID;
 	}
 
@@ -69,6 +69,10 @@ public class SorciClientURI {
 
 	public ClientIdentification getClientID() {
 		return cID;
+	}
+	
+	public String toURI() {
+		return createURI(addr, port, cID.types, cID.name, cID.token);
 	}
 	
 }

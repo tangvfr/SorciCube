@@ -1,27 +1,31 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.connection;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 
 public class ConnectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 8194724955087227091L;
 	private JButton btnConnection;
-	private JButton btnReset;
+	private JButton btnCreate;
 	private JTextField scURI;
 	private JLabel message;
 	private JPanel centerPan;
@@ -43,14 +47,29 @@ public class ConnectionPanel extends JPanel {
 				}
 			}
 		});
-		//btnreset
-		btnReset = new JButton("Reset");
-		btnReset.setFocusable(false);
-		btnReset.addMouseListener(new ClickListener() {
+		//btnCreate
+		btnCreate = new JButton("Create URI");
+		btnCreate.setFocusable(false);
+		btnCreate.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				scURI.setText("");
-				message.setText(" ");
+				JDialog dialog = new JDialog(fl);
+				dialog.addWindowListener(new WindowListener() {
+					@Override public void windowOpened(WindowEvent e) {}
+					@Override public void windowIconified(WindowEvent e) {}
+					@Override public void windowDeiconified(WindowEvent e) {}
+					@Override public void windowDeactivated(WindowEvent e) {}
+					@Override public void windowClosing(WindowEvent e) {}
+					@Override public void windowClosed(WindowEvent e) {
+						fl.setEnabled(true);
+					} 
+					@Override public void windowActivated(WindowEvent e) {}
+				});
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setContentPane(new PanelURI(dialog , scURI));
+				dialog.pack();
+				dialog.setVisible(true);
+				fl.setEnabled(false);
 			}
 		});
 		//scURI
@@ -66,7 +85,7 @@ public class ConnectionPanel extends JPanel {
 		this.centerPan.add(new Label("SorciClientURI:"));
 		this.centerPan.add(scURI);
 		this.centerPan.add(btnConnection);
-		this.centerPan.add(btnReset);
+		this.centerPan.add(btnCreate);
 		//frame
 		JPanel inPanel = new JPanel();
 		inPanel.setBorder(new EmptyBorder(50, 50, 50, 50));

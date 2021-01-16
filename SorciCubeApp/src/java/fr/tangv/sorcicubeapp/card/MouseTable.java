@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.card;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,6 +18,7 @@ import javax.swing.SpinnerNumberModel;
 import fr.tangv.sorcicubeapp.dialog.DialogBase;
 import fr.tangv.sorcicubeapp.dialog.DialogCombo;
 import fr.tangv.sorcicubeapp.dialog.DialogSkin;
+import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubecore.card.CardFaction;

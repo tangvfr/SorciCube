@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.card;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -34,6 +34,8 @@ import javax.swing.ListSelectionModel;
 
 import fr.tangv.sorcicubeapp.dialog.DialogCombo;
 import fr.tangv.sorcicubeapp.tools.ImageTool;
+import fr.tangv.sorcicubeapp.utils.ClickListener;
+import fr.tangv.sorcicubeapp.utils.ColorMCToHTML;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubecore.card.CardComparator;
@@ -52,6 +54,7 @@ import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 public class PanelNav extends JPanel {
 
 	private static final long serialVersionUID = -493103431246777186L;
+	private JSplitPane splitPane;
 	private CardsPanel cartsPanel;
 	private JButton refrech;
 	private JLabel clear;
@@ -81,7 +84,13 @@ public class PanelNav extends JPanel {
 		this.filterApply = new JCheckBox("Filter", false);
 		this.filterApply.addActionListener((ActionEvent e) -> {
 			if (e.getID() == 1001) {
-				filter.setVisible(filterApply.isSelected());
+				if (filterApply.isSelected()) {
+					filter.setVisible(true);
+					splitPane.setDividerLocation(0);
+				} else {
+					filter.setVisible(false);
+					splitPane.setDividerLocation((int) (splitPane.getDividerSize()*0.2));
+				}
 				PanelNav.this.getParent().repaint();
 			}
 		});
@@ -147,7 +156,8 @@ public class PanelNav extends JPanel {
 		searchBar.add(this.search, BorderLayout.CENTER);
 		searchBar.add(this.filterApply, BorderLayout.EAST);
 		panelUp.add(searchBar, BorderLayout.SOUTH);
-		this.add(new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelUp, new JScrollPane(this.list)), BorderLayout.CENTER);
+		this.splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelUp, new JScrollPane(this.list));
+		this.add(this.splitPane, BorderLayout.CENTER);
 		this.add(this.disconnect, BorderLayout.SOUTH);
 		this.sort = CardComparator.BY_ID;
 	}

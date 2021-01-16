@@ -18,8 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import fr.tangv.sorcicubeapp.ClickListener;
 import fr.tangv.sorcicubeapp.tools.ImageTool;
+import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.card.CardSkin;
 
 public abstract class DialogSkin extends DialogBase<JTextField> {

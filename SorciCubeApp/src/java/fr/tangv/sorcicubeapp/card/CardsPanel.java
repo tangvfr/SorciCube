@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.card;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.requests.RequestException;

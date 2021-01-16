@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.card;
 
 import java.awt.event.ActionEvent;
 

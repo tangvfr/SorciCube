@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.card;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.card.Card;
 
 public class UUIDPanelEditor extends JPanel {

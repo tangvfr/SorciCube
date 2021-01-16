@@ -1,9 +1,10 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.connection;
 
 import java.awt.Color;
 
 import javax.swing.JFrame;
 
+import fr.tangv.sorcicubeapp.card.CardsPanel;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 import fr.tangv.sorcicubecore.util.RenderException;
