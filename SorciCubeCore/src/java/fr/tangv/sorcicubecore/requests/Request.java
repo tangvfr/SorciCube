@@ -56,7 +56,7 @@ public class Request {
 	}
 	
 	public String toRequestNoData() {
-		return requestType.name()+" "+id+" "+name+" Data["+(requestType.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name().length())+"]";
+		return requestType.name()+" "+id+" "+name+" Data["+(requestType.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name()).length()+"]";
 	}
 	
 }
