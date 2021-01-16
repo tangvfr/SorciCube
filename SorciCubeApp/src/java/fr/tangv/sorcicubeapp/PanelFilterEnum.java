@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi;
+package fr.tangv.sorcicubeapp;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,8 +12,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import fr.tangv.sorcicubeapp.dialog.CompEmpty;
 import fr.tangv.sorcicubecore.card.CardCible;
-import fr.tangv.sorcicubespell.logi.dialog.CompEmpty;
 
 public class PanelFilterEnum<T extends Enum<?>> extends JPanel {
 

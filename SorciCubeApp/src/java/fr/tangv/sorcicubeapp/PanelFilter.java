@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi;
+package fr.tangv.sorcicubeapp;
 
 import java.util.ArrayList;
 import java.util.Collection;

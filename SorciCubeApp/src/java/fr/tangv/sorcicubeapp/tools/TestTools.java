@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi.tools;
+package fr.tangv.sorcicubeapp.tools;
 
 import javax.swing.JFrame;
 

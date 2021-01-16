@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi.dialog;
+package fr.tangv.sorcicubeapp.dialog;
 
 import java.awt.Window;
 import java.io.IOException;

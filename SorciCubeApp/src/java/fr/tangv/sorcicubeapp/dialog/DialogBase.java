@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi.dialog;
+package fr.tangv.sorcicubeapp.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -16,9 +16,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import fr.tangv.sorcicubeapp.ClickListener;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
-import fr.tangv.sorcicubespell.logi.ClickListener;
 
 public abstract class DialogBase<T extends Component> extends JDialog {
 

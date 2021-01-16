@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi;
+package fr.tangv.sorcicubeapp;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -17,15 +17,15 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 
+import fr.tangv.sorcicubeapp.dialog.DialogBase;
+import fr.tangv.sorcicubeapp.dialog.DialogCombo;
+import fr.tangv.sorcicubeapp.dialog.DialogSkin;
 import fr.tangv.sorcicubecore.card.CardFeature;
 import fr.tangv.sorcicubecore.card.CardFeatureType;
 import fr.tangv.sorcicubecore.card.CardFeatures;
 import fr.tangv.sorcicubecore.card.CardSkin;
 import fr.tangv.sorcicubecore.card.CardValue;
 import fr.tangv.sorcicubecore.card.CardValue.TypeValue;
-import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
-import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
-import fr.tangv.sorcicubespell.logi.dialog.DialogSkin;
 
 public class FeaturesTable extends JTable {
 

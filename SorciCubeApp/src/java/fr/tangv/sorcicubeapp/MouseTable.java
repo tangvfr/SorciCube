@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi;
+package fr.tangv.sorcicubeapp;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -15,6 +15,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import fr.tangv.sorcicubeapp.dialog.DialogBase;
+import fr.tangv.sorcicubeapp.dialog.DialogCombo;
+import fr.tangv.sorcicubeapp.dialog.DialogSkin;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubecore.card.CardFaction;
@@ -25,9 +28,6 @@ import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.util.TextList;
-import fr.tangv.sorcicubespell.logi.dialog.DialogBase;
-import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
-import fr.tangv.sorcicubespell.logi.dialog.DialogSkin;
 
 public class MouseTable extends ClickListener {
 

@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi;
+package fr.tangv.sorcicubeapp;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,6 +32,8 @@ import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
+import fr.tangv.sorcicubeapp.dialog.DialogCombo;
+import fr.tangv.sorcicubeapp.tools.ImageTool;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubecore.card.CardComparator;
@@ -46,8 +48,6 @@ import fr.tangv.sorcicubecore.card.CardValue;
 import fr.tangv.sorcicubecore.card.CardVisual;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
-import fr.tangv.sorcicubespell.logi.dialog.DialogCombo;
-import fr.tangv.sorcicubespell.logi.tools.ImageTool;
 
 public class PanelNav extends JPanel {
 

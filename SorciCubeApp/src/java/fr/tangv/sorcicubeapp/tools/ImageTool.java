@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubespell.logi.tools;
+package fr.tangv.sorcicubeapp.tools;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import fr.tangv.sorcicubespell.logi.ClickListener;
+import fr.tangv.sorcicubeapp.ClickListener;
 
 public class ImageTool extends JPanel {
 
