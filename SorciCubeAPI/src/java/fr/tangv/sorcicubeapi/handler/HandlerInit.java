@@ -4,8 +4,11 @@ import java.io.IOException;
 
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubeapi.server.ClientsManager;
+import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.player.DeckException;
+import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestHandlerException;
+import fr.tangv.sorcicubecore.requests.RequestHandlerInterface;
 
 public class HandlerInit {
 
@@ -25,6 +28,12 @@ public class HandlerInit {
 		cm.registered(players);
 		cm.registered(yaml);
 		cm.registered(packets);
+		cm.registered(new RequestHandlerInterface() {
+			@Override
+			public void handlingRequest(Client client, Request request) throws Exception {
+				System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+":"+client.getClientID().token+" <recieve< "+request.toRequestNoData());
+			}
+		});
 	}
 	
 }

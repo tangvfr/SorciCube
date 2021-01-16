@@ -24,22 +24,24 @@ public class HandlerReponse implements RequestHandlerInterface {
 		Request request = reponsesWait.get(reponse.id);
 		if (request != null) {
 			reponsesWait.replace(reponse.id, reponse);
-			request.notify();
+			request.name.notifyAll();
 		}
 	}
 	
 	public Request sendRequestReponse(Request request) throws IOException {
-		reponsesWait.put(request.id, request);
-		sorci.sendRequest(request);
-		try {
-			request.wait(timeout);
-		} catch (InterruptedException e) {
-			return null;
+		synchronized (request.name) {
+			reponsesWait.put(request.id, request);
+			sorci.sendRequest(request);
+			try {
+				request.name.wait(timeout);
+			} catch (InterruptedException e) {
+				return null;
+			}
+			Request reponse = reponsesWait.remove(request.id);
+			if (request == reponse)
+				return null;
+			return reponse;
 		}
-		Request reponse = reponsesWait.remove(request.id);
-		if (request == reponse)
-			return null;
-		return reponse;
 	}
 	
 }

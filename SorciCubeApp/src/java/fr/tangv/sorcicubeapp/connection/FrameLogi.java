@@ -56,6 +56,7 @@ public class FrameLogi extends JFrame {
 				}
 				
 			};
+			client.setPrintStream(System.out);
 			client.start();
 		} catch (Exception e) {
 			showConnection("Error: "+e.getMessage(), Color.RED);
