@@ -28,7 +28,7 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 				client.setClientID(clientID);
 				if (manager.authentification(client)) {
 					client.sendRequest(new Request(RequestType.AUTHENTIFIED, request.id, clientID.name, ""));
-					System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+":"+client.getClientID().token+" <auth< "+"sucessful");
+					System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <auth< "+"sucessful with "+client.getClientID().token);
 					return;
 				} else {
 					client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED,request.id, "Authentification", "Token is wrong"));

@@ -24,16 +24,16 @@ public class HandlerReponse implements RequestHandlerInterface {
 		Request request = reponsesWait.get(reponse.id);
 		if (request != null) {
 			reponsesWait.replace(reponse.id, reponse);
-			request.name.notifyAll();
+			request.notifyAll();
 		}
 	}
 	
 	public Request sendRequestReponse(Request request) throws IOException {
-		synchronized (request.name) {
+		synchronized (request) {
 			reponsesWait.put(request.id, request);
 			sorci.sendRequest(request);
 			try {
-				request.name.wait(timeout);
+				request.wait(timeout);
 			} catch (InterruptedException e) {
 				return null;
 			}
