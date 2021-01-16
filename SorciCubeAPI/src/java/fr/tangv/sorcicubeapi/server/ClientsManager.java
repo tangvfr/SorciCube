@@ -113,6 +113,7 @@ public class ClientsManager extends Thread {
 		if (server.hasToken(client.getClientID().token)) {
 			clientsNotAuthentified.remove(client);
 			clients.add(client);
+			client.setHandler(handler);
 			return true;
 		} else
 			return false;
