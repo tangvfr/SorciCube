@@ -97,7 +97,18 @@ public abstract class Client extends Thread {
 				Request request = new Request(in.nextLine());
 				id = request.id;
 				if (handler != null)
-					handler.handlingRequest(this, request);
+					new Thread(() -> {
+						try {
+							handler.handlingRequest(this, request);
+						} catch (Exception e) {
+							e.printStackTrace();
+							try {
+								sendRequest(new Request(RequestType.ERROR, request.id, "Error_Exception", e.getMessage()));
+							} catch (RequestException | IOException e2) {
+								e2.printStackTrace();
+							}
+						}
+					}).start();
 			} catch (RequestException e) {
 				e.printStackTrace();
 				try {

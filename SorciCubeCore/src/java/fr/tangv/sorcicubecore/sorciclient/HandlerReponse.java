@@ -21,19 +21,20 @@ public class HandlerReponse implements RequestHandlerInterface {
 
 	@Override
 	public void handlingRequest(Client client, Request reponse) throws Exception {
+		System.out.println("RID: "+reponse.id);
 		Request request = reponsesWait.get(reponse.id);
 		if (request != null) {
 			reponsesWait.replace(reponse.id, reponse);
-			request.notifyAll();
+			request.name.notifyAll();
 		}
 	}
 	
 	public Request sendRequestReponse(Request request) throws IOException {
-		synchronized (request) {
+		synchronized (request.name) {
 			reponsesWait.put(request.id, request);
 			sorci.sendRequest(request);
 			try {
-				request.wait(timeout);
+				request.name.wait(timeout);
 			} catch (InterruptedException e) {
 				return null;
 			}
