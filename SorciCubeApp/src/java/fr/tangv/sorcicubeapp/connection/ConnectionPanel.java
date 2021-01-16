@@ -54,6 +54,7 @@ public class ConnectionPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JDialog dialog = new JDialog(fl);
+				dialog.setName("Create URI");
 				dialog.addWindowListener(new WindowListener() {
 					@Override public void windowOpened(WindowEvent e) {}
 					@Override public void windowIconified(WindowEvent e) {}
@@ -66,6 +67,7 @@ public class ConnectionPanel extends JPanel {
 					@Override public void windowActivated(WindowEvent e) {}
 				});
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setLocationRelativeTo(fl);
 				dialog.setContentPane(new PanelURI(dialog , scURI));
 				dialog.pack();
 				dialog.setVisible(true);
@@ -79,7 +81,7 @@ public class ConnectionPanel extends JPanel {
 		message.setHorizontalAlignment(JLabel.CENTER);
 		//centerPan
 		centerPan = new JPanel();
-		centerPan.setLayout(new GridLayout(6, 1, 0, 5));
+		centerPan.setLayout(new GridLayout(4, 1, 0, 5));
 		centerPan.setBorder(new TitledBorder("Connection"));
 		//add in centerPan
 		this.centerPan.add(new Label("SorciClientURI:"));
@@ -88,7 +90,8 @@ public class ConnectionPanel extends JPanel {
 		this.centerPan.add(btnCreate);
 		//frame
 		JPanel inPanel = new JPanel();
-		inPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
+		int marge = 50;
+		inPanel.setBorder(new EmptyBorder(marge, marge, marge, marge));
 		inPanel.setLayout(new BorderLayout());
 		inPanel.add(centerPan, BorderLayout.CENTER);
 		this.setLayout(new BorderLayout());

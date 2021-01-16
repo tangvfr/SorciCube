@@ -18,7 +18,7 @@ public class FrameLogi extends JFrame {
 		this.connectionPanel = new ConnectionPanel(this);
 		//init
 		super.setName("Frame");
-		super.setTitle("LogiSpell");
+		super.setTitle("SorciCubeApp");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//default
 		showConnection("", Color.BLACK);
@@ -26,7 +26,7 @@ public class FrameLogi extends JFrame {
 	
 	public void showConnection(String message, Color color) {
 		this.connectionPanel.setMessage(message, color);
-		super.setSize(500, 340);
+		super.setSize(500, 280);
 		super.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setContentPane(this.connectionPanel);
