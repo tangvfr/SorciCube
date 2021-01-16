@@ -54,7 +54,7 @@ public class ConnectionPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JDialog dialog = new JDialog(fl);
-				dialog.setName("Create URI");
+				dialog.setTitle("Create URI");
 				dialog.addWindowListener(new WindowListener() {
 					@Override public void windowOpened(WindowEvent e) {}
 					@Override public void windowIconified(WindowEvent e) {}
@@ -63,13 +63,16 @@ public class ConnectionPanel extends JPanel {
 					@Override public void windowClosing(WindowEvent e) {}
 					@Override public void windowClosed(WindowEvent e) {
 						fl.setEnabled(true);
+						fl.setAlwaysOnTop(true);
+						fl.setAlwaysOnTop(false);
 					} 
 					@Override public void windowActivated(WindowEvent e) {}
 				});
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dialog.setLocationRelativeTo(fl);
 				dialog.setContentPane(new PanelURI(dialog , scURI));
-				dialog.pack();
+				dialog.setSize(300, 300);
+				dialog.setResizable(false);
 				dialog.setVisible(true);
 				fl.setEnabled(false);
 			}

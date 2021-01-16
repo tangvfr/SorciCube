@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubeapp.connection;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import fr.tangv.sorcicubeapp.dialog.CompEmpty;
 import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 
@@ -68,9 +70,10 @@ public class PanelURI extends JPanel {
 		this.add(name);
 		this.add(token);
 		this.add(types);
-		JPanel btns = new JPanel(new BorderLayout(0, 10));
-		btns.add(create, BorderLayout.WEST);
-		btns.add(cancel, BorderLayout.EAST);
+		this.add(new CompEmpty(0, marge));
+		JPanel btns = new JPanel(new GridLayout(1, 2, 5, 5));
+		btns.add(create);
+		btns.add(cancel);
 		this.add(btns);
 	}
 	
