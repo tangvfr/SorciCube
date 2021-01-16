@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubeapp.connection;
 
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.net.InetAddress;
 import java.net.URISyntaxException;
