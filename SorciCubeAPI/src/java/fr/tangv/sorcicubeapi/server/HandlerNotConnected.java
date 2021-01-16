@@ -19,7 +19,7 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 	
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {
-		System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+":"+client.getClientID().token+" <tryauth< "+request.toRequestNoData());
+		System.out.println(client.getInetAddress().getHostAddress()+" <tryauth< "+request.toRequestNoData());
 		if (request.requestType == RequestType.IDENTIFICATION) {
 			ClientIdentification clientID = ClientIdentification.toClientIdentification(Document.parse(request.data));
 			if (!clientID.isValid()) {
@@ -43,7 +43,7 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 			}
 			client.close();
 		} else {
-			System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+":"+client.getClientID().token+" <auth< "+"wrong");
+			System.out.println(client.getInetAddress().getHostAddress()+" <auth< "+"wrong");
 			client.sendRequest(new Request(RequestType.DONT_AUTHENTIFIED, request.id, "NotAuthentified" ,"This action is invalid, you dont are authentified !"));
 		}
 	}
