@@ -37,8 +37,7 @@ public class Console extends Thread {
 							" - stop\r\n" + 
 							" - tokens\r\n" + 
 							" - newtoken <description>\r\n" + 
-							" - loadtokens\r\n" + 
-							" - reloadconfig\r\n"+
+							" - loadtokens\r\n" +
 							" - clients");
 				} else if (cmd.equalsIgnoreCase("tokens")) {
 					ConcurrentHashMap<String, String> tokens = sorci.getTokens();
@@ -67,8 +66,6 @@ public class Console extends Thread {
 				} else if (cmd.equalsIgnoreCase("loadtokens")) {
 					sorci.loadTokens();
 					System.out.println("Tokens is loaded !");
-				} else if (cmd.equalsIgnoreCase("reloadconfig")) {
-					System.out.println("This command is not disponible !");
 				} else if (cmd.equalsIgnoreCase("clients")) {
 					System.out.println("Clients: "+sorci.getClientsManager().getClients().size());
 					for (Client client : sorci.getClientsManager().getClients()) {
