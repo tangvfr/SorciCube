@@ -29,7 +29,6 @@ wait_view_fight: 5000
 #server
 server_lobby: "lobby"
 server_fight: "fight"
-server_jump: "jump"
 #location
 location_spawn:
   ==: org.bukkit.Location
