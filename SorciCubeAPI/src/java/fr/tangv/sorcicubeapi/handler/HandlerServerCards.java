@@ -20,7 +20,7 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 
 public class HandlerServerCards implements RequestHandlerInterface {
 
-	private final ConcurrentHashMap<UUID, Card> cards;//---------------
+	private final ConcurrentHashMap<UUID, Card> cards;
 	private final File file;
 	
 	public HandlerServerCards() throws IOException {

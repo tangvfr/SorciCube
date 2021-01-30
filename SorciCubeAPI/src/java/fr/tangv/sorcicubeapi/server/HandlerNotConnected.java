@@ -47,5 +47,12 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 			client.sendRequest(new Request(RequestType.DONT_AUTHENTIFIED, request.id, "NotAuthentified" ,"This action is invalid, you dont are authentified !"));
 		}
 	}
+	
+	public static void printDisconnect(Client client, boolean authentified) {
+		System.out.println(authentified ?
+				(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <diconnect< "+client.getClientID().token)
+				: (client.getInetAddress().getHostAddress()+" <diconnect< ")
+			);
+	}
 
 }
