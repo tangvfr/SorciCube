@@ -48,7 +48,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	//server
 	private String nameServerLobby;
 	private String nameServerFight;
-	private String nameServerJump;
 	
 	//config
 	private Config message;
@@ -133,7 +132,6 @@ public class SorciCubeSpell extends JavaPlugin {
 			getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 			this.nameServerLobby = this.parameter.getString("server_lobby");
 			this.nameServerFight = this.parameter.getString("server_fight");
-			this.nameServerJump = this.parameter.getString("server_jump");
 			//init handler
 			this.handlerCards = new HandlerCards(client);
 			this.handlerPlayers = new HandlerPlayers(client, handlerCards);
@@ -220,10 +218,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public String getNameServerFight() {
 		return nameServerFight;
-	}
-	
-	public String getNameServerJump() {
-		return nameServerJump;
 	}
 	
 	//config
