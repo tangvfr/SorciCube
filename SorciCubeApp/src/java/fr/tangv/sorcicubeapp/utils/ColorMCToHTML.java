@@ -22,6 +22,7 @@ public class ColorMCToHTML {
 		//text = text.replace("§e","</span><span color='#FFFF55'>");
 		text = text.replace("§e","</span><span color='#E4E422'>");
 		text = text.replace("§f","</span><span color='#FFFFFF'>");
+		text = text.replace("§r","</span><span color='#FFFFFF'>");
 		//return
 		return "<span color='#000000'>"+text+"</span>";
 	}
