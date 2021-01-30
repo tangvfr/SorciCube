@@ -22,6 +22,7 @@ public class HandlerReponse implements RequestHandlerInterface {
 	@Override
 	public void handlingRequest(Client client, Request reponse) throws Exception {
 		System.out.println("RID: "+reponse.id);
+		
 		Request request = reponsesWait.get(reponse.id);
 		if (request != null) {
 			reponsesWait.replace(reponse.id, reponse);
