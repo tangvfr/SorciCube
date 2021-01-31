@@ -150,16 +150,22 @@ public class PanelNav extends JPanel {
 		this.add(this.splitPane, BorderLayout.CENTER);
 		this.sort = CardComparator.BY_ID;
 		this.sortedBy = new JLabel("Sorted by ???");
+		this.sortedBy.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				changeSort();
+			}
+		});
 		sortedBy.setHorizontalAlignment(JLabel.CENTER);
 		updateTextSortedBy();
 		this.add(sortedBy, BorderLayout.SOUTH);
 	}
 	
 	private void updateTextSortedBy() {
-		this.sortedBy.setText("Sorted by "+this.sort.name());
+		this.sortedBy.setText("Sorted "+this.sort.name());
 	}
 	
-	private void changeSorted() {
+	private void changeSort() {
 		new DialogCombo<CardComparator>(cardsPanel.getFrameLogi(), "Sorted by", sort) {
 			private static final long serialVersionUID = 944290591647698175L;
 					
@@ -321,7 +327,7 @@ public class PanelNav extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (e.getID() == 1001) {
-						changeSorted();
+						changeSort();
 					}
 				}
 			});
