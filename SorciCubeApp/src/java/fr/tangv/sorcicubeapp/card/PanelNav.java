@@ -49,6 +49,7 @@ import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 public class PanelNav extends JPanel {
 
 	private static final long serialVersionUID = -493103431246777186L;
+	private final ListCellRenderer<Card> listCellRenderer;
 	private final JLabel sortedBy;
 	private final JSplitPane splitPane;
 	private final CardsPanel cardsPanel;
@@ -101,17 +102,17 @@ public class PanelNav extends JPanel {
 		this.list = new JList<Card>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setComponentPopupMenu(new ListPopupMenu(this.cardsPanel));
-		list.setCellRenderer(new ListCellRenderer<Card>() {
+		this.listCellRenderer = new ListCellRenderer<Card>() {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
 				return new JLabel(renderHTMLCard(card, (isSelected ? ">" : "")));
 			}
-		});
+		};
+		list.setCellRenderer(this.listCellRenderer);
 		list.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				cardsPanel.setCard(list.getSelectedValue());
-				
 			}
 		});
 		//filter
@@ -161,6 +162,10 @@ public class PanelNav extends JPanel {
 		this.add(sortedBy, BorderLayout.SOUTH);
 	}
 	
+	public ListCellRenderer<Card> getListCellRenderer() {
+		return listCellRenderer;
+	}
+
 	private void updateTextSortedBy() {
 		this.sortedBy.setText("Sorted "+this.sort.name());
 	}
