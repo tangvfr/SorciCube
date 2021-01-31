@@ -3,6 +3,7 @@ package fr.tangv.sorcicubeapp.others;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.net.URISyntaxException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.tools.ImageTool;
@@ -25,8 +25,9 @@ public class PanelOthers extends JPanel {
 
 	public PanelOthers(SorciClient client, FrameLogi logi) {
 		this.setLayout(new GridLayout(3, 1, 10, 10));
-		int border = 20;
-		this.setBorder(new EmptyBorder(border, border, border, border));
+		Dimension dim = new Dimension(150, 100);
+		this.setMaximumSize(dim);
+		this.setPreferredSize(dim);
 		
 		//mineSkin
 		JButton mineskin = new JButton("mineskin.org");
