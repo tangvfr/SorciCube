@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
+import fr.tangv.sorcicubeapp.card.PanelFilter.PanelFilterException;
 import fr.tangv.sorcicubeapp.dialog.DialogCombo;
 import fr.tangv.sorcicubeapp.tools.ImageTool;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
@@ -66,7 +67,7 @@ public class PanelNav extends JPanel {
 	private JCheckBox filterApply;
 	private CardComparator sort;
 	
-	public PanelNav(CardsPanel cartsPanel) throws Exception {
+	public PanelNav(CardsPanel cartsPanel) throws PanelFilterException {
 		this.cartsPanel = cartsPanel;
 		//clear
 		this.clear = new JLabel(" X ");

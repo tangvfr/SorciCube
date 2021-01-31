@@ -10,6 +10,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import fr.tangv.sorcicubeapp.card.PanelFilter.PanelFilterException;
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
@@ -28,7 +29,7 @@ public class CardsPanel extends JPanel {
 	private JTable table;
 	private Card card;
 	
-	public CardsPanel(SorciClient client, FrameLogi frameLogi) throws Exception {
+	public CardsPanel(SorciClient client, FrameLogi frameLogi) throws IOException, ReponseRequestException, RequestException, PanelFilterException {
 		this.frameLogi = frameLogi;
 		this.client = client;
 		this.cards = new HandlerCards(client);

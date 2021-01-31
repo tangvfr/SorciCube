@@ -33,13 +33,27 @@ public class PanelFilter extends JScrollPane {
 	private PanelFilterBoolean filterIsStunned;
 	private PanelFilterBoolean filterInvalidMaterial;
 	
-	public PanelFilter() throws Exception {
+	public static final class PanelFilterException extends Exception {
+		
+		private static final long serialVersionUID = 3015619588366530847L;
+
+		private PanelFilterException(String message) {
+			super(message);
+		}
+		
+	}
+	
+	public PanelFilter() throws PanelFilterException {
 		//init value
-		this.filterType = new PanelFilterEnum<CardType>(CardType.ENTITY, "Type", BoxLayout.X_AXIS, false);
-		this.filterRarity = new PanelFilterEnum<CardRarity>(CardRarity.COMMUN, "Rarity", BoxLayout.Y_AXIS, false);
-		this.filterFaction = new PanelFilterEnum<CardFaction>(CardFaction.BASIC, "Faction", BoxLayout.Y_AXIS, false);
-		this.filterCibleFaction = new PanelFilterEnum<CardFaction>(CardFaction.BASIC, "Cible Faction", BoxLayout.Y_AXIS, false);
-		this.filterCible = new PanelFilterEnum<CardCible>(CardCible.ALL, "Cible", 0, true);
+		try {
+			this.filterType = new PanelFilterEnum<CardType>(CardType.ENTITY, "Type", BoxLayout.X_AXIS, false);
+			this.filterRarity = new PanelFilterEnum<CardRarity>(CardRarity.COMMUN, "Rarity", BoxLayout.Y_AXIS, false);
+			this.filterFaction = new PanelFilterEnum<CardFaction>(CardFaction.BASIC, "Faction", BoxLayout.Y_AXIS, false);
+			this.filterCibleFaction = new PanelFilterEnum<CardFaction>(CardFaction.BASIC, "Cible Faction", BoxLayout.Y_AXIS, false);
+			this.filterCible = new PanelFilterEnum<CardCible>(CardCible.ALL, "Cible", 0, true);
+		} catch (Exception e) {
+			throw new PanelFilterException("Error with FilterEnum");
+		}
 		this.filterOriginalName = new PanelFilterBoolean("Orignal Name", "True", "False", "Any");
 		this.filterHideCard = new PanelFilterBoolean("Hide Card", "True", "False", "Any");
 		this.filterHasSkin = new PanelFilterBoolean("Has Skin", "True", "False", "Any");

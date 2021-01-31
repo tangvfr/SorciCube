@@ -40,7 +40,7 @@
 	 				<descriptorRefs>
 	 					<descriptorRef>jar-with-dependencies</descriptorRef>
 	 				</descriptorRefs>
-	 				<finalName>${project.artifactId}-${project.version}.${git.commit.id.abbrev}</finalName>
+	 				<finalName>${project.artifactId}-${project.version}-built</finalName>
 	 				<appendAssemblyId>false</appendAssemblyId>
 	 			</configuration>
 	 			<executions>
