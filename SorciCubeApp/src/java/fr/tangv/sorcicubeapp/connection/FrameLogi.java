@@ -39,7 +39,7 @@ public class FrameLogi extends JFrame {
 				
 				@Override
 				public void disconnected() {
-					showConnection("Disconnected", Color.ORANGE);
+					showConnection("Disconnected", Color.GREEN);
 				}
 				
 				@Override
