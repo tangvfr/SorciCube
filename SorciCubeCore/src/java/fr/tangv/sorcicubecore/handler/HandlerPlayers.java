@@ -31,12 +31,12 @@ public class HandlerPlayers {
 		return Boolean.parseBoolean(reponse.data);
 	};
 	
-	public PlayerFeature getPlayer(UUID uuid) throws IOException, ReponseRequestException, RequestException, Exception {
+	public PlayerFeature getPlayer(UUID uuid, String pseudo) throws IOException, ReponseRequestException, RequestException, Exception {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_GET, Request.randomID(), uuid.toString(), null),
 				RequestType.PLAYER_REPONSE
 			);
-		return PlayerFeature.toPlayerFeature(uuid, managerCards.originalCards(), Document.parse(reponse.data));
+		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalCards(), Document.parse(reponse.data));
 	};
 	
 	public void update(PlayerFeature playerFeature) throws IOException, ReponseRequestException, RequestException {
@@ -46,12 +46,12 @@ public class HandlerPlayers {
 			);
 	};
 	
-	public PlayerFeature initPlayer(UUID uuid, CardFaction faction) throws IOException, ReponseRequestException, RequestException, Exception {
+	public PlayerFeature initPlayer(UUID uuid, String pseudo, CardFaction faction) throws IOException, ReponseRequestException, RequestException, Exception {
 		Request reponse = sorci.sendRequestReponse(
-				new Request(RequestType.PLAYER_INIT, Request.randomID(), uuid.toString(), faction.name()),
+				new Request(RequestType.PLAYER_INIT, Request.randomID(), uuid.toString(), faction.name()+" "+pseudo),
 				RequestType.PLAYER_REPONSE
 			);
-		return PlayerFeature.toPlayerFeature(uuid, managerCards.originalCards(), Document.parse(reponse.data));
+		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalCards(), Document.parse(reponse.data));
 	};
 	
 }

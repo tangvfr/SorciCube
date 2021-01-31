@@ -34,7 +34,9 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	public void init(Client client, Request request) throws IOException, RequestException {
 		try {
 			UUID player = UUID.fromString(request.name);
-			CardFaction faction = CardFaction.valueOf(request.data);
+			String args[] = request.data.split(" ");
+			CardFaction faction = CardFaction.valueOf(args[0]);
+			String pseudo = args[1];
 			if (fm.has(player.toString()))
 				throw new Exception("Player already registred !");
 			//define type default deck
@@ -68,6 +70,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 			}
 			//create and insert playerfeature
 			PlayerFeature playerFeature = new PlayerFeature(player,
+					pseudo,
 					defaultDeck,
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),

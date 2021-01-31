@@ -12,6 +12,7 @@ import fr.tangv.sorcicubecore.card.Card;
 public class PlayerFeature {
 
 	private final UUID uuid;
+	private final String pseudo;
 	private final DeckCards deck1;
 	private final DeckCards deck2;
 	private final DeckCards deck3;
@@ -25,6 +26,7 @@ public class PlayerFeature {
 	private volatile byte level;
 	
 	public PlayerFeature(UUID uuid,
+			String pseudo,
 			DeckCards deck1,
 			DeckCards deck2,
 			DeckCards deck3,
@@ -38,6 +40,7 @@ public class PlayerFeature {
 			byte level
 		) {
 		this.uuid = uuid;
+		this.pseudo = pseudo;
 		this.unlockDecks = unlockDecks;
 		this.deck1 = deck1;
 		this.deck2 = deck2;
@@ -164,6 +167,7 @@ public class PlayerFeature {
 	public Document toDocument() {
 		Document doc = new Document()
 				.append("uuid", uuid.toString())
+				.append("pseudo", pseudo)
 				.append("deck1", deck1.toDocument())
 				.append("deck2", deck2.toDocument())
 				.append("deck3", deck3.toDocument())
@@ -179,7 +183,7 @@ public class PlayerFeature {
 		return doc;
 	}
 	
-	public static PlayerFeature toPlayerFeature(UUID uuid, Map<UUID, Card> manager, Document doc) throws DeckException {
+	public static PlayerFeature toPlayerFeature(UUID uuid, String pseudo, Map<UUID, Card> manager, Document doc) throws DeckException {
 		DeckCards deck1 = DeckCards.toDeckCards(manager, doc.get("deck1", Document.class));
 		DeckCards deck2 = DeckCards.toDeckCards(manager, doc.get("deck2", Document.class));
 		DeckCards deck3 = DeckCards.toDeckCards(manager, doc.get("deck3", Document.class));
@@ -191,7 +195,7 @@ public class PlayerFeature {
 		int money = doc.getInteger("money", 0);
 		int experience = doc.getInteger("experience", 0);
 		byte level = (byte) doc.getInteger("level", 1);
-		return new PlayerFeature(uuid, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks,
+		return new PlayerFeature(uuid, pseudo, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks,
 				((rewardNPC == null) ? new ArrayList<String>() : rewardNPC),
 				money, experience, level);
 	}

@@ -116,7 +116,7 @@ public class ManagerLobby implements Listener {
 							try {
 								PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 								playerG.setPlayerFeature(
-										sorci.getHandlerPlayers().getPlayer(player.getUniqueId())
+										sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName())
 								);
 								sorci.getManagerGui().updateDisplayPlayer(playerG);
 							} catch (Exception e) {

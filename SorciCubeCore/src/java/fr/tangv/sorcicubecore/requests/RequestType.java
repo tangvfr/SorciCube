@@ -40,7 +40,7 @@ public enum RequestType {
 	 */
 	
 	//PLAYER
-	PLAYER_INIT(RequestDataType.TEXT),
+	PLAYER_INIT(RequestDataType.ARRAY_TEXT),
 	PLAYER_GET(RequestDataType.NOTHING),
 	PLAYER_EXIST(RequestDataType.NOTHING),
 	PLAYER_UPDATE(RequestDataType.JSON),

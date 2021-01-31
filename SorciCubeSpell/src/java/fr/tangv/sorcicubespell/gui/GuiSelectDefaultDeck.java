@@ -79,7 +79,7 @@ public class GuiSelectDefaultDeck extends AbstractGui {
 		}
 		PlayerFeature pf = null;
 		try {
-			pf = sorci.getHandlerPlayers().initPlayer(player.getUniqueId(), faction);
+			pf = sorci.getHandlerPlayers().initPlayer(player.getUniqueId(), player.getName(), faction);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
