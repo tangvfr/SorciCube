@@ -1,6 +1,6 @@
 package fr.tangv.sorcicubeapp.tabs;
 
-import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.io.IOException;
 
 import javax.swing.JPanel;
@@ -30,8 +30,8 @@ public class TabsPanel extends JTabbedPane {
 		
 		//add tabbbed
 		this.addTab("Cards", this.cardsPanel);
-		JPanel panelOthers = new JPanel(new BorderLayout());
-		panelOthers.add(this.others, BorderLayout.CENTER);
+		JPanel panelOthers = new JPanel(new GridBagLayout());
+		panelOthers.add(this.others);
 		this.addTab("Others", panelOthers);
 		
 		//refresh

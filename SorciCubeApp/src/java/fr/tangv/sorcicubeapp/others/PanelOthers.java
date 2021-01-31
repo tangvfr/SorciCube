@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.tools.ImageTool;
@@ -25,7 +26,8 @@ public class PanelOthers extends JPanel {
 
 	public PanelOthers(SorciClient client, FrameLogi logi) {
 		this.setLayout(new GridLayout(3, 1, 10, 10));
-		Dimension dim = new Dimension(150, 100);
+		this.setBorder(new TitledBorder("Others"));
+		Dimension dim = new Dimension(220, 140);
 		this.setMaximumSize(dim);
 		this.setPreferredSize(dim);
 		

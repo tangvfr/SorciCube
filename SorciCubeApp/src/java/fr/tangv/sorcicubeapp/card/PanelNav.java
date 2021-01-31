@@ -80,10 +80,10 @@ public class PanelNav extends JPanel {
 			if (e.getID() == 1001) {
 				if (filterApply.isSelected()) {
 					filter.setVisible(true);
-					splitPane.setDividerLocation(0);
+					splitPane.setDividerLocation(0.4);
 				} else {
 					filter.setVisible(false);
-					splitPane.setDividerLocation((int) (splitPane.getDividerSize()*0.2));
+					splitPane.setDividerLocation(splitPane.getMinimumDividerLocation());
 				}
 				PanelNav.this.getParent().repaint();
 			}
