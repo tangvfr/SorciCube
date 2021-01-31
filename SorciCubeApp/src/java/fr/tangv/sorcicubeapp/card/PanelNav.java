@@ -53,7 +53,6 @@ public class PanelNav extends JPanel {
 	private CardsPanel cardsPanel;
 	private JButton refrech;
 	private JLabel clear;
-	private JButton disconnect;
 	private JTextField search;
 	private JList<Card> list;
 	private Vector<Card> listValue;
@@ -144,7 +143,6 @@ public class PanelNav extends JPanel {
 		panelUp.add(searchBar, BorderLayout.SOUTH);
 		this.splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelUp, new JScrollPane(this.list));
 		this.add(this.splitPane, BorderLayout.CENTER);
-		this.add(this.disconnect, BorderLayout.SOUTH);
 		this.sort = CardComparator.BY_ID;
 	}
 	
