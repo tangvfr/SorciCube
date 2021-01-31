@@ -14,8 +14,8 @@ public class FrameLogi extends JFrame {
 	private static final long serialVersionUID = -3539638134870583981L;
 	private ConnectionPanel connectionPanel;
 	
-	public FrameLogi() {
-		this.connectionPanel = new ConnectionPanel(this);
+	public FrameLogi(String defaultURI) {
+		this.connectionPanel = new ConnectionPanel(this, defaultURI);
 		//init
 		super.setName("Frame");
 		super.setTitle("SorciCubeApp");

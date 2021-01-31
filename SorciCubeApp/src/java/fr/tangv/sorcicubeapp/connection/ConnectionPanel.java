@@ -30,7 +30,7 @@ public class ConnectionPanel extends JPanel {
 	private JLabel message;
 	private JPanel centerPan;
 	
-	public ConnectionPanel(FrameLogi fl) {
+	public ConnectionPanel(FrameLogi fl, String defaultURI) {
 		//btnconnection
 		btnConnection = new JButton("Connection");
 		btnConnection.setFocusable(false);
@@ -78,7 +78,7 @@ public class ConnectionPanel extends JPanel {
 			}
 		});
 		//scURI
-		scURI = new JTextField("");
+		scURI = new JTextField(defaultURI);
 		//message
 		message = new JLabel(" ");
 		message.setHorizontalAlignment(JLabel.CENTER);
