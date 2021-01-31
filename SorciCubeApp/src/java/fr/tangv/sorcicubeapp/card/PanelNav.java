@@ -124,7 +124,12 @@ public class PanelNav extends JPanel {
 		disconnect.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cardsPanel.getClient().disconnect();
+				try {
+					cardsPanel.getClient().close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					cardsPanel.getFrameLogi().showConnection("DisconnectError: "+e1.getMessage(), Color.RED);
+				}
 			}
 		});
 		disconnect.setFocusable(false);
