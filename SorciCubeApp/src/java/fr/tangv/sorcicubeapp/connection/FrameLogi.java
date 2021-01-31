@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
-import fr.tangv.sorcicubeapp.tabs.TabsPanel;
+import fr.tangv.sorcicubeapp.tabbed.TabbedPanel;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 import fr.tangv.sorcicubecore.util.RenderException;
@@ -45,7 +45,7 @@ public class FrameLogi extends JFrame {
 				@Override
 				public void connected() {
 					try {
-						FrameLogi.this.setContentPane(new TabsPanel(this, FrameLogi.this));
+						FrameLogi.this.setContentPane(new TabbedPanel(this, FrameLogi.this));
 						FrameLogi.this.setResizable(true);
 					} catch (Exception e) {
 						showConnection("Error: "+e.getMessage(), Color.RED);

@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp.tabs;
+package fr.tangv.sorcicubeapp.tabbed;
 
 import java.awt.GridBagLayout;
 import java.io.IOException;
@@ -9,12 +9,11 @@ import javax.swing.JTabbedPane;
 import fr.tangv.sorcicubeapp.card.CardsPanel;
 import fr.tangv.sorcicubeapp.card.PanelFilter.PanelFilterException;
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
-import fr.tangv.sorcicubeapp.others.PanelOthers;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
-public class TabsPanel extends JTabbedPane {
+public class TabbedPanel extends JTabbedPane {
 
 	private static final long serialVersionUID = -4754481175431522229L;
 
@@ -22,7 +21,7 @@ public class TabsPanel extends JTabbedPane {
 	private final CardsPanel cardsPanel;
 	private final PanelOthers others;
 	
-	public TabsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException, PanelFilterException {
+	public TabbedPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException, PanelFilterException {
 		this.setTabPlacement(JTabbedPane.TOP);
 		//init tabbed
 		this.cardsPanel = new CardsPanel(client, logi);
@@ -36,8 +35,6 @@ public class TabsPanel extends JTabbedPane {
 		
 		//refresh
 		this.cardsPanel.refresh();
-		
-		
 	}
 	
 	

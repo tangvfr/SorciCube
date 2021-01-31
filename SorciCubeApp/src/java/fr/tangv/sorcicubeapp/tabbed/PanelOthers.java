@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp.others;
+package fr.tangv.sorcicubeapp.tabbed;
 
 import java.awt.Color;
 import java.awt.Desktop;
