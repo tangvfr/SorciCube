@@ -49,15 +49,16 @@ import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 public class PanelNav extends JPanel {
 
 	private static final long serialVersionUID = -493103431246777186L;
-	private JSplitPane splitPane;
-	private CardsPanel cardsPanel;
-	private JButton refrech;
-	private JLabel clear;
-	private JTextField search;
-	private JList<Card> list;
+	private final JLabel sortedBy;
+	private final JSplitPane splitPane;
+	private final CardsPanel cardsPanel;
+	private final JButton refrech;
+	private final JLabel clear;
+	private final JTextField search;
+	private final JList<Card> list;
+	private final PanelFilter filter;
+	private final JCheckBox filterApply;
 	private Vector<Card> listValue;
-	private PanelFilter filter;
-	private JCheckBox filterApply;
 	private CardComparator sort;
 	
 	public PanelNav(CardsPanel cardsPanel) throws PanelFilterException {
@@ -72,22 +73,6 @@ public class PanelNav extends JPanel {
 			}
 		});
 		clear.setForeground(Color.RED);
-		//filter
-		this.filter = new PanelFilter();
-		filter.setVisible(false);
-		this.filterApply = new JCheckBox("Filter", false);
-		this.filterApply.addActionListener((ActionEvent e) -> {
-			if (e.getID() == 1001) {
-				if (filterApply.isSelected()) {
-					filter.setVisible(true);
-					splitPane.setDividerLocation(0.4);
-				} else {
-					filter.setVisible(false);
-					splitPane.setDividerLocation(splitPane.getMinimumDividerLocation());
-				}
-				PanelNav.this.getParent().repaint();
-			}
-		});
 		//info
 		this.search = new JTextField();
 		search.setToolTipText("name of card or uuid of card");
@@ -129,6 +114,10 @@ public class PanelNav extends JPanel {
 				
 			}
 		});
+		//filter
+		this.filter = new PanelFilter();
+		filter.setVisible(false);
+		this.filterApply = new JCheckBox("Filter", false);
 		//Display
 		this.setLayout(new BorderLayout());
 		JPanel panelUp = new JPanel(new BorderLayout());
@@ -142,8 +131,46 @@ public class PanelNav extends JPanel {
 		searchBar.add(this.filterApply, BorderLayout.EAST);
 		panelUp.add(searchBar, BorderLayout.SOUTH);
 		this.splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelUp, new JScrollPane(this.list));
+		
+		//filterApply
+		this.filterApply.addActionListener((ActionEvent e) -> {
+			if (e.getID() == 1001) {
+				if (filterApply.isSelected()) {
+					filter.setVisible(true);
+					splitPane.setDividerLocation(0.4);
+				} else {
+					filter.setVisible(false);
+					splitPane.setDividerLocation(splitPane.getMinimumDividerLocation());
+				}
+				PanelNav.this.getParent().repaint();
+			}
+		});
+		
+		//finish Display
 		this.add(this.splitPane, BorderLayout.CENTER);
 		this.sort = CardComparator.BY_ID;
+		this.sortedBy = new JLabel("Sorted by ???");
+		sortedBy.setHorizontalAlignment(JLabel.CENTER);
+		updateTextSortedBy();
+		this.add(sortedBy, BorderLayout.SOUTH);
+	}
+	
+	private void updateTextSortedBy() {
+		this.sortedBy.setText("Sorted by "+this.sort.name());
+	}
+	
+	private void changeSorted() {
+		new DialogCombo<CardComparator>(cardsPanel.getFrameLogi(), "Sorted by", sort) {
+			private static final long serialVersionUID = 944290591647698175L;
+					
+			@Override
+			public void eventOk(CardComparator newSort) throws IOException, ReponseRequestException, RequestException  {
+				sort = newSort;
+				updateTextSortedBy();
+				cardsPanel.refresh();
+			}
+			
+		};
 	}
 	
 	public static String renderHTMLCard(Card card, String prefix) {
@@ -294,16 +321,7 @@ public class PanelNav extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (e.getID() == 1001) {
-						new DialogCombo<CardComparator>(cardsPanel.getFrameLogi(), "Sorted by", sort) {
-							private static final long serialVersionUID = 944290591647698175L;
-									
-							@Override
-							public void eventOk(CardComparator newSort) throws IOException, ReponseRequestException, RequestException  {
-								sort = newSort;
-								cardsPanel.refresh();
-							}
-							
-						}; 
+						changeSorted();
 					}
 				}
 			});
