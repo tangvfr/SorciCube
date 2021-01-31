@@ -56,7 +56,7 @@ public class PanelNav extends JPanel {
 
 	private static final long serialVersionUID = -493103431246777186L;
 	private JSplitPane splitPane;
-	private CardsPanel cartsPanel;
+	private CardsPanel cardsPanel;
 	private JButton refrech;
 	private JLabel clear;
 	private JButton disconnect;
@@ -67,8 +67,8 @@ public class PanelNav extends JPanel {
 	private JCheckBox filterApply;
 	private CardComparator sort;
 	
-	public PanelNav(CardsPanel cartsPanel) throws PanelFilterException {
-		this.cartsPanel = cartsPanel;
+	public PanelNav(CardsPanel cardsPanel) throws PanelFilterException {
+		this.cardsPanel = cardsPanel;
 		//clear
 		this.clear = new JLabel(" X ");
 		clear.addMouseListener(new ClickListener() {
@@ -124,14 +124,14 @@ public class PanelNav extends JPanel {
 		disconnect.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cartsPanel.getFrameLogi().showConnection("Button Disconected", Color.GREEN);
+				cardsPanel.getClient().disconnect();
 			}
 		});
 		disconnect.setFocusable(false);
 		//list
 		this.list = new JList<Card>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setComponentPopupMenu(new ListPopupMenu(this.cartsPanel));
+		list.setComponentPopupMenu(new ListPopupMenu(this.cardsPanel));
 		list.setCellRenderer(new ListCellRenderer<Card>() {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
@@ -141,7 +141,7 @@ public class PanelNav extends JPanel {
 		list.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cartsPanel.setCard(list.getSelectedValue());
+				cardsPanel.setCard(list.getSelectedValue());
 				
 			}
 		});
@@ -184,7 +184,7 @@ public class PanelNav extends JPanel {
 	}
 	
 	public void refresh() {
-		Vector<Card> listCard = this.cartsPanel.getCards().cloneCardsValue();
+		Vector<Card> listCard = this.cardsPanel.getCards().cloneCardsValue();
 		String name = this.search.getText().toLowerCase();
 		boolean uuidSearch = false;
 		if (!name.isEmpty()) {
@@ -359,7 +359,7 @@ public class PanelNav extends JPanel {
 	
 	private void refrechCardPanel() {
 		try {
-			cartsPanel.refresh();
+			cardsPanel.refresh();
 		} catch (IOException | ReponseRequestException | RequestException e) {
 			JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e.getMessage(), "Error refrech", JOptionPane.ERROR_MESSAGE);
 		}
