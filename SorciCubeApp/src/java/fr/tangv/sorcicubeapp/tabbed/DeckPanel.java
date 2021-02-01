@@ -19,7 +19,7 @@ public class DeckPanel extends JList<Card> {
 	private static final long serialVersionUID = 1426081281440355960L;
 	private DeckCards deck;
 	
-	public DeckPanel(CardsPanel cardsPanel) {
+	public DeckPanel(DecksPanel decks, CardsPanel cardsPanel) {
 		this.setCellRenderer(cardsPanel.getPanelNav().getListCellRenderer());
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.addMouseListener(new ClickListener() {
@@ -36,6 +36,7 @@ public class DeckPanel extends JList<Card> {
 									DeckPanel.this.getSelectedIndex(),
 									cardsPanel.getCards().getCard(comp.getCardUUID())
 								);
+							decks.update();
 							DeckPanel.this.repaint();
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(this, e.getMessage(), "Error invalid UUID", JOptionPane.ERROR_MESSAGE);

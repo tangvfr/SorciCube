@@ -2,7 +2,11 @@ package fr.tangv.sorcicubeapp.tabbed;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import fr.tangv.sorcicubeapp.card.CardsPanel;
 import fr.tangv.sorcicubecore.handler.HandlerDefaultDeck;
@@ -23,10 +27,10 @@ public class DecksPanel extends JTabbedPane {
 		this.decks = new HandlerDefaultDeck(cardsPanel.getClient(), cardsPanel.getCards());
 		this.setTabPlacement(JTabbedPane.LEFT);
 		//init decks
-		this.dark = new DeckPanel(cardsPanel);
-		this.light = new DeckPanel(cardsPanel);
-		this.nature = new DeckPanel(cardsPanel);
-		this.toxic = new DeckPanel(cardsPanel);
+		this.dark = new DeckPanel(this, cardsPanel);
+		this.light = new DeckPanel(this, cardsPanel);
+		this.nature = new DeckPanel(this, cardsPanel);
+		this.toxic = new DeckPanel(this, cardsPanel);
 		//show deck
 		refresh();
 		//add decks
@@ -34,6 +38,20 @@ public class DecksPanel extends JTabbedPane {
 		this.addTab("Light", light);
 		this.addTab("Nature", nature);
 		this.addTab("Toxic", toxic);
+		this.addTab("Refresh", new JPanel());
+		this.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if (DecksPanel.this.getSelectedIndex() == 4) {
+					try {
+						refresh();
+						DecksPanel.this.setSelectedIndex(0);
+					} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
+						JOptionPane.showMessageDialog(DecksPanel.this, e1.getMessage(), "Error Refresh", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
 	}
 	
 	public void refresh() throws IOException, ReponseRequestException, RequestException, DeckException {
@@ -42,6 +60,11 @@ public class DecksPanel extends JTabbedPane {
 		this.light.setDeck(decks.getDeckLight());
 		this.nature.setDeck(decks.getDeckNature());
 		this.toxic.setDeck(decks.getDeckToxic());
+		this.repaint();
+	}
+	
+	public void update() throws IOException, ReponseRequestException, RequestException {
+		decks.update();
 	}
 	
 }
