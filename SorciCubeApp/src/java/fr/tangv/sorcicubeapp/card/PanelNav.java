@@ -105,7 +105,10 @@ public class PanelNav extends JPanel {
 		this.listCellRenderer = new ListCellRenderer<Card>() {
 			@Override
 			public Component getListCellRendererComponent(JList<? extends Card> list, Card card, int index, boolean isSelected, boolean cellHasFocus) {
-				return new JLabel(renderHTMLCard(card, (isSelected ? ">" : "")));
+				if (card != null)
+					return new JLabel(renderHTMLCard(card, (isSelected ? ">" : "")));
+				else
+					return new JLabel("*None*");
 			}
 		};
 		list.setCellRenderer(this.listCellRenderer);
