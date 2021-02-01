@@ -98,7 +98,7 @@ public class FeaturesTable extends JTable {
 										feature.setValue(new CardValue(comp.getCardUUID()));
 										FeaturesTable.this.init(window);
 										FeaturesTable.this.repaint();
-									} catch (Throwable e) {
+									} catch (Exception e) {
 										JOptionPane.showMessageDialog(this, e.getMessage(), "Error invalid UUID", JOptionPane.ERROR_MESSAGE);
 									}
 								}

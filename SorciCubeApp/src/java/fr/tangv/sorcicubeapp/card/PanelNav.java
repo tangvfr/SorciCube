@@ -108,7 +108,7 @@ public class PanelNav extends JPanel {
 				if (card != null)
 					return new JLabel(renderHTMLCard(card, (isSelected ? ">" : "")));
 				else
-					return new JLabel("*None*");
+					return new JLabel((isSelected ? ">" : "")+"*None*");
 			}
 		};
 		list.setCellRenderer(this.listCellRenderer);

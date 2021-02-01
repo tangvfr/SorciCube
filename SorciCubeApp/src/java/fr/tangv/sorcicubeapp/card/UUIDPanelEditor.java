@@ -60,16 +60,16 @@ public class UUIDPanelEditor extends JPanel {
 		this.parent = parent;
 	}
 	
-	public UUID getCardUUID() throws Throwable {
+	public UUID getCardUUID() throws Exception {
 		UUID uuid;
 		try {
 			uuid = UUID.fromString(field.getText());
 		} catch (Throwable e) {
-			throw new Throwable("\""+field.getText()+"\" is not UUID !");
+			throw new Exception("\""+field.getText()+"\" is not UUID !");
 		}
 		Card card = cardsPanel.getCards().getCard(uuid);
 		if (card == null)
-			throw new Throwable("Card is not existing for the UUID \""+uuid.toString()+"\" !");
+			throw new Exception("Don't existing card for the UUID \""+uuid.toString()+"\" !");
 		return uuid;
 	}
 	

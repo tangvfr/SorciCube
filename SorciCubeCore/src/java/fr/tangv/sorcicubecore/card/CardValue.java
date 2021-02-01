@@ -6,7 +6,7 @@ import org.bson.Document;
 
 public class CardValue {
 
-	private static final UUID EMPTY_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+	public static final UUID EMPTY_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 	
 	private final Object value;
 	private final TypeValue type;
