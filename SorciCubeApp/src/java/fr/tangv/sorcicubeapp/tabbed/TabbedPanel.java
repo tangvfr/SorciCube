@@ -21,6 +21,7 @@ public class TabbedPanel extends JTabbedPane {
 	//tabbed
 	private final CardsPanel cardsPanel;
 	private final DecksPanel decksPanel;
+	private final PacketsCardsPanel packetsPanel;
 	private final PanelOthers others;
 	
 	public TabbedPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException, PanelFilterException, DeckException {
@@ -28,11 +29,13 @@ public class TabbedPanel extends JTabbedPane {
 		//init tabbed
 		this.cardsPanel = new CardsPanel(client, logi);
 		this.decksPanel = new DecksPanel(cardsPanel);
+		this.packetsPanel = new PacketsCardsPanel(client, logi);
 		this.others = new PanelOthers(client, logi);
 		
 		//add tabbbed
 		this.addTab("Cards", this.cardsPanel);
-		this.addTab("DefaultDecks", decksPanel);
+		this.addTab("DefaultDecks", this.decksPanel);
+		this.addTab("Packets", this.packetsPanel);
 		JPanel panelOthers = new JPanel(new GridBagLayout());
 		panelOthers.add(this.others);
 		this.addTab("Others", panelOthers);
