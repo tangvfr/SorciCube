@@ -47,6 +47,7 @@ public class HandlerPacketCards {
 	public void removePacket(String name) throws IOException, ReponseRequestException, RequestException {
 		sorci.sendRequestReponse(new Request(RequestType.PACKETS_REMOVE, Request.randomID(), "Remove", name),
 				RequestType.SUCCESSFUL);
+		packets.remove(name);
 	}
 	
 	public void updatePacket(String lastName, PacketCards packet) throws IOException, ReponseRequestException, RequestException {
