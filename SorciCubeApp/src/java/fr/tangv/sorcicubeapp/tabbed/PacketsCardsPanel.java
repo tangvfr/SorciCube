@@ -20,7 +20,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
@@ -106,7 +106,7 @@ public class PacketsCardsPanel extends JSplitPane {
 		panelUp.add(refresh, BorderLayout.NORTH);
 		panelUp.add(clear, BorderLayout.WEST);
 		panelUp.add(search, BorderLayout.CENTER);
-		panelUp.add(new JSeparator(HORIZONTAL_SPLIT), BorderLayout.SOUTH);
+		panelUp.setBorder(new EmptyBorder(0, 0, 5, 0));
 		JPanel panelLeft = new JPanel(new BorderLayout());
 		panelLeft.add(panelUp, BorderLayout.NORTH);
 		panelLeft.add(listPakcets, BorderLayout.CENTER);
