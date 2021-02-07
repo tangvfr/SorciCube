@@ -30,11 +30,11 @@ public class TabbedPanel extends JTabbedPane {
 		this.cardsPanel = new CardsPanel(client, logi);
 		this.decksPanel = new DecksPanel(cardsPanel);
 		this.packetsPanel = new PacketsCardsPanel(client, logi);
-		this.others = new PanelOthers(client, logi);
+		this.others = new PanelOthers(client, logi, this);
 		
 		//add tabbbed
 		this.addTab("Cards", this.cardsPanel);
-		this.addTab("DefaultDecks", this.decksPanel);
+		this.addTab("DefaultDecks", this.decksPanel);  
 		this.addTab("Packets", this.packetsPanel);
 		JPanel panelOthers = new JPanel(new GridBagLayout());
 		panelOthers.add(this.others);
@@ -44,6 +44,10 @@ public class TabbedPanel extends JTabbedPane {
 		this.cardsPanel.refresh();
 	}
 	
-	
+	public void refreshAll() throws IOException, ReponseRequestException, RequestException, DeckException {
+		this.cardsPanel.refresh();
+		this.decksPanel.refresh();
+		this.packetsPanel.refresh();
+	}
 	
 }

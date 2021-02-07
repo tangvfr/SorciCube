@@ -18,18 +18,37 @@ import javax.swing.border.TitledBorder;
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.tools.ImageTool;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
+import fr.tangv.sorcicubecore.player.DeckException;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class PanelOthers extends JPanel {
 
 	private static final long serialVersionUID = -1979640189589135131L;
 
-	public PanelOthers(SorciClient client, FrameLogi logi) {
-		this.setLayout(new GridLayout(3, 1, 10, 10));
+	public PanelOthers(SorciClient client, FrameLogi logi, TabbedPanel tab) {
+		this.setLayout(new GridLayout(4, 1, 10, 10));
 		this.setBorder(new TitledBorder("Others"));
-		Dimension dim = new Dimension(220, 140);
+		Dimension dim = new Dimension(220, 180);
 		this.setMaximumSize(dim);
 		this.setPreferredSize(dim);
+		
+		//refresh
+		JButton refresh = new JButton("Refresh All");
+		refresh.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					tab.refreshAll();
+					JOptionPane.showMessageDialog(PanelOthers.this, "Successful refresh !", "Refresh All", JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
+					e1.printStackTrace();
+					logi.showConnection("RefreshAllError: "+e1.getMessage(), Color.RED);
+				}
+			}
+		});
+		this.add(refresh);
 		
 		//mineSkin
 		JButton mineskin = new JButton("mineskin.org");

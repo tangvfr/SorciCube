@@ -8,7 +8,6 @@ import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListCellRenderer;
@@ -29,6 +28,7 @@ public class PacketsCardsPanel extends JSplitPane {
 	
 	private final HandlerPacketCards handler;
 	private final JList<PacketCards> listPakcets;
+	private final PacketCardsPanel packetCard;
 	
 	public PacketsCardsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
 		super(HORIZONTAL_SPLIT);
@@ -49,14 +49,17 @@ public class PacketsCardsPanel extends JSplitPane {
 		this.listPakcets.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				showPanel(listPakcets.getSelectedValue());
+				packetCard.showPacket(listPakcets.getSelectedValue());
 			}
 		});
+		this.packetCard = new PacketCardsPanel(this);
 		this.add(new JScrollPane(this.listPakcets), 0);
-		refresh(null);
+		this.add(this.packetCard, 1);
+		refresh();
 	}
 	
-	public void refresh(String nameSelect) throws IOException, ReponseRequestException, RequestException {
+	public void refresh() throws IOException, ReponseRequestException, RequestException {
+		String nameSelect = this.packetCard.getPacketName();
 		handler.refresh();
 		Vector<PacketCards> list = new Vector<PacketCards>();
 		PacketCards pack = null;
@@ -69,17 +72,10 @@ public class PacketsCardsPanel extends JSplitPane {
 			list.add(pack);
 		}
 		listPakcets.setListData(list);
-		listPakcets.setSelectedValue(pack, true);
-		showPanel(pack);
+		if (pack != null)
+			listPakcets.setSelectedValue(pack, true);
+		packetCard.showPacket(pack);
 		this.repaint();
-	}
-	
-	public void showPanel(PacketCards packet) {
-		if (packet == null) {
-			this.add(new JPanel(), 1);
-			return;
-		}
-			
 	}
 	
 }
