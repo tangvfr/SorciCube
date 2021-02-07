@@ -52,7 +52,7 @@ public class PacketCards {
 	public int getId() {
 		return idItem;
 	}
-	
+
 	public Document toDocument() {
 		Document doc = new Document("name", name)
 			.append("size", size)

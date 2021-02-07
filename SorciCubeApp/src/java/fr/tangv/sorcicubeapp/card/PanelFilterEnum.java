@@ -3,7 +3,6 @@ package fr.tangv.sorcicubeapp.card;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,17 +19,14 @@ public class PanelFilterEnum<T extends Enum<?>> extends JPanel {
 	private static final long serialVersionUID = 5956915292783604068L;
 	private ConcurrentHashMap<T, JCheckBox> map;
 	
-	public PanelFilterEnum(T enumm, String name, int axis, boolean cible) throws Exception {
+	public PanelFilterEnum(T[] enums, String name, int axis, boolean cible) throws Exception {
 		this.map = new ConcurrentHashMap<T, JCheckBox>();
 		if (cible)
 			this.setLayout(new GridLayout(10, 2));
 		else
 			this.setLayout(new BoxLayout(this, axis));
 		this.setBorder(new TitledBorder(name));
-		Method values = enumm.getClass().getDeclaredMethod("values", new Class<?>[0]);
-		@SuppressWarnings("unchecked")
-		T[] list = (T[]) values.invoke(enumm, new Object[0]);
-		for (T value : list) {
+		for (T value : enums) {
 			String label;
 			if (value == CardCible.ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE) {
 				label = "ONE_EA_AND_ONE_EE";

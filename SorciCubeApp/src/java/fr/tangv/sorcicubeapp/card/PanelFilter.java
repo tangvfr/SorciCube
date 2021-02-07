@@ -46,11 +46,11 @@ public class PanelFilter extends JScrollPane {
 	public PanelFilter() throws PanelFilterException {
 		//init value
 		try {
-			this.filterType = new PanelFilterEnum<CardType>(CardType.ENTITY, "Type", BoxLayout.X_AXIS, false);
-			this.filterRarity = new PanelFilterEnum<CardRarity>(CardRarity.COMMUN, "Rarity", BoxLayout.Y_AXIS, false);
-			this.filterFaction = new PanelFilterEnum<CardFaction>(CardFaction.BASIC, "Faction", BoxLayout.Y_AXIS, false);
-			this.filterCibleFaction = new PanelFilterEnum<CardFaction>(CardFaction.BASIC, "Cible Faction", BoxLayout.Y_AXIS, false);
-			this.filterCible = new PanelFilterEnum<CardCible>(CardCible.ALL, "Cible", 0, true);
+			this.filterType = new PanelFilterEnum<CardType>(CardType.values(), "Type", BoxLayout.X_AXIS, false);
+			this.filterRarity = new PanelFilterEnum<CardRarity>(CardRarity.values(), "Rarity", BoxLayout.Y_AXIS, false);
+			this.filterFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Faction", BoxLayout.Y_AXIS, false);
+			this.filterCibleFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Cible Faction", BoxLayout.Y_AXIS, false);
+			this.filterCible = new PanelFilterEnum<CardCible>(CardCible.values(), "Cible", 0, true);
 		} catch (Exception e) {
 			throw new PanelFilterException("Error with FilterEnum");
 		}

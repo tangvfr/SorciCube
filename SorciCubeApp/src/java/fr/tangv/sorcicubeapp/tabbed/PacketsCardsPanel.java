@@ -78,4 +78,6 @@ public class PacketsCardsPanel extends JSplitPane {
 		this.repaint();
 	}
 	
+	
+	
 }
