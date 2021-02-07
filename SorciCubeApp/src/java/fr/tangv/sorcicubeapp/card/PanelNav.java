@@ -349,6 +349,7 @@ public class PanelNav extends JPanel {
 			cardsPanel.refresh();
 		} catch (IOException | ReponseRequestException | RequestException e) {
 			JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e.getMessage(), "Error refrech", JOptionPane.ERROR_MESSAGE);
+			cardsPanel.getFrameLogi().showConnection("Error: "+e.getMessage(), Color.PINK);
 		}
 	}
 	

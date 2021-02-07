@@ -36,7 +36,6 @@ public class PacketCardsPanel extends JScrollPane {
 		if (packet == null) {
 			this.setViewportView(empty);
 		} else {
-			
 			this.setViewportView(packetPanel);
 		}
 	}
