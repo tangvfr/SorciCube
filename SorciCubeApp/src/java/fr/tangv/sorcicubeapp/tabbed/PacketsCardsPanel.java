@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
@@ -98,6 +97,7 @@ public class PacketsCardsPanel extends JSplitPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				packetCard.showPacket(listPakcets.getSelectedValue());
+				packetCard.repaint();
 			}
 		});
 		this.packetCard = new PacketCardsPanel(this);
