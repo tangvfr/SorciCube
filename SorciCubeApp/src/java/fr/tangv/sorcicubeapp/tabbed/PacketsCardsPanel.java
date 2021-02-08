@@ -113,6 +113,7 @@ public class PacketsCardsPanel extends JSplitPane {
 		this.add(panelLeft, 0);
 		this.add(this.packetCard, 1);
 		refresh();
+		//add popmenu
 	}
 	
 	public void refresh() {
@@ -145,6 +146,13 @@ public class PacketsCardsPanel extends JSplitPane {
 		}
 	}
 	
-	
+	public void updatePacket(String lastName, PacketCards newPacket) {
+		try {
+			handler.updatePacket(lastName, newPacket);
+		} catch (IOException | ReponseRequestException | RequestException e) {
+			JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error update", JOptionPane.ERROR_MESSAGE);
+			logi.showConnection("Error: "+e.getMessage(), Color.PINK);
+		}
+	}
 	
 }

@@ -48,11 +48,16 @@ public class PacketCardsPanel extends JScrollPane {
 		this.apply.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				manager.updatePacket(packet.getName(), createPacket());
 			}
 		});
 		this.cancel = new JButton("Cancel");
-		
+		this.cancel.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				initValue();
+			}
+		});
 		JPanel btns = new JPanel(new BorderLayout(10, 10));
 		btns.add(apply, BorderLayout.WEST);
 		btns.add(cancel, BorderLayout.EAST);
@@ -64,6 +69,7 @@ public class PacketCardsPanel extends JScrollPane {
 		this.packetPanel.add(rarities);
 		this.packetPanel.add(types);
 		this.packetPanel.add(size);
+		this.packetPanel.add(btns);
 		showPacket(null);
 	}
 	
@@ -78,15 +84,19 @@ public class PacketCardsPanel extends JScrollPane {
 		if (packet == null) {
 			this.setViewportView(empty);
 		} else {
-			this.name.setText(packet.getName());
-			this.id.setInt(packet.getId());
-			this.factions.setInts(packet.getFaction());
-			this.rarities.setInts(packet.getRarity());
-			this.types.setInts(packet.getType());
-			this.size.setInt(packet.getSize());
+			initValue();
 			packetPanel.setBorder(new TitledBorder(ColorMCToHTML.replaceColor("Packet: "+packet.getName())));
 			this.setViewportView(packetPanel);
 		}
+	}
+	
+	public void initValue() {
+		this.name.setText(packet.getName());
+		this.id.setInt(packet.getId());
+		this.factions.setInts(packet.getFaction());
+		this.rarities.setInts(packet.getRarity());
+		this.types.setInts(packet.getType());
+		this.size.setInt(packet.getSize());
 	}
 	
 	public PacketCards createPacket() {
