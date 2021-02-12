@@ -20,6 +20,7 @@ public class ComponentText extends JComponent {
 		JLabel label = new JLabel(name+":");
 		label.setHorizontalAlignment(JLabel.RIGHT);	
 		this.add(label);
+		this.add(text);
 	}
 	
 	public void setText(String text) {

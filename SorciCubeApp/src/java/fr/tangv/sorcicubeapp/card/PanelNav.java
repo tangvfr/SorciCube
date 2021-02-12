@@ -314,17 +314,17 @@ public class PanelNav extends JPanel {
 					if (e.getID() == 1001) {
 						Card card = list.getSelectedValue();
 						if (card != null) {
-							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure delete card nommed \""+card.getName()+"\" ?", "Delete card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure remove card nommed \""+card.getName()+"\" ?", "Remove card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
 								try {
 									cardsPanel.getCards().delete(card);
 									cardsPanel.setCard(null);
 									cardsPanel.refresh();
 								} catch (IOException | ReponseRequestException | RequestException e1) {
-									JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Delete Card", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Remove Card", JOptionPane.ERROR_MESSAGE);
 								}
 							}
 						} else {
-							JOptionPane.showMessageDialog(PanelNav.this, "No selected card ?", "Delete Card", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(PanelNav.this, "No selected card ?", "Remove Card", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}

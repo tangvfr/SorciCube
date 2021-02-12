@@ -21,6 +21,7 @@ public class ComponentNumberInt extends JComponent {
 		JLabel label = new JLabel(name+":");
 		label.setHorizontalAlignment(JLabel.RIGHT);	
 		this.add(label);
+		this.add(number);
 	}
 	
 	public void setInt(int number) {

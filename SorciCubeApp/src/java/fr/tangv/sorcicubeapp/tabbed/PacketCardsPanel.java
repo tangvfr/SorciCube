@@ -1,6 +1,8 @@
 package fr.tangv.sorcicubeapp.tabbed;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
@@ -19,7 +21,6 @@ import fr.tangv.sorcicubecore.packet.PacketCards;
 public class PacketCardsPanel extends JScrollPane {
 
 	private static final long serialVersionUID = 2848497329580995498L;
-	private final PacketsCardsPanel manager;
 	private PacketCards packet;
 	private final JPanel empty;
 	private final JPanel packetPanel;
@@ -33,7 +34,6 @@ public class PacketCardsPanel extends JScrollPane {
 	private final JButton cancel;
 
 	public PacketCardsPanel(PacketsCardsPanel manager) {
-		this.manager = manager;
 		this.empty = new JPanel();
 		this.packetPanel = new JPanel();
 		//pakcet
@@ -58,11 +58,12 @@ public class PacketCardsPanel extends JScrollPane {
 				initValue();
 			}
 		});
-		JPanel btns = new JPanel(new BorderLayout(10, 10));
+		JPanel btns = new JPanel(new GridLayout(1, 2, 10, 10));
 		btns.add(apply, BorderLayout.WEST);
 		btns.add(cancel, BorderLayout.EAST);
 		//panel
-		this.packetPanel.setLayout(new BoxLayout(packetPanel, BoxLayout.X_AXIS));
+		//this.packetPanel.setLayout(new BoxLayout(packetPanel, BoxLayout.Y_AXIS)); //new GridBagLayout() 
+		//check style sheet
 		this.packetPanel.add(name);
 		this.packetPanel.add(id);
 		this.packetPanel.add(factions);
@@ -85,7 +86,7 @@ public class PacketCardsPanel extends JScrollPane {
 			this.setViewportView(empty);
 		} else {
 			initValue();
-			packetPanel.setBorder(new TitledBorder(ColorMCToHTML.replaceColor("Packet: "+packet.getName())));
+			packetPanel.setBorder(new TitledBorder("<html><body>"+ColorMCToHTML.replaceColor("Packet: "+packet.getName())+"</html></body>"));
 			this.setViewportView(packetPanel);
 		}
 	}

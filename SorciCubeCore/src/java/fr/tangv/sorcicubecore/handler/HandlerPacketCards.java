@@ -39,6 +39,8 @@ public class HandlerPacketCards {
 	}
 	
 	public void newPacket(String name) throws IOException, ReponseRequestException, RequestException {
+		if (name == null || name.isEmpty())
+			throw new RequestException("Packet new has name invalid");
 		Request reponse = sorci.sendRequestReponse(new Request(RequestType.PACKETS_NEW, Request.randomID(), "New", name),
 				RequestType.PACKETS_NEWED);
 		packets.put(name, PacketCards.toPacketCards(Document.parse(reponse.data)));

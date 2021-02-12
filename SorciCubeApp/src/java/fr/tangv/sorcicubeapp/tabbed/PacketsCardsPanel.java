@@ -3,6 +3,8 @@ package fr.tangv.sorcicubeapp.tabbed;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -13,8 +15,10 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
@@ -113,7 +117,48 @@ public class PacketsCardsPanel extends JSplitPane {
 		this.add(panelLeft, 0);
 		this.add(this.packetCard, 1);
 		refresh();
-		//add popmenu
+		//popmenu
+		JMenuItem create = new JMenuItem("Create Pakcet");
+		create.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getID() == ActionEvent.ACTION_FIRST) {
+					String name = JOptionPane.showInputDialog(logi, "Name for packet new", "Create Packet", JOptionPane.QUESTION_MESSAGE);
+					if (name != null && !name.isEmpty())
+						try {
+							handler.newPacket(name);
+							refresh();
+						} catch (IOException | ReponseRequestException | RequestException e1) {
+							JOptionPane.showMessageDialog(logi, "Error: "+e1.getMessage(), "Create Packet", JOptionPane.ERROR_MESSAGE);
+						}
+				}
+			}
+		});
+		JMenuItem delete = new JMenuItem("Remove Pakcet");
+		delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getID() == ActionEvent.ACTION_FIRST) {
+					PacketCards packet = listPakcets.getSelectedValue();
+					if (packet != null) {
+						if (0 == JOptionPane.showConfirmDialog(logi, "Are you sure remove pakcet nommed \""+packet.getName()+"\" ?", "Remove Packet", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+							try {
+								handler.removePacket(packet.getName());
+								refresh();
+							} catch (IOException | ReponseRequestException | RequestException e1) {
+								JOptionPane.showMessageDialog(logi, "Error: "+e1.getMessage(), "Remove Packet", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					} else {
+						JOptionPane.showMessageDialog(logi, "No selected packet ?", "Remove Packet", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		JPopupMenu menu = new JPopupMenu();
+		menu.add(create);
+		menu.add(delete);
+		this.listPakcets.setComponentPopupMenu(menu);
 	}
 	
 	public void refresh() {
@@ -131,7 +176,7 @@ public class PacketsCardsPanel extends JSplitPane {
 				if (name.equals(nameSelect))
 					pack = packet;
 				if (searchName.isEmpty() || name.contains(searchName))
-					list.add(pack);
+					list.add(packet);
 				max++;
 			}
 			listPakcets.setListData(list);
