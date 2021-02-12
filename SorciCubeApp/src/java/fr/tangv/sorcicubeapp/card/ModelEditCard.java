@@ -92,6 +92,8 @@ public class ModelEditCard extends AbstractTableModel {
 		}
 		if (rowIndex == 0 || rowIndex == 2)
 			return "<html><body><span color='#5555FF'>"+text+"</span></body></html>";
+		else if (rowIndex == 9)
+			return "<html><body><span color='#DD33DDF'>"+text+"</span></body></html>";
 		else
 			return text;
 	}
