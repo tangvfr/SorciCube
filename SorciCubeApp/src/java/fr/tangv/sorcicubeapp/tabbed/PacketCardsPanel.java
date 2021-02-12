@@ -44,11 +44,15 @@ public class PacketCardsPanel extends JScrollPane {
 		this.types = new ComponentArrayInt(CardType.values(), "Types");
 		this.size = new ComponentNumberInt("Size");
 		//button
-		this.apply = new JButton("Apply");
+		this.apply = new JButton("Save");
 		this.apply.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				manager.updatePacket(packet.getName(), createPacket());
+				PacketCards pack = createPacket();
+				manager.updatePacket(packet.getName(), pack);
+				manager.refresh();
+				showPacket(pack);
+				PacketCardsPanel.this.repaint();
 			}
 		});
 		this.cancel = new JButton("Cancel");
@@ -62,15 +66,17 @@ public class PacketCardsPanel extends JScrollPane {
 		btns.add(apply, BorderLayout.WEST);
 		btns.add(cancel, BorderLayout.EAST);
 		//panel
-		//this.packetPanel.setLayout(new BoxLayout(packetPanel, BoxLayout.Y_AXIS)); //new GridBagLayout() 
-		//check style sheet
-		this.packetPanel.add(name);
-		this.packetPanel.add(id);
-		this.packetPanel.add(factions);
-		this.packetPanel.add(rarities);
-		this.packetPanel.add(types);
-		this.packetPanel.add(size);
-		this.packetPanel.add(btns);
+		this.packetPanel.setLayout(new GridBagLayout());
+		JPanel pan = new JPanel();
+		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS)); 
+		pan.add(name);
+		pan.add(id);
+		pan.add(factions);
+		pan.add(rarities);
+		pan.add(types);
+		pan.add(size);
+		pan.add(btns);
+		this.packetPanel.add(pan);
 		showPacket(null);
 	}
 	

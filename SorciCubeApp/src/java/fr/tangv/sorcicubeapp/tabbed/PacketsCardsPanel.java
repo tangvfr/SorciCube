@@ -86,12 +86,18 @@ public class PacketsCardsPanel extends JSplitPane {
 		//main panel
 		this.listPakcets = new JList<PacketCards>();
 		this.listPakcets.setCellRenderer(new ListCellRenderer<PacketCards>() {
+			private String antiSpaces(String input) {
+				if (input.startsWith(" "))
+					return input.replaceFirst(" ", "§4[*space*]§0");
+				else
+					return input;
+			}
 			@Override
 			public Component getListCellRendererComponent(JList<? extends PacketCards> list, PacketCards value, int index, boolean isSelected, boolean cellHasFocus) {
 				return new JLabel(
 						"<html><body><span>"
 						+(isSelected ? ">" : "")+"</span>"
-						+ColorMCToHTML.replaceColor(value.getName())
+						+ColorMCToHTML.replaceColor(antiSpaces(value.getName()))
 						+"</html></body>"
 					);
 			}
