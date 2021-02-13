@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubeapp.tabbed;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -109,8 +108,7 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 			refresh.setText("Refresh | "+max+" packets "+list.size()+" find");
 			this.repaint();
 		} catch (IOException | ReponseRequestException | RequestException e) {
-			JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error refrech", JOptionPane.ERROR_MESSAGE);
-			logi.showConnection("Error: "+e.getMessage(), Color.PINK);
+			warningBug(e, "refresh");
 		}
 	}
 	
@@ -118,8 +116,7 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 		try {
 			handler.updatePacket(lastName, newPacket);
 		} catch (IOException | ReponseRequestException | RequestException e) {
-			JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error update", JOptionPane.ERROR_MESSAGE);
-			logi.showConnection("Error: "+e.getMessage(), Color.PINK);
+			warningBug(e, "update");
 		}
 	}
 

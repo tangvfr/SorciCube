@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
@@ -89,6 +90,11 @@ public abstract class SearchPanel<T> extends JSplitPane implements ListCellRende
 		this.add(this.initSelectPanel(client, menu), 1);
 		this.list.setComponentPopupMenu(menu);
 		refresh();
+	}
+	
+	protected void warningBug(Exception e, String action) {
+		JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error "+action, JOptionPane.ERROR_MESSAGE);
+		logi.showConnection("Error: "+e.getMessage(), Color.PINK);
 	}
 	
 	protected abstract JComponent initSelectPanel(SorciClient client, JPopupMenu menu) throws IOException, ReponseRequestException, RequestException;

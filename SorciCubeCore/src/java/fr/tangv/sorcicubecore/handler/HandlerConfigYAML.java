@@ -16,6 +16,17 @@ public class HandlerConfigYAML {
 		this.sorci = sorci;
 	}
 	
+	public String[] listConfig() throws IOException, ReponseRequestException, RequestException {
+		Request reponse = sorci.sendRequestReponse(
+				new Request(RequestType.CONFIG_SERVER_LIST, Request.randomID(), "List", null),
+				RequestType.CONFIG_SERVER_LIST_CONFIG
+			);
+		if (reponse.data.equals("|||"))
+			return new String[0];
+		else
+			return reponse.data.split("|");
+	}
+	
 	public String getConfig(String name) throws IOException, ReponseRequestException, RequestException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.CONFIG_SERVER_GET, Request.randomID(), name, null),

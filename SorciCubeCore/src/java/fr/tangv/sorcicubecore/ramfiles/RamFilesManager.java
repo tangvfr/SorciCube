@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubecore.ramfiles;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class RamFilesManager {
@@ -22,6 +23,10 @@ public class RamFilesManager {
 		} else {
 			folder.mkdirs();
 		}
+	}
+	
+	public Enumeration<String> list() {
+		return files.keys();
 	}
 	
 	public boolean has(String name) {

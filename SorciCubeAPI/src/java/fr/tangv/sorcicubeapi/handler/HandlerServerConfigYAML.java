@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubeapi.handler;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.ramfiles.RamFilesManager;
@@ -20,6 +21,20 @@ public class HandlerServerConfigYAML implements RequestHandlerInterface {
 
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {}
+	
+	@RequestAnnotation(type=RequestType.CONFIG_SERVER_LIST)
+	public void list(Client client, Request request) throws IOException, RequestException {
+		String data = "";
+		Enumeration<String> list = fm.list();
+		while (list.hasMoreElements()) {
+			data += list.nextElement();
+			if (list.hasMoreElements())
+				data += "|";
+		}
+		if (data.isEmpty())
+			data = "|||";
+		client.sendRequest(request.createReponse(RequestType.CONFIG_SERVER_LIST_CONFIG, data));
+	}
 	
 	@RequestAnnotation(type=RequestType.CONFIG_SERVER_UPDATE)
 	public void update(Client client, Request request) throws IOException, RequestException {

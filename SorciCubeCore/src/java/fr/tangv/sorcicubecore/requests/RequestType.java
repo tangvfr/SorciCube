@@ -22,6 +22,7 @@ public enum RequestType {
 	FIGHT_DATA_ONE(RequestDataType.JSON),
 	FIGHT_DATA_LIST(RequestDataType.JSON),
 	//CONFIG
+	CONFIG_SERVER_LIST_CONFIG(RequestDataType.ARRAY_TEXT),
 	CONFIG_SERVER_CONFIG(RequestDataType.YAML),
 	//PACKETS
 	PACKETS_LIST(RequestDataType.JSON),
@@ -64,6 +65,7 @@ public enum RequestType {
 	FIGHT_DATA_REMOVE(RequestDataType.NOTHING),
 	FIGHT_DATA_SERVER_REMOVE(RequestDataType.NOTHING),
 	//CONFIG
+	CONFIG_SERVER_LIST(RequestDataType.NOTHING),
 	CONFIG_SERVER_GET(RequestDataType.NOTHING),
 	CONFIG_SERVER_UPDATE(RequestDataType.YAML),
 	//PACKETS

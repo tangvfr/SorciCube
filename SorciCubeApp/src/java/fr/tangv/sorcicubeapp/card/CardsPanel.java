@@ -48,6 +48,7 @@ public class CardsPanel extends JPanel {
 		split.add(nav);
 		split.add(edit);
 		super.add(split, BorderLayout.CENTER);
+		refresh();
 	}
 
 	public SorciClient getClient() {
