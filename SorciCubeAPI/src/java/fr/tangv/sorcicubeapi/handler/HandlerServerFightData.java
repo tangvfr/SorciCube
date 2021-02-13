@@ -31,7 +31,7 @@ public class HandlerServerFightData implements RequestHandlerInterface {
 	@RequestAnnotation(type=RequestType.FIGHT_DATA_GET_LIST)
 	public void getList(Client client, Request request) throws IOException, RequestException {
 		try {
-			client.sendRequest(request.createReponse(RequestType.FIGHT_DATA_GET_LIST, new Document("list", fightDatas).toString()));
+			client.sendRequest(request.createReponse(RequestType.FIGHT_DATA_LIST, new Document("list", fightDatas).toString()));
 		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 		}

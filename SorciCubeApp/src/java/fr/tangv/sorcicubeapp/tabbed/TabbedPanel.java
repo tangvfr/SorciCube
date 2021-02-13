@@ -48,6 +48,7 @@ public class TabbedPanel extends JTabbedPane {
 		this.cardsPanel.refresh();
 		this.decksPanel.refresh();
 		this.packetsPanel.refresh();
+		this.configPanel.refresh();
 	}
 	
 }
