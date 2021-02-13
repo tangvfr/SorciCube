@@ -29,10 +29,8 @@ public class HandlerServerConfigYAML implements RequestHandlerInterface {
 		while (list.hasMoreElements()) {
 			data += list.nextElement();
 			if (list.hasMoreElements())
-				data += "|";
+				data += ";";
 		}
-		if (data.isEmpty())
-			data = "|||";
 		client.sendRequest(request.createReponse(RequestType.CONFIG_SERVER_LIST_CONFIG, data));
 	}
 	

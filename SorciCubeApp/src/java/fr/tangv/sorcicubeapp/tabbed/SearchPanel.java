@@ -94,7 +94,7 @@ public abstract class SearchPanel<T> extends JSplitPane implements ListCellRende
 	
 	protected void warningBug(Exception e, String action) {
 		JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error "+action, JOptionPane.ERROR_MESSAGE);
-		logi.showConnection("Error: "+e.getMessage(), Color.PINK);
+		logi.showConnection("Error: "+e.getMessage(), Color.MAGENTA);
 	}
 	
 	protected abstract JComponent initSelectPanel(SorciClient client, JPopupMenu menu) throws IOException, ReponseRequestException, RequestException;

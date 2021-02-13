@@ -26,7 +26,7 @@ public class Request {
 			this.name = r[2];
 			if (name.contains(" ") || name.contains("\n") || name.contains("\r") || name.isEmpty())
 				throw new Exception("");
-			this.data = new String(Base64.getDecoder().decode(r[3]), Client.CHARSET);
+			this.data = (r.length < 4) ? "" : new String(Base64.getDecoder().decode(r[3]), Client.CHARSET);
 		} catch (Exception e) {
 			throw new RequestException("Format of request is invalid: "+request);
 		}
@@ -38,7 +38,7 @@ public class Request {
 		this.name = name;
 		if (name.contains(" ") || name.contains("\n") || name.contains("\r"))
 			throw new RequestException("Name of request is invalid");
-		if (requestType.getTypeData() != RequestDataType.NOTHING && (data == null || data.isEmpty()))
+		if (requestType.getTypeData() != RequestDataType.NOTHING && (data == null))
 			throw new RequestException("Data is Null");
 		this.data = data;
 	}
