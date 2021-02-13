@@ -35,21 +35,9 @@ public class PanelOthers extends JPanel {
 		this.logi = logi;
 		this.setLayout(new GridLayout(5, 1, 10, 10));
 		this.setBorder(new TitledBorder("Others"));
-		Dimension dim = new Dimension(270, 180);
+		Dimension dim = new Dimension(250, 5*46-10);
 		this.setMaximumSize(dim);
 		this.setPreferredSize(dim);
-		
-		//Number fights
-		this.fights = new HandlerFightData(client);
-		this.fightsNumber = new JButton("x Fights");
-		this.fightsNumber.addMouseListener(new ClickListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				refreshFights();
-			}
-		});
-		this.add(fightsNumber);
-		refreshFights();
 		
 		//refresh
 		JButton refresh = new JButton("Refresh All");
@@ -67,6 +55,18 @@ public class PanelOthers extends JPanel {
 			}
 		});
 		this.add(refresh);
+		
+		//Number fights
+		this.fights = new HandlerFightData(client);
+		this.fightsNumber = new JButton("x Fights");
+		this.fightsNumber.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				refreshFights();
+			}
+		});
+		this.add(fightsNumber);
+		refreshFights();
 		
 		//mineSkin
 		JButton mineskin = new JButton("mineskin.org");
