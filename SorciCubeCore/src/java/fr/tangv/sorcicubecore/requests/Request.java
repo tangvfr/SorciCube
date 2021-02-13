@@ -18,7 +18,7 @@ public class Request {
 	
 	public Request(String request) throws RequestException {
 		String[] r = request.split(" ");
-		if (r.length != 4)
+		if (r.length != 4 || r.length != 3)
 			throw new RequestException("Format space in request is invalid");
 		try {
 			this.requestType = RequestType.valueOf(r[0]);
@@ -26,7 +26,7 @@ public class Request {
 			this.name = r[2];
 			if (name.contains(" ") || name.contains("\n") || name.contains("\r") || name.isEmpty())
 				throw new Exception("");
-			this.data = (r.length < 4) ? "" : new String(Base64.getDecoder().decode(r[3]), Client.CHARSET);
+			this.data = (r.length == 3) ? "" : new String(Base64.getDecoder().decode(r[3]), Client.CHARSET);
 		} catch (Exception e) {
 			throw new RequestException("Format of request is invalid: "+request);
 		}
