@@ -8,11 +8,12 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
@@ -28,7 +29,8 @@ public class ConfigsPanel extends SearchPanel<String> {
 	private HandlerConfigYAML handler;
 	private JPanel editor;
 	private String name;
-	private JEditorPane text;
+	private JTextArea text;
+	private JScrollPane scroll;
 	private JPanel btns;
 	
 	public ConfigsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
@@ -44,14 +46,17 @@ public class ConfigsPanel extends SearchPanel<String> {
 	protected JComponent initSelectPanel(SorciClient client, JPopupMenu menu) throws IOException, ReponseRequestException, RequestException {
 		this.handler = new HandlerConfigYAML(client);
 		this.editor = new JPanel(new BorderLayout());
-		this.text = new JEditorPane("text/plain", "");
+		this.text = new JTextArea("");
+		this.scroll = new JScrollPane(text);
 		this.btns = new JPanel(new GridLayout(1, 2, 5, 5));
 		//btns
-		JButton save = new JButton("save");
+		JButton save = new JButton("Save");
 		save.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					System.out.println(name);
+					System.out.println(text.getText());
 					handler.updateConfig(name, text.getText());
 					refresh();
 					openConfig(name);
@@ -73,9 +78,10 @@ public class ConfigsPanel extends SearchPanel<String> {
 	}
 
 	public void openConfig(String name) throws IOException, ReponseRequestException, RequestException {
+		this.name = name;
 		this.text.setText(handler.getConfig(name));
 		editor.setBorder(new TitledBorder("Config: "+name));
-		editor.add(this.text, BorderLayout.CENTER);
+		editor.add(this.scroll, BorderLayout.CENTER);
 		editor.add(this.btns, BorderLayout.SOUTH);
 	}
 	
