@@ -50,7 +50,8 @@ public class PlayerResources {
 			if ("textures".equals(value.getString("name"))) {
 				Document texture = Document.parse(new String(Base64.getDecoder().decode(value.getString("value"))));
 				this.skin = ImageIO.read(new URL(texture.get("textures", Document.class).get("SKIN", Document.class).getString("url")));
-				this.head = skin.getSubimage(8, 8, 8, 8);
+				this.head = new BufferedImage(8, 8, BufferedImage.TYPE_4BYTE_ABGR);
+				head.getGraphics().drawImage(skin.getSubimage(8, 8, 8, 8), 0, 0, null);
 				head.getGraphics().drawImage(skin.getSubimage(8+32, 8, 8, 8), 0, 0, null);
 				return;
 			}
@@ -75,7 +76,7 @@ public class PlayerResources {
 
 	public static void main(String[] args) {
 		try {
-			PlayerResources pr = new PlayerResources(UUID.fromString("ffe558be-2e97-4eca-a7d6-b6f9012ff1ba"));
+			PlayerResources pr = new PlayerResources(UUID.fromString("c7690732-20b3-4fb5-ab26-f976544b3fe5"));
 			BufferedImage skin = pr.getSkin();
 			JFrame frame = new JFrame();
 			JPanel panel = new JPanel(new BorderLayout(10, 10));
