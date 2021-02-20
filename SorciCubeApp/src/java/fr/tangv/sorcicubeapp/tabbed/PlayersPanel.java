@@ -91,11 +91,12 @@ public class PlayersPanel extends JPanel {
 	public void find() {
 		try {
 			UUID uuid;
+			String text = find.getText();
 			try {
-				uuid = UUID.fromString(find.getText());
+				uuid = UUID.fromString(text);
 			} catch (IllegalArgumentException e) {
 				try {
-					uuid = PlayerResources.findUserName(find.getText());
+					uuid = PlayerResources.findUserName(text);
 				} catch (ExceptionPlayerResources e1) {
 					uuid = null;
 				}

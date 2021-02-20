@@ -85,13 +85,18 @@ public class PlayerResources {
 				w.write(in, 0, len);
 			input.close();
 			String json = new String(w.toCharArray());
+			System.out.println(json+"\n--------------------");
 			if (json.isEmpty())
 				throw new ExceptionPlayerResources("Error find UserName");
 			Document doc = Document.parse(json);
 			String error = doc.getString("error");
 			if (error != null)
 				throw new ExceptionPlayerResources("Error find UserName");
-			return UUID.fromString(doc.getString("id").replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5"));
+			String id = doc.getString("id");
+			System.out.println(id);
+			String idd = id.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
+			System.out.println(idd);
+			return UUID.fromString(idd);
 		} catch (Exception e) {
 			throw new ExceptionPlayerResources("Error find UserName");
 		}
