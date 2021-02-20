@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -23,22 +22,23 @@ import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
-import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 @SuppressWarnings("serial")
 public abstract class SearchPanel<T> extends JSplitPane implements ListCellRenderer<T>, MouseListener {
 		
+	protected final JPopupMenu menu;
+	protected final SorciClient client;
 	protected final FrameLogi logi;
 	protected final JButton refresh;
 	protected final JLabel clear;
 	protected final JTextField search;
 	protected final JList<T> list;
 	
-	public SearchPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
+	public SearchPanel(SorciClient client, FrameLogi logi) {
 		super(HORIZONTAL_SPLIT);
 		this.logi = logi;
+		this.client = client;
 		//refresh
 		this.refresh = new JButton("");
 		this.refresh.addMouseListener(new ClickListener() {
@@ -86,10 +86,12 @@ public abstract class SearchPanel<T> extends JSplitPane implements ListCellRende
 		panelLeft.add(panelUp, BorderLayout.NORTH);
 		panelLeft.add(list, BorderLayout.CENTER);
 		this.add(panelLeft, 0);
-		JPopupMenu menu = new JPopupMenu();
-		this.add(this.initSelectPanel(client, menu), 1);
+		this.menu = new JPopupMenu();
 		this.list.setComponentPopupMenu(menu);
-		refresh();
+	}
+	
+	protected void addMainComponent(JComponent comp) {
+		this.add(comp, 1);
 	}
 	
 	protected void warningBug(Exception e, String action) {
@@ -97,7 +99,6 @@ public abstract class SearchPanel<T> extends JSplitPane implements ListCellRende
 		logi.showConnection("Error: "+e.getMessage(), Color.MAGENTA);
 	}
 	
-	protected abstract JComponent initSelectPanel(SorciClient client, JPopupMenu menu) throws IOException, ReponseRequestException, RequestException;
 	public abstract void refresh();
 	
 	@Override

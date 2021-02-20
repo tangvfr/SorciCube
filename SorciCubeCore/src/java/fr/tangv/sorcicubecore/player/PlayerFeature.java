@@ -54,6 +54,10 @@ public class PlayerFeature {
 		this.level = level;
 	}
 	
+	public String getPseudo() {
+		return pseudo;
+	}
+
 	public byte getLevel() {
 		return level;
 	}

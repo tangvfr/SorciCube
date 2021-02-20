@@ -25,7 +25,7 @@ public class PlayerResources {
 	private final BufferedImage skin;
 	private final BufferedImage head;
 	
-	private PlayerResources(UUID uuid) throws ExceptionPlayerResources, IOException {
+	public PlayerResources(UUID uuid) throws ExceptionPlayerResources, IOException {
 		this.uuid = uuid;
 		if (uuid == null)
 			throw new ExceptionPlayerResources("UUID is null");
@@ -58,7 +58,7 @@ public class PlayerResources {
 		throw new ExceptionPlayerResources("Data are not valid");
 	}
 	
-	public UUID getUuid() {
+	public UUID getUUID() {
 		return uuid;
 	}
 
@@ -74,6 +74,29 @@ public class PlayerResources {
 		return head;
 	}
 
+	public static UUID findUserName(String userName) throws ExceptionPlayerResources {
+		try {
+			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/"+userName+"?at="+(System.currentTimeMillis()/1000));
+			InputStreamReader input = new InputStreamReader(url.openStream());
+			CharArrayWriter w = new CharArrayWriter();
+			char[] in = new char[512];
+			int len;
+			while ((len = input.read(in)) != -1)
+				w.write(in, 0, len);
+			input.close();
+			String json = new String(w.toCharArray());
+			if (json.isEmpty())
+				throw new ExceptionPlayerResources("Error find UserName");
+			Document doc = Document.parse(json);
+			String error = doc.getString("error");
+			if (error != null)
+				throw new ExceptionPlayerResources("Error find UserName");
+			return UUID.fromString(doc.getString("id").replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5"));
+		} catch (Exception e) {
+			throw new ExceptionPlayerResources("Error find UserName");
+		}
+	}
+	
 	public static void main(String[] args) {
 		try {
 			PlayerResources pr = new PlayerResources(UUID.fromString("c7690732-20b3-4fb5-ab26-f976544b3fe5"));

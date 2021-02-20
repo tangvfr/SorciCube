@@ -8,12 +8,10 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.utils.ColorMCToHTML;
@@ -27,15 +25,11 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 
 	private static final long serialVersionUID = 2460248920367644846L;
 	
-	private HandlerPacketCards handler;
-	private PacketCardsPanel packetCard;
+	private final HandlerPacketCards handler;
+	private final PacketCardsPanel packetCard;
 	
 	public PacketsCardsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
 		super(client, logi);
-	}
-	
-	@Override
-	protected JComponent initSelectPanel(SorciClient client, JPopupMenu menu) throws IOException, ReponseRequestException, RequestException {
 		this.handler = new HandlerPacketCards(client);
 		this.packetCard = new PacketCardsPanel(this);
 		//popmenu
@@ -79,7 +73,8 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 		//menu add
 		menu.add(create);
 		menu.add(delete);
-		return this.packetCard;
+		this.addMainComponent(packetCard);
+		refresh();
 	}
 			
 	@Override

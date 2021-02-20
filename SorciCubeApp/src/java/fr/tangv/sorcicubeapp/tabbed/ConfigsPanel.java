@@ -7,11 +7,9 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
@@ -26,24 +24,15 @@ import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 public class ConfigsPanel extends SearchPanel<String> {
 
 	private static final long serialVersionUID = -1896197255749294906L;
-	private HandlerConfigYAML handler;
-	private JPanel editor;
+	private final HandlerConfigYAML handler;
+	private final JPanel editor;
 	private String name;
-	private JTextArea text;
-	private JScrollPane scroll;
-	private JPanel btns;
+	private final JTextArea text;
+	private final JScrollPane scroll;
+	private final JPanel btns;
 	
 	public ConfigsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
 		super(client, logi);
-	}
-	
-	@Override
-	public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
-		return new JLabel((isSelected ? "> " : "")+value);
-	}
-
-	@Override
-	protected JComponent initSelectPanel(SorciClient client, JPopupMenu menu) throws IOException, ReponseRequestException, RequestException {
 		this.handler = new HandlerConfigYAML(client);
 		this.editor = new JPanel(new BorderLayout());
 		this.text = new JTextArea("");
@@ -74,7 +63,13 @@ public class ConfigsPanel extends SearchPanel<String> {
 			}
 		});
 		btns.add(cancel);
-		return editor;
+		this.addMainComponent(editor);
+		refresh();
+	}
+	
+	@Override
+	public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
+		return new JLabel((isSelected ? "> " : "")+value);
 	}
 
 	public void openConfig(String name) throws IOException, ReponseRequestException, RequestException {
