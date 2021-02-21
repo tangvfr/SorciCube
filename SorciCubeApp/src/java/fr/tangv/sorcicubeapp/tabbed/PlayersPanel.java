@@ -79,6 +79,7 @@ public class PlayersPanel extends JPanel {
 				}
 			}
 		});
+		search.setToolTipText("name or uuid of player");
 		//makeup
 		this.setLayout(new BorderLayout());
 		JPanel panelUp = new JPanel(new BorderLayout());
