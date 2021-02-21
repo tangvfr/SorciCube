@@ -3,15 +3,12 @@ package fr.tangv.sorcicubeapp.tabbed;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -45,6 +42,7 @@ public class PlayersPanel extends JPanel {
 	private final JTextField search;
 	private final JScrollPane center;
 	private final JLabel message;
+	private final File headImage;
 	
 	public PlayersPanel(CardsPanel cardsPanel) throws IOException, ReponseRequestException, RequestException {
 		this.logi = cardsPanel.getFrameLogi();
@@ -93,6 +91,9 @@ public class PlayersPanel extends JPanel {
 		message.setHorizontalAlignment(JLabel.CENTER);
 		this.center = new JScrollPane(message);
 		this.add(center, BorderLayout.CENTER);
+		this.headImage = new File(System.getenv("TEMP")+"/head_player_sorcicube.png");
+		if (!headImage.exists())
+			headImage.createNewFile();
 	}
 
 	public void find() {
@@ -112,7 +113,7 @@ public class PlayersPanel extends JPanel {
 				}
 			}
 			if (uuid == null) {
-				message.setText("<html><body><center><h1>"+text+"</h1><h4>Pseudo not found to Mojang</h4></center></body></html>");
+				message.setText("<html><body><center><font size=7>"+text+"</font><br><font size=4>Pseudo not found to Mojang</font></center></body></html>");
 			} else {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
@@ -122,20 +123,17 @@ public class PlayersPanel extends JPanel {
 						center.setViewportView(new PlayerHeadList(res, feature));
 						return;
 					} else {
-						ByteArrayOutputStream out = new ByteArrayOutputStream();
-						Image imgH = res.getHead(256);
-						BufferedImage image = new BufferedImage(imgH.getWidth(null), imgH.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+						int size = 128;
+						BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
 						Graphics2D bGr = image.createGraphics();
-						bGr.drawImage(imgH, 0, 0, null);
+						bGr.drawImage(res.getHead(size), 0, 0, null);
 						bGr.dispose();
-						ImageIO.write(image, "png", out);
-						out.close();
-						String img = Base64.getEncoder().encodeToString(out.toByteArray());
-						message.setText("<html><body><center><img alt=\"Head Of Player\" src=\"data:image/png;base64, "+img+"\"><h1>"+res.getName()+"</h1><h4>Player is not registered on server</h4></center></body></html>");
+						ImageIO.write(image, "png", this.headImage);
+						message.setText("<html><body><center><img alt=\"Head Of Player\" src=\"file:"+this.headImage.getPath()+"\"><br><font size=7>"+res.getName()+"</font><br><font size=4>Player is not registered on server</font></center></body></html>");
 					}
 					this.repaint();
 				} catch (ExceptionPlayerResources e) {
-					message.setText("<html><body><center><h1>"+uuid.toString()+"</h1><h4>UUID not found to Mojang</h4></center></body></html>");
+					message.setText("<html><body><center><font size=7>"+uuid.toString()+"</font><br><font size=4>UUID not found to Mojang</font></center></body></html>");
 				}
 			}
 			center.setViewportView(message);
@@ -168,9 +166,9 @@ public class PlayersPanel extends JPanel {
 			this.add(head, BorderLayout.WEST);
 			this.add(new JLabel(
 					  "<html><body>"
-					+ "<h1>"+res.getName()+"</h1>"
+					+ "<font size=7>"+res.getName()+"</font>"
 					+ "<br>"
-					+ "<h6>"+res.getUUID().toString()+"</h6>"
+					+ "<font size=4>"+res.getUUID().toString()+"</font>"
 					+ "</body></html>"
 			), BorderLayout.CENTER);
 		}
