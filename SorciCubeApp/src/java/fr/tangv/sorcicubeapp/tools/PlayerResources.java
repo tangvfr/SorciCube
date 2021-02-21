@@ -30,15 +30,9 @@ public class PlayerResources {
 		this.uuid = uuid;
 		if (uuid == null)
 			throw new ExceptionPlayerResources("UUID is null");
-		URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/"+uuid.toString().replace("-", ""));
-		InputStreamReader input = new InputStreamReader(url.openStream());
-		CharArrayWriter w = new CharArrayWriter();
-		char[] in = new char[512];
-		int len;
-		while ((len = input.read(in)) != -1)
-			w.write(in, 0, len);
-		input.close();
-		String json = new String(w.toCharArray());
+		String json = new String(urlToCharArray(
+				new URL("https://sessionserver.mojang.com/session/minecraft/profile/"+uuid.toString().replace("-", ""))
+			));
 		if (json.isEmpty())
 			throw new ExceptionPlayerResources("No found UUID");
 		Document doc = Document.parse(json);
@@ -85,15 +79,9 @@ public class PlayerResources {
 
 	public static UUID findUserName(String userName) throws ExceptionPlayerResources {
 		try {
-			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/"+userName+"?at="+(System.currentTimeMillis()/1000));
-			InputStreamReader input = new InputStreamReader(url.openStream());
-			CharArrayWriter w = new CharArrayWriter();
-			char[] in = new char[512];
-			int len;
-			while ((len = input.read(in)) != -1)
-				w.write(in, 0, len);
-			input.close();
-			String json = new String(w.toCharArray());
+			String json = new String(urlToCharArray(
+					new URL("https://api.mojang.com/users/profiles/minecraft/"+userName+"?at="+(System.currentTimeMillis()/1000))
+				));
 			if (json.isEmpty())
 				throw new ExceptionPlayerResources("Error find UserName");
 			Document doc = Document.parse(json);
@@ -104,6 +92,17 @@ public class PlayerResources {
 		} catch (Exception e) {
 			throw new ExceptionPlayerResources("Error find UserName");
 		}
+	}
+	
+	private static char[] urlToCharArray(URL url) throws IOException {
+		InputStreamReader input = new InputStreamReader(url.openStream());
+		CharArrayWriter w = new CharArrayWriter();
+		char[] in = new char[512];
+		int len;
+		while ((len = input.read(in)) != -1)
+			w.write(in, 0, len);
+		input.close();
+		return w.toCharArray();
 	}
 	
 	public static void main(String[] args) {
