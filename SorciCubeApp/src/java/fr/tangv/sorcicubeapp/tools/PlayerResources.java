@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubeapp.tools;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.CharArrayWriter;
 import java.io.IOException;
@@ -69,9 +70,17 @@ public class PlayerResources {
 	public BufferedImage getSkin() {
 		return skin;
 	}
+	
+	public Image getSkin(int size) {
+		return skin.getScaledInstance(size, size, BufferedImage.SCALE_SMOOTH);
+	}
 
 	public BufferedImage getHead() {
 		return head;
+	}
+	
+	public Image getHead(int size) {
+		return head.getScaledInstance(size, size, BufferedImage.SCALE_SMOOTH);
 	}
 
 	public static UUID findUserName(String userName) throws ExceptionPlayerResources {

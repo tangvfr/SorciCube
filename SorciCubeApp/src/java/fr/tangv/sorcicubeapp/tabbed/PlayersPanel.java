@@ -2,13 +2,19 @@ package fr.tangv.sorcicubeapp.tabbed;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -38,13 +44,13 @@ public class PlayersPanel extends JPanel {
 	private final JLabel clear;
 	private final JTextField search;
 	private final JScrollPane center;
-	private final JPanel empty;
+	private final JLabel message;
 	
 	public PlayersPanel(CardsPanel cardsPanel) throws IOException, ReponseRequestException, RequestException {
 		this.logi = cardsPanel.getFrameLogi();
 		this.handler = new HandlerPlayers(cardsPanel.getClient(), cardsPanel.getCards());
 		//refresh
-		this.find = new JButton("Find | ");
+		this.find = new JButton("Find");
 		this.find.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -83,12 +89,16 @@ public class PlayersPanel extends JPanel {
 		panelUp.add(search, BorderLayout.CENTER);
 		panelUp.setBorder(new EmptyBorder(0, 0, 5, 0));
 		this.add(panelUp, BorderLayout.NORTH);
-		this.empty = new JPanel();
-		this.center = new JScrollPane(empty);
+		this.message = new JLabel("");
+		message.setHorizontalAlignment(JLabel.CENTER);
+		this.center = new JScrollPane(message);
 		this.add(center, BorderLayout.CENTER);
 	}
 
 	public void find() {
+		if (!find.isEnabled())
+			return;
+		find.setEnabled(false);
 		try {
 			UUID uuid;
 			String text = search.getText();
@@ -102,25 +112,43 @@ public class PlayersPanel extends JPanel {
 				}
 			}
 			if (uuid == null) {
-				find.setText("Find | Pseudo not found to Mojang");
+				message.setText("<html><body><center><h1>"+text+"</h1><h4>Pseudo not found to Mojang</h4></center></body></html>");
 			} else {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
 					if (handler.containtPlayer(uuid)) {
 						PlayerFeature feature = handler.getPlayer(uuid, res.getName());
-						find.setText("Find | lvl."+feature.getLevel()+" "+feature.getPseudo());
+						message.setText("lvl."+feature.getLevel()+" "+feature.getPseudo());
 						center.setViewportView(new PlayerHeadList(res, feature));
 						return;
 					} else {
-						find.setText("Find | "+res.getName()+" is not registered on server");
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						Image imgH = res.getHead(256);
+						BufferedImage image = new BufferedImage(imgH.getWidth(null), imgH.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+						Graphics2D bGr = image.createGraphics();
+						bGr.drawImage(imgH, 0, 0, null);
+						bGr.dispose();
+						ImageIO.write(image, "png", out);
+						out.close();
+						String img = Base64.getEncoder().encodeToString(out.toByteArray());
+						message.setText("<html><body><center><img alt=\"Head Of Player\" src=\"data:image/png;base64, "+img+"\"><h1>"+res.getName()+"</h1><h4>Player is not registered on server</h4></center></body></html>");
 					}
 					this.repaint();
 				} catch (ExceptionPlayerResources e) {
-					find.setText("Find | UUID not found to Mojang");
+					message.setText("<html><body><center><h1>"+uuid.toString()+"</h1><h4>UUID not found to Mojang</h4></center></body></html>");
 				}
 			}
-			center.setViewportView(empty);
+			center.setViewportView(message);
 			this.repaint();
+			new Thread(() -> {
+				try {
+					Thread.sleep(2000);//for time rate request API Mojang
+				} catch (InterruptedException e2) {
+					e2.printStackTrace();
+				}
+				find.setEnabled(true);
+				find.repaint();
+			}).start();
 		} catch (IOException | ReponseRequestException | RequestException | DeckException e) {
 			JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error Find", JOptionPane.ERROR_MESSAGE);
 			logi.showConnection("Error: "+e.getMessage(), Color.MAGENTA);
@@ -134,7 +162,7 @@ public class PlayersPanel extends JPanel {
 		private PlayerHeadList(PlayerResources res, PlayerFeature feature) throws ExceptionPlayerResources, IOException {
 			int layout = 5;
 			this.setLayout(new BorderLayout(layout, layout));
-			JLabel head = new JLabel(new ImageIcon(res.getHead().getScaledInstance(128, 128, BufferedImage.SCALE_DEFAULT)));
+			JLabel head = new JLabel(new ImageIcon(res.getHead(128)));
 			int headBorder = 10;
 			head.setBorder(new EmptyBorder(headBorder, headBorder, headBorder, headBorder));
 			this.add(head, BorderLayout.WEST);

@@ -2,7 +2,7 @@ package fr.tangv.sorcicubeapp.tools;
 
 import javax.swing.JFrame;
 
-public class TestTools {
+public class TestImageTools {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("TestTools");
