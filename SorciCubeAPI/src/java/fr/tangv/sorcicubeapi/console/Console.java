@@ -1,10 +1,11 @@
 package fr.tangv.sorcicubeapi.console;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -20,17 +21,16 @@ public class Console extends Thread {
 	static {
 		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
 		logger = Logger.getLogger("logger");
-		ConsoleHandler ch = new ConsoleHandler();
-		ch.setFormatter(new SimpleFormatter());
-		logger.addHandler(ch);
-		Date date = new Date();
 		try {
-			@SuppressWarnings("deprecation")
-			FileHandler fh = new FileHandler("log_"+date.getDay()+"-"+date.getMonth()+"-"+date.getYear()+".log", 16*1024*1024, -1, true);
+			File file = new File("./logs");
+			if (!file.exists())
+				file.mkdirs();
+			FileHandler fh = new FileHandler("./logs/"+new SimpleDateFormat("dd-MM-yyyy").format(new Date())+"_%g.log", 16*1024*1024, 20, true);
 			fh.setFormatter(new SimpleFormatter());
 			logger.addHandler(fh);
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
+			System.exit(MAX_PRIORITY);
 		}		
 	}
 	
