@@ -3,6 +3,7 @@ package fr.tangv.sorcicubeapi.handler;
 import java.io.IOException;
 
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
+import fr.tangv.sorcicubeapi.console.Console;
 import fr.tangv.sorcicubeapi.server.ClientsManager;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.player.DeckException;
@@ -31,7 +32,7 @@ public class HandlerInit {
 		cm.registered(new RequestHandlerInterface() {
 			@Override
 			public void handlingRequest(Client client, Request request) throws Exception {
-				System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <recieve< "+request.toRequestNoData());
+				Console.logger.info(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <recieve< "+request.toRequestNoData());
 			}
 		});
 	}

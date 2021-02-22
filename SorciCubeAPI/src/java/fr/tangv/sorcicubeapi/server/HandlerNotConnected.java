@@ -2,6 +2,7 @@ package fr.tangv.sorcicubeapi.server;
 
 import org.bson.Document;
 
+import fr.tangv.sorcicubeapi.console.Console;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.requests.Request;
@@ -19,7 +20,7 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 	
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {
-		System.out.println(client.getInetAddress().getHostAddress()+" <tryauth< "+request.toRequestNoData());
+		Console.logger.info(client.getInetAddress().getHostAddress()+" <tryauth< "+request.toRequestNoData());
 		if (request.requestType == RequestType.IDENTIFICATION) {
 			ClientIdentification clientID = ClientIdentification.toClientIdentification(Document.parse(request.data));
 			if (!clientID.isValid()) {
@@ -28,7 +29,7 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 				client.setClientID(clientID);
 				if (manager.authentification(client)) {
 					client.sendRequest(new Request(RequestType.AUTHENTIFIED, request.id, clientID.name, ""));
-					System.out.println(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <auth< "+"sucessful with "+client.getClientID().token);
+					Console.logger.info(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <auth< "+"sucessful with "+client.getClientID().token);
 					return;
 				} else {
 					client.sendRequest(new Request(RequestType.IDENTIFICATION_REFUSED,request.id, "Authentification", "Token is wrong"));
@@ -43,13 +44,13 @@ public class HandlerNotConnected implements RequestHandlerInterface {
 			}
 			client.close();
 		} else {
-			System.out.println(client.getInetAddress().getHostAddress()+" <auth< "+"wrong");
+			Console.logger.info(client.getInetAddress().getHostAddress()+" <auth< "+"wrong");
 			client.sendRequest(new Request(RequestType.DONT_AUTHENTIFIED, request.id, "NotAuthentified" ,"This action is invalid, you dont are authentified !"));
 		}
 	}
 	
 	public static void printDisconnect(Client client, boolean authentified) {
-		System.out.println(authentified ?
+		Console.logger.info(authentified ?
 				(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <diconnect< "+client.getClientID().token)
 				: (client.getInetAddress().getHostAddress()+" <diconnect< ")
 			);

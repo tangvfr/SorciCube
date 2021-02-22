@@ -1,7 +1,13 @@
 package fr.tangv.sorcicubeapi.console;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubecore.clients.Client;
@@ -9,6 +15,25 @@ import fr.tangv.sorcicubecore.clients.ClientIdentification;
 
 public class Console extends Thread {
 
+	public static Logger logger;
+	
+	static {
+		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
+		logger = Logger.getLogger("logger");
+		ConsoleHandler ch = new ConsoleHandler();
+		ch.setFormatter(new SimpleFormatter());
+		logger.addHandler(ch);
+		Date date = new Date();
+		try {
+			@SuppressWarnings("deprecation")
+			FileHandler fh = new FileHandler("log_"+date.getDay()+"-"+date.getMonth()+"-"+date.getYear()+".log", 16*1024*1024, -1, true);
+			fh.setFormatter(new SimpleFormatter());
+			logger.addHandler(fh);
+		} catch (SecurityException | IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
 	private SorciCubeAPI sorci;
 	private Scanner in;
 	
@@ -29,10 +54,10 @@ public class Console extends Thread {
 				//String[] args = (input.length() >= fs+1) ? input.substring(fs+1).split(" ") : new String[0];
 				String arg = (input.length() >= fs+1) ? input.substring(fs+1) : "";
 				if (cmd.equalsIgnoreCase("stop")) {
-					System.out.println("Server is Stopped !");
+					Console.logger.info("Server is Stopped !");
 					sorci.stopServer();
 				} else if (cmd.equalsIgnoreCase("help")) {
-					System.out.println("Help:\r\n" + 
+					Console.logger.info("Help:\r\n" + 
 							" - help\r\n" + 
 							" - stop\r\n" + 
 							" - tokens\r\n" + 
@@ -42,45 +67,45 @@ public class Console extends Thread {
 				} else if (cmd.equalsIgnoreCase("tokens")) {
 					ConcurrentHashMap<String, String> tokens = sorci.getTokens();
 					int size = tokens.size();
-					System.out.println("Tokens: "+size);
+					Console.logger.info("Tokens: "+size);
 					if (size > 0)
-						System.out.println("  ------------");
+						Console.logger.info("  ------------");
 					for (String token : tokens.keySet()) {
-						System.out.println("  Description: "+tokens.get(token));
-						System.out.println("  "+token);
-						System.out.println("  ------------");
+						Console.logger.info("  Description: "+tokens.get(token));
+						Console.logger.info("  "+token);
+						Console.logger.info("  ------------");
 					}
-					System.out.println("-----END-----");
+					Console.logger.info("-----END-----");
 				} else if (cmd.equalsIgnoreCase("newtoken")) {
 					if (!arg.isEmpty()) {
 						String desc = arg;
 						String token = sorci.generatedTokens(desc);
 						sorci.saveTokens();
-						System.out.println("NewToken: ");
-						System.out.println("  Description: "+desc);
-						System.out.println("  "+token);
-						System.out.println("-----END-----");
+						Console.logger.info("NewToken: ");
+						Console.logger.info("  Description: "+desc);
+						Console.logger.info("  "+token);
+						Console.logger.info("-----END-----");
 					} else {
-						System.out.println("newtoken <description>");
+						Console.logger.info("newtoken <description>");
 					}
 				} else if (cmd.equalsIgnoreCase("loadtokens")) {
 					sorci.loadTokens();
-					System.out.println("Tokens is loaded !");
+					Console.logger.info("Tokens is loaded !");
 				} else if (cmd.equalsIgnoreCase("clients")) {
-					System.out.println("Clients: "+sorci.getClientsManager().getClients().size());
+					Console.logger.info("Clients: "+sorci.getClientsManager().getClients().size());
 					for (Client client : sorci.getClientsManager().getClients()) {
 						ClientIdentification cID = client.getClientID();
 						String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
 						if (hex.length() == 1)
 							hex = '0'+hex;
-						System.out.println("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
+						Console.logger.info("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
 					}
-					System.out.println("-----END-----");
+					Console.logger.info("-----END-----");
 				} else {
-					System.out.println("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
+					Console.logger.info("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
 				}
 			} catch (Exception e) {
-				System.out.println("Error Console: "+e.getMessage());
+				Console.logger.info("Error Console: "+e.getMessage());
 			}
 		}
 		in.close();

@@ -3,6 +3,8 @@ package fr.tangv.sorcicubeapi.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import fr.tangv.sorcicubeapi.console.Console;
+
 public abstract class ServerAbstract extends Thread {
 	
 	private volatile ServerSocket server;
@@ -15,7 +17,7 @@ public abstract class ServerAbstract extends Thread {
 			try {
 				this.server = new ServerSocket(properties.port, properties.backLog, properties.bindIP);
 			} catch (Exception e1) {
-				System.out.println("ServerSokcet already started to this port !");
+				Console.logger.info("ServerSokcet already started to this port !");
 			}
 			manager.start();
 			started();

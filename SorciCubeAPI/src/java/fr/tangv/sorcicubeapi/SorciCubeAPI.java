@@ -46,7 +46,7 @@ public class SorciCubeAPI extends ServerAbstract {
 		this.handlerInit = new HandlerInit(this);
 		this.console = new Console(this);
 		this.start();
-		System.out.println("Server is start on: port "+properties.port+", bindIP "+properties.bindIP+", backLog "+properties.backLog);
+		Console.logger.info("Server is start on: port "+properties.port+", bindIP "+properties.bindIP+", backLog "+properties.backLog);
 	}
 	
 	@Override
