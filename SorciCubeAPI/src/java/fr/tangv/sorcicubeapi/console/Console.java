@@ -105,7 +105,7 @@ public class Console extends Thread {
 					Console.logger.info("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
 				}
 			} catch (Exception e) {
-				Console.logger.info("Error Console: "+e.getMessage());
+				Console.logger.warning("Error Console: "+e.getMessage());
 			}
 		}
 		in.close();

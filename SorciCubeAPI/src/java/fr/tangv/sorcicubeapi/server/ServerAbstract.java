@@ -17,7 +17,7 @@ public abstract class ServerAbstract extends Thread {
 			try {
 				this.server = new ServerSocket(properties.port, properties.backLog, properties.bindIP);
 			} catch (Exception e1) {
-				Console.logger.info("ServerSokcet already started to this port !");
+				Console.logger.warning("ServerSokcet already started to this port !");
 			}
 			manager.start();
 			started();
