@@ -40,6 +40,7 @@ public class Console extends Thread {
 	public Console(SorciCubeAPI sorci) throws IOException {
 		this.sorci = sorci;
 		this.console = new ConsoleReader();
+		this.console.setPrompt(">");
 	}
 	
 	@Override
