@@ -48,6 +48,10 @@ public class Console extends Thread {
 		while (sorci.serverIsStart()) {
 			try {
 				String input = this.console.readLine();
+				if (input == null) {
+					sorci.stopServer();
+					return;
+				}
 				int fs = input.indexOf((int) (' '));
 				if (fs == -1)
 					fs = input.length();
