@@ -52,67 +52,73 @@ public class Console extends Thread {
 					sorci.stopServer();
 					return;
 				}
-				int fs = input.indexOf((int) (' '));
-				if (fs == -1)
-					fs = input.length();
-				String cmd = input.substring(0, fs);
-				//String[] args = (input.length() >= fs+1) ? input.substring(fs+1).split(" ") : new String[0];
-				String arg = (input.length() >= fs+1) ? input.substring(fs+1) : "";
-				if (cmd.equalsIgnoreCase("stop")) {
-					Console.logger.info("Server is Stopped !");
-					sorci.stopServer();
-				} else if (cmd.equalsIgnoreCase("help")) {
-					Console.logger.info("Help:\r\n" + 
-							" - help\r\n" + 
-							" - stop\r\n" + 
-							" - tokens\r\n" + 
-							" - newtoken <description>\r\n" + 
-							" - loadtokens\r\n" +
-							" - clients");
-				} else if (cmd.equalsIgnoreCase("tokens")) {
-					ConcurrentHashMap<String, String> tokens = sorci.getTokens();
-					int size = tokens.size();
-					Console.logger.info("Tokens: "+size);
-					if (size > 0)
-						Console.logger.info("  ------------");
-					for (String token : tokens.keySet()) {
-						Console.logger.info("  Description: "+tokens.get(token));
-						Console.logger.info("  "+token);
-						Console.logger.info("  ------------");
-					}
-					Console.logger.info("-----END-----");
-				} else if (cmd.equalsIgnoreCase("newtoken")) {
-					if (!arg.isEmpty()) {
-						String desc = arg;
-						String token = sorci.generatedTokens(desc);
-						sorci.saveTokens();
-						Console.logger.info("NewToken: ");
-						Console.logger.info("  Description: "+desc);
-						Console.logger.info("  "+token);
-						Console.logger.info("-----END-----");
-					} else {
-						Console.logger.info("newtoken <description>");
-					}
-				} else if (cmd.equalsIgnoreCase("loadtokens")) {
-					sorci.loadTokens();
-					Console.logger.info("Tokens is loaded !");
-				} else if (cmd.equalsIgnoreCase("clients")) {
-					Console.logger.info("Clients: "+sorci.getClientsManager().getClients().size());
-					for (Client client : sorci.getClientsManager().getClients()) {
-						ClientIdentification cID = client.getClientID();
-						String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
-						if (hex.length() == 1)
-							hex = '0'+hex;
-						Console.logger.info("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
-					}
-					Console.logger.info("-----END-----");
-				} else {
-					if (!cmd.isEmpty())
-						Console.logger.info("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
-				}
+				this.excute(input);
 			} catch (Exception e) {
 				Console.logger.warning("Error Console: "+e.getMessage());
 			}
+		}
+	}
+	
+	public void excute(String input) throws IOException {
+		if (input == null)
+			return;
+		int fs = input.indexOf((int) (' '));
+		if (fs == -1)
+			fs = input.length();
+		String cmd = input.substring(0, fs);
+		//String[] args = (input.length() >= fs+1) ? input.substring(fs+1).split(" ") : new String[0];
+		String arg = (input.length() >= fs+1) ? input.substring(fs+1) : "";
+		if (cmd.equalsIgnoreCase("stop")) {
+			Console.logger.info("Server is Stopped !");
+			sorci.stopServer();
+		} else if (cmd.equalsIgnoreCase("help")) {
+			Console.logger.info("Help:\r\n" + 
+					" - help\r\n" + 
+					" - stop\r\n" + 
+					" - tokens\r\n" + 
+					" - newtoken <description>\r\n" + 
+					" - loadtokens\r\n" +
+					" - clients");
+		} else if (cmd.equalsIgnoreCase("tokens")) {
+			ConcurrentHashMap<String, String> tokens = sorci.getTokens();
+			int size = tokens.size();
+			Console.logger.info("Tokens: "+size);
+			if (size > 0)
+				Console.logger.info("  ------------");
+			for (String token : tokens.keySet()) {
+				Console.logger.info("  Description: "+tokens.get(token));
+				Console.logger.info("  "+token);
+				Console.logger.info("  ------------");
+			}
+			Console.logger.info("-----END-----");
+		} else if (cmd.equalsIgnoreCase("newtoken")) {
+			if (!arg.isEmpty()) {
+				String desc = arg;
+				String token = sorci.generatedTokens(desc);
+				sorci.saveTokens();
+				Console.logger.info("NewToken: ");
+				Console.logger.info("  Description: "+desc);
+				Console.logger.info("  "+token);
+				Console.logger.info("-----END-----");
+			} else {
+				Console.logger.info("newtoken <description>");
+			}
+		} else if (cmd.equalsIgnoreCase("loadtokens")) {
+			sorci.loadTokens();
+			Console.logger.info("Tokens is loaded !");
+		} else if (cmd.equalsIgnoreCase("clients")) {
+			Console.logger.info("Clients: "+sorci.getClientsManager().getClients().size());
+			for (Client client : sorci.getClientsManager().getClients()) {
+				ClientIdentification cID = client.getClientID();
+				String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
+				if (hex.length() == 1)
+					hex = '0'+hex;
+				Console.logger.info("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
+			}
+			Console.logger.info("-----END-----");
+		} else {
+			if (!cmd.isEmpty())
+				Console.logger.info("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
 		}
 	}
 	
