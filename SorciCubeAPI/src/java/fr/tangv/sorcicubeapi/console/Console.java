@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -13,6 +12,7 @@ import java.util.logging.SimpleFormatter;
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
+import jline.console.ConsoleReader;
 
 public class Console extends Thread {
 
@@ -35,18 +35,18 @@ public class Console extends Thread {
 	}
 	
 	private SorciCubeAPI sorci;
-	private Scanner in;
+	private ConsoleReader console;
 	
-	public Console(SorciCubeAPI sorci) {
+	public Console(SorciCubeAPI sorci) throws IOException {
 		this.sorci = sorci;
-		this.in = new Scanner(System.in);
+		this.console = new ConsoleReader();
 	}
 	
 	@Override
 	public void run() {
 		while (sorci.serverIsStart()) {
 			try {
-				String input = in.nextLine();
+				String input = this.console.readLine();
 				int fs = input.indexOf((int) (' '));
 				if (fs == -1)
 					fs = input.length();
@@ -108,7 +108,6 @@ public class Console extends Thread {
 				Console.logger.warning("Error Console: "+e.getMessage());
 			}
 		}
-		in.close();
 	}
 	
 	private String complet(String src, int lenght, char c) {
