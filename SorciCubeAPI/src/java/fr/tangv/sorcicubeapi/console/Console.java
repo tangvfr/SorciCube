@@ -107,7 +107,8 @@ public class Console extends Thread {
 					}
 					Console.logger.info("-----END-----");
 				} else {
-					Console.logger.info("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
+					if (!cmd.isEmpty())
+						Console.logger.info("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
 				}
 			} catch (Exception e) {
 				Console.logger.warning("Error Console: "+e.getMessage());
