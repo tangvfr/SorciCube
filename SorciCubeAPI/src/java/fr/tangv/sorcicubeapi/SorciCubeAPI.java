@@ -47,6 +47,7 @@ public class SorciCubeAPI extends ServerAbstract {
 		this.console = new Console(this);
 		this.start();
 		Console.logger.info("Server is start on: port "+properties.port+", bindIP "+properties.bindIP+", backLog "+properties.backLog);
+		Console.logger.info("Querry: enable "+properties.querryEnable+", port "+properties.querryPort+", bindIP "+properties.querryBindIP+", backLog "+properties.querryBackLog);
 	}
 	
 	@Override
@@ -98,13 +99,7 @@ public class SorciCubeAPI extends ServerAbstract {
 		if (!file.exists()) {
 			file.createNewFile();
 			FileOutputStream out = new FileOutputStream(file);
-			out.write(("{\r\n" + 
-					"	\"port\": 8367,\r\n" + 
-					"	\"backLog\": 10,\r\n" + 
-					"	\"bindIP\": \"0.0.0.0\",\r\n" + 
-					"	\"cooldownConnexion\": 5000,\r\n"+ 
-					"	\"timeChecking\": 1000\r\n" + 
-					"}").getBytes(Client.CHARSET));
+			out.write(ServerProperties.createDefault().toDocument().toJson().getBytes(Client.CHARSET));
 			out.close();
 		}
 		FileInputStream in = new FileInputStream(file);

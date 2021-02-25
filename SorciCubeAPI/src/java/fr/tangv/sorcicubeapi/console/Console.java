@@ -12,7 +12,6 @@ import java.util.logging.SimpleFormatter;
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
-import jline.console.ConsoleReader;
 
 public class Console extends Thread {
 
@@ -34,17 +33,19 @@ public class Console extends Thread {
 		}		
 	}
 	
-	private SorciCubeAPI sorci;
-	private ConsoleReader console;
+	protected SorciCubeAPI sorci;
+	private java.io.Console console;
+	private QuerryServer querry;
 	
 	public Console(SorciCubeAPI sorci) throws IOException {
 		this.sorci = sorci;
-		this.console = new ConsoleReader();
-		this.console.setPrompt(">");
+		this.console = System.console();
+		this.querry = new QuerryServer(this);
 	}
 	
 	@Override
 	public void run() {
+		querry.start();
 		while (sorci.serverIsStart()) {
 			try {
 				String input = this.console.readLine();
@@ -52,16 +53,17 @@ public class Console extends Thread {
 					sorci.stopServer();
 					return;
 				}
-				this.excute(input);
+				Console.logger.info(this.excute(input));
 			} catch (Exception e) {
 				Console.logger.warning("Error Console: "+e.getMessage());
 			}
 		}
 	}
 	
-	public void excute(String input) throws IOException {
-		if (input == null)
-			return;
+	public String excute(String input) throws IOException {
+		if (input == null || input.isEmpty())
+			return "";
+		StringBuilder out = new StringBuilder();
 		int fs = input.indexOf((int) (' '));
 		if (fs == -1)
 			fs = input.length();
@@ -69,57 +71,57 @@ public class Console extends Thread {
 		//String[] args = (input.length() >= fs+1) ? input.substring(fs+1).split(" ") : new String[0];
 		String arg = (input.length() >= fs+1) ? input.substring(fs+1) : "";
 		if (cmd.equalsIgnoreCase("stop")) {
-			Console.logger.info("Server is Stopped !");
+			out.append("Server is Stopped !\r\n");
 			sorci.stopServer();
 		} else if (cmd.equalsIgnoreCase("help")) {
-			Console.logger.info("Help:\r\n" + 
+			out.append("Help:\r\n" + 
 					" - help\r\n" + 
 					" - stop\r\n" + 
 					" - tokens\r\n" + 
 					" - newtoken <description>\r\n" + 
 					" - loadtokens\r\n" +
-					" - clients");
+					" - clients\r\n");
 		} else if (cmd.equalsIgnoreCase("tokens")) {
 			ConcurrentHashMap<String, String> tokens = sorci.getTokens();
 			int size = tokens.size();
-			Console.logger.info("Tokens: "+size);
+			out.append("Tokens: "+size+"\r\n");
 			if (size > 0)
-				Console.logger.info("  ------------");
+				out.append("  ------------"+"\r\n");
 			for (String token : tokens.keySet()) {
-				Console.logger.info("  Description: "+tokens.get(token));
-				Console.logger.info("  "+token);
-				Console.logger.info("  ------------");
+				out.append("  Description: "+tokens.get(token)+"\r\n");
+				out.append("  "+token+"\r\n");
+				out.append("  ------------"+"\r\n");
 			}
-			Console.logger.info("-----END-----");
+			out.append("-----END-----"+"\r\n");
 		} else if (cmd.equalsIgnoreCase("newtoken")) {
 			if (!arg.isEmpty()) {
 				String desc = arg;
 				String token = sorci.generatedTokens(desc);
 				sorci.saveTokens();
-				Console.logger.info("NewToken: ");
-				Console.logger.info("  Description: "+desc);
-				Console.logger.info("  "+token);
-				Console.logger.info("-----END-----");
+				out.append("NewToken: "+"\r\n");
+				out.append("  Description: "+desc+"\r\n");
+				out.append("  "+token+"\r\n");
+				out.append("-----END-----"+"\r\n");
 			} else {
-				Console.logger.info("newtoken <description>");
+				out.append("newtoken <description>"+"\r\n");
 			}
 		} else if (cmd.equalsIgnoreCase("loadtokens")) {
 			sorci.loadTokens();
-			Console.logger.info("Tokens is loaded !");
+			out.append("Tokens is loaded !"+"\r\n");
 		} else if (cmd.equalsIgnoreCase("clients")) {
-			Console.logger.info("Clients: "+sorci.getClientsManager().getClients().size());
+			out.append("Clients: "+sorci.getClientsManager().getClients().size()+"\r\n");
 			for (Client client : sorci.getClientsManager().getClients()) {
 				ClientIdentification cID = client.getClientID();
 				String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
 				if (hex.length() == 1)
 					hex = '0'+hex;
-				Console.logger.info("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token);
+				out.append("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token+"\r\n");
 			}
-			Console.logger.info("-----END-----");
+			out.append("-----END-----"+"\r\n");
 		} else {
-			if (!cmd.isEmpty())
-				Console.logger.info("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping.");
+			out.append("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping."+"\r\n");
 		}
+		return out.toString();
 	}
 	
 	private String complet(String src, int lenght, char c) {
