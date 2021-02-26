@@ -20,7 +20,7 @@ public class FrameLogi extends JFrame {
 	
 	public FrameLogi(String defaultURI) {
 		this.connectionPanel = new ConnectionPanel(this, defaultURI);
-		this.waitConnection = new JLabel("Wait connetion...");
+		this.waitConnection = new JLabel("Wait connection...");
 		this.waitConnection.setHorizontalAlignment(JLabel.CENTER);
 		//init
 		super.setName("Frame");
