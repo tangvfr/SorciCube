@@ -19,7 +19,7 @@ public class QuerryCooldown extends Thread {
 			if (!client.auth)
 				try {
 					client.log("Connect-TimeOut");
-					client.console.println("You are kicked because too time for connected !");
+					client.out.println("You are kicked because too time for connected !");
 					client.socket.close();
 				} catch (IOException e) {
 					e.printStackTrace();
