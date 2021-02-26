@@ -38,7 +38,7 @@ public class QuerryClient implements Runnable {
 					Console.logger.info("Querry["+socket.getInetAddress().getHostName()+"] "+input);
 					String back = server.console.excute(input);
 					if (!back.isEmpty())
-						out.println(back);
+						out.print(back);
 				} else {
 					if (this.server.tryPassword(input)) {
 						auth = true;
