@@ -66,7 +66,7 @@ public class QuerryClient implements Runnable {
 	}
 	
 	protected void log(String message) {
-		Console.logger.info("Querry["+socket.getInetAddress().getHostName()+"]-"+message);
+		Console.logger.info("Querry["+socket.getInetAddress().getHostAddress()+"]-"+message);
 	}
 	
 }
