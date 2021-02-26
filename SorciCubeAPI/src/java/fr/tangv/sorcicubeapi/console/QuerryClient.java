@@ -35,7 +35,7 @@ public class QuerryClient implements Runnable {
 			String input;
 			while ((input = in.readLine()) != null) {
 				if (auth) {
-					Console.logger.info("Querry["+socket.getInetAddress().getHostName()+"] "+input);
+					Console.logger.info("Querry["+socket.getInetAddress().getHostAddress()+"] "+input);
 					String back = server.console.excute(input);
 					if (!back.isEmpty())
 						out.print(back);
