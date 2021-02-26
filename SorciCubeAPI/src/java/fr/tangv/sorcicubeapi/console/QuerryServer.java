@@ -2,7 +2,6 @@ package fr.tangv.sorcicubeapi.console;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.UnknownHostException;
 
 import fr.tangv.sorcicubeapi.server.ServerProperties;
 
@@ -18,14 +17,6 @@ public class QuerryServer extends Thread {
 		this.properties = console.sorci.getProperties();
 		this.timeNextTry = System.currentTimeMillis();
 		this.enable = properties.querryEnable;
-	}
-	
-	//for test
-	private QuerryServer() throws UnknownHostException {
-		this.console = null;
-		this.properties = ServerProperties.createDefault();
-		this.timeNextTry = System.currentTimeMillis();
-		this.enable = true;
 	}
 	
 	@Override
@@ -57,10 +48,6 @@ public class QuerryServer extends Thread {
 				this.timeNextTry = System.currentTimeMillis()+properties.querryTimeTryPassword;
 		}
 		return false;
-	}
-	
-	public static void main(String[] args) throws UnknownHostException {
-		new QuerryServer().start();
 	}
 	
 }
