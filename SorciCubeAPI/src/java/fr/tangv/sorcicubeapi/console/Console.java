@@ -46,6 +46,8 @@ public class Console extends Thread {
 	@Override
 	public void run() {
 		querry.start();
+		if (console == null)
+			return;
 		while (sorci.serverIsStart()) {
 			try {
 				String input = this.console.readLine();
