@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubeapp.tabbed;
 
 import java.awt.event.MouseEvent;
+import java.util.UUID;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -32,9 +33,15 @@ public class DeckPanel extends JList<Card> {
 					@Override
 					public void eventOk(UUIDPanelEditor comp) {
 						try {
+							UUID uuid = comp.getCardUUID();
+							for (Card card : deck.getCards())
+								if (card != null && card.getUUID().equals(uuid)) {
+									JOptionPane.showMessageDialog(this, "Card already in deck !", "Error invalid Card", JOptionPane.ERROR_MESSAGE);
+									return;
+								}
 							deck.setCard(
 									DeckPanel.this.getSelectedIndex(),
-									cardsPanel.getCards().getCard(comp.getCardUUID())
+									cardsPanel.getCards().getCard(uuid)
 								);
 							decks.update();
 							DeckPanel.this.repaint();
