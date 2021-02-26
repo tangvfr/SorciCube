@@ -53,7 +53,9 @@ public class Console extends Thread {
 					sorci.stopServer();
 					return;
 				}
-				Console.logger.info(this.excute(input));
+				String back = this.excute(input);
+				if (!back.isEmpty())
+					Console.logger.info(back);
 			} catch (Exception e) {
 				Console.logger.warning("Error Console: "+e.getMessage());
 			}

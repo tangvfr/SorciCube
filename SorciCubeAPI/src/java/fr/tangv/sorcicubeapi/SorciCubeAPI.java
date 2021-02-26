@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -102,11 +103,11 @@ public class SorciCubeAPI extends ServerAbstract {
 			out.write(ServerProperties.createDefault().toDocument().toJson().getBytes(Client.CHARSET));
 			out.close();
 		}
-		FileInputStream in = new FileInputStream(file);
-		byte[] buf = new byte[(int) file.length()];
+		InputStreamReader in = new InputStreamReader(new FileInputStream(file), Client.CHARSET);
+		char[] buf = new char[(int) file.length()];
 		in.read(buf);
 		in.close();
-		return Document.parse(new String(buf, Client.CHARSET));
+		return Document.parse(new String(buf));
 	}
 
 	@Override
