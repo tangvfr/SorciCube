@@ -63,9 +63,9 @@ public class Card {
 	
 	public String renderName() {
 		if (isOriginalName())
-			return "§r"+name;
+			return name;
 		else
-			return "§r"+rarity.getColor()+"["+faction.getColor()+name+rarity.getColor()+"]";
+			return rarity.getColor()+"["+faction.getColor()+name+rarity.getColor()+"]";
 	}
 
 	public void setName(String name) {
