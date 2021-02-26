@@ -12,7 +12,6 @@ import java.util.logging.SimpleFormatter;
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
-import jline.console.ConsoleReader;
 
 public class Console extends Thread {
 
@@ -35,13 +34,12 @@ public class Console extends Thread {
 	}
 	
 	protected SorciCubeAPI sorci;
-	private ConsoleReader console;
+	private java.io.Console console;
 	private QuerryServer querry;
 	
 	public Console(SorciCubeAPI sorci) throws IOException {
 		this.sorci = sorci;
-		this.console = new ConsoleReader();
-		this.console.setPrompt(">");
+		this.console = System.console();
 		this.querry = new QuerryServer(this);
 	}
 	
