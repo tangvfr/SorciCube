@@ -78,6 +78,7 @@ public class Console extends Thread {
 		} else if (cmd.equalsIgnoreCase("help")) {
 			out.append("Help:\r\n" + 
 					" - help\r\n" + 
+					" - version\r\n" + 
 					" - stop\r\n" + 
 					" - tokens\r\n" + 
 					" - newtoken <description>\r\n" + 
@@ -120,6 +121,8 @@ public class Console extends Thread {
 				out.append("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token+"\r\n");
 			}
 			out.append("-----END-----"+"\r\n");
+		} else if (cmd.equalsIgnoreCase("version")) {
+			out.append("Version is "+Client.VERSION_PROTOCOL+"\r\n");
 		} else {
 			out.append("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping."+"\r\n");
 		}
