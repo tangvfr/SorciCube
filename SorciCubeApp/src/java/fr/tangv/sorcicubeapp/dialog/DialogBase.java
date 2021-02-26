@@ -27,11 +27,11 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 	protected JPanel panUp;
 	protected JPanel panDown;
 	
-	public DialogBase(Window owner, String label, T comp) {
-		this(owner, label, comp, null);
+	public DialogBase(Window owner, String action, String label, T comp) {
+		this(owner, action, label, comp, null);
 	}
 	
-	public DialogBase(Window owner, String label, T comp, Dimension minDim) {
+	public DialogBase(Window owner, String action, String label, T comp, Dimension minDim) {
 		super(owner);
 		this.frameLogi = owner;
 		owner.setEnabled(false);
@@ -56,7 +56,7 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		});
 		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setTitle("Edit Card "+label);
+		this.setTitle(action+" "+label);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.panUp = new JPanel();
 		panUp.setLayout(new BorderLayout());

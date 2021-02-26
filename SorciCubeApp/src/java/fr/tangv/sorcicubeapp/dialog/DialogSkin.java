@@ -26,8 +26,8 @@ public abstract class DialogSkin extends DialogBase<JTextField> {
 	
 	private static final long serialVersionUID = 2834671283964685106L;
 	
-	public DialogSkin(Window owner, String label, CardSkin skin, boolean head) {
-		super(owner, label, new JTextField(head ? "skull: "+skin.toString() : skin.toString()));
+	public DialogSkin(Window owner, String action, String label, CardSkin skin, boolean head) {
+		super(owner, action, label, new JTextField(head ? "skull: "+skin.toString() : skin.toString()));
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		try {

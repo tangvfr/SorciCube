@@ -24,8 +24,8 @@ public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBo
 		return combo;
 	}
 	
-	public DialogCombo(Window owner, String label, T enumCombo) {
-		super(owner, label, generatedCombo(enumCombo));
+	public DialogCombo(Window owner, String action, String label, T enumCombo) {
+		super(owner, action, label, generatedCombo(enumCombo));
 		this.enumCombo = enumCombo;
 	}
 

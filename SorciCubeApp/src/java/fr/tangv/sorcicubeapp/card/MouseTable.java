@@ -56,7 +56,7 @@ public class MouseTable extends ClickListener {
 					break;
 			
 				case 1:
-					new DialogBase<JTextField>(parent, "Name", new JTextField(card.getName())) {
+					new DialogBase<JTextField>(parent, "Edit Card", "Name", new JTextField(card.getName())) {
 						private static final long serialVersionUID = -4613034932047272121L;
 
 						@Override
@@ -71,7 +71,7 @@ public class MouseTable extends ClickListener {
 				case 2:
 					JTextField textType = new JTextField(card.getType().name());
 					textType.setEditable(false);
-					new DialogBase<JTextField>(parent, "Type", textType) {
+					new DialogBase<JTextField>(parent, "Edit Card", "Type", textType) {
 						private static final long serialVersionUID = -4613094932047272122L;
 						@Override
 						public void eventOk(JTextField comp) throws IOException, ReponseRequestException, RequestException {}
@@ -80,7 +80,7 @@ public class MouseTable extends ClickListener {
 					
 				case 3:
 					if (card.getMaterial().hasSkin())
-						new DialogSkin(parent, "Material", card.getMaterial().getSkin(), true) {
+						new DialogSkin(parent, "Edit Card", "Material", card.getMaterial().getSkin(), true) {
 							private static final long serialVersionUID = -4613034932047272123L;
 
 							@Override
@@ -89,7 +89,7 @@ public class MouseTable extends ClickListener {
 							}
 						};
 					else
-						new DialogBase<JTextField>(parent, "Material", new JTextField(card.getMaterial().toString())) {
+						new DialogBase<JTextField>(parent, "Edit Card", "Material", new JTextField(card.getMaterial().toString())) {
 							private static final long serialVersionUID = -4613034932047272124L;
 	
 							@Override
@@ -100,7 +100,7 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 4:
-					new DialogCombo<CardRarity>(parent, "Rarity", card.getRarity()) {
+					new DialogCombo<CardRarity>(parent, "Edit Card", "Rarity", card.getRarity()) {
 						private static final long serialVersionUID = -4807395720412058129L;
 
 						@Override
@@ -113,7 +113,7 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 5:
-					new DialogCombo<CardFaction>(parent, "Faction", card.getFaction()) {
+					new DialogCombo<CardFaction>(parent, "Edit Card", "Faction", card.getFaction()) {
 						private static final long serialVersionUID = -4807395720412058130L;
 
 						@Override
@@ -126,7 +126,7 @@ public class MouseTable extends ClickListener {
 					break;
 
 				case 6:
-					new DialogCombo<CardCible>(parent, "Cible", card.getCible()) {
+					new DialogCombo<CardCible>(parent, "Edit Card", "Cible", card.getCible()) {
 						private static final long serialVersionUID = -4807395720412058131L;
 
 						@Override
@@ -139,7 +139,7 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 7:
-					new DialogCombo<CardFaction>(parent, "Cible Faction", card.getCibleFaction()) {
+					new DialogCombo<CardFaction>(parent, "Edit Card", "Cible Faction", card.getCibleFaction()) {
 						private static final long serialVersionUID = -4807395720412058129L;
 
 						@Override
@@ -152,7 +152,7 @@ public class MouseTable extends ClickListener {
 					break;
 				
 				case 8:
-					new DialogBase<JSpinner>(parent, "Mana", new JSpinner(new SpinnerNumberModel(card.getMana(), 0, Integer.MAX_VALUE, 1))) {
+					new DialogBase<JSpinner>(parent, "Edit Card", "Mana", new JSpinner(new SpinnerNumberModel(card.getMana(), 0, Integer.MAX_VALUE, 1))) {
 						private static final long serialVersionUID = -4613034932048272120L;
 
 						@Override
@@ -166,7 +166,7 @@ public class MouseTable extends ClickListener {
 					
 				case 9:
 					Card cardC = card.clone();
-					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(parent, "Features",
+					DialogBase<FeaturesTable> dialog = new DialogBase<FeaturesTable>(parent, "Edit Card", "Features",
 							new FeaturesTable(cardsPanel, cardC.getFeatures(), cardC.getType() == CardType.ENTITY), new Dimension(500, 300)) {
 						private static final long serialVersionUID = -4613024932048272120L;
 
@@ -186,7 +186,7 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 10:
-					DialogBase<JTextArea> dialogTextArea = new DialogBase<JTextArea>(parent, "Description",
+					DialogBase<JTextArea> dialogTextArea = new DialogBase<JTextArea>(parent, "Edit Card", "Description",
 							new JTextArea(TextList.listToText(card.getDescription())), new Dimension(500, 300)) {
 						private static final long serialVersionUID = 6649269953841487465L;
 
@@ -201,7 +201,7 @@ public class MouseTable extends ClickListener {
 					break;
 					
 				case 11:
-					new DialogBase<JCheckBox>(parent, "Orignal Name",
+					new DialogBase<JCheckBox>(parent, "Edit Card", "Orignal Name",
 							new JCheckBox("", card.isOriginalName())) {
 						private static final long serialVersionUID = 664926995384148851L;
 

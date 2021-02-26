@@ -51,7 +51,7 @@ public class FeaturesTable extends JTable {
 						CardFeature feature = getCardFeature(id);
 						CardValue value = feature.getValue();
 						if (feature.getType() == CardFeatureType.SKIN) {
-							new DialogSkin(window, "Skin", value.asSkin(), false) {
+							new DialogSkin(window, "Edit Card", "Skin", value.asSkin(), false) {
 								private static final long serialVersionUID = 4116920655857733849L;
 
 								@Override
@@ -67,7 +67,7 @@ public class FeaturesTable extends JTable {
 								}
 							};
 						} else if (value.getType() == TypeValue.NUMBER) {
-							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel(value.asNumber(), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
+							new DialogBase<JSpinner>(window, "Edit Card", "Value", new JSpinner(new SpinnerNumberModel(value.asNumber(), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
 								private static final long serialVersionUID = 4116920655857733840L;
 
 								@Override
@@ -78,7 +78,7 @@ public class FeaturesTable extends JTable {
 								}
 							};
 						} else if (value.getType() == TypeValue.ROUND) {
-							new DialogBase<JSpinner>(window, "Value", new JSpinner(new SpinnerNumberModel((value.asRound()/2), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
+							new DialogBase<JSpinner>(window, "Edit Card", "Value", new JSpinner(new SpinnerNumberModel((value.asRound()/2), Integer.MIN_VALUE, Integer.MAX_VALUE, 1))) {
 								private static final long serialVersionUID = 4116920655857733840L;
 
 								@Override
@@ -89,7 +89,7 @@ public class FeaturesTable extends JTable {
 								}
 							};
 						} else if (value.getType() == TypeValue.UUID) {
-							new DialogBase<UUIDPanelEditor>(window, "Value", new UUIDPanelEditor(cards, value.asUUID())) {
+							new DialogBase<UUIDPanelEditor>(window, "Edit Card", "Value", new UUIDPanelEditor(cards, value.asUUID())) {
 								private static final long serialVersionUID = 4116920655857733839L;
 
 								@Override
@@ -137,7 +137,7 @@ public class FeaturesTable extends JTable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getID() == 1001) {
-					new DialogCombo<CardFeatureType>(window, "Add Feature", CardFeatureType.SKIN) {
+					new DialogCombo<CardFeatureType>(window, "Edit Card", "Add Feature", CardFeatureType.SKIN) {
 						private static final long serialVersionUID = 1721551878121090783L;
 
 						@Override

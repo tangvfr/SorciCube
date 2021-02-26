@@ -174,7 +174,7 @@ public class PanelNav extends JPanel {
 	}
 	
 	private void changeSort() {
-		new DialogCombo<CardComparator>(cardsPanel.getFrameLogi(), "Sorted by", sort) {
+		new DialogCombo<CardComparator>(cardsPanel.getFrameLogi(), "Change", "Sorted by", sort) {
 			private static final long serialVersionUID = 944290591647698175L;
 					
 			@Override
