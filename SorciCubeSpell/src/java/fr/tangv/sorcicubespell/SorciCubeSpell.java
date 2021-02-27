@@ -83,7 +83,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		} catch (InvalidConfigurationException e) {
 			throw new Exception("Error in config named \""+name+"\"");
 		} catch (IOException | ReponseRequestException | RequestException e) {
-			throw new Exception("Error config \""+name+"\" caused "+e.getCause());
+			throw new Exception("Error config \""+name+"\" caused "+e.getMessage());
 		}
 	}
 	
@@ -113,54 +113,60 @@ public class SorciCubeSpell extends JavaPlugin {
 				@Override
 				public void connected() {
 					w.continueCode();
+					try {
+						SorciClient client = this;
+						//handler for config
+						SorciCubeSpell.this.handlerConfigYAML = new HandlerConfigYAML(client);
+						//init Config
+						SorciCubeSpell.this.message = newConfig("message.yml");
+						SorciCubeSpell.this.parameter = newConfig("parameter.yml");
+						SorciCubeSpell.this.enumConfig = newConfig("enum.yml");
+						SorciCubeSpell.this.guiConfig = newConfig("gui.yml");
+						SorciCubeSpell.this.levelConfig = newConfig("level.yml");
+						//init tool
+						SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this.enumConfig);
+						//init for change server
+						getServer().getMessenger().registerOutgoingPluginChannel(SorciCubeSpell.this, "BungeeCord");
+						SorciCubeSpell.this.nameServerLobby = SorciCubeSpell.this.parameter.getString("server_lobby");
+						SorciCubeSpell.this.nameServerFight = SorciCubeSpell.this.parameter.getString("server_fight");
+						//init handler
+						SorciCubeSpell.this.handlerCards = new HandlerCards(client);
+						SorciCubeSpell.this.handlerPlayers = new HandlerPlayers(client, handlerCards);
+						SorciCubeSpell.this.handlerFightData = new HandlerFightData(client);
+						if (SorciCubeSpell.this.isLobby) {
+							SorciCubeSpell.this.configItemList = newConfig("itemlist.yml");
+							SorciCubeSpell.this.configNPC = newConfig("npc.yml");
+							SorciCubeSpell.this.handlerFightData.removeAllFightDataServer(nameServer);
+							SorciCubeSpell.this.handlerDefaultDeck = new HandlerDefaultDeck(client, SorciCubeSpell.this.handlerCards);
+							SorciCubeSpell.this.managerGuiAdmin = new ManagerGui(SorciCubeSpell.this);
+							SorciCubeSpell.this.managerPakcetCards = new ManagerPakcetCards(client, SorciCubeSpell.this);
+							SorciCubeSpell.this.managerCreatorFight = new ManagerCreatorFight(SorciCubeSpell.this);
+							//init for npc
+							getCommand("additeminlist").setExecutor(new CommandAddItemInList(SorciCubeSpell.this));
+							SorciCubeSpell.this.managerClickNPC = new ManagerClickNPC(SorciCubeSpell.this);
+							//init for lobby
+							SorciCubeSpell.this.managerLobby = new ManagerLobby(SorciCubeSpell.this);
+							CommandMoney commandMoney = new CommandMoney(SorciCubeSpell.this);
+							getCommand("money").setExecutor(commandMoney);
+							getCommand("money").setTabCompleter(commandMoney);
+						} else {
+							SorciCubeSpell.this.arenaConfig = newConfig("arena.yml");
+							SorciCubeSpell.this.managerFight = new ManagerFight(SorciCubeSpell.this);
+						}
+						new ManagerSecurity(SorciCubeSpell.this);
+						getCommand("refresh").setExecutor(new CommandRefresh(SorciCubeSpell.this));
+						getCommand("givecard").setExecutor(new CommandGiveCard(SorciCubeSpell.this));
+						getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(SorciCubeSpell.this));
+					} catch (Exception e) {
+						e.printStackTrace();
+						Bukkit.getPluginManager().disablePlugin(SorciCubeSpell.this);
+					}
 				}
 			};
 			client.start();
 			w.waitCode(TIMEOUT);
 			if (!client.isAuthentified())
 				throw new Exception("SorciClient is not connected !");
-			//handler for config
-			this.handlerConfigYAML = new HandlerConfigYAML(client);
-			//init Config
-			this.message = newConfig("message.yml");
-			this.parameter = newConfig("parameter.yml");
-			this.enumConfig = newConfig("enum.yml");
-			this.guiConfig = newConfig("gui.yml");
-			this.levelConfig = newConfig("level.yml");
-			//init tool
-			this.enumTool = new EnumTool(this.enumConfig);
-			//init for change server
-			getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-			this.nameServerLobby = this.parameter.getString("server_lobby");
-			this.nameServerFight = this.parameter.getString("server_fight");
-			//init handler
-			this.handlerCards = new HandlerCards(client);
-			this.handlerPlayers = new HandlerPlayers(client, handlerCards);
-			this.handlerFightData = new HandlerFightData(client);
-			if (this.isLobby) {
-				this.configItemList = newConfig("itemlist.yml");
-				this.configNPC = newConfig("npc.yml");
-				this.handlerFightData.removeAllFightDataServer(nameServer);
-				this.handlerDefaultDeck = new HandlerDefaultDeck(client, this.handlerCards);
-				this.managerGuiAdmin = new ManagerGui(this);
-				this.managerPakcetCards = new ManagerPakcetCards(client, this);
-				this.managerCreatorFight = new ManagerCreatorFight(this);
-				//init for npc
-				getCommand("additeminlist").setExecutor(new CommandAddItemInList(this));
-				this.managerClickNPC = new ManagerClickNPC(this);
-				//init for lobby
-				this.managerLobby = new ManagerLobby(this);
-				CommandMoney commandMoney = new CommandMoney(this);
-				getCommand("money").setExecutor(commandMoney);
-				getCommand("money").setTabCompleter(commandMoney);
-			} else {
-				this.arenaConfig = newConfig("arena.yml");
-				this.managerFight = new ManagerFight(this);
-			}
-			new ManagerSecurity(this);
-			getCommand("refresh").setExecutor(new CommandRefresh(this));
-			getCommand("givecard").setExecutor(new CommandGiveCard(this));
-			getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(this));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Bukkit.getPluginManager().disablePlugin(this);

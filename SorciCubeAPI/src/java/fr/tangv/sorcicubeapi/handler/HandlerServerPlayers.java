@@ -61,6 +61,8 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 				default:
 					throw new Exception("Faction for default deck is invalid !");
 			}
+			if (defaultDeck.isComplet())
+				throw new Exception("Default deck is not complet !");
 			//list cards unlocked
 			ArrayList<String> cardsUnlocks = new ArrayList<String>();
 			for (int i = 0; i < defaultDeck.size(); i++) {
@@ -81,6 +83,8 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					new ArrayList<String>(),
 					0, 0, (byte) 1);
 			String playerJson = playerFeature.toDocument().toJson();
+			if (playerJson == null || playerJson.isEmpty())
+				throw new Exception("Echec PlayerFeature to Json !");
 			fm.insert(player.toString(), playerJson);
 			client.sendRequest(request.createReponse(RequestType.PLAYER_REPONSE, playerJson));
 		} catch (Exception e) {

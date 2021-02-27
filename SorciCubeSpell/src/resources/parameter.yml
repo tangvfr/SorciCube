@@ -5,7 +5,6 @@ action_bar_message: "§7Niveau.§b[§f§l{level}§b]    §5[§d{exp}§5/§d{exp_
 perm_build: "sorcicubespell.build"
 perm_admin: "sorcicubespell.admin"
 #/viewcards = sorcicubespell.viewcards
-#/packetadd <name> = sorcicubespell.packetadd
 #/packetgive <player> = <name> sorcicubespell.packetgive
 #/refresh = sorcicubespell.refresh
 #/givecard <name> <uuid> = sorcicubespell.givecard

@@ -2,6 +2,7 @@ package fr.tangv.sorcicubespell.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringReader;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -22,7 +23,7 @@ public class Config extends YamlConfiguration {
 	}
 	
 	public void load() throws FileNotFoundException, IOException, InvalidConfigurationException, ReponseRequestException, RequestException {
-		this.load(handler.getConfig(name));
+		this.load(new StringReader(handler.getConfig(name)));
 	}
 	
 	public void save() throws IOException, ReponseRequestException, RequestException {
