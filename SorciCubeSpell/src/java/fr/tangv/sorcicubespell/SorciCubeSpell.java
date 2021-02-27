@@ -162,7 +162,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			getCommand("givecard").setExecutor(new CommandGiveCard(this));
 			getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(this));
 		} catch (Exception e) {
-			Bukkit.getLogger().throwing("SorciCubeSpell" ,"onEnable", e);
+			e.printStackTrace();
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
 	}
@@ -184,7 +184,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				out.writeUTF("Connect");
 				out.writeUTF(server);
 			} catch (Exception e) {
-				Bukkit.getLogger().throwing("SorciCubeSpell" ,"sendPlayerToServer", e);
+				e.printStackTrace();
 			}
 			player.sendPluginMessage(this, "BungeeCord", data.toByteArray());
 		}
