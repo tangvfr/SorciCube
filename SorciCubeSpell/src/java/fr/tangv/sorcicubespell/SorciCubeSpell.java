@@ -84,7 +84,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		} catch (InvalidConfigurationException e) {
 			throw new Exception("Error in config named \""+name+"\"");
 		} catch (IOException | ReponseRequestException | RequestException e) {
-			throw new Exception("Error config \""+name+"\""+e.getCause());
+			throw new Exception("Error config \""+name+"\" caused "+e.getCause());
 		}
 	}
 	
