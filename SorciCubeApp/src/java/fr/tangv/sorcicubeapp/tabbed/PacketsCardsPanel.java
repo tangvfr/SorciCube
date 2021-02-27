@@ -86,13 +86,13 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 			Vector<PacketCards> list = new Vector<PacketCards>();
 			PacketCards pack = null;
 			Enumeration<String> names = handler.getEnumNamePacket();
-			String searchName = search.getText();
+			String searchName = search.getText().toLowerCase();
 			while (names.hasMoreElements()) {
 				String name = names.nextElement();
 				PacketCards packet = handler.getPacketCards(name);
 				if (name.equals(nameSelect))
 					pack = packet;
-				if (searchName.isEmpty() || name.contains(searchName))
+				if (searchName.isEmpty() || name.toLowerCase().contains(searchName))
 					list.add(packet);
 				max++;
 			}

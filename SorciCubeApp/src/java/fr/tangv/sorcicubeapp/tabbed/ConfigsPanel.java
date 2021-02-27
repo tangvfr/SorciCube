@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -94,8 +95,17 @@ public class ConfigsPanel extends SearchPanel<String> {
 		try {
 			editor.setBorder(null);
 			this.editor.removeAll();
-			String[] l = handler.listConfig(); 
-			this.list.setListData(l);
+			String[] l = handler.listConfig();
+			String search = this.search.getText().toLowerCase();
+			if (search.isEmpty()) {
+				this.list.setListData(l);
+			} else {
+				Vector<String> list = new Vector<String>();
+				for (String config : l)
+					if (config.toLowerCase().contains(search))
+						list.add(config);
+				this.list.setListData(list);
+			}
 			this.refresh.setText("Refresh | "+l.length+" configs");
 			this.repaint();
 		} catch (IOException | ReponseRequestException | RequestException e) {
