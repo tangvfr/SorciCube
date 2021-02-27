@@ -61,7 +61,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 				default:
 					throw new Exception("Faction for default deck is invalid !");
 			}
-			if (defaultDeck.isComplet())
+			if (!defaultDeck.isComplet())
 				throw new Exception("Default deck is not complet !");
 			//list cards unlocked
 			ArrayList<String> cardsUnlocks = new ArrayList<String>();

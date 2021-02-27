@@ -38,7 +38,7 @@ public class RamFilesManager {
 	}
 	
 	public void insert(String name, String data) throws IOException {
-		files.put(name, new RamFile(new java.io.File(folder.getPath()+SEPARATOR+name)));
+		files.put(name, new RamFile(new java.io.File(folder.getPath()+SEPARATOR+name))).writeData(data);;
 	}
 	
 	public boolean delete(String name) {
