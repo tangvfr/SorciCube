@@ -32,7 +32,6 @@ import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.fight.FightSlot;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
@@ -244,7 +243,7 @@ public class EventFight implements Listener {
 													player.checkPlayerIsDead();
 													player.getEnemie().checkPlayerIsDead();
 												} catch (Exception e1) {
-													Bukkit.getLogger().warning(RenderException.renderException(e1));
+													Bukkit.getLogger().throwing("EventFight" ,"onClick", e1);
 												}
 											});
 										}

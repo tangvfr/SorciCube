@@ -61,7 +61,7 @@ public class RepartedHeadArrow {
 				throw new Exception("Arguments is invalid, argument: (-file or -url possible) (path or url)");
 			}
 		} catch(Exception e) {
-			System.err.println(RenderException.renderException(e));
+			e.printStackTrace();
 		}
 	}
 

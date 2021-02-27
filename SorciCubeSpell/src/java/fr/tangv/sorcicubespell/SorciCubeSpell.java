@@ -22,7 +22,6 @@ import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.command.CommandAddItemInList;
 import fr.tangv.sorcicubespell.command.CommandGiveArrowHead;
 import fr.tangv.sorcicubespell.command.CommandGiveCard;
@@ -163,7 +162,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			getCommand("givecard").setExecutor(new CommandGiveCard(this));
 			getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(this));
 		} catch (Exception e) {
-			Bukkit.getLogger().warning(RenderException.renderException(e));
+			Bukkit.getLogger().throwing("SorciCubeSpell" ,"onEnable", e);
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
 	}
@@ -185,7 +184,7 @@ public class SorciCubeSpell extends JavaPlugin {
 				out.writeUTF("Connect");
 				out.writeUTF(server);
 			} catch (Exception e) {
-				Bukkit.getLogger().warning(RenderException.renderException(e));
+				Bukkit.getLogger().throwing("SorciCubeSpell" ,"sendPlayerToServer", e);
 			}
 			player.sendPluginMessage(this, "BungeeCord", data.toByteArray());
 		}

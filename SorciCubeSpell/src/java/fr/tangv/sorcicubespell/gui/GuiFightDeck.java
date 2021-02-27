@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import fr.tangv.sorcicubecore.fight.FightType;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.manager.ManagerCreatorFight;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 
@@ -95,7 +94,7 @@ public class GuiFightDeck extends GuiDecks {
 					break;
 			}
 		} catch (Exception e1) {
-			Bukkit.getLogger().warning(RenderException.renderException(e1));
+			Bukkit.getLogger().throwing("GuiFightDeck" ,"onClick", e1);
 		}
 	}
 

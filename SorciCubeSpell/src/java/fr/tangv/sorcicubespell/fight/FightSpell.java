@@ -10,7 +10,6 @@ import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFeature;
 import fr.tangv.sorcicubecore.card.CardFeatureType;
 import fr.tangv.sorcicubecore.card.CardFeatures;
-import fr.tangv.sorcicubecore.util.RenderException;
 
 public class FightSpell {
 
@@ -138,7 +137,7 @@ public class FightSpell {
 									try {
 										entity.setCard(new CardEntity(card));
 									} catch (Exception e1) {
-										Bukkit.getLogger().warning(RenderException.renderException(e1));
+										Bukkit.getLogger().throwing("FightSpell" ,"static", e1);
 									}
 									numberPose++;
 								}
@@ -237,7 +236,7 @@ public class FightSpell {
 							try {
 								entity.setCard(new CardEntity(cardFeature.clone()));
 							} catch (Exception e1) {
-								Bukkit.getLogger().warning(RenderException.renderException(e1));
+								Bukkit.getLogger().throwing("FightSpell" ,"static", e1);
 							}
 							break;
 						}
@@ -268,7 +267,7 @@ public class FightSpell {
 							try {
 								entity.setCard(new CardEntity(cardFeature));
 							} catch (Exception e1) {
-								Bukkit.getLogger().warning(RenderException.renderException(e1));
+								Bukkit.getLogger().throwing("FightSpell" ,"static", e1);
 							}
 						}
 				}

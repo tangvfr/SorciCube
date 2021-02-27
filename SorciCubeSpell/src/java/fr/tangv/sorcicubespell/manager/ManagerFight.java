@@ -9,19 +9,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import fr.tangv.sorcicubecore.fight.FightData;
+import fr.tangv.sorcicubecore.fight.FightStat;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.fight.EventFight;
 import fr.tangv.sorcicubespell.fight.Fight;
 import fr.tangv.sorcicubespell.fight.FightArena;
 import fr.tangv.sorcicubespell.fight.FightSpectator;
-import fr.tangv.sorcicubecore.fight.FightStat;
-import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.fight.PreFight;
-import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubespell.fight.ValueFight;
-import fr.tangv.sorcicubecore.util.RenderException;
 
 public class ManagerFight implements Runnable {
 	
@@ -178,7 +177,7 @@ public class ManagerFight implements Runnable {
 								} catch (IOException | ReponseRequestException | RequestException e1) {
 									e1.printStackTrace();
 								}
-								Bukkit.getLogger().warning(RenderException.renderException(e));
+								Bukkit.getLogger().throwing("ManagerFight" ,"run", e);
 								sendLobbyPlayer(preFight.getPlayer1());
 								sendLobbyPlayer(preFight.getPlayer2());
 							}
@@ -207,7 +206,7 @@ public class ManagerFight implements Runnable {
 					fights.remove(fight.getFightData().getFightUUID());
 				}
 			} catch (Exception e) {
-				Bukkit.getLogger().warning(RenderException.renderException(e));
+				Bukkit.getLogger().throwing("ManagerFight" ,"run", e);
 			}
 	}
 	

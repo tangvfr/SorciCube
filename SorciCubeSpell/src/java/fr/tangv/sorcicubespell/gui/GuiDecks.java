@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -70,7 +69,7 @@ public class GuiDecks extends AbstractGui {
 			inv.setItem(40, itemBack);
 			return inv;
 		} catch (Exception e) {
-			Bukkit.getLogger().warning(RenderException.renderException(e));
+			Bukkit.getLogger().throwing("GuiDecks" ,"createInventory", e);
 			return null;
 		}
 	}
@@ -108,7 +107,7 @@ public class GuiDecks extends AbstractGui {
 					break;
 			}
 		} catch (Exception e1) {
-			Bukkit.getLogger().warning(RenderException.renderException(e1));
+			Bukkit.getLogger().throwing("GuiDecks" ,"onClick", e1);
 		}
 		e.setCancelled(true);
 	}

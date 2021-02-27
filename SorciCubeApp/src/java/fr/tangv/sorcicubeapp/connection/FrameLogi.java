@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import fr.tangv.sorcicubeapp.tabbed.TabbedPanel;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
-import fr.tangv.sorcicubecore.util.RenderException;
 
 public class FrameLogi extends JFrame {
 
@@ -64,7 +63,7 @@ public class FrameLogi extends JFrame {
 						FrameLogi.this.setResizable(true);
 					} catch (Exception e) {
 						showConnection("Error: "+e.getMessage(), Color.RED);
-						System.err.println(RenderException.renderException(e));
+						e.printStackTrace();
 					}
 				}
 				
@@ -73,7 +72,7 @@ public class FrameLogi extends JFrame {
 			client.start();
 		} catch (Exception e) {
 			showConnection("Error: "+e.getMessage(), Color.RED);
-			System.err.println(RenderException.renderException(e));
+			e.printStackTrace();
 		}
 		return true;
 	}

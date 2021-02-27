@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.Card;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -40,7 +39,7 @@ public class GuiViewCards extends AbstractGuiCards {
 			}
 			return cards;
 		} catch (Exception e) {
-			Bukkit.getLogger().warning(RenderException.renderException(e));
+			Bukkit.getLogger().throwing("GuiViewCards" ,"listCards", e);
 			return new ArrayList<Card>();
 		}
 	}

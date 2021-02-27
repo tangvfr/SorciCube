@@ -20,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.packet.PacketCards;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.manager.ManagerPakcetCards;
@@ -112,7 +111,7 @@ public class EventPacket implements Listener, Runnable {
 							player.openInventory(inv);
 						}
 					} catch (Exception e1) {
-						Bukkit.getLogger().warning(RenderException.renderException(e1));
+						Bukkit.getLogger().throwing("EventPacket", "onClick", e1);
 						player.sendMessage(manger.getSorci().getMessage().getString("message_packet_error_take"));
 					}
 				}

@@ -14,7 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardComparator;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
@@ -95,7 +94,7 @@ public abstract class AbstractGuiCards extends AbstractGui {
 			inv.setItem(53, this.end);
 			return inv;
 		} catch (Exception e) {
-			Bukkit.getLogger().warning(RenderException.renderException(e));
+			Bukkit.getLogger().throwing("AbstractGuiCards" , "createInventory", e);
 			return null;
 		}
 	}

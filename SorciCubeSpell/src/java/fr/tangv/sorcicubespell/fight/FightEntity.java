@@ -17,7 +17,6 @@ import com.mojang.authlib.properties.Property;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.card.CardSkin;
 import fr.tangv.sorcicubecore.card.CardVisual;
-import fr.tangv.sorcicubecore.util.RenderException;
 import net.minecraft.server.v1_9_R2.EntityArmorStand;
 import net.minecraft.server.v1_9_R2.EntityPlayer;
 import net.minecraft.server.v1_9_R2.MinecraftServer;
@@ -115,7 +114,7 @@ public class FightEntity extends FightHead {
 			field.setAccessible(true);
 			field.set(entityPlayer, createProfil(""));
 		} catch (Exception e) {
-			Bukkit.getLogger().warning(RenderException.renderException(e));
+			Bukkit.getLogger().throwing("FightEntity" ,"spawnPlayer", e);
 		}
 		//create team
 		ScoreboardTeam team = new ScoreboardTeam(((CraftScoreboard) Bukkit.getScoreboardManager().getMainScoreboard()).getHandle(), "GENE");

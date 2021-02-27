@@ -8,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.fight.FightType;
-import fr.tangv.sorcicubecore.util.RenderException;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -55,7 +54,7 @@ public class GuiFight extends AbstractGui {
 				player.closeInventory();
 			}
 		} catch (Exception e2) {
-			Bukkit.getLogger().warning(RenderException.renderException(e2));
+			Bukkit.getLogger().throwing("GuiFight" ,"onClick", e2);
 		}
 		e.setCancelled(true);
 	}

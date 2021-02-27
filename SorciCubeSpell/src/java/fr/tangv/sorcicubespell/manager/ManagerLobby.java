@@ -6,9 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -18,13 +18,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
-import fr.tangv.sorcicubecore.util.RenderException;
 
 public class ManagerLobby implements Listener {
 
@@ -120,7 +119,7 @@ public class ManagerLobby implements Listener {
 								);
 								sorci.getManagerGui().updateDisplayPlayer(playerG);
 							} catch (Exception e) {
-								Bukkit.getLogger().warning(RenderException.renderException(e));
+								Bukkit.getLogger().throwing("ManagerLobby", "onJoin", e);
 							}
 						} else {
 							player.sendMessage(sorci.getMessage().getString("message_welcom"));
