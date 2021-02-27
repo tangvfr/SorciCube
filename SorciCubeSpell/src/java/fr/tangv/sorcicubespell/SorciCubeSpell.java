@@ -37,6 +37,7 @@ import fr.tangv.sorcicubespell.manager.ManagerPakcetCards;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
+import fr.tangv.sorcicubespell.util.WaitObject;
 
 public class SorciCubeSpell extends JavaPlugin {
 
@@ -83,7 +84,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		} catch (InvalidConfigurationException e) {
 			throw new Exception("Error in config named \""+name+"\"");
 		} catch (IOException | ReponseRequestException | RequestException e) {
-			throw new Exception(e.getCause());
+			throw new Exception("Error config \""+name+"\""+e.getCause());
 		}
 	}
 	
@@ -98,6 +99,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			String hostAPI = System.getenv("SC_HOST_API");
 			int portAPI = Integer.parseInt(System.getenv("SC_PORT_API"));
 			//init client
+			WaitObject w = new WaitObject();
 			SorciClient client = new SorciClient(
 					new SorciClientURI(InetAddress.getByName(hostAPI), portAPI,
 							new ClientIdentification(Client.VERSION_PROTOCOL, ClientType.SPIGOT.mask, nameServer, tokenServer)),
@@ -111,11 +113,11 @@ public class SorciCubeSpell extends JavaPlugin {
 				
 				@Override
 				public void connected() {
-					nameServer.notify();
+					w.continueCode();
 				}
 			};
 			client.start();
-			nameServer.wait(TIMEOUT);
+			w.waitCode(TIMEOUT);
 			if (!client.isAuthentified())
 				throw new Exception("SorciClient is not connected !");
 			//handler for config
