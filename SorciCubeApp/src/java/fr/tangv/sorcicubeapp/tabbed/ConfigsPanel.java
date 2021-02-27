@@ -97,16 +97,12 @@ public class ConfigsPanel extends SearchPanel<String> {
 			this.editor.removeAll();
 			String[] l = handler.listConfig();
 			String search = this.search.getText().toLowerCase();
-			if (search.isEmpty()) {
-				this.list.setListData(l);
-			} else {
-				Vector<String> list = new Vector<String>();
-				for (String config : l)
-					if (config.toLowerCase().contains(search))
-						list.add(config);
-				this.list.setListData(list);
-			}
-			this.refresh.setText("Refresh | "+l.length+" configs");
+			Vector<String> list = new Vector<String>();
+			for (String config : l)
+				if (search.isEmpty() || config.toLowerCase().contains(search))
+					list.add(config);
+			this.list.setListData(list);
+			this.refresh.setText("Refresh | "+l.length+" configs "+list.size()+" find");
 			this.repaint();
 		} catch (IOException | ReponseRequestException | RequestException e) {
 			warningBug(e, "refresh");
