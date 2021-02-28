@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubecore.handler;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 import org.bson.Document;
 
@@ -14,7 +15,6 @@ import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Enumeration;
 
 public class HandlerPacketCards {
 
@@ -67,8 +67,8 @@ public class HandlerPacketCards {
 		return packets.get(name);
 	}
 	
-	public Enumeration<String> getEnumNamePacket() {
-		return packets.keys();
+	public KeySetView<String, PacketCards> getPackets() {
+		return packets.keySet();
 	}
 	
 }

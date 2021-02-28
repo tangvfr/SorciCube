@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -85,10 +84,8 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 			int max = 0;
 			Vector<PacketCards> list = new Vector<PacketCards>();
 			PacketCards pack = null;
-			Enumeration<String> names = handler.getEnumNamePacket();
 			String searchName = search.getText().toLowerCase();
-			while (names.hasMoreElements()) {
-				String name = names.nextElement();
+			for (String name : handler.getPackets()) {
 				PacketCards packet = handler.getPacketCards(name);
 				if (name.equals(nameSelect))
 					pack = packet;
