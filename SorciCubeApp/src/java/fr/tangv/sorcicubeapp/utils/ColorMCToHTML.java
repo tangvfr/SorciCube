@@ -20,9 +20,9 @@ public class ColorMCToHTML {
 		text = text.replace("§c","</span><span color='#FF5555'>");
 		text = text.replace("§d","</span><span color='#FF55FF'>");
 		text = text.replace("§e","</span><span color='#E4E422'>");
-		text = text.replace("§f","</span><span color='#FFFFFF' background='#666666'>");
+		text = text.replace("§f","</span><span color='#FFFFFF' style=\"background-color: #D0D0D0\">");
 		//other
-		text = text.replace("§r","</span><span color='#FFFFFF' background='#666666'>");
+		text = text.replace("§r","</span><span color='#FFFFFF' style=\"background-color: #D0D0D0\">");
 		text = text.replace("§o","");
 		text = text.replace("§n","");
 		text = text.replace("§m","");
