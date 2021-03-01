@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
+import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -31,9 +32,11 @@ public class ManagerLobby implements Listener {
 	private Location locationTuto;
 	private Location locationSpawn;
 	private String formatChat;
+	private String noneLvl;
 	
 	public ManagerLobby(SorciCubeSpell sorci) {
 		this.sorci = sorci;
+		this.noneLvl = sorci.getParameter().getString("none_lvl");
 		this.locationTuto = (Location) sorci.getParameter().get("location_tuto");
 		this.locationSpawn = (Location) sorci.getParameter().get("location_spawn");
 		this.formatChat = sorci.getParameter().getString("chat_format");
@@ -46,10 +49,11 @@ public class ManagerLobby implements Listener {
 	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
+		PlayerFeature feature = sorci.getManagerGui().getPlayerGui(e.getPlayer()).getPlayerFeature();
 		e.setFormat(formatChat
 				.replace("{displayname}", e.getPlayer().getDisplayName())
 				.replace("{message}", e.getMessage())
-				.replace("{level}", Byte.toString(sorci.getManagerGui().getPlayerGui(e.getPlayer()).getPlayerFeature().getLevel()))
+				.replace("{level}", feature == null ? noneLvl : Byte.toString(feature.getLevel()))
 			);
 	}
 	
