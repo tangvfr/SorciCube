@@ -57,7 +57,6 @@ public class ConnectionPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					String text = scURI.getText();
-					System.out.println(text);
 					if (!uris.contains(text)) {
 						uris.add(text);
 						saveURIS();
