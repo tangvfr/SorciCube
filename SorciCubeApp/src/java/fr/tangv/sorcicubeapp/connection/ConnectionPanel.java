@@ -2,8 +2,11 @@ package fr.tangv.sorcicubeapp.connection;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -54,6 +57,7 @@ public class ConnectionPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					String text = scURI.getText();
+					System.out.println(text);
 					if (!uris.contains(text)) {
 						uris.add(text);
 						saveURIS();
@@ -97,12 +101,33 @@ public class ConnectionPanel extends JPanel {
 				fl.setEnabled(false);
 			}
 		});
+		//scURI
+		scURI = new JTextField();
 		//message
-		message = new JLabel(" ");
+		message = new JLabel();
 		message.setHorizontalAlignment(JLabel.CENTER);
 		//files
 		this.file = new File(System.getenv("appdata")+"/SorciCubeApp/uris");
 		this.uris = new Vector<String>();
+		//clearURI
+		this.clearURI = new JMenuItem("Clear");
+		clearURI.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getID() == ActionEvent.ACTION_FIRST) {
+					uris.clear();
+					try {
+						saveURIS();
+					} catch (IOException e1) {
+						message.setText("Error: "+e1.getMessage());
+						message.setForeground(Color.MAGENTA);
+					}
+				}
+			}
+		});
+		clearURI.setForeground(Color.RED);
+		clearURI.setHorizontalAlignment(JMenuItem.CENTER);
+		//load URIS
 		try {
 			if (!file.exists()) {
 				if (!file.getParentFile().exists())
@@ -117,21 +142,7 @@ public class ConnectionPanel extends JPanel {
 		//scURI
 		if (defaultURI.isEmpty() && !uris.isEmpty())
 			defaultURI = uris.lastElement();
-		scURI = new JTextField(defaultURI);
-		//clearURI
-		this.clearURI = new JMenuItem("Clear");
-		clearURI.addMouseListener(new ClickListener() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				uris.clear();
-				try {
-					saveURIS();
-				} catch (IOException e) {
-					message.setText("Error: "+e.getMessage());
-					message.setForeground(Color.MAGENTA);
-				}
-			}
-		});
+		scURI.setText(defaultURI);
 		//centerPan
 		centerPan = new JPanel();
 		centerPan.setLayout(new GridLayout(4, 1, 0, 5));
@@ -159,25 +170,29 @@ public class ConnectionPanel extends JPanel {
 	
 	private void updatePopMenu() {
 		JPopupMenu pop = new JPopupMenu();
+		pop.setMaximumSize(new Dimension(400, 200));
+		pop.add(clearURI);
+		pop.addSeparator();
 		for (String uri : uris) {
-			JMenuItem item = new JMenuItem(uri);
-			item.addMouseListener(new ClickListener() {
+			JMenuItem item = new JMenuItem((uri.length() < 60) ? uri : uri.substring(0, 56)+"...");
+			item.addActionListener(new ActionListener() {
 				@Override
-				public void mouseClicked(MouseEvent e) {
-					scURI.setText(uri);
-					scURI.repaint();
+				public void actionPerformed(ActionEvent e) {
+					if (e.getID() == ActionEvent.ACTION_FIRST) {
+						scURI.setText(uri);
+						scURI.repaint();
+					}
 				}
 			});
+			pop.add(item);
 		}
-		pop.addSeparator();
-		pop.add(clearURI);
 		scURI.setComponentPopupMenu(pop);
 	}
 	
 	private void saveURIS() throws IOException {
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 		Iterator<String> it = uris.iterator();
-		while (true) {
+		while (it.hasNext()) {
 			out.append(it.next());
 			if (it.hasNext())
 				out.newLine();

@@ -26,7 +26,7 @@ public class FrameLogi extends JFrame {
 		super.setTitle("SorciCubeApp");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//default
-		showConnection("", Color.BLACK);
+		showConnection("Welcome", Color.BLUE);
 	}
 	
 	public synchronized void showConnection(String message, Color color) {
@@ -36,7 +36,7 @@ public class FrameLogi extends JFrame {
 	}
 	
 	private synchronized void showContainer(Container container) {
-		super.setSize(500, 280);
+		super.setSize(500, 300);
 		super.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setContentPane(container);
