@@ -35,12 +35,6 @@ public abstract class DialogSkin extends DialogBase<JTextField> {
 			labTexture.setBorder(new EmptyBorder(0, 0, 0, 30));
 			panel.add(labTexture);
 			panel.add(new JLabel(new ImageIcon(head ? skin.toImageHead() : skin.toImageSkin())));
-			/*if (skin.isLastVersion()) {
-				JLabel pan = new JLabel("Error Invalid Skin");
-				pan.setSize(200, 200);
-				pan.setBackground(Color.RED);
-				panel.add(pan);
-			}*/
 		} catch (Exception e) {}
 		this.panUp.add(panel, BorderLayout.SOUTH);
 		panDown.add(new CompEmpty(10, 10));

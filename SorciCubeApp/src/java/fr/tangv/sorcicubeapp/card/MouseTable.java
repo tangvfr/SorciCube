@@ -17,6 +17,7 @@ import javax.swing.SpinnerNumberModel;
 
 import fr.tangv.sorcicubeapp.dialog.DialogBase;
 import fr.tangv.sorcicubeapp.dialog.DialogCombo;
+import fr.tangv.sorcicubeapp.dialog.DialogItem;
 import fr.tangv.sorcicubeapp.dialog.DialogSkin;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.card.Card;
@@ -89,7 +90,7 @@ public class MouseTable extends ClickListener {
 							}
 						};
 					else
-						new DialogBase<JTextField>(parent, "Edit Card", "Material", new JTextField(card.getMaterial().toString())) {
+						new DialogItem(parent, "Edit Card", "Material", card.getMaterial()) {
 							private static final long serialVersionUID = -4613034932047272124L;
 	
 							@Override
