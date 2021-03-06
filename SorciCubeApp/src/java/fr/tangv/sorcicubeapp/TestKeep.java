@@ -1,8 +1,12 @@
 package fr.tangv.sorcicubeapp;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -74,8 +78,18 @@ public class TestKeep {
 				}
 			}
 			System.out.println("End !");
-			for (Item item : list) {
-				System.out.println(item.name+" | "+item.numID);
+			File folder = new File(System.getenv("appdata")+"/TestKeep/items");
+			if (!folder.exists())
+				folder.mkdirs();
+			for (int i = 0; i < list.size(); i++) {
+				Item item = list.get(i);
+				System.out.println(((i*100)/(list.size()*100))+"% > "+item.name+" with "+item.numID);
+				File file = new File(folder.getPath()+"/"+item.numID.replace(":", "_"));
+				if (!file.exists())
+					file.createNewFile();
+				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+				out.writeObject(item);
+				out.close();
 			}	
 		//<tbody> 
 		} catch(IOException e) {
@@ -87,7 +101,9 @@ public class TestKeep {
 		return ImageIO.read(new URL("https://minecraftitemids.com/item/"+size+"/"+name+".png"));
 	}
 	
-	public static class Item {
+	public static class Item implements Serializable {
+		
+		private static final long serialVersionUID = 7043385399714609173L;
 		
 		public final String name;
 		public final String minecraftID;
