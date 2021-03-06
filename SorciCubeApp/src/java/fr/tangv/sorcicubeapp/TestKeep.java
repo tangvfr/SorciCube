@@ -3,6 +3,7 @@ package fr.tangv.sorcicubeapp;
 import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -16,8 +17,6 @@ public class TestKeep {
 		ArrayList<Item> list = new ArrayList<Item>(); 
 		int flags = Pattern.UNICODE_CASE+Pattern.MULTILINE;
 		Pattern rmB = Pattern.compile("<[^>]*>" ,flags);
-		String f = "none";
-		String fm = "none";
 		try {
 			for (int page = 1; page <= 8; page++) {
 				System.out.println("Page "+page);
@@ -50,25 +49,42 @@ public class TestKeep {
 							continue;
 						if (!Pattern.compile(":\\d*\\z").matcher(numID).find())
 							numID += ":0";
-						//System.out.println(name+" "+minecraftID+" "+legacyID+" "+numID);
-						f = name;
-						fm = minecraftID;
-						String linkID = minecraftID.replace("minecraft:", "");
+						int size = 64;
 						Image img;
 						try {
-							img = ImageIO.read(new URL("https://minecraftitemids.com/item/32/"+linkID+".png"));
+							img = getImage(size, minecraftID.replace("minecraft:", ""));
 						} catch (IOException e) {
-							img = ImageIO.read(new URL("https://minecraftitemids.com/item/32/"+numID.replace(":", "-")+".png"));
+							try {
+								img = getImage(size, numID.replace(":", "-"));
+							} catch (IOException e2) {
+								if (numID.equalsIgnoreCase("373:16") || numID.equalsIgnoreCase("373:32") || numID.equalsIgnoreCase("373:64"))
+									img = getImage(size, "373-0");
+								else if (numID.equalsIgnoreCase("68:0"))
+									img = getImage(size, "sign");
+								else if (legacyID.equalsIgnoreCase("minecraft:mob_spawner"))
+									img = getImage(size, "spawner");
+								else {
+									System.out.println(name+" "+minecraftID+" "+legacyID+" "+numID);
+									throw e2;
+								}
+							}
 						}
 						list.add(new Item(name, minecraftID, legacyID, numID, img));
 					}
 				}
 			}
+			System.out.println("End !");
+			for (Item item : list) {
+				System.out.println(item.name+" | "+item.numID);
+			}	
 		//<tbody> 
 		} catch(IOException e) {
 			e.printStackTrace();
-			System.out.println("Error: "+f);
 		}
+	}
+	
+	public static Image getImage(int size, String name) throws MalformedURLException, IOException {
+		return ImageIO.read(new URL("https://minecraftitemids.com/item/"+size+"/"+name+".png"));
 	}
 	
 	public static class Item {
