@@ -1,19 +1,20 @@
 package fr.tangv.sorcicubeapp;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import fr.tangv.sorcicubeapp.dialog.Item;
 
 public class TestKeep {
 
@@ -54,7 +55,7 @@ public class TestKeep {
 						if (!Pattern.compile(":\\d*\\z").matcher(numID).find())
 							numID += ":0";
 						int size = 64;
-						Image img;
+						BufferedImage img;
 						try {
 							img = getImage(size, minecraftID.replace("minecraft:", ""));
 						} catch (IOException e) {
@@ -83,12 +84,13 @@ public class TestKeep {
 				folder.mkdirs();
 			for (int i = 0; i < list.size(); i++) {
 				Item item = list.get(i);
-				System.out.println(((i*100)/(list.size()*100))+"% > "+item.name+" with "+item.numID);
+				if (i%50 == 0)
+					System.out.println(((i*100)/(list.size()*100))+"% saved");
 				File file = new File(folder.getPath()+"/"+item.numID.replace(":", "_"));
 				if (!file.exists())
 					file.createNewFile();
-				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-				out.writeObject(item);
+				OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+				out.append(item.toDocument().toJson());
 				out.close();
 			}
 			System.out.println("Finish !");
@@ -98,32 +100,8 @@ public class TestKeep {
 		}
 	}
 	
-	public static Image getImage(int size, String name) throws MalformedURLException, IOException {
+	public static BufferedImage getImage(int size, String name) throws MalformedURLException, IOException {
 		return ImageIO.read(new URL("https://minecraftitemids.com/item/"+size+"/"+name+".png"));
-	}
-	
-	public static class Item implements Serializable {
-		
-		private static final long serialVersionUID = 7043385399714609173L;
-		
-		public final String name;
-		public final String minecraftID;
-		public final String legacyID;
-		public final String numID;
-		public final Image img;
-		
-		public Item(String name,
-					String minecraftID,
-					String legacyID,
-					String numID,
-					Image img) {
-			this.name = name;
-			this.minecraftID = minecraftID;
-			this.legacyID = legacyID;
-			this.numID = numID;
-			this.img = img;
-		}
-		
 	}
 
 }
