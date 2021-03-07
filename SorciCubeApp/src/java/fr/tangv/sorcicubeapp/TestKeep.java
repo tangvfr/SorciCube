@@ -86,6 +86,9 @@ public class TestKeep {
 			File folder = new File(System.getenv("appdata")+"/TestKeep/items");
 			if (!folder.exists())
 				folder.mkdirs();
+			else
+				for (File file : folder.listFiles())
+					file.delete();
 			for (int i = 0; i < list.size(); i++) {
 				Item item = list.get(i);
 				if (i%50 == 0)
