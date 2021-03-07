@@ -54,6 +54,8 @@ public class TestKeep {
 						String numID = mi.group(1);
 						if (numID.isEmpty())
 							continue;
+						if (minecraftID.equals("minecraft:clay"))
+							numID = "82:0";
 						if (!Pattern.compile(":\\d*\\z").matcher(numID).find())
 							numID += ":0";
 						int size = 64;
