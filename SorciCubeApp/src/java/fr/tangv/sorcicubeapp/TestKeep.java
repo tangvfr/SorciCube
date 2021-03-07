@@ -85,7 +85,7 @@ public class TestKeep {
 			for (int i = 0; i < list.size(); i++) {
 				Item item = list.get(i);
 				if (i%50 == 0)
-					System.out.println(((i*100)/(list.size()*100))+"% saved");
+					System.out.println(i+"/"+list.size()+" saved");
 				File file = new File(folder.getPath()+"/"+item.numID.replace(":", "_"));
 				if (!file.exists())
 					file.createNewFile();
