@@ -90,7 +90,8 @@ public class TestKeep {
 				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 				out.writeObject(item);
 				out.close();
-			}	
+			}
+			System.out.println("Finish !");
 		//<tbody> 
 		} catch(IOException e) {
 			e.printStackTrace();
