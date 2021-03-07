@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp;
+package fr.tangv.sorcicubeapp.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,7 +19,7 @@ import org.bson.Document;
 
 import fr.tangv.sorcicubeapp.dialog.Item;
 
-public class TestKeep {
+public class KeepData {
 
 	public static void main(String[] args) {
 		ArrayList<Item> list = new ArrayList<Item>(); 
@@ -86,7 +86,7 @@ public class TestKeep {
 				}
 			}
 			System.out.println("End !");
-			File folder = new File(System.getenv("appdata")+"/TestKeep/items");
+			File folder = new File(System.getenv("appdata")+"/KeepData/items");
 			if (!folder.exists())
 				folder.mkdirs();
 			else
