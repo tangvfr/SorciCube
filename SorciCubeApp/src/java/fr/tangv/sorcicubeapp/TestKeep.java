@@ -48,6 +48,8 @@ public class TestKeep {
 						String minecraftID = mi.group(1);
 						mi.find();
 						String legacyID = mi.group(1);
+						if (legacyID.isEmpty())
+							legacyID = minecraftID;
 						mi.find();
 						String numID = mi.group(1);
 						if (numID.isEmpty())
