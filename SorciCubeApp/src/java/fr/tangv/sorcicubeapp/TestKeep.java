@@ -91,6 +91,8 @@ public class TestKeep {
 				File file = new File(folder.getPath()+"/"+item.numID.replace(":", "_"));
 				if (!file.exists())
 					file.createNewFile();
+				else
+					System.out.println(item.numID+" "+item.name+" already exist");
 				OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
 				out.append(item.toDocument().toJson());
 				out.close();

@@ -22,12 +22,11 @@
 	    <defaultGoal>package</defaultGoal>
 	    <sourceDirectory>src/java</sourceDirectory>
 	    <directory>target</directory>
-	    <!--<resources>
+	    <resources>
 	    	<resource>
 	        	<directory>src/resources</directory>
-	        	<filtering>true</filtering>
 	    	</resource>
-	    </resources>-->
+	    </resources>
 	    <plugins>
 	 		<plugin>
 	 			<artifactId>maven-assembly-plugin</artifactId>
