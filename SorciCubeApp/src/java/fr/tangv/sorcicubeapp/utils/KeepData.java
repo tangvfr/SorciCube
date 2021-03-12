@@ -86,34 +86,14 @@ public class KeepData {
 				}
 			}
 			System.out.println("End !");
-			File folder = new File(System.getenv("appdata")+"/KeepData/items");
-			if (!folder.exists())
-				folder.mkdirs();
-			else
-				for (File file : folder.listFiles())
-					file.delete();
-			ArrayList<String> index = new ArrayList<String>();
-			for (int i = 0; i < list.size(); i++) {
-				Item item = list.get(i);
-				if (i%50 == 0)
-					System.out.println(i+"/"+list.size()+" saved");
-				String name = item.numID.replace(":", "_");
-				File file = new File(folder.getPath()+"/"+name);
-				if (!file.exists())
-					file.createNewFile();
-				else
-					System.out.println(item.numID+" "+item.name+" already exist");
-				OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-				out.append(item.toDocument().toJson());
-				out.close();
-				index.add(name);
-			}
-			System.out.println("Creating index");
-			File indexFile = new File(folder.getPath()+"/index");
-			if (!indexFile.exists())
-				indexFile.createNewFile();
-			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(indexFile), StandardCharsets.UTF_8);
-			out.append(new Document("index", index).toJson());
+			File file = new File(System.getenv("appdata")+"/KeepData/items.json");
+			if (!file.exists())
+				file.createNewFile();
+			Document items = new Document();
+			for (Item item : list)
+				items.append(item.numID, item.toDocument());
+			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+			out.write(items.toJson());
 			out.close();
 			System.out.println("Finish !");
 		} catch(IOException e) {

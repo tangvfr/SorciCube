@@ -10,9 +10,14 @@ public class Items extends ConcurrentHashMap<String, Item> {
 
 	public Items() {
 		super();
-		InputStreamReader in = new InputStreamReader(ClassLoader.getSystemResourceAsStream("/items/index"), StandardCharsets.UTF_8);
-		in.read(arg0)
-		Document.parse(json)
+		StringBuilder sb = new StringBuilder();
+		InputStreamReader in = new InputStreamReader(ClassLoader.getSystemResourceAsStream("items.json"), StandardCharsets.UTF_8);
+		char[] c = new char[1024];
+		int len;
+		while ((len = in.read(c)) != -1)
+			sb.append(c, 0, len);
+		in.close();
+		//Document.parse(json)
 	}
 	
 }
