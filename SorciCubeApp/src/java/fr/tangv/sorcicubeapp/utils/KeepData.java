@@ -87,8 +87,10 @@ public class KeepData {
 			}
 			System.out.println("End !");
 			File file = new File(System.getenv("appdata")+"/KeepData/items.json");
-			if (!file.exists())
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
 				file.createNewFile();
+			}
 			Document items = new Document();
 			for (Item item : list)
 				items.append(item.numID, item.toDocument());
