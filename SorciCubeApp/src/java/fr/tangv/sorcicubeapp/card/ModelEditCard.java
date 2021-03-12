@@ -2,6 +2,8 @@ package fr.tangv.sorcicubeapp.card;
 
 import javax.swing.table.AbstractTableModel;
 
+import fr.tangv.sorcicubeapp.SorciCubeApp;
+import fr.tangv.sorcicubeapp.dialog.Item;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.util.TextList;
 
@@ -52,6 +54,10 @@ public class ModelEditCard extends AbstractTableModel {
 					
 				case 3:
 					text = card.getMaterial().toString();
+					if (!card.getMaterial().hasSkin()) {
+						Item item = SorciCubeApp.items.get(text);
+						text += " | "+((item == null) ? "unknown" : item.name);
+					}
 					break;
 					
 				case 4:

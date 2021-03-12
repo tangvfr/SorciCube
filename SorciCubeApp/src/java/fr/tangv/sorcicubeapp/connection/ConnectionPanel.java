@@ -57,7 +57,7 @@ public class ConnectionPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					String text = scURI.getText();
-					if (!uris.contains(text)) {
+					if (uris.isEmpty() || !text.equals(uris.lastElement())) {
 						uris.add(text);
 						saveURIS();
 					}
@@ -172,7 +172,8 @@ public class ConnectionPanel extends JPanel {
 		pop.setMaximumSize(new Dimension(400, 200));
 		pop.add(clearURI);
 		pop.addSeparator();
-		for (String uri : uris) {
+		for (int i = uris.size()-1; i > -1; i--) {
+			String uri = uris.get(i);
 			JMenuItem item = new JMenuItem((uri.length() < 60) ? uri : uri.substring(0, 56)+"...");
 			item.addActionListener(new ActionListener() {
 				@Override
