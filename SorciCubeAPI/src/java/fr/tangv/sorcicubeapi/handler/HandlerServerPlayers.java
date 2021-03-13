@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import fr.tangv.sorcicubeapi.console.Console;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
@@ -88,6 +89,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 			client.sendRequest(request.createReponse(RequestType.PLAYER_REPONSE, playerJson));
 		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
+			Console.logger.throwing("HandlerServerPlayers", "init", e);
 		}
 	}
 	
