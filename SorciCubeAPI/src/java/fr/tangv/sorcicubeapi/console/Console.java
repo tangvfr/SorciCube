@@ -24,7 +24,7 @@ public class Console extends Thread {
 			File file = new File("./logs");
 			if (!file.exists())
 				file.mkdirs();
-			FileHandler fh = new FileHandler("./logs/"+new SimpleDateFormat("dd-MM-yyyy").format(new Date())+"_%g.log", 16*1024*1024, 20, true);
+			FileHandler fh = new FileHandler("./logs/"+new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"_%g.log", 16*1024*1024, 20, true);
 			fh.setFormatter(new SimpleFormatter());
 			logger.addHandler(fh);
 		} catch (SecurityException | IOException e) {

@@ -10,6 +10,7 @@ import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestHandlerException;
 import fr.tangv.sorcicubecore.requests.RequestHandlerInterface;
+import fr.tangv.sorcicubecore.requests.RequestType;
 
 public class HandlerInit {
 
@@ -32,7 +33,8 @@ public class HandlerInit {
 		cm.registered(new RequestHandlerInterface() {
 			@Override
 			public void handlingRequest(Client client, Request request) throws Exception {
-				Console.logger.info(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <recieve< "+request.toRequestNoData());
+				if (request.requestType != RequestType.FIGHT_DATA_GET_LIST)
+					Console.logger.info(client.getInetAddress().getHostAddress()+":"+client.getClientID().name+" <recieve< "+request.toRequestNoData());
 			}
 		});
 	}
