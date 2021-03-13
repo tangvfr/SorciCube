@@ -1,15 +1,16 @@
 package fr.tangv.sorcicubecore.ramfiles;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class RamFilesManager {
 
-	private final static char SEPARATOR = java.io.File.separatorChar;
+	private final static char SEPARATOR = File.separatorChar;
 	
 	private ConcurrentHashMap<String, RamFile> files;
-	private java.io.File folder;
+	private File folder;
 	
 	public RamFilesManager(String pathFolder) throws IOException {
 		this.files = new ConcurrentHashMap<String, RamFile>();
@@ -38,7 +39,9 @@ public class RamFilesManager {
 	}
 	
 	public void insert(String name, String data) throws IOException {
-		files.put(name, new RamFile(new java.io.File(folder.getPath()+SEPARATOR+name))).writeData(data);;
+		RamFile rf = new RamFile(new File(folder.getPath()+SEPARATOR+name));
+		rf.writeData(data);
+		files.put(name, rf);
 	}
 	
 	public boolean delete(String name) {

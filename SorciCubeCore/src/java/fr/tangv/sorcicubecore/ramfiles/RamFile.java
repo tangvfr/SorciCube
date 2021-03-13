@@ -17,8 +17,9 @@ public class RamFile {
 		if (file.exists()) {
 			if (file.isFile()) {
 				loadData();
-			} else
+			} else {
 				throw new IOException("That don't is File !");
+			}
 		} else {
 			file.createNewFile();
 		}

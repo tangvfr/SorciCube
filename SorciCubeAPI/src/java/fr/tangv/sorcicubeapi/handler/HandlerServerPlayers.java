@@ -90,6 +90,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
 			Console.logger.throwing("HandlerServerPlayers", "init", e);
+			e.printStackTrace();
 		}
 	}
 	
