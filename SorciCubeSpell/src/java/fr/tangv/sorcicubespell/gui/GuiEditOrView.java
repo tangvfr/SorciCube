@@ -39,6 +39,7 @@ public class GuiEditOrView extends AbstractGui {
 
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
+		e.setCancelled(true);
 		int raw = e.getRawSlot();
 		if (raw == 11) {//deck
 			manager.getGuiDecks().open(player);
@@ -47,7 +48,6 @@ public class GuiEditOrView extends AbstractGui {
 		} else if (raw == 22) {//close
 			player.closeInventory();
 		}
-		e.setCancelled(true);
 	}
 
 }

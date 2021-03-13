@@ -40,6 +40,7 @@ public class GuiFight extends AbstractGui {
 
 	@Override
 	public void onClick(Player player, InventoryClickEvent e) {
+		e.setCancelled(true);
 		int raw = e.getRawSlot();
 		try {
 			if (raw == 11) {//noclassified
@@ -56,7 +57,6 @@ public class GuiFight extends AbstractGui {
 		} catch (Exception e2) {
 			Bukkit.getLogger().throwing("GuiFight" ,"onClick", e2);
 		}
-		e.setCancelled(true);
 	}
 
 }
