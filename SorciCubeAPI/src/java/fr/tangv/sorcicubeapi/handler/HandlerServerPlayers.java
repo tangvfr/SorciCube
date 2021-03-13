@@ -29,7 +29,6 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {}
 	
-	@Deprecated
 	@RequestAnnotation(type=RequestType.PLAYER_INIT)
 	public void init(Client client, Request request) throws IOException, RequestException {
 		try {

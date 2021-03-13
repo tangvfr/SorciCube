@@ -38,9 +38,7 @@ public class Request {
 		this.name = name;
 		if (name.contains(" ") || name.contains("\n") || name.contains("\r"))
 			throw new RequestException("Name of request is invalid");
-		if (requestType.getTypeData() != RequestDataType.NOTHING && (data == null))
-			throw new RequestException("Data is Null");
-		this.data = data;
+		this.data = data == null ? "" : data;
 	}
 	
 	public Request createReponse(RequestType typeRequest, String data) throws RequestException {
