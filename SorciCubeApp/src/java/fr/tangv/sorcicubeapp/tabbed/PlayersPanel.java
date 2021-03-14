@@ -119,16 +119,17 @@ public class PlayersPanel extends JPanel {
 			} else {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
-					int size = 128;
-					BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-					Graphics2D bGr = image.createGraphics();
-					bGr.drawImage(res.getHead(size), 0, 0, null);
-					bGr.dispose();
-					ImageIO.write(image, "png", this.headImage);
-					if (handler.existPlayer(uuid)) 
-						view = new PlayerHeadList(res, handler.getPlayer(uuid, res.getName()), this.headImage.getPath());
-					else
+					if (handler.existPlayer(uuid))
+						view = new PlayerHeadList(res, handler.getPlayer(uuid, res.getName()));
+					else {
+						int size = 128;
+						BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+						Graphics2D bGr = image.createGraphics();
+						bGr.drawImage(res.getHead(size), 0, 0, null);
+						bGr.dispose();
+						ImageIO.write(image, "png", this.headImage);
 						message.setText("<html><body><center><img alt=\"Head Of Player\" src=\"file:"+this.headImage.getPath()+"\"><br><font size=7>"+res.getName()+"</font><br><font size=4>Player is not registered on server</font></center></body></html>");
+					}
 				} catch (ExceptionPlayerResources e) {
 					message.setText("<html><body><center><font size=7>"+uuid.toString()+"</font><br><font size=4>UUID not found to Mojang</font></center></body></html>");
 				}
@@ -154,12 +155,13 @@ public class PlayersPanel extends JPanel {
 
 		private static final long serialVersionUID = -6207825311939478548L;
 		
-		private PlayerHeadList(PlayerResources res, PlayerFeature feature, String pathHeadFile) throws ExceptionPlayerResources, IOException {
+		private PlayerHeadList(PlayerResources res, PlayerFeature feature) throws ExceptionPlayerResources, IOException {
 			this.setLayout(new BorderLayout(5, 5));
+			
 			this.add(new JLabel(
-					"<html><body><center><img alt=\"Head Of Player\" src=\"file:"+pathHeadFile+"\"><br><font size=7>"+res.getName()+"</font><br><font size=3>"+res.getUUID().toString()+"</font></center></body></html>"
+					"<html><body><center><img alt=\"Head Of Player\" src=\"file:\"><br><font size=7>"+res.getName()+"</font><br><font size=3>"+res.getUUID().toString()+"</font></center></body></html>"
 			), BorderLayout.NORTH);
-			this.add(new JLabel("lvl."+feature.getLevel()+" "+feature.getMoney()+"€ "), BorderLayout.CENTER);
+			this.add(new JLabel("lvl."+feature.getLevel()+" money: "+feature.getMoney()), BorderLayout.CENTER);
 		}
 		
 		
