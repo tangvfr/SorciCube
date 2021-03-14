@@ -93,6 +93,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		try {
 			//init env
 			this.isLobby = !Boolean.parseBoolean(System.getenv("SC_FIGHT"));
+			System.out.println("Fight: "+!isLobby);
 			this.nameServer = System.getenv("SC_NAME_SERVER");
 			String tokenServer = System.getenv("SC_TOKEN_SERVER");
 			String hostAPI = System.getenv("SC_HOST_API");
