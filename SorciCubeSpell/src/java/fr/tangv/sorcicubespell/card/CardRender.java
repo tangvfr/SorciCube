@@ -48,15 +48,15 @@ public class CardRender {
 		CardFeatures features = card.getFeatures();
 		String cible = sorci.getEnumTool().cibleToString(card.getCible())+
 				(card.getCibleFaction() != CardFaction.BASIC ? (" "+sorci.getEnumTool().factionToString(card.getCibleFaction())) : "");
-		String name = card.renderName()+"§r "+CardVisual.renderManaCard(card);
+		String name = card.renderName()+" "+CardVisual.renderManaCard(card);
 		ArrayList<String> lore = new ArrayList<String>();
 		//damage and health if is entity
 		if (card.getType() == CardType.ENTITY) {
-			lore.add("§r  "+CardVisual.renderStatCard(card));
+			lore.add("  "+CardVisual.renderStatCard(card));
 		}
 		//rarity and faction
 		lore.add("");
-		lore.add("§r"+sorci.getEnumTool().rarityToString(card.getRarity())+"§r§f§l \u2807 "+sorci.getEnumTool().factionToString(card.getFaction()));
+		lore.add(sorci.getEnumTool().rarityToString(card.getRarity())+"§r§f§l \u2807 "+sorci.getEnumTool().factionToString(card.getFaction()));
 		lore.add("");
 		//features
 		boolean featureReturn = false;
@@ -68,21 +68,21 @@ public class CardRender {
 						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
 						.replace("{cible}", cible)
 						.split("\n")) {
-					lore.add("§r"+line);
+					lore.add(line);
 				}
 			}
 		if (featureReturn)
 			lore.add("");
 		//lore
 		for (int i = 0; i < card.getDescription().size(); i++)
-			lore.add("§r"+card.getDescription().get(i));
+			lore.add(card.getDescription().get(i));
 		if (card.getDescription().size() >= 1)
 			lore.add("");
 		//type
-		lore.add("§r  "+sorci.getEnumTool().typeToString(card.getType()));
+		lore.add("  "+sorci.getEnumTool().typeToString(card.getType()));
 		lore.add("");
 		//id
-		lore.add("§r§8Id: "+card.getUUID());
+		lore.add("§8Id: "+card.getUUID());
 		//return item
 		CardMaterial material = card.getMaterial();
 		if (material.hasSkin())
