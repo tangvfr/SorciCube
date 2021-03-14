@@ -44,7 +44,7 @@ public class HandlerFightData {
 	}
 	
 	public void addFightData(FightData fightData) throws IOException, ReponseRequestException, RequestException {
-		sorci.sendRequestReponse(new Request(RequestType.FIGHT_DATA_ADD, Request.randomID(), fightData.getFightUUID().toString(), null),
+		sorci.sendRequestReponse(new Request(RequestType.FIGHT_DATA_ADD, Request.randomID(), fightData.getFightUUID().toString(), fightData.toDocument().toJson()),
 				RequestType.SUCCESSFUL);
 	}
 	
