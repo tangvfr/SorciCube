@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -102,6 +102,7 @@ public class PlayersPanel extends JPanel {
 			return;
 		find.setEnabled(false);
 		try {
+			JComponent view = message;
 			UUID uuid;
 			String text = search.getText();
 			try {
@@ -118,26 +119,21 @@ public class PlayersPanel extends JPanel {
 			} else {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
-					if (handler.existPlayer(uuid)) {
-						PlayerFeature feature = handler.getPlayer(uuid, res.getName());
-						message.setText("lvl."+feature.getLevel()+" "+feature.getPseudo());
-						center.setViewportView(new PlayerHeadList(res, feature));
-						return;
-					} else {
-						int size = 128;
-						BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-						Graphics2D bGr = image.createGraphics();
-						bGr.drawImage(res.getHead(size), 0, 0, null);
-						bGr.dispose();
-						ImageIO.write(image, "png", this.headImage);
+					int size = 128;
+					BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+					Graphics2D bGr = image.createGraphics();
+					bGr.drawImage(res.getHead(size), 0, 0, null);
+					bGr.dispose();
+					ImageIO.write(image, "png", this.headImage);
+					if (handler.existPlayer(uuid)) 
+						view = new PlayerHeadList(res, handler.getPlayer(uuid, res.getName()), this.headImage.getPath());
+					else
 						message.setText("<html><body><center><img alt=\"Head Of Player\" src=\"file:"+this.headImage.getPath()+"\"><br><font size=7>"+res.getName()+"</font><br><font size=4>Player is not registered on server</font></center></body></html>");
-					}
-					this.repaint();
 				} catch (ExceptionPlayerResources e) {
 					message.setText("<html><body><center><font size=7>"+uuid.toString()+"</font><br><font size=4>UUID not found to Mojang</font></center></body></html>");
 				}
 			}
-			center.setViewportView(message);
+			center.setViewportView(view);
 			this.repaint();
 			new Thread(() -> {
 				try {
@@ -158,20 +154,12 @@ public class PlayersPanel extends JPanel {
 
 		private static final long serialVersionUID = -6207825311939478548L;
 		
-		private PlayerHeadList(PlayerResources res, PlayerFeature feature) throws ExceptionPlayerResources, IOException {
-			int layout = 5;
-			this.setLayout(new BorderLayout(layout, layout));
-			JLabel head = new JLabel(new ImageIcon(res.getHead(128)));
-			int headBorder = 10;
-			head.setBorder(new EmptyBorder(headBorder, headBorder, headBorder, headBorder));
-			this.add(head, BorderLayout.WEST);
+		private PlayerHeadList(PlayerResources res, PlayerFeature feature, String pathHeadFile) throws ExceptionPlayerResources, IOException {
+			this.setLayout(new BorderLayout(5, 5));
 			this.add(new JLabel(
-					  "<html><body>"
-					+ "<font size=7>"+res.getName()+"</font>"
-					+ "<br>"
-					+ "<font size=4>"+res.getUUID().toString()+"</font>"
-					+ "</body></html>"
-			), BorderLayout.CENTER);
+					"<html><body><center><img alt=\"Head Of Player\" src=\"file:"+pathHeadFile+"\"><br><font size=7>"+res.getName()+"</font><br><font size=3>"+res.getUUID().toString()+"</font></center></body></html>"
+			), BorderLayout.NORTH);
+			this.add(new JLabel("lvl."+feature.getLevel()+" "+feature.getMoney()+"€ "), BorderLayout.CENTER);
 		}
 		
 		
