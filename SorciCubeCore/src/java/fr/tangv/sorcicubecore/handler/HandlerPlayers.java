@@ -24,7 +24,7 @@ public class HandlerPlayers {
 		this.managerCards = managerCards;
 	}
 	
-	public boolean containtPlayer(UUID uuid) throws IOException, ReponseRequestException, RequestException {
+	public boolean existPlayer(UUID uuid) throws IOException, ReponseRequestException, RequestException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_EXIST, Request.randomID(), uuid.toString(), null),
 				RequestType.PLAYER_EXITSTING

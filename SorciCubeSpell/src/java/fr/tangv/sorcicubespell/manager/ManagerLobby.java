@@ -71,14 +71,9 @@ public class ManagerLobby implements Listener {
 	private void teleportPlayerToSpawn(Player player) {
 		Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
 		if (loc == null) {
-			try {
-				if (sorci.getHandlerPlayers().containtPlayer(player.getUniqueId())) {
-					loc = locationSpawn;
-				} else {
-					loc = locationTuto;
-				}
-			} catch (IOException | ReponseRequestException | RequestException e) {
-				e.printStackTrace();
+			if (sorci.getManagerGui().getPlayerGui(player).getPlayerFeature() != null) {
+				loc = locationSpawn;
+			} else {
 				loc = locationTuto;
 			}
 		}
@@ -113,8 +108,7 @@ public class ManagerLobby implements Listener {
 					if (fightData != null && fightData.getStat() == FightStat.START) {
 						sorci.sendPlayerToServer(player, fightData.getServer());
 					} else {
-						teleportPlayerToSpawn(player);
-						if (sorci.getHandlerPlayers().containtPlayer(player.getUniqueId())) {
+						if (sorci.getHandlerPlayers().existPlayer(player.getUniqueId())) {
 							player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
 							try {
 								PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
@@ -130,6 +124,7 @@ public class ManagerLobby implements Listener {
 							player.setLevel(0);
 							player.setExp(0F);
 						}
+						teleportPlayerToSpawn(player);
 					}
 				} catch (IOException | ReponseRequestException | RequestException e) {
 					e.printStackTrace();

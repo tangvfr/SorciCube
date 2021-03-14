@@ -118,7 +118,7 @@ public class PlayersPanel extends JPanel {
 			} else {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
-					if (handler.containtPlayer(uuid)) {
+					if (handler.existPlayer(uuid)) {
 						PlayerFeature feature = handler.getPlayer(uuid, res.getName());
 						message.setText("lvl."+feature.getLevel()+" "+feature.getPseudo());
 						center.setViewportView(new PlayerHeadList(res, feature));

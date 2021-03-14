@@ -1,14 +1,10 @@
 package fr.tangv.sorcicubespell.manager;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.npc.ClickNPC;
 import fr.tangv.sorcicubespell.npc.EventClickNPC;
@@ -29,17 +25,11 @@ public class ManagerClickNPC {
 	}
 	
 	private boolean playerIsInit(SorciCubeSpell sorci, Player player, boolean message) {
-		try {
-			if (sorci.getHandlerPlayers().containtPlayer(player.getUniqueId())) {
-				return true;
-			} else {
-				if (message)
-					player.sendMessage(sorci.getMessage().getString("message_initialized_player"));
-				return false;
-			}
-		} catch (IOException | ReponseRequestException | RequestException e) {
-			e.printStackTrace();
-			player.sendMessage(e.getMessage());
+		if (sorci.getManagerGui().getPlayerGui(player).getPlayerFeature() != null) {
+			return true;
+		} else {
+			if (message)
+				player.sendMessage(sorci.getMessage().getString("message_initialized_player"));
 			return false;
 		}
 	}
