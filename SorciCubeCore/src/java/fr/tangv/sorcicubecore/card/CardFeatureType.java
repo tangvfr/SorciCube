@@ -33,7 +33,7 @@ public enum CardFeatureType {
 	APPLY_EXCITED(TypeValue.NONE, true),
 	GIVE_FEATURE_CARD(TypeValue.UUID, true),
 	METAMORPH_TO(TypeValue.UUID, true),
-	HIDE_CARD(TypeValue.NONE, true);
+	HIDE_CARD(TypeValue.NONE, false);
 	
 	private final TypeValue typeValue;
 	private final boolean show;
