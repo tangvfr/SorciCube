@@ -34,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubeapp.utils.ClickListener;
+import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 
 public class ConnectionPanel extends JPanel {
@@ -62,6 +63,8 @@ public class ConnectionPanel extends JPanel {
 						saveURIS();
 					}
 					SorciClientURI uri = new SorciClientURI(text);
+					if (!ClientType.APPLICATION.isType(uri.getClientID().types))
+						throw new URISyntaxException(text, "URI Type is not for Application !");
 					message.setText(" ");
 					fl.tryConnection(uri);
 				} catch (NumberFormatException | URISyntaxException | IOException e1) {

@@ -74,11 +74,6 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 	public abstract void connected();
 	public abstract void disconnected();
 
-	@Override
-	public void handlingRequest(Client client, Request request) throws Exception {
-		//this.out.println(request.id+": "+request.typeRequest+" n:"+request.name+"\ndata: "+request.data);
-	}
-
 	@RequestAnnotation(type=RequestType.KICK)
 	public void kicked(Client client, Request request) {
 		try {
@@ -120,6 +115,7 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 			SorciClient sc = new SorciClient("sc://04:TestSorciClient:"+token+"@localhost:8367", 10_000) {
 				@Override public void connected() {}
 				@Override public void disconnected() {}
+				@Override public void handlingRequest(Client client, Request request) throws Exception {}
 			};
 			sc.start();
 		} catch (NumberFormatException | IOException | URISyntaxException | RequestHandlerException | RequestException e) {

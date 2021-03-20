@@ -1,6 +1,5 @@
 package fr.tangv.sorcicubeapp.tabbed;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
@@ -63,8 +62,8 @@ public class PacketCardsPanel extends JScrollPane {
 			}
 		});
 		JPanel btns = new JPanel(new GridLayout(1, 2, 10, 10));
-		btns.add(apply, BorderLayout.WEST);
-		btns.add(cancel, BorderLayout.EAST);
+		btns.add(apply);
+		btns.add(cancel);
 		//panel
 		this.packetPanel.setLayout(new GridBagLayout());
 		JPanel pan = new JPanel();

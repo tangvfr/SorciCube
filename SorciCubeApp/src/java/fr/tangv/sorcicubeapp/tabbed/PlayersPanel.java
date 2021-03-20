@@ -28,7 +28,6 @@ import fr.tangv.sorcicubeapp.tools.PlayerResources;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 
@@ -120,7 +119,7 @@ public class PlayersPanel extends JPanel {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
 					if (handler.existPlayer(uuid))
-						view = new PlayerHeadList(res, handler.getPlayer(uuid, res.getName()));
+						view = new PlayerComponent(res, handler.getPlayer(uuid, res.getName()), handler);
 					else {
 						int size = 128;
 						BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
@@ -149,22 +148,6 @@ public class PlayersPanel extends JPanel {
 			JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error Find", JOptionPane.ERROR_MESSAGE);
 			logi.showConnection("Error: "+e.getMessage(), Color.MAGENTA);
 		}
-	}
-	
-	private class PlayerHeadList extends JPanel {
-
-		private static final long serialVersionUID = -6207825311939478548L;
-		
-		private PlayerHeadList(PlayerResources res, PlayerFeature feature) throws ExceptionPlayerResources, IOException {
-			this.setLayout(new BorderLayout(5, 5));
-			
-			this.add(new JLabel(
-					"<html><body><center><img alt=\"Head Of Player\" src=\"file:\"><br><font size=7>"+res.getName()+"</font><br><font size=3>"+res.getUUID().toString()+"</font></center></body></html>"
-			), BorderLayout.NORTH);
-			this.add(new JLabel("lvl."+feature.getLevel()+" money: "+feature.getMoney()), BorderLayout.CENTER);
-		}
-		
-		
 	}
 
 }

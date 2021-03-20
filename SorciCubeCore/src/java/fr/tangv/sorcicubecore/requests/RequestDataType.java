@@ -6,6 +6,6 @@ public enum RequestDataType {
 	YAML(),
 	TEXT(),
 	ARRAY_TEXT(),
-	NOTHING();
+	NONE();
 	
 }

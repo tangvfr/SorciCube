@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import fr.tangv.sorcicubeapp.tabbed.TabbedPanel;
+import fr.tangv.sorcicubecore.clients.Client;
+import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 
@@ -66,6 +68,9 @@ public class FrameLogi extends JFrame {
 						e.printStackTrace();
 					}
 				}
+				
+				@Override
+				public void handlingRequest(Client client, Request request) throws Exception {}
 				
 			};
 			client.setPrintStream(System.out);

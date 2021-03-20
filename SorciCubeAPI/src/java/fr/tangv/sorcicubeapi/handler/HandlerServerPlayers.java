@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubeapi.console.Console;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
+import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubecore.ramfiles.RamFilesManager;
@@ -21,14 +23,25 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
 	private final HandlerServerDefaultDeck defaultDeck;
+	private final SorciCubeAPI sorci;
 	
-	public HandlerServerPlayers(HandlerServerDefaultDeck defaultDeck) throws IOException {
+	public HandlerServerPlayers(HandlerServerDefaultDeck defaultDeck, SorciCubeAPI sorci) throws IOException {
 		this.fm = new RamFilesManager("./players");
 		this.defaultDeck = defaultDeck;
+		this.sorci = sorci;
 	}
 	
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {}
+	
+	@RequestAnnotation(type=RequestType.PLAYER_START_UPDATING)
+	public void startUpdating(Client client, Request request) throws RequestException, IOException {
+		Request updating = new Request(RequestType.PLAYER_UPDATING, Request.randomID(), request.name, null);
+		for (Client cl : sorci.getClientsManager().clients)
+			if (ClientType.SPIGOT.isType(cl.getClientID().types))
+				cl.sendRequest(updating);
+		client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
+	}
 	
 	@RequestAnnotation(type=RequestType.PLAYER_INIT)
 	public void init(Client client, Request request) throws IOException, RequestException {

@@ -19,7 +19,7 @@ public class HandlerInit {
 		HandlerServerCards cards = new HandlerServerCards();
 		HandlerServerDefaultDeck defaultDeck = new HandlerServerDefaultDeck(cards);
 		HandlerServerFightData fightData = new HandlerServerFightData();
-		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck);
+		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck, sorci);
 		HandlerServerConfigYAML yaml = new HandlerServerConfigYAML();
 		HandlerServerPacketCards packets = new HandlerServerPacketCards();
 		//registred

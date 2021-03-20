@@ -12,7 +12,7 @@ public enum ClientType {
 		this.mask = mask;
 	}
 	
-	public boolean isThisType(byte type) {
+	public boolean isType(byte type) {
 		return (type & mask) != 0;
 	}
 	

@@ -50,11 +50,11 @@ public class Request {
 	}
 	
 	public String toRequest() {
-		return requestType.name()+" "+id+" "+name+" "+new String(Base64.getEncoder().encode((requestType.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name()).getBytes(Client.CHARSET)), StandardCharsets.US_ASCII);
+		return requestType.name()+" "+id+" "+name+" "+new String(Base64.getEncoder().encode((requestType.getTypeData() != RequestDataType.NONE ? data : RequestDataType.NONE.name()).getBytes(Client.CHARSET)), StandardCharsets.US_ASCII);
 	}
 	
 	public String toRequestNoData() {
-		return requestType.name()+" "+id+" "+name+" Data["+(requestType.getTypeData() != RequestDataType.NOTHING ? data : RequestDataType.NOTHING.name()).length()+"]";
+		return requestType.name()+" "+id+" "+name+" Data["+(requestType.getTypeData() != RequestDataType.NONE ? data : RequestDataType.NONE.name()).length()+"]";
 	}
 	
 }

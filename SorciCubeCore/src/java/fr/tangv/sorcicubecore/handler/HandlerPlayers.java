@@ -24,6 +24,13 @@ public class HandlerPlayers {
 		this.managerCards = managerCards;
 	}
 	
+	public void startUpdatingPlayer(UUID uuid) throws IOException, ReponseRequestException, RequestException {
+		sorci.sendRequestReponse(
+				new Request(RequestType.PLAYER_START_UPDATING, Request.randomID(), uuid.toString(), null)
+				, RequestType.SUCCESSFUL
+			);
+	}
+	
 	public boolean existPlayer(UUID uuid) throws IOException, ReponseRequestException, RequestException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_EXIST, Request.randomID(), uuid.toString(), null),
