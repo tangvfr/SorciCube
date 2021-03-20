@@ -19,10 +19,8 @@ import fr.tangv.sorcicubecore.handler.HandlerConfigYAML;
 import fr.tangv.sorcicubecore.handler.HandlerDefaultDeck;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
-import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubecore.requests.Request;
-import fr.tangv.sorcicubecore.requests.RequestAnnotation;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
@@ -171,15 +169,14 @@ public class SorciCubeSpell extends JavaPlugin {
 				}
 
 				@Override
-				public void handlingRequest(Client client, Request request) throws Exception {}
-				
-				@RequestAnnotation(type=RequestType.PLAYER_UPDATING)
-				public void updatingPlayer(Client client, Request request) throws IOException, ReponseRequestException, RequestException, DeckException {
-					Player player = Bukkit.getPlayer(UUID.fromString(request.name));
-					if (player != null) {
-						PlayerFeature feature = handlerPlayers.getPlayer(player.getUniqueId(), player.getName());
-						player.closeInventory();
-						managerGuiAdmin.getPlayerGui(player).setPlayerFeature(feature);
+				public void handlingRequest(Client client, Request request) throws Exception {
+					if (request.requestType == RequestType.PLAYER_UPDATING) {
+						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
+						if (player != null) {
+							PlayerFeature feature = handlerPlayers.getPlayer(player.getUniqueId(), player.getName());
+							player.closeInventory();
+							managerGuiAdmin.getPlayerGui(player).setPlayerFeature(feature);
+						}
 					}
 				}
 				

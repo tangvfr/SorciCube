@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import fr.tangv.sorcicubeapp.tabbed.TabbedPanel;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.requests.Request;
+import fr.tangv.sorcicubecore.requests.RequestType;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 
@@ -18,6 +19,7 @@ public class FrameLogi extends JFrame {
 	private final ConnectionPanel connectionPanel;
 	private final JLabel waitConnection;
 	private volatile boolean used;
+	private volatile boolean err;
 	
 	public FrameLogi(String defaultURI) {
 		this.connectionPanel = new ConnectionPanel(this, defaultURI);
@@ -49,13 +51,15 @@ public class FrameLogi extends JFrame {
 		if (used) 
 			return false;
 		used = true;
+		err = false;
 		showContainer(this.waitConnection);
 		try {
 			SorciClient client = new SorciClient(uri, 5_000) {
 				
 				@Override
 				public void disconnected() {
-					showConnection("Disconnected", Color.GREEN);
+					if (!err)
+						showConnection("Disconnected", Color.GREEN);
 				}
 				
 				@Override
@@ -70,12 +74,18 @@ public class FrameLogi extends JFrame {
 				}
 				
 				@Override
-				public void handlingRequest(Client client, Request request) throws Exception {}
+				public void handlingRequest(Client client, Request request) throws Exception {
+					if (request.requestType == RequestType.IDENTIFICATION_REFUSED) {
+						err = true;
+						showConnection(request.data, Color.RED);
+					}
+				}
 				
 			};
 			client.setPrintStream(System.out);
 			client.start();
 		} catch (Exception e) {
+			err = true;
 			showConnection("Error: "+e.getMessage(), Color.RED);
 			e.printStackTrace();
 		}
