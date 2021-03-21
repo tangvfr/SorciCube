@@ -24,6 +24,7 @@ public class QuerryServer extends Thread {
 		if (!enable)
 			return;
 		try {
+			@SuppressWarnings("resource")
 			ServerSocket server = new ServerSocket(properties.querryPort, properties.querryBackLog, properties.querryBindIP);
 			while (true) {
 				try {
@@ -31,10 +32,8 @@ public class QuerryServer extends Thread {
 				} catch (Exception e) {
 					Console.logger.warning(e.getMessage());
 					e.printStackTrace();
-					break;
 				}
 			}
-			server.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
