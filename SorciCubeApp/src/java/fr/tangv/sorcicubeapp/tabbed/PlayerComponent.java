@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubeapp.tabbed;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -21,6 +22,7 @@ import fr.tangv.sorcicubeapp.tools.ExceptionPlayerResources;
 import fr.tangv.sorcicubeapp.tools.PlayerResources;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
@@ -31,21 +33,23 @@ public class PlayerComponent extends JComponent {
 	private final JLabel head;
 	private final JLabel name;
 	private final JLabel uuid;
-	private final PlayerFeature feature;
+	private final PlayerResources res;
+	private PlayerFeature feature;
 	private final HandlerPlayers handler;
 	private final ComponentNumberInt lvl;
 	private final ComponentNumberInt exp;
 	private final ComponentNumberInt money;
 	private final ComponentNumberInt decks;
 	
-	public PlayerComponent(PlayerResources res, PlayerFeature feature, HandlerPlayers handler) throws ExceptionPlayerResources, IOException {
+	public PlayerComponent(PlayerResources res, HandlerPlayers handler) throws ExceptionPlayerResources, IOException, ReponseRequestException, RequestException, DeckException {
 		this.setLayout(new GridBagLayout());
-		this.feature = feature;
+		this.res = res;
 		this.handler = handler;
 		this.lvl = new ComponentNumberInt("Level");
 		this.exp = new ComponentNumberInt("Experience");
 		this.money = new ComponentNumberInt("Money");
 		this.decks = new ComponentNumberInt("Decks");
+		getPlayerValues();
 		//head
 		this.head = new JLabel(new ImageIcon(res.getHead(128)));
 		this.head.setAlignmentX(0.5F);
@@ -86,7 +90,7 @@ public class PlayerComponent extends JComponent {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					updatePlayerValues();
+					setPlayerValues();
 				} catch (IOException | ReponseRequestException | RequestException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Save", JOptionPane.ERROR_MESSAGE);
@@ -97,23 +101,38 @@ public class PlayerComponent extends JComponent {
 		cancel.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				initPlayerValues();
+				try {
+					getPlayerValues();
+				} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Get", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		JPanel btns = new JPanel(new GridLayout(1, 2, 10, 10));
 		btns.add(apply);
 		btns.add(cancel);
+		//warning
+		JPanel warn = new JPanel(new BorderLayout(0, 0));
+		TitledBorder bord = new TitledBorder("Warning");
+		bord.setTitleColor(Color.RED);
+		JLabel warning = new JLabel("Mustn't fill fields with random values");
+		warning.setHorizontalAlignment(JLabel.CENTER);
+		warn.setAlignmentX(0.5F);
+		warn.setBorder(bord);
+		warn.add(warning, BorderLayout.CENTER);
 		//style
 		JPanel pan = new JPanel();
 		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
 		pan.add(info);
+		pan.add(warn);
 		pan.add(features);
 		pan.add(btns);
 		this.add(pan);
-		initPlayerValues();
 	}
 	
-	private void initPlayerValues() {
+	private void getPlayerValues() throws IOException, ReponseRequestException, RequestException, DeckException {
+		this.feature = handler.getPlayer(res.getUUID(), res.getName());
 		this.lvl.setInt(feature.getLevel());
 		this.exp.setInt(feature.getExperience());
 		this.money.setInt(feature.getMoney());
@@ -122,7 +141,7 @@ public class PlayerComponent extends JComponent {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void updatePlayerValues() throws IOException, ReponseRequestException, RequestException {
+	private void setPlayerValues() throws IOException, ReponseRequestException, RequestException {
 		feature.setLevel((byte) this.lvl.getInt());
 		feature.setExperience(this.exp.getInt());
 		feature.setMoney(this.money.getInt());

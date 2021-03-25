@@ -119,7 +119,7 @@ public class PlayersPanel extends JPanel {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
 					if (handler.existPlayer(uuid))
-						view = new PlayerComponent(res, handler.getPlayer(uuid, res.getName()), handler);
+						view = new PlayerComponent(res, handler);
 					else {
 						int size = 128;
 						BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
