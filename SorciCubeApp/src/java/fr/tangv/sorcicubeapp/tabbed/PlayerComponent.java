@@ -97,7 +97,7 @@ public class PlayerComponent extends JComponent {
 				}
 			}
 		});
-		JButton cancel = new JButton("Cancel");
+		JButton cancel = new JButton("Update");
 		cancel.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -105,7 +105,7 @@ public class PlayerComponent extends JComponent {
 					getPlayerValues();
 				} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Get", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Update", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
