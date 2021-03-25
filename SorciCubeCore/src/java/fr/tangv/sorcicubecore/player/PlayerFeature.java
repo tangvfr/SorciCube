@@ -69,6 +69,11 @@ public class PlayerFeature {
 	public void addLevel(byte level) {
 		this.level += level;
 	}
+
+	@Deprecated
+	public void setLevel(byte level) {
+		this.level = level;
+	}
 	
 	public int getExperience() {
 		return experience;
@@ -84,6 +89,11 @@ public class PlayerFeature {
 	
 	public void addExperience(int experience) {
 		this.experience += experience;
+	}
+	
+	@Deprecated
+	public void setExperience(int experience) {
+		this.experience = experience;
 	}
 	
 	public int getMoney() {

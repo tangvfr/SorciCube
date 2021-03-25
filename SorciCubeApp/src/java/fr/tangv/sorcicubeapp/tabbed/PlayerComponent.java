@@ -121,11 +121,16 @@ public class PlayerComponent extends JComponent {
 		this.repaint();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void updatePlayerValues() throws IOException, ReponseRequestException, RequestException {
+		feature.setLevel((byte) this.lvl.getInt());
+		feature.setExperience(this.exp.getInt());
+		feature.setMoney(this.money.getInt());
+		feature.setUnlockDecks(this.decks.getInt());
 		handler.update(feature);
 		handler.startUpdatingPlayer(feature.getUUID());
 	}
-	
+
 	private class ActionCopy extends ClickListener {
 		
 		private final String copy;
