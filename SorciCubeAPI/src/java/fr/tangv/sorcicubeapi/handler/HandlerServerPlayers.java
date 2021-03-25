@@ -43,6 +43,15 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 		client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 	}
 	
+	@RequestAnnotation(type=RequestType.PLAYER_START_SEND)
+	public void startSendding(Client client, Request request) throws RequestException, IOException {
+		Request updating = new Request(RequestType.PLAYER_SEND, Request.randomID(), request.name, request.data);
+		for (Client cl : sorci.getClientsManager().clients)
+			if (ClientType.SPIGOT.isType(cl.getClientID().types))
+				cl.sendRequest(updating);
+		client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
+	}
+	
 	@RequestAnnotation(type=RequestType.PLAYER_INIT)
 	public void init(Client client, Request request) throws IOException, RequestException {
 		try {

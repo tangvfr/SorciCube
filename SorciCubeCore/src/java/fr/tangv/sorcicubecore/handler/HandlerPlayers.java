@@ -31,6 +31,13 @@ public class HandlerPlayers {
 			);
 	}
 	
+	public void startSendingPlayer(UUID uuid, String json) throws IOException, ReponseRequestException, RequestException {
+		sorci.sendRequestReponse(
+				new Request(RequestType.PLAYER_START_SEND, Request.randomID(), uuid.toString(), json)
+				, RequestType.SUCCESSFUL
+			);
+	}
+	
 	public boolean existPlayer(UUID uuid) throws IOException, ReponseRequestException, RequestException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_EXIST, Request.randomID(), uuid.toString(), null),

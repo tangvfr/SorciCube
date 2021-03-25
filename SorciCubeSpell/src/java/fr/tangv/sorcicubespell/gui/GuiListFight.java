@@ -87,15 +87,15 @@ public class GuiListFight extends AbstractGui implements Runnable {
 		int all = listFight.size();
 		int no_classed = all-duel;
 		//duel
-		inv.setItem(8, ItemBuild.buildItem(Material.IRON_SWORD, duel, (short) 0, (byte) 0, 
+		inv.setItem(8, ItemBuild.buildItem(Material.IRON_SWORD, 1, (short) 0, (byte) 0, 
 				config.getString("duel_number").replace("{number}", Integer.toString(duel))
 		, null, false));
 		//no classed
-		inv.setItem(17, ItemBuild.buildSkull(SkullUrl.N_GRAY, no_classed,
+		inv.setItem(17, ItemBuild.buildSkull(SkullUrl.N_GRAY, 1,
 				config.getString("no_classed_number").replace("{number}", Integer.toString(no_classed))
 		, null, false));
 		//all
-		inv.setItem(35, ItemBuild.buildItem(Material.FIREBALL, all, (short) 0, (byte) 0,
+		inv.setItem(35, ItemBuild.buildItem(Material.FIREBALL, 1, (short) 0, (byte) 0,
 				config.getString("all_number").replace("{number}", Integer.toString(all))
 		, null, false));
 	}

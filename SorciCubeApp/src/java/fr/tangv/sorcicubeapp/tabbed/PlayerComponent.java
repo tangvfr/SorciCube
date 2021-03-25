@@ -12,10 +12,12 @@ import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubeapp.tools.ExceptionPlayerResources;
@@ -121,6 +123,29 @@ public class PlayerComponent extends JComponent {
 		warn.setAlignmentX(0.5F);
 		warn.setBorder(bord);
 		warn.add(warning, BorderLayout.CENTER);
+		//JPanel Message
+		JPanel message = new JPanel(new BorderLayout(5, 5));
+		message.setAlignmentX(0.5F);
+		message.setBorder(new TitledBorder("Send Message"));
+		JTextField field = new JTextField("{\"text\": \"[SorcicubeAPI] Voici un Message\"}");
+		JCheckBox json = new JCheckBox("JSON");
+		json.setSelected(true);
+		JButton send = new JButton("Send");
+		send.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					handler.startSendingPlayer(res.getUUID(), json.isSelected() ? field.getText() : ("{\"text\": \""+field.getText()+"\"}"));
+				} catch (IOException | ReponseRequestException | RequestException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Send Message", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		message.add(new JLabel("Message:"), BorderLayout.WEST);
+		message.add(field, BorderLayout.CENTER);
+		message.add(json, BorderLayout.EAST);
+		message.add(send, BorderLayout.SOUTH);
 		//style
 		JPanel pan = new JPanel();
 		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
@@ -128,6 +153,7 @@ public class PlayerComponent extends JComponent {
 		pan.add(warn);
 		pan.add(features);
 		pan.add(btns);
+		pan.add(message);
 		this.add(pan);
 	}
 	

@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,6 +42,8 @@ import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
 import fr.tangv.sorcicubespell.util.WaitObject;
+import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutChat;
 
 public class SorciCubeSpell extends JavaPlugin {
 
@@ -177,7 +180,11 @@ public class SorciCubeSpell extends JavaPlugin {
 							player.closeInventory();
 							managerGuiAdmin.getPlayerGui(player).setPlayerFeature(feature);
 						}
-					}
+					} else if (request.requestType == RequestType.PLAYER_SEND) {
+						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
+						if (player != null)
+							((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a(request.data), (byte) 0));
+					} 
 				}
 				
 			};
