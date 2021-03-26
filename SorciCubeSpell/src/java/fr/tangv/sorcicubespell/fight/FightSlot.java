@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.fight;
+package fr.tangv.sorcicubespell.fight;
 
 public enum FightSlot {
 

@@ -54,6 +54,19 @@ public class ServerPanel extends JScrollPane {
 			}
 		});
 		refresh.setPreferredSize(dim);
+		JButton refreshServ = new JButton("Refresh Server");
+		refreshServ.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					handler.startRefresh();
+				} catch (IOException | ReponseRequestException | RequestException e1) {
+					JOptionPane.showMessageDialog(ServerPanel.this, e1.getMessage(), "Error Refresh Server", JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				}
+			}
+		});
+		refreshServ.setPreferredSize(dim);
 		JButton stop = new JButton("Stop API");
 		stop.addMouseListener(new ClickListener() {
 			@Override
@@ -92,6 +105,11 @@ public class ServerPanel extends JScrollPane {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
+		pan.add(refreshServ, c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
 		pan.add(stop, c);
 		
 		this.setViewportView(pan);

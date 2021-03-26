@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
-import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.fight.FightSpectator;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
@@ -51,7 +50,6 @@ public class CommandGiveCard implements CommandExecutor {
 								feature.getCardsUnlocks().add(uuid);
 							playerG.uploadPlayerFeature(sorci.getHandlerPlayers());
 						}
-						player.getInventory().addItem(CardRender.cardToItem(card, sorci));
 					} else if (sorci.getManagerFight().isSpectator(player.getUniqueId())) {
 						FightSpectator spectator = sorci.getManagerFight().getSpectator(player.getUniqueId());
 						if (spectator.isFightPlayer()) {

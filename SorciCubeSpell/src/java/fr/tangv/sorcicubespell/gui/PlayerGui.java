@@ -52,6 +52,10 @@ public class PlayerGui {
 		return player.getUniqueId();
 	}
 	
+	public String getName() {
+		return player.getName();
+	}
+	
 	public Player getPlayer() {
 		return player;
 	}

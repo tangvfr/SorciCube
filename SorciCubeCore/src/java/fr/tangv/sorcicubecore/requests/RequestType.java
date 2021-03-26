@@ -8,6 +8,7 @@ public enum RequestType {
 	
 	//SERVER
 	SPITGOT_SERVER_LIST(RequestDataType.JSON),
+	SERVER_REFRESH(RequestDataType.NONE),
 	//DATA
 	ERROR(RequestDataType.TEXT),
 	SUCCESSFUL(RequestDataType.NONE),
@@ -49,6 +50,7 @@ public enum RequestType {
 	GET_SPITGOT_SERVER_LIST(RequestDataType.NONE),
 	PLAYER_JOIN(RequestDataType.NONE),
 	PLAYER_LEAVE(RequestDataType.NONE),
+	START_SERVER_REFRESH(RequestDataType.NONE),
 	//PLAYER
 	PLAYER_INIT(RequestDataType.ARRAY_TEXT),
 	PLAYER_GET(RequestDataType.NONE),

@@ -1,10 +1,16 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import fr.tangv.sorcicubecore.handler.HandlerPlayers;
+import fr.tangv.sorcicubecore.player.DeckException;
+import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.requests.RequestException;
+import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.command.CommandGuiAdminViewCards;
 import fr.tangv.sorcicubespell.gui.EventGuiPlayer;
@@ -136,6 +142,15 @@ public class ManagerGui {
 	
 	public GuiIncreaseDeck getGuiIncreaseDeck() {
 		return guiIncreaseDeck;
+	}
+	
+	public void refreshFeaturePlayers() throws IOException, ReponseRequestException, RequestException, DeckException {
+		HandlerPlayers handler = sorci.getHandlerPlayers();
+		for (PlayerGui pg : playerGuis.values()) {
+			PlayerFeature feature = handler.getPlayer(pg.getUUID(), pg.getName());
+			pg.getPlayer().closeInventory();
+			pg.setPlayerFeature(feature);
+		}
 	}
 	
 }

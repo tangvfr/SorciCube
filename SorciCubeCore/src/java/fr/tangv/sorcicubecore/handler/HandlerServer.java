@@ -20,6 +20,13 @@ public class HandlerServer {
 		this.client = client;
 	}
 	
+	public void startRefresh() throws IOException, ReponseRequestException, RequestException {
+		client.sendRequestReponse(
+				new Request(RequestType.START_SERVER_REFRESH, Request.randomID(), "ServerRefresh", null),
+				RequestType.SUCCESSFUL
+			);
+	}
+	
 	public void playerJoin(UUID uuid) throws IOException, RequestException {
 		client.sendRequest(new Request(RequestType.PLAYER_JOIN, Request.randomID(), uuid.toString(), null));
 	}

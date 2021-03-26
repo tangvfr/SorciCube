@@ -29,7 +29,7 @@ import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.fight.FightCible;
-import fr.tangv.sorcicubecore.fight.FightSlot;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.card.CardRender;
@@ -296,7 +296,7 @@ public class EventFight implements Listener {
 	}
 	
 	@EventHandler
-	public void onClickInv(InventoryClickEvent e) throws IOException, ReponseRequestException, RequestException {
+	public void onClickInv(InventoryClickEvent e) throws IOException, ReponseRequestException, RequestException, DeckException {
 		UUID uuid = e.getWhoClicked().getUniqueId();
 		if (manager.isSpectator(uuid)) {
 			e.setCancelled(true);

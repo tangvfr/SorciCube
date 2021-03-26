@@ -17,9 +17,7 @@ import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.card.CardVisual;
 import fr.tangv.sorcicubecore.fight.FightCible;
-import fr.tangv.sorcicubecore.fight.FightDeck;
-import fr.tangv.sorcicubecore.fight.FightSlot;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.util.ItemHead;
@@ -29,7 +27,6 @@ public class PlayerFight extends FightSpectator {
 	private final Inventory invSwap;
     private PlayerFight enemie;
 	private final FightDeck deck;
-	private final PlayerFeature playerFeature;
 	private int mana;
 	private int manaBoost;
 	private int health;
@@ -46,10 +43,9 @@ public class PlayerFight extends FightSpectator {
 	private boolean lossAFK;
 	private boolean isDead;
 	
-	public PlayerFight(Fight fight, Player player, PlayerFeature playerFeature, FightDeck deck, boolean first) {
+	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first) {
 		super(fight, player, first ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase(), first);
 		this.deck = deck;
-		this.playerFeature = playerFeature;
 		this.mana = 0;
 		this.manaBoost = 0;
 		this.health = Fight.START_HEALTH;
@@ -84,7 +80,7 @@ public class PlayerFight extends FightSpectator {
 		if (isDead && !fight.isEnd())
 			try {
 				fight.end(this);
-			} catch (IOException | ReponseRequestException | RequestException e) {
+			} catch (IOException | ReponseRequestException | RequestException | DeckException e) {
 				e.printStackTrace();
 			}
 	}
@@ -101,10 +97,6 @@ public class PlayerFight extends FightSpectator {
 		initHotBar();
 	}
 	
-	public PlayerFeature getPlayerFeature() {
-		return this.playerFeature;
-	}
-	
 	public void noAFK() {
 		this.isAFK = false;
 	}
@@ -113,7 +105,7 @@ public class PlayerFight extends FightSpectator {
 		return this.lossAFK;
 	}
 
-	public void addRoundAFK() throws IOException, ReponseRequestException, RequestException {
+	public void addRoundAFK() throws IOException, ReponseRequestException, RequestException, DeckException {
 		if (isAFK) {
 			this.roundAFK++;
 			if (roundAFK >= ValueFight.V.roundMaxAFK && !fight.isEnd()) {

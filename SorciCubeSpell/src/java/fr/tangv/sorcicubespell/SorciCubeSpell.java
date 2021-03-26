@@ -17,10 +17,10 @@ import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.handler.HandlerConfigYAML;
-import fr.tangv.sorcicubecore.handler.HandlerDefaultDeck;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
@@ -70,7 +70,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	//handler
 	private ManagerPakcetCards managerPakcetCards;
 	private HandlerPlayers handlerPlayers;
-	private HandlerDefaultDeck handlerDefaultDeck;
 	private HandlerCards handlerCards;
 	private HandlerFightData handlerFightData;
 	private HandlerConfigYAML handlerConfigYAML;
@@ -78,7 +77,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	//manager
 	private ManagerLobby managerLobby;
-	private ManagerGui managerGuiAdmin;
+	private ManagerGui managerGui;
 	private ManagerClickNPC managerClickNPC;
 	private ManagerFight managerFight;
 	private ManagerCreatorFight managerCreatorFight;
@@ -148,8 +147,7 @@ public class SorciCubeSpell extends JavaPlugin {
 							SorciCubeSpell.this.configItemList = newConfig("itemlist.yml");
 							SorciCubeSpell.this.configNPC = newConfig("npc.yml");
 							SorciCubeSpell.this.handlerFightData.removeAllFightDataServer(nameServer);
-							SorciCubeSpell.this.handlerDefaultDeck = new HandlerDefaultDeck(client, SorciCubeSpell.this.handlerCards);
-							SorciCubeSpell.this.managerGuiAdmin = new ManagerGui(SorciCubeSpell.this);
+							SorciCubeSpell.this.managerGui = new ManagerGui(SorciCubeSpell.this);
 							SorciCubeSpell.this.managerPakcetCards = new ManagerPakcetCards(client, SorciCubeSpell.this);
 							SorciCubeSpell.this.managerCreatorFight = new ManagerCreatorFight(SorciCubeSpell.this);
 							//init for npc
@@ -176,17 +174,19 @@ public class SorciCubeSpell extends JavaPlugin {
 
 				@Override
 				public void handlingRequest(Client client, Request request) throws Exception {
-					if (request.requestType == RequestType.PLAYER_UPDATING) {
+					if (request.requestType == RequestType.PLAYER_UPDATING && isLobby) {
 						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
 						if (player != null) {
 							PlayerFeature feature = handlerPlayers.getPlayer(player.getUniqueId(), player.getName());
 							player.closeInventory();
-							managerGuiAdmin.getPlayerGui(player).setPlayerFeature(feature);
+							managerGui.getPlayerGui(player).setPlayerFeature(feature);
 						}
 					} else if (request.requestType == RequestType.PLAYER_SEND) {
 						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
 						if (player != null)
 							((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a(request.data), (byte) 0));
+					} else if (request.requestType == RequestType.START_SERVER_REFRESH) {
+						SorciCubeSpell.this.refresh();
 					} 
 				}
 				
@@ -299,10 +299,6 @@ public class SorciCubeSpell extends JavaPlugin {
 		return handlerPlayers;
 	}
 	
-	public HandlerDefaultDeck getHandlerDefaultDeck() {
-		return handlerDefaultDeck;
-	}
-	
 	public HandlerFightData getHandlerFightData() {
 		return handlerFightData;
 	}
@@ -330,7 +326,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	}
 	
 	public ManagerGui getManagerGui() {
-		return managerGuiAdmin;
+		return managerGui;
 	}
 	
 	public ManagerClickNPC getManagerClickNPC() {
@@ -345,6 +341,16 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public EnumTool getEnumTool() {
 		return enumTool;
+	}
+	
+	//refresh
+	
+	public void refresh() throws IOException, ReponseRequestException, RequestException, DeckException {
+		handlerCards.refresh();
+		if (isLobby) {
+			managerPakcetCards.refresh();
+			managerGui.refreshFeaturePlayers();
+		}
 	}
 	
 }

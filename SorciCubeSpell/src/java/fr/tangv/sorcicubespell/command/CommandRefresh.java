@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -21,9 +22,9 @@ public class CommandRefresh implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		try {
-			sorci.getHandlerCards().refresh();
+			sorci.refresh();
 			sender.sendMessage(sorci.getMessage().getString("message_refresh"));
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ReponseRequestException | RequestException | DeckException e) {
 			e.printStackTrace();
 			sender.sendMessage("§8[§4ERROR§8] §c"+e.getMessage());
 		}
