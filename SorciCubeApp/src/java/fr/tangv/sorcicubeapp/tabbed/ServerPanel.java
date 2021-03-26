@@ -19,6 +19,7 @@ import javax.swing.table.AbstractTableModel;
 import org.bson.Document;
 
 import fr.tangv.sorcicubeapp.utils.ClickListener;
+import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
@@ -30,17 +31,22 @@ public class ServerPanel extends JScrollPane {
 	private static final long serialVersionUID = -7377720399280596193L;
 	
 	private final HandlerServer handler;
+	private final HandlerFightData handlerFights;
 	private final JTable table;
 	private volatile Vector<Document> list;
+	private volatile int fights;
 	
 	public ServerPanel(SorciClient client) throws IOException, ReponseRequestException, RequestException {
 		this.handler = new HandlerServer(client);
+		this.handlerFights = new HandlerFightData(client);
 		this.list = new Vector<Document>();
+		this.fights = 0;
 		//table
 		this.table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//refresh
 		Dimension dim = new Dimension(300, 30);
+		//refresh
 		JButton refresh = new JButton("Refresh");
 		refresh.addMouseListener(new ClickListener() {
 			@Override
@@ -54,6 +60,7 @@ public class ServerPanel extends JScrollPane {
 			}
 		});
 		refresh.setPreferredSize(dim);
+		//refreshSevrer
 		JButton refreshServ = new JButton("Refresh Servers");
 		refreshServ.addMouseListener(new ClickListener() {
 			@Override
@@ -73,6 +80,7 @@ public class ServerPanel extends JScrollPane {
 			}
 		});
 		refreshServ.setPreferredSize(dim);
+		//stop
 		JButton stop = new JButton("Stop API");
 		stop.addMouseListener(new ClickListener() {
 			@Override
@@ -125,6 +133,7 @@ public class ServerPanel extends JScrollPane {
 	public void refresh() throws IOException, ReponseRequestException, RequestException {
 		this.list = new Vector<Document>(handler.getSpigotServerList());
 		this.table.setModel(new ServerPanelTable());
+		this.fights = this.handlerFights.getAllFightData().size();
 		this.repaint();
 	}
 	
@@ -139,10 +148,11 @@ public class ServerPanel extends JScrollPane {
 
 		@Override
 		public int getRowCount() {
-			return list.size()+2;
+			return list.size()+3;
 		}
 
 		private final String[] HEAD = new String[] {"Server Name", "Time Connected", "Players"};
+		private final String color = "#FF5555";
 		
 		private int totalPlayers() {
 			int total = 0;
@@ -154,12 +164,19 @@ public class ServerPanel extends JScrollPane {
 		@Override
 		public Object getValueAt(int row, int column) {
 			if (row == 0)
-				return "<html><body><span color='#5555FF'>"+HEAD[column]+"</span></body></html>";
+				return "<html><body><span color='"+color+"'>"+HEAD[column]+"</span></body></html>";
 			else if (row == list.size()+1) {
 				if (column == 2)
-					return "<html><body><span color='#FF5555'>"+totalPlayers()+"</span></body></html>";
+					return "<html><body><span color='"+color+"'>"+totalPlayers()+"</span></body></html>";
 				else
-					return "<html><body><span color='#FF5555'>--</span></body></html>";
+					return "<html><body><span color='"+color+"'>--</span></body></html>";
+			} else if (row == list.size()+2) {
+				if (column == 0)
+					return "<html><body><span color='"+color+"'>Fights Number</span></body></html>";
+				else if (column == 1)
+					return "<html><body><span color='"+color+"'>"+fights+"</span></body></html>";
+				else
+					return "<html><body><span color='"+color+"'>--</span></body></html>";
 			} else {
 				if (column == 0)
 					return list.get(row-1).getString("name");

@@ -50,7 +50,7 @@ public enum RequestType {
 	GET_SPITGOT_SERVER_LIST(RequestDataType.NONE),
 	PLAYER_JOIN(RequestDataType.NONE),
 	PLAYER_LEAVE(RequestDataType.NONE),
-	START_SERVER_REFRESH(RequestDataType.NONE),
+	START_SERVERS_REFRESH(RequestDataType.NONE),
 	//PLAYER
 	PLAYER_INIT(RequestDataType.ARRAY_TEXT),
 	PLAYER_GET(RequestDataType.NONE),

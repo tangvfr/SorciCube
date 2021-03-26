@@ -18,7 +18,6 @@ import javax.swing.border.TitledBorder;
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.tools.ImageTool;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
-import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
@@ -27,15 +26,12 @@ import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 public class PanelOthers extends JPanel {
 
 	private static final long serialVersionUID = -1979640189589135131L;
-	private final FrameLogi logi;
-	private final HandlerFightData fights;
-	private final JButton fightsNumber;
 	
 	public PanelOthers(SorciClient client, FrameLogi logi, TabbedPanel tab) {
-		this.logi = logi;
-		this.setLayout(new GridLayout(5, 1, 10, 10));
+		int element = 4;
+		this.setLayout(new GridLayout(element, 1, 10, 10));
 		this.setBorder(new TitledBorder("Others"));
-		Dimension dim = new Dimension(250, 5*46-10);
+		Dimension dim = new Dimension(250, element*46-10);
 		this.setMaximumSize(dim);
 		this.setPreferredSize(dim);
 		
@@ -45,7 +41,6 @@ public class PanelOthers extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					refreshFights();
 					tab.refreshAll();
 					JOptionPane.showMessageDialog(PanelOthers.this, "Successful refresh !", "Refresh All", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
@@ -55,18 +50,6 @@ public class PanelOthers extends JPanel {
 			}
 		});
 		this.add(refresh);
-		
-		//Number fights
-		this.fights = new HandlerFightData(client);
-		this.fightsNumber = new JButton("x Fights");
-		this.fightsNumber.addMouseListener(new ClickListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				refreshFights();
-			}
-		});
-		this.add(fightsNumber);
-		refreshFights();
 		
 		//mineSkin
 		JButton mineskin = new JButton("mineskin.org");
@@ -107,17 +90,6 @@ public class PanelOthers extends JPanel {
 			}
 		});
 		this.add(disconnect);
-	}
-	
-	private void refreshFights() {
-		try {
-			int number = this.fights.getAllFightData().size();
-			this.fightsNumber.setText(number+" Fights");
-			this.fightsNumber.repaint();
-		} catch (IOException | ReponseRequestException | RequestException e) {
-			JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error fight", JOptionPane.ERROR_MESSAGE);
-			logi.showConnection("Error: "+e.getMessage(), Color.MAGENTA);
-		}
 	}
 	
 }

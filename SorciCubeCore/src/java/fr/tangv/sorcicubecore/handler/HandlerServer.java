@@ -22,7 +22,7 @@ public class HandlerServer {
 	
 	public void startRefresh() throws IOException, ReponseRequestException, RequestException {
 		client.sendRequestReponse(
-				new Request(RequestType.START_SERVER_REFRESH, Request.randomID(), "ServerRefresh", null),
+				new Request(RequestType.START_SERVERS_REFRESH, Request.randomID(), "RefreshServers", null),
 				RequestType.SUCCESSFUL
 			);
 	}

@@ -185,7 +185,7 @@ public class SorciCubeSpell extends JavaPlugin {
 						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
 						if (player != null)
 							((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a(request.data), (byte) 0));
-					} else if (request.requestType == RequestType.START_SERVER_REFRESH) {
+					} else if (request.requestType == RequestType.START_SERVERS_REFRESH) {
 						SorciCubeSpell.this.refresh();
 					} 
 				}

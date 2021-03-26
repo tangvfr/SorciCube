@@ -26,6 +26,15 @@ public class HandlerServerServer implements RequestHandlerInterface {
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {}
 	
+	@RequestAnnotation(type=RequestType.START_SERVERS_REFRESH)
+	public void startRefresh(Client client, Request request) throws IOException, RequestException {
+		Request refresh = new Request(RequestType.SERVER_REFRESH, Request.randomID(), "Refresh", null);
+		for (Client cl : api.getClientsManager().clients)
+			if (ClientType.SPIGOT.isType(cl.getClientID().types))
+				cl.sendRequest(refresh);
+		client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));	
+	}
+	
 	@RequestAnnotation(type=RequestType.PLAYER_JOIN)
 	public void playerJoin(Client client, Request request) throws IOException, RequestException {
 		client.setValue((int) client.getValue()+1);
