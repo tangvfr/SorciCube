@@ -40,7 +40,7 @@ public class HandlerServerServer implements RequestHandlerInterface {
 			if (ClientType.SPIGOT.isType(id.types))
 				list.add(new Document()
 						.append("name", id.name)
-						.append("time_connected", cl.calcTimeConnected())
+						.append("time_connected", Long.toString(cl.calcTimeConnected(), 16))
 					);
 		}
 		client.sendRequest(request.createReponse(RequestType.SPITGOT_SERVER_LIST, new Document("list", list).toJson()));

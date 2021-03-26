@@ -28,7 +28,7 @@ public class ServerPanel extends JPanel {
 	private final JTable table;
 	private volatile Vector<Document> list;
 	
-	public ServerPanel(SorciClient client) {
+	public ServerPanel(SorciClient client) throws IOException, ReponseRequestException, RequestException {
 		this.handler = new HandlerServer(client);
 		this.list = new Vector<Document>();
 		this.table = new JTable(new ServerPanelTable());
@@ -47,16 +47,34 @@ public class ServerPanel extends JPanel {
 			}
 		});
 		JButton stop = new JButton("Stop API");
-		
+		stop.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					String valid = Integer.toString((int) (Math.random()*Short.MAX_VALUE));
+					if (valid.equals(JOptionPane.showInputDialog(ServerPanel.this, "Enter this number \""+valid+"\" for stop API", "Valid Stop API", JOptionPane.WARNING_MESSAGE))) {
+						handler.stopServer();
+					} else {
+						JOptionPane.showMessageDialog(ServerPanel.this, "Stoping server canceled !", "Canceled Stop API", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch (IOException | ReponseRequestException | RequestException e1) {
+					JOptionPane.showMessageDialog(ServerPanel.this, e1.getMessage(), "Error Stop API", JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				}
+			}
+		});
 		//style
 		GridBagLayout layout = new GridBagLayout();
 		this.setLayout(layout);
 		this.add(table);
 		this.add(refresh);
 		this.add(stop);
+		refresh();
 	}
 	
 	public void refresh() throws IOException, ReponseRequestException, RequestException {
+		for (Document doc : handler.getSpigotServerList())
+			System.out.println(doc.toJson());
 		this.list = new Vector<Document>(handler.getSpigotServerList());
 		this.repaint();
 	}
@@ -81,11 +99,17 @@ public class ServerPanel extends JPanel {
 		public Object getValueAt(int row, int column) {
 			if (row == 0)
 				return HEAD[column];
-			else
+			else {
 				if (column == 0)
 					return list.get(row-1).getString("name");
 				else
-					return list.get(row-1).getString("time_connected");
+					return formatTime(Long.parseLong(list.get(row-1).getString("time_connected"), 16));
+			}
+		}
+		
+		private final String formatTime(long time) {
+			
+			return time+"";
 		}
 		
 	}
