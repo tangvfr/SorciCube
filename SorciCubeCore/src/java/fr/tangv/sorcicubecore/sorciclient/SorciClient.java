@@ -52,7 +52,7 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 			throw new ReponseRequestException("Error type of ReponseRequest is invalid !");
 		return reponse;
 	}
-	
+
 	public void setPrintStream(PrintStream out) {
 		this.out = out;
 	}

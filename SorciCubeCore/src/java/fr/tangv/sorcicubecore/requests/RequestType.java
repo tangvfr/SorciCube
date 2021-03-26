@@ -47,6 +47,8 @@ public enum RequestType {
 	//SERVER
 	STOP_SERVER(RequestDataType.NONE),
 	GET_SPITGOT_SERVER_LIST(RequestDataType.NONE),
+	PLAYER_JOIN(RequestDataType.NONE),
+	PLAYER_LEAVE(RequestDataType.NONE),
 	//PLAYER
 	PLAYER_INIT(RequestDataType.ARRAY_TEXT),
 	PLAYER_GET(RequestDataType.NONE),

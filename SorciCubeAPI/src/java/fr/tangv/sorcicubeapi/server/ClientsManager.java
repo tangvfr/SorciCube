@@ -55,6 +55,7 @@ public class ClientsManager extends Thread {
 
 		public ClientServer(Socket socket) throws IOException {
 			super(socket);
+			setValue(0);
 		}
 
 		@Override

@@ -2,6 +2,7 @@ package fr.tangv.sorcicubecore.handler;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.bson.Document;
 
@@ -17,6 +18,14 @@ public class HandlerServer {
 	
 	public HandlerServer(SorciClient client) {
 		this.client = client;
+	}
+	
+	public void playerJoin(UUID uuid) throws IOException, RequestException {
+		client.sendRequest(new Request(RequestType.PLAYER_JOIN, Request.randomID(), uuid.toString(), null));
+	}
+	
+	public void playerLeave(UUID uuid) throws IOException, RequestException {
+		client.sendRequest(new Request(RequestType.PLAYER_LEAVE, Request.randomID(), uuid.toString(), null));
 	}
 	
 	public void stopServer() throws IOException, ReponseRequestException, RequestException {

@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubespell.manager;
 
+import java.io.IOException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -12,24 +14,47 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.hanging.HangingBreakEvent.RemoveCause;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 
+import fr.tangv.sorcicubecore.handler.HandlerServer;
+import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class ManagerSecurity implements Listener {
 
-	private SorciCubeSpell sorci;
+	private final SorciCubeSpell sorci;
+	private final HandlerServer handler;
 	
 	public ManagerSecurity(SorciCubeSpell sorci) {
 		this.sorci = sorci;
+		this.handler = sorci.getHandlerServer();
 		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
 	
 	private boolean isAuto(Player player) {
 		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission(sorci.getParameter().getString("perm_build"));
+	}
+	
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e) {
+		try {
+			handler.playerJoin(e.getPlayer().getUniqueId());
+		} catch (IOException | RequestException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	@EventHandler
+	public void onLeave(PlayerQuitEvent e) {
+		try {
+			handler.playerLeave(e.getPlayer().getUniqueId());
+		} catch (IOException | RequestException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	@EventHandler

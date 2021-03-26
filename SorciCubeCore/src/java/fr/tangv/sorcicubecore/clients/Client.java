@@ -22,6 +22,7 @@ public abstract class Client extends Thread {
 	private volatile RequestHandlerInterface handler;
 	private final Socket socket;
 	private final long timeConnect;
+	private volatile Object value;
 	
 	//stream
 	private final Scanner in;
@@ -37,6 +38,14 @@ public abstract class Client extends Thread {
 	}
 	
 	//seter geter
+	
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
 	
 	public RequestHandlerInterface getHandler() {
 		return handler;

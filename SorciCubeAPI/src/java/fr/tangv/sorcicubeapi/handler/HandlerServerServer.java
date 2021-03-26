@@ -26,6 +26,16 @@ public class HandlerServerServer implements RequestHandlerInterface {
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {}
 	
+	@RequestAnnotation(type=RequestType.PLAYER_JOIN)
+	public void playerJoin(Client client, Request request) throws IOException, RequestException {
+		client.setValue((int) client.getValue()+1);
+	}
+	
+	@RequestAnnotation(type=RequestType.PLAYER_LEAVE)
+	public void playerLeave(Client client, Request request) throws IOException, RequestException {
+		client.setValue((int) client.getValue()-1);
+	}
+	
 	@RequestAnnotation(type=RequestType.STOP_SERVER)
 	public void stopServer(Client client, Request request) throws IOException, RequestException {
 		client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
@@ -41,6 +51,7 @@ public class HandlerServerServer implements RequestHandlerInterface {
 				list.add(new Document()
 						.append("name", id.name)
 						.append("time_connected", Long.toString(cl.calcTimeConnected(), 16))
+						.append("players", (int) cl.getValue())
 					);
 		}
 		client.sendRequest(request.createReponse(RequestType.SPITGOT_SERVER_LIST, new Document("list", list).toJson()));

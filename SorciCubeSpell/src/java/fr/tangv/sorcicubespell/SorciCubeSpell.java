@@ -20,6 +20,7 @@ import fr.tangv.sorcicubecore.handler.HandlerConfigYAML;
 import fr.tangv.sorcicubecore.handler.HandlerDefaultDeck;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
+import fr.tangv.sorcicubecore.handler.HandlerServer;
 import fr.tangv.sorcicubecore.player.PlayerFeature;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
@@ -73,6 +74,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private HandlerCards handlerCards;
 	private HandlerFightData handlerFightData;
 	private HandlerConfigYAML handlerConfigYAML;
+	private HandlerServer handlerServer;
 	
 	//manager
 	private ManagerLobby managerLobby;
@@ -134,6 +136,7 @@ public class SorciCubeSpell extends JavaPlugin {
 						//init tool
 						SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this.enumConfig);
 						//init for change server
+						SorciCubeSpell.this.handlerServer = new HandlerServer(this);
 						getServer().getMessenger().registerOutgoingPluginChannel(SorciCubeSpell.this, "BungeeCord");
 						SorciCubeSpell.this.nameServerLobby = SorciCubeSpell.this.parameter.getString("server_lobby");
 						SorciCubeSpell.this.nameServerFight = SorciCubeSpell.this.parameter.getString("server_fight");
@@ -310,6 +313,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public HandlerConfigYAML getHandlerConfigYAML() {
 		return handlerConfigYAML;
+	}
+	
+	public HandlerServer getHandlerServer() {
+		return handlerServer;
 	}
 	
 	//manager
