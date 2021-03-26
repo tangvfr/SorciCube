@@ -152,7 +152,8 @@ public class ServerPanel extends JScrollPane {
 		}
 
 		private final String[] HEAD = new String[] {"Server Name", "Time Connected", "Players"};
-		private final String color = "#FF5555";
+		private final String colorRed = "#FF5555";
+		private final String colorBlue = "#5555FF";
 		
 		private int totalPlayers() {
 			int total = 0;
@@ -164,19 +165,19 @@ public class ServerPanel extends JScrollPane {
 		@Override
 		public Object getValueAt(int row, int column) {
 			if (row == 0)
-				return "<html><body><span color='"+color+"'>"+HEAD[column]+"</span></body></html>";
+				return "<html><body><span color='"+colorBlue+"'>"+HEAD[column]+"</span></body></html>";
 			else if (row == list.size()+1) {
 				if (column == 2)
-					return "<html><body><span color='"+color+"'>"+totalPlayers()+"</span></body></html>";
+					return "<html><body><span color='"+colorRed+"'>"+totalPlayers()+"</span></body></html>";
 				else
-					return "<html><body><span color='"+color+"'>--</span></body></html>";
+					return "<html><body><span color='"+colorRed+"'>--</span></body></html>";
 			} else if (row == list.size()+2) {
 				if (column == 0)
-					return "<html><body><span color='"+color+"'>Fights Number</span></body></html>";
+					return "<html><body><span color='"+colorRed+"'>Fights Number</span></body></html>";
 				else if (column == 1)
-					return "<html><body><span color='"+color+"'>"+fights+"</span></body></html>";
+					return "<html><body><span color='"+colorRed+"'>"+fights+"</span></body></html>";
 				else
-					return "<html><body><span color='"+color+"'>--</span></body></html>";
+					return "<html><body><span color='"+colorRed+"'>--</span></body></html>";
 			} else {
 				if (column == 0)
 					return list.get(row-1).getString("name");
