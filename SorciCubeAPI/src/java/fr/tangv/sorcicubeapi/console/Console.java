@@ -12,6 +12,7 @@ import java.util.logging.SimpleFormatter;
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
+import fr.tangv.sorcicubecore.util.Format;
 
 public class Console extends Thread {
 
@@ -120,7 +121,7 @@ public class Console extends Thread {
 				String hex = Integer.toHexString(Byte.toUnsignedInt(cID.types));
 				if (hex.length() == 1)
 					hex = '0'+hex;
-				out.append("  "+formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token+"\r\n");
+				out.append("  "+Format.formatTime(client.calcTimeConnected())+" | 0x"+hex+" | "+cID.name+" -> "+cID.token+"\r\n");
 			}
 			out.append("-----END-----"+"\r\n");
 		} else if (cmd.equalsIgnoreCase("version")) {
@@ -129,23 +130,6 @@ public class Console extends Thread {
 			out.append("Unknown command \""+cmd+"\" ! Enter command \"help\" for helping."+"\r\n");
 		}
 		return out.toString();
-	}
-	
-	private String complet(String src, int lenght, char c) {
-		while (src.length() < lenght)
-			src = c+src;
-		return src;
-	}
-	
-	private String complet(long src, int lenght) {
-		return complet(Long.toString(src), lenght, '0');
-	}
-	
-	private String formatTime(long time) {
-		long h = time/3600_000;
-		long m = (time%3600_000)/60_000;
-		long s = ((time%3600_000)%60_000)/1000;
-		return complet(h, 4)+":"+complet(m, 2)+":"+complet(s, 2);
 	}
 	
 }
