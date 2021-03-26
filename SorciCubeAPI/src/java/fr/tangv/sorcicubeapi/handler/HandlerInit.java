@@ -22,6 +22,7 @@ public class HandlerInit {
 		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck, sorci);
 		HandlerServerConfigYAML yaml = new HandlerServerConfigYAML();
 		HandlerServerPacketCards packets = new HandlerServerPacketCards();
+		HandlerServerServer server = new HandlerServerServer(sorci);
 		//registred
 		ClientsManager cm = sorci.getClientsManager();
 		cm.registered(cards);
@@ -30,6 +31,7 @@ public class HandlerInit {
 		cm.registered(players);
 		cm.registered(yaml);
 		cm.registered(packets);
+		cm.registered(server);
 		cm.registered(new RequestHandlerInterface() {
 			@Override
 			public void handlingRequest(Client client, Request request) throws Exception {
