@@ -133,7 +133,7 @@ public class ServerPanel extends JScrollPane {
 		this.setViewportView(pan);
 		new Thread(() -> {
 			try {
-				while (client.isConnected()) {
+				while (client.isAlive()) {
 					refresh();
 					try {
 						Thread.sleep(REFRESH);
@@ -148,7 +148,7 @@ public class ServerPanel extends JScrollPane {
 		}).start();
 	}
 	
-	public void refresh() throws IOException, ReponseRequestException, RequestException {
+	public synchronized void refresh() throws IOException, ReponseRequestException, RequestException {
 		this.list = new Vector<Document>(handler.getSpigotServerList());
 		this.table.setModel(new ServerPanelTable());
 		this.fights = this.handlerFights.getAllFightData().size();
