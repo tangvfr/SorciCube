@@ -59,7 +59,8 @@ public class ServerPanel extends JScrollPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					String valid = Integer.toString((int) (Math.random()*Short.MAX_VALUE));
+					short m = Short.MAX_VALUE/2;
+					String valid = Integer.toString((int) (Math.random()*m)+m);
 					if (valid.equals(JOptionPane.showInputDialog(ServerPanel.this, "Enter this number \""+valid+"\" for stop API", "Valid Stop API", JOptionPane.WARNING_MESSAGE))) {
 						handler.stopServer();
 					} else {
