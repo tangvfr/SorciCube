@@ -122,15 +122,16 @@ public class ServerPanel extends JScrollPane {
 		private int totalPlayers() {
 			int total = 0;
 			for (int i = 0; i < list.size(); i++)
-				total += list.get(i).getInteger("players");
+				total += list.get(i).getInteger("players", 0);
 			return total;
 		}
 		
 		@Override
 		public Object getValueAt(int row, int column) {
+			System.out.println("row "+row+" max"+ list.size());
 			if (row == 0)
 				return "<html><body><span color='#5555FF'>"+HEAD[column]+"</span></body></html>";
-			else if (row == list.size()-1) {
+			else if (row == list.size()+1) {
 				if (column == 2)
 					return "<html><body><span color='#FF5555'>"+totalPlayers()+"</span></body></html>";
 				else
@@ -141,7 +142,7 @@ public class ServerPanel extends JScrollPane {
 				else if (column == 1)
 					return Format.formatTime(Long.parseLong(list.get(row-1).getString("time_connected"), 16));
 				else
-					return list.get(row-1).getInteger("players").toString();
+					return Integer.toString(list.get(row-1).getInteger("players", 0));
 			}
 		}
 		
