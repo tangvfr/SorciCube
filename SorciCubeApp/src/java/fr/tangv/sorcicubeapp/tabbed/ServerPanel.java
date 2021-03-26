@@ -54,12 +54,18 @@ public class ServerPanel extends JScrollPane {
 			}
 		});
 		refresh.setPreferredSize(dim);
-		JButton refreshServ = new JButton("Refresh Server");
+		JButton refreshServ = new JButton("Refresh Servers");
 		refreshServ.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					handler.startRefresh();
+					short m = Short.MAX_VALUE/2;
+					String valid = Integer.toString((int) (Math.random()*m)+m);
+					if (valid.equals(JOptionPane.showInputDialog(ServerPanel.this, "Enter this number \""+valid+"\" for refresh servers", "Valid Refresh Servers", JOptionPane.WARNING_MESSAGE))) {
+						handler.startRefresh();
+					} else {
+						JOptionPane.showMessageDialog(ServerPanel.this, "Refresh servers canceled !", "Canceled Refresh Servers", JOptionPane.INFORMATION_MESSAGE);
+					}
 				} catch (IOException | ReponseRequestException | RequestException e1) {
 					JOptionPane.showMessageDialog(ServerPanel.this, e1.getMessage(), "Error Refresh Server", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
