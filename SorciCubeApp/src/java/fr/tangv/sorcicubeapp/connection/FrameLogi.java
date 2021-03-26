@@ -20,6 +20,7 @@ public class FrameLogi extends JFrame {
 	private final JLabel waitConnection;
 	private volatile boolean used;
 	private volatile boolean err;
+	private volatile SorciClient client;
 	
 	public FrameLogi(String defaultURI) {
 		this.connectionPanel = new ConnectionPanel(this, defaultURI);
@@ -34,6 +35,10 @@ public class FrameLogi extends JFrame {
 	}
 	
 	public synchronized void showConnection(String message, Color color) {
+		if (client != null) {
+			err = true;
+			client.disconnect();
+		}
 		used = false;
 		this.connectionPanel.setMessage(message, color);
 		showContainer(this.connectionPanel);
@@ -48,16 +53,17 @@ public class FrameLogi extends JFrame {
 	}
 	
 	public synchronized boolean tryConnection(SorciClientURI uri) {
-		if (used) 
+		if (used || client != null)
 			return false;
 		used = true;
 		err = false;
 		showContainer(this.waitConnection);
 		try {
-			SorciClient client = new SorciClient(uri, 5_000) {
+			this.client = new SorciClient(uri, 5_000) {
 				
 				@Override
 				public void disconnected() {
+					FrameLogi.this.client = null;
 					if (!err)
 						showConnection("Disconnected", Color.GREEN);
 				}

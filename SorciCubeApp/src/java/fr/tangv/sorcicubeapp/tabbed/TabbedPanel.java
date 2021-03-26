@@ -35,7 +35,7 @@ public class TabbedPanel extends JTabbedPane {
 		this.packetsPanel = new PacketsCardsPanel(client, logi);
 		this.configPanel = new ConfigsPanel(client, logi);
 		this.playersPanel = new PlayersPanel(cardsPanel);
-		this.serverPanel = new ServerPanel(client);
+		this.serverPanel = new ServerPanel(client, logi);
 		this.others = new PanelOthers(client, logi, this);
 		
 		//add tabbbed

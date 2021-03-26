@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubeapp.tabbed;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,6 +19,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.bson.Document;
 
+import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
@@ -30,13 +32,15 @@ public class ServerPanel extends JScrollPane {
 
 	private static final long serialVersionUID = -7377720399280596193L;
 	
+	private final static int REFRESH = 10_000;
+	
 	private final HandlerServer handler;
 	private final HandlerFightData handlerFights;
 	private final JTable table;
 	private volatile Vector<Document> list;
 	private volatile int fights;
 	
-	public ServerPanel(SorciClient client) throws IOException, ReponseRequestException, RequestException {
+	public ServerPanel(SorciClient client, FrameLogi logi) {
 		this.handler = new HandlerServer(client);
 		this.handlerFights = new HandlerFightData(client);
 		this.list = new Vector<Document>();
@@ -127,7 +131,21 @@ public class ServerPanel extends JScrollPane {
 		pan.add(stop, c);
 		
 		this.setViewportView(pan);
-		refresh();
+		new Thread(() -> {
+			try {
+				while (client.isConnected()) {
+					refresh();
+					try {
+						Thread.sleep(REFRESH);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				}
+			} catch (IOException | ReponseRequestException | RequestException e1) {
+				logi.showConnection("Error: "+e1.getMessage(), Color.RED);
+				e1.printStackTrace();
+			}
+		}).start();
 	}
 	
 	public void refresh() throws IOException, ReponseRequestException, RequestException {
