@@ -128,7 +128,6 @@ public class ServerPanel extends JScrollPane {
 		
 		@Override
 		public Object getValueAt(int row, int column) {
-			System.out.println("row "+row+" max"+ list.size());
 			if (row == 0)
 				return "<html><body><span color='#5555FF'>"+HEAD[column]+"</span></body></html>";
 			else if (row == list.size()+1) {
