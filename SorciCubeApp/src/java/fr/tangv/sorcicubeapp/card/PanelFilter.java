@@ -24,8 +24,8 @@ public class PanelFilter extends JScrollPane {
 	private PanelFilterEnum<CardRarity> filterRarity;
 	private PanelFilterEnum<CardFaction> filterFaction;
 	private PanelFilterEnum<CardFaction> filterCibleFaction;
-	private PanelFilterEnum<CardFeatureType> filterFeatures;
 	private PanelFilterEnum<CardCible> filterCible;
+	private PanelFilterEnum<CardFeatureType> filterFeatures;
 	private PanelFilterBoolean filterOriginalName;
 	private PanelFilterBoolean filterHideCard;
 	private PanelFilterBoolean filterHasSkin;
@@ -49,12 +49,12 @@ public class PanelFilter extends JScrollPane {
 	public PanelFilter() throws PanelFilterException {
 		//init value
 		try {
-			this.filterType = new PanelFilterEnum<CardType>(CardType.values(), "Type", BoxLayout.X_AXIS, false);
-			this.filterRarity = new PanelFilterEnum<CardRarity>(CardRarity.values(), "Rarity", BoxLayout.Y_AXIS, false);
-			this.filterFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Faction", BoxLayout.Y_AXIS, false);
-			this.filterFeatures = new PanelFilterEnum<CardFeatureType>(CardFeatureType.values(), "Features", BoxLayout.X_AXIS, false);
-			this.filterCibleFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Cible Faction", BoxLayout.Y_AXIS, false);
-			this.filterCible = new PanelFilterEnum<CardCible>(CardCible.values(), "Cible", BoxLayout.X_AXIS, true);
+			this.filterType = new PanelFilterEnum<CardType>(CardType.values(), "Type", BoxLayout.X_AXIS);
+			this.filterRarity = new PanelFilterEnum<CardRarity>(CardRarity.values(), "Rarity", BoxLayout.Y_AXIS);
+			this.filterFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Faction", BoxLayout.Y_AXIS);
+			this.filterCibleFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Cible Faction", BoxLayout.Y_AXIS);
+			this.filterCible = new PanelFilterEnum<CardCible>(CardCible.values(), "Cible", -2);
+			this.filterFeatures = new PanelFilterEnum<CardFeatureType>(CardFeatureType.values(), "Features", -2);
 		} catch (Exception e) {
 			throw new PanelFilterException("Error with FilterEnum");
 		}
@@ -86,8 +86,8 @@ public class PanelFilter extends JScrollPane {
 		pan.add(filterIsImmobilization);
 		pan.add(filterIsStunned);
 		pan.add(filterHasNUUID);
-		pan.add(filterFeatures);
 		pan.add(filterCible);
+		pan.add(filterFeatures);
 		//scroll pan
 		this.setViewportView(pan);
 		this.getVerticalScrollBar().setUnitIncrement(10);
@@ -97,9 +97,9 @@ public class PanelFilter extends JScrollPane {
 		ArrayList<CardType> filterType = this.filterType.makeFilter();
 		ArrayList<CardRarity> filterRarity = this.filterRarity.makeFilter();
 		ArrayList<CardFaction> filterFaction = this.filterFaction.makeFilter();
-		ArrayList<CardFeatureType> filterFeature = this.filterFeatures.makeFilter();
 		ArrayList<CardFaction> filterCibleFaction = this.filterCibleFaction.makeFilter();
 		ArrayList<CardCible> filterCible = this.filterCible.makeFilter();
+		ArrayList<CardFeatureType> filterFeature = this.filterFeatures.makeFilter();
 		Vector<Card> cards = new Vector<Card>();
 		for (Card card : list) {
 			CardFeatures features = card.getFeatures();
@@ -109,10 +109,10 @@ public class PanelFilter extends JScrollPane {
 					hasFeature = true;
 					break;
 				}
-			if (filterType.contains(card.getType())
+			if (hasFeature
+				&& filterType.contains(card.getType())
 				&& filterRarity.contains(card.getRarity())
 				&& filterFaction.contains(card.getFaction())
-				&& hasFeature
 				&& filterCibleFaction.contains(card.getCibleFaction())
 				&& filterCible.contains(card.getCible())
 				&& filterOriginalName.isGood(card.isOriginalName())

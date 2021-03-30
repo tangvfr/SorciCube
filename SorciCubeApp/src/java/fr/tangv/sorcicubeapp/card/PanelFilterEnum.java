@@ -11,7 +11,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import fr.tangv.sorcicubeapp.dialog.CompEmpty;
 import fr.tangv.sorcicubecore.card.CardCible;
 
 public class PanelFilterEnum<T extends Enum<?>> extends JPanel {
@@ -19,12 +18,12 @@ public class PanelFilterEnum<T extends Enum<?>> extends JPanel {
 	private static final long serialVersionUID = 5956915292783604068L;
 	private ConcurrentHashMap<T, JCheckBox> map;
 	
-	public PanelFilterEnum(T[] enums, String name, int axis, boolean cible) throws Exception {
+	public PanelFilterEnum(T[] enums, String name, int val) throws Exception {
 		this.map = new ConcurrentHashMap<T, JCheckBox>();
-		if (cible)
-			this.setLayout(new GridLayout(10, 2));
+		if (val < 0)
+			this.setLayout(new GridLayout((int) (((enums.length+1)/-(double)val)+0.5D), -val));
 		else
-			this.setLayout(new BoxLayout(this, axis));
+			this.setLayout(new BoxLayout(this, val));
 		this.setBorder(new TitledBorder(name));
 		for (T value : enums) {
 			String label;
@@ -36,7 +35,6 @@ public class PanelFilterEnum<T extends Enum<?>> extends JPanel {
 			this.map.put(value, checkBox);
 			this.add(checkBox);
 		}
-		this.add(new CompEmpty(10, 10));
 		JCheckBox all = new JCheckBox("*All*", true);
 		all.addActionListener(new ActionListener() {
 			@Override
