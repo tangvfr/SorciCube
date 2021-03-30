@@ -35,7 +35,7 @@ public class CardFeature {
 	
 	public boolean isNUUID(HandlerCards handler) {
 		if (value.isUUID())
-			return handler.containsCard(value.asUUID());
+			return !handler.containsCard(value.asUUID());
 		return false;
 	}
 	
