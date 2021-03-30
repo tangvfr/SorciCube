@@ -51,10 +51,6 @@ public class HandlerCards {
 		return cards.get(uuid);
 	}
 	
-	public boolean containsCard(UUID uuid) {
-		return cards.contains(uuid);
-	}
-	
 	public void insert(Card card) throws IOException, ReponseRequestException, RequestException {
 		sorci.sendRequestReponse(new Request(RequestType.CARDS_INSERT, Request.randomID(), card.getUUID().toString(), card.toDocument().toJson()),
 				RequestType.SUCCESSFUL);
