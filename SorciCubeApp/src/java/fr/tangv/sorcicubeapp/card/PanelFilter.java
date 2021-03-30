@@ -12,6 +12,7 @@ import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardCible;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.card.CardFeatureType;
+import fr.tangv.sorcicubecore.card.CardFeatures;
 import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
@@ -23,6 +24,7 @@ public class PanelFilter extends JScrollPane {
 	private PanelFilterEnum<CardRarity> filterRarity;
 	private PanelFilterEnum<CardFaction> filterFaction;
 	private PanelFilterEnum<CardFaction> filterCibleFaction;
+	private PanelFilterEnum<CardFeatureType> filterFeatures;
 	private PanelFilterEnum<CardCible> filterCible;
 	private PanelFilterBoolean filterOriginalName;
 	private PanelFilterBoolean filterHideCard;
@@ -50,8 +52,9 @@ public class PanelFilter extends JScrollPane {
 			this.filterType = new PanelFilterEnum<CardType>(CardType.values(), "Type", BoxLayout.X_AXIS, false);
 			this.filterRarity = new PanelFilterEnum<CardRarity>(CardRarity.values(), "Rarity", BoxLayout.Y_AXIS, false);
 			this.filterFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Faction", BoxLayout.Y_AXIS, false);
+			this.filterFeatures = new PanelFilterEnum<CardFeatureType>(CardFeatureType.values(), "Features", BoxLayout.Y_AXIS, false);
 			this.filterCibleFaction = new PanelFilterEnum<CardFaction>(CardFaction.values(), "Cible Faction", BoxLayout.Y_AXIS, false);
-			this.filterCible = new PanelFilterEnum<CardCible>(CardCible.values(), "Cible", 0, true);
+			this.filterCible = new PanelFilterEnum<CardCible>(CardCible.values(), "Cible", BoxLayout.X_AXIS, true);
 		} catch (Exception e) {
 			throw new PanelFilterException("Error with FilterEnum");
 		}
@@ -83,6 +86,7 @@ public class PanelFilter extends JScrollPane {
 		pan.add(filterIsImmobilization);
 		pan.add(filterIsStunned);
 		pan.add(filterHasNUUID);
+		pan.add(filterFeatures);
 		pan.add(filterCible);
 		//scroll pan
 		this.setViewportView(pan);
@@ -93,24 +97,33 @@ public class PanelFilter extends JScrollPane {
 		ArrayList<CardType> filterType = this.filterType.makeFilter();
 		ArrayList<CardRarity> filterRarity = this.filterRarity.makeFilter();
 		ArrayList<CardFaction> filterFaction = this.filterFaction.makeFilter();
+		ArrayList<CardFeatureType> filterFeature = this.filterFeatures.makeFilter();
 		ArrayList<CardFaction> filterCibleFaction = this.filterCibleFaction.makeFilter();
 		ArrayList<CardCible> filterCible = this.filterCible.makeFilter();
 		Vector<Card> cards = new Vector<Card>();
 		for (Card card : list) {
+			CardFeatures features = card.getFeatures();
+			boolean hasFeature = false;
+			for (CardFeatureType type : filterFeature)
+				if (features.hasFeature(type)) {
+					hasFeature = true;
+					break;
+				}
 			if (filterType.contains(card.getType())
 				&& filterRarity.contains(card.getRarity())
 				&& filterFaction.contains(card.getFaction())
+				&& hasFeature
 				&& filterCibleFaction.contains(card.getCibleFaction())
 				&& filterCible.contains(card.getCible())
 				&& filterOriginalName.isGood(card.isOriginalName())
-				&& filterHideCard.isGood(card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD))
-				&& filterHasSkin.isGood(card.getFeatures().hasFeature(CardFeatureType.SKIN))
-				&& filterHasIncitement.isGood(card.getFeatures().hasFeature(CardFeatureType.INCITEMENT))
-				&& filterIsExited.isGood(card.getFeatures().hasFeature(CardFeatureType.EXCITED))
-				&& filterIsInvulnerability.isGood(card.getFeatures().hasFeature(CardFeatureType.INVULNERABILITY))
-				&& filterIsImmobilization.isGood(card.getFeatures().hasFeature(CardFeatureType.IMMOBILIZATION))
-				&& filterIsStunned.isGood(card.getFeatures().hasFeature(CardFeatureType.STUNNED))
-				&& filterHasNUUID.isGood(card.getFeatures().hasNUUID(handler))
+				&& filterHideCard.isGood(features.hasFeature(CardFeatureType.HIDE_CARD))
+				&& filterHasSkin.isGood(features.hasFeature(CardFeatureType.SKIN))
+				&& filterHasIncitement.isGood(features.hasFeature(CardFeatureType.INCITEMENT))
+				&& filterIsExited.isGood(features.hasFeature(CardFeatureType.EXCITED))
+				&& filterIsInvulnerability.isGood(features.hasFeature(CardFeatureType.INVULNERABILITY))
+				&& filterIsImmobilization.isGood(features.hasFeature(CardFeatureType.IMMOBILIZATION))
+				&& filterIsStunned.isGood(features.hasFeature(CardFeatureType.STUNNED))
+				&& filterHasNUUID.isGood(features.hasNUUID(handler))
 			) {
 				cards.add(card);
 			}
