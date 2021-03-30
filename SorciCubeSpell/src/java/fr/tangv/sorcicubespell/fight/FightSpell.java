@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +13,8 @@ import fr.tangv.sorcicubecore.card.CardFeatureType;
 import fr.tangv.sorcicubecore.card.CardFeatures;
 
 public class FightSpell {
+
+	private static Object object;
 
 	private static interface ActionSpell {
 		public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads);
@@ -271,6 +274,22 @@ public class FightSpell {
 							}
 						}
 				}
+			}
+		});
+		actionsSpells.put(CardFeatureType.REMOVE_CARD, new ActionSpell() {
+			@Override
+			public void actionSpell(PlayerFight p, CardFeature feature, Collection<FightHead> heads) {
+				int number = feature.getValue().asNumber();
+				for (FightHead head : heads)
+					if (head instanceof FightHero) {
+						PlayerFight player = head.getOwner();
+						ArrayList<Integer> cards = new ArrayList<Integer>();
+						for (int i = 0; i < player.getMaxCardHand(); i++)
+							if (player.getCardHand(i) != null)
+								cards.add(i);
+						for (int rm = 0; rm < number && !cards.isEmpty(); rm++)
+							player.setCardHand(cards.remove((int) (Math.random()*cards.size())), null);
+					}
 			}
 		});
 		actionsSpells.put(CardFeatureType.GIVE_FEATURE_CARD, new ActionSpell() {

@@ -80,4 +80,5 @@ feature:
   apply_excited: "§f§l{cible} attaque une \n§f§lseconde fois."
   give_feature_card: "§f§l{uuid}."
   metamorph_to: "§f§lTransforme {cible} en {uuid}."
+  remove_card: "§f§lDéfause {number} carte(s) à {cible}"
   hide_card: ""
