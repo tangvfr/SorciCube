@@ -6,6 +6,8 @@ import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 import org.bson.Document;
 
+import fr.tangv.sorcicubecore.handler.HandlerCards;
+
 public class CardFeatures {
 
 	private final ConcurrentHashMap<CardFeatureType, CardFeature> features;
@@ -44,6 +46,13 @@ public class CardFeatures {
 	
 	public int size() {
 		return this.features.size();
+	}
+	
+	public boolean hasNUUID(HandlerCards handler) {
+		for (CardFeature fea : features.values())
+			if (fea.isNUUID(handler))
+				return true;
+		return false;
 	}
 	
 	public Document toDocument() {

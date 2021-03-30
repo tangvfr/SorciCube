@@ -2,6 +2,8 @@ package fr.tangv.sorcicubecore.card;
 
 import org.bson.Document;
 
+import fr.tangv.sorcicubecore.handler.HandlerCards;
+
 public class CardFeature {
 
 	private final CardFeatureType type;
@@ -29,6 +31,12 @@ public class CardFeature {
 
 	public CardFeature clone() {
 		return toCartFeature(type, toDocument());
+	}
+	
+	public boolean isNUUID(HandlerCards handler) {
+		if (value.isUUID())
+			return handler.containsCard(value.asUUID());
+		return false;
 	}
 	
 	public Document toDocument() {

@@ -67,7 +67,7 @@ public class CardsPanel extends JPanel {
 		this.card = card;
 		if (card != null) {
 			edit.setBorder(new TitledBorder(PanelNav.renderHTMLCard(card, "Card: ")));
-			table.setModel(new ModelEditCard(card));
+			table.setModel(new ModelEditCard(card, cards));
 		} else {
 			edit.setBorder(new TitledBorder("Card: none"));
 			table.setModel(new DefaultTableModel());

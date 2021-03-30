@@ -43,6 +43,7 @@ import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.card.CardValue;
 import fr.tangv.sorcicubecore.card.CardVisual;
+import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 
@@ -53,6 +54,7 @@ public class PanelNav extends JPanel {
 	private final JLabel sortedBy;
 	private final JSplitPane splitPane;
 	private final CardsPanel cardsPanel;
+	private final HandlerCards handler;
 	private final JButton refrech;
 	private final JLabel clear;
 	private final JTextField search;
@@ -64,6 +66,7 @@ public class PanelNav extends JPanel {
 	
 	public PanelNav(CardsPanel cardsPanel) throws PanelFilterException {
 		this.cardsPanel = cardsPanel;
+		this.handler = this.cardsPanel.getCards();
 		//clear
 		this.clear = new JLabel(" X ");
 		clear.addMouseListener(new ClickListener() {
@@ -206,7 +209,7 @@ public class PanelNav extends JPanel {
 	}
 	
 	public void refresh() {
-		Vector<Card> listCard = this.cardsPanel.getCards().cloneCardsValue();
+		Vector<Card> listCard = handler.cloneCardsValue();
 		String name = this.search.getText().toLowerCase();
 		boolean uuidSearch = false;
 		if (!name.isEmpty()) {
@@ -222,7 +225,7 @@ public class PanelNav extends JPanel {
 			listValue = listCard;
 		}
 		if (!uuidSearch && this.filterApply.isSelected())
-			listValue = this.filter.applyFilter(listValue);
+			listValue = this.filter.applyFilter(listValue, handler);
 		//display
 		this.refrech.setText("Refrech | "+Integer.toString(listCard.size())+" cards "+Integer.toString(listValue.size())+" find");
 		listValue.sort(CardComparator.BY_ID);

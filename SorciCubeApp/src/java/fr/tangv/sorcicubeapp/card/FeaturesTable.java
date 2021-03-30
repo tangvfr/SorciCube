@@ -27,18 +27,21 @@ import fr.tangv.sorcicubecore.card.CardFeatures;
 import fr.tangv.sorcicubecore.card.CardSkin;
 import fr.tangv.sorcicubecore.card.CardValue;
 import fr.tangv.sorcicubecore.card.CardValue.TypeValue;
+import fr.tangv.sorcicubecore.handler.HandlerCards;
 
 public class FeaturesTable extends JTable {
 
 	private static final long serialVersionUID = 3573798367579198241L;
-	private CardFeatures cardFeatures;
-	private boolean isEntity;
+	private final CardFeatures cardFeatures;
+	private final boolean isEntity;
 	private Window window;
 	private HashMap<Integer, CardFeature> idCardFeature;
+	private final HandlerCards cards;
 	
 	public FeaturesTable(CardsPanel cards, CardFeatures cardFeatures, boolean isEntity) {
 		this.window = cards.getFrameLogi();
 		this.cardFeatures = cardFeatures;
+		this.cards = cards.getCards();
 		this.isEntity = isEntity;
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setVisible(false);
@@ -130,7 +133,7 @@ public class FeaturesTable extends JTable {
 		for (int i = 0; i < list.size(); i++)
 			idCardFeature.put(i, list.get(i));
 		//init mapname
-		this.setModel(new FeaturesTableModel(this));
+		this.setModel(new FeaturesTableModel(this, this.cards));
 		JPopupMenu popManage = new JPopupMenu();
 		JMenuItem itemAddFeature = new JMenuItem("Add feature");
 		itemAddFeature.addActionListener(new ActionListener() {

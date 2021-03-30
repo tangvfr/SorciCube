@@ -8,14 +8,17 @@ import javax.swing.table.AbstractTableModel;
 import fr.tangv.sorcicubecore.card.CardFeature;
 import fr.tangv.sorcicubecore.card.CardFeatureType;
 import fr.tangv.sorcicubecore.card.CardValue.TypeValue;
+import fr.tangv.sorcicubecore.handler.HandlerCards;
 
 public class FeaturesTableModel extends AbstractTableModel implements MouseListener {
 
 	private static final long serialVersionUID = 506002420552780083L;
-	private FeaturesTable featuresTable;
+	private final FeaturesTable featuresTable;
+	private final HandlerCards cards;
 	
-	public FeaturesTableModel(FeaturesTable featuresTable) {
+	public FeaturesTableModel(FeaturesTable featuresTable, HandlerCards cards) {
 		this.featuresTable = featuresTable;
+		this.cards = cards;
 	}
 	
 	@Override
@@ -48,8 +51,8 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 					break;
 					
 				case 2://value
-					if (feature.getType() == CardFeatureType.SKIN)
-						text = feature.getValue().toString().replace("http://textures.minecraft.net/texture/", "");
+					if (feature.isNUUID(cards))
+						text = "<span color='#0FC56A'>"+feature.getValue().toString()+"</span>";
 					else
 						text = feature.getValue().toString();
 					break;
@@ -61,7 +64,7 @@ public class FeaturesTableModel extends AbstractTableModel implements MouseListe
 		}
 		if (column == 1 || lock)
 			return "<html><body><span color='#5555FF'>"+text+"</span></body></html>";
-		return text;
+		return "<html><body>"+text+"</body></html>";
 	}
 	
 	@Override

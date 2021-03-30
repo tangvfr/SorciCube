@@ -14,6 +14,7 @@ import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.card.CardFeatureType;
 import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.card.CardType;
+import fr.tangv.sorcicubecore.handler.HandlerCards;
 
 public class PanelFilter extends JScrollPane {
 
@@ -31,6 +32,7 @@ public class PanelFilter extends JScrollPane {
 	private PanelFilterBoolean filterIsInvulnerability;
 	private PanelFilterBoolean filterIsImmobilization;
 	private PanelFilterBoolean filterIsStunned;
+	private PanelFilterBoolean filterHasNUUID;
 	
 	public static final class PanelFilterException extends Exception {
 		
@@ -61,6 +63,7 @@ public class PanelFilter extends JScrollPane {
 		this.filterIsInvulnerability = new PanelFilterBoolean("Is Invulnerability", "True", "False", "Any");
 		this.filterIsImmobilization = new PanelFilterBoolean("Is Immobilization", "True", "False", "Any");
 		this.filterIsStunned = new PanelFilterBoolean("Is Stunned", "True", "False", "Any");
+		this.filterHasNUUID = new PanelFilterBoolean("Has None UUID", "True", "False", "Any");
 		//init gui
 		JPanel pan = new JPanel();
 		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
@@ -79,13 +82,14 @@ public class PanelFilter extends JScrollPane {
 		pan.add(filterIsInvulnerability);
 		pan.add(filterIsImmobilization);
 		pan.add(filterIsStunned);
+		pan.add(filterHasNUUID);
 		pan.add(filterCible);
 		//scroll pan
 		this.setViewportView(pan);
 		this.getVerticalScrollBar().setUnitIncrement(10);
 	}
 	
-	public Vector<Card> applyFilter(Collection<Card> list) {
+	public Vector<Card> applyFilter(Collection<Card> list, HandlerCards handler) {
 		ArrayList<CardType> filterType = this.filterType.makeFilter();
 		ArrayList<CardRarity> filterRarity = this.filterRarity.makeFilter();
 		ArrayList<CardFaction> filterFaction = this.filterFaction.makeFilter();
@@ -106,6 +110,7 @@ public class PanelFilter extends JScrollPane {
 				&& filterIsInvulnerability.isGood(card.getFeatures().hasFeature(CardFeatureType.INVULNERABILITY))
 				&& filterIsImmobilization.isGood(card.getFeatures().hasFeature(CardFeatureType.IMMOBILIZATION))
 				&& filterIsStunned.isGood(card.getFeatures().hasFeature(CardFeatureType.STUNNED))
+				&& filterHasNUUID.isGood(card.getFeatures().hasNUUID(handler))
 			) {
 				cards.add(card);
 			}

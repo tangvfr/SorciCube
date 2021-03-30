@@ -87,7 +87,7 @@ public class UUIDPanelEditor extends JPanel {
 			JTable table = new JTable();
 			table.addMouseListener(new MouseTable(table, cardsPanel, frame));
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			table.setModel(new ModelEditCard(card));
+			table.setModel(new ModelEditCard(card, cardsPanel.getCards()));
 			panel.add(table);
 			frame.setContentPane(panel);
 			//show

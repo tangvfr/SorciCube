@@ -5,16 +5,19 @@ import javax.swing.table.AbstractTableModel;
 import fr.tangv.sorcicubeapp.SorciCubeApp;
 import fr.tangv.sorcicubeapp.dialog.Item;
 import fr.tangv.sorcicubecore.card.Card;
+import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.util.TextList;
 
 public class ModelEditCard extends AbstractTableModel {
 
 	private static final long serialVersionUID = -3498539069595000083L;
-	private Card card;
+	private final Card card;
+	private final HandlerCards handler;
 	
-	public ModelEditCard(Card cart) {
+	public ModelEditCard(Card cart, HandlerCards handler) {
 		super();
 		this.card = cart;
+		this.handler = handler;
 	}
 	
 	public Card getCard() {
@@ -81,7 +84,10 @@ public class ModelEditCard extends AbstractTableModel {
 					break;
 					
 				case 9:
-					text = ""+card.getFeatures().size();
+					if (card.getFeatures().hasNUUID(handler))
+						text = "<span color='#0FC56A'>"+card.getFeatures().size()+"</span>";
+					else
+						text = ""+card.getFeatures().size();
 					break;
 
 				case 10:
@@ -101,7 +107,7 @@ public class ModelEditCard extends AbstractTableModel {
 		else if (rowIndex == 9)
 			return "<html><body><span color='#DD33DDF'>"+text+"</span></body></html>";
 		else
-			return text;
+			return "<html><body>"+text+"</body></html>";
 	}
 	
 	@Override
