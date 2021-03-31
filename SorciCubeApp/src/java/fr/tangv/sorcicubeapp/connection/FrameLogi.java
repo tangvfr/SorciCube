@@ -18,6 +18,7 @@ public class FrameLogi extends JFrame {
 	private static final long serialVersionUID = -3539638134870583981L;
 	private final ConnectionPanel connectionPanel;
 	private final JLabel waitConnection;
+	private final JFrame panel;
 	private volatile boolean used;
 	private volatile boolean err;
 	private volatile SorciClient client;
@@ -27,9 +28,17 @@ public class FrameLogi extends JFrame {
 		this.waitConnection = new JLabel("Wait connection...");
 		this.waitConnection.setHorizontalAlignment(JLabel.CENTER);
 		//init
-		super.setName("Frame");
-		super.setTitle("SorciCubeApp");
+		super.setTitle("SorciCubeApp Connect");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setSize(500, 300);
+		super.setResizable(false);
+		this.setLocationRelativeTo(null);
+		//panel
+		panel = new JFrame("SorciCubeApp Panel");
+		panel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel.setResizable(true);
+		panel.setSize(800, 450);
+		panel.setVisible(false);
 		//default
 		showConnection("Welcome", Color.BLUE);
 	}
@@ -45,11 +54,8 @@ public class FrameLogi extends JFrame {
 	}
 	
 	private synchronized void showContainer(Container container) {
-		super.setSize(500, 300);
-		super.setResizable(false);
-		this.setLocationRelativeTo(null);
 		this.setContentPane(container);
-		this.repaint();
+		this.setVisible(true);
 	}
 	
 	public synchronized boolean tryConnection(SorciClientURI uri) {
@@ -66,15 +72,19 @@ public class FrameLogi extends JFrame {
 					FrameLogi.this.client = null;
 					if (!err)
 						showConnection("Disconnected", Color.GREEN);
+					if (panel.isVisible()) {
+						FrameLogi.this.setLocationRelativeTo(panel);
+						panel.setVisible(false);
+					}
 				}
 				
 				@Override
 				public synchronized void connected() {
 					try {
-						FrameLogi.this.setResizable(true);
-						TabbedPanel tab = new TabbedPanel(this, FrameLogi.this);
-						FrameLogi.this.setContentPane(tab);
-						tab.repaint();
+						panel.setLocationRelativeTo(FrameLogi.this);
+						panel.setContentPane(new TabbedPanel(this, FrameLogi.this));
+						panel.setVisible(true);
+						FrameLogi.this.setVisible(false);
 					} catch (Exception e) {
 						showConnection("Error: "+e.getMessage(), Color.RED);
 						e.printStackTrace();
