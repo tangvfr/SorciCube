@@ -114,62 +114,14 @@ public class SorciCubeSpell extends JavaPlugin {
 					TIMEOUT
 			) {
 				@Override
-				public void disconnected() {
+				public synchronized void disconnected() {
 					Bukkit.getLogger().warning("SorciClient is disconnected !");
 					Bukkit.getPluginManager().disablePlugin(SorciCubeSpell.this);
 				}
 				
 				@Override
-				public void connected() {
+				public synchronized void connected() {
 					w.continueCode();
-					try {
-						SorciClient client = this;
-						//handler for config
-						SorciCubeSpell.this.handlerConfigYAML = new HandlerConfigYAML(client);
-						//init Config
-						SorciCubeSpell.this.message = newConfig("message.yml");
-						SorciCubeSpell.this.parameter = newConfig("parameter.yml");
-						SorciCubeSpell.this.enumConfig = newConfig("enum.yml");
-						SorciCubeSpell.this.guiConfig = newConfig("gui.yml");
-						SorciCubeSpell.this.levelConfig = newConfig("level.yml");
-						//init tool
-						SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this.enumConfig);
-						//init for change server
-						SorciCubeSpell.this.handlerServer = new HandlerServer(this);
-						getServer().getMessenger().registerOutgoingPluginChannel(SorciCubeSpell.this, "BungeeCord");
-						SorciCubeSpell.this.nameServerLobby = SorciCubeSpell.this.parameter.getString("server_lobby");
-						SorciCubeSpell.this.nameServerFight = SorciCubeSpell.this.parameter.getString("server_fight");
-						//init handler
-						SorciCubeSpell.this.handlerCards = new HandlerCards(client);
-						SorciCubeSpell.this.handlerPlayers = new HandlerPlayers(client, handlerCards);
-						SorciCubeSpell.this.handlerFightData = new HandlerFightData(client);
-						if (SorciCubeSpell.this.isLobby) {
-							SorciCubeSpell.this.configItemList = newConfig("itemlist.yml");
-							SorciCubeSpell.this.configNPC = newConfig("npc.yml");
-							SorciCubeSpell.this.handlerFightData.removeAllFightDataServer(nameServer);
-							SorciCubeSpell.this.managerGui = new ManagerGui(SorciCubeSpell.this);
-							SorciCubeSpell.this.managerPakcetCards = new ManagerPakcetCards(client, SorciCubeSpell.this);
-							SorciCubeSpell.this.managerCreatorFight = new ManagerCreatorFight(SorciCubeSpell.this);
-							//init for npc
-							getCommand("additeminlist").setExecutor(new CommandAddItemInList(SorciCubeSpell.this));
-							SorciCubeSpell.this.managerClickNPC = new ManagerClickNPC(SorciCubeSpell.this);
-							//init for lobby
-							SorciCubeSpell.this.managerLobby = new ManagerLobby(SorciCubeSpell.this);
-							CommandMoney commandMoney = new CommandMoney(SorciCubeSpell.this);
-							getCommand("money").setExecutor(commandMoney);
-							getCommand("money").setTabCompleter(commandMoney);
-						} else {
-							SorciCubeSpell.this.arenaConfig = newConfig("arena.yml");
-							SorciCubeSpell.this.managerFight = new ManagerFight(SorciCubeSpell.this);
-						}
-						new ManagerSecurity(SorciCubeSpell.this);
-						getCommand("refresh").setExecutor(new CommandRefresh(SorciCubeSpell.this));
-						getCommand("givecard").setExecutor(new CommandGiveCard(SorciCubeSpell.this));
-						getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(SorciCubeSpell.this));
-					} catch (Exception e) {
-						e.printStackTrace();
-						Bukkit.getPluginManager().disablePlugin(SorciCubeSpell.this);
-					}
 				}
 
 				@Override
@@ -195,6 +147,48 @@ public class SorciCubeSpell extends JavaPlugin {
 			w.waitCode(TIMEOUT);
 			if (!client.isAuthentified())
 				throw new Exception("SorciClient is not connected !");
+			//handler for config
+			SorciCubeSpell.this.handlerConfigYAML = new HandlerConfigYAML(client);
+			//init Config
+			SorciCubeSpell.this.message = newConfig("message.yml");
+			SorciCubeSpell.this.parameter = newConfig("parameter.yml");
+			SorciCubeSpell.this.enumConfig = newConfig("enum.yml");
+			SorciCubeSpell.this.guiConfig = newConfig("gui.yml");
+			SorciCubeSpell.this.levelConfig = newConfig("level.yml");
+			//init tool
+			SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this.enumConfig);
+			//init for change server
+			SorciCubeSpell.this.handlerServer = new HandlerServer(client);
+			getServer().getMessenger().registerOutgoingPluginChannel(SorciCubeSpell.this, "BungeeCord");
+			SorciCubeSpell.this.nameServerLobby = SorciCubeSpell.this.parameter.getString("server_lobby");
+			SorciCubeSpell.this.nameServerFight = SorciCubeSpell.this.parameter.getString("server_fight");
+			//init handler
+			SorciCubeSpell.this.handlerCards = new HandlerCards(client);
+			SorciCubeSpell.this.handlerPlayers = new HandlerPlayers(client, handlerCards);
+			SorciCubeSpell.this.handlerFightData = new HandlerFightData(client);
+			if (SorciCubeSpell.this.isLobby) {
+				SorciCubeSpell.this.configItemList = newConfig("itemlist.yml");
+				SorciCubeSpell.this.configNPC = newConfig("npc.yml");
+				SorciCubeSpell.this.handlerFightData.removeAllFightDataServer(nameServer);
+				SorciCubeSpell.this.managerGui = new ManagerGui(SorciCubeSpell.this);
+				SorciCubeSpell.this.managerPakcetCards = new ManagerPakcetCards(client, SorciCubeSpell.this);
+				SorciCubeSpell.this.managerCreatorFight = new ManagerCreatorFight(SorciCubeSpell.this);
+				//init for npc
+				getCommand("additeminlist").setExecutor(new CommandAddItemInList(SorciCubeSpell.this));
+				SorciCubeSpell.this.managerClickNPC = new ManagerClickNPC(SorciCubeSpell.this);
+				//init for lobby
+				SorciCubeSpell.this.managerLobby = new ManagerLobby(SorciCubeSpell.this);
+				CommandMoney commandMoney = new CommandMoney(SorciCubeSpell.this);
+				getCommand("money").setExecutor(commandMoney);
+				getCommand("money").setTabCompleter(commandMoney);
+			} else {
+				SorciCubeSpell.this.arenaConfig = newConfig("arena.yml");
+				SorciCubeSpell.this.managerFight = new ManagerFight(SorciCubeSpell.this);
+			}
+			new ManagerSecurity(SorciCubeSpell.this);
+			getCommand("refresh").setExecutor(new CommandRefresh(SorciCubeSpell.this));
+			getCommand("givecard").setExecutor(new CommandGiveCard(SorciCubeSpell.this));
+			getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(SorciCubeSpell.this));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Bukkit.getPluginManager().disablePlugin(this);

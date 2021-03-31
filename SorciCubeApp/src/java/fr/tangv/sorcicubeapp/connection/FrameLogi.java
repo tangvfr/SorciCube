@@ -62,17 +62,19 @@ public class FrameLogi extends JFrame {
 			this.client = new SorciClient(uri, 5_000) {
 				
 				@Override
-				public void disconnected() {
+				public synchronized void disconnected() {
 					FrameLogi.this.client = null;
 					if (!err)
 						showConnection("Disconnected", Color.GREEN);
 				}
 				
 				@Override
-				public void connected() {
+				public synchronized void connected() {
 					try {
-						FrameLogi.this.setContentPane(new TabbedPanel(this, FrameLogi.this));
 						FrameLogi.this.setResizable(true);
+						TabbedPanel tab = new TabbedPanel(this, FrameLogi.this);
+						FrameLogi.this.setContentPane(tab);
+						tab.repaint();
 					} catch (Exception e) {
 						showConnection("Error: "+e.getMessage(), Color.RED);
 						e.printStackTrace();
