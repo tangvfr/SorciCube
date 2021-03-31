@@ -27,7 +27,7 @@ public class DeckPanel extends JList<Card> {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Card card = DeckPanel.this.getSelectedValue();
-				new DialogBase<UUIDPanelEditor>(cardsPanel.getFrameLogi(), "Change", "UUID", new UUIDPanelEditor(cardsPanel, (card != null ? card.getUUID() : CardValue.EMPTY_UUID))) {
+				new DialogBase<UUIDPanelEditor>(cardsPanel.getFrameLogi().getFramePanel(), "Change", "UUID", new UUIDPanelEditor(cardsPanel, (card != null ? card.getUUID() : CardValue.EMPTY_UUID))) {
 					private static final long serialVersionUID = 4116920655857733838L;
 
 					@Override

@@ -25,6 +25,7 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -49,7 +50,7 @@ public class ConnectionPanel extends JPanel {
 	private final Vector<String> uris;
 	private final File file;
 	
-	public ConnectionPanel(FrameLogi fl, String defaultURI) {
+	public ConnectionPanel(FrameLogi logi, String defaultURI) {
 		//btnconnection
 		btnConnection = new JButton("Connection");
 		btnConnection.setFocusable(false);
@@ -66,7 +67,7 @@ public class ConnectionPanel extends JPanel {
 					if (!ClientType.APPLICATION.isType(uri.getClientID().types))
 						throw new URISyntaxException(text, "URI Type is not for Application !");
 					message.setText(" ");
-					fl.tryConnection(uri);
+					logi.tryConnection(uri);
 				} catch (NumberFormatException | URISyntaxException | IOException e1) {
 					message.setText("Error: "+e1.getMessage());
 					message.setForeground(Color.MAGENTA);
@@ -79,6 +80,8 @@ public class ConnectionPanel extends JPanel {
 		btnCreate.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				@SuppressWarnings("deprecation")
+				JFrame fl = logi.getFrameConnect();
 				JDialog dialog = new JDialog(fl);
 				dialog.setTitle("Create URI");
 				dialog.addWindowListener(new WindowListener() {
@@ -165,12 +168,12 @@ public class ConnectionPanel extends JPanel {
 		this.add(message, BorderLayout.SOUTH);
 	}
 	
-	public void setMessage(String message, Color color) {
+	public synchronized void setMessage(String message, Color color) {
 		this.message.setText(message);
 		this.message.setForeground(color);
 	}
 	
-	private void updatePopMenu() {
+	private synchronized void updatePopMenu() {
 		JPopupMenu pop = new JPopupMenu();
 		pop.setMaximumSize(new Dimension(400, 200));
 		pop.add(clearURI);
@@ -192,7 +195,7 @@ public class ConnectionPanel extends JPanel {
 		scURI.setComponentPopupMenu(pop);
 	}
 	
-	private void saveURIS() throws IOException {
+	private synchronized void saveURIS() throws IOException {
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 		Iterator<String> it = uris.iterator();
 		while (it.hasNext()) {
@@ -206,7 +209,7 @@ public class ConnectionPanel extends JPanel {
 		updatePopMenu();
 	}
 	
-	private void loadURIS() throws IOException {
+	private synchronized void loadURIS() throws IOException {
 		uris.clear();
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
 		String uri;

@@ -10,7 +10,7 @@ public class SorciCubeApp {
 	public static Items items;
 	
 	public static void main(String[] args) throws IOException {
-		new FrameLogi((args.length >= 1) ? args[0] : "").setVisible(true);
+		new FrameLogi((args.length >= 1) ? args[0] : "");
 		items = new Items();
 	}
 	

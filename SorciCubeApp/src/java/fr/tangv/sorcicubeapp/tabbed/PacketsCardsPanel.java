@@ -37,13 +37,13 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getID() == ActionEvent.ACTION_FIRST) {
-					String name = JOptionPane.showInputDialog(logi, "Name for packet new", "Create Packet", JOptionPane.QUESTION_MESSAGE);
+					String name = JOptionPane.showInputDialog(logi.getFramePanel(), "Name for packet new", "Create Packet", JOptionPane.QUESTION_MESSAGE);
 					if (name != null && !name.isEmpty())
 						try {
 							handler.newPacket(name);
 							refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
-							JOptionPane.showMessageDialog(logi, "Error: "+e1.getMessage(), "Create Packet", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Packet", JOptionPane.ERROR_MESSAGE);
 						}
 				}
 			}
@@ -55,16 +55,16 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 				if (e.getID() == ActionEvent.ACTION_FIRST) {
 					PacketCards packet = list.getSelectedValue();
 					if (packet != null) {
-						if (0 == JOptionPane.showConfirmDialog(logi, "Are you sure remove pakcet nommed \""+packet.getName()+"\" ?", "Remove Packet", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+						if (0 == JOptionPane.showConfirmDialog(logi.getFramePanel(), "Are you sure remove pakcet nommed \""+packet.getName()+"\" ?", "Remove Packet", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
 							try {
 								handler.removePacket(packet.getName());
 								refresh();
 							} catch (IOException | ReponseRequestException | RequestException e1) {
-								JOptionPane.showMessageDialog(logi, "Error: "+e1.getMessage(), "Remove Packet", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Remove Packet", JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					} else {
-						JOptionPane.showMessageDialog(logi, "No selected packet ?", "Remove Packet", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(logi.getFramePanel(), "No selected packet ?", "Remove Packet", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

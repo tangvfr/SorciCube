@@ -39,7 +39,7 @@ public class FeaturesTable extends JTable {
 	private final HandlerCards cards;
 	
 	public FeaturesTable(CardsPanel cards, CardFeatures cardFeatures, boolean isEntity) {
-		this.window = cards.getFrameLogi();
+		this.window = cards.getFrameLogi().getFramePanel();
 		this.cardFeatures = cardFeatures;
 		this.cards = cards.getCards();
 		this.isEntity = isEntity;

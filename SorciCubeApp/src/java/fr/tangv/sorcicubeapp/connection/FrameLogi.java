@@ -13,11 +13,11 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 
-public class FrameLogi extends JFrame {
+public class FrameLogi {
 
-	private static final long serialVersionUID = -3539638134870583981L;
 	private final ConnectionPanel connectionPanel;
 	private final JLabel waitConnection;
+	private final JFrame connect;
 	private final JFrame panel;
 	private volatile boolean used;
 	private volatile boolean err;
@@ -28,11 +28,11 @@ public class FrameLogi extends JFrame {
 		this.waitConnection = new JLabel("Wait connection...");
 		this.waitConnection.setHorizontalAlignment(JLabel.CENTER);
 		//init
-		super.setTitle("SorciCubeApp Connect");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		super.setSize(500, 300);
-		super.setResizable(false);
-		this.setLocationRelativeTo(null);
+		connect = new JFrame("SorciCubeApp Connect");
+		connect.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		connect.setSize(500, 300);
+		connect.setResizable(false);
+		connect.setLocationRelativeTo(null);
 		//panel
 		panel = new JFrame("SorciCubeApp Panel");
 		panel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +41,16 @@ public class FrameLogi extends JFrame {
 		panel.setVisible(false);
 		//default
 		showConnection("Welcome", Color.BLUE);
+		connect.setVisible(true);
+	}
+	
+	@Deprecated
+	public JFrame getFrameConnect() {
+		return connect;
+	}
+	
+	public JFrame getFramePanel() {
+		return panel;
 	}
 	
 	public synchronized void showConnection(String message, Color color) {
@@ -54,8 +64,8 @@ public class FrameLogi extends JFrame {
 	}
 	
 	private synchronized void showContainer(Container container) {
-		this.setContentPane(container);
-		this.setVisible(true);
+		connect.setContentPane(container);
+		connect.setVisible(true);
 	}
 	
 	public synchronized boolean tryConnection(SorciClientURI uri) {
@@ -73,7 +83,7 @@ public class FrameLogi extends JFrame {
 					if (!err)
 						showConnection("Disconnected", Color.GREEN);
 					if (panel.isVisible()) {
-						FrameLogi.this.setLocationRelativeTo(panel);
+						connect.setLocationRelativeTo(panel);
 						panel.setVisible(false);
 					}
 				}
@@ -81,10 +91,10 @@ public class FrameLogi extends JFrame {
 				@Override
 				public synchronized void connected() {
 					try {
-						panel.setLocationRelativeTo(FrameLogi.this);
+						panel.setLocationRelativeTo(connect);
 						panel.setContentPane(new TabbedPanel(this, FrameLogi.this));
 						panel.setVisible(true);
-						FrameLogi.this.setVisible(false);
+						connect.setVisible(false);
 					} catch (Exception e) {
 						showConnection("Error: "+e.getMessage(), Color.RED);
 						e.printStackTrace();
