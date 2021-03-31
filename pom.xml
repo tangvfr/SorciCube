@@ -16,26 +16,4 @@
 		<module>SorciCubeApp</module>
 	</modules>
 	
-	<build>
-		<plugins>
-	    	<plugin>
-		    <groupId>pl.project13.maven</groupId>
-		    <artifactId>git-commit-id-plugin</artifactId>
-		    <version>2.2.4</version>
-		    <executions>
-		        <execution>
-		            <phase>validate</phase>
-		            <goals>
-		                <goal>revision</goal>
-		            </goals>
-		        </execution>
-		    </executions>
-		    <configuration>
-		        <dateFormat>yyyyMMdd-HHmmss</dateFormat><!--  human-readable part of the version number -->
-		        <generateGitPropertiesFile>false</generateGitPropertiesFile><!-- somehow necessary. otherwise the variables are not available in the pom -->
-		    </configuration>
-		</plugin>
-		</plugins>
-	</build>
-	
 </project>
