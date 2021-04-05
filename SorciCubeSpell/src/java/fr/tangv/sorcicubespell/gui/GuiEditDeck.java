@@ -28,7 +28,7 @@ public class GuiEditDeck extends AbstractGui {
 	public Inventory createInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 36 ,this.name);
 		PlayerGui playerG = getPlayerGui(player);
-		DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());
+		DeckCards deck = playerG.getPlayerFeatures().getDeck(playerG.getDeckEdit());
 		String averageCost = "§b"+Double.toString(deck.calcAverageCost()/10.0D)+" \u2756";
 		ItemStack itemTypeDeck = ItemBuild.buildSkull(SkullUrl.getSkullForFaction(deck.getFaction()), 1,
 				manager.getSorci().getEnumTool().factionToString(deck.getFaction()), 

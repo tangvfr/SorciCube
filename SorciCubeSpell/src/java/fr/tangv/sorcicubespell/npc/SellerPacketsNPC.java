@@ -42,7 +42,7 @@ public class SellerPacketsNPC extends AbstractGui implements ClickNPC {
 
 	@Override
 	public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-		if (getPlayerGui(player).getPlayerFeature() != null)
+		if (getPlayerGui(player).getPlayerFeatures() != null)
 			this.open(player);
 	}
 	

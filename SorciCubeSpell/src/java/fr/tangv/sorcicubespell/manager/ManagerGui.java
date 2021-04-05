@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -147,8 +147,7 @@ public class ManagerGui {
 	public void refreshFeaturePlayers() throws IOException, ReponseRequestException, RequestException, DeckException {
 		HandlerPlayers handler = sorci.getHandlerPlayers();
 		for (PlayerGui pg : playerGuis.values()) {
-			PlayerFeature feature = handler.getPlayer(pg.getUUID(), pg.getName());
-			pg.getPlayer().closeInventory();
+			PlayerFeatures feature = handler.getPlayer(pg.getUUID(), pg.getName());
 			pg.setPlayerFeature(feature);
 		}
 	}

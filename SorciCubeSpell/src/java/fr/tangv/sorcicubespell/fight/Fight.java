@@ -19,7 +19,7 @@ import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubecore.util.Cooldown;
@@ -390,7 +390,7 @@ public class Fight {
 	}
 	
 	private void endReward(Config lc, PlayerFight player, int money, int exp) throws IOException, ReponseRequestException, RequestException, DeckException {
-		PlayerFeature feature = sorci.getHandlerPlayers().getPlayer(player.getUUID(), player.getNamePlayer());
+		PlayerFeatures feature = sorci.getHandlerPlayers().getPlayer(player.getUUID(), player.getNamePlayer());
 		player.sendMessage(
 				sorci.getMessage().getString("message_reward_end_game")
 				.replace("{money}", Integer.toString(money))

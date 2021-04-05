@@ -25,7 +25,7 @@ public class ManagerClickNPC {
 	}
 	
 	private boolean playerIsInit(SorciCubeSpell sorci, Player player, boolean message) {
-		if (sorci.getManagerGui().getPlayerGui(player).getPlayerFeature() != null) {
+		if (sorci.getManagerGui().getPlayerGui(player).getPlayerFeatures() != null) {
 			return true;
 		} else {
 			if (message)

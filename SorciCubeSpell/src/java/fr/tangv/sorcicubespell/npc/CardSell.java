@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 import fr.tangv.sorcicubecore.card.Card;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
@@ -34,12 +34,12 @@ public class CardSell extends PCSell {
 	
 	@Override
 	public boolean buy(PlayerGui player) {
-		PlayerFeature feature = player.getPlayerFeature();
+		PlayerFeatures feature = player.getPlayerFeatures();
 		String cardID = card.getUUID().toString();
 		if (!feature.getCardsUnlocks().contains(cardID)) {
 			feature.removeMoney(price);
 			feature.getCardsUnlocks().add(cardID);
-			player.uploadPlayerFeature(sorci.getHandlerPlayers());
+			player.uploadPlayerFeatures(sorci.getHandlerPlayers());
 			player.getPlayer().sendMessage(getMessage("message_packet_buy_card")
 					.replace("{name}", card.renderName())
 					.replace("{price}", Integer.toString(price))

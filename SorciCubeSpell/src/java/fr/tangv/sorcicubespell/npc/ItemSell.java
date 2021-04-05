@@ -67,7 +67,7 @@ public class ItemSell {
 	}
 	
 	public boolean hasMoney(PlayerGui player) {
-		return player.getPlayerFeature().hasMoney(price);
+		return player.getPlayerFeatures().hasMoney(price);
 	}
 	
 	public int getPrice() {

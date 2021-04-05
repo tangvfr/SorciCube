@@ -18,8 +18,8 @@ public class GuiFightDeck extends GuiDecks {
 
 	private void chooseDeck(Player player, int number) throws Exception {
 		PlayerGui playerG = getPlayerGui(player);
-		if (playerG.getPlayerFeature().getUnlockDecks() >= number) {
-			if (playerG.getPlayerFeature().getDeck(number).isComplet()) {
+		if (playerG.getPlayerFeatures().getUnlockDecks() >= number) {
+			if (playerG.getPlayerFeatures().getDeck(number).isComplet()) {
 				playerG.setDeckEdit(number);
 				ManagerCreatorFight cf = sorci.getManagerCreatorFight();
 				sorci.getHandlerFightData().removeFightDataPlayer(player.getUniqueId());

@@ -85,11 +85,11 @@ public class GuiCreateDeck extends AbstractGui {
 			default:
 				return;
 		}
-		DeckCards deck = playerG.getPlayerFeature().getDeck(playerG.getDeckEdit());
+		DeckCards deck = playerG.getPlayerFeatures().getDeck(playerG.getDeckEdit());
 		for (int i = 0; i < deck.size(); i++)
 			deck.setCard(i, null);
 		deck.setFaction(faction);
-		playerG.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
+		playerG.uploadPlayerFeatures(manager.getSorci().getHandlerPlayers());
 		playerG.getPreviousGui().open(player);
 	}
 	

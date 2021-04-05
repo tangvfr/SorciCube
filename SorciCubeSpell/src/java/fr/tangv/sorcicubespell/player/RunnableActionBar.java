@@ -23,7 +23,7 @@ public class RunnableActionBar implements Runnable {
 	@Override
 	public void run() {
 		for (PlayerGui playerG : playerGuis.values()) {
-			if (playerG.getPlayerFeature() != null)
+			if (playerG.getPlayerFeatures() != null)
 				playerG.updateDisplay(lc, messageActionBar);
 		}
 	}

@@ -10,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.CardFaction;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -77,7 +77,7 @@ public class GuiSelectDefaultDeck extends AbstractGui {
 			default:
 				return;
 		}
-		PlayerFeature pf = null;
+		PlayerFeatures pf = null;
 		try {
 			pf = sorci.getHandlerPlayers().initPlayer(player.getUniqueId(), player.getName(), faction);
 		} catch (Exception e1) {

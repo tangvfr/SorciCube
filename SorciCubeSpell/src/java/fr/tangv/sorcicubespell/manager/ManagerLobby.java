@@ -20,7 +20,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -49,7 +49,7 @@ public class ManagerLobby implements Listener {
 	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
-		PlayerFeature feature = sorci.getManagerGui().getPlayerGui(e.getPlayer()).getPlayerFeature();
+		PlayerFeatures feature = sorci.getManagerGui().getPlayerGui(e.getPlayer()).getPlayerFeatures();
 		e.setFormat(formatChat
 				.replace("{displayname}", e.getPlayer().getDisplayName())
 				.replace("{message}", e.getMessage())
@@ -71,7 +71,7 @@ public class ManagerLobby implements Listener {
 	private void teleportPlayerToSpawn(Player player) {
 		Location loc = sorci.getManagerCreatorFight().getLocationFor(player);
 		if (loc == null) {
-			if (sorci.getManagerGui().getPlayerGui(player).getPlayerFeature() != null) {
+			if (sorci.getManagerGui().getPlayerGui(player).getPlayerFeatures() != null) {
 				loc = locationSpawn;
 			} else {
 				loc = locationTuto;

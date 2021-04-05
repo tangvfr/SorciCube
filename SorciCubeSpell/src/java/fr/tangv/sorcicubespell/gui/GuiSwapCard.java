@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.player.DeckCards;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -32,7 +32,7 @@ public class GuiSwapCard extends AbstractGuiCards {
 
 	@Override
 	protected List<Card> listCards(PlayerGui player) {
-		PlayerFeature playerF = player.getPlayerFeature();
+		PlayerFeatures playerF = player.getPlayerFeatures();
 		DeckCards deck = playerF.getDeck(player.getDeckEdit());
 		ArrayList<Card> cards = new ArrayList<Card>();
 		for (String uuidS : playerF.getCardsUnlocks()) {
@@ -58,8 +58,8 @@ public class GuiSwapCard extends AbstractGuiCards {
 			if (lore.size() >= 1) {
 				String uuid = lore.get(lore.size()-1).replaceFirst("§8Id: ", "");
 				Card card = manager.getSorci().getHandlerCards().getCard(UUID.fromString(uuid));
-				player.getPlayerFeature().getDeck(player.getDeckEdit()).setCard(player.getDeckCardEdit(), card);
-				player.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
+				player.getPlayerFeatures().getDeck(player.getDeckEdit()).setCard(player.getDeckCardEdit(), card);
+				player.uploadPlayerFeatures(manager.getSorci().getHandlerPlayers());
 				manager.getSorci().getManagerGui().getGuiEditDeck().open(player.getPlayer());
 			}
 		}

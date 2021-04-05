@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 
@@ -28,7 +28,7 @@ public class GuiIncreaseDeck extends AbstractGui {
 		Inventory inv = Bukkit.createInventory(null, InventoryType.DISPENSER, this.name);
 		String name;
 		ArrayList<String> lore = new ArrayList<String>();
-		PlayerFeature feature = getPlayerGui(player).getPlayerFeature();
+		PlayerFeatures feature = getPlayerGui(player).getPlayerFeatures();
 		int number = feature.getUnlockDecks()+1;
 		if (number <= 5) {
 			name = config.getString("unlock").replace("{number}", Integer.toString(number));
@@ -52,7 +52,7 @@ public class GuiIncreaseDeck extends AbstractGui {
 		if (raw >= 0 && raw < 9) {
 			if (raw == 4) {
 				PlayerGui playerG = getPlayerGui(player);
-				PlayerFeature feature = playerG.getPlayerFeature();
+				PlayerFeatures feature = playerG.getPlayerFeatures();
 				int number = feature.getUnlockDecks()+1;
 				if (number <= 5) {
 					int price = priceSection.getInt(Integer.toString(number));
@@ -60,7 +60,7 @@ public class GuiIncreaseDeck extends AbstractGui {
 						if (feature.getMoney() >= price) {
 							feature.removeMoney(price);
 							feature.setUnlockDecks(number);
-							playerG.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
+							playerG.uploadPlayerFeatures(manager.getSorci().getHandlerPlayers());
 							player.sendMessage(getMessage("message_increase_deck_unlock")
 									.replace("{number}", Integer.toString(number))
 									.replace("{price}", Integer.toString(price))

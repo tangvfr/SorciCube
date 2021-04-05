@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 
@@ -28,8 +28,8 @@ public class CommandMoney implements CommandExecutor, TabCompleter {
 			Player player = Bukkit.getPlayer(args[0]);
 			if (player != null) {
 				PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
-				if (playerG != null && playerG.getPlayerFeature() != null) {
-					PlayerFeature feature = playerG.getPlayerFeature();
+				if (playerG != null && playerG.getPlayerFeatures() != null) {
+					PlayerFeatures feature = playerG.getPlayerFeatures();
 					String action = args[1];
 					if (action.equalsIgnoreCase("get") || action.equalsIgnoreCase("set") 
 							|| action.equalsIgnoreCase("add") || action.equalsIgnoreCase("remove")) {
@@ -64,7 +64,7 @@ public class CommandMoney implements CommandExecutor, TabCompleter {
 									default:
 										return false;
 								}
-								playerG.uploadPlayerFeature(sorci.getHandlerPlayers());
+								playerG.uploadPlayerFeatures(sorci.getHandlerPlayers());
 								sender.sendMessage(sorci.getMessage().getString(messageName)
 										.replace("{player}", player.getName())
 										.replace("{money}", Integer.toString(value))

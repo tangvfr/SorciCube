@@ -18,10 +18,11 @@ import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.handler.HandlerConfigYAML;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
+import fr.tangv.sorcicubecore.handler.HandlerGroups;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
 import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
@@ -74,6 +75,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private HandlerFightData handlerFightData;
 	private HandlerConfigYAML handlerConfigYAML;
 	private HandlerServer handlerServer;
+	private HandlerGroups handlerGroups;
 	
 	//manager
 	private ManagerLobby managerLobby;
@@ -129,7 +131,7 @@ public class SorciCubeSpell extends JavaPlugin {
 					if (request.requestType == RequestType.PLAYER_UPDATING && isLobby) {
 						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
 						if (player != null) {
-							PlayerFeature feature = handlerPlayers.getPlayer(player.getUniqueId(), player.getName());
+							PlayerFeatures feature = handlerPlayers.getPlayer(player.getUniqueId(), player.getName());
 							player.closeInventory();
 							managerGui.getPlayerGui(player).setPlayerFeature(feature);
 						}
@@ -163,6 +165,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			SorciCubeSpell.this.nameServerLobby = SorciCubeSpell.this.parameter.getString("server_lobby");
 			SorciCubeSpell.this.nameServerFight = SorciCubeSpell.this.parameter.getString("server_fight");
 			//init handler
+			SorciCubeSpell.this.handlerGroups = new HandlerGroups(client);
 			SorciCubeSpell.this.handlerCards = new HandlerCards(client);
 			SorciCubeSpell.this.handlerPlayers = new HandlerPlayers(client, handlerCards);
 			SorciCubeSpell.this.handlerFightData = new HandlerFightData(client);
@@ -309,6 +312,10 @@ public class SorciCubeSpell extends JavaPlugin {
 		return handlerServer;
 	}
 	
+	public HandlerGroups getHandlerGroups() {
+		return handlerGroups;
+	}
+	
 	//manager
 
 	public ManagerCreatorFight getManagerCreatorFight() {
@@ -341,6 +348,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public void refresh() throws IOException, ReponseRequestException, RequestException, DeckException {
 		handlerCards.refresh();
+		handlerGroups.refresh();
 		if (isLobby) {
 			managerPakcetCards.refresh();
 			managerGui.refreshFeaturePlayers();

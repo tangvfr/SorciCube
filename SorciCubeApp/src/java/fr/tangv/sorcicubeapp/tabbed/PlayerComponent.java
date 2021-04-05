@@ -25,7 +25,7 @@ import fr.tangv.sorcicubeapp.tools.PlayerResources;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 
@@ -36,7 +36,7 @@ public class PlayerComponent extends JComponent {
 	private final JLabel name;
 	private final JLabel uuid;
 	private final PlayerResources res;
-	private PlayerFeature feature;
+	private PlayerFeatures feature;
 	private final HandlerPlayers handler;
 	private final ComponentNumberInt lvl;
 	private final ComponentNumberInt exp;

@@ -9,7 +9,7 @@ import org.bson.Document;
 
 import fr.tangv.sorcicubecore.card.Card;
 
-public class PlayerFeature {
+public class PlayerFeatures {
 
 	private final UUID uuid;
 	private final String pseudo;
@@ -27,7 +27,7 @@ public class PlayerFeature {
 	private volatile String group;
 	private volatile boolean admin;
 	
-	public PlayerFeature(UUID uuid,
+	public PlayerFeatures(UUID uuid,
 			String pseudo,
 			DeckCards deck1,
 			DeckCards deck2,
@@ -221,7 +221,7 @@ public class PlayerFeature {
 		return doc;
 	}
 	
-	public static PlayerFeature toPlayerFeature(UUID uuid, String pseudo, Map<UUID, Card> manager, Document doc) throws DeckException {
+	public static PlayerFeatures toPlayerFeature(UUID uuid, String pseudo, Map<UUID, Card> manager, Document doc) throws DeckException {
 		DeckCards deck1 = DeckCards.toDeckCards(manager, doc.get("deck1", Document.class));
 		DeckCards deck2 = DeckCards.toDeckCards(manager, doc.get("deck2", Document.class));
 		DeckCards deck3 = DeckCards.toDeckCards(manager, doc.get("deck3", Document.class));
@@ -235,7 +235,7 @@ public class PlayerFeature {
 		byte level = (byte) doc.getInteger("level", 1);
 		String group = doc.getString("group");
 		boolean admin = doc.getBoolean("admin", false);
-		return new PlayerFeature(uuid, pseudo, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks,
+		return new PlayerFeatures(uuid, pseudo, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks,
 				((rewardNPC == null) ? new ArrayList<String>() : rewardNPC),
 				money, experience, level, group, admin);
 	}

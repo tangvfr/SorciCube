@@ -7,7 +7,7 @@ import org.bson.Document;
 
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
@@ -46,27 +46,27 @@ public class HandlerPlayers {
 		return Boolean.parseBoolean(reponse.data);
 	};
 	
-	public PlayerFeature getPlayer(UUID uuid, String pseudo) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public PlayerFeatures getPlayer(UUID uuid, String pseudo) throws IOException, ReponseRequestException, RequestException, DeckException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_GET, Request.randomID(), uuid.toString(), null),
 				RequestType.PLAYER_REPONSE
 			);
-		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalMap(), Document.parse(reponse.data));
+		return PlayerFeatures.toPlayerFeature(uuid, pseudo, managerCards.originalMap(), Document.parse(reponse.data));
 	};
 	
-	public void update(PlayerFeature playerFeature) throws IOException, ReponseRequestException, RequestException {
+	public void update(PlayerFeatures playerFeature) throws IOException, ReponseRequestException, RequestException {
 		sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_UPDATE, Request.randomID(), playerFeature.getUUID().toString(), playerFeature.toDocument().toJson()),
 				RequestType.SUCCESSFUL
 			);
 	};
 	
-	public PlayerFeature initPlayer(UUID uuid, String pseudo, CardFaction faction) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public PlayerFeatures initPlayer(UUID uuid, String pseudo, CardFaction faction) throws IOException, ReponseRequestException, RequestException, DeckException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_INIT, Request.randomID(), uuid.toString(), faction.name()+" "+pseudo),
 				RequestType.PLAYER_REPONSE
 			);
-		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalMap(), Document.parse(reponse.data));
+		return PlayerFeatures.toPlayerFeature(uuid, pseudo, managerCards.originalMap(), Document.parse(reponse.data));
 	};
 	
 }

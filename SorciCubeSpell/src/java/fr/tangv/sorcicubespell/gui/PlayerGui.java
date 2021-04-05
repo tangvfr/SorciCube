@@ -10,7 +10,7 @@ import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardComparator;
 import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.util.Config;
@@ -27,7 +27,7 @@ public class PlayerGui {
 	private int pageViewGui;
 	private int deckEdit;
 	private int deckCardEdit;
-	private PlayerFeature playerFeature;
+	private PlayerFeatures playerFeature;
 	private AbstractGui previousGui;
 	private FightType fightType;
 	private Player inviteDuel;
@@ -125,15 +125,15 @@ public class PlayerGui {
 		this.deckCardEdit = deckCardEdit;
 	}
 
-	public PlayerFeature getPlayerFeature() {
+	public PlayerFeatures getPlayerFeatures() {
 		return playerFeature;
 	}
 
-	public void setPlayerFeature(PlayerFeature playerFeature) {
+	/*public void setPlayerFeatures(PlayerFeatures playerFeature, String test) {
 		this.playerFeature = playerFeature;
-	}
+	}*/
 	
-	public void uploadPlayerFeature(HandlerPlayers handler) {
+	public void uploadPlayerFeatures(HandlerPlayers handler) {
 		if(playerFeature != null)
 			try {
 				handler.update(playerFeature);
@@ -141,7 +141,7 @@ public class PlayerGui {
 				e.printStackTrace();
 			}
 		else
-			new Exception("PlayerFeature is null !").printStackTrace();;
+			new Exception("PlayerFeature is null !").printStackTrace();
 	}
 	
 	public void updateDisplay(Config lc, String messageActionBar) {

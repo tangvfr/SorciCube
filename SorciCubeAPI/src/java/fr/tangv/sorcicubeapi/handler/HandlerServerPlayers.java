@@ -11,7 +11,7 @@ import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.player.DeckCards;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.ramfiles.RamFilesManager;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestAnnotation;
@@ -97,7 +97,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 			//defaultGroup
 			
 			//create and insert playerfeature
-			PlayerFeature playerFeature = new PlayerFeature(player,
+			PlayerFeatures playerFeature = new PlayerFeatures(player,
 					pseudo,
 					defaultDeck,
 					DeckCards.createDeckCardsEmpty(),

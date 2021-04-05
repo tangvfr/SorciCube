@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.player.DeckCards;
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -25,7 +25,7 @@ public class GuiDecks extends AbstractGui {
 		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.getString("back"), null, false);
 	}
 
-	private ItemStack getItemDeck(PlayerFeature playerF, int number) {
+	private ItemStack getItemDeck(PlayerFeatures playerF, int number) {
 		if (playerF.getUnlockDecks() >= number) {
 			DeckCards deck = playerF.getDeck(number);
 			return ItemBuild.buildSkull(SkullUrl.getSkullForFaction(deck.getFaction()), 1, 
@@ -41,9 +41,9 @@ public class GuiDecks extends AbstractGui {
 	}
 	
 	private void editDeck(PlayerGui player, int number) {
-		if (player.getPlayerFeature().getUnlockDecks() >= number) {
+		if (player.getPlayerFeatures().getUnlockDecks() >= number) {
 			player.setDeckEdit(number);
-			if (player.getPlayerFeature().getDeck(number).getFaction() != CardFaction.BASIC) {
+			if (player.getPlayerFeatures().getDeck(number).getFaction() != CardFaction.BASIC) {
 				manager.getGuiEditDeck().open(player.getPlayer());
 			} else {
 				player.setPreviousGui(this);
@@ -61,11 +61,11 @@ public class GuiDecks extends AbstractGui {
 				inv.setItem(i, itemDeco);
 				inv.setItem(i+36, itemDeco);
 			}
-			inv.setItem(18, getItemDeck(playerG.getPlayerFeature(), 1));
-			inv.setItem(20, getItemDeck(playerG.getPlayerFeature(), 2));
-			inv.setItem(22, getItemDeck(playerG.getPlayerFeature(), 3));
-			inv.setItem(24, getItemDeck(playerG.getPlayerFeature(), 4));
-			inv.setItem(26, getItemDeck(playerG.getPlayerFeature(), 5));
+			inv.setItem(18, getItemDeck(playerG.getPlayerFeatures(), 1));
+			inv.setItem(20, getItemDeck(playerG.getPlayerFeatures(), 2));
+			inv.setItem(22, getItemDeck(playerG.getPlayerFeatures(), 3));
+			inv.setItem(24, getItemDeck(playerG.getPlayerFeatures(), 4));
+			inv.setItem(26, getItemDeck(playerG.getPlayerFeatures(), 5));
 			inv.setItem(40, itemBack);
 			return inv;
 		} catch (Exception e) {

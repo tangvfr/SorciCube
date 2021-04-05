@@ -3,7 +3,7 @@ package fr.tangv.sorcicubespell.npc;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import fr.tangv.sorcicubecore.player.PlayerFeature;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 
@@ -23,12 +23,12 @@ public class RewardNPC implements ClickNPC {
 	@Override
 	public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
 		PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
-		if (playerG.getPlayerFeature() != null) {
-			PlayerFeature feature = playerG.getPlayerFeature();
+		if (playerG.getPlayerFeatures() != null) {
+			PlayerFeatures feature = playerG.getPlayerFeatures();
 			if (!feature.getRewardNPC().contains(key)) {
 				feature.getRewardNPC().add(key);
 				feature.addMoney(reward);
-				playerG.uploadPlayerFeature(sorci.getHandlerPlayers());
+				playerG.uploadPlayerFeatures(sorci.getHandlerPlayers());
 				player.sendMessage(this.message.replace("{player}", player.getName()));
 			}
 		}

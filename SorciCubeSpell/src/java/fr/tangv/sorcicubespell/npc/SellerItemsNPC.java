@@ -35,7 +35,7 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 
 	@Override
 	public void clickNPC(SorciCubeSpell sorci, String nameNPC, Player player) {
-		if (getPlayerGui(player).getPlayerFeature() != null)
+		if (getPlayerGui(player).getPlayerFeatures() != null)
 			this.open(player);
 	}
 	
@@ -60,8 +60,8 @@ public class SellerItemsNPC extends AbstractGui implements ClickNPC {
 			if (!item.isDeco()) {
 				PlayerGui playerG = getPlayerGui(player);
 				if (item.hasMoney(playerG)) {
-					playerG.getPlayerFeature().removeMoney(item.getPrice());
-					playerG.uploadPlayerFeature(manager.getSorci().getHandlerPlayers());
+					playerG.getPlayerFeatures().removeMoney(item.getPrice());
+					playerG.uploadPlayerFeatures(manager.getSorci().getHandlerPlayers());
 					player.getInventory().addItem(item.getItem());
 					player.sendMessage(getMessage("message_seller_items_buy")
 							.replace("{name}", item.getName())
