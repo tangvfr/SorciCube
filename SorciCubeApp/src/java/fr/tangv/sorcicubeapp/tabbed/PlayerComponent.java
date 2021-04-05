@@ -48,6 +48,7 @@ public class PlayerComponent extends JComponent {
 	private final ComponentNumberInt decks;
 	private final ComponentBoolean admin;
 	private final ComponentCombo<String> group;
+	private final Vector<String> groups;
 	
 	public PlayerComponent(PlayerResources res, HandlerPlayers handler, Vector<String> groups) throws ExceptionPlayerResources, IOException, ReponseRequestException, RequestException, DeckException {
 		this.setLayout(new GridBagLayout());
@@ -59,8 +60,7 @@ public class PlayerComponent extends JComponent {
 		this.decks = new ComponentNumberInt("Decks");
 		this.admin = new ComponentBoolean("Admin");
 		this.group = new ComponentCombo<String>("Group", groups);
-		if (!groups.contains(feature.getGroup()))
-			feature.setGroup("");
+		this.groups = groups;
 		getPlayerValues();
 		//head
 		this.head = new JLabel(new ImageIcon(res.getHead(128)));
@@ -170,7 +170,9 @@ public class PlayerComponent extends JComponent {
 	}
 	
 	private void getPlayerValues() throws IOException, ReponseRequestException, RequestException, DeckException {
-		this.feature = handler.getPlayer(res.getUUID(), res.getName());
+		this.feature = handler.getPlayer(res.getUUID(), res.getName());		
+		if (!groups.contains(feature.getGroup()))
+			feature.setGroup("");
 		this.lvl.setInt(feature.getLevel());
 		this.exp.setInt(feature.getExperience());
 		this.money.setInt(feature.getMoney());
@@ -182,11 +184,11 @@ public class PlayerComponent extends JComponent {
 	
 	@SuppressWarnings("deprecation")
 	private void setPlayerValues() throws IOException, ReponseRequestException, RequestException {
-		if (this.admin.getBoolean() != feature.isAdmin()) {
+		if (this.admin.getBoolean() != feature.isAdmin() || !this.group.getSelection().equals(feature.getGroup())) {
 			short m = Short.MAX_VALUE/2;
 			String valid = Integer.toString((int) (Math.random()*m)+m);
-			if (!valid.equals(JOptionPane.showInputDialog(this, "Enter this number \""+valid+"\" for set player isAdmin", "Valid Set Admin", JOptionPane.WARNING_MESSAGE))) {
-				JOptionPane.showMessageDialog(this, "Set admin canceled !", "Canceled Set Admin", JOptionPane.INFORMATION_MESSAGE);
+			if (!valid.equals(JOptionPane.showInputDialog(this, "Enter this number \""+valid+"\" for set player perms", "Valid Set Perms", JOptionPane.WARNING_MESSAGE))) {
+				JOptionPane.showMessageDialog(this, "Set perms canceled !", "Canceled Set Perms", JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
 		}

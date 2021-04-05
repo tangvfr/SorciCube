@@ -3,6 +3,7 @@ package fr.tangv.sorcicubeapp.groups;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -40,7 +41,7 @@ public class GroupPanel extends JScrollPane {
 		this.display = new ComponentText("Display");
 		this.weight = new ComponentNumberInt("Weight");
 		this.perms = new ComponentAreaText("Permissions");
-		perms.setToolTipText("[addgroupperms, -removeperm, addperm");
+		perms.setToolTipText("[addgroupperms, -removeperm, addperm, *don't work");
 		//button
 		this.apply = new JButton("Save");
 		this.apply.addMouseListener(new ClickListener() {
@@ -67,7 +68,10 @@ public class GroupPanel extends JScrollPane {
 		this.panel.setLayout(new GridBagLayout());
 		JPanel pan = new JPanel();
 		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS)); 
-
+		pan.add(name);
+		pan.add(display);
+		pan.add(weight);
+		pan.add(perms);
 		pan.add(btns);
 		this.panel.add(pan);
 		this.getVerticalScrollBar().setUnitIncrement(10);
@@ -98,14 +102,18 @@ public class GroupPanel extends JScrollPane {
 	
 	private String permsToString(Vector<String> list) {
 		String text = "";
-		for (String s : list)
-			text += s+"\r\n";
+		Iterator<String> ite = list.iterator();
+		while (ite.hasNext()) {
+			text += ite.next();
+			if (ite.hasNext())
+				text += "\r\n";
+		}
 		return text;
 	}
 	
 	private Vector<String> stringToPerms(String perms) {
 		Vector<String> list = new Vector<String>();
-		for (String perm : perms.replace(" ", "").replace("\t", "").split("\r\n"))
+		for (String perm : perms.replace(" ", "").replace("\t", "").replace("\r", "").split("\n"))
 			if (!perm.isEmpty())
 				list.add(perm);
 		return list;
