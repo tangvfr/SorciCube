@@ -40,7 +40,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 					String name = JOptionPane.showInputDialog(logi.getFramePanel(), "Name for group new", "Create Group", JOptionPane.QUESTION_MESSAGE);
 					if (name != null && !name.isEmpty())
 						try {
-							handler.add(new Group(name, "§8[§f"+name+"§8]", 0, new Vector<String>()));
+							handler.add(new Group(name, "§8[§9"+name+"§8]", 0, new Vector<String>()));
 							refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
 							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Group", JOptionPane.ERROR_MESSAGE);
