@@ -118,9 +118,10 @@ public class PlayersPanel extends JPanel {
 			} else {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
-					if (handler.existPlayer(uuid))
+					if (handler.existPlayer(uuid)) {
+						
 						view = new PlayerComponent(res, handler);
-					else {
+					} else {
 						int size = 128;
 						BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
 						Graphics2D bGr = image.createGraphics();

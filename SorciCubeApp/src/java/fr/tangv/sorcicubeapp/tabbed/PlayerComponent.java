@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -42,8 +43,10 @@ public class PlayerComponent extends JComponent {
 	private final ComponentNumberInt exp;
 	private final ComponentNumberInt money;
 	private final ComponentNumberInt decks;
+	private final ComponentBoolean admin;
+	private final ComponentCombo<String> group;
 	
-	public PlayerComponent(PlayerResources res, HandlerPlayers handler) throws ExceptionPlayerResources, IOException, ReponseRequestException, RequestException, DeckException {
+	public PlayerComponent(PlayerResources res, HandlerPlayers handler, Vector<String> groups) throws ExceptionPlayerResources, IOException, ReponseRequestException, RequestException, DeckException {
 		this.setLayout(new GridBagLayout());
 		this.res = res;
 		this.handler = handler;
@@ -51,6 +54,10 @@ public class PlayerComponent extends JComponent {
 		this.exp = new ComponentNumberInt("Experience");
 		this.money = new ComponentNumberInt("Money");
 		this.decks = new ComponentNumberInt("Decks");
+		this.admin = new ComponentBoolean("Admin");
+		this.group = new ComponentCombo<String>("Group", groups);
+		if (!groups.contains(feature.getGroup()))
+			feature.setGroup("");
 		getPlayerValues();
 		//head
 		this.head = new JLabel(new ImageIcon(res.getHead(128)));
@@ -86,6 +93,8 @@ public class PlayerComponent extends JComponent {
 		features.add(exp);
 		features.add(money);
 		features.add(decks);
+		features.add(admin);
+		features.add(group);
 		//buttons
 		JButton apply = new JButton("Save");
 		apply.addMouseListener(new ClickListener() {
@@ -163,15 +172,27 @@ public class PlayerComponent extends JComponent {
 		this.exp.setInt(feature.getExperience());
 		this.money.setInt(feature.getMoney());
 		this.decks.setInt(feature.getUnlockDecks());
+		this.admin.setBoolean(feature.isAdmin());
+		this.group.setSelection(feature.getGroup());
 		this.repaint();
 	}
 	
 	@SuppressWarnings("deprecation")
 	private void setPlayerValues() throws IOException, ReponseRequestException, RequestException {
+		if (this.admin.getBoolean() != feature.isAdmin()) {
+			short m = Short.MAX_VALUE/2;
+			String valid = Integer.toString((int) (Math.random()*m)+m);
+			if (!valid.equals(JOptionPane.showInputDialog(this, "Enter this number \""+valid+"\" for set player isAdmin", "Valid Set Admin", JOptionPane.WARNING_MESSAGE))) {
+				JOptionPane.showMessageDialog(this, "Set admin canceled !", "Canceled Set Admin", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+		}
 		feature.setLevel((byte) this.lvl.getInt());
 		feature.setExperience(this.exp.getInt());
 		feature.setMoney(this.money.getInt());
 		feature.setUnlockDecks(this.decks.getInt());
+		feature.setAdmin(this.admin.getBoolean());
+		feature.setGroup(this.group.getSelection());
 		handler.update(feature);
 		handler.startUpdatingPlayer(feature.getUUID());
 	}
