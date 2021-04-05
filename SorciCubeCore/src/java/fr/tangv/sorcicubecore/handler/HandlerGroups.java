@@ -19,7 +19,6 @@ public class HandlerGroups extends HandlerObjectsAbstract<String, Group> {
 		super.refresh();
 		for (Group group : map.values())
 			group.calcAllPerms(cloneMap());
-		System.out.println("calcAllPerms okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
 	}
 	
 }
