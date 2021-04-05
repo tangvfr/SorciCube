@@ -17,6 +17,7 @@ public class HandlerInit {
 	public HandlerInit(SorciCubeAPI sorci) throws RequestHandlerException, IOException, DeckException {
 		//handler
 		HandlerServerCards cards = new HandlerServerCards();
+		
 		HandlerServerDefaultDeck defaultDeck = new HandlerServerDefaultDeck(cards);
 		HandlerServerFightData fightData = new HandlerServerFightData();
 		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck, sorci);

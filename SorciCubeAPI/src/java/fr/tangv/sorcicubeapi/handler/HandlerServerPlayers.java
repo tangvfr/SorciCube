@@ -92,6 +92,8 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 				if (card != null)
 					cardsUnlocks.add(card.getUUID().toString());
 			}
+			//defaultGroup
+			
 			//create and insert playerfeature
 			PlayerFeature playerFeature = new PlayerFeature(player,
 					pseudo,
@@ -103,7 +105,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					2,
 					cardsUnlocks,
 					new ArrayList<String>(),
-					0, 0, (byte) 1);
+					0, 0, (byte) 1, defaultGroup, false);
 			String playerJson = playerFeature.toDocument().toJson();
 			if (playerJson == null || playerJson.isEmpty())
 				throw new Exception("Echec PlayerFeature to Json !");

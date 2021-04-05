@@ -17,8 +17,8 @@ public enum RequestType {
 	PLAYER_EXITSTING(RequestDataType.TEXT),
 	PLAYER_UPDATING(RequestDataType.NONE),
 	PLAYER_SEND(RequestDataType.TEXT),
-	//CARDS
-	CARDS_LIST(RequestDataType.JSON),
+	//OBJECTS
+	OBJECTS_LIST(RequestDataType.JSON),
 	//DEFAULT DECK
 	DEFAULT_DECK_REPONSE(RequestDataType.JSON),
 	//SPECTATOR
@@ -61,11 +61,11 @@ public enum RequestType {
 	//SPECTATOR
 	SPECTATOR_ADD(RequestDataType.TEXT),
 	SPECTATOR_PEEK(RequestDataType.NONE),
-	//CARDS
-	CARDS_INSERT(RequestDataType.JSON),
-	CARDS_UPDATE(RequestDataType.JSON),
-	CARDS_GET_ALL(RequestDataType.NONE),
-	CARDS_DELETE(RequestDataType.NONE),
+	//OBJECTS
+	OBJECTS_ADD(RequestDataType.JSON),
+	OBJECTS_UPDATE(RequestDataType.JSON),
+	OBJECTS_GET_ALL(RequestDataType.NONE),
+	OBJECTS_REMOVE(RequestDataType.NONE),
 	//DEFAULT DECK
 	DEFAULT_DECK_GET(RequestDataType.NONE),
 	DEFAULT_DECK_UPDATE(RequestDataType.JSON),

@@ -31,10 +31,10 @@ public class HandlerDefaultDeck {
 		Request reponse = sorci.sendRequestReponse(new Request(RequestType.DEFAULT_DECK_GET, Request.randomID(), "GET", null),
 				RequestType.DEFAULT_DECK_REPONSE);
 		Document doc = Document.parse(reponse.data);
-		this.deckDark = DeckCards.toDeckCards(cards.originalCards(), doc.get("deck_dark", Document.class));
-		this.deckLight = DeckCards.toDeckCards(cards.originalCards(), doc.get("deck_light", Document.class));
-		this.deckNature = DeckCards.toDeckCards(cards.originalCards(), doc.get("deck_nature", Document.class));
-		this.deckToxic = DeckCards.toDeckCards(cards.originalCards(), doc.get("deck_toxic", Document.class));
+		this.deckDark = DeckCards.toDeckCards(cards.originalMap(), doc.get("deck_dark", Document.class));
+		this.deckLight = DeckCards.toDeckCards(cards.originalMap(), doc.get("deck_light", Document.class));
+		this.deckNature = DeckCards.toDeckCards(cards.originalMap(), doc.get("deck_nature", Document.class));
+		this.deckToxic = DeckCards.toDeckCards(cards.originalMap(), doc.get("deck_toxic", Document.class));
 	}
 	
 	public void update() throws IOException, ReponseRequestException, RequestException {

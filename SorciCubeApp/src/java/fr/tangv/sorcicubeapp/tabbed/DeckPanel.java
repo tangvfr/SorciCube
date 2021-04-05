@@ -41,7 +41,7 @@ public class DeckPanel extends JList<Card> {
 								}
 							deck.setCard(
 									DeckPanel.this.getSelectedIndex(),
-									cardsPanel.getCards().getCard(uuid)
+									cardsPanel.getCards().get(uuid)
 								);
 							decks.update();
 							DeckPanel.this.repaint();

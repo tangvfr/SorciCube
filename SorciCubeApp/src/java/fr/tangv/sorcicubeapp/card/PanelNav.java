@@ -264,7 +264,7 @@ public class PanelNav extends JPanel {
 								false
 							);
 						try {
-							cardsPanel.getCards().insert(card);
+							cardsPanel.getCards().add(card);
 							cardsPanel.setCard(card);
 							cardsPanel.refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
@@ -298,7 +298,7 @@ public class PanelNav extends JPanel {
 								false
 							);
 						try {
-							cardsPanel.getCards().insert(card);
+							cardsPanel.getCards().add(card);
 							cardsPanel.setCard(card);
 							cardsPanel.refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
@@ -317,7 +317,7 @@ public class PanelNav extends JPanel {
 						if (card != null) {
 							if (0 == JOptionPane.showConfirmDialog(PanelNav.this, "Are you sure remove card nommed \""+card.getName()+"\" ?", "Remove card", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
 								try {
-									cardsPanel.getCards().delete(card);
+									cardsPanel.getCards().remove(card);
 									cardsPanel.setCard(null);
 									cardsPanel.refresh();
 								} catch (IOException | ReponseRequestException | RequestException e1) {

@@ -48,10 +48,10 @@ public class HandlerServerDefaultDeck implements RequestHandlerInterface {
 				in.close();
 				Document doc = Document.parse(new String(buf, Client.CHARSET));
 				buf = new byte[0];
-				this.deckDark = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_dark", Document.class));
-				this.deckLight = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_light", Document.class));
-				this.deckNature = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_nature", Document.class));
-				this.deckToxic = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_toxic", Document.class));
+				this.deckDark = DeckCards.toDeckCards(cards.map, doc.get("deck_dark", Document.class));
+				this.deckLight = DeckCards.toDeckCards(cards.map, doc.get("deck_light", Document.class));
+				this.deckNature = DeckCards.toDeckCards(cards.map, doc.get("deck_nature", Document.class));
+				this.deckToxic = DeckCards.toDeckCards(cards.map, doc.get("deck_toxic", Document.class));
 			} else
 				throw new IOException("Error not file, \"default_deck.json\" is directory !");
 		}
@@ -105,10 +105,10 @@ public class HandlerServerDefaultDeck implements RequestHandlerInterface {
 	public void update(Client client, Request request) throws IOException, RequestException {
 		try {
 			Document doc = Document.parse(request.data);
-			this.deckDark = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_dark", Document.class));
-			this.deckLight = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_light", Document.class));
-			this.deckNature = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_nature", Document.class));
-			this.deckToxic = DeckCards.toDeckCards(cards.getCards(), doc.get("deck_toxic", Document.class));
+			this.deckDark = DeckCards.toDeckCards(cards.map, doc.get("deck_dark", Document.class));
+			this.deckLight = DeckCards.toDeckCards(cards.map, doc.get("deck_light", Document.class));
+			this.deckNature = DeckCards.toDeckCards(cards.map, doc.get("deck_nature", Document.class));
+			this.deckToxic = DeckCards.toDeckCards(cards.map, doc.get("deck_toxic", Document.class));
 			save();
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 		} catch (Exception e) {

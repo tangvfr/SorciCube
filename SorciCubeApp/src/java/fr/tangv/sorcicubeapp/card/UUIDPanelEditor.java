@@ -34,7 +34,7 @@ public class UUIDPanelEditor extends JPanel {
 		this.cardsPanel = cardsPanel;
 		this.fieldUUID = new JTextField(uuid.toString());
 		this.fieldUUID.setEditable(false);
-		this.card = cardsPanel.getCards().getCard(uuid);
+		this.card = cardsPanel.getCards().get(uuid);
 		this.textLabel = (card != null) ? PanelNav.renderHTMLCard(card, "Card: ") : "Card is not existing";
 		this.btnShow = new JButton("Show Card");
 		btnShow.setFocusable(false);
@@ -67,7 +67,7 @@ public class UUIDPanelEditor extends JPanel {
 		} catch (Throwable e) {
 			throw new Exception("\""+field.getText()+"\" is not UUID !");
 		}
-		Card card = cardsPanel.getCards().getCard(uuid);
+		Card card = cardsPanel.getCards().get(uuid);
 		if (card == null)
 			throw new Exception("Don't existing card for the UUID \""+uuid.toString()+"\" !");
 		return uuid;

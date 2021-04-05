@@ -24,6 +24,8 @@ public class PlayerFeature {
 	private volatile int money;
 	private volatile int experience;
 	private volatile byte level;
+	private volatile String group;
+	private volatile boolean admin;
 	
 	public PlayerFeature(UUID uuid,
 			String pseudo,
@@ -37,7 +39,9 @@ public class PlayerFeature {
 			List<String> rewardNPC,
 			int money,
 			int experience,
-			byte level
+			byte level,
+			String group,
+			boolean admin
 		) {
 		this.uuid = uuid;
 		this.pseudo = pseudo;
@@ -52,8 +56,26 @@ public class PlayerFeature {
 		this.money = money;
 		this.experience = experience;
 		this.level = level;
+		this.group = group;
+		this.admin = admin;
 	}
 	
+	public String getGroup() {
+		return group;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
 	public String getPseudo() {
 		return pseudo;
 	}
@@ -193,6 +215,8 @@ public class PlayerFeature {
 				.append("money", money)
 				.append("experience", experience)
 				.append("level", level)
+				.append("group", group)
+				.append("admin", admin)
 			;
 		return doc;
 	}
@@ -209,13 +233,11 @@ public class PlayerFeature {
 		int money = doc.getInteger("money", 0);
 		int experience = doc.getInteger("experience", 0);
 		byte level = (byte) doc.getInteger("level", 1);
+		String group = doc.getString("group");
+		boolean admin = doc.getBoolean("admin", false);
 		return new PlayerFeature(uuid, pseudo, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks,
 				((rewardNPC == null) ? new ArrayList<String>() : rewardNPC),
-				money, experience, level);
-	}
-	
-	public Document toUUIDDocument() {
-		return Card.toUUIDDocument(uuid);
+				money, experience, level, group, admin);
 	}
 	
 }

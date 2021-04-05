@@ -51,7 +51,7 @@ public class HandlerPlayers {
 				new Request(RequestType.PLAYER_GET, Request.randomID(), uuid.toString(), null),
 				RequestType.PLAYER_REPONSE
 			);
-		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalCards(), Document.parse(reponse.data));
+		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalMap(), Document.parse(reponse.data));
 	};
 	
 	public void update(PlayerFeature playerFeature) throws IOException, ReponseRequestException, RequestException {
@@ -66,7 +66,7 @@ public class HandlerPlayers {
 				new Request(RequestType.PLAYER_INIT, Request.randomID(), uuid.toString(), faction.name()+" "+pseudo),
 				RequestType.PLAYER_REPONSE
 			);
-		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalCards(), Document.parse(reponse.data));
+		return PlayerFeature.toPlayerFeature(uuid, pseudo, managerCards.originalMap(), Document.parse(reponse.data));
 	};
 	
 }

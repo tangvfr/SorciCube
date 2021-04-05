@@ -82,7 +82,7 @@ public class CardsPanel extends JPanel {
 		this.cards.refresh();
 		this.nav.refresh();
 		if (card != null) {
-			card = this.cards.getCard(card.getUUID());
+			card = this.cards.get(card.getUUID());
 			setCard(card);
 			if (card != null)
 				nav.setCardSelectedInList(card);

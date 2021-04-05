@@ -35,7 +35,7 @@ public class CardFeature {
 	
 	public boolean isNUUID(HandlerCards handler) {
 		if (value.isUUID())
-			return handler.getCard(value.asUUID()) == null;
+			return handler.get(value.asUUID()) == null;
 		return false;
 	}
 	
