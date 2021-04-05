@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubeapp.card.CardsPanel;
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
+import fr.tangv.sorcicubeapp.groups.GroupsPanel;
 import fr.tangv.sorcicubeapp.tools.ExceptionPlayerResources;
 import fr.tangv.sorcicubeapp.tools.PlayerResources;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
@@ -35,6 +36,7 @@ public class PlayersPanel extends JPanel {
 
 	private static final long serialVersionUID = 933468304672805743L;
 	private final FrameLogi logi;
+	private final GroupsPanel groups;
 	private final HandlerPlayers handler;
 	private final JButton find;
 	private final JLabel clear;
@@ -43,8 +45,9 @@ public class PlayersPanel extends JPanel {
 	private final JLabel message;
 	private final File headImage;
 	
-	public PlayersPanel(CardsPanel cardsPanel) throws IOException, ReponseRequestException, RequestException {
+	public PlayersPanel(CardsPanel cardsPanel, GroupsPanel groups) throws IOException, ReponseRequestException, RequestException {
 		this.logi = cardsPanel.getFrameLogi();
+		this.groups = groups;
 		this.handler = new HandlerPlayers(cardsPanel.getClient(), cardsPanel.getCards());
 		//refresh
 		this.find = new JButton("Find");
@@ -118,10 +121,9 @@ public class PlayersPanel extends JPanel {
 			} else {
 				try {
 					PlayerResources res = new PlayerResources(uuid);
-					if (handler.existPlayer(uuid)) {
-						
-						view = new PlayerComponent(res, handler);
-					} else {
+					if (handler.existPlayer(uuid))
+						view = new PlayerComponent(res, handler, groups.cloneListWithEmpty());
+					else {
 						int size = 128;
 						BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
 						Graphics2D bGr = image.createGraphics();

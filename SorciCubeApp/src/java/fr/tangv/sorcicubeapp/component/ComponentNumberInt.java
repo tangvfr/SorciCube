@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubeapp.tabbed;
+package fr.tangv.sorcicubeapp.component;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;

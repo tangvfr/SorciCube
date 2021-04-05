@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import fr.tangv.sorcicubeapp.component.ComponentArrayInt;
+import fr.tangv.sorcicubeapp.component.ComponentNumberInt;
+import fr.tangv.sorcicubeapp.component.ComponentText;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubeapp.utils.ColorMCToHTML;
 import fr.tangv.sorcicubecore.card.CardFaction;

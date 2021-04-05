@@ -21,6 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import fr.tangv.sorcicubeapp.component.ComponentBoolean;
+import fr.tangv.sorcicubeapp.component.ComponentCombo;
+import fr.tangv.sorcicubeapp.component.ComponentNumberInt;
 import fr.tangv.sorcicubeapp.tools.ExceptionPlayerResources;
 import fr.tangv.sorcicubeapp.tools.PlayerResources;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
@@ -108,7 +111,7 @@ public class PlayerComponent extends JComponent {
 				}
 			}
 		});
-		JButton cancel = new JButton("Update");
+		JButton cancel = new JButton("Cancel");
 		cancel.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -116,7 +119,7 @@ public class PlayerComponent extends JComponent {
 					getPlayerValues();
 				} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Update", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Cancel", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

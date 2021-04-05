@@ -13,11 +13,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
-import fr.tangv.sorcicubeapp.tabbed.PacketCardsPanel;
 import fr.tangv.sorcicubeapp.tabbed.SearchPanel;
 import fr.tangv.sorcicubeapp.utils.ColorMCToHTML;
 import fr.tangv.sorcicubecore.handler.HandlerGroups;
-import fr.tangv.sorcicubecore.packet.PacketCards;
 import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
@@ -26,54 +24,78 @@ import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 public class GroupsPanel extends SearchPanel<Group> {
 
 	private static final long serialVersionUID = 2516520893332579991L;
-	private final HandlerGroups groups;
+	private final HandlerGroups handler;
+	private final GroupPanel groupPanel;
 	
 	public GroupsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
 		super(client, logi);
-		this.groups = new HandlerGroups(client);
-		this.packetCard = new PacketCardsPanel(this);
+		this.handler = new HandlerGroups(client);
+		this.groupPanel = new GroupPanel(this);
 		//popmenu
-		JMenuItem create = new JMenuItem("Create Pakcet");
+		JMenuItem create = new JMenuItem("Create Group");
 		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getID() == ActionEvent.ACTION_FIRST) {
-					String name = JOptionPane.showInputDialog(logi.getFramePanel(), "Name for packet new", "Create Packet", JOptionPane.QUESTION_MESSAGE);
+					String name = JOptionPane.showInputDialog(logi.getFramePanel(), "Name for group new", "Create Group", JOptionPane.QUESTION_MESSAGE);
 					if (name != null && !name.isEmpty())
 						try {
-							handler.newPacket(name);
+							handler.add(new Group(name, "§8[§f"+name+"§8]", 0, new Vector<String>()));
 							refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
-							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Packet", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Group", JOptionPane.ERROR_MESSAGE);
 						}
 				}
 			}
 		});
-		JMenuItem delete = new JMenuItem("Remove Pakcet");
+		JMenuItem rename = new JMenuItem("Rename Group");
+		rename.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getID() == ActionEvent.ACTION_FIRST) {
+					Group group = list.getSelectedValue();
+					if (group != null) {
+						String name = JOptionPane.showInputDialog(logi.getFramePanel(), "Name new for group", "Rename Group", JOptionPane.QUESTION_MESSAGE);
+						if (name != null && !name.isEmpty())
+							try {
+								handler.remove(group);
+								handler.add(new Group(name, group.getDisplay(), group.getWeight(), group.getPerms()));
+								refresh();
+							} catch (IOException | ReponseRequestException | RequestException e1) {
+								JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Rename Group", JOptionPane.ERROR_MESSAGE);
+							}
+					} else {
+						JOptionPane.showMessageDialog(logi.getFramePanel(), "No selected group ?", "Rename Packet", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		JMenuItem delete = new JMenuItem("Remove Group");
 		delete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getID() == ActionEvent.ACTION_FIRST) {
-					PacketCards packet = list.getSelectedValue();
-					if (packet != null) {
-						if (0 == JOptionPane.showConfirmDialog(logi.getFramePanel(), "Are you sure remove pakcet nommed \""+packet.getName()+"\" ?", "Remove Packet", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+					Group group = list.getSelectedValue();
+					if (group != null) {
+						if (0 == JOptionPane.showConfirmDialog(logi.getFramePanel(), "Are you sure remove group nommed \""+group.getName()+"\" ?", "Remove Group", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
 							try {
-								handler.removePacket(packet.getName());
+								handler.remove(group);
 								refresh();
 							} catch (IOException | ReponseRequestException | RequestException e1) {
 								JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Remove Packet", JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					} else {
-						JOptionPane.showMessageDialog(logi.getFramePanel(), "No selected packet ?", "Remove Packet", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(logi.getFramePanel(), "No selected group ?", "Remove Packet", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
 		});
 		//menu add
 		menu.add(create);
+		menu.add(rename);
 		menu.add(delete);
-		this.addMainComponent(packetCard);
+		this.addMainComponent(groupPanel);
 		refresh();
 	}
 
@@ -89,36 +111,52 @@ public class GroupsPanel extends SearchPanel<Group> {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		packetCard.showPacket(list.getSelectedValue());
-		packetCard.repaint();
+		groupPanel.showGroup(list.getSelectedValue());
+		groupPanel.repaint();
 	}
 
 	@Override
 	public void refresh() {
 		try {
-			String nameSelect = this.packetCard.getPacketName();
+			String nameSelect = this.groupPanel.getGroupName();
 			handler.refresh();
 			int max = 0;
-			Vector<PacketCards> list = new Vector<PacketCards>();
-			PacketCards pack = null;
+			Vector<Group> list = new Vector<Group>();
+			Group g = null;
 			String searchName = search.getText().toLowerCase();
-			for (String name : handler.getPackets()) {
-				PacketCards packet = handler.getPacketCards(name);
+			for (Group group : handler.cloneValues()) {
+				String name = group.getName();
 				if (name.equals(nameSelect))
-					pack = packet;
+					g = group;
 				if (searchName.isEmpty() || name.toLowerCase().contains(searchName))
-					list.add(packet);
+					list.add(group);
 				max++;
 			}
 			this.list.setListData(list);
-			if (pack != null)
-				this.list.setSelectedValue(pack, true);
-			packetCard.showPacket(pack);
-			refresh.setText("Refresh | "+max+" packets "+list.size()+" find");
+			if (g != null)
+				this.list.setSelectedValue(g, true);
+			groupPanel.showGroup(g);
+			refresh.setText("Refresh | "+max+" groups "+list.size()+" find");
 			this.repaint();
 		} catch (IOException | ReponseRequestException | RequestException e) {
 			warningBug(e, "refresh");
 		}
 	}
+	
+	public void update(Group group) {
+		try {
+			handler.update(group);
+		} catch (IOException | ReponseRequestException | RequestException e) {
+			warningBug(e, "update");
+		}
+	}
 
+	public Vector<String> cloneListWithEmpty() {
+		Vector<String> list = new Vector<String>();
+		list.add("");
+		for (Group group : handler.cloneValues())
+			list.add(group.getName());
+		return list;
+	}
+	
 }
