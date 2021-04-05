@@ -118,7 +118,7 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 	public Card[] packetTakeCard(PacketCards packet) throws Exception {
 		Random random = new Random();
 		Card[] cards = new Card[packet.getSize()];
-		Vector<Card> collectionCards = sorci.getHandlerCards().cloneCardsValue();
+		Vector<Card> collectionCards = sorci.getHandlerCards().cloneValues();
 		for (int i = 0; i < cards.length; i++) {
 			CardFaction faction = CardFaction.values()[chooseIndex(packet.getFaction(), random)];
 			CardRarity rarity = CardRarity.values()[chooseIndex(packet.getRarity(), random)];

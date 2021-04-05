@@ -30,7 +30,7 @@ public class GuiAdminViewCards extends AbstractGuiCards {
 	@Override
 	protected List<Card> listCards(PlayerGui player) {
 		ArrayList<Card> cards = new ArrayList<Card>();
-		for (Card card : manager.getSorci().getHandlerCards().cloneCardsValue()) {
+		for (Card card : manager.getSorci().getHandlerCards().cloneValues()) {
 			if (!player.isViewHideCards() && card.getFeatures().hasFeature(CardFeatureType.HIDE_CARD))
 				continue;
 			cards.add(card);

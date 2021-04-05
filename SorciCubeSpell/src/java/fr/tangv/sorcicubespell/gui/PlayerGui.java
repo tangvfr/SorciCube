@@ -19,7 +19,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class PlayerGui {
 
-	private Player player;
+	private final Player player;
 	private Card card;
 	private Inventory invOfGui;
 	private AbstractGui gui;
@@ -43,7 +43,7 @@ public class PlayerGui {
 		this.invOfGui = null;
 		this.setDeckEdit(1);
 		this.setDeckCardEdit(0);
-		this.setPlayerFeature(null);
+		this.playerFeature = null;
 		this.setPreviousGui(null);
 		this.setViewHideCards(false);
 	}
@@ -129,9 +129,13 @@ public class PlayerGui {
 		return playerFeature;
 	}
 
-	/*public void setPlayerFeatures(PlayerFeatures playerFeature, String test) {
+	
+	
+	public void setPlayerFeatures(PlayerFeatures playerFeature) {
+		player.closeInventory();
 		this.playerFeature = playerFeature;
-	}*/
+		//update permission here
+	}
 	
 	public void uploadPlayerFeatures(HandlerPlayers handler) {
 		if(playerFeature != null)

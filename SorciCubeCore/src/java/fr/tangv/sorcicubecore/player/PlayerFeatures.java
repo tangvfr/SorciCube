@@ -233,7 +233,7 @@ public class PlayerFeatures {
 		int money = doc.getInteger("money", 0);
 		int experience = doc.getInteger("experience", 0);
 		byte level = (byte) doc.getInteger("level", 1);
-		String group = doc.getString("group");
+		String group = doc.get("group", "");
 		boolean admin = doc.getBoolean("admin", false);
 		return new PlayerFeatures(uuid, pseudo, deck1, deck2, deck3, deck4, deck5, unlockDecks, cardsUnlocks,
 				((rewardNPC == null) ? new ArrayList<String>() : rewardNPC),

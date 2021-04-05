@@ -112,7 +112,7 @@ public class ManagerLobby implements Listener {
 							player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
 							try {
 								PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
-								playerG.setPlayerFeature(
+								playerG.setPlayerFeatures(
 										sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName())
 								);
 								sorci.getManagerGui().updateDisplayPlayer(playerG);

@@ -11,6 +11,7 @@ import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.player.DeckCards;
+import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.ramfiles.RamFilesManager;
 import fr.tangv.sorcicubecore.requests.Request;
@@ -95,7 +96,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					cardsUnlocks.add(card.getUUID().toString());
 			}
 			//defaultGroup
-			
+			Group group = groups.getLowWeightGroup();
 			//create and insert playerfeature
 			PlayerFeatures playerFeature = new PlayerFeatures(player,
 					pseudo,
@@ -107,7 +108,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					2,
 					cardsUnlocks,
 					new ArrayList<String>(),
-					0, 0, (byte) 1, groups.getLowWeightGroup().getName(), false);
+					0, 0, (byte) 1, (group == null ? "" : group.getName()), false);
 			String playerJson = playerFeature.toDocument().toJson();
 			if (playerJson == null || playerJson.isEmpty())
 				throw new Exception("Echec PlayerFeature to Json !");

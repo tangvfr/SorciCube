@@ -33,7 +33,7 @@ public class GuiViewCards extends AbstractGuiCards {
 		try {
 			ArrayList<Card> cards = new ArrayList<Card>();
 			for (String uuidS : player.getPlayerFeatures().getCardsUnlocks()) {
-				Card card = manager.getSorci().getHandlerCards().getCard(UUID.fromString(uuidS));
+				Card card = manager.getSorci().getHandlerCards().get(UUID.fromString(uuidS));
 				if (card != null)
 					cards.add(card);
 			}

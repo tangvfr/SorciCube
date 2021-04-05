@@ -209,7 +209,7 @@ public class PanelNav extends JPanel {
 	}
 	
 	public void refresh() {
-		Vector<Card> listCard = handler.cloneCardsValue();
+		Vector<Card> listCard = handler.cloneValues();
 		String name = this.search.getText().toLowerCase();
 		boolean uuidSearch = false;
 		if (!name.isEmpty()) {

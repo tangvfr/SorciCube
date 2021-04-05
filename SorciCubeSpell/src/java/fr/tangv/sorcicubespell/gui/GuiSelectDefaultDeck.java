@@ -84,7 +84,7 @@ public class GuiSelectDefaultDeck extends AbstractGui {
 			e1.printStackTrace();
 		}
 		if (pf != null) {
-			getPlayerGui(player).setPlayerFeature(pf);
+			getPlayerGui(player).setPlayerFeatures(pf);
 			player.sendMessage(sorci.getMessage().getString("message_select_default_deck")
 					.replace("{faction}", sorci.getEnumTool().factionToString(faction)));
 		} else

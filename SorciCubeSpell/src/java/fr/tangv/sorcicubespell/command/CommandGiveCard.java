@@ -34,7 +34,7 @@ public class CommandGiveCard implements CommandExecutor {
 					.replace("{player}", args[0])
 				);
 			} else {
-				Card card = sorci.getHandlerCards().getCard(UUID.fromString(args[1]));
+				Card card = sorci.getHandlerCards().get(UUID.fromString(args[1]));
 				if (card == null) {
 					sender.sendMessage(
 						sorci.getMessage().getString("message_invalid_card")
