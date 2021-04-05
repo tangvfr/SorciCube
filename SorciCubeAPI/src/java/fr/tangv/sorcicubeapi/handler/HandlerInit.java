@@ -17,16 +17,17 @@ public class HandlerInit {
 	public HandlerInit(SorciCubeAPI sorci) throws RequestHandlerException, IOException, DeckException {
 		//handler
 		HandlerServerCards cards = new HandlerServerCards();
-		
+		HandlerServerGroups groups = new HandlerServerGroups();
 		HandlerServerDefaultDeck defaultDeck = new HandlerServerDefaultDeck(cards);
 		HandlerServerFightData fightData = new HandlerServerFightData();
-		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck, sorci);
+		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck, groups, sorci);
 		HandlerServerConfigYAML yaml = new HandlerServerConfigYAML();
 		HandlerServerPacketCards packets = new HandlerServerPacketCards();
 		HandlerServerServer server = new HandlerServerServer(sorci);
 		//registred
 		ClientsManager cm = sorci.getClientsManager();
 		cm.registered(cards);
+		cm.registered(groups);
 		cm.registered(defaultDeck);
 		cm.registered(fightData);
 		cm.registered(players);

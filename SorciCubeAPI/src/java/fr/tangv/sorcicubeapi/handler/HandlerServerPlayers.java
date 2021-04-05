@@ -23,11 +23,13 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
 	private final HandlerServerDefaultDeck defaultDeck;
+	private final HandlerServerGroups groups;
 	private final SorciCubeAPI sorci;
 	
-	public HandlerServerPlayers(HandlerServerDefaultDeck defaultDeck, SorciCubeAPI sorci) throws IOException {
+	public HandlerServerPlayers(HandlerServerDefaultDeck defaultDeck, HandlerServerGroups groups, SorciCubeAPI sorci) throws IOException {
 		this.fm = new RamFilesManager("./players");
 		this.defaultDeck = defaultDeck;
+		this.groups = groups;
 		this.sorci = sorci;
 	}
 	
@@ -105,7 +107,7 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					2,
 					cardsUnlocks,
 					new ArrayList<String>(),
-					0, 0, (byte) 1, defaultGroup, false);
+					0, 0, (byte) 1, groups.getLowWeightGroup().getName(), false);
 			String playerJson = playerFeature.toDocument().toJson();
 			if (playerJson == null || playerJson.isEmpty())
 				throw new Exception("Echec PlayerFeature to Json !");

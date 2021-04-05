@@ -16,7 +16,7 @@ import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 public abstract class HandlerObjectsAbstract<K, V> {
 
 	private final SorciClient sorci;
-	private final ConcurrentHashMap<K, V> map;
+	protected final ConcurrentHashMap<K, V> map;
 	private final HandlerObjectsFormater<K, V> formater;
 	
 	public HandlerObjectsAbstract(SorciClient sorci, HandlerObjectsFormater<K, V> formater) throws IOException, ReponseRequestException, RequestException {
@@ -44,7 +44,7 @@ public abstract class HandlerObjectsAbstract<K, V> {
 		return new ConcurrentHashMap<K, V>(map);
 	}
 	
-	public Vector<V> cloneCardsValue() {
+	public Vector<V> cloneValues() {
 		return new Vector<V>(map.values());
 	}
 	

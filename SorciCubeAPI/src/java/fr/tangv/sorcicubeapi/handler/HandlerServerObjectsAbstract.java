@@ -26,6 +26,7 @@ public abstract class HandlerServerObjectsAbstract<K, V> implements RequestHandl
 			this.map = new ConcurrentHashMap<K, V>();
 			this.formater = formater;
 			load();
+			update();
 		}
 		
 		public synchronized void load() throws IOException {
@@ -74,13 +75,16 @@ public abstract class HandlerServerObjectsAbstract<K, V> implements RequestHandl
 							value = formater.toValue(Document.parse(request.data));
 							map.put(formater.getKey(value), value);
 							save();
+							update();
 							client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 							break;
 					
 						case OBJECTS_UPDATE:
 							value = formater.toValue(Document.parse(request.data));
-							map.replace(formater.getKey(value), value);
+							//map.replace(formater.getKey(value), value);
+							map.put(formater.getKey(value), value);
 							save();
+							update();
 							client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 							break;
 							
@@ -88,6 +92,7 @@ public abstract class HandlerServerObjectsAbstract<K, V> implements RequestHandl
 							value = formater.toValue(Document.parse(request.data));
 							map.remove(formater.getKey(value));
 							save();
+							update();
 							client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 							break;
 							
@@ -106,5 +111,7 @@ public abstract class HandlerServerObjectsAbstract<K, V> implements RequestHandl
 				}
 			}
 		}
+		
+		public void update() {};
 	
 }
