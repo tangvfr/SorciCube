@@ -79,6 +79,7 @@ public class PacketCardsPanel extends JScrollPane {
 		pan.add(size);
 		pan.add(btns);
 		this.packetPanel.add(pan);
+		this.getVerticalScrollBar().setUnitIncrement(10);
 		showPacket(null);
 	}
 	

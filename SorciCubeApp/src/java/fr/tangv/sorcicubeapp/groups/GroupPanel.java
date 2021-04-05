@@ -70,6 +70,7 @@ public class GroupPanel extends JScrollPane {
 
 		pan.add(btns);
 		this.panel.add(pan);
+		this.getVerticalScrollBar().setUnitIncrement(10);
 		showGroup(null);
 	}
 	
