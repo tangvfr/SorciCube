@@ -1,25 +1,15 @@
 package fr.tangv.sorcicubeapp.component;
 
-import java.awt.GridLayout;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
 
-public class ComponentText extends JComponent {
+public class ComponentText extends ComponentCustom {
 
 	private static final long serialVersionUID = 5937702865253871122L;
 	private final JTextField text;
 		
 	public ComponentText(String name) {
-		//panel
-		this.setBorder(new TitledBorder(name));
-		this.setLayout(new GridLayout(1, 2, 5, 5));
+		super(name);
 		this.text = new JTextField("");
-		JLabel label = new JLabel(name+":");
-		label.setHorizontalAlignment(JLabel.RIGHT);	
-		this.add(label);
 		this.add(text);
 	}
 	

@@ -102,8 +102,8 @@ public class GroupsPanel extends SearchPanel<Group> {
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Group> list, Group group, int index, boolean isSelected, boolean cellHasFocus) {
 		return new JLabel(
-				"<html><body><span>"
-				+(isSelected ? ">" : "")+group.getName()+" | </span>"
+				"<html><body><span>"+(isSelected ? ">" : "")
+				+group.getWeight()+" | "+group.getName()+" | </span>"
 				+ColorMCToHTML.replaceColor(group.getDisplay())
 				+"</html></body>"
 			);

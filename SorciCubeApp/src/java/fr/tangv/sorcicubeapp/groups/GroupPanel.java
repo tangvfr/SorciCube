@@ -3,6 +3,7 @@ package fr.tangv.sorcicubeapp.groups;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -10,6 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import fr.tangv.sorcicubeapp.component.ComponentAreaText;
+import fr.tangv.sorcicubeapp.component.ComponentLabel;
+import fr.tangv.sorcicubeapp.component.ComponentNumberInt;
+import fr.tangv.sorcicubeapp.component.ComponentText;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubeapp.utils.ColorMCToHTML;
 import fr.tangv.sorcicubecore.player.Group;
@@ -18,6 +23,10 @@ public class GroupPanel extends JScrollPane {
 
 	private static final long serialVersionUID = 2848497329580995498L;
 	private volatile Group group;
+	private final ComponentLabel name;
+	private final ComponentText display;
+	private final ComponentNumberInt weight;
+	private final ComponentAreaText perms;
 	private final JPanel empty;
 	private final JPanel panel;
 	private final JButton apply;
@@ -27,7 +36,11 @@ public class GroupPanel extends JScrollPane {
 		this.empty = new JPanel();
 		this.panel = new JPanel();
 		//pakcet
-
+		this.name = new ComponentLabel("Name");
+		this.display = new ComponentText("Display");
+		this.weight = new ComponentNumberInt("Weight");
+		this.perms = new ComponentAreaText("Permissions");
+		perms.setToolTipText("[addgroupperms, -removeperm, addperm");
 		//button
 		this.apply = new JButton("Save");
 		this.apply.addMouseListener(new ClickListener() {
@@ -73,7 +86,7 @@ public class GroupPanel extends JScrollPane {
 		} else {
 			initValue();
 			panel.setBorder(new TitledBorder(
-					"<html><body><span>"
+					"<html><body><span>"+group.getWeight()+" | "
 					+group.getName()+" | </span>"
 					+ColorMCToHTML.replaceColor(group.getDisplay())
 					+"</html></body>"
@@ -82,13 +95,30 @@ public class GroupPanel extends JScrollPane {
 		}
 	}
 	
+	private String permsToString(Vector<String> list) {
+		String text = "";
+		for (String s : list)
+			text += s+"\r\n";
+		return text;
+	}
+	
+	private Vector<String> stringToPerms(String perms) {
+		Vector<String> list = new Vector<String>();
+		for (String perm : perms.replace(" ", "").replace("\t", "").split("\r\n"))
+			if (!perm.isEmpty())
+				list.add(perm);
+		return list;
+	}
+	
 	public void initValue() {
-		
-		
+		this.name.setLabel(group.getName());
+		this.display.setText(group.getDisplay());
+		this.weight.setInt(group.getWeight());
+		this.perms.setArea(permsToString(group.getPerms()));
 	}
 	
 	public Group createGroup() {
-		return new Group(group.getName(), "", 0, null);
+		return new Group(name.getLabel(), display.getText(), weight.getInt(), stringToPerms(perms.getArea()));
 	}
 	
 }
