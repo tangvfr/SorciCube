@@ -15,14 +15,20 @@ public class PreFight {
 	private final UUID playerUUID2;
 	private final int player1DeckUse;
 	private final int player2DeckUse;
+	private final byte levelPlayer1;
+	private final byte levelPlayer2;
+	private final String groupPlayer1;
+	private final String groupPlayer2;
 	private Cooldown cooldown;
 	private volatile Player player2;
 	
 	public static PreFight createPreFight(Player player, FightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))
-			return new PreFight(data, player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(), data.getFightType());
+			return new PreFight(data, player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(),
+					data.getLevelPlayer1(), data.getLevelPlayer2(), data.getGroupPlayer1(), data.getGroupPlayer2(), data.getFightType());
 		else
-			return new PreFight(data, player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(), data.getFightType());
+			return new PreFight(data, player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(),
+					data.getLevelPlayer2(), data.getLevelPlayer1(), data.getGroupPlayer2(), data.getGroupPlayer1(), data.getFightType());
 	}
 	
 	private PreFight(FightData fightData,
@@ -30,12 +36,20 @@ public class PreFight {
 					UUID playerUUID2,
 					int player1DeckUse,
 					int player2DeckUse,
+					byte levelPlayer1,
+					byte levelPlayer2,
+					String groupPlayer1,
+					String groupPlayer2,
 					FightType fightType) {
 		this.fightData = fightData;
 		this.player1 = player1;
 		this.playerUUID2 = playerUUID2;
 		this.player1DeckUse = player1DeckUse;
 		this.player2DeckUse = player2DeckUse;
+		this.levelPlayer1 = levelPlayer1;
+		this.levelPlayer2 = levelPlayer2;
+		this.groupPlayer1 = groupPlayer1;
+		this.groupPlayer2 = groupPlayer2;
 		this.player2 = null;
 		this.cooldown = new Cooldown(1_000);
 		cooldown.start();
@@ -59,6 +73,22 @@ public class PreFight {
 	
 	public int getPlayer2DeckUse() {
 		return player2DeckUse;
+	}
+	
+	public byte getLevelPlayer1() {
+		return levelPlayer1;
+	}
+	
+	public byte getLevelPlayer2() {
+		return levelPlayer2;
+	}
+	
+	public String getGroupPlayer1() {
+		return groupPlayer1;
+	}
+
+	public String getGroupPlayer2() {
+		return groupPlayer2;
 	}
 	
 	public void complet(Player player2) {

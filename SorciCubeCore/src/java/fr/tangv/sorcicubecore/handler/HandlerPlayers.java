@@ -46,7 +46,7 @@ public class HandlerPlayers {
 		return Boolean.parseBoolean(reponse.data);
 	};
 	
-	public PlayerFeatures getPlayer(UUID uuid, String pseudo) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public PlayerFeatures getPlayeree(UUID uuid, String pseudo) throws IOException, ReponseRequestException, RequestException, DeckException {
 		Request reponse = sorci.sendRequestReponse(
 				new Request(RequestType.PLAYER_GET, Request.randomID(), uuid.toString(), null),
 				RequestType.PLAYER_REPONSE

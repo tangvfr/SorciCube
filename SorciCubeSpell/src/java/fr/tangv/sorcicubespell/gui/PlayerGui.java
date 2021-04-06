@@ -13,6 +13,7 @@ import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.util.Config;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -32,6 +33,7 @@ public class PlayerGui {
 	private FightType fightType;
 	private Player inviteDuel;
 	private boolean viewHideCards;
+	private String displayGroup;
 	
 	public PlayerGui(Player player) {
 		this.player = player;
@@ -46,6 +48,7 @@ public class PlayerGui {
 		this.playerFeature = null;
 		this.setPreviousGui(null);
 		this.setViewHideCards(false);
+		this.displayGroup = "";
 	}
 	
 	public UUID getUUID() {
@@ -54,6 +57,10 @@ public class PlayerGui {
 	
 	public String getName() {
 		return player.getName();
+	}
+	
+	public String getDisplayGroup() {
+		return displayGroup;
 	}
 	
 	public Player getPlayer() {
@@ -128,13 +135,11 @@ public class PlayerGui {
 	public PlayerFeatures getPlayerFeatures() {
 		return playerFeature;
 	}
-
 	
-	
-	public void setPlayerFeatures(PlayerFeatures playerFeature) {
+	public void setPlayerFeatures(PlayerFeatures playerFeature, SorciCubeSpell sorci) {
 		player.closeInventory();
 		this.playerFeature = playerFeature;
-		//update permission here
+		this.displayGroup = sorci.applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
 	}
 	
 	public void uploadPlayerFeatures(HandlerPlayers handler) {
@@ -162,6 +167,7 @@ public class PlayerGui {
 		}
 		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
 				messageActionBar
+					.replace("{group}", displayGroup)
 					.replace("{level}", Integer.toString(level))
 					.replace("{exp}", Integer.toString(exp))
 					.replace("{exp_max}", Integer.toString(expMax))

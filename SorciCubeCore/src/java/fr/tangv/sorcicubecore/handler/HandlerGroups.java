@@ -21,4 +21,9 @@ public class HandlerGroups extends HandlerObjectsAbstract<String, Group> {
 			group.calcAllPerms(cloneMap());
 	}
 	
+	@Override
+	public void update(Group group) throws IOException, ReponseRequestException, RequestException {
+		group.calcAllPerms(cloneMap());
+	}
+	
 }

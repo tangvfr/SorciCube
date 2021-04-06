@@ -49,8 +49,10 @@ public class ManagerLobby implements Listener {
 	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
-		PlayerFeatures feature = sorci.getManagerGui().getPlayerGui(e.getPlayer()).getPlayerFeatures();
+		PlayerGui player = sorci.getManagerGui().getPlayerGui(e.getPlayer());
+		PlayerFeatures feature = player.getPlayerFeatures();
 		e.setFormat(formatChat
+				.replace("{group}", player.getDisplayGroup())
 				.replace("{displayname}", e.getPlayer().getDisplayName())
 				.replace("{message}", e.getMessage())
 				.replace("{level}", feature == null ? noneLvl : Byte.toString(feature.getLevel()))
@@ -113,7 +115,8 @@ public class ManagerLobby implements Listener {
 							try {
 								PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 								playerG.setPlayerFeatures(
-										sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName())
+										sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName()),
+										sorci
 								);
 								sorci.getManagerGui().updateDisplayPlayer(playerG);
 							} catch (Exception e) {

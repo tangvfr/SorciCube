@@ -15,6 +15,8 @@ public class FightData {
 	private final CardFaction factionPlayer2;
 	private final byte levelPlayer1;
 	private final byte levelPlayer2;
+	private final String groupPlayer1;
+	private final String groupPlayer2;
 	private final int player1DeckUse;
 	private final int player2DeckUse;
 	private final FightType fightType;
@@ -30,6 +32,8 @@ public class FightData {
 					CardFaction factionPlayer2,
 					byte levelPlayer1,
 					byte levelPlayer2,
+					String groupPlayer1,
+					String groupPlayer2,
 					FightType fightType,
 					FightStat stat,
 					String server) {
@@ -42,6 +46,8 @@ public class FightData {
 		this.factionPlayer2 = factionPlayer2;
 		this.levelPlayer1 = levelPlayer1;
 		this.levelPlayer2 = levelPlayer2;
+		this.groupPlayer1 = groupPlayer1;
+		this.groupPlayer2 = groupPlayer2;
 		this.fightType = fightType;
 		this.stat = stat;
 		this.server = server;
@@ -87,6 +93,14 @@ public class FightData {
 		return levelPlayer2;
 	}
 	
+	public String getGroupPlayer1() {
+		return groupPlayer1;
+	}
+
+	public String getGroupPlayer2() {
+		return groupPlayer2;
+	}
+	
 	public int getPlayer1DeckUse() {
 		return player1DeckUse;
 	}
@@ -110,6 +124,8 @@ public class FightData {
 				.append("faction_player2", factionPlayer2.name())
 				.append("level_player1", levelPlayer1)
 				.append("level_player2", levelPlayer2)
+				.append("group_player1", groupPlayer1)
+				.append("group_player2", groupPlayer2)
 				.append("stat", stat.name())
 				.append("server", server);
 	}
@@ -124,6 +140,8 @@ public class FightData {
 				CardFaction.valueOf(doc.getString("faction_player2")),
 				doc.getInteger("level_player1").byteValue(),
 				doc.getInteger("level_player2").byteValue(),
+				doc.getString("group_player1"),
+				doc.getString("group_player2"),
 				FightType.valueOf(doc.getString("fight_type")),
 				FightStat.valueOf(doc.getString("stat")),
 				doc.getString("server"));

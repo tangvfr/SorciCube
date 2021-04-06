@@ -146,7 +146,7 @@ public class ManagerGui {
 	public void refreshFeaturePlayers() throws IOException, ReponseRequestException, RequestException, DeckException {
 		HandlerPlayers handler = sorci.getHandlerPlayers();
 		for (PlayerGui pg : playerGuis.values())
-			pg.setPlayerFeatures(handler.getPlayer(pg.getUUID(), pg.getName()));
+			pg.setPlayerFeatures(handler.getPlayer(pg.getUUID(), pg.getName()), sorci);
 	}
 	
 }

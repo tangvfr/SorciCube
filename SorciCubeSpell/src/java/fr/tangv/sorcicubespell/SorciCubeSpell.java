@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubecore.clients.Client;
@@ -22,6 +23,7 @@ import fr.tangv.sorcicubecore.handler.HandlerGroups;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
 import fr.tangv.sorcicubecore.player.DeckException;
+import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
@@ -130,7 +132,7 @@ public class SorciCubeSpell extends JavaPlugin {
 					if (request.requestType == RequestType.PLAYER_UPDATING && isLobby) {
 						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
 						if (player != null)
-							managerGui.getPlayerGui(player).setPlayerFeatures(handlerPlayers.getPlayer(player.getUniqueId(), player.getName()));
+							managerGui.getPlayerGui(player).setPlayerFeatures(handlerPlayers.getPlayer(player.getUniqueId(), player.getName()), SorciCubeSpell.this);
 					} else if (request.requestType == RequestType.PLAYER_SEND) {
 						Player player = Bukkit.getPlayer(UUID.fromString(request.name));
 						if (player != null)
@@ -308,10 +310,6 @@ public class SorciCubeSpell extends JavaPlugin {
 		return handlerServer;
 	}
 	
-	public HandlerGroups getHandlerGroups() {
-		return handlerGroups;
-	}
-	
 	//manager
 
 	public ManagerCreatorFight getManagerCreatorFight() {
@@ -351,8 +349,20 @@ public class SorciCubeSpell extends JavaPlugin {
 		}
 	}
 	
-	//player permission
-	
-	
+	//return display group
+	public String applyPermission(Player player, boolean isAdmin, String groupName) {
+		for (Permission perm : Bukkit.getPluginManager().getPermissions())
+			player.getEffectivePermissions();
+		
+		
+		
+		Group group = handlerGroups.get(groupName);
+		if (group == null)
+			return "";
+		
+		
+		
+		return group.getDisplay();
+	}
 	
 }

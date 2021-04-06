@@ -61,7 +61,7 @@ public abstract class HandlerObjectsAbstract<K, V> {
 	public void update(V value) throws IOException, ReponseRequestException, RequestException {
 		sorci.sendRequestReponse(new Request(RequestType.OBJECTS_UPDATE, Request.randomID(), formater.getType(), formater.toDocument(value).toJson()),
 				RequestType.SUCCESSFUL);
-		map.replace(formater.getKey(value), value);
+		map.put(formater.getKey(value), value);
 	}
 	
 	public void remove(V value) throws IOException, ReponseRequestException, RequestException {

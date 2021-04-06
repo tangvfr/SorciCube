@@ -77,11 +77,11 @@ public class Fight {
 			);
 		//player1 start one
 		if (Math.random() < 0.5) {
-			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), true);
-			this.player2 = createPlayerFight(preFight.getPlayer2(), preFight.getPlayer2DeckUse(), false);
+			this.player1 = createPlayerFight(preFight.getPlayer1(), , preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), true);
+			this.player2 = createPlayerFight(preFight.getPlayer2(), , preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), false);
 		} else {
-			this.player2 = createPlayerFight(preFight.getPlayer1(), preFight.getPlayer1DeckUse(), false);
-			this.player1 = createPlayerFight(preFight.getPlayer2(), preFight.getPlayer2DeckUse(), true);
+			this.player2 = createPlayerFight(preFight.getPlayer1(), , preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), false);
+			this.player1 = createPlayerFight(preFight.getPlayer2(), , preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), true);
 		}
 		//init player
 		player1.setEnemie(player2);
@@ -137,12 +137,14 @@ public class Fight {
 		spectators.remove(spectator);
 	}
 	
-	private PlayerFight createPlayerFight(Player player, int deck, boolean first) throws Exception {
+	private PlayerFight createPlayerFight(Player player, PlayerFeatures features, int deck, String group, byte level, boolean first) throws Exception {
 		return new PlayerFight(
 				this, 
 				player,
-				new FightDeck(sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName()).getDeck(deck)),
-				first
+				new FightDeck(features.getDeck(deck)),
+				first,
+				group,
+				level
 			);
 	}
 	

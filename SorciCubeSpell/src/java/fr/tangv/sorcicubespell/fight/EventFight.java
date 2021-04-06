@@ -63,13 +63,17 @@ public class EventFight implements Listener {
 				message = formatChat
 						.replace("{spectator}", playerChat)
 						.replace("{displayname}", e.getPlayer().getDisplayName())
-						.replace("{message}", e.getMessage());
+						.replace("{message}", e.getMessage())
+						.replace("{group}", spectator.getDisplayGroup())
+						.replace("{level}", Byte.toString(spectator.getLevel()));
 				spectator.getFight().sendMessage(message);
 			} else {
 				message = formatChat
 					.replace("{spectator}", spectatorChat)
 					.replace("{displayname}", e.getPlayer().getDisplayName())
-					.replace("{message}", e.getMessage());
+					.replace("{message}", e.getMessage())
+					.replace("{group}", spectator.getDisplayGroup())
+					.replace("{level}", Byte.toString(spectator.getLevel()));
 				spectator.getFight().sendMessageSpectator(message);
 			}
 			Bukkit.getConsoleSender().sendMessage(message);

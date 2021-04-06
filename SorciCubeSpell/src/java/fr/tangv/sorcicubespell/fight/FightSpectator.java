@@ -116,6 +116,8 @@ public class FightSpectator {
 	protected final boolean first;
 	private final Vector<Integer> invAutorized;
 	private long waitView;
+	private final String displayGroup;
+	private final byte level;
 	
 	//scoreboard
 	private String[] lastScoreMy;
@@ -123,7 +125,7 @@ public class FightSpectator {
 	private Scoreboard sc;
 	private ScoreboardObjective scob;
 	
-	public FightSpectator(Fight fight, Player player, Location locBase, boolean first) {
+	public FightSpectator(Fight fight, Player player, Location locBase, boolean first, String displayGroup, byte level) {
 		this.player = player;
 		this.waitView = -1;
 		this.fight = fight;
@@ -131,6 +133,8 @@ public class FightSpectator {
 		this.first = first;
 		this.name = player.getName();
 		this.uuid = player.getUniqueId();
+		this.displayGroup = displayGroup;
+		this.level = level;
 		this.profile = ((CraftPlayer) player).getProfile();
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_historic.name"));
 		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().getGuiConfig().getString("gui_view_entity.name"));
@@ -178,6 +182,14 @@ public class FightSpectator {
 		return fight;
 	}
 	
+	public String getDisplayGroup() {
+		return displayGroup;
+	}
+
+	public byte getLevel() {
+		return level;
+	}
+
 	private void sendScore(String name, String lastName, int scoreNumber) {
 		if (lastName != null)
 			sendPacket(new PacketPlayOutScoreboardScore(lastName)/*remove*/);

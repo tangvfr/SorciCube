@@ -41,6 +41,8 @@ public class GuiListFight extends AbstractGui implements Runnable {
 		String namePlayer2 = Bukkit.getOfflinePlayer(fightData.getPlayerUUID2()).getName();
 		String levelPlayer1 = Byte.toString(fightData.getLevelPlayer1());
 		String levelPlayer2 = Byte.toString(fightData.getLevelPlayer2());
+		String groupPlayer1 = fightData.getGroupPlayer1();
+		String groupPlayer2 = fightData.getGroupPlayer2();
 		String factionPlayer1 = manager.getSorci().getEnumTool().factionToString(fightData.getFactionDeckPlayer1());
 		String factionPlayer2 = manager.getSorci().getEnumTool().factionToString(fightData.getFactionDeckPlayer2());
 		String fightUUID = fightData.getFightUUID().toString();
@@ -53,6 +55,8 @@ public class GuiListFight extends AbstractGui implements Runnable {
 				.replace("{name_player2}", namePlayer2)
 				.replace("{level_player1}", levelPlayer1)
 				.replace("{level_player2}", levelPlayer2)
+				.replace("{group_player1}", groupPlayer1)
+				.replace("{group_player2}", groupPlayer2)
 				.replace("{faction_player1}", factionPlayer1)
 				.replace("{faction_player2}", factionPlayer2)
 				.replace("{fight_uuid}", fightUUID)

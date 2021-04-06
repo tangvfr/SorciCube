@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -80,7 +81,7 @@ public class ManagerFight implements Runnable {
 	
 	public void playerJoin(Player player) throws IOException, ReponseRequestException, RequestException {
 		boolean kick = true;
-		//init perm here
+		PlayerFeatures feature 
 		if (playerInstance.containsKey(player.getUniqueId())) {
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
 			if (spectator.isFightPlayer() && !spectator.getFight().isEnd()) {
