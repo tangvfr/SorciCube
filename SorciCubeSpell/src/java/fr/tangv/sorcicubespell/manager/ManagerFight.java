@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
@@ -79,9 +80,10 @@ public class ManagerFight implements Runnable {
 		}
 	}
 	
-	public void playerJoin(Player player) throws IOException, ReponseRequestException, RequestException {
+	public void playerJoin(Player player) throws IOException, ReponseRequestException, RequestException, DeckException {
 		boolean kick = true;
-		PlayerFeatures feature 
+		PlayerFeatures features = sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName());
+		String groupDisplay = sorci.applyPermission(player, features.isAdmin(), features.getGroup());
 		if (playerInstance.containsKey(player.getUniqueId())) {
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
 			if (spectator.isFightPlayer() && !spectator.getFight().isEnd()) {
@@ -94,12 +96,12 @@ public class ManagerFight implements Runnable {
 			}
 		} else if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
-			preFight.complet(player);
+			preFight.complet(player, features);
 			kick = false;
 		} else {
 			FightData fightData = sorci.getHandlerFightData().getFightDataPlayer(player.getUniqueId());
 			if (fightData != null && fightData.getStat() == FightStat.WAITING) {
-				PreFight preFight = PreFight.createPreFight(player, fightData);
+				PreFight preFight = PreFight.createPreFight(player, features, fightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
 				fightData.setStat(FightStat.STARTING);
 				sorci.getHandlerFightData().updateFightData(fightData);
@@ -124,7 +126,9 @@ public class ManagerFight implements Runnable {
 						fight,
 						player,
 						fight.getPlayer1().getLocBase().clone().add(fight.getPlayer2().getLocBase()).multiply(0.5),
-						true
+						true,
+						groupDisplay,
+						features.getLevel()
 				);
 				playerInstance.put(player.getUniqueId(), spectator);
 				player.setAllowFlight(true);

@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
@@ -162,6 +163,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			getServer().getMessenger().registerOutgoingPluginChannel(SorciCubeSpell.this, "BungeeCord");
 			SorciCubeSpell.this.nameServerLobby = SorciCubeSpell.this.parameter.getString("server_lobby");
 			SorciCubeSpell.this.nameServerFight = SorciCubeSpell.this.parameter.getString("server_fight");
+			((CraftServer) Bukkit.getServer()).getCommandMap()
 			//init handler
 			SorciCubeSpell.this.handlerGroups = new HandlerGroups(client);
 			SorciCubeSpell.this.handlerCards = new HandlerCards(client);
@@ -352,8 +354,8 @@ public class SorciCubeSpell extends JavaPlugin {
 	//return display group
 	public String applyPermission(Player player, boolean isAdmin, String groupName) {
 		for (Permission perm : Bukkit.getPluginManager().getPermissions())
-			player.getEffectivePermissions();
-		
+			player.get
+		player.rec
 		
 		
 		Group group = handlerGroups.get(groupName);

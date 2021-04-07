@@ -77,11 +77,11 @@ public class Fight {
 			);
 		//player1 start one
 		if (Math.random() < 0.5) {
-			this.player1 = createPlayerFight(preFight.getPlayer1(), , preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), true);
-			this.player2 = createPlayerFight(preFight.getPlayer2(), , preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), false);
+			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getFeatures1(), preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), true);
+			this.player2 = createPlayerFight(preFight.getPlayer2(), preFight.getFeatures2(), preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), false);
 		} else {
-			this.player2 = createPlayerFight(preFight.getPlayer1(), , preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), false);
-			this.player1 = createPlayerFight(preFight.getPlayer2(), , preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), true);
+			this.player2 = createPlayerFight(preFight.getPlayer1(), preFight.getFeatures1(), preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), false);
+			this.player1 = createPlayerFight(preFight.getPlayer2(), preFight.getFeatures2(), preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), true);
 		}
 		//init player
 		player1.setEnemie(player2);

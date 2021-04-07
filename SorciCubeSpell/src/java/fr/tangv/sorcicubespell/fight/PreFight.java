@@ -6,12 +6,14 @@ import org.bukkit.entity.Player;
 
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightType;
+import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.util.Cooldown;
 
 public class PreFight {
 
 	private final FightData fightData;
 	private final Player player1;
+	private final PlayerFeatures features1;
 	private final UUID playerUUID2;
 	private final int player1DeckUse;
 	private final int player2DeckUse;
@@ -21,18 +23,20 @@ public class PreFight {
 	private final String groupPlayer2;
 	private Cooldown cooldown;
 	private volatile Player player2;
+	private volatile PlayerFeatures features2;
 	
-	public static PreFight createPreFight(Player player, FightData data) {
+	public static PreFight createPreFight(Player player, PlayerFeatures features, FightData data) {
 		if (player.getUniqueId().equals(data.getPlayerUUID1()))
-			return new PreFight(data, player, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(),
+			return new PreFight(data, player, features, data.getPlayerUUID2(), data.getPlayer1DeckUse(), data.getPlayer2DeckUse(),
 					data.getLevelPlayer1(), data.getLevelPlayer2(), data.getGroupPlayer1(), data.getGroupPlayer2(), data.getFightType());
 		else
-			return new PreFight(data, player, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(),
+			return new PreFight(data, player, features, data.getPlayerUUID1(), data.getPlayer2DeckUse(), data.getPlayer1DeckUse(),
 					data.getLevelPlayer2(), data.getLevelPlayer1(), data.getGroupPlayer2(), data.getGroupPlayer1(), data.getFightType());
 	}
 	
 	private PreFight(FightData fightData,
 					Player player1,
+					PlayerFeatures features1,
 					UUID playerUUID2,
 					int player1DeckUse,
 					int player2DeckUse,
@@ -43,6 +47,7 @@ public class PreFight {
 					FightType fightType) {
 		this.fightData = fightData;
 		this.player1 = player1;
+		this.features1 = features1;
 		this.playerUUID2 = playerUUID2;
 		this.player1DeckUse = player1DeckUse;
 		this.player2DeckUse = player2DeckUse;
@@ -67,6 +72,14 @@ public class PreFight {
 		return playerUUID2;
 	}
 	
+	public PlayerFeatures getFeatures1() {
+		return features1;
+	}
+
+	public PlayerFeatures getFeatures2() {
+		return features2;
+	}
+
 	public int getPlayer1DeckUse() {
 		return player1DeckUse;
 	}
@@ -91,8 +104,9 @@ public class PreFight {
 		return groupPlayer2;
 	}
 	
-	public void complet(Player player2) {
+	public void complet(Player player2, PlayerFeatures features2) {
 		this.player2 = player2;
+		this.features2 = features2;
 		this.cooldown = new Cooldown(1_000);
 		cooldown.start();
 	}

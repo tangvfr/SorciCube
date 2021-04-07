@@ -428,7 +428,7 @@ public class EventFight implements Listener {
 	}
 	
 	@EventHandler
-	public void onJoin(PlayerJoinEvent e) throws IOException, ReponseRequestException, RequestException {
+	public void onJoin(PlayerJoinEvent e) throws IOException, ReponseRequestException, RequestException, DeckException {
 		Player player = e.getPlayer();
 		e.setJoinMessage("");
 		player.setGameMode(GameMode.ADVENTURE);
