@@ -33,10 +33,12 @@ public class ManagerLobby implements Listener {
 	private Location locationSpawn;
 	private String formatChat;
 	private String noneLvl;
+	private String noneGroup;
 	
 	public ManagerLobby(SorciCubeSpell sorci) {
 		this.sorci = sorci;
 		this.noneLvl = sorci.getParameter().getString("none_lvl");
+		this.noneGroup = sorci.getParameter().getString("none_group");
 		this.locationTuto = (Location) sorci.getParameter().get("location_tuto");
 		this.locationSpawn = (Location) sorci.getParameter().get("location_spawn");
 		this.formatChat = sorci.getParameter().getString("chat_format");
@@ -50,13 +52,22 @@ public class ManagerLobby implements Listener {
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		PlayerGui player = sorci.getManagerGui().getPlayerGui(e.getPlayer());
-		PlayerFeatures feature = player.getPlayerFeatures();
-		e.setFormat(formatChat
-				.replace("{group}", player.getDisplayGroup())
-				.replace("{displayname}", e.getPlayer().getDisplayName())
-				.replace("{message}", e.getMessage())
-				.replace("{level}", feature == null ? noneLvl : Byte.toString(feature.getLevel()))
-			);
+		if (player != null) {
+			PlayerFeatures feature = player.getPlayerFeatures();
+			e.setFormat(formatChat
+					.replace("{group}", player.getDisplayGroup())
+					.replace("{displayname}", e.getPlayer().getDisplayName())
+					.replace("{message}", e.getMessage())
+					.replace("{level}", Byte.toString(feature.getLevel()))
+				);
+		} else {
+			e.setFormat(formatChat
+					.replace("{group}", noneGroup)
+					.replace("{displayname}", e.getPlayer().getDisplayName())
+					.replace("{message}", e.getMessage())
+					.replace("{level}", noneLvl)
+				);
+		}
 	}
 	
 	@EventHandler
