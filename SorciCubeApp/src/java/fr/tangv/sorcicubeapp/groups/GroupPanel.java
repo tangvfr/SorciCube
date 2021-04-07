@@ -41,7 +41,7 @@ public class GroupPanel extends JScrollPane {
 		this.display = new ComponentText("Display");
 		this.weight = new ComponentNumberInt("Weight");
 		this.perms = new ComponentAreaText("Permissions");
-		perms.setToolTipText("[addgroupperms, -removeperm, addperm, *don't work");
+		perms.setToolTipText("[addgroupperms, -removeperm, addperm");
 		//button
 		this.apply = new JButton("Save");
 		this.apply.addMouseListener(new ClickListener() {
