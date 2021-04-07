@@ -139,7 +139,7 @@ public class PlayerGui {
 	public void setPlayerFeatures(PlayerFeatures playerFeature, SorciCubeSpell sorci) {
 		player.closeInventory();
 		this.playerFeature = playerFeature;
-		this.displayGroup = sorci.applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
+		this.displayGroup = sorci.getManagerPermissions().applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
 	}
 	
 	public void uploadPlayerFeatures(HandlerPlayers handler) {

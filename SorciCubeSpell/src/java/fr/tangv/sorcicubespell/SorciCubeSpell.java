@@ -8,11 +8,8 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.craftbukkit.v1_9_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubecore.clients.Client;
@@ -25,7 +22,6 @@ import fr.tangv.sorcicubecore.handler.HandlerGroups;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
 import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
@@ -43,6 +39,7 @@ import fr.tangv.sorcicubespell.manager.ManagerFight;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.manager.ManagerLobby;
 import fr.tangv.sorcicubespell.manager.ManagerPakcetCards;
+import fr.tangv.sorcicubespell.manager.ManagerPermissions;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
@@ -86,6 +83,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private ManagerClickNPC managerClickNPC;
 	private ManagerFight managerFight;
 	private ManagerCreatorFight managerCreatorFight;
+	private ManagerPermissions managerPermissions;
 	
 	//tools
 	private EnumTool enumTool;
@@ -188,7 +186,12 @@ public class SorciCubeSpell extends JavaPlugin {
 				SorciCubeSpell.this.arenaConfig = newConfig("arena.yml");
 				SorciCubeSpell.this.managerFight = new ManagerFight(SorciCubeSpell.this);
 			}
+			//security
 			new ManagerSecurity(SorciCubeSpell.this);
+			//attachements
+			SorciCubeSpell.this.managerPermissions = new ManagerPermissions(this, handlerGroups);
+			Bukkit.getPluginManager().registerEvents(managerPermissions, this);
+			//commands
 			getCommand("refresh").setExecutor(new CommandRefresh(SorciCubeSpell.this));
 			getCommand("givecard").setExecutor(new CommandGiveCard(SorciCubeSpell.this));
 			getCommand("givearrowhead").setExecutor(new CommandGiveArrowHead(SorciCubeSpell.this));
@@ -334,6 +337,10 @@ public class SorciCubeSpell extends JavaPlugin {
 		return managerFight;
 	}
 	
+	public ManagerPermissions getManagerPermissions() {
+		return managerPermissions;
+	}
+	
 	//tools
 	
 	public EnumTool getEnumTool() {
@@ -349,22 +356,6 @@ public class SorciCubeSpell extends JavaPlugin {
 			managerPakcetCards.refresh();
 			managerGui.refreshFeaturePlayers();
 		}
-	}
-	
-	//return display group
-	public String applyPermission(Player player, boolean isAdmin, String groupName) {
-		for (Permission perm : Bukkit.getPluginManager().getPermissions());
-			/*player.get
-		player.rec*/
-		
-		
-		Group group = handlerGroups.get(groupName);
-		if (group == null)
-			return "";
-		
-		
-		
-		return group.getDisplay();
 	}
 	
 }

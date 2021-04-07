@@ -83,7 +83,7 @@ public class ManagerFight implements Runnable {
 	public void playerJoin(Player player) throws IOException, ReponseRequestException, RequestException, DeckException {
 		boolean kick = true;
 		PlayerFeatures features = sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName());
-		String groupDisplay = sorci.applyPermission(player, features.isAdmin(), features.getGroup());
+		String groupDisplay = sorci.getManagerPermissions().applyPermission(player, features.isAdmin(), features.getGroup());
 		if (playerInstance.containsKey(player.getUniqueId())) {
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
 			if (spectator.isFightPlayer() && !spectator.getFight().isEnd()) {
