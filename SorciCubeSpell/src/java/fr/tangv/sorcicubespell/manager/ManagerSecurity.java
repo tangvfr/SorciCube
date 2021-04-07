@@ -26,17 +26,15 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class ManagerSecurity implements Listener {
 
-	private final SorciCubeSpell sorci;
 	private final HandlerServer handler;
 	
 	public ManagerSecurity(SorciCubeSpell sorci) {
-		this.sorci = sorci;
 		this.handler = sorci.getHandlerServer();
 		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
 	
 	private boolean isAuto(Player player) {
-		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission(sorci.getParameter().getString("perm_build"));
+		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission("sorcicubespell.build");
 	}
 	
 	@EventHandler

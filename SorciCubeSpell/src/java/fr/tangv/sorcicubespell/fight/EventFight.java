@@ -293,7 +293,7 @@ public class EventFight implements Listener {
 				}
 			}
 			e.getPlayer().updateInventory();
-		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
+		} else if (!e.getPlayer().hasPermission("sorcicubespell.join.fight")) {
 			e.setCancelled(true);
 			e.getPlayer().updateInventory();
 		}

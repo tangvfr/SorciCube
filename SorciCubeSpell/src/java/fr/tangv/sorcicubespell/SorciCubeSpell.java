@@ -258,9 +258,9 @@ public class SorciCubeSpell extends JavaPlugin {
 		return message;
 	}
 	
-	/*public Config getParameter() {
+	public Config getParameter() {
 		return parameter;
-	}*/
+	}
 
 	public Config getEnumConfig() {
 		return enumConfig;
