@@ -1,14 +1,6 @@
 #lobby
 chat_format: "§7Niveau.§b[§f§l{level}§b]§f {displayname}§r§7 : §r§f{message}"
 action_bar_message: "§7Niveau.§b[§f§l{level}§b]    §5[§d{exp}§5/§d{exp_max}§5] §dXP    §6[§e{money}€§6]"
-#security
-perm_build: "sorcicubespell.build"
-perm_admin: "sorcicubespell.admin"
-#/viewcards = sorcicubespell.viewcards
-#/packetgive <player> = <name> sorcicubespell.packetgive
-#/refresh = sorcicubespell.refresh
-#/givecard <name> <uuid> = sorcicubespell.givecard
-#/givearrowhead = sorcicubespell.givearrowhead
 #format time
 format_time_sec: "sec"
 format_time_min: "min "

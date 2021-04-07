@@ -136,7 +136,7 @@ public class ManagerFight implements Runnable {
 				spectator.initForViewFight();
 				fight.addSpectator(spectator);
 				spectator.initBarSpectator();
-			} else if (player.hasPermission(sorci.getParameter().getString("perm_admin"))) {
+			} else if (player.hasPermission("sorcicubespell.join.fight")) {
 				for (Player other : Bukkit.getOnlinePlayers())
 					if (playerInstance.containsKey(other.getUniqueId()))
 						other.hidePlayer(player);

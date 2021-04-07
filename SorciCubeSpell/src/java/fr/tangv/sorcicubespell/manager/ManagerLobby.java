@@ -44,7 +44,7 @@ public class ManagerLobby implements Listener {
 	}
 	
 	private boolean isAuto(Player player) {
-		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission(sorci.getParameter().getString("perm_build"));
+		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission("sorcicubespell.build");
 	}
 	
 	@EventHandler
