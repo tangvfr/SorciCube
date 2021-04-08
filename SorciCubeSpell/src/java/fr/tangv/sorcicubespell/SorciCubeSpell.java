@@ -102,7 +102,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	public void onEnable() {
 		//try for bug
 		try {
-			//init env
+			//ChatColor.translateAlternateColorCodes('&', s).replaceAll("\\n", "\n");
 			this.isLobby = !Boolean.parseBoolean(System.getenv("SC_FIGHT"));
 			Bukkit.getLogger().info("Fight: "+!isLobby);
 			this.nameServer = System.getenv("SC_NAME_SERVER");
