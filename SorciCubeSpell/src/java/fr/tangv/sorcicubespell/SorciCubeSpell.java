@@ -12,6 +12,7 @@ import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.clients.ClientType;
@@ -102,7 +103,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	public void onEnable() {
 		//try for bug
 		try {
-			//ChatColor.translateAlternateColorCodes('&', s).replaceAll("\\n", "\n");
 			this.isLobby = !Boolean.parseBoolean(System.getenv("SC_FIGHT"));
 			Bukkit.getLogger().info("Fight: "+!isLobby);
 			this.nameServer = System.getenv("SC_NAME_SERVER");
@@ -156,6 +156,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			SorciCubeSpell.this.guiConfig = newConfig("gui.yml");
 			SorciCubeSpell.this.levelConfig = newConfig("level.yml");
 			//init tool
+			CardFaction.initColors('7', '8', '6', '2', '5');
 			SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this.enumConfig);
 			//init for change server
 			SorciCubeSpell.this.handlerServer = new HandlerServer(client);

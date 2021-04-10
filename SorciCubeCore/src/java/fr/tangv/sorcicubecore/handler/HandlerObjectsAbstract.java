@@ -52,16 +52,11 @@ public abstract class HandlerObjectsAbstract<K, V> {
 		return map.get(key);
 	}
 	
-	public void add(V value) throws IOException, ReponseRequestException, RequestException {
-		sorci.sendRequestReponse(new Request(RequestType.OBJECTS_ADD, Request.randomID(), formater.getType(), formater.toDocument(value).toJson()),
+	public void put(V value) throws IOException, ReponseRequestException, RequestException {
+		sorci.sendRequestReponse(new Request(RequestType.OBJECTS_PUT, Request.randomID(), formater.getType(), formater.toDocument(value).toJson()),
 				RequestType.SUCCESSFUL);
 		map.put(formater.getKey(value), value);
-	}
-	
-	public void update(V value) throws IOException, ReponseRequestException, RequestException {
-		sorci.sendRequestReponse(new Request(RequestType.OBJECTS_UPDATE, Request.randomID(), formater.getType(), formater.toDocument(value).toJson()),
-				RequestType.SUCCESSFUL);
-		map.put(formater.getKey(value), value);
+		update(value);
 	}
 	
 	public void remove(V value) throws IOException, ReponseRequestException, RequestException {
@@ -69,5 +64,7 @@ public abstract class HandlerObjectsAbstract<K, V> {
 				RequestType.SUCCESSFUL);
 		map.remove(formater.getKey(value), value);
 	}
+
+	public void update(V value) {};
 	
 }

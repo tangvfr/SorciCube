@@ -62,10 +62,9 @@ public enum RequestType {
 	SPECTATOR_ADD(RequestDataType.TEXT),
 	SPECTATOR_PEEK(RequestDataType.NONE),
 	//OBJECTS
-	OBJECTS_ADD(RequestDataType.JSON),
-	OBJECTS_UPDATE(RequestDataType.JSON),
+	OBJECTS_PUT(RequestDataType.JSON),
 	OBJECTS_GET_ALL(RequestDataType.NONE),
-	OBJECTS_REMOVE(RequestDataType.NONE),
+	OBJECTS_REMOVE(RequestDataType.JSON),
 	//DEFAULT DECK
 	DEFAULT_DECK_GET(RequestDataType.NONE),
 	DEFAULT_DECK_UPDATE(RequestDataType.JSON),

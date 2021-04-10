@@ -48,7 +48,7 @@ public class GroupPanel extends JScrollPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Group g = createGroup();
-				manager.update(g);
+				manager.put(g);
 				manager.refresh();
 				showGroup(g);
 				GroupPanel.this.repaint();

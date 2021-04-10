@@ -40,7 +40,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 					String name = JOptionPane.showInputDialog(logi.getFramePanel(), "Name for group new", "Create Group", JOptionPane.QUESTION_MESSAGE);
 					if (name != null && !name.isEmpty())
 						try {
-							handler.add(new Group(name, "§8[§9"+name+"§8]", 0, new Vector<String>()));
+							handler.put(new Group(name, "§8[§9"+name+"§8]", 0, new Vector<String>()));
 							refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
 							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Group", JOptionPane.ERROR_MESSAGE);
@@ -59,7 +59,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 						if (name != null && !name.isEmpty())
 							try {
 								handler.remove(group);
-								handler.add(new Group(name, group.getDisplay(), group.getWeight(), group.getPerms()));
+								handler.put(new Group(name, group.getDisplay(), group.getWeight(), group.getPerms()));
 								refresh();
 							} catch (IOException | ReponseRequestException | RequestException e1) {
 								JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Rename Group", JOptionPane.ERROR_MESSAGE);
@@ -143,11 +143,11 @@ public class GroupsPanel extends SearchPanel<Group> {
 		}
 	}
 	
-	public void update(Group group) {
+	public void put(Group group) {
 		try {
-			handler.update(group);
+			handler.put(group);
 		} catch (IOException | ReponseRequestException | RequestException e) {
-			warningBug(e, "update");
+			warningBug(e, "put");
 		}
 	}
 

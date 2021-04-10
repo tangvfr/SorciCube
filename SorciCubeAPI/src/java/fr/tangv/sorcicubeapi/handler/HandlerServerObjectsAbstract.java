@@ -71,17 +71,8 @@ public abstract class HandlerServerObjectsAbstract<K, V> implements RequestHandl
 					V value;
 					switch (request.requestType) {
 					
-						case OBJECTS_ADD:
+						case OBJECTS_PUT:
 							value = formater.toValue(Document.parse(request.data));
-							map.put(formater.getKey(value), value);
-							save();
-							update();
-							client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
-							break;
-					
-						case OBJECTS_UPDATE:
-							value = formater.toValue(Document.parse(request.data));
-							//map.replace(formater.getKey(value), value);
 							map.put(formater.getKey(value), value);
 							save();
 							update();

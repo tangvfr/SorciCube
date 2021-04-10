@@ -56,7 +56,7 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		});
 		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setTitle(action+" "+label);
+		this.setTitle(label+" "+action);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.panUp = new JPanel();
 		panUp.setLayout(new BorderLayout());

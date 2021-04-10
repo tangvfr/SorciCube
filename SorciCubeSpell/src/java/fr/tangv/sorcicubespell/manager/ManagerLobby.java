@@ -28,12 +28,12 @@ import fr.tangv.sorcicubespell.gui.PlayerGui;
 
 public class ManagerLobby implements Listener {
 
-	private SorciCubeSpell sorci;
-	private Location locationTuto;
-	private Location locationSpawn;
-	private String formatChat;
-	private String noneLvl;
-	private String noneGroup;
+	private final SorciCubeSpell sorci;
+	private final Location locationTuto;
+	private final Location locationSpawn;
+	private final String formatChat;
+	private final String noneLvl;
+	private final String noneGroup;
 	
 	public ManagerLobby(SorciCubeSpell sorci) {
 		this.sorci = sorci;

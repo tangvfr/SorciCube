@@ -22,7 +22,7 @@ public class HandlerGroups extends HandlerObjectsAbstract<String, Group> {
 	}
 	
 	@Override
-	public void update(Group group) throws IOException, ReponseRequestException, RequestException {
+	public void update(Group group) {
 		group.calcAllPerms(cloneMap());
 	}
 	

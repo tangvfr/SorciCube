@@ -264,7 +264,7 @@ public class PanelNav extends JPanel {
 								false
 							);
 						try {
-							cardsPanel.getCards().add(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.setCard(card);
 							cardsPanel.refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
@@ -298,7 +298,7 @@ public class PanelNav extends JPanel {
 								false
 							);
 						try {
-							cardsPanel.getCards().add(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.setCard(card);
 							cardsPanel.refresh();
 						} catch (IOException | ReponseRequestException | RequestException e1) {
