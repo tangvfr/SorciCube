@@ -156,7 +156,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			SorciCubeSpell.this.guiConfig = newConfig("gui.yml");
 			SorciCubeSpell.this.levelConfig = newConfig("level.yml");
 			//init tool
-			CardFaction.initColors('7', '8', '6', '2', '5');
+			CardFaction.initColors("§7", "§8", "§6", "§2", "§5");
 			SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this.enumConfig);
 			//init for change server
 			SorciCubeSpell.this.handlerServer = new HandlerServer(client);

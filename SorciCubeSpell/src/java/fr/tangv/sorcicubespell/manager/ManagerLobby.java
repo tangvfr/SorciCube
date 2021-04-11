@@ -55,7 +55,7 @@ public class ManagerLobby implements Listener {
 		if (player != null) {
 			PlayerFeatures feature = player.getPlayerFeatures();
 			e.setFormat(formatChat
-					.replace("{group}", player.getDisplayGroup())
+					.replace("{group}", feature.getGroup().isEmpty() ? noneGroup : player.getDisplayGroup())
 					.replace("{displayname}", e.getPlayer().getDisplayName())
 					.replace("{message}", e.getMessage())
 					.replace("{level}", Byte.toString(feature.getLevel()))
