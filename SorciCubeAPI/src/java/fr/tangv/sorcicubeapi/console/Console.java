@@ -35,34 +35,16 @@ public class Console extends Thread {
 	}
 	
 	protected SorciCubeAPI sorci;
-	private java.io.Console console;
 	private QuerryServer querry;
 	
 	public Console(SorciCubeAPI sorci) throws IOException {
 		this.sorci = sorci;
-		this.console = System.console();
 		this.querry = new QuerryServer(this);
 	}
 	
 	@Override
 	public void run() {
 		querry.start();
-		if (console == null)
-			return;
-		while (sorci.serverIsStart()) {
-			try {
-				String input = this.console.readLine();
-				if (input == null) {
-					sorci.stopServer();
-					return;
-				}
-				String back = this.excute(input);
-				if (!back.isEmpty())
-					Console.logger.info(back);
-			} catch (Exception e) {
-				Console.logger.warning("Error Console: "+e.getMessage());
-			}
-		}
 	}
 	
 	public String excute(String input) throws IOException {
