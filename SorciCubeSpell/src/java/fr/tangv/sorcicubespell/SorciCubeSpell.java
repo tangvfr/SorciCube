@@ -26,7 +26,7 @@ import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.sorciclient.SorciClientURI;
 import fr.tangv.sorcicubespell.command.CommandAddItemInList;
@@ -94,7 +94,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			return new Config(handlerConfigYAML, name);
 		} catch (InvalidConfigurationException e) {
 			throw new Exception("Error in config named \""+name+"\"");
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			throw new Exception("Error config \""+name+"\" caused "+e.getMessage());
 		}
 	}
@@ -350,7 +350,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	//refresh
 	
-	public void refresh() throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void refresh() throws IOException, ResponseRequestException, RequestException, DeckException {
 		handlerCards.refresh();
 		handlerGroups.refresh();
 		if (isLobby) {

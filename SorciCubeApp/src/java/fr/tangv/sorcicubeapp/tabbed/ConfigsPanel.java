@@ -19,7 +19,7 @@ import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.handler.HandlerConfigYAML;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class ConfigsPanel extends SearchPanel<String> {
@@ -32,7 +32,7 @@ public class ConfigsPanel extends SearchPanel<String> {
 	private final JScrollPane scroll;
 	private final JPanel btns;
 	
-	public ConfigsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
+	public ConfigsPanel(SorciClient client, FrameLogi logi) throws IOException, ResponseRequestException, RequestException {
 		super(client, logi);
 		this.handler = new HandlerConfigYAML(client);
 		this.editor = new JPanel(new BorderLayout());
@@ -50,7 +50,7 @@ public class ConfigsPanel extends SearchPanel<String> {
 					handler.updateConfig(name, text.getText());
 					refresh();
 					openConfig(name);
-				} catch (IOException | ReponseRequestException | RequestException e1) {
+				} catch (IOException | ResponseRequestException | RequestException e1) {
 					warningBug(e1, "save config");
 				}
 			}
@@ -73,7 +73,7 @@ public class ConfigsPanel extends SearchPanel<String> {
 		return new JLabel((isSelected ? "> " : "")+value);
 	}
 
-	public void openConfig(String name) throws IOException, ReponseRequestException, RequestException {
+	public void openConfig(String name) throws IOException, ResponseRequestException, RequestException {
 		this.name = name;
 		this.text.setText(handler.getConfig(name));
 		editor.setBorder(new TitledBorder("Config: "+name));
@@ -85,7 +85,7 @@ public class ConfigsPanel extends SearchPanel<String> {
 	public void mouseClicked(MouseEvent e) {
 		try {
 			openConfig(list.getSelectedValue());
-		} catch (IOException | ReponseRequestException | RequestException e1) {
+		} catch (IOException | ResponseRequestException | RequestException e1) {
 			warningBug(e1, "open config");
 		}
 	}
@@ -104,7 +104,7 @@ public class ConfigsPanel extends SearchPanel<String> {
 			this.list.setListData(list);
 			this.refresh.setText("Refresh | "+l.length+" configs "+list.size()+" find");
 			this.repaint();
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			warningBug(e, "refresh");
 		}
 	}

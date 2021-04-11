@@ -31,7 +31,7 @@ import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.fight.PlayerFight.ResultFightHead;
 import fr.tangv.sorcicubespell.manager.ManagerFight;
@@ -300,7 +300,7 @@ public class EventFight implements Listener {
 	}
 	
 	@EventHandler
-	public void onClickInv(InventoryClickEvent e) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void onClickInv(InventoryClickEvent e) throws IOException, ResponseRequestException, RequestException, DeckException {
 		UUID uuid = e.getWhoClicked().getUniqueId();
 		if (manager.isSpectator(uuid)) {
 			e.setCancelled(true);
@@ -428,7 +428,7 @@ public class EventFight implements Listener {
 	}
 	
 	@EventHandler
-	public void onJoin(PlayerJoinEvent e) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void onJoin(PlayerJoinEvent e) throws IOException, ResponseRequestException, RequestException, DeckException {
 		Player player = e.getPlayer();
 		e.setJoinMessage("");
 		player.setGameMode(GameMode.ADVENTURE);

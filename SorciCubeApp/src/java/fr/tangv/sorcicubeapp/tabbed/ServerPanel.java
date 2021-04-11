@@ -24,7 +24,7 @@ import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubecore.util.Format;
 
@@ -57,7 +57,7 @@ public class ServerPanel extends JScrollPane {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					refresh();
-				} catch (IOException | ReponseRequestException | RequestException e1) {
+				} catch (IOException | ResponseRequestException | RequestException e1) {
 					JOptionPane.showMessageDialog(ServerPanel.this, e1.getMessage(), "Error Refresh", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				}
@@ -77,7 +77,7 @@ public class ServerPanel extends JScrollPane {
 					} else {
 						JOptionPane.showMessageDialog(ServerPanel.this, "Refresh servers canceled !", "Canceled Refresh Servers", JOptionPane.INFORMATION_MESSAGE);
 					}
-				} catch (IOException | ReponseRequestException | RequestException e1) {
+				} catch (IOException | ResponseRequestException | RequestException e1) {
 					JOptionPane.showMessageDialog(ServerPanel.this, e1.getMessage(), "Error Refresh Server", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				}
@@ -97,7 +97,7 @@ public class ServerPanel extends JScrollPane {
 					} else {
 						JOptionPane.showMessageDialog(ServerPanel.this, "Stoping server canceled !", "Canceled Stop API", JOptionPane.INFORMATION_MESSAGE);
 					}
-				} catch (IOException | ReponseRequestException | RequestException e1) {
+				} catch (IOException | ResponseRequestException | RequestException e1) {
 					JOptionPane.showMessageDialog(ServerPanel.this, e1.getMessage(), "Error Stop API", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				}
@@ -141,14 +141,14 @@ public class ServerPanel extends JScrollPane {
 						e1.printStackTrace();
 					}
 				}
-			} catch (IOException | ReponseRequestException | RequestException e1) {
+			} catch (IOException | ResponseRequestException | RequestException e1) {
 				logi.showConnection("Error: "+e1.getMessage(), Color.RED);
 				e1.printStackTrace();
 			}
 		}).start();
 	}
 	
-	public synchronized void refresh() throws IOException, ReponseRequestException, RequestException {
+	public synchronized void refresh() throws IOException, ResponseRequestException, RequestException {
 		this.list = new Vector<Document>(handler.getSpigotServerList());
 		this.table.setModel(new ServerPanelTable());
 		this.fights = this.handlerFights.getAllFightData().size();

@@ -22,7 +22,7 @@ import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 
@@ -140,7 +140,7 @@ public class ManagerLobby implements Listener {
 						}
 						teleportPlayerToSpawn(player);
 					}
-				} catch (IOException | ReponseRequestException | RequestException e) {
+				} catch (IOException | ResponseRequestException | RequestException e) {
 					e.printStackTrace();
 				}
 			}

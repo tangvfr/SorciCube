@@ -14,7 +14,7 @@ import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.fight.EventFight;
 import fr.tangv.sorcicubespell.fight.Fight;
@@ -80,7 +80,7 @@ public class ManagerFight implements Runnable {
 		}
 	}
 	
-	public void playerJoin(Player player) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void playerJoin(Player player) throws IOException, ResponseRequestException, RequestException, DeckException {
 		boolean kick = true;
 		PlayerFeatures features = sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName());
 		String groupDisplay = sorci.getManagerPermissions().applyPermission(player, features.isAdmin(), features.getGroup());
@@ -180,7 +180,7 @@ public class ManagerFight implements Runnable {
 							} catch (Exception e) {
 								try {
 									sorci.getHandlerFightData().removeFightDataFight(fightData);
-								} catch (IOException | ReponseRequestException | RequestException e1) {
+								} catch (IOException | ResponseRequestException | RequestException e1) {
 									e1.printStackTrace();
 								}
 								Bukkit.getLogger().throwing("ManagerFight" ,"run", e);
@@ -195,7 +195,7 @@ public class ManagerFight implements Runnable {
 				}
 				try {
 					sorci.getHandlerFightData().removeFightDataFight(fightData);
-				} catch (IOException | ReponseRequestException | RequestException e) {
+				} catch (IOException | ResponseRequestException | RequestException e) {
 					e.printStackTrace();
 				}
 			}
@@ -219,7 +219,7 @@ public class ManagerFight implements Runnable {
 	public void stop() {
 		try {
 			sorci.getHandlerFightData().removeAllFightDataServer(sorci.getNameServer());
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			e.printStackTrace();
 		}
 	}

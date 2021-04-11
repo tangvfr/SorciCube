@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 
 public abstract class DialogBase<T extends Component> extends JDialog {
 
@@ -41,7 +41,7 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					DialogBase.this.eventOk(comp);
-				} catch (IOException | ReponseRequestException | RequestException e1) {
+				} catch (IOException | ResponseRequestException | RequestException e1) {
 					JOptionPane.showMessageDialog(DialogBase.this, "Error: "+e1.getMessage(), "EvneOK DialogBase", JOptionPane.ERROR_MESSAGE);
 				}
 				DialogBase.this.processWindowEvent(new WindowEvent(DialogBase.this, WindowEvent.WINDOW_CLOSING));
@@ -63,7 +63,7 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		panUp.add(new JLabel(label+": "), BorderLayout.WEST);
 		try {
 			this.initComp(comp);
-		} catch (IOException | ReponseRequestException | RequestException e1) {
+		} catch (IOException | ResponseRequestException | RequestException e1) {
 			JOptionPane.showMessageDialog(DialogBase.this, "Error: "+e1.getMessage(), "Init DialogBase", JOptionPane.ERROR_MESSAGE);
 		}
 		panUp.add(comp, BorderLayout.CENTER);
@@ -91,8 +91,8 @@ public abstract class DialogBase<T extends Component> extends JDialog {
 		super.processWindowEvent(e);
 	}
 	
-	public abstract void eventOk(T comp) throws IOException, ReponseRequestException, RequestException;
+	public abstract void eventOk(T comp) throws IOException, ResponseRequestException, RequestException;
 	
-	protected void initComp(T comp) throws IOException, ReponseRequestException, RequestException {};
+	protected void initComp(T comp) throws IOException, ResponseRequestException, RequestException {};
 	
 }

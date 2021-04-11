@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class CommandRefresh implements CommandExecutor {
@@ -24,7 +24,7 @@ public class CommandRefresh implements CommandExecutor {
 		try {
 			sorci.refresh();
 			sender.sendMessage(sorci.getMessage().getString("message_refresh"));
-		} catch (IOException | ReponseRequestException | RequestException | DeckException e) {
+		} catch (IOException | ResponseRequestException | RequestException | DeckException e) {
 			e.printStackTrace();
 			sender.sendMessage("§8[§4ERROR§8] §c"+e.getMessage());
 		}

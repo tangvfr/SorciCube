@@ -15,7 +15,7 @@ import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
@@ -74,7 +74,7 @@ public class GuiListFight extends AbstractGui implements Runnable {
 	public void run() {
 		try {
 			listFight = manager.getSorci().getHandlerFightData().getAllFightData();
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			e.printStackTrace();
 		}
 		int duel = 0;
@@ -124,7 +124,7 @@ public class GuiListFight extends AbstractGui implements Runnable {
 						try {
 							manager.getSorci().getHandlerFightData().whichSpectate(player.getUniqueId());
 							manager.getSorci().getHandlerFightData().addFightSpectate(player.getUniqueId(), fight.getFightUUID());
-						} catch (IOException | ReponseRequestException | RequestException e1) {
+						} catch (IOException | ResponseRequestException | RequestException e1) {
 							e1.printStackTrace();
 						}
 						manager.getSorci().sendPlayerToServer(player, fight.getServer());

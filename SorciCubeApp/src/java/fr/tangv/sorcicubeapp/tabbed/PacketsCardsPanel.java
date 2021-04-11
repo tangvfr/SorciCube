@@ -17,7 +17,7 @@ import fr.tangv.sorcicubeapp.utils.ColorMCToHTML;
 import fr.tangv.sorcicubecore.handler.HandlerPacketCards;
 import fr.tangv.sorcicubecore.packet.PacketCards;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class PacketsCardsPanel extends SearchPanel<PacketCards> {
@@ -27,7 +27,7 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 	private final HandlerPacketCards handler;
 	private final PacketCardsPanel packetCard;
 	
-	public PacketsCardsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
+	public PacketsCardsPanel(SorciClient client, FrameLogi logi) throws IOException, ResponseRequestException, RequestException {
 		super(client, logi);
 		this.handler = new HandlerPacketCards(client);
 		this.packetCard = new PacketCardsPanel(this);
@@ -42,7 +42,7 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 						try {
 							handler.newPacket(name);
 							refresh();
-						} catch (IOException | ReponseRequestException | RequestException e1) {
+						} catch (IOException | ResponseRequestException | RequestException e1) {
 							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Packet", JOptionPane.ERROR_MESSAGE);
 						}
 				}
@@ -59,7 +59,7 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 							try {
 								handler.removePacket(packet.getName());
 								refresh();
-							} catch (IOException | ReponseRequestException | RequestException e1) {
+							} catch (IOException | ResponseRequestException | RequestException e1) {
 								JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Remove Packet", JOptionPane.ERROR_MESSAGE);
 							}
 						}
@@ -99,7 +99,7 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 			packetCard.showPacket(pack);
 			refresh.setText("Refresh | "+max+" packets "+list.size()+" find");
 			this.repaint();
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			warningBug(e, "refresh");
 		}
 	}
@@ -107,7 +107,7 @@ public class PacketsCardsPanel extends SearchPanel<PacketCards> {
 	public void updatePacket(String lastName, PacketCards newPacket) {
 		try {
 			handler.updatePacket(lastName, newPacket);
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			warningBug(e, "update");
 		}
 	}

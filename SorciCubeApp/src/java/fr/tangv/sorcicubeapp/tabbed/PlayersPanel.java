@@ -30,7 +30,7 @@ import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 
 public class PlayersPanel extends JPanel {
 
@@ -45,7 +45,7 @@ public class PlayersPanel extends JPanel {
 	private final JLabel message;
 	private final File headImage;
 	
-	public PlayersPanel(CardsPanel cardsPanel, GroupsPanel groups) throws IOException, ReponseRequestException, RequestException {
+	public PlayersPanel(CardsPanel cardsPanel, GroupsPanel groups) throws IOException, ResponseRequestException, RequestException {
 		this.logi = cardsPanel.getFrameLogi();
 		this.groups = groups;
 		this.handler = new HandlerPlayers(cardsPanel.getClient(), cardsPanel.getCards());
@@ -147,7 +147,7 @@ public class PlayersPanel extends JPanel {
 				find.setEnabled(true);
 				find.repaint();
 			}).start();
-		} catch (IOException | ReponseRequestException | RequestException | DeckException e) {
+		} catch (IOException | ResponseRequestException | RequestException | DeckException e) {
 			JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error Find", JOptionPane.ERROR_MESSAGE);
 			logi.showConnection("Error: "+e.getMessage(), Color.MAGENTA);
 		}

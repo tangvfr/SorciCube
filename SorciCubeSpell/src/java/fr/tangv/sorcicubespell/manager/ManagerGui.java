@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.command.CommandGuiAdminViewCards;
 import fr.tangv.sorcicubespell.gui.EventGuiPlayer;
@@ -143,7 +143,7 @@ public class ManagerGui {
 		return guiIncreaseDeck;
 	}
 	
-	public void refreshFeaturePlayers() throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void refreshFeaturePlayers() throws IOException, ResponseRequestException, RequestException, DeckException {
 		HandlerPlayers handler = sorci.getHandlerPlayers();
 		for (PlayerGui pg : playerGuis.values())
 			pg.setPlayerFeatures(handler.getPlayer(pg.getUUID(), pg.getName()), sorci);

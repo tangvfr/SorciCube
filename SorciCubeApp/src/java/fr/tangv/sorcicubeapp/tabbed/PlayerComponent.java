@@ -31,7 +31,7 @@ import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 
 public class PlayerComponent extends JComponent {
 
@@ -50,7 +50,7 @@ public class PlayerComponent extends JComponent {
 	private final ComponentCombo<String> group;
 	private final Vector<String> groups;
 	
-	public PlayerComponent(PlayerResources res, HandlerPlayers handler, Vector<String> groups) throws ExceptionPlayerResources, IOException, ReponseRequestException, RequestException, DeckException {
+	public PlayerComponent(PlayerResources res, HandlerPlayers handler, Vector<String> groups) throws ExceptionPlayerResources, IOException, ResponseRequestException, RequestException, DeckException {
 		this.setLayout(new GridBagLayout());
 		this.res = res;
 		this.handler = handler;
@@ -105,7 +105,7 @@ public class PlayerComponent extends JComponent {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					setPlayerValues();
-				} catch (IOException | ReponseRequestException | RequestException e1) {
+				} catch (IOException | ResponseRequestException | RequestException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Save", JOptionPane.ERROR_MESSAGE);
 				}
@@ -117,7 +117,7 @@ public class PlayerComponent extends JComponent {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					getPlayerValues();
-				} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
+				} catch (IOException | ResponseRequestException | RequestException | DeckException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Cancel", JOptionPane.ERROR_MESSAGE);
 				}
@@ -148,7 +148,7 @@ public class PlayerComponent extends JComponent {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					handler.startSendingPlayer(res.getUUID(), json.isSelected() ? field.getText() : ("{\"text\": \""+field.getText()+"\"}"));
-				} catch (IOException | ReponseRequestException | RequestException e1) {
+				} catch (IOException | ResponseRequestException | RequestException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(PlayerComponent.this, e1.getMessage(), "Error Send Message", JOptionPane.ERROR_MESSAGE);
 				}
@@ -169,7 +169,7 @@ public class PlayerComponent extends JComponent {
 		this.add(pan);
 	}
 	
-	private void getPlayerValues() throws IOException, ReponseRequestException, RequestException, DeckException {
+	private void getPlayerValues() throws IOException, ResponseRequestException, RequestException, DeckException {
 		this.feature = handler.getPlayer(res.getUUID(), res.getName());		
 		if (!groups.contains(feature.getGroup()))
 			feature.setGroup("");
@@ -183,7 +183,7 @@ public class PlayerComponent extends JComponent {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void setPlayerValues() throws IOException, ReponseRequestException, RequestException {
+	private void setPlayerValues() throws IOException, ResponseRequestException, RequestException {
 		if (this.admin.getBoolean() != feature.isAdmin() || !this.group.getSelection().equals(feature.getGroup())) {
 			short m = Short.MAX_VALUE/2;
 			String valid = Integer.toString((int) (Math.random()*m)+m);

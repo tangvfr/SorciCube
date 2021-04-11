@@ -19,7 +19,7 @@ import fr.tangv.sorcicubecore.card.CardVisual;
 import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.util.ItemHead;
 
 public class PlayerFight extends FightSpectator {
@@ -80,7 +80,7 @@ public class PlayerFight extends FightSpectator {
 		if (isDead && !fight.isEnd())
 			try {
 				fight.end(this);
-			} catch (IOException | ReponseRequestException | RequestException | DeckException e) {
+			} catch (IOException | ResponseRequestException | RequestException | DeckException e) {
 				e.printStackTrace();
 			}
 	}
@@ -105,7 +105,7 @@ public class PlayerFight extends FightSpectator {
 		return this.lossAFK;
 	}
 
-	public void addRoundAFK() throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void addRoundAFK() throws IOException, ResponseRequestException, RequestException, DeckException {
 		if (isAFK) {
 			this.roundAFK++;
 			if (roundAFK >= ValueFight.V.roundMaxAFK && !fight.isEnd()) {

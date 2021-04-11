@@ -28,7 +28,7 @@ import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.card.CardSkin;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.util.TextList;
 
 public class MouseTable extends ClickListener {
@@ -61,7 +61,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = -4613034932047272121L;
 
 						@Override
-						public void eventOk(JTextField comp) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(JTextField comp) throws IOException, ResponseRequestException, RequestException {
 							card.setName(comp.getText());
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -75,7 +75,7 @@ public class MouseTable extends ClickListener {
 					new DialogBase<JTextField>(parent, "Edit Card", "Type", textType) {
 						private static final long serialVersionUID = -4613094932047272122L;
 						@Override
-						public void eventOk(JTextField comp) throws IOException, ReponseRequestException, RequestException {}
+						public void eventOk(JTextField comp) throws IOException, ResponseRequestException, RequestException {}
 					};
 					break;
 					
@@ -85,7 +85,7 @@ public class MouseTable extends ClickListener {
 							private static final long serialVersionUID = -4613034932047272123L;
 
 							@Override
-							public void eventOk(JTextField comp) throws IOException, ReponseRequestException, RequestException {
+							public void eventOk(JTextField comp) throws IOException, ResponseRequestException, RequestException {
 								eventOkMaterial(comp, card, this);
 							}
 						};
@@ -94,7 +94,7 @@ public class MouseTable extends ClickListener {
 							private static final long serialVersionUID = -4613034932047272124L;
 	
 							@Override
-							public void eventOk(JTextField comp) throws IOException, ReponseRequestException, RequestException {
+							public void eventOk(JTextField comp) throws IOException, ResponseRequestException, RequestException {
 								eventOkMaterial(comp, card, this);
 							}
 						};
@@ -105,7 +105,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = -4807395720412058129L;
 
 						@Override
-						public void eventOk(CardRarity enumCombo) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(CardRarity enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setRarity(enumCombo);
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -118,7 +118,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = -4807395720412058130L;
 
 						@Override
-						public void eventOk(CardFaction enumCombo) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(CardFaction enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setFaction(enumCombo);
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -131,7 +131,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = -4807395720412058131L;
 
 						@Override
-						public void eventOk(CardCible enumCombo) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(CardCible enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setCible(enumCombo);
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -144,7 +144,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = -4807395720412058129L;
 
 						@Override
-						public void eventOk(CardFaction enumCombo) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(CardFaction enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setCibleFaction(enumCombo);
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -157,7 +157,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = -4613034932048272120L;
 
 						@Override
-						public void eventOk(JSpinner comp) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(JSpinner comp) throws IOException, ResponseRequestException, RequestException {
 							card.setMana((int) comp.getValue());
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -172,7 +172,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = -4613024932048272120L;
 
 						@Override
-						public void eventOk(FeaturesTable comp) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(FeaturesTable comp) throws IOException, ResponseRequestException, RequestException {
 							card.setFeatures(comp.getCardFeatures());
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -192,7 +192,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = 6649269953841487465L;
 
 						@Override
-						public void eventOk(JTextArea comp) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(JTextArea comp) throws IOException, ResponseRequestException, RequestException {
 							card.setDescription(TextList.textToList(comp.getText()));
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -207,7 +207,7 @@ public class MouseTable extends ClickListener {
 						private static final long serialVersionUID = 664926995384148851L;
 
 						@Override
-						public void eventOk(JCheckBox comp) throws IOException, ReponseRequestException, RequestException {
+						public void eventOk(JCheckBox comp) throws IOException, ResponseRequestException, RequestException {
 							card.setOriginalName(comp.isSelected());
 							cardsPanel.getCards().update(card);
 							cardsPanel.refresh();
@@ -226,7 +226,7 @@ public class MouseTable extends ClickListener {
 	
 	
 	
-	private void eventOkMaterial(JTextField comp, Card card, DialogBase<?> base) throws IOException, ReponseRequestException, RequestException {
+	private void eventOkMaterial(JTextField comp, Card card, DialogBase<?> base) throws IOException, ResponseRequestException, RequestException {
 		CardMaterial material = null;
 		String text = comp.getText();
 		if (text.startsWith("skull: ")) {

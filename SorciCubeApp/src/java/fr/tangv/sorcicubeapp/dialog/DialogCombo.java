@@ -8,7 +8,7 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 
 public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBox<String>> {
 
@@ -30,7 +30,7 @@ public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBo
 	}
 
 	@Override
-	public void eventOk(JComboBox<String> comp) throws IOException, ReponseRequestException, RequestException {
+	public void eventOk(JComboBox<String> comp) throws IOException, ResponseRequestException, RequestException {
 		this.eventOk(this.valueOf((String) comp.getSelectedItem()));
 	}
 	
@@ -46,6 +46,6 @@ public abstract class DialogCombo<T extends Enum<?>> extends DialogBase<JComboBo
 		return null;
 	}
 
-	public abstract void eventOk(T enumCombo) throws IOException, ReponseRequestException, RequestException;
+	public abstract void eventOk(T enumCombo) throws IOException, ResponseRequestException, RequestException;
 	
 }

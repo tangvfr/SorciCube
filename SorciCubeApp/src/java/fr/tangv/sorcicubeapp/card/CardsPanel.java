@@ -15,7 +15,7 @@ import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class CardsPanel extends JPanel {
@@ -29,7 +29,7 @@ public class CardsPanel extends JPanel {
 	private JTable table;
 	private Card card;
 	
-	public CardsPanel(SorciClient client, FrameLogi frameLogi) throws IOException, ReponseRequestException, RequestException, PanelFilterException {
+	public CardsPanel(SorciClient client, FrameLogi frameLogi) throws IOException, ResponseRequestException, RequestException, PanelFilterException {
 		this.frameLogi = frameLogi;
 		this.client = client;
 		this.cards = new HandlerCards(client);
@@ -78,7 +78,7 @@ public class CardsPanel extends JPanel {
 		return nav;
 	}
 	
-	public void refresh() throws IOException, ReponseRequestException, RequestException {
+	public void refresh() throws IOException, ResponseRequestException, RequestException {
 		this.cards.refresh();
 		this.nav.refresh();
 		if (card != null) {

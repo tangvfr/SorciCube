@@ -18,7 +18,7 @@ import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.handler.HandlerPacketCards;
 import fr.tangv.sorcicubecore.packet.PacketCards;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.command.CommandPacketGive;
@@ -29,7 +29,7 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 	
 	public SorciCubeSpell sorci;
 
-	public ManagerPakcetCards(SorciClient sorciClient, SorciCubeSpell sorci) throws IOException, ReponseRequestException, RequestException {
+	public ManagerPakcetCards(SorciClient sorciClient, SorciCubeSpell sorci) throws IOException, ResponseRequestException, RequestException {
 		super(sorciClient);
 		this.sorci = sorci;
 		//command

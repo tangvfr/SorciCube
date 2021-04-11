@@ -12,7 +12,7 @@ import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.prefight.EventDuelCreator;
@@ -74,7 +74,7 @@ public class ManagerCreatorFight {
 				);
 			sorci.sendPlayerToServer(player1.getPlayer(), server);
 			sorci.sendPlayerToServer(player2.getPlayer(), server);
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			e.printStackTrace();
 			player1.getPlayer().sendMessage(e.getMessage());
 			player2.getPlayer().sendMessage(e.getMessage());

@@ -45,7 +45,7 @@ import fr.tangv.sorcicubecore.card.CardValue;
 import fr.tangv.sorcicubecore.card.CardVisual;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 
 public class PanelNav extends JPanel {
 
@@ -181,7 +181,7 @@ public class PanelNav extends JPanel {
 			private static final long serialVersionUID = 944290591647698175L;
 					
 			@Override
-			public void eventOk(CardComparator newSort) throws IOException, ReponseRequestException, RequestException  {
+			public void eventOk(CardComparator newSort) throws IOException, ResponseRequestException, RequestException  {
 				sort = newSort;
 				updateTextSortedBy();
 				cardsPanel.refresh();
@@ -267,7 +267,7 @@ public class PanelNav extends JPanel {
 							cardsPanel.getCards().put(card);
 							cardsPanel.setCard(card);
 							cardsPanel.refresh();
-						} catch (IOException | ReponseRequestException | RequestException e1) {
+						} catch (IOException | ResponseRequestException | RequestException e1) {
 							JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Create Card Spell", JOptionPane.ERROR_MESSAGE);
 						}
 					}
@@ -301,7 +301,7 @@ public class PanelNav extends JPanel {
 							cardsPanel.getCards().put(card);
 							cardsPanel.setCard(card);
 							cardsPanel.refresh();
-						} catch (IOException | ReponseRequestException | RequestException e1) {
+						} catch (IOException | ResponseRequestException | RequestException e1) {
 							JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Create Card Entity", JOptionPane.ERROR_MESSAGE);
 						}
 					}
@@ -320,7 +320,7 @@ public class PanelNav extends JPanel {
 									cardsPanel.getCards().remove(card);
 									cardsPanel.setCard(null);
 									cardsPanel.refresh();
-								} catch (IOException | ReponseRequestException | RequestException e1) {
+								} catch (IOException | ResponseRequestException | RequestException e1) {
 									JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e1.getMessage(), "Remove Card", JOptionPane.ERROR_MESSAGE);
 								}
 							}
@@ -348,7 +348,7 @@ public class PanelNav extends JPanel {
 	private void refrechCardPanel() {
 		try {
 			cardsPanel.refresh();
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			JOptionPane.showMessageDialog(PanelNav.this, "Error: "+e.getMessage(), "Error refrech", JOptionPane.ERROR_MESSAGE);
 			cardsPanel.getFrameLogi().showConnection("Error: "+e.getMessage(), Color.PINK);
 		}

@@ -20,7 +20,7 @@ import fr.tangv.sorcicubeapp.tools.ImageTool;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class PanelOthers extends JPanel {
@@ -43,7 +43,7 @@ public class PanelOthers extends JPanel {
 				try {
 					tab.refreshAll();
 					JOptionPane.showMessageDialog(PanelOthers.this, "Successful refresh !", "Refresh All", JOptionPane.INFORMATION_MESSAGE);
-				} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
+				} catch (IOException | ResponseRequestException | RequestException | DeckException e1) {
 					e1.printStackTrace();
 					logi.showConnection("RefreshAllError: "+e1.getMessage(), Color.RED);
 				}

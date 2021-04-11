@@ -12,7 +12,7 @@ import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.util.Config;
 import net.md_5.bungee.api.ChatMessageType;
@@ -146,7 +146,7 @@ public class PlayerGui {
 		if(playerFeature != null)
 			try {
 				handler.update(playerFeature);
-			} catch (IOException | ReponseRequestException | RequestException e) {
+			} catch (IOException | ResponseRequestException | RequestException e) {
 				e.printStackTrace();
 			}
 		else

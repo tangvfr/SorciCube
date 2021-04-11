@@ -9,7 +9,7 @@ import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class HandlerDefaultDeck {
@@ -21,14 +21,14 @@ public class HandlerDefaultDeck {
 	private final HandlerCards cards;
 	private final SorciClient sorci;
 	
-	public HandlerDefaultDeck(SorciClient sorci, HandlerCards cards) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public HandlerDefaultDeck(SorciClient sorci, HandlerCards cards) throws IOException, ResponseRequestException, RequestException, DeckException {
 		this.sorci = sorci;
 		this.cards = cards;
 		refresh();
 	}
 	
-	public void refresh() throws IOException, ReponseRequestException, RequestException, DeckException {
-		Request reponse = sorci.sendRequestReponse(new Request(RequestType.DEFAULT_DECK_GET, Request.randomID(), "GET", null),
+	public void refresh() throws IOException, ResponseRequestException, RequestException, DeckException {
+		Request reponse = sorci.sendRequestResponse(new Request(RequestType.DEFAULT_DECK_GET, Request.randomID(), "GET", null),
 				RequestType.DEFAULT_DECK_REPONSE);
 		Document doc = Document.parse(reponse.data);
 		this.deckDark = DeckCards.toDeckCards(cards.originalMap(), doc.get("deck_dark", Document.class));
@@ -37,8 +37,8 @@ public class HandlerDefaultDeck {
 		this.deckToxic = DeckCards.toDeckCards(cards.originalMap(), doc.get("deck_toxic", Document.class));
 	}
 	
-	public void update() throws IOException, ReponseRequestException, RequestException {
-		sorci.sendRequestReponse(new Request(RequestType.DEFAULT_DECK_UPDATE, Request.randomID(), "UPDATE",
+	public void update() throws IOException, ResponseRequestException, RequestException {
+		sorci.sendRequestResponse(new Request(RequestType.DEFAULT_DECK_UPDATE, Request.randomID(), "UPDATE",
 				new Document()
 				.append("deck_dark", deckDark.toDocument())
 				.append("deck_light", deckLight.toDocument())

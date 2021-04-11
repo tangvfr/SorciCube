@@ -12,7 +12,7 @@ import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.groups.GroupsPanel;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class TabbedPanel extends JTabbedPane {
@@ -29,7 +29,7 @@ public class TabbedPanel extends JTabbedPane {
 	private final ServerPanel serverPanel;
 	private final PanelOthers others;
 	
-	public TabbedPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException, PanelFilterException, DeckException {
+	public TabbedPanel(SorciClient client, FrameLogi logi) throws IOException, ResponseRequestException, RequestException, PanelFilterException, DeckException {
 		this.setTabPlacement(JTabbedPane.TOP);
 		//init tabbed
 		this.cardsPanel = new CardsPanel(client, logi);
@@ -54,7 +54,7 @@ public class TabbedPanel extends JTabbedPane {
 		this.addTab("Others", panelOthers);
 	}
 	
-	public void refreshAll() throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void refreshAll() throws IOException, ResponseRequestException, RequestException, DeckException {
 		this.cardsPanel.refresh();
 		this.decksPanel.refresh();
 		this.packetsPanel.refresh();

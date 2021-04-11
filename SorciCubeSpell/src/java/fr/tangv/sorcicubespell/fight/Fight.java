@@ -21,7 +21,7 @@ import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.util.Cooldown;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.CardRender;
@@ -148,7 +148,7 @@ public class Fight {
 			);
 	}
 	
-	public void update() throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void update() throws IOException, ResponseRequestException, RequestException, DeckException {
 		if (!isEnd) {
 			if (round < 0) {
 				if (cooldown.update()) {
@@ -343,7 +343,7 @@ public class Fight {
 		}
 	}
 	
-	public void nextRound() throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void nextRound() throws IOException, ResponseRequestException, RequestException, DeckException {
 		round += 1;
 		cooldownRound.start();
 		this.firstPlay = round%2 == 0;
@@ -384,14 +384,14 @@ public class Fight {
 		return isEnd;
 	}
 	
-	public void end(PlayerFight losser) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void end(PlayerFight losser) throws IOException, ResponseRequestException, RequestException, DeckException {
 		if (player1 == losser)
 			end(player1, player2);
 		else
 			end(player2, player1);
 	}
 	
-	private void endReward(Config lc, PlayerFight player, int money, int exp) throws IOException, ReponseRequestException, RequestException, DeckException {
+	private void endReward(Config lc, PlayerFight player, int money, int exp) throws IOException, ResponseRequestException, RequestException, DeckException {
 		PlayerFeatures feature = sorci.getHandlerPlayers().getPlayer(player.getUUID(), player.getNamePlayer());
 		player.sendMessage(
 				sorci.getMessage().getString("message_reward_end_game")
@@ -418,7 +418,7 @@ public class Fight {
 		sorci.getHandlerPlayers().update(feature);
 	}
 	
-	private void end(PlayerFight losser, PlayerFight winner) throws IOException, ReponseRequestException, RequestException, DeckException {
+	private void end(PlayerFight losser, PlayerFight winner) throws IOException, ResponseRequestException, RequestException, DeckException {
 		fightData.setStat(FightStat.END);
 		sorci.getHandlerFightData().updateFightData(fightData);
 		this.cooldownEnd.start();

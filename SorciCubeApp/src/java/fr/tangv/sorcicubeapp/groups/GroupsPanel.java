@@ -18,7 +18,7 @@ import fr.tangv.sorcicubeapp.utils.ColorMCToHTML;
 import fr.tangv.sorcicubecore.handler.HandlerGroups;
 import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 public class GroupsPanel extends SearchPanel<Group> {
@@ -27,7 +27,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 	private final HandlerGroups handler;
 	private final GroupPanel groupPanel;
 	
-	public GroupsPanel(SorciClient client, FrameLogi logi) throws IOException, ReponseRequestException, RequestException {
+	public GroupsPanel(SorciClient client, FrameLogi logi) throws IOException, ResponseRequestException, RequestException {
 		super(client, logi);
 		this.handler = new HandlerGroups(client);
 		this.groupPanel = new GroupPanel(this);
@@ -42,7 +42,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 						try {
 							handler.put(new Group(name, "§8[§9"+name+"§8]", 0, new Vector<String>()));
 							refresh();
-						} catch (IOException | ReponseRequestException | RequestException e1) {
+						} catch (IOException | ResponseRequestException | RequestException e1) {
 							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Group", JOptionPane.ERROR_MESSAGE);
 						}
 				}
@@ -61,7 +61,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 								handler.remove(group);
 								handler.put(new Group(name, group.getDisplay(), group.getWeight(), group.getPerms()));
 								refresh();
-							} catch (IOException | ReponseRequestException | RequestException e1) {
+							} catch (IOException | ResponseRequestException | RequestException e1) {
 								JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Rename Group", JOptionPane.ERROR_MESSAGE);
 							}
 					} else {
@@ -81,7 +81,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 							try {
 								handler.remove(group);
 								refresh();
-							} catch (IOException | ReponseRequestException | RequestException e1) {
+							} catch (IOException | ResponseRequestException | RequestException e1) {
 								JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Remove Packet", JOptionPane.ERROR_MESSAGE);
 							}
 						}
@@ -138,7 +138,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 			groupPanel.showGroup(g);
 			refresh.setText("Refresh | "+max+" groups "+list.size()+" find");
 			this.repaint();
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			warningBug(e, "refresh");
 		}
 	}
@@ -146,7 +146,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 	public void put(Group group) {
 		try {
 			handler.put(group);
-		} catch (IOException | ReponseRequestException | RequestException e) {
+		} catch (IOException | ResponseRequestException | RequestException e) {
 			warningBug(e, "put");
 		}
 	}

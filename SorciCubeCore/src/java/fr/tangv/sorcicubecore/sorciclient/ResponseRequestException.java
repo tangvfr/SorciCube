@@ -1,10 +1,10 @@
 package fr.tangv.sorcicubecore.sorciclient;
 
-public class ReponseRequestException extends Exception {
+public class ResponseRequestException extends Exception {
 
 	private static final long serialVersionUID = -2598529536053606148L;
 
-	public ReponseRequestException(String message) {
+	public ResponseRequestException(String message) {
 		super(message);
 	}
 	

@@ -7,13 +7,13 @@ import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestHandlerInterface;
 
-public class HandlerReponse implements RequestHandlerInterface {
+public class HandlerResponse implements RequestHandlerInterface {
 
 	public final ConcurrentHashMap<Integer, ReponseRequest> reponsesWait;
 	public final SorciClient sorci;
 	public final long timeout;
 	
-	public HandlerReponse(SorciClient sorci, long timeout) {
+	public HandlerResponse(SorciClient sorci, long timeout) {
 		this.reponsesWait = new ConcurrentHashMap<Integer, ReponseRequest>();
 		this.sorci = sorci;
 		this.timeout = timeout;

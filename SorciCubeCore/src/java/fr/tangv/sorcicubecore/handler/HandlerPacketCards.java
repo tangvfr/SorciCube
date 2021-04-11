@@ -10,7 +10,7 @@ import fr.tangv.sorcicubecore.packet.PacketCards;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.requests.RequestType;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.sorciclient.SorciClient;
 
 import java.io.IOException;
@@ -21,14 +21,14 @@ public class HandlerPacketCards {
 	private final SorciClient sorci;
 	private final ConcurrentHashMap<String, PacketCards> packets;
 	
-	public HandlerPacketCards(SorciClient sorci) throws IOException, ReponseRequestException, RequestException {
+	public HandlerPacketCards(SorciClient sorci) throws IOException, ResponseRequestException, RequestException {
 		this.packets = new ConcurrentHashMap<String, PacketCards>();
 		this.sorci = sorci;
 		this.refresh();
 	}
 	
-	public void refresh() throws IOException, ReponseRequestException, RequestException {
-		Request reponse = sorci.sendRequestReponse(new Request(RequestType.PACKETS_GET_ALL, Request.randomID(), "List", null),
+	public void refresh() throws IOException, ResponseRequestException, RequestException {
+		Request reponse = sorci.sendRequestResponse(new Request(RequestType.PACKETS_GET_ALL, Request.randomID(), "List", null),
 				RequestType.PACKETS_LIST);
 		Document list = Document.parse(reponse.data);
 		this.packets.clear();
@@ -38,22 +38,22 @@ public class HandlerPacketCards {
 		}
 	}
 	
-	public void newPacket(String name) throws IOException, ReponseRequestException, RequestException {
+	public void newPacket(String name) throws IOException, ResponseRequestException, RequestException {
 		if (name == null || name.isEmpty())
 			throw new RequestException("Packet new has name invalid");
-		Request reponse = sorci.sendRequestReponse(new Request(RequestType.PACKETS_NEW, Request.randomID(), "New", name),
+		Request reponse = sorci.sendRequestResponse(new Request(RequestType.PACKETS_NEW, Request.randomID(), "New", name),
 				RequestType.PACKETS_NEWED);
 		packets.put(name, PacketCards.toPacketCards(Document.parse(reponse.data)));
 	}
 	
-	public void removePacket(String name) throws IOException, ReponseRequestException, RequestException {
-		sorci.sendRequestReponse(new Request(RequestType.PACKETS_REMOVE, Request.randomID(), "Remove", name),
+	public void removePacket(String name) throws IOException, ResponseRequestException, RequestException {
+		sorci.sendRequestResponse(new Request(RequestType.PACKETS_REMOVE, Request.randomID(), "Remove", name),
 				RequestType.SUCCESSFUL);
 		packets.remove(name);
 	}
 	
-	public void updatePacket(String lastName, PacketCards packet) throws IOException, ReponseRequestException, RequestException {
-		sorci.sendRequestReponse(new Request(RequestType.PACKETS_UPDATE, Request.randomID(), Base64.getEncoder().encodeToString(lastName.getBytes(Client.CHARSET)), packet.toDocument().toJson()),
+	public void updatePacket(String lastName, PacketCards packet) throws IOException, ResponseRequestException, RequestException {
+		sorci.sendRequestResponse(new Request(RequestType.PACKETS_UPDATE, Request.randomID(), Base64.getEncoder().encodeToString(lastName.getBytes(Client.CHARSET)), packet.toDocument().toJson()),
 				RequestType.SUCCESSFUL);
 		packets.remove(lastName);
 		packets.put(packet.getName(), packet);

@@ -17,7 +17,7 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 
 public abstract class SorciClient extends Client implements RequestHandlerInterface {
 	
-	private final HandlerReponse handlerReponse;
+	private final HandlerResponse handlerReponse;
 	private volatile boolean isAuthentified;
 	private volatile PrintStream out;
 	
@@ -32,7 +32,7 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 	public SorciClient(SorciClientURI uri, long timeoutReponse) throws IOException, RequestHandlerException, RequestException {
 		super(new Socket(uri.getAddr(), uri.getPort()));
 		this.setClientID(uri.getClientID());
-		this.handlerReponse = new HandlerReponse(this, timeoutReponse);
+		this.handlerReponse = new HandlerResponse(this, timeoutReponse);
 		RequestHandler handler = new RequestHandler();
 		handler.registered(this);
 		handler.registered(handlerReponse);
@@ -42,14 +42,14 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 		sendRequest(new Request(RequestType.IDENTIFICATION, Request.randomID(), "identification", this.getClientID().toDocument().toJson()));
 	}
 	
-	public Request sendRequestReponse(Request request, RequestType reponseType) throws IOException, ReponseRequestException {
+	public Request sendRequestResponse(Request request, RequestType responseType) throws IOException, ResponseRequestException {
 		Request reponse = this.handlerReponse.sendRequestReponse(request);
 		if (reponse == null)
-			throw new ReponseRequestException("Error with ReponseRequest is null !");
+			throw new ResponseRequestException("Error with ReponseRequest is null !");
 		if (reponse.requestType == RequestType.ERROR)
-			throw new ReponseRequestException("Error ReponseRequest: "+reponse.data);
-		if (reponse.requestType != reponseType)
-			throw new ReponseRequestException("Error type of ReponseRequest is invalid !");
+			throw new ResponseRequestException("Error ReponseRequest: "+reponse.data);
+		if (reponse.requestType != responseType)
+			throw new ResponseRequestException("Error type of ReponseRequest is invalid !");
 		return reponse;
 	}
 

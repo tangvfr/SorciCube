@@ -12,7 +12,7 @@ import fr.tangv.sorcicubeapp.card.CardsPanel;
 import fr.tangv.sorcicubecore.handler.HandlerDefaultDeck;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ReponseRequestException;
+import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 
 public class DecksPanel extends JTabbedPane {
 
@@ -23,7 +23,7 @@ public class DecksPanel extends JTabbedPane {
 	private final DeckPanel nature;
 	private final DeckPanel toxic;
 	
-	public DecksPanel(CardsPanel cardsPanel) throws IOException, ReponseRequestException, RequestException, DeckException {
+	public DecksPanel(CardsPanel cardsPanel) throws IOException, ResponseRequestException, RequestException, DeckException {
 		this.decks = new HandlerDefaultDeck(cardsPanel.getClient(), cardsPanel.getCards());
 		this.setTabPlacement(JTabbedPane.LEFT);
 		//init decks
@@ -46,7 +46,7 @@ public class DecksPanel extends JTabbedPane {
 					try {
 						refresh();
 						DecksPanel.this.setSelectedIndex(0);
-					} catch (IOException | ReponseRequestException | RequestException | DeckException e1) {
+					} catch (IOException | ResponseRequestException | RequestException | DeckException e1) {
 						JOptionPane.showMessageDialog(DecksPanel.this, e1.getMessage(), "Error Refresh", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -54,7 +54,7 @@ public class DecksPanel extends JTabbedPane {
 		});
 	}
 	
-	public void refresh() throws IOException, ReponseRequestException, RequestException, DeckException {
+	public void refresh() throws IOException, ResponseRequestException, RequestException, DeckException {
 		decks.refresh();
 		this.dark.setDeck(decks.getDeckDark());
 		this.light.setDeck(decks.getDeckLight());
@@ -63,7 +63,7 @@ public class DecksPanel extends JTabbedPane {
 		this.repaint();
 	}
 	
-	public void update() throws IOException, ReponseRequestException, RequestException {
+	public void update() throws IOException, ResponseRequestException, RequestException {
 		decks.update();
 	}
 	
