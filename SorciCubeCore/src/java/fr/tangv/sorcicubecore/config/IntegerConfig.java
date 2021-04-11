@@ -7,7 +7,10 @@ public class IntegerConfig implements ElementConfig {
 	public int value;
 
 	public IntegerConfig(Document doc) {
-		this.value = doc.getInteger("integer");
+		if (doc == null)
+			this.value = 0;
+		else
+			this.value = doc.get("integer", 0);
 	}
 	
 	@Override

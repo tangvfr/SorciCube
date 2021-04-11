@@ -22,7 +22,7 @@ public class HandlerGroups extends HandlerObjectsAbstract<String, Group> {
 	}
 	
 	@Override
-	public void update(Group group) {
+	protected void updateValue(Group group) {
 		group.calcAllPerms(cloneMap());
 	}
 	

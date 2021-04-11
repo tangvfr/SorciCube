@@ -10,13 +10,12 @@ public enum CardFaction {
 		
 	private static String[] colors = new String[5];
 	
-	public static void initColors(char basic, char dark, char light, char nature, char toxic) {
-		final String c = "§";
-		colors[0] = c+basic;
-		colors[1] = c+dark;
-		colors[2] = c+light;
-		colors[3] = c+nature;
-		colors[4] = c+toxic;
+	public static void initColors(String basic, String dark, String light, String nature, String toxic) {
+		colors[0] = basic;
+		colors[1] = dark;
+		colors[2] = light;
+		colors[3] = nature;
+		colors[4] = toxic;
 	}
 	
 	private byte number;

@@ -8,4 +8,8 @@ public class ConfigParseException extends Exception {
 		super(message);
 	}
 	
+	public ConfigParseException(String message, Throwable thro) {
+		super(message, thro);
+	}
+	
 }

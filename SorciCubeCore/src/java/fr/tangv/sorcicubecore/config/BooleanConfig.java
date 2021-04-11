@@ -7,7 +7,10 @@ public class BooleanConfig implements ElementConfig {
 	public boolean value;
 
 	public BooleanConfig(Document doc) {
-		this.value = doc.getBoolean("boolean");
+		if (doc == null)
+			this.value = false;
+		else
+			this.value = doc.get("boolean", false);
 	}
 	
 	@Override

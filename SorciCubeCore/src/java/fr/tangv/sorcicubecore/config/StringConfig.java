@@ -7,7 +7,10 @@ public class StringConfig implements ElementConfig {
 	public String value;
 
 	public StringConfig(Document doc) {
-		this.value = doc.get("string", "");
+		if (doc == null)
+			this.value = "";
+		else
+			this.value = doc.get("string", "");
 	}
 	
 	@Override

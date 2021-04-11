@@ -56,7 +56,7 @@ public abstract class HandlerObjectsAbstract<K, V> {
 		sorci.sendRequestResponse(new Request(RequestType.OBJECTS_PUT, Request.randomID(), formater.getType(), formater.toDocument(value).toJson()),
 				RequestType.SUCCESSFUL);
 		map.put(formater.getKey(value), value);
-		update(value);
+		updateValue(value);
 	}
 	
 	public void remove(V value) throws IOException, ResponseRequestException, RequestException {
@@ -65,6 +65,6 @@ public abstract class HandlerObjectsAbstract<K, V> {
 		map.remove(formater.getKey(value), value);
 	}
 
-	public void update(V value) {};
+	protected void updateValue(V value) {};
 	
 }

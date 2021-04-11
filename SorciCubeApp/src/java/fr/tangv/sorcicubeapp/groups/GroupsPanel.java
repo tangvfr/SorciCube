@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -132,6 +133,12 @@ public class GroupsPanel extends SearchPanel<Group> {
 					list.add(group);
 				max++;
 			}
+			list.sort(new Comparator<Group>() {
+				@Override
+				public int compare(Group g1, Group g2) {
+					return Integer.compare(g1.getWeight(), g2.getWeight());
+				}
+			});
 			this.list.setListData(list);
 			if (g != null)
 				this.list.setSelectedValue(g, true);

@@ -63,7 +63,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JTextField comp) throws IOException, ResponseRequestException, RequestException {
 							card.setName(comp.getText());
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -107,7 +107,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardRarity enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setRarity(enumCombo);
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -120,7 +120,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardFaction enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setFaction(enumCombo);
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -133,7 +133,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardCible enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setCible(enumCombo);
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -146,7 +146,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(CardFaction enumCombo) throws IOException, ResponseRequestException, RequestException {
 							card.setCibleFaction(enumCombo);
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -159,7 +159,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JSpinner comp) throws IOException, ResponseRequestException, RequestException {
 							card.setMana((int) comp.getValue());
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -174,7 +174,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(FeaturesTable comp) throws IOException, ResponseRequestException, RequestException {
 							card.setFeatures(comp.getCardFeatures());
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 						
@@ -194,7 +194,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JTextArea comp) throws IOException, ResponseRequestException, RequestException {
 							card.setDescription(TextList.textToList(comp.getText()));
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -209,7 +209,7 @@ public class MouseTable extends ClickListener {
 						@Override
 						public void eventOk(JCheckBox comp) throws IOException, ResponseRequestException, RequestException {
 							card.setOriginalName(comp.isSelected());
-							cardsPanel.getCards().update(card);
+							cardsPanel.getCards().put(card);
 							cardsPanel.refresh();
 						}
 					};
@@ -248,7 +248,7 @@ public class MouseTable extends ClickListener {
 		}
 		if (material != null) {
 			card.setMaterial(material);
-			cardsPanel.getCards().update(card);
+			cardsPanel.getCards().put(card);
 			cardsPanel.refresh();
 		} else {
 			JOptionPane.showMessageDialog(base, "Error invalid Material", "Error Card Material", JOptionPane.ERROR_MESSAGE);
