@@ -14,7 +14,7 @@ public abstract class AbstractConfig implements ElementConfig {
 				throw new ConfigParseException("ErrorField "+type.getName()+" don't has interface "+ElementConfig.class.getSimpleName()+" !");
 			try {
 				try {
-					Document d = (doc == null) ? null : doc.get(field.getName().toLowerCase(), Document.class);
+					Document d = (doc == null) ? null : doc.get(field.getName(), Document.class);
 					field.set(this, type.getConstructor(Document.class).newInstance(d));
 				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					throw new ConfigParseException(e);
@@ -37,7 +37,7 @@ public abstract class AbstractConfig implements ElementConfig {
 			try {
 				Object ob = field.get(this);
 				if (ob != null)
-					doc.append(field.getName().toLowerCase(), ((ElementConfig) ob).toDocument());
+					doc.append(field.getName(), ((ElementConfig) ob).toDocument());
 			} catch (IllegalAccessException | IllegalArgumentException | SecurityException e) {
 				throw new ConfigParseException(e.getClass().getSimpleName()+": "+e.getMessage(), e);
 			}	
