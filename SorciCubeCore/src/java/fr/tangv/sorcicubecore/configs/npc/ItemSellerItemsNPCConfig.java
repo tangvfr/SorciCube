@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.configs;
+package fr.tangv.sorcicubecore.configs.npc;
 
 import org.bson.Document;
 
@@ -8,17 +8,13 @@ import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.config.IntegerConfig;
 import fr.tangv.sorcicubecore.config.StringConfig;
 
-public class ArenaConfig extends AbstractConfig {
+public class ItemSellerItemsNPCConfig extends AbstractConfig {
 
 	public BooleanConfig isEnable;
-	public StringConfig id;
-	public StringConfig name;
-	public StringConfig world;
-	public IntegerConfig spectatorRadius;
-	public BaseCoordConfig firstBase;
-	public BaseCoordConfig secondBase;
+	public StringConfig nameItem;
+	public IntegerConfig price;
 	
-	public ArenaConfig(Document doc) throws ConfigParseException {
+	public ItemSellerItemsNPCConfig(Document doc) throws ConfigParseException {
 		super(doc);
 	}
 	

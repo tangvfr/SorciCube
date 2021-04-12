@@ -14,7 +14,11 @@ public class NPCConfig extends AbstractConfig {
 	public StringConfig listFight;
 	public StringConfig increaseNumberDeck;
 	public DeckPriceNPCConfig increaseNumberDeckPrice;
-
+	public ListConfig<RewardNPCConfig> rewardNPCs;
+	public ListConfig<MessageNPCConfig> messageNPCs;
+	public ListConfig<SellerCardsNPCConfig> sellerCardsNPCs;
+	public ListConfig<SellerItemsNPCConfig> sellerItemsNPCs;
+	
 	public NPCConfig(Document doc) throws ConfigParseException {
 		super(doc);
 	}
