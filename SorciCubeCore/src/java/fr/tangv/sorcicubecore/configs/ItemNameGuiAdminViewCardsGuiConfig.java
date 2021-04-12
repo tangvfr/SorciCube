@@ -5,11 +5,11 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class ItemNameGuiAdminViewCardsGuiConfig extends AbstractConfig {
 
-	public StringConfig SORT;
-	public StringConfig PREVIOUS;
-	public StringConfig NEXT;
-	public StringConfig CLOSE;
-	public StringConfig PAGE;
+	public StringConfig sort;
+	public StringConfig previous;
+	public StringConfig next;
+	public StringConfig close;
+	public StringConfig page;
 
 	public ItemNameGuiAdminViewCardsGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

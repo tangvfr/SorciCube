@@ -5,8 +5,8 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiTrashGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
-	public StringConfig DUMPED;
+	public StringConfig name;
+	public StringConfig dumped;
 
 	public GuiTrashGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

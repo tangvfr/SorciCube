@@ -8,12 +8,12 @@ import fr.tangv.sorcicubecore.config.VectorConfig;
 
 public class BaseCoordConfig extends AbstractConfig {
 
-	public VectorConfig BASE;
-	public VectorConfig ENTITY1;
-	public VectorConfig ENTITY2;
-	public VectorConfig ENTITY3;
-	public VectorConfig ENTITY4;
-	public VectorConfig ENTITY5;
+	public VectorConfig base;
+	public VectorConfig entity1;
+	public VectorConfig entity2;
+	public VectorConfig entity3;
+	public VectorConfig entity4;
+	public VectorConfig entity5;
 	
 	public BaseCoordConfig(Document doc) throws ConfigParseException {
 		super(doc);

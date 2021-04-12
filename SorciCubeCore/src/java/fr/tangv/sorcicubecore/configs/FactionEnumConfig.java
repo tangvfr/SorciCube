@@ -5,11 +5,11 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class FactionEnumConfig extends AbstractConfig {
 
-	public StringConfig BASIC;
-	public StringConfig DARK;
-	public StringConfig LIGHT;
-	public StringConfig NATURE;
-	public StringConfig TOXIC;
+	public StringConfig basic;
+	public StringConfig dark;
+	public StringConfig light;
+	public StringConfig nature;
+	public StringConfig toxic;
 
 	public FactionEnumConfig(Document doc) throws ConfigParseException {
 		super(doc);

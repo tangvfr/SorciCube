@@ -5,8 +5,8 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiSelectDeckDefaultGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
-	public StringConfig LORE_SELECT;
+	public StringConfig name;
+	public StringConfig loreSelect;
 
 	public GuiSelectDeckDefaultGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

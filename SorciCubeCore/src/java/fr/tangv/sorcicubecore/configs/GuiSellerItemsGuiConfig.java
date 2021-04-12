@@ -5,8 +5,8 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiSellerItemsGuiConfig extends AbstractConfig {
 
-	public StringConfig LORE_RIGHT;
-	public StringConfig LORE_WRONG;
+	public StringConfig loreRight;
+	public StringConfig loreWrong;
 
 	public GuiSellerItemsGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

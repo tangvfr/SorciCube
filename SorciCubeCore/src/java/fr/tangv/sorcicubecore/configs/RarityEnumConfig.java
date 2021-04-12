@@ -5,10 +5,10 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class RarityEnumConfig extends AbstractConfig {
 
-	public StringConfig COMMUN;
-	public StringConfig RARE;
-	public StringConfig EPIC;
-	public StringConfig LEGENDARY;
+	public StringConfig commun;
+	public StringConfig rare;
+	public StringConfig epic;
+	public StringConfig legendary;
 
 	public RarityEnumConfig(Document doc) throws ConfigParseException {
 		super(doc);

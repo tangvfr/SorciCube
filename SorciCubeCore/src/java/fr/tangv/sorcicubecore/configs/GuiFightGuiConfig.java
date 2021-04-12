@@ -5,10 +5,10 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiFightGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
-	public StringConfig UNCLASSIED;
-	public StringConfig DUEL;
-	public StringConfig CLOSE;
+	public StringConfig name;
+	public StringConfig unclassied;
+	public StringConfig duel;
+	public StringConfig close;
 
 	public GuiFightGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

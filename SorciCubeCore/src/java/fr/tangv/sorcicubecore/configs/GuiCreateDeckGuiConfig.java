@@ -5,9 +5,9 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiCreateDeckGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
-	public StringConfig BACK;
-	public StringConfig LORE_SELECT;
+	public StringConfig name;
+	public StringConfig back;
+	public StringConfig loreSelect;
 
 	public GuiCreateDeckGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

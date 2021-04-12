@@ -5,11 +5,11 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class ItemNameGuiSwapCardGuiConfig extends AbstractConfig {
 
-	public StringConfig SORT;
-	public StringConfig PREVIOUS;
-	public StringConfig NEXT;
-	public StringConfig BACK;
-	public StringConfig PAGE;
+	public StringConfig sort;
+	public StringConfig previous;
+	public StringConfig next;
+	public StringConfig back;
+	public StringConfig page;
 
 	public ItemNameGuiSwapCardGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

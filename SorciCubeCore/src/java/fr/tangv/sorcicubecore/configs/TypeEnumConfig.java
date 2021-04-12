@@ -5,9 +5,9 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class TypeEnumConfig extends AbstractConfig {
 
-	public StringConfig SPELL;
-	public StringConfig ENTITY;
-	public StringConfig HERO;
+	public StringConfig spell;
+	public StringConfig entity;
+	public StringConfig hero;
 
 	public TypeEnumConfig(Document doc) throws ConfigParseException {
 		super(doc);

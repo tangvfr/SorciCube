@@ -9,12 +9,12 @@ import fr.tangv.sorcicubecore.config.StringConfig;
 
 public class ArenaConfig extends AbstractConfig {
  
-	public StringConfig ID;
-	public StringConfig NAME;
-	public StringConfig WORLD;
-	public IntegerConfig SPECTATOR_RADIUS;
-	public BaseCoordConfig FIRST_BASE;
-	public BaseCoordConfig SECOND_BASE;
+	public StringConfig id;
+	public StringConfig name;
+	public StringConfig world;
+	public IntegerConfig spectatorRadius;
+	public BaseCoordConfig firstBase;
+	public BaseCoordConfig secondBase;
 	
 	public ArenaConfig(Document doc) throws ConfigParseException {
 		super(doc);

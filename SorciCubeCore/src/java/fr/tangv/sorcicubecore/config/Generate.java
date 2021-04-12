@@ -44,11 +44,14 @@ public class Generate {
 			while ((len = reader.read(chars)) != -1)
 				all.append(chars, 0, len);
 			reader.close();
-			Pattern pat = Pattern.compile("^\tpublic \\w+ ([\\w_]+);$", Pattern.MULTILINE);
+			Pattern pat = Pattern.compile("^\tpublic (\\w+) ([\\w_]+);$", Pattern.MULTILINE);
 			Matcher mat = pat.matcher(all.toString());
 			String result = all.toString();
 			while (mat.find()) {
-				result = result.replace(mat.group(1), generateNameVariable(mat.group(1), false));
+				result = result.replace(
+						"\tpublic "+mat.group(1)+" "+mat.group(2)+";",
+						"\tpublic "+mat.group(1)+" "+generateNameVariable(mat.group(2), false)+";"
+					);
 			}
 			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(parent));
 			out.append(result);

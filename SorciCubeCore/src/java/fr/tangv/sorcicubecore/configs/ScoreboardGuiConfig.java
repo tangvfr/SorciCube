@@ -5,7 +5,7 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class ScoreboardGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
+	public StringConfig name;
 
 	public ScoreboardGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

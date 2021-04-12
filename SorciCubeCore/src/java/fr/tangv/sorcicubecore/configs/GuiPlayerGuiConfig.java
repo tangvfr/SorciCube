@@ -5,18 +5,18 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiPlayerGuiConfig extends AbstractConfig {
 
-	public StringConfig NULL;
-	public StringConfig NONE;
-	public StringConfig NEXT;
-	public StringConfig NEXT_DESC;
-	public StringConfig STICK_VIEW;
-	public StringConfig STICK_VIEW_DESC;
-	public StringConfig BUY;
-	public StringConfig BUY_DESC;
-	public StringConfig SWAP;
-	public StringConfig SWAP_DESC;
-	public StringConfig BACK_LOBBY;
-	public StringConfig BACK_LOBBY_DESC;
+	public StringConfig nul;
+	public StringConfig none;
+	public StringConfig next;
+	public StringConfig nextDesc;
+	public StringConfig stickView;
+	public StringConfig stickViewDesc;
+	public StringConfig buy;
+	public StringConfig buyDesc;
+	public StringConfig swap;
+	public StringConfig swapDesc;
+	public StringConfig backLobby;
+	public StringConfig backLobbyDesc;
 
 	public GuiPlayerGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

@@ -5,10 +5,10 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiEditDeckGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
-	public StringConfig DECK;
-	public StringConfig BACK;
-	public StringConfig LORE_FACTION;
+	public StringConfig name;
+	public StringConfig deck;
+	public StringConfig back;
+	public StringConfig loreFaction;
 
 	public GuiEditDeckGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

@@ -5,8 +5,8 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiChangeSortGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
-	public StringConfig BACK;
+	public StringConfig name;
+	public StringConfig back;
 
 	public GuiChangeSortGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

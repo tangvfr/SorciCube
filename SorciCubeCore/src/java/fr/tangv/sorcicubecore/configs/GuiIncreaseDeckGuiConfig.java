@@ -5,12 +5,12 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiIncreaseDeckGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
-	public StringConfig MAX;
-	public StringConfig UNLOCK;
-	public StringConfig PRENIUM;
-	public StringConfig PRICE_WRONG;
-	public StringConfig PRICE_RIGHT;
+	public StringConfig name;
+	public StringConfig max;
+	public StringConfig unlock;
+	public StringConfig prenium;
+	public StringConfig priceWrong;
+	public StringConfig priceRight;
 
 	public GuiIncreaseDeckGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

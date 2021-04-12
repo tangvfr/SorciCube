@@ -5,12 +5,12 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class LevelConfig extends AbstractConfig {
 
-	public IntegerConfig EXPERIENCE_WIN;
-	public IntegerConfig MONEY_WIN;
-	public IntegerConfig EXPERIENCE_LOSS;
-	public IntegerConfig MONEY_LOSS;
-	public IntegerConfig EXPERIENCE_EQUALITY;
-	public IntegerConfig MONEY_EQUALITY;
+	public IntegerConfig experienceWin;
+	public IntegerConfig moneyWin;
+	public IntegerConfig experienceLoss;
+	public IntegerConfig moneyLoss;
+	public IntegerConfig experienceEquality;
+	public IntegerConfig moneyEquality;
 
 	public LevelConfig(Document doc) throws ConfigParseException {
 		super(doc);

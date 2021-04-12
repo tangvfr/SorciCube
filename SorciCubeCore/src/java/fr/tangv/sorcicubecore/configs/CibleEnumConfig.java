@@ -5,24 +5,24 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class CibleEnumConfig extends AbstractConfig {
 
-	public StringConfig NONE;
-	public StringConfig ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE;
-	public StringConfig ONE_HERO;
-	public StringConfig ALL_HERO;
-	public StringConfig ONE;
-	public StringConfig ONE_ENEMIE;
-	public StringConfig ONE_ENTITY_ENEMIE;
-	public StringConfig HERO_ENEMIE;
-	public StringConfig ALL_ENEMIE;
-	public StringConfig ALL_ENTITY_ENEMIE;
-	public StringConfig ONE_ALLY;
-	public StringConfig ONE_ENTITY_ALLY;
-	public StringConfig HERO_ALLY;
-	public StringConfig ALL_ALLY;
-	public StringConfig ALL_ENTITY_ALLY;
-	public StringConfig ONE_ENTITY;
-	public StringConfig ALL_ENTITY;
-	public StringConfig ALL;
+	public StringConfig none;
+	public StringConfig oneEntityAllyAndOneEntityEnemie;
+	public StringConfig oneHero;
+	public StringConfig allHero;
+	public StringConfig one;
+	public StringConfig oneEnemie;
+	public StringConfig oneEntityEnemie;
+	public StringConfig heroEnemie;
+	public StringConfig allEnemie;
+	public StringConfig allEntityEnemie;
+	public StringConfig oneAlly;
+	public StringConfig oneEntityAlly;
+	public StringConfig heroAlly;
+	public StringConfig allAlly;
+	public StringConfig allEntityAlly;
+	public StringConfig oneEntity;
+	public StringConfig allEntity;
+	public StringConfig all;
 
 	public CibleEnumConfig(Document doc) throws ConfigParseException {
 		super(doc);

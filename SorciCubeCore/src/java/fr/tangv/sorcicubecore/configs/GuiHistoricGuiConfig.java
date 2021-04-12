@@ -5,7 +5,7 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class GuiHistoricGuiConfig extends AbstractConfig {
 
-	public StringConfig NAME;
+	public StringConfig name;
 
 	public GuiHistoricGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);
