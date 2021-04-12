@@ -2,10 +2,16 @@ package fr.tangv.sorcicubecore.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayDeque;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bson.Document;
 import org.bukkit.configuration.ConfigurationSection;
@@ -17,14 +23,57 @@ import fr.tangv.sorcicubecore.configs.*;
 public class Generate {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, ConfigParseException {
-		boolean gClass = true;
+		/*boolean gClass = true;
 		String name = "Npc";
 		String file = "D:\\Data\\ShareFolder\\Bureau\\config\\others\\npc.yml";
 		FeatureGenerate feature = new FeatureGenerate(name, new File(file));
 		if (gClass)
 			generateClass(feature);
 		else
-			generateJSON(feature);
+			generateJSON(feature);*/
+		lowVariable(new File("D:\\Data\\ShareFolder\\Bureau\\configs\\"));
+	}
+	
+	public static void lowVariable(File parent) throws IOException {
+		if (parent.isFile()) {
+			System.out.println("File: "+parent.getName());
+			FileReader reader = new FileReader(parent);
+			StringBuilder all = new StringBuilder();
+			int len;
+			char[] chars = new char[1024];
+			while ((len = reader.read(chars)) != -1)
+				all.append(chars, 0, len);
+			reader.close();
+			Pattern pat = Pattern.compile("^\tpublic \\w+ ([\\w_]+);$", Pattern.MULTILINE);
+			Matcher mat = pat.matcher(all.toString());
+			ArrayDeque<ReplaceMatch> list = new ArrayDeque<ReplaceMatch>();
+			while (mat.find())
+				list.add(new ReplaceMatch(mat.start(1), mat.end(1), generateNameVariable(mat.group(1), false)));
+			String result = all.toString();
+			ReplaceMatch rep;
+			while ((rep = list.pollLast()) != null)
+				result = result.replace(result.substring(rep.start, rep.end), rep.content);
+			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(parent));
+			out.append(result);
+			out.close();
+		} else if (parent.isDirectory()) {
+			for (File file : parent.listFiles())
+				lowVariable(file);
+		}
+	}
+	
+	private static class ReplaceMatch {
+		
+		private final int start;
+		private final int end;
+		private final String content;
+		
+		private ReplaceMatch(int start, int end, String content) {
+			this.start = start;
+			this.end = end;
+			this.content = content;
+		}
+		
 	}
 	
 	public static class FeatureGenerate {
@@ -66,18 +115,7 @@ public class Generate {
 		else if (section.isSet(key) && section.getBoolean(key+".location", false)) {
 			typ = "LocationConfig";
 		} else if (section.isConfigurationSection(key)) {
-			char[] cll = key.toLowerCase().toCharArray();
-			String cl = "";
-			for (int i = 0; i < cll.length; i++) {
-				if (cll[i] == '_') {
-					i++;
-					cl += Character.toUpperCase(cll[i]);
-				} else if (i == 0) {
-					cl += Character.toUpperCase(cll[i]);
-				} else {
-					cl += cll[i];
-				}
-			}
+			String cl = generateNameVariable(key, true);
 			cl += prefix;
 			File file = new File(folder+cl+".java");
 			if (!file.exists())
@@ -89,14 +127,30 @@ public class Generate {
 			FileWriter fw = new FileWriter(file);
 			fw.append(FeatureGenerate.DEFAULT_CLASS.replace("{className}", cl).replace("{classContent}", lines));
 			fw.close();
-			return "	public "+cl+" "+key.toUpperCase()+";\r\n";
+			return "	public "+cl+" "+generateNameVariable(key, false)+";\r\n";
 		}
 		if (typ != null)
-			return "	public "+typ+" "+key.toUpperCase()+";\r\n";
+			return "	public "+typ+" "+generateNameVariable(key, false)+";\r\n";
 		else {
 			System.err.println("Key "+key+" has invalid type !");
 			return "";
 		}
+	}
+	
+	private static String generateNameVariable(String name, boolean upperFirstChar) {
+		char[] cll = name.toLowerCase().toCharArray();
+		String cl = "";
+		for (int i = 0; i < cll.length; i++) {
+			if (cll[i] == '_') {
+				i++;
+				cl += Character.toUpperCase(cll[i]);
+			} else if (i == 0 && upperFirstChar) {
+				cl += Character.toUpperCase(cll[i]);
+			} else {
+				cl += cll[i];
+			}
+		}
+		return cl;
 	}
 			
 	public static void generateClass(FeatureGenerate feature) throws IOException, InvalidConfigurationException {
@@ -115,7 +169,7 @@ public class Generate {
 	}
 	
 	private static void generateJSON(ConfigurationSection section, String key, Object parent) throws ConfigParseException, NoSuchFieldException, SecurityException {
-		Field field = parent.getClass().getField(key.toUpperCase());
+		Field field = parent.getClass().getField(generateNameVariable(key, false));
 		Class<?> type = field.getType();
 		if (!ElementConfig.class.isAssignableFrom(type))
 			throw new ConfigParseException("ErrorField "+type.getName()+" don't has interface "+ElementConfig.class.getSimpleName()+" !");
