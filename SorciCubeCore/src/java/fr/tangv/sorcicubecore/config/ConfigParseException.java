@@ -12,4 +12,8 @@ public class ConfigParseException extends Exception {
 		super(message, thro);
 	}
 	
+	public ConfigParseException(Throwable thro) {
+		super(thro.getClass().getSimpleName()+": "+thro.getMessage(), thro);
+	}
+	
 }

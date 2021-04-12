@@ -17,7 +17,7 @@ public abstract class AbstractConfig implements ElementConfig {
 					Document d = (doc == null) ? null : doc.get(field.getName().toLowerCase(), Document.class);
 					field.set(this, type.getConstructor(Document.class).newInstance(d));
 				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					throw new ConfigParseException(e.getClass().getSimpleName()+": "+e.getMessage(), e);
+					throw new ConfigParseException(e);
 				}
 			} catch (NoSuchMethodException e) {
 				throw new ConfigParseException(type.getName()+" don't has constructor "+type.getSimpleName()+"(Document doc) !", e);
