@@ -46,13 +46,10 @@ public class Generate {
 			reader.close();
 			Pattern pat = Pattern.compile("^\tpublic \\w+ ([\\w_]+);$", Pattern.MULTILINE);
 			Matcher mat = pat.matcher(all.toString());
-			ArrayDeque<ReplaceMatch> list = new ArrayDeque<ReplaceMatch>();
-			while (mat.find())
-				list.add(new ReplaceMatch(mat.start(1), mat.end(1), generateNameVariable(mat.group(1), false)));
 			String result = all.toString();
-			ReplaceMatch rep;
-			while ((rep = list.pollLast()) != null)
-				result = result.replace(result.substring(rep.start, rep.end), rep.content);
+			while (mat.find()) {
+				result = result.replace(mat.group(1), generateNameVariable(mat.group(1), false));
+			}
 			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(parent));
 			out.append(result);
 			out.close();
@@ -60,20 +57,6 @@ public class Generate {
 			for (File file : parent.listFiles())
 				lowVariable(file);
 		}
-	}
-	
-	private static class ReplaceMatch {
-		
-		private final int start;
-		private final int end;
-		private final String content;
-		
-		private ReplaceMatch(int start, int end, String content) {
-			this.start = start;
-			this.end = end;
-			this.content = content;
-		}
-		
 	}
 	
 	public static class FeatureGenerate {
