@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.configs;
+package fr.tangv.sorcicubecore.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,16 +11,9 @@ import org.bson.Document;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import fr.tangv.sorcicubecore.configs.*;
 
-import fr.tangv.sorcicubecore.config.AbstractConfig;
-import fr.tangv.sorcicubecore.config.BooleanConfig;
-import fr.tangv.sorcicubecore.config.ConfigParseException;
-import fr.tangv.sorcicubecore.config.ElementConfig;
-import fr.tangv.sorcicubecore.config.IntegerConfig;
-import fr.tangv.sorcicubecore.config.LocationConfig;
-import fr.tangv.sorcicubecore.config.StringConfig;
-import fr.tangv.sorcicubecore.config.VectorConfig;
-
+@SuppressWarnings("unused")
 public class Generate {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, ConfigParseException {
