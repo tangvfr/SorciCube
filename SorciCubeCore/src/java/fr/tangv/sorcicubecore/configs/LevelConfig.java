@@ -11,6 +11,7 @@ public class LevelConfig extends AbstractConfig {
 	public IntegerConfig moneyLoss;
 	public IntegerConfig experienceEquality;
 	public IntegerConfig moneyEquality;
+	public LevelsConfig levels;
 
 	public LevelConfig(Document doc) throws ConfigParseException {
 		super(doc);

@@ -25,11 +25,6 @@ public class ParameterConfig extends AbstractConfig {
 	public IntegerConfig waitViewFight;
 	public StringConfig serverLobby;
 	public StringConfig serverFight;
-	public LocationConfig locationSpawn;
-	public LocationConfig locationTuto;
-	public LocationConfig locationNoclassified;
-	public LocationConfig locationDuel;
-	public LocationConfig locationNpc;
 	public StringConfig joinMessage;
 	public StringConfig quitMessage;
 	public StringConfig packetLore;
