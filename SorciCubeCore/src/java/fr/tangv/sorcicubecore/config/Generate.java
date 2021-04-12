@@ -17,9 +17,9 @@ import fr.tangv.sorcicubecore.configs.*;
 public class Generate {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, ConfigParseException {
-		boolean gClass = false;
-		String name = "Level";
-		String file = "D:\\Data\\ShareFolder\\Bureau\\config\\others\\level.yml";
+		boolean gClass = true;
+		String name = "Npc";
+		String file = "D:\\Data\\ShareFolder\\Bureau\\config\\others\\npc.yml";
 		FeatureGenerate feature = new FeatureGenerate(name, new File(file));
 		if (gClass)
 			generateClass(feature);

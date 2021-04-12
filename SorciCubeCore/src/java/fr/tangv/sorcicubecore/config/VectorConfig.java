@@ -8,6 +8,13 @@ public class VectorConfig implements ElementConfig {
 	public double y;
 	public double z;
 
+	//for clone
+	private VectorConfig(double x, double y, double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	
 	public VectorConfig(Document doc) {
 		if (doc == null) {
 			this.x = 0.0;
@@ -26,7 +33,10 @@ public class VectorConfig implements ElementConfig {
 				.append("x", x)
 				.append("y", y)
 				.append("z", z);
-		
 	}
 
+	public VectorConfig clone() {
+		return new VectorConfig(x, y, z);
+	}
+	
 }
