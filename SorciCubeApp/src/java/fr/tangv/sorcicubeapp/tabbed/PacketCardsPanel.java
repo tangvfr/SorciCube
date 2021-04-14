@@ -40,11 +40,11 @@ public class PacketCardsPanel extends JScrollPane {
 		this.packetPanel = new JPanel();
 		//pakcet
 		this.name = new ComponentText("Name");
-		this.id = new ComponentNumberInt("ItemID");
+		this.id = new ComponentNumberInt("ItemID", 1, 2267, 1);
 		this.factions = new ComponentArrayInt(CardFaction.values(), "Factions");
 		this.rarities = new ComponentArrayInt(CardRarity.values(), "Rarities");
 		this.types = new ComponentArrayInt(CardType.values(), "Types");
-		this.size = new ComponentNumberInt("Size");
+		this.size = new ComponentNumberInt("Size", 1, 7, 1);
 		//button
 		this.apply = new JButton("Save");
 		this.apply.addMouseListener(new ClickListener() {

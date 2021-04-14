@@ -39,7 +39,7 @@ public class GroupPanel extends JScrollPane {
 		//pakcet
 		this.name = new ComponentLabel("Name");
 		this.display = new ComponentText("Display");
-		this.weight = new ComponentNumberInt("Weight");
+		this.weight = new ComponentNumberInt("Weight", Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
 		this.perms = new ComponentAreaText("Permissions");
 		perms.setToolTipText("[addgroupperms, -removeperm, addperm");
 		//button

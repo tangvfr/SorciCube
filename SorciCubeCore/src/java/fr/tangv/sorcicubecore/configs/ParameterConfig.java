@@ -30,7 +30,7 @@ public class ParameterConfig extends AbstractConfig {
 	public StringConfig packetLore;
 	public StringConfig packetFormat;
 	public StringConfig packetSize;
-
+	
 	public ParameterConfig(Document doc) throws ConfigParseException {
 		super(doc);
 	}

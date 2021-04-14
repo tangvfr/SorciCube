@@ -9,6 +9,7 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class LevelConfig extends AbstractConfig {
 
+	public IntegerConfig numberDeckStart;
 	public IntegerConfig moneyStart;
 	public IntegerConfig experienceWin;
 	public IntegerConfig moneyWin;
@@ -28,24 +29,26 @@ public class LevelConfig extends AbstractConfig {
 	
 	private int[] experiences;
 	private int[] rewards;
+	private boolean calculatingError;
 	
 	public LevelConfig(Document doc) throws ConfigParseException {
 		super(doc);
-		try {
-			calculate();
-		} catch (NumberFormatException | ScriptException e) {
-			throw new ConfigParseException(e);
-		}
 	}
 	
-	public void calculate() throws NumberFormatException, ScriptException {
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine script = manager.getEngineByName("JavaScript");
-		this.experiences = new int[maxLevel.value-1];
-		this.rewards = new int[maxLevel.value-1];
-		for (int i = 2; i <= maxLevel.value; i++) {
-			experiences[i-2] = (int) Double.parseDouble(script.eval(experienceCalc.value.replace("{lvl}", Integer.toString(i))).toString());
-			rewards[i-2] = (int) Double.parseDouble(script.eval(rewardCalc.value.replace("{lvl}", Integer.toString(i))).toString());
+	public void calculate() {
+		try {
+			calculate();
+			ScriptEngineManager manager = new ScriptEngineManager();
+			ScriptEngine script = manager.getEngineByName("JavaScript");
+			this.experiences = new int[maxLevel.value-1];
+			this.rewards = new int[maxLevel.value-1];
+			for (int i = 2; i <= maxLevel.value; i++) {
+				experiences[i-2] = (int) Double.parseDouble(script.eval(experienceCalc.value.replace("{lvl}", Integer.toString(i))).toString());
+				rewards[i-2] = (int) Double.parseDouble(script.eval(rewardCalc.value.replace("{lvl}", Integer.toString(i))).toString());
+			}
+			this.calculatingError = false;
+		} catch (NumberFormatException | ScriptException e) {
+			this.calculatingError = true;
 		}
 	}
 	
@@ -55,6 +58,10 @@ public class LevelConfig extends AbstractConfig {
 	
 	public int getReward(int lvl) {
 		return rewards[lvl-2];
+	}
+	
+	public boolean hasCalculatingError() {
+		return calculatingError;
 	}
 	
 }

@@ -10,6 +10,7 @@ import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientType;
+import fr.tangv.sorcicubecore.configs.LevelConfig;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
@@ -105,10 +106,10 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
-					2,
+					n,
 					cardsUnlocks,
 					new ArrayList<String>(),
-					0, 0, (byte) 1, (group == null ? "" : group.getName()), false);
+					n, 0, (byte) 1, (group == null ? "" : group.getName()), false);
 			String playerJson = playerFeature.toDocument().toJson();
 			if (playerJson == null || playerJson.isEmpty())
 				throw new Exception("Echec PlayerFeature to Json !");

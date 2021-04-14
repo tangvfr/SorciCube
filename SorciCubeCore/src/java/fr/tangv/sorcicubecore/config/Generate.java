@@ -23,9 +23,9 @@ import fr.tangv.sorcicubecore.configs.*;
 public class Generate {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, ConfigParseException {
-		boolean gClass = true;
-		String name = "Npc";
-		String file = "D:\\Data\\ShareFolder\\Bureau\\config\\others\\npc.yml";
+		boolean gClass = false;
+		String name = "None";
+		String file = "D:\\Data\\ShareFolder\\Bureau\\config\\"+name.toLowerCase()+".yml";
 		FeatureGenerate feature = new FeatureGenerate(name, new File(file));
 		if (gClass)
 			generateClass(feature);
@@ -155,7 +155,8 @@ public class Generate {
 	}
 	
 	private static void generateJSON(ConfigurationSection section, String key, Object parent) throws ConfigParseException, NoSuchFieldException, SecurityException {
-		Field field = parent.getClass().getField(generateNameVariable(key, false));
+		String f = generateNameVariable(key, false);
+		Field field = parent.getClass().getField(f.equals("null") ? "nul" : f);
 		Class<?> type = field.getType();
 		if (!ElementConfig.class.isAssignableFrom(type))
 			throw new ConfigParseException("ErrorField "+type.getName()+" don't has interface "+ElementConfig.class.getSimpleName()+" !");

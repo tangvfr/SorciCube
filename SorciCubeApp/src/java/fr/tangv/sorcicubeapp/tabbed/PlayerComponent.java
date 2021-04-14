@@ -27,6 +27,7 @@ import fr.tangv.sorcicubeapp.component.ComponentNumberInt;
 import fr.tangv.sorcicubeapp.tools.ExceptionPlayerResources;
 import fr.tangv.sorcicubeapp.tools.PlayerResources;
 import fr.tangv.sorcicubeapp.utils.ClickListener;
+import fr.tangv.sorcicubecore.configs.LevelConfig;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
@@ -50,14 +51,14 @@ public class PlayerComponent extends JComponent {
 	private final ComponentCombo<String> group;
 	private final Vector<String> groups;
 	
-	public PlayerComponent(PlayerResources res, HandlerPlayers handler, Vector<String> groups) throws ExceptionPlayerResources, IOException, ResponseRequestException, RequestException, DeckException {
+	public PlayerComponent(PlayerResources res, HandlerPlayers handler, Vector<String> groups, LevelConfig levelConfig) throws ExceptionPlayerResources, IOException, ResponseRequestException, RequestException, DeckException {
 		this.setLayout(new GridBagLayout());
 		this.res = res;
 		this.handler = handler;
-		this.lvl = new ComponentNumberInt("Level");
-		this.exp = new ComponentNumberInt("Experience");
-		this.money = new ComponentNumberInt("Money");
-		this.decks = new ComponentNumberInt("Decks");
+		this.lvl = new ComponentNumberInt("Level", 1, levelConfig.maxLevel.value, 1);
+		this.exp = new ComponentNumberInt("Experience", 0, levelConfig.getExperience(levelConfig.maxLevel.value), 1);
+		this.money = new ComponentNumberInt("Money", Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+		this.decks = new ComponentNumberInt("Decks", 0, 5, 1);
 		this.admin = new ComponentBoolean("Admin");
 		this.group = new ComponentCombo<String>("Group", groups);
 		this.groups = groups;

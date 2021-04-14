@@ -8,9 +8,9 @@ public class ComponentNumberInt extends ComponentCustom {
 	private static final long serialVersionUID = 5937702865253871122L;
 	private final JSpinner number;
 		
-	public ComponentNumberInt(String name) {
+	public ComponentNumberInt(String name, int min, int max, int step) {
 		super(name);
-		this.number = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		this.number = new JSpinner(new SpinnerNumberModel(0, min, max, step));
 		this.add(number);
 	}
 	
