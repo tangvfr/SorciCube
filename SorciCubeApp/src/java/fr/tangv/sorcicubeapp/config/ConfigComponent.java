@@ -13,7 +13,7 @@ public class ConfigComponent extends JComponent {
 		//panel
 		this.setLayout(new GridLayout(1, 2, 5, 5));
 		JLabel label = new JLabel(name+":");
-		label.setHorizontalAlignment(JLabel.RIGHT);	
+		label.setHorizontalAlignment(JLabel.RIGHT);
 		this.add(label);
 	}
 	

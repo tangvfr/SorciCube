@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.JPanel;
 
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.config.AbstractConfig;
@@ -16,7 +16,7 @@ import fr.tangv.sorcicubecore.config.IntegerConfig;
 import fr.tangv.sorcicubecore.config.ListConfig;
 import fr.tangv.sorcicubecore.config.StringConfig;
 
-public abstract class ConfigPanel extends JTable {
+public abstract class ConfigPanel extends JPanel {
 	
 	private static final long serialVersionUID = 3820881949873208818L;
 	private static final String SEPARATOR = " > ";
@@ -28,8 +28,7 @@ public abstract class ConfigPanel extends JTable {
 		this.main = main;
 		this.parent = parent;
 		this.name = name;
-		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-		this.setLayout(layout);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
 	
 	public String getPath() {
@@ -60,15 +59,14 @@ public abstract class ConfigPanel extends JTable {
 	}
 	
 	public JComponent makeComponent(ElementConfig element, String name) {
-		JComponent comp;
 		if (element instanceof BooleanConfig) {
-			comp = new BooleanConfigComponent((BooleanConfig) element, name);
+			return new BooleanConfigComponent((BooleanConfig) element, name);
 			
 		} else if (element instanceof IntegerConfig) {
-			comp = new IntegerConfigComponent((IntegerConfig) element, name);
+			return new IntegerConfigComponent((IntegerConfig) element, name);
 			
 		} else if (element instanceof StringConfig) {
-			comp = new StringConfigComponent((StringConfig) element, name);
+			return new StringConfigComponent((StringConfig) element, name);
 			
 		} else if (element instanceof AbstractConfig || element instanceof ListConfig<?>) {
 			JButton btn = new JButton(name);
@@ -78,12 +76,11 @@ public abstract class ConfigPanel extends JTable {
 					enter(element, name);
 				}
 			});
-			comp = btn;
+			return btn;
 			
 		} else {
-			comp = new JLabel("Unknown: "+name);
+			return new JLabel("Unknown: "+name);
 		}
-		return comp;
 	}
 	
 }

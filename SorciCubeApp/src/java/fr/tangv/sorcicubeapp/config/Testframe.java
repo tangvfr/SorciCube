@@ -13,6 +13,7 @@ public class Testframe {
 		MainConfigPanel main = new MainConfigPanel();
 		main.setView(new AbstractConfigPanel(main, null, "TEST PTDR", new TestConfig(null)));
 		frame.setContentPane(main);
+		frame.pack();
 		frame.setVisible(true);
 	}
 	

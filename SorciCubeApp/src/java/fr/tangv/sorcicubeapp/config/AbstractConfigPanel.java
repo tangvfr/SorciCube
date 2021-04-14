@@ -17,6 +17,7 @@ public class AbstractConfigPanel extends ConfigPanel {
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
+		this.repaint();
 	}
 	
 }
