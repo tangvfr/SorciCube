@@ -57,6 +57,7 @@ public class MainConfigPanel extends JPanel {
 		this.selection = panel;
 		this.back.setEnabled(panel.parent != null);
 		this.title.setTitle(panel.getPath());
+		panel.update();
 		this.scroll.setViewportView(panel);
 	}
 		

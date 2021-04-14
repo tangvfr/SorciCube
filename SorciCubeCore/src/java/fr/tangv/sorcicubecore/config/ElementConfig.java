@@ -6,5 +6,8 @@ public interface ElementConfig {
 
 	//Construtor(Document doc);
 	public Document toDocument() throws ConfigParseException;
+	public default String nameString() {
+		return getClass().getSimpleName();
+	}
 	
 }

@@ -31,6 +31,8 @@ public abstract class ConfigPanel extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
 	
+	public void update() {};
+	
 	public String getPath() {
 		String path = "";
 		ConfigPanel pan = this;

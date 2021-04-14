@@ -1,6 +1,9 @@
 package fr.tangv.sorcicubeapp.config;
 
+import java.lang.reflect.Field;
+
 import fr.tangv.sorcicubecore.config.AbstractConfig;
+import fr.tangv.sorcicubecore.config.ElementConfig;
 
 public class AbstractConfigPanel extends ConfigPanel {
 
@@ -8,24 +11,12 @@ public class AbstractConfigPanel extends ConfigPanel {
 
 	public AbstractConfigPanel(MainConfigPanel main, ConfigPanel parent, AbstractConfig config, String name) {
 		super(main, parent, name);
-		
-	}
-
-	/*for (Field field : getClass().getFields()) {
-		Class<?> type = field.getType();
-		if (!ElementConfig.class.isAssignableFrom(type))
-			throw new ConfigParseException("ErrorField "+type.getName()+" don't has interface "+ElementConfig.class.getSimpleName()+" !");
-		try {
+		for (Field field : config.getClass().getFields())
 			try {
-				Document d = (doc == null) ? null : doc.get(field.getName(), Document.class);
-				field.set(this, type.getConstructor(Document.class).newInstance(d));
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				throw new ConfigParseException(e);
+				this.add(makeComponent((ElementConfig) field.get(config), field.getName()));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
 			}
-		} catch (NoSuchMethodException e) {
-			throw new ConfigParseException(type.getName()+" don't has constructor "+type.getSimpleName()+"(Document doc) !", e);
-		} catch (SecurityException e) {
-			throw new ConfigParseException(type.getName()+" don't has permission for constructor "+type.getSimpleName()+"(Document doc) !", e);
-		}
-	}*/
+	}
+	
 }

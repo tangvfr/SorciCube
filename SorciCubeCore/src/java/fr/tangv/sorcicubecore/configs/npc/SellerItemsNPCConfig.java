@@ -23,4 +23,9 @@ public class SellerItemsNPCConfig extends AbstractConfig {
 		super(doc);
 	}
 
+	@Override
+	public String nameString() {
+		return nameNPC.value;
+	}
+	
 }

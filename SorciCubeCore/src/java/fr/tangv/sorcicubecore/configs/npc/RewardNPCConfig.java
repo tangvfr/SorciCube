@@ -18,4 +18,9 @@ public class RewardNPCConfig extends AbstractConfig {
 		super(doc);
 	}
 	
+	@Override
+	public String nameString() {
+		return id.value;
+	}
+	
 }

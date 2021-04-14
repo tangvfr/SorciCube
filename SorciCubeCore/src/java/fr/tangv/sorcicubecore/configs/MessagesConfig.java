@@ -3,7 +3,7 @@ package fr.tangv.sorcicubecore.configs;
 import org.bson.Document;
 import fr.tangv.sorcicubecore.config.*;
 
-public class MessageConfig extends AbstractConfig {
+public class MessagesConfig extends AbstractConfig {
 
 	public StringConfig messageNoPlayer;
 	public StringConfig messageSelectDefaultDeck;
@@ -77,7 +77,7 @@ public class MessageConfig extends AbstractConfig {
 	public StringConfig messagePacketBuyCard;
 	public StringConfig messagePacketAlreadyCard;
 
-	public MessageConfig(Document doc) throws ConfigParseException {
+	public MessagesConfig(Document doc) throws ConfigParseException {
 		super(doc);
 	}
 	

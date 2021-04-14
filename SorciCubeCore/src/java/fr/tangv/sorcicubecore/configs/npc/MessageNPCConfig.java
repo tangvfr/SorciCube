@@ -15,5 +15,10 @@ public class MessageNPCConfig extends AbstractConfig {
 	public MessageNPCConfig(Document doc) throws ConfigParseException {
 		super(doc);
 	}
+
+	@Override
+	public String nameString() {
+		return nameNPC.value;
+	}
 	
 }

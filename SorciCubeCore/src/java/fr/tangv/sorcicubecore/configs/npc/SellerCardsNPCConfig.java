@@ -20,5 +20,10 @@ public class SellerCardsNPCConfig extends AbstractConfig {
 	public SellerCardsNPCConfig(Document doc) throws ConfigParseException {
 		super(doc);
 	}
+
+	@Override
+	public String nameString() {
+		return nameNPC.value;
+	}
 	
 }
