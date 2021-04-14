@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.config.AbstractConfig;
@@ -16,22 +16,21 @@ import fr.tangv.sorcicubecore.config.IntegerConfig;
 import fr.tangv.sorcicubecore.config.ListConfig;
 import fr.tangv.sorcicubecore.config.StringConfig;
 
-public abstract class ConfigPanel extends JPanel {
+public abstract class ConfigPanel extends JTable {
 	
 	private static final long serialVersionUID = 3820881949873208818L;
-	private static final String SEPARATOR = " -> ";
+	private static final String SEPARATOR = " > ";
 	private final  MainConfigPanel main;
 	protected final ConfigPanel parent;
 	private final String name;
 	
-	public ConfigPanel(MainConfigPanel main, ConfigPanel parent, String name) {
+	protected ConfigPanel(MainConfigPanel main, ConfigPanel parent, String name) {
 		this.main = main;
 		this.parent = parent;
 		this.name = name;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+		this.setLayout(layout);
 	}
-	
-	public void update() {};
 	
 	public String getPath() {
 		String path = "";
@@ -50,10 +49,10 @@ public abstract class ConfigPanel extends JPanel {
 	@SuppressWarnings("unchecked")
 	public boolean enter(ElementConfig element, String name) {
 		if (element instanceof AbstractConfig) {
-			main.setView(new AbstractConfigPanel(main, this, (AbstractConfig) element, name));
+			main.setView(new AbstractConfigPanel(main, this, name, (AbstractConfig) element));
 			return true;
 		} else if (element instanceof ListConfig<?>) {
-			main.setView(new ListConfigPanel(main, this, (ListConfig<? extends ElementConfig>) element, name));
+			main.setView(new ListConfigPanel(main, this, name, (ListConfig<? extends ElementConfig>) element));
 			return true;
 		} else {
 			return false;
@@ -61,14 +60,15 @@ public abstract class ConfigPanel extends JPanel {
 	}
 	
 	public JComponent makeComponent(ElementConfig element, String name) {
+		JComponent comp;
 		if (element instanceof BooleanConfig) {
-			return new BooleanConfigComponent((BooleanConfig) element, name);
+			comp = new BooleanConfigComponent((BooleanConfig) element, name);
 			
 		} else if (element instanceof IntegerConfig) {
-			return new IntegerConfigComponent((IntegerConfig) element, name);
+			comp = new IntegerConfigComponent((IntegerConfig) element, name);
 			
 		} else if (element instanceof StringConfig) {
-			return new StringConfigComponent((StringConfig) element, name);
+			comp = new StringConfigComponent((StringConfig) element, name);
 			
 		} else if (element instanceof AbstractConfig || element instanceof ListConfig<?>) {
 			JButton btn = new JButton(name);
@@ -78,11 +78,12 @@ public abstract class ConfigPanel extends JPanel {
 					enter(element, name);
 				}
 			});
-			return btn;
+			comp = btn;
 			
 		} else {
-			return new JLabel("Unknown: "+name);
+			comp = new JLabel("Unknown: "+name);
 		}
+		return comp;
 	}
 	
 }

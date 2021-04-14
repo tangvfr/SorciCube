@@ -24,7 +24,9 @@ public class MainConfigPanel extends JPanel {
 		this.title = new TitledBorder("");
 		setBorder(title);
 		//scroll
-		this.scroll = new JScrollPane(10, 10);
+		this.scroll = new JScrollPane();
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		scroll.getHorizontalScrollBar().setUnitIncrement(10);
 		//init buttons
 		this.back = new JButton("Back");
 		back.addMouseListener(new ClickListener() {
@@ -37,10 +39,10 @@ public class MainConfigPanel extends JPanel {
 		JButton save = new JButton("Save");
 		JButton cancel = new JButton("Cancel");
 		//buttons display
-		JPanel split2 = new JPanel(new GridLayout(1, 2, 0, 5));
+		JPanel split2 = new JPanel(new GridLayout(1, 2, 5, 5));
 		split2.add(save);
 		split2.add(cancel);
-		JPanel split1 = new JPanel(new GridLayout(1, 2, 0, 10));
+		JPanel split1 = new JPanel(new GridLayout(1, 2, 10, 10));
 		split1.add(this.back);
 		split1.add(split2);
 		//diplay
@@ -48,17 +50,12 @@ public class MainConfigPanel extends JPanel {
 		this.add(split1, BorderLayout.SOUTH);
 	}
 	
-	public MainConfigPanel(ConfigPanel panel) {
-		this();
-		setView(panel);
-	}
-	
 	public void setView(ConfigPanel panel) {
 		this.selection = panel;
 		this.back.setEnabled(panel.parent != null);
 		this.title.setTitle(panel.getPath());
-		panel.update();
 		this.scroll.setViewportView(panel);
+		this.repaint();
 	}
 		
 }

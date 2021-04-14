@@ -5,10 +5,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import fr.tangv.sorcicubeapp.component.ComponentCustom;
 import fr.tangv.sorcicubecore.config.IntegerConfig;
 
-public class IntegerConfigComponent extends ComponentCustom {
+public class IntegerConfigComponent extends ConfigComponent {
 
 	private static final long serialVersionUID = 5825619911390026882L;
 	private final JSpinner number;

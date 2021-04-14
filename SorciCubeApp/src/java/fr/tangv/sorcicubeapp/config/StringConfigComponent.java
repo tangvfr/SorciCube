@@ -1,13 +1,21 @@
 package fr.tangv.sorcicubeapp.config;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JTextArea;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
 
-import fr.tangv.sorcicubeapp.component.ComponentCustom;
+import javax.swing.JTextArea;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+
 import fr.tangv.sorcicubecore.config.StringConfig;
 
-public class StringConfigComponent  extends ComponentCustom {
+public class StringConfigComponent  extends ConfigComponent {
 
 	private static final long serialVersionUID = 5825619911390026882L;
 	private final JTextArea text;
@@ -15,9 +23,9 @@ public class StringConfigComponent  extends ComponentCustom {
 	public StringConfigComponent(StringConfig string, String name) {
 		super(name);
 		this.text = new JTextArea(string.value);
-		this.text.addPropertyChangeListener(new PropertyChangeListener() {
+		this.text.addCaretListener(new CaretListener() {
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
+			public void caretUpdate(CaretEvent e) {
 				System.out.println("string change");
 				string.value = text.getText();
 			}

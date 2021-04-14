@@ -8,13 +8,12 @@ public class ListConfigPanel extends ConfigPanel {
 	private static final long serialVersionUID = 2541302758482910090L;
 	private final ListConfig<? extends ElementConfig> list;
 	
-	public ListConfigPanel(MainConfigPanel main, ConfigPanel parent, ListConfig<? extends ElementConfig> list, String name) {
+	public ListConfigPanel(MainConfigPanel main, ConfigPanel parent, String name, ListConfig<? extends ElementConfig> list) {
 		super(main, parent, name);
 		this.list = list;
 		update();
 	}
 	
-	@Override
 	public void update() {
 		this.removeAll();
 		for (int i = 0; i < list.size(); i++) {
