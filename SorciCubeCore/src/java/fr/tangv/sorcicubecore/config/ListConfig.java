@@ -8,7 +8,7 @@ import java.util.Vector;
 
 import org.bson.Document;
 
-public abstract class ListConfig<E extends ElementConfig> extends Vector<E> implements ElementConfig {
+public class ListConfig<E extends ElementConfig> extends Vector<E> implements ElementConfig {
 	
 	private static final long serialVersionUID = -9217705213133376301L;
 	private final Constructor<?> construtor;

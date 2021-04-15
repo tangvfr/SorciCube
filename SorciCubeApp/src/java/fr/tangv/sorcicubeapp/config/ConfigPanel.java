@@ -20,15 +20,16 @@ public abstract class ConfigPanel extends JPanel {
 	
 	private static final long serialVersionUID = 3820881949873208818L;
 	private static final String SEPARATOR = " > ";
-	private final  MainConfigPanel main;
-	protected final ConfigPanel parent;
 	private final String name;
+	protected final  MainConfigPanel main;
+	protected final ConfigPanel parent;
 	
 	protected ConfigPanel(MainConfigPanel main, ConfigPanel parent, String name) {
 		this.main = main;
 		this.parent = parent;
 		this.name = name;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(null);
 	}
 	
 	public String getPath() {
