@@ -10,13 +10,12 @@ import fr.tangv.sorcicubecore.config.BooleanConfig;
 public class BooleanConfigComponent extends ConfigComponent {
 
 	private static final long serialVersionUID = -6765183340444651119L;
-	private final JComboBox<String> combo;
 	
-	public BooleanConfigComponent(BooleanConfig bool, String name) {
+	public BooleanConfigComponent(BooleanConfig bool, String name, Runnable run) {
 		super(name);
-		this.combo = new JComboBox<String>(new String[] {"true", "false"});
-		this.combo.setSelectedItem(bool.value ? "true" : "false");
-		this.combo.addActionListener(new ActionListener() {
+		JComboBox<String> combo = new JComboBox<String>(new String[] {"true", "false"});
+		combo.setSelectedItem(bool.value ? "true" : "false");
+		combo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getID() == ActionEvent.ACTION_FIRST)
@@ -24,6 +23,7 @@ public class BooleanConfigComponent extends ConfigComponent {
 			}
 		});
 		this.add(combo);
+		addRemoveBtn(run);
 	}
 	
 }

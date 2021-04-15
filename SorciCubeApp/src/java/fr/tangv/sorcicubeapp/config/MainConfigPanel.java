@@ -32,8 +32,7 @@ public class MainConfigPanel extends JPanel {
 		back.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (selection.parent != null)
-					setView(selection.parent);
+				selection.parent.back();
 			}
 		});
 		JButton save = new JButton("Save");

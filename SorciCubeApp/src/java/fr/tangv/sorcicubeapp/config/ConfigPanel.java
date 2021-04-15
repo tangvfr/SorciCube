@@ -21,8 +21,8 @@ import fr.tangv.sorcicubecore.config.StringConfig;
 public abstract class ConfigPanel extends JPanel {
 	
 	private static final long serialVersionUID = 3820881949873208818L;
-	private static final String SEPARATOR = " > ";
-	private final String name;
+	private static final String SEPARATOR = " \u21AA";
+	protected final String name;
 	protected final  MainConfigPanel main;
 	protected final ConfigPanel parent;
 	
@@ -31,6 +31,7 @@ public abstract class ConfigPanel extends JPanel {
 		this.parent = parent;
 		this.name = name;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.add(Box.createRigidArea(new Dimension(5, 5)));
 	}
 	
 	public String getPath() {
@@ -60,36 +61,42 @@ public abstract class ConfigPanel extends JPanel {
 		}
 	}
 	
-	public void addComponent(ElementConfig element, String name) {
-		//create component
+	public void addComponent(ElementConfig element, String name, Runnable run) {
 		JComponent comp;
-		if (element instanceof BooleanConfig) {
-			comp = new BooleanConfigComponent((BooleanConfig) element, name);
-			
-		} else if (element instanceof IntegerConfig) {
-			comp = new IntegerConfigComponent((IntegerConfig) element, name);
-			
-		} else if (element instanceof StringConfig) {
-			comp = new StringConfigComponent((StringConfig) element, name);
-			
-		} else if (element instanceof AbstractConfig || element instanceof ListConfig<?>) {
+		if (element == null) {
 			JButton btn = new JButton(name);
 			btn.addMouseListener(new ClickListener() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					enter(element, name);
+					if (run != null)
+						run.run();
 				}
 			});
+			btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
+			btn.setHorizontalAlignment(JButton.LEFT);
 			comp = btn;
+		} else if (element instanceof BooleanConfig) {
+			comp = new BooleanConfigComponent((BooleanConfig) element, name, run);
+			
+		} else if (element instanceof IntegerConfig) {
+			comp = new IntegerConfigComponent((IntegerConfig) element, name, run);
+			
+		} else if (element instanceof StringConfig) {
+			comp = new StringConfigComponent((StringConfig) element, name, run);
+			
+		} else if (element instanceof AbstractConfig || element instanceof ListConfig<?>) {
+			comp = new ButtonConfigComponent(this, element, name, run);
 			
 		} else {
 			comp = new JLabel("Unknown: "+name);
 		}
-		//size and display component
-		//comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMinimumSize().height));
-		//add in panel component
+		//----------------
+		comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMinimumSize().height));
+		//----------------
 		this.add(comp);
 		this.add(Box.createRigidArea(new Dimension(5, 5)));
 	}
+	
+	public abstract void back();
 	
 }
