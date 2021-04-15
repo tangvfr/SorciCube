@@ -13,7 +13,7 @@ public class AbstractConfigPanel extends ConfigPanel {
 		super(main, parent, name);
 		for (Field field : config.getClass().getFields())
 			try {
-				this.add(makeComponent((ElementConfig) field.get(config), field.getName()));
+				this.addComponent((ElementConfig) field.get(config), field.getName());
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 			}

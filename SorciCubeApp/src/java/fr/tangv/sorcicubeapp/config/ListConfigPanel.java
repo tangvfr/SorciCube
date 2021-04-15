@@ -18,7 +18,7 @@ public class ListConfigPanel extends ConfigPanel {
 		this.removeAll();
 		for (int i = 0; i < list.size(); i++) {
 			ElementConfig element = list.get(i);
-			this.add(makeComponent(element, "["+i+"]"+element.nameString()));
+			this.addComponent(element, "["+i+"]"+element.nameString());
 		}
 		this.repaint();
 	}

@@ -1,7 +1,9 @@
 package fr.tangv.sorcicubeapp.config;
 
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -28,8 +30,7 @@ public abstract class ConfigPanel extends JPanel {
 		this.main = main;
 		this.parent = parent;
 		this.name = name;
-		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setLayout(null);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
 	
 	public String getPath() {
@@ -59,15 +60,17 @@ public abstract class ConfigPanel extends JPanel {
 		}
 	}
 	
-	public JComponent makeComponent(ElementConfig element, String name) {
+	public void addComponent(ElementConfig element, String name) {
+		//create component
+		JComponent comp;
 		if (element instanceof BooleanConfig) {
-			return new BooleanConfigComponent((BooleanConfig) element, name);
+			comp = new BooleanConfigComponent((BooleanConfig) element, name);
 			
 		} else if (element instanceof IntegerConfig) {
-			return new IntegerConfigComponent((IntegerConfig) element, name);
+			comp = new IntegerConfigComponent((IntegerConfig) element, name);
 			
 		} else if (element instanceof StringConfig) {
-			return new StringConfigComponent((StringConfig) element, name);
+			comp = new StringConfigComponent((StringConfig) element, name);
 			
 		} else if (element instanceof AbstractConfig || element instanceof ListConfig<?>) {
 			JButton btn = new JButton(name);
@@ -77,11 +80,16 @@ public abstract class ConfigPanel extends JPanel {
 					enter(element, name);
 				}
 			});
-			return btn;
+			comp = btn;
 			
 		} else {
-			return new JLabel("Unknown: "+name);
+			comp = new JLabel("Unknown: "+name);
 		}
+		//size and display component
+		//comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMinimumSize().height));
+		//add in panel component
+		this.add(comp);
+		this.add(Box.createRigidArea(new Dimension(5, 5)));
 	}
 	
 }
