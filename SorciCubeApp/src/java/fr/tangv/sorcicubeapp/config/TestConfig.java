@@ -17,6 +17,8 @@ public class TestConfig extends AbstractConfig {
 	public BooleanConfig test2;
 	public ParameterConfig test3;
 	public ListConfig<RewardNPCConfig> test4;
+	@SuppressWarnings("unused")
+	private RewardNPCConfig _test4;
 	public IntegerConfig test5;
 	
 	public TestConfig(Document doc) throws ConfigParseException {

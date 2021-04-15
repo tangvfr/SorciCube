@@ -19,10 +19,8 @@ public class BooleanConfigComponent extends ConfigComponent {
 		this.combo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (e.getID() == ActionEvent.ACTION_FIRST) {
-					System.out.println("bool actual");
+				if (e.getID() == ActionEvent.ACTION_FIRST)
 					bool.value = combo.getSelectedItem().equals("true");
-				}
 			}
 		});
 		this.add(combo);

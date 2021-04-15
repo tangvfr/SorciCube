@@ -17,7 +17,6 @@ public class StringConfigComponent  extends ConfigComponent {
 		this.text.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
-				System.out.println("string change");
 				string.value = text.getText();
 			}
 		});

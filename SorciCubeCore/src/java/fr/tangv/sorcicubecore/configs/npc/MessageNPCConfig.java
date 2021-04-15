@@ -11,6 +11,8 @@ public class MessageNPCConfig extends AbstractConfig {
 
 	public StringConfig nameNPC;
 	public ListConfig<StringConfig> messages;
+	@SuppressWarnings("unused")
+	private StringConfig _messages;
 	
 	public MessageNPCConfig(Document doc) throws ConfigParseException {
 		super(doc);

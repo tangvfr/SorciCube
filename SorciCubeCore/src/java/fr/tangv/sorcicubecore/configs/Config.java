@@ -17,6 +17,8 @@ public class Config extends AbstractConfig {
 	public NPCConfig npc;
 	public LevelConfig level;
 	public ListConfig<ArenaConfig> arenas;
+	@SuppressWarnings("unused")
+	private ArenaConfig _arenas;
 	
 	public Config(Document doc) throws ConfigParseException {
 		super(doc);

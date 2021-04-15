@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubeapp.config;
 
+import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.config.ElementConfig;
 import fr.tangv.sorcicubecore.config.ListConfig;
 
@@ -11,6 +12,11 @@ public class ListConfigPanel extends ConfigPanel {
 	public ListConfigPanel(MainConfigPanel main, ConfigPanel parent, String name, ListConfig<? extends ElementConfig> list) {
 		super(main, parent, name);
 		this.list = list;
+		try {
+			list.addNew(null);
+		} catch (ConfigParseException e) {
+			e.printStackTrace();
+		}
 		update();
 	}
 	

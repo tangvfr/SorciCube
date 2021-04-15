@@ -18,7 +18,6 @@ public class IntegerConfigComponent extends ConfigComponent {
 		this.number.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				System.out.println("int change");
 				integer.value = (int) number.getValue();
 			}
 		});
