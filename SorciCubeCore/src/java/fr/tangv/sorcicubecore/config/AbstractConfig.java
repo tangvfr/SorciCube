@@ -13,6 +13,8 @@ public abstract class AbstractConfig implements ElementConfig {
 			Class<?> type = field.getType();
 			if (!ElementConfig.class.isAssignableFrom(type))
 				throw new ConfigParseException("ErrorField "+type.getName()+" don't has interface "+ElementConfig.class.getSimpleName()+" !");
+			if (clazz.isAssignableFrom(type))
+				throw new ConfigParseException("ErrorSameClass "+type.getName()+" some class can't have same class in his class !");
 			try {
 				try {
 					Document d = (doc == null) ? null : doc.get(field.getName(), Document.class);

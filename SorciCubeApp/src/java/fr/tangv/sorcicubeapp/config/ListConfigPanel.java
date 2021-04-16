@@ -12,7 +12,7 @@ public class ListConfigPanel extends ConfigPanel {
 	public ListConfigPanel(MainConfigPanel main, ConfigPanel parent, String name, ListConfig<? extends ElementConfig> list) {
 		super(main, parent, name);
 		this.list = list;
-		addComponent(null, "Add New", () -> {
+		addComponent(null, "Add New \uD83D\uDCC4", () -> {
 			try {
 				list.addNew(null);
 				main.setView(new ListConfigPanel(main, parent, name, list));

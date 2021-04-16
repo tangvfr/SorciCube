@@ -1,22 +1,21 @@
 package fr.tangv.sorcicubeapp.config;
 
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import fr.tangv.sorcicubeapp.utils.ClickListener;
 import fr.tangv.sorcicubecore.config.AbstractConfig;
 import fr.tangv.sorcicubecore.config.BooleanConfig;
 import fr.tangv.sorcicubecore.config.ElementConfig;
 import fr.tangv.sorcicubecore.config.IntegerConfig;
 import fr.tangv.sorcicubecore.config.ListConfig;
+import fr.tangv.sorcicubecore.config.LocationConfig;
 import fr.tangv.sorcicubecore.config.StringConfig;
+import fr.tangv.sorcicubecore.config.VectorConfig;
 
 public abstract class ConfigPanel extends JPanel {
 	
@@ -64,17 +63,7 @@ public abstract class ConfigPanel extends JPanel {
 	public void addComponent(ElementConfig element, String name, Runnable run) {
 		JComponent comp;
 		if (element == null) {
-			JButton btn = new JButton(name);
-			btn.addMouseListener(new ClickListener() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					if (run != null)
-						run.run();
-				}
-			});
-			btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
-			btn.setHorizontalAlignment(JButton.LEFT);
-			comp = btn;
+			comp = new ActionButtonConfigComponent(name, run);
 		} else if (element instanceof BooleanConfig) {
 			comp = new BooleanConfigComponent((BooleanConfig) element, name, run);
 			
@@ -83,6 +72,12 @@ public abstract class ConfigPanel extends JPanel {
 			
 		} else if (element instanceof StringConfig) {
 			comp = new StringConfigComponent((StringConfig) element, name, run);
+			
+		} else if (element instanceof VectorConfig) {
+			comp = new VectorConfigComponent((VectorConfig) element, name, run);
+			
+		} else if (element instanceof LocationConfig) {
+			comp = new LocationConfigComponent((LocationConfig) element, name, run);
 			
 		} else if (element instanceof AbstractConfig || element instanceof ListConfig<?>) {
 			comp = new ButtonConfigComponent(this, element, name, run);
