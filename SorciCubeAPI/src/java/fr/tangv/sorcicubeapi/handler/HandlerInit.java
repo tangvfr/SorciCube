@@ -6,6 +6,7 @@ import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubeapi.console.Console;
 import fr.tangv.sorcicubeapi.server.ClientsManager;
 import fr.tangv.sorcicubecore.clients.Client;
+import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestHandlerException;
@@ -14,14 +15,14 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 
 public class HandlerInit {
 
-	public HandlerInit(SorciCubeAPI sorci) throws RequestHandlerException, IOException, DeckException {
+	public HandlerInit(SorciCubeAPI sorci) throws RequestHandlerException, IOException, DeckException, ConfigParseException {
 		//handler
 		HandlerServerCards cards = new HandlerServerCards();
 		HandlerServerGroups groups = new HandlerServerGroups();
 		HandlerServerDefaultDeck defaultDeck = new HandlerServerDefaultDeck(cards);
 		HandlerServerFightData fightData = new HandlerServerFightData();
-		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck, groups, sorci);
-		HandlerServerConfigYAML yaml = new HandlerServerConfigYAML();
+		HandlerServerConfig config = new HandlerServerConfig();
+		HandlerServerPlayers players = new HandlerServerPlayers(defaultDeck, groups, config, sorci);
 		HandlerServerPacketCards packets = new HandlerServerPacketCards();
 		HandlerServerServer server = new HandlerServerServer(sorci);
 		//registred
@@ -31,7 +32,7 @@ public class HandlerInit {
 		cm.registered(defaultDeck);
 		cm.registered(fightData);
 		cm.registered(players);
-		cm.registered(yaml);
+		cm.registered(config);
 		cm.registered(packets);
 		cm.registered(server);
 		cm.registered(new RequestHandlerInterface() {

@@ -10,6 +10,7 @@ import fr.tangv.sorcicubeapp.card.CardsPanel;
 import fr.tangv.sorcicubeapp.card.PanelFilter.PanelFilterException;
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
 import fr.tangv.sorcicubeapp.groups.GroupsPanel;
+import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
@@ -29,7 +30,7 @@ public class TabbedPanel extends JTabbedPane {
 	private final ServerPanel serverPanel;
 	private final PanelOthers others;
 	
-	public TabbedPanel(SorciClient client, FrameLogi logi) throws IOException, ResponseRequestException, RequestException, PanelFilterException, DeckException {
+	public TabbedPanel(SorciClient client, FrameLogi logi) throws IOException, ResponseRequestException, RequestException, PanelFilterException, DeckException, ConfigParseException {
 		this.setTabPlacement(JTabbedPane.TOP);
 		//init tabbed
 		this.cardsPanel = new CardsPanel(client, logi);
@@ -37,7 +38,7 @@ public class TabbedPanel extends JTabbedPane {
 		this.packetsPanel = new PacketsCardsPanel(client, logi);
 		this.groupsPanel = new GroupsPanel(client, logi);
 		this.configPanel = new ConfigsPanel(client, logi);
-		this.playersPanel = new PlayersPanel(cardsPanel, groupsPanel);
+		this.playersPanel = new PlayersPanel(cardsPanel, groupsPanel, configPanel.getHandler());
 		this.serverPanel = new ServerPanel(client, logi);
 		this.others = new PanelOthers(client, logi, this);
 		
@@ -46,7 +47,7 @@ public class TabbedPanel extends JTabbedPane {
 		this.addTab("DefaultDecks", this.decksPanel);  
 		this.addTab("Packets", this.packetsPanel);
 		this.addTab("Groups", this.groupsPanel);
-		this.addTab("Configs", this.configPanel);
+		this.addTab("Config", this.configPanel);
 		this.addTab("Players", this.playersPanel);
 		this.addTab("Server", this.serverPanel);
 		JPanel panelOthers = new JPanel(new GridBagLayout());

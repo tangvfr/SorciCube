@@ -17,7 +17,7 @@ import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
-import fr.tangv.sorcicubecore.handler.HandlerConfigYAML;
+import fr.tangv.sorcicubecore.handler.HandlerConfig;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
 import fr.tangv.sorcicubecore.handler.HandlerGroups;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
@@ -74,7 +74,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	private HandlerPlayers handlerPlayers;
 	private HandlerCards handlerCards;
 	private HandlerFightData handlerFightData;
-	private HandlerConfigYAML handlerConfigYAML;
+	private HandlerConfig handlerConfigYAML;
 	private HandlerServer handlerServer;
 	private HandlerGroups handlerGroups;
 	
@@ -148,7 +148,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			if (!client.isAuthentified())
 				throw new Exception("SorciClient is not connected !");
 			//handler for config
-			SorciCubeSpell.this.handlerConfigYAML = new HandlerConfigYAML(client);
+			SorciCubeSpell.this.handlerConfigYAML = new HandlerConfig(client);
 			//init Config
 			SorciCubeSpell.this.message = newConfig("message.yml");
 			SorciCubeSpell.this.parameter = newConfig("parameter.yml");
@@ -308,7 +308,7 @@ public class SorciCubeSpell extends JavaPlugin {
 		return handlerCards;
 	}
 	
-	public HandlerConfigYAML getHandlerConfigYAML() {
+	public HandlerConfig getHandlerConfigYAML() {
 		return handlerConfigYAML;
 	}
 	

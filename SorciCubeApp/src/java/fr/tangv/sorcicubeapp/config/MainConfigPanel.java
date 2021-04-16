@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 
 import fr.tangv.sorcicubeapp.utils.ClickListener;
 
-public class MainConfigPanel extends JPanel {
+public abstract class MainConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 2368005438019853886L;
 	private final TitledBorder title;
@@ -32,11 +32,24 @@ public class MainConfigPanel extends JPanel {
 		back.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				selection.parent.back();
+				if (selection.parent != null)
+					selection.parent.back();
 			}
 		});
 		JButton save = new JButton("Save");
+		save.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				save();
+			}
+		});
 		JButton cancel = new JButton("Cancel");
+		cancel.addMouseListener(new ClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cancel();
+			}
+		});
 		//buttons display
 		JPanel split2 = new JPanel(new GridLayout(1, 2, 5, 5));
 		split2.add(save);
@@ -56,6 +69,9 @@ public class MainConfigPanel extends JPanel {
 		this.scroll.setViewportView(panel);
 		this.repaint();
 	}
+	
+	public abstract void save();
+	public abstract void cancel();
 		
 }
 

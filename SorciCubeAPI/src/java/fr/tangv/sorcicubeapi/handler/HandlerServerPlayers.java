@@ -10,7 +10,6 @@ import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientType;
-import fr.tangv.sorcicubecore.configs.LevelConfig;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
@@ -24,14 +23,16 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public class HandlerServerPlayers implements RequestHandlerInterface {
 
 	private final RamFilesManager fm;
+	private final HandlerServerConfig config;
 	private final HandlerServerDefaultDeck defaultDeck;
 	private final HandlerServerGroups groups;
 	private final SorciCubeAPI sorci;
 	
-	public HandlerServerPlayers(HandlerServerDefaultDeck defaultDeck, HandlerServerGroups groups, SorciCubeAPI sorci) throws IOException {
+	public HandlerServerPlayers(HandlerServerDefaultDeck defaultDeck, HandlerServerGroups groups, HandlerServerConfig config, SorciCubeAPI sorci) throws IOException {
 		this.fm = new RamFilesManager("./players");
 		this.defaultDeck = defaultDeck;
 		this.groups = groups;
+		this.config = config;
 		this.sorci = sorci;
 	}
 	
@@ -106,10 +107,10 @@ public class HandlerServerPlayers implements RequestHandlerInterface {
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
 					DeckCards.createDeckCardsEmpty(),
-					n,
+					config.getConfig().level.numberDeckStart.value,
 					cardsUnlocks,
 					new ArrayList<String>(),
-					n, 0, (byte) 1, (group == null ? "" : group.getName()), false);
+					config.getConfig().level.moneyStart.value, 0, (byte) 1, (group == null ? "" : group.getName()), false);
 			String playerJson = playerFeature.toDocument().toJson();
 			if (playerJson == null || playerJson.isEmpty())
 				throw new Exception("Echec PlayerFeature to Json !");

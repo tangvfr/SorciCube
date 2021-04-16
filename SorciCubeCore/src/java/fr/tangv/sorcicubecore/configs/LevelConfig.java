@@ -20,12 +20,6 @@ public class LevelConfig extends AbstractConfig {
 	public IntegerConfig maxLevel;
 	public StringConfig experienceCalc;
 	public StringConfig rewardCalc;
-
-	/*	
-	  	this.experienceFunction.value = "40*Math.pow(1.1007, {lvl}-2)";
-		this.rewardFunction.value = "10*Math.pow(1.107, {lvl}-2)";
-    	+png 300piece
-    */
 	
 	private int[] experiences;
 	private int[] rewards;
