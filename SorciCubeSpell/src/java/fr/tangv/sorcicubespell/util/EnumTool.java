@@ -9,27 +9,75 @@ import fr.tangv.sorcicubecore.card.CardFeatureType;
 import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.card.CardValue;
+import fr.tangv.sorcicubecore.configs.CibleEnumConfig;
+import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class EnumTool {
 
-	private ConfigurationSection cible;
-	private ConfigurationSection faction;
-	private ConfigurationSection rarity;
-	private ConfigurationSection type;
-	private ConfigurationSection sort;
-	private ConfigurationSection feature;
+	private final SorciCubeSpell sorci;
 	
-	public EnumTool(Config config) {
-		this.cible = config.getConfigurationSection("cible");
-		this.faction = config.getConfigurationSection("faction");
-		this.rarity = config.getConfigurationSection("rarity");
-		this.type = config.getConfigurationSection("type");
-		this.sort = config.getConfigurationSection("sort");
-		this.feature = config.getConfigurationSection("feature");
+	public EnumTool(SorciCubeSpell sorci) {
+		this.sorci = sorci;
 	}
 	
 	public String cibleToString(CardCible cible) {
-		return this.enumToString(cible, this.cible);
+		CibleEnumConfig c = sorci.config().enums.cible;
+		switch (cible) {
+			case ALL:
+				return c.all.value;
+				
+			case ALL_ALLY:
+				return c.allAlly.value;
+				
+			case ALL_ENEMIE:
+				return c.allEnemie.value;
+				
+			case ALL_ENTITY:
+				return c.allEntity.value;
+				
+			case ALL_ENTITY_ALLY:
+				return c.allEntityAlly.value;
+				
+			case ALL_ENTITY_ENEMIE:
+				return c.allEntityEnemie.value;
+				
+			case ALL_HERO:
+				return c.allHero.value;
+				
+			case HERO_ALLY:
+				return c.heroAlly.value;
+				
+			case HERO_ENEMIE:
+				return c.allEntityEnemie.value;
+				
+			case NONE:
+				return c.none.value;
+				
+			case ONE:
+				return c.one.value;
+				
+			case ONE_ALLY:
+				return c.oneAlly.value;
+				
+			case ONE_ENEMIE:
+				return c.oneEnemie.value;
+				
+			case ONE_ENTITY:
+				return c.oneEntity.value;
+				
+			case ONE_ENTITY_ALLY:
+				return c.oneEntityAlly.value;
+				
+			case ONE_ENTITY_ALLY_AND_ONE_ENTITY_ENEMIE:
+				return c.oneEntityAllyAndOneEntityEnemie.value;
+				
+			case ONE_ENTITY_ENEMIE:
+				return c.oneEntityEnemie.value;
+				
+			case ONE_HERO:
+				return c.oneHero.value;
+		}
+		return null;
 	}
 	
 	public String factionToString(CardFaction faction) {

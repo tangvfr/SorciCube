@@ -8,7 +8,9 @@ import javax.swing.JOptionPane;
 import fr.tangv.sorcicubeapp.config.AbstractConfigPanel;
 import fr.tangv.sorcicubeapp.config.MainConfigPanel;
 import fr.tangv.sorcicubeapp.connection.FrameLogi;
+import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.config.ConfigParseException;
+import fr.tangv.sorcicubecore.configs.FactionColorEnumConfig;
 import fr.tangv.sorcicubecore.handler.HandlerConfig;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
@@ -34,6 +36,8 @@ public class ConfigsPanel extends MainConfigPanel {
 	public void refresh() {
 		try {
 			handler.refreshConfig();
+			FactionColorEnumConfig color = handler.getConfig().enums.factionColor;
+			CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
 			setView(new AbstractConfigPanel(this, null, "Config", handler.getConfig()));
 		} catch (IOException | ResponseRequestException | RequestException | ConfigParseException e) {
 			logi.showConnection("Error: "+e.getMessage(), Color.RED);

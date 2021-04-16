@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +15,9 @@ import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.clients.ClientType;
+import fr.tangv.sorcicubecore.config.ConfigParseException;
+import fr.tangv.sorcicubecore.configs.Config;
+import fr.tangv.sorcicubecore.configs.FactionColorEnumConfig;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.handler.HandlerConfig;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
@@ -42,7 +44,6 @@ import fr.tangv.sorcicubespell.manager.ManagerLobby;
 import fr.tangv.sorcicubespell.manager.ManagerPakcetCards;
 import fr.tangv.sorcicubespell.manager.ManagerPermissions;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
-import fr.tangv.sorcicubespell.util.Config;
 import fr.tangv.sorcicubespell.util.EnumTool;
 import fr.tangv.sorcicubespell.util.WaitObject;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
@@ -59,22 +60,12 @@ public class SorciCubeSpell extends JavaPlugin {
 	private String nameServerLobby;
 	private String nameServerFight;
 	
-	//config
-	private Config message;
-	private Config parameter;
-	private Config enumConfig;
-	private Config guiConfig;
-	private Config arenaConfig;
-	private Config levelConfig;
-	private Config configNPC;
-	private Config configItemList;
-	
 	//handler
 	private ManagerPakcetCards managerPakcetCards;
 	private HandlerPlayers handlerPlayers;
 	private HandlerCards handlerCards;
 	private HandlerFightData handlerFightData;
-	private HandlerConfig handlerConfigYAML;
+	private HandlerConfig handlerConfig;
 	private HandlerServer handlerServer;
 	private HandlerGroups handlerGroups;
 	
@@ -88,16 +79,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	//tools
 	private EnumTool enumTool;
-	
-	private Config newConfig(String name) throws Exception {
-		try {
-			return new Config(handlerConfigYAML, name);
-		} catch (InvalidConfigurationException e) {
-			throw new Exception("Error in config named \""+name+"\"");
-		} catch (IOException | ResponseRequestException | RequestException e) {
-			throw new Exception("Error config \""+name+"\" caused "+e.getMessage());
-		}
-	}
 	
 	@Override
 	public void onEnable() {
@@ -148,29 +129,20 @@ public class SorciCubeSpell extends JavaPlugin {
 			if (!client.isAuthentified())
 				throw new Exception("SorciClient is not connected !");
 			//handler for config
-			SorciCubeSpell.this.handlerConfigYAML = new HandlerConfig(client);
-			//init Config
-			SorciCubeSpell.this.message = newConfig("message.yml");
-			SorciCubeSpell.this.parameter = newConfig("parameter.yml");
-			SorciCubeSpell.this.enumConfig = newConfig("enum.yml");
-			SorciCubeSpell.this.guiConfig = newConfig("gui.yml");
-			SorciCubeSpell.this.levelConfig = newConfig("level.yml");
+			SorciCubeSpell.this.handlerConfig = new HandlerConfig(client);
 			//init tool
-			CardFaction.initColors("§7", "§8", "§6", "§2", "§5");
-			SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this.enumConfig);
+			FactionColorEnumConfig color = config().enums.factionColor;
+			CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
+			SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this);
 			//init for change server
 			SorciCubeSpell.this.handlerServer = new HandlerServer(client);
 			getServer().getMessenger().registerOutgoingPluginChannel(SorciCubeSpell.this, "BungeeCord");
-			SorciCubeSpell.this.nameServerLobby = SorciCubeSpell.this.parameter.getString("server_lobby");
-			SorciCubeSpell.this.nameServerFight = SorciCubeSpell.this.parameter.getString("server_fight");
 			//init handler
 			SorciCubeSpell.this.handlerGroups = new HandlerGroups(client);
 			SorciCubeSpell.this.handlerCards = new HandlerCards(client);
 			SorciCubeSpell.this.handlerPlayers = new HandlerPlayers(client, handlerCards);
 			SorciCubeSpell.this.handlerFightData = new HandlerFightData(client);
 			if (SorciCubeSpell.this.isLobby) {
-				SorciCubeSpell.this.configItemList = newConfig("itemlist.yml");
-				SorciCubeSpell.this.configNPC = newConfig("npc.yml");
 				SorciCubeSpell.this.handlerFightData.removeAllFightDataServer(nameServer);
 				SorciCubeSpell.this.managerGui = new ManagerGui(SorciCubeSpell.this);
 				SorciCubeSpell.this.managerPakcetCards = new ManagerPakcetCards(client, SorciCubeSpell.this);
@@ -184,7 +156,6 @@ public class SorciCubeSpell extends JavaPlugin {
 				getCommand("money").setExecutor(commandMoney);
 				getCommand("money").setTabCompleter(commandMoney);
 			} else {
-				SorciCubeSpell.this.arenaConfig = newConfig("arena.yml");
 				SorciCubeSpell.this.managerFight = new ManagerFight(SorciCubeSpell.this);
 			}
 			//security
@@ -231,8 +202,8 @@ public class SorciCubeSpell extends JavaPlugin {
 		long sec = timeInSec%60;
 		String format = "";
 		if (min > 0)
-			format += min+parameter.getString("format_time_min");
-		format += sec+parameter.getString("format_time_sec");
+			format += min+config().parameter.formatTimeMin.value;
+		format += sec+config().parameter.formatTimeSec.value;
 		return format;
 	}
 	
@@ -256,40 +227,6 @@ public class SorciCubeSpell extends JavaPlugin {
 		return nameServerFight;
 	}
 	
-	//config
-	
-	public Config getMessage() {
-		return message;
-	}
-	
-	public Config getParameter() {
-		return parameter;
-	}
-
-	public Config getEnumConfig() {
-		return enumConfig;
-	}
-	
-	public Config getGuiConfig() {
-		return guiConfig;
-	}
-	
-	public Config getArenaConfig() {
-		return arenaConfig;
-	}
-	
-	public Config getLevelConfig() {
-		return levelConfig;
-	}
-	
-	public Config getConfigNPC() {
-		return configNPC;
-	}
-	
-	public Config getConfigItemList() {
-		return configItemList;
-	}
-	
 	//handler
 	
 	public ManagerPakcetCards getManagerPakcetCards() {
@@ -308,8 +245,8 @@ public class SorciCubeSpell extends JavaPlugin {
 		return handlerCards;
 	}
 	
-	public HandlerConfig getHandlerConfigYAML() {
-		return handlerConfigYAML;
+	public Config config() {
+		return handlerConfig.getConfig();
 	}
 	
 	public HandlerServer getHandlerServer() {
@@ -350,7 +287,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	//refresh
 	
-	public void refresh() throws IOException, ResponseRequestException, RequestException, DeckException {
+	public void refresh() throws IOException, ResponseRequestException, RequestException, DeckException, ConfigParseException {
+		handlerConfig.refreshConfig();
+		FactionColorEnumConfig color = config().enums.factionColor;
+		CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
 		handlerCards.refresh();
 		handlerGroups.refresh();
 		if (isLobby) {
