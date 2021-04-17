@@ -1,7 +1,9 @@
 package fr.tangv.sorcicubecore.configs;
 
 import org.bson.Document;
-import fr.tangv.sorcicubecore.config.*;
+
+import fr.tangv.sorcicubecore.config.AbstractConfig;
+import fr.tangv.sorcicubecore.config.ConfigParseException;
 
 public class GuiConfig extends AbstractConfig {
 
@@ -16,9 +18,9 @@ public class GuiConfig extends AbstractConfig {
 	public GuiCreateDeckGuiConfig guiCreateDeck;
 	public GuiOpenPacketGuiConfig guiOpenPacket;
 	public GuiFightGuiConfig guiFight;
-	public GuiHistoricGuiConfig guiHistoric;
-	public GuiViewEntityGuiConfig guiViewEntity;
-	public GuiSwapFightGuiConfig guiSwapFight;
+	public BasicGuiConfig guiHistoric;
+	public BasicGuiConfig guiViewEntity;
+	public BasicGuiConfig guiSwapFight;
 	public GuiPlayerGuiConfig guiPlayer;
 	public BossBarGuiConfig bossBar;
 	public ScoreboardGuiConfig scoreboard;

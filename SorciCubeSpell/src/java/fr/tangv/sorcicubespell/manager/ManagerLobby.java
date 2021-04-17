@@ -31,17 +31,11 @@ public class ManagerLobby implements Listener {
 	private final SorciCubeSpell sorci;
 	private final Location locationTuto;
 	private final Location locationSpawn;
-	private final String formatChat;
-	private final String noneLvl;
-	private final String noneGroup;
 	
 	public ManagerLobby(SorciCubeSpell sorci) {
 		this.sorci = sorci;
-		this.noneLvl = sorci.getParameter().getString("none_lvl");
-		this.noneGroup = sorci.getParameter().getString("none_group");
-		this.locationTuto = (Location) sorci.getParameter().get("location_tuto");
-		this.locationSpawn = (Location) sorci.getParameter().get("location_spawn");
-		this.formatChat = sorci.getParameter().getString("chat_format");
+		this.locationTuto = sorci.convertLocation(sorci.config().locations.locationTuto);
+		this.locationSpawn = sorci.convertLocation(sorci.config().locations.locationSpawn);
 		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
 	
@@ -54,18 +48,18 @@ public class ManagerLobby implements Listener {
 		PlayerGui player = sorci.getManagerGui().getPlayerGui(e.getPlayer());
 		if (player != null) {
 			PlayerFeatures feature = player.getPlayerFeatures();
-			e.setFormat(formatChat
-					.replace("{group}", feature.getGroup().isEmpty() ? noneGroup : player.getDisplayGroup())
+			e.setFormat(sorci.config().parameter.chatFormat.value
+					.replace("{group}", feature.getGroup().isEmpty() ? sorci.config().parameter.noneGroup.value : player.getDisplayGroup())
 					.replace("{displayname}", e.getPlayer().getDisplayName())
 					.replace("{message}", e.getMessage())
 					.replace("{level}", Byte.toString(feature.getLevel()))
 				);
 		} else {
-			e.setFormat(formatChat
-					.replace("{group}", noneGroup)
+			e.setFormat(sorci.config().parameter.chatFormat.value
+					.replace("{group}", sorci.config().parameter.noneGroup.value)
 					.replace("{displayname}", e.getPlayer().getDisplayName())
 					.replace("{message}", e.getMessage())
-					.replace("{level}", noneLvl)
+					.replace("{level}", sorci.config().parameter.noneLvl.value)
 				);
 		}
 	}
@@ -107,7 +101,7 @@ public class ManagerLobby implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
-		e.setJoinMessage(sorci.getParameter().getString("join_message").replace("{player}", player.getDisplayName()));
+		e.setJoinMessage(sorci.config().parameter.joinMessage.value.replace("{player}", player.getDisplayName()));
 		player.setGameMode(GameMode.ADVENTURE);
 		player.setFoodLevel(19);
 		player.setMaxHealth(20);
@@ -122,7 +116,7 @@ public class ManagerLobby implements Listener {
 						sorci.sendPlayerToServer(player, fightData.getServer());
 					} else {
 						if (sorci.getHandlerPlayers().existPlayer(player.getUniqueId())) {
-							player.sendMessage(sorci.getMessage().getString("message_welcom_back"));
+							player.sendMessage(sorci.config().messages.welcomBack.value);
 							try {
 								PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 								playerG.setPlayerFeatures(
@@ -134,7 +128,7 @@ public class ManagerLobby implements Listener {
 								Bukkit.getLogger().throwing("ManagerLobby", "onJoin", e);
 							}
 						} else {
-							player.sendMessage(sorci.getMessage().getString("message_welcom"));
+							player.sendMessage(sorci.config().messages.welcom.value);
 							player.setLevel(0);
 							player.setExp(0F);
 						}
@@ -158,7 +152,7 @@ public class ManagerLobby implements Listener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		Player player = e.getPlayer();
-		e.setQuitMessage(sorci.getParameter().getString("quit_message").replace("{player}", player.getDisplayName()));
+		e.setQuitMessage(sorci.config().parameter.quitMessage.value.replace("{player}", player.getDisplayName()));
 		sorci.getManagerCreatorFight().playerLeave(player, true);
 	}
 	

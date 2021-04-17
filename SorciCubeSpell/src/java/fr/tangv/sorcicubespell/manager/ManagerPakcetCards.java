@@ -52,7 +52,7 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 		int[] faction = packet.getFaction();
 		for (int i = 0; i < faction.length; i++)
 			lore.add(
-				sorci.getParameter().getString("packet_format")
+					sorci.config().parameter.packetFormat.value
 					.replace("{name}", sorci.getEnumTool().factionToString(factions[i]))
 					.replace("{value}", Integer.toString(faction[i]))
 				);
@@ -62,7 +62,7 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 		int[] rarity = packet.getRarity();
 		for (int i = 0; i < rarity.length; i++)
 			lore.add(
-				sorci.getParameter().getString("packet_format")
+					sorci.config().parameter.packetFormat.value
 					.replace("{name}", sorci.getEnumTool().rarityToString(raritys[i]))
 					.replace("{value}", Integer.toString(rarity[i]))
 				);
@@ -72,16 +72,16 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 		int[] type = packet.getType();
 		for (int i = 0; i < type.length; i++)
 			lore.add(
-				sorci.getParameter().getString("packet_format")
+					sorci.config().parameter.packetFormat.value
 					.replace("{name}", sorci.getEnumTool().typeToString(types[i]))
 					.replace("{value}", Integer.toString(type[i]))
 				);
 		//number
 		lore.add("");
-		lore.add(sorci.getParameter().getString("packet_size").replace("{value}", Integer.toString(packet.getSize())));
+		lore.add(sorci.config().parameter.packetSize.value.replace("{value}", Integer.toString(packet.getSize())));
 		//packet end lore
 		lore.add("");
-		lore.add(sorci.getParameter().getString("packet_lore"));
+		lore.add(sorci.config().parameter.packetLore.value);
 		return ItemBuild.buildItem(Material.getMaterial(packet.getId()), 1, (short) 0, (byte) 0, packet.getName(), lore, false);
 	}
 	
@@ -90,7 +90,7 @@ public class ManagerPakcetCards extends HandlerPacketCards {
 			List<String> lore = item.getItemMeta().getLore();
 			if (lore.size() >= 1) {
 				String text = lore.get(lore.size()-1);
-				return sorci.getParameter().getString("packet_lore").equals(text);
+				return sorci.config().parameter.packetLore.value.equals(text);
 			}
 		}
 		return false;

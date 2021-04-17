@@ -1,31 +1,25 @@
 package fr.tangv.sorcicubespell.gui;
 
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
+import fr.tangv.sorcicubecore.configs.BasicGuiConfig;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 
-public abstract class AbstractGui implements Gui {
+public abstract class AbstractGui<T extends BasicGuiConfig> implements Gui {
 
 	protected ManagerGui manager;
-	protected ConfigurationSection config;
-	protected String name;
+	protected T config;
 	protected SorciCubeSpell sorci;
 	
-	public AbstractGui(ManagerGui manager, ConfigurationSection config) {
+	public AbstractGui(ManagerGui manager, T config) {
 		this.manager = manager;
-		this.name = config.getString("name");
 		this.config = config;
 		this.sorci = manager.getSorci();
-	}
-
-	public String getMessage(String path) {
-		return manager.getSorci().getMessage().getString(path);
 	}
 	
 	public PlayerGui getPlayerGui(Player player) {
@@ -55,7 +49,7 @@ public abstract class AbstractGui implements Gui {
 	
 	@Override
 	public String getName() {
-		return this.name;
+		return config.name.value;
 	}
 
 }

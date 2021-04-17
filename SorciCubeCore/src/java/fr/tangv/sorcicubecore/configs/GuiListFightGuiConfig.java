@@ -3,9 +3,8 @@ package fr.tangv.sorcicubecore.configs;
 import org.bson.Document;
 import fr.tangv.sorcicubecore.config.*;
 
-public class GuiListFightGuiConfig extends AbstractConfig {
+public class GuiListFightGuiConfig extends BasicGuiConfig {
 
-	public StringConfig name;
 	public StringConfig unclassied;
 	public StringConfig duel;
 	public StringConfig close;

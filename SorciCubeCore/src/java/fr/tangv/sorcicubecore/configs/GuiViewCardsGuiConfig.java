@@ -3,9 +3,8 @@ package fr.tangv.sorcicubecore.configs;
 import org.bson.Document;
 import fr.tangv.sorcicubecore.config.*;
 
-public class GuiViewCardsGuiConfig extends AbstractConfig {
+public class GuiViewCardsGuiConfig extends BasicGuiConfig {
 
-	public StringConfig name;
 	public ItemNameGuiViewCardsGuiConfig itemName;
 
 	public GuiViewCardsGuiConfig(Document doc) throws ConfigParseException {

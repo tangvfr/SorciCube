@@ -3,9 +3,8 @@ package fr.tangv.sorcicubecore.configs;
 import org.bson.Document;
 import fr.tangv.sorcicubecore.config.*;
 
-public class GuiIncreaseDeckGuiConfig extends AbstractConfig {
+public class GuiIncreaseDeckGuiConfig extends BasicGuiConfig {
 
-	public StringConfig name;
 	public StringConfig max;
 	public StringConfig unlock;
 	public StringConfig prenium;

@@ -13,6 +13,10 @@ public class StringConfig implements ElementConfig {
 			this.value = doc.get("string", "");
 	}
 	
+	public String[] toArrayString() {
+		return value.split("\n");
+	}
+	
 	@Override
 	public Document toDocument() throws ConfigParseException {
 		return new Document("string", value);
