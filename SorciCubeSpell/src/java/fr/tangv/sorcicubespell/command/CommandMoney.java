@@ -40,49 +40,49 @@ public class CommandMoney implements CommandExecutor, TabCompleter {
 									value = Integer.parseInt(args[2]);
 								} catch (Exception e) {}
 							if (value < 0) {
-								sender.sendMessage(sorci.getMessage().getString("message_number_invalid"));
+								sender.sendMessage(sorci.config().messages.numberInvalid.value);
 								return true;
 							} else {
-								String messageName;
+								String message;
 								switch (action) {
 								
 									case "set":
 										feature.setMoney(value);
-										messageName = "message_money_set";
+										message = sorci.config().messages.moneySet.value;
 										break;
 	
 									case "add":
 										feature.addMoney(value);
-										messageName = "message_money_add";
+										message = sorci.config().messages.moneyAdd.value;
 										break;
 										
 									case "remove":
 										feature.removeMoney(value);
-										messageName = "message_money_remove";
+										message = sorci.config().messages.moneyRemove.value;
 										break;
 										
 									default:
 										return false;
 								}
 								playerG.uploadPlayerFeatures(sorci.getHandlerPlayers());
-								sender.sendMessage(sorci.getMessage().getString(messageName)
+								sender.sendMessage(message
 										.replace("{player}", player.getName())
 										.replace("{money}", Integer.toString(value))
 								);
 							}
 						}
-						sender.sendMessage(sorci.getMessage().getString("message_money_get")
+						sender.sendMessage(sorci.config().messages.moneyGet.value
 								.replace("{player}", player.getName())
 								.replace("{money}", Integer.toString(feature.getMoney()))
 						);
 					} else {
-						sender.sendMessage(sorci.getMessage().getString("message_action_invalid"));
+						sender.sendMessage(sorci.config().messages.actionInvalid.value);
 					}
 				} else {
-					sender.sendMessage(sorci.getMessage().getString("message_player_no_feature").replace("{player}", player.getName()));
+					sender.sendMessage(sorci.config().messages.playerNoFeature.value.replace("{player}", player.getName()));
 				}
 			} else {
-				sender.sendMessage(sorci.getMessage().getString("message_player_no_found").replace("{player}", args[0]));
+				sender.sendMessage(sorci.config().messages.playerNoFound.value.replace("{player}", args[0]));
 			}
 			return true;
 		} else {

@@ -8,13 +8,13 @@ import org.bukkit.inventory.Inventory;
 
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardComparator;
+import fr.tangv.sorcicubecore.configs.LevelConfig;
 import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
-import fr.tangv.sorcicubespell.util.Config;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -153,14 +153,14 @@ public class PlayerGui {
 			new Exception("PlayerFeature is null !").printStackTrace();
 	}
 	
-	public void updateDisplay(Config lc, String messageActionBar) {
+	public void updateDisplay(String messageActionBar, LevelConfig lc) {
 		int level = playerFeature.getLevel();
 		player.setLevel(level);
 		int exp = 0;
 		int expMax = 0;
-		if (!playerFeature.isLevel((byte) lc.getInt("level_max"))) {
+		if (!playerFeature.isLevel((byte) lc.maxLevel.value)) {
 			exp = playerFeature.getExperience();
-			expMax = lc.getInt("level_experience."+(playerFeature.getLevel()+1)+".experience");
+			expMax = lc.getExperience(level);
 			player.setExp(playerFeature.getExperience()/(float) expMax);
 		} else {
 			player.setExp(1.0F);

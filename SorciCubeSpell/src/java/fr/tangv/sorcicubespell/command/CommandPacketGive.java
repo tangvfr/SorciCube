@@ -27,7 +27,7 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 		Player player = Bukkit.getPlayer(args[0]);
 		if (player == null) {
 			sender.sendMessage(
-				manager.getSorci().getMessage().getString("message_player_no_found")
+				manager.getSorci().config().messages.playerNoFound.value
 				.replace("{player}", args[0])
 			);
 			return true;
@@ -39,13 +39,13 @@ public class CommandPacketGive implements CommandExecutor, TabCompleter {
 		PacketCards packetCards = manager.getPacketCards(name);
 		if (packetCards == null) {
 			sender.sendMessage(
-				manager.getSorci().getMessage().getString("message_packet_no_found")
+				manager.getSorci().config().messages.packetNoFound.value
 				.replace("{name}", name)
 			);
 		} else {
 			player.getInventory().addItem(manager.packetToItem(packetCards));
 			sender.sendMessage(
-				manager.getSorci().getMessage().getString("message_give_packet")
+				manager.getSorci().config().messages.givePacket.value
 				.replace("{name}", name)
 				.replace("{player}", player.getName())
 			);

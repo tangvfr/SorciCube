@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +17,7 @@ import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.config.ConfigParseException;
+import fr.tangv.sorcicubecore.config.LocationConfig;
 import fr.tangv.sorcicubecore.configs.Config;
 import fr.tangv.sorcicubecore.configs.FactionColorEnumConfig;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
@@ -283,6 +285,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public EnumTool getEnumTool() {
 		return enumTool;
+	}
+	
+	public Location convertLocation(LocationConfig loc) {
+		return new Location(Bukkit.getWorld(loc.world), loc.x, loc.y, loc.z, loc.pitch, loc.yaw);
 	}
 	
 	//refresh

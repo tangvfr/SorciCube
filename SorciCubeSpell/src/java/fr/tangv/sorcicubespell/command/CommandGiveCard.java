@@ -30,14 +30,14 @@ public class CommandGiveCard implements CommandExecutor {
 			Player player = Bukkit.getPlayer(args[0]);
 			if (player == null) {
 				sender.sendMessage(
-					sorci.getMessage().getString("message_player_no_found")
+					sorci.config().messages.playerNoFound.value
 					.replace("{player}", args[0])
 				);
 			} else {
 				Card card = sorci.getHandlerCards().get(UUID.fromString(args[1]));
 				if (card == null) {
 					sender.sendMessage(
-						sorci.getMessage().getString("message_invalid_card")
+						sorci.config().messages.invalidCard.value
 						.replace("{uuid}", args[1])
 					);
 				} else {
@@ -59,7 +59,7 @@ public class CommandGiveCard implements CommandExecutor {
 						}
 					}
 					sender.sendMessage(
-						sorci.getMessage().getString("message_give_card")
+						sorci.config().messages.giveCard.value
 						.replace("{player}", player.getName())
 						.replace("{card}", card.renderName())
 					);

@@ -18,7 +18,7 @@ public class CommandAddItemInList implements CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
-		if (!(sender instanceof Player)) {
+		/*if (!(sender instanceof Player)) {
 			sender.sendMessage(sorci.getMessage().getString("message_no_player"));
 			return true;
 		}
@@ -46,7 +46,7 @@ public class CommandAddItemInList implements CommandExecutor {
 				player.sendMessage(sorci.getMessage().getString("message_itemlist_no_item"));
 			}
 			return true;
-		}
+		}*/
 		return false;
 	}
 

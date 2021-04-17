@@ -23,7 +23,7 @@ public class CommandGuiAdminViewCards implements CommandExecutor {
 			this.manager.getGuiAdminViewCards().open(player);
 			return true;
 		} else {
-			sender.sendMessage(manager.getSorci().getMessage().getString("message_no_player"));
+			sender.sendMessage(manager.getSorci().config().messages.playerNoFound.value);
 			return true;
 		}
 	}

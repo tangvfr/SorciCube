@@ -35,10 +35,10 @@ public class EventDuelCreator implements Listener {
 					manager.duelFightPlayer(playerG, cibleG, sorci.getNameServerFight());
 				} else if (playerG.getInviteDuel() != cible) {
 					playerG.setInviteDuel(cible);
-					player.sendMessage(sorci.config().messages.messageDuelSendInvite.value.replace("{player}", cible.getName()));
-					cible.sendMessage(sorci.config().messages.messageDuelReceiveInvite.value.replace("{player}", player.getName()));
+					player.sendMessage(sorci.config().messages.duelSendInvite.value.replace("{player}", cible.getName()));
+					cible.sendMessage(sorci.config().messages.duelReceiveInvite.value.replace("{player}", player.getName()));
 				} else {
-					player.sendMessage(sorci.config().messages.messageDuelAlreadyInvite.value.replace("{player}", cible.getName()));
+					player.sendMessage(sorci.config().messages.duelAlreadyInvite.value.replace("{player}", cible.getName()));
 				}
 			}
 		}
@@ -53,7 +53,7 @@ public class EventDuelCreator implements Listener {
 				PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 				if (playerG.getInviteDuel() != null) {
 					playerG.setInviteDuel(null);
-					player.sendMessage(sorci.config().messages.messageDuelCancelInvite.value);
+					player.sendMessage(sorci.config().messages.duelCancelInvite.value);
 				}
 			}
 		}

@@ -28,9 +28,9 @@ public class CommandGiveArrowHead implements CommandExecutor {
 			inv.addItem(ItemHead.SELECTABLE_ENTITY_AAE);
 			inv.addItem(ItemHead.SELECTABLE_POSE);
 			inv.addItem(ItemHead.SELECTED_ENTITY);
-			sender.sendMessage(sorci.getMessage().getString("message_give_head"));
+			sender.sendMessage(sorci.config().messages.giveHead.value);
 		} else {
-			sender.sendMessage(sorci.getMessage().getString("message_no_player"));
+			sender.sendMessage(sorci.config().messages.noPlayer.value);
 		}
 		return true;
 	}

@@ -28,9 +28,9 @@ public class ManagerCreatorFight {
 	
 	public ManagerCreatorFight(SorciCubeSpell sorci) {
 		this.sorci = sorci;
-		this.locNoClassified = (Location) sorci.getParameter().get("location_noclassified");
-		this.locDuel = (Location) sorci.getParameter().get("location_duel");
-		this.locNPC = (Location) sorci.getParameter().get("location_npc");
+		this.locNoClassified = sorci.convertLocation(sorci.config().locations.locationNoclassified);
+		this.locDuel = sorci.convertLocation(sorci.config().locations.locationDuel);
+		this.locNPC = sorci.convertLocation(sorci.config().locations.locationNpc);
 		this.duelPlayers = new Vector<Player>();
 		this.noClassified = null;
 		Bukkit.getPluginManager().registerEvents(new EventDuelCreator(sorci, this), sorci);

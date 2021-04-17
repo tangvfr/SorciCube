@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,16 +29,14 @@ public class EventPacket implements Listener, Runnable {
 
 	private ManagerPakcetCards manger;
 	private ConcurrentHashMap<Player, PlayerPacket> packetsPlayers;
-	private ConfigurationSection config;
 	private ItemStack itemQuestion;
 	private ItemStack itemBack;
 	
 	public EventPacket(ManagerPakcetCards manager) {
 		this.manger = manager;
 		this.packetsPlayers = new ConcurrentHashMap<Player, PlayerPacket>();
-		this.config = manager.getSorci().getGuiConfig().getConfigurationSection("gui_open_packet");
-		this.itemQuestion = ItemBuild.buildSkull(SkullUrl.QUESTION, 1, config.getString("no_view"), null, false);
-		this.itemBack = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("back"), null, false);
+		this.itemQuestion = ItemBuild.buildSkull(SkullUrl.QUESTION, 1, manager.getSorci().config().gui.guiOpenPacket.noView.value, null, false);
+		this.itemBack = ItemBuild.buildSkull(SkullUrl.X_RED, 1, manager.getSorci().config().gui.guiOpenPacket.back.value, null, false);
 	}
 	
 	private static final byte[] dataPane = {/*0, */1, 2, 3, 4, 5, 6, /*7, 8, */9, 10, 11, 12, 13, 14/*, 15*/};
@@ -70,7 +67,7 @@ public class EventPacket implements Listener, Runnable {
 				PacketCards packet = manger.getPacketCards(name);
 				if (packet == null) {
 					player.sendMessage(
-						manger.getSorci().getMessage().getString("message_packet_no_found")
+						manger.getSorci().config().messages.packetNoFound.value
 						.replace("{name}", name)
 					);
 				} else {
@@ -112,7 +109,7 @@ public class EventPacket implements Listener, Runnable {
 						}
 					} catch (Exception e1) {
 						Bukkit.getLogger().throwing("EventPacket", "onClick", e1);
-						player.sendMessage(manger.getSorci().getMessage().getString("message_packet_error_take"));
+						player.sendMessage(manger.getSorci().config().messages.packetErrorTake.value);
 					}
 				}
 				e.setCancelled(true);
