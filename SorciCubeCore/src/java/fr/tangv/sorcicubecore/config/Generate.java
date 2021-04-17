@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayDeque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,21 +16,30 @@ import org.bson.Document;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import fr.tangv.sorcicubecore.configs.*;
 
 @SuppressWarnings("unused")
 public class Generate {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, ConfigParseException {
-		boolean gClass = false;
+		/*boolean gClass = false;
 		String name = "None";
 		String file = "D:\\Data\\ShareFolder\\Bureau\\config\\"+name.toLowerCase()+".yml";
 		FeatureGenerate feature = new FeatureGenerate(name, new File(file));
 		if (gClass)
 			generateClass(feature);
 		else
-			generateJSON(feature);
+			generateJSON(feature);*/
 		//lowVariable(new File("D:\\Data\\ShareFolder\\Bureau\\configs\\"));
+		//test("");
+	}
+	
+	public static void test(String input) {
+		String out = input;
+		Pattern p = Pattern.compile("\"message(.)(\\w*)");
+		Matcher m = p.matcher(input);
+		while (m.find())
+			out = out.replaceFirst(m.group(0), '\"'+m.group(1).toLowerCase()+m.group(2));
+		System.out.println(out);
 	}
 	
 	public static void lowVariable(File parent) throws IOException {

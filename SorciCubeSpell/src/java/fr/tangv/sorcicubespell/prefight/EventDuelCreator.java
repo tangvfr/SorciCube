@@ -16,18 +16,10 @@ public class EventDuelCreator implements Listener {
 
 	private final SorciCubeSpell sorci;
 	private final ManagerCreatorFight manager;
-	private final String messageInvite;
-	private final String messageReceive;
-	private final String messageCancel;
-	private final String messageAlready;
 	
 	public EventDuelCreator(SorciCubeSpell sorci, ManagerCreatorFight manager) {
 		this.sorci = sorci;
 		this.manager = manager;
-		this.messageInvite = sorci.getMessage().getString("message_duel_send_invite");
-		this.messageReceive = sorci.getMessage().getString("message_duel_receive_invite");
-		this.messageCancel = sorci.getMessage().getString("message_duel_cancel_invite");
-		this.messageAlready = sorci.getMessage().getString("message_duel_already_invite");
 	}
 	
 	@EventHandler
@@ -43,10 +35,10 @@ public class EventDuelCreator implements Listener {
 					manager.duelFightPlayer(playerG, cibleG, sorci.getNameServerFight());
 				} else if (playerG.getInviteDuel() != cible) {
 					playerG.setInviteDuel(cible);
-					player.sendMessage(messageInvite.replace("{player}", cible.getName()));
-					cible.sendMessage(messageReceive.replace("{player}", player.getName()));
+					player.sendMessage(sorci.config().messages.messageDuelSendInvite.value.replace("{player}", cible.getName()));
+					cible.sendMessage(sorci.config().messages.messageDuelReceiveInvite.value.replace("{player}", player.getName()));
 				} else {
-					player.sendMessage(messageAlready.replace("{player}", cible.getName()));
+					player.sendMessage(sorci.config().messages.messageDuelAlreadyInvite.value.replace("{player}", cible.getName()));
 				}
 			}
 		}
@@ -61,7 +53,7 @@ public class EventDuelCreator implements Listener {
 				PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 				if (playerG.getInviteDuel() != null) {
 					playerG.setInviteDuel(null);
-					player.sendMessage(messageCancel);
+					player.sendMessage(sorci.config().messages.messageDuelCancelInvite.value);
 				}
 			}
 		}
