@@ -49,6 +49,7 @@ import fr.tangv.sorcicubespell.manager.ManagerPakcetCards;
 import fr.tangv.sorcicubespell.manager.ManagerPermissions;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.util.EnumTool;
+import fr.tangv.sorcicubespell.util.Items;
 import fr.tangv.sorcicubespell.util.WaitObject;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_9_R2.PacketPlayOutChat;
@@ -83,6 +84,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	//tools
 	private EnumTool enumTool;
+	private Items items;
 	
 	@Override
 	public void onEnable() {
@@ -138,6 +140,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			FactionColorEnumConfig color = config().enums.factionColor;
 			CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
 			SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this);
+			this.items = new Items(config().items);
 			//init for change server
 			SorciCubeSpell.this.handlerServer = new HandlerServer(client);
 			getServer().getMessenger().registerOutgoingPluginChannel(SorciCubeSpell.this, "BungeeCord");
@@ -253,6 +256,10 @@ public class SorciCubeSpell extends JavaPlugin {
 		return handlerConfig.getConfig();
 	}
 	
+	public void uploadConfig() throws IOException, ResponseRequestException, RequestException, ConfigParseException {
+		handlerConfig.uploadConfig();
+	}
+	
 	public HandlerServer getHandlerServer() {
 		return handlerServer;
 	}
@@ -295,6 +302,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	public static Location convertLocation(VectorConfig vec, World world, float yaw, float pitch) {
 		return new Location(world, vec.x, vec.y, vec.z, yaw, pitch);
+	}
+	
+	public Items getItems() {
+		return items;
 	}
 	
 	//refresh

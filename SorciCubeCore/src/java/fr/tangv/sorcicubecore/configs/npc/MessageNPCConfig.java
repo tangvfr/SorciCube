@@ -7,11 +7,11 @@ import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.config.ListConfig;
 import fr.tangv.sorcicubecore.config.StringConfig;
 
+@SuppressWarnings("unused")
 public class MessageNPCConfig extends AbstractConfig {
 
 	public StringConfig nameNPC;
 	public ListConfig<StringConfig> messages;
-	@SuppressWarnings("unused")
 	private StringConfig _messages;
 	
 	public MessageNPCConfig(Document doc) throws ConfigParseException {

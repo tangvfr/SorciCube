@@ -3,8 +3,8 @@ package fr.tangv.sorcicubespell.npc;
 import java.util.Arrays;
 
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 
+import fr.tangv.sorcicubecore.configs.GuiSellerPacketsGuiConfig;
 import fr.tangv.sorcicubecore.packet.PacketCards;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
@@ -12,16 +12,17 @@ import fr.tangv.sorcicubespell.util.ItemBuild;
 
 public class PacketCardsSell extends PCSell {
 
-	private PacketCards packetCards;
+	private final PacketCards packetCards;
 	
-	public PacketCardsSell(SorciCubeSpell sorci, ConfigurationSection config, int price, String id) {
-		super(sorci, config, price);
+	public PacketCardsSell(SorciCubeSpell sorci, int price, String id) {
+		super(sorci, price);
 		this.packetCards = sorci.getManagerPakcetCards().getPacketCards(id);
-		if (this.isValid()) {
+		GuiSellerPacketsGuiConfig gui = sorci.config().gui.guiSellerPackets;
+		if (isValid()) {
 			this.itemView = sorci.getManagerPakcetCards().packetToItem(this.packetCards);
-			this.initItemSell("packet", this.packetCards.getName());
+			this.initItemSell(gui, true, this.packetCards.getName());
 		} else {
-			this.itemView = ItemBuild.buildItem(Material.SIGN, 1, (short) 0, (byte) 0, config.getString("packet_error"), Arrays.asList(id), false);
+			this.itemView = ItemBuild.buildItem(Material.SIGN, 1, (short) 0, (byte) 0, gui.packetError.value, Arrays.asList(id), false);
 		}
 	}
 	
@@ -30,7 +31,7 @@ public class PacketCardsSell extends PCSell {
 		player.getPlayerFeatures().removeMoney(price);
 		player.uploadPlayerFeatures(sorci.getHandlerPlayers());
 		player.getPlayer().getInventory().addItem(this.itemView);
-		player.getPlayer().sendMessage(getMessage("message_packet_buy_packet")
+		player.getPlayer().sendMessage(sorci.config().messages.packetBuyPacket.value
 				.replace("{name}", packetCards.getName())
 				.replace("{price}", Integer.toString(price))
 		);

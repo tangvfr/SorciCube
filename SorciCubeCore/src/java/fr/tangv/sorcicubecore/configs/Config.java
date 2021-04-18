@@ -7,6 +7,7 @@ import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.config.ListConfig;
 import fr.tangv.sorcicubecore.configs.npc.NPCConfig;
 
+@SuppressWarnings("unused")
 public class Config extends AbstractConfig {
 
 	public ParameterConfig parameter;
@@ -17,8 +18,9 @@ public class Config extends AbstractConfig {
 	public NPCConfig npc;
 	public LevelConfig level;
 	public ListConfig<ArenaConfig> arenas;
-	@SuppressWarnings("unused")
 	private ArenaConfig _arenas;
+	public ListConfig<ItemConfig> items;
+	private ItemConfig _items;
 	
 	public Config(Document doc) throws ConfigParseException {
 		super(doc);

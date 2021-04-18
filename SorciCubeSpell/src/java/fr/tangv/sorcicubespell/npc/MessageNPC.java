@@ -1,17 +1,21 @@
 package fr.tangv.sorcicubespell.npc;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.bukkit.entity.Player;
 
+import fr.tangv.sorcicubecore.config.StringConfig;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class MessageNPC implements ClickNPC {
 
-	private final List<String> messages;
+	private final Vector<String> messages;
 	
-	public MessageNPC(List<String> messages) {
-		this.messages = messages;
+	public MessageNPC(List<StringConfig> messages) {
+		this.messages = new Vector<String>();
+		for (StringConfig msg : messages)
+			this.messages.add(msg.value);
 	}
 	
 	@Override

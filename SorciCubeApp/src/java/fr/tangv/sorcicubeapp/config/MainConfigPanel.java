@@ -43,7 +43,7 @@ public abstract class MainConfigPanel extends JPanel {
 				save();
 			}
 		});
-		JButton cancel = new JButton("Cancel");
+		JButton cancel = new JButton("Cancel / Refresh");
 		cancel.addMouseListener(new ClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

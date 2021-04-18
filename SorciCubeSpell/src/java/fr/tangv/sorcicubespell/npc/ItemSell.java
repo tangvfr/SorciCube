@@ -8,9 +8,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.tangv.sorcicubecore.configs.GuiSellerItemsGuiConfig;
 import fr.tangv.sorcicubecore.configs.npc.ItemSellerItemsNPCConfig;
-import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
+import fr.tangv.sorcicubespell.util.Items;
 
 public class ItemSell {
 
@@ -32,7 +32,7 @@ public class ItemSell {
 		return item;
 	}
 	
-	public ItemSell(ItemSellerItemsNPCConfig conf, GuiSellerItemsGuiConfig gui) throws Exception {
+	public ItemSell(ItemSellerItemsNPCConfig conf, GuiSellerItemsGuiConfig gui, Items items) throws Exception {
 		try {
 			this.isDeco = !conf.isEnable.value;
 			if (isDeco) {
@@ -41,7 +41,7 @@ public class ItemSell {
 				this.itemShopWrong = null;
 				this.price = -1;
 			} else {
-				this.item = /*sorci.get conf.nameItem*/;
+				this.item = items.getItem(conf.nameItem.value);
 				this.itemShopRight = duplicateItemShopLore(gui, true);
 				this.itemShopWrong = duplicateItemShopLore(gui, false);
 				this.price = conf.price.value;

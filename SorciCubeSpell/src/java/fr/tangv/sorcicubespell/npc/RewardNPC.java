@@ -1,23 +1,22 @@
 package fr.tangv.sorcicubespell.npc;
 
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import fr.tangv.sorcicubecore.configs.npc.RewardNPCConfig;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
 
 public class RewardNPC implements ClickNPC {
 
-	private final String key;
+	private final String id;
     private final int reward;
 	private final String message;
 	
-	public RewardNPC(SorciCubeSpell sorci, String key) {
-		ConfigurationSection config = sorci.getConfigNPC().getConfigurationSection("npc_rewards."+key);
-		this.key = key;
-		this.reward = config.getInt("reward");
-		this.message = config.getString("message").replace("{reward}", Integer.toString(this.reward));
+	public RewardNPC(SorciCubeSpell sorci, RewardNPCConfig npc) {
+		this.id = npc.id.value;
+		this.reward = npc.reward.value;
+		this.message = npc.message.value.replace("{reward}", Integer.toString(this.reward));
 	}
 	
 	@Override
@@ -25,8 +24,8 @@ public class RewardNPC implements ClickNPC {
 		PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 		if (playerG.getPlayerFeatures() != null) {
 			PlayerFeatures feature = playerG.getPlayerFeatures();
-			if (!feature.getRewardNPC().contains(key)) {
-				feature.getRewardNPC().add(key);
+			if (!feature.getRewardNPC().contains(id)) {
+				feature.getRewardNPC().add(id);
 				feature.addMoney(reward);
 				playerG.uploadPlayerFeatures(sorci.getHandlerPlayers());
 				player.sendMessage(this.message.replace("{player}", player.getName()));
