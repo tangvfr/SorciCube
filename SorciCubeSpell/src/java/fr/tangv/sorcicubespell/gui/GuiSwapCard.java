@@ -8,21 +8,22 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
+import fr.tangv.sorcicubecore.configs.GuiSwapCardGuiConfig;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiSwapCard extends AbstractGuiCards {
+public class GuiSwapCard extends AbstractGuiCards<GuiSwapCardGuiConfig> {
 	
 	public GuiSwapCard(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_swap_card"));
+		super(manager, manager.getSorci().config().gui.guiSwapCard);
 	}
 
 	@Override
 	protected ItemStack createEndItem() {
-		return ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.getString("item_name.back"), null, false);
+		return ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.back.value, null, false);
 	}
 
 	@Override

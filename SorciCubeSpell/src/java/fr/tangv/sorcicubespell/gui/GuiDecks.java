@@ -8,34 +8,36 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.CardFaction;
+import fr.tangv.sorcicubecore.configs.GuiDecksGuiConfig;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiDecks extends AbstractGui {
+public class GuiDecks extends AbstractGui<GuiDecksGuiConfig> {
 
 	private ItemStack itemDeco;
 	private ItemStack itemBack;
 	
 	public GuiDecks(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_decks"));
+		super(manager, manager.getSorci().config().gui.guiDecks);
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
-		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.getString("back"), null, false);
+		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.back.value, null, false);
 	}
 
 	private ItemStack getItemDeck(PlayerFeatures playerF, int number) {
 		if (playerF.getUnlockDecks() >= number) {
 			DeckCards deck = playerF.getDeck(number);
 			return ItemBuild.buildSkull(SkullUrl.getSkullForFaction(deck.getFaction()), 1, 
-					config.getString("deck")
+					config.deck.value
 						.replace("{number}", Integer.toString(number))
 						.replace("{average_cost}", "§b"+Double.toString(deck.calcAverageCost()/10.0D)+" \u2756")
 					, null, false);
 		} else {
 			return ItemBuild.buildSkull(SkullUrl.CHEST_GRAY, 1, 
-					config.getString("deck").replace("{number}", Integer.toString(number)).replace("{average_cost}", "")
+					config.deck.value
+						.replace("{number}", Integer.toString(number)).replace("{average_cost}", "")
 					, null, false);
 		}
 	}
@@ -56,7 +58,7 @@ public class GuiDecks extends AbstractGui {
 	public Inventory createInventory(Player player) {
 		try {
 			PlayerGui playerG = getPlayerGui(player);
-			Inventory inv = Bukkit.createInventory(null, 45, this.name);
+			Inventory inv = Bukkit.createInventory(null, 45, config.name.value);
 			for (int i = 0; i < 9; i++) {
 				inv.setItem(i, itemDeco);
 				inv.setItem(i+36, itemDeco);

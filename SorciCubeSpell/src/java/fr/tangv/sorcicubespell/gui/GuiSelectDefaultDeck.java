@@ -10,22 +10,23 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.CardFaction;
+import fr.tangv.sorcicubecore.configs.GuiSelectDeckDefaultGuiConfig;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiSelectDefaultDeck extends AbstractGui {
+public class GuiSelectDefaultDeck extends AbstractGui<GuiSelectDeckDefaultGuiConfig> {
 
-	private ItemStack itemDark;
-	private ItemStack itemLight;
-	private ItemStack itemNature;
-	private ItemStack itemToxic;
-	private ItemStack itemDeco;
+	private final ItemStack itemDark;
+	private final ItemStack itemLight;
+	private final ItemStack itemNature;
+	private final ItemStack itemToxic;
+	private final ItemStack itemDeco;
 	
 	public GuiSelectDefaultDeck(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_select_deck_default"));
-		String desc = config.getString("lore_select");
+		super(manager, manager.getSorci().config().gui.guiSelectDeckDefault);
+		String desc = config.loreSelect.value;
 		String dark = manager.getSorci().getEnumTool().factionToString(CardFaction.DARK);
 		String light = manager.getSorci().getEnumTool().factionToString(CardFaction.LIGHT);
 		String nature = manager.getSorci().getEnumTool().factionToString(CardFaction.NATURE);
@@ -39,7 +40,7 @@ public class GuiSelectDefaultDeck extends AbstractGui {
 
 	@Override
 	public Inventory createInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(null, 45, this.name);
+		Inventory inv = Bukkit.createInventory(null, 45, config.name.value);
 		for (int i = 0; i < 9; i++) {
 			inv.setItem(i, itemDeco);
 			inv.setItem(i+36, itemDeco);
@@ -85,10 +86,10 @@ public class GuiSelectDefaultDeck extends AbstractGui {
 		}
 		if (pf != null) {
 			getPlayerGui(player).setPlayerFeatures(pf, sorci);
-			player.sendMessage(sorci.getMessage().getString("message_select_default_deck")
+			player.sendMessage(sorci.config().messages.selectDefaultDeck.value
 					.replace("{faction}", sorci.getEnumTool().factionToString(faction)));
 		} else
-			player.sendMessage(sorci.getMessage().getString("message_already_select_default_deck"));
+			player.sendMessage(sorci.config().messages.alreadySelectDefaultDeck.value);
 		player.closeInventory();
 	}
 

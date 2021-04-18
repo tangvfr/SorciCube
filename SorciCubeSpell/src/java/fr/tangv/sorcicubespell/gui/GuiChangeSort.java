@@ -8,19 +8,20 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.CardComparator;
+import fr.tangv.sorcicubecore.configs.GuiChangeSortGuiConfig;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiChangeSort extends AbstractGui {
+public class GuiChangeSort extends AbstractGui<GuiChangeSortGuiConfig> {
 
-	private ItemStack itemDeco;
-	private ItemStack itemBack;
+	private final ItemStack itemDeco;
+	private final ItemStack itemBack;
 	
 	public GuiChangeSort(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_change_sort"));
+		super(manager, manager.getSorci().config().gui.guiChangeSort);
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
-		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.getString("back"), null, false);
+		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.back.value, null, false);
 	}
 
 	private ItemStack itemSort(PlayerGui playerG, String url, CardComparator sort) {
@@ -30,7 +31,7 @@ public class GuiChangeSort extends AbstractGui {
 	@Override
 	public Inventory createInventory(Player player) {
 		PlayerGui playerG = getPlayerGui(player);
-		Inventory inv = Bukkit.createInventory(null, 18, this.name);
+		Inventory inv = Bukkit.createInventory(null, 18, config.name.value);
 		inv.setItem(0, itemDeco);
 		inv.setItem(1, itemSort(playerG, SkullUrl.I_DRAY, CardComparator.BY_ID));
 		inv.setItem(2, itemSort(playerG, SkullUrl.F_LIME, CardComparator.BY_FACTION));

@@ -10,23 +10,24 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.CardFaction;
+import fr.tangv.sorcicubecore.configs.GuiCreateDeckGuiConfig;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiCreateDeck extends AbstractGui {
+public class GuiCreateDeck extends AbstractGui<GuiCreateDeckGuiConfig> {
 
-	private ItemStack itemDark;
-	private ItemStack itemLight;
-	private ItemStack itemNature;
-	private ItemStack itemToxic;
-	private ItemStack itemDeco;
-	private ItemStack itemBack;
+	private final ItemStack itemDark;
+	private final ItemStack itemLight;
+	private final ItemStack itemNature;
+	private final ItemStack itemToxic;
+	private final ItemStack itemDeco;
+	private final ItemStack itemBack;
 	
 	public GuiCreateDeck(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_create_deck"));
-		String desc = config.getString("lore_select");
+		super(manager, manager.getSorci().config().gui.guiCreateDeck);
+		String desc = config.loreSelect.value;
 		String dark = manager.getSorci().getEnumTool().factionToString(CardFaction.DARK);
 		String light = manager.getSorci().getEnumTool().factionToString(CardFaction.LIGHT);
 		String nature = manager.getSorci().getEnumTool().factionToString(CardFaction.NATURE);
@@ -36,12 +37,12 @@ public class GuiCreateDeck extends AbstractGui {
 		itemNature = ItemBuild.buildSkull(SkullUrl.LECTTUCE, 1, nature, Arrays.asList(desc.replace("{faction}", nature)), false);
 		itemToxic = ItemBuild.buildSkull(SkullUrl.BLACK_BERRY, 1, toxic, Arrays.asList(desc.replace("{faction}", toxic)), false);
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
-		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.getString("back"), null, false);
+		itemBack = ItemBuild.buildSkull(SkullUrl.BACK_RED, 1, config.back.value, null, false);
 	}
 
 	@Override
 	public Inventory createInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(null, 45, this.name);
+		Inventory inv = Bukkit.createInventory(null, 45, config.name.value);
 		for (int i = 0; i < 9; i++) {
 			inv.setItem(i, itemDeco);
 			inv.setItem(i+36, itemDeco);

@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import fr.tangv.sorcicubecore.configs.GuiListFightGuiConfig;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.fight.FightType;
@@ -20,23 +21,42 @@ import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiListFight extends AbstractGui implements Runnable {
+public class GuiListFight extends AbstractGui<GuiListFightGuiConfig> implements Runnable {
 
 	private final Inventory inv;
 	private Vector<FightData> listFight;
 	
 	public GuiListFight(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_list_fight"));
-		this.inv = Bukkit.createInventory(null, 54, this.name);
+		super(manager, manager.getSorci().config().gui.guiListFight);
+		this.inv = Bukkit.createInventory(null, 54, config.name.value);
 		ItemStack decoItem = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, " ", null, false);
 		for (int i = 0; i < 6; i++)
 			inv.setItem(8+(i*9), decoItem);
-		inv.setItem(53, ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("close"), null, false));
+		inv.setItem(53, ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.close.value, null, false));
 		Bukkit.getScheduler().runTaskTimerAsynchronously(manager.getSorci(), this, 0, 20);
 	}
 	
+	private String nameFightStat(FightStat stat) {
+		switch (stat) {
+			case END:
+				return config.stats.end.value;
+				
+			case START:
+				return config.stats.start.value;
+				
+			case STARTING:
+				return config.stats.starting.value;
+				
+			case WAITING:
+				return config.stats.waiting.value;
+				
+			default:
+				return null;
+		}
+	}
+	
 	private ItemStack fightDataToItem(FightData fightData) {
-		String stat = config.getString("stats."+fightData.getStat().name().toLowerCase());
+		String stat = nameFightStat(fightData.getStat());
 		String namePlayer1 = Bukkit.getOfflinePlayer(fightData.getPlayerUUID1()).getName();
 		String namePlayer2 = Bukkit.getOfflinePlayer(fightData.getPlayerUUID2()).getName();
 		String levelPlayer1 = Byte.toString(fightData.getLevelPlayer1());
@@ -48,7 +68,7 @@ public class GuiListFight extends AbstractGui implements Runnable {
 		String fightUUID = fightData.getFightUUID().toString();
 		String server = fightData.getServer();
 		ArrayList<String> lore = new ArrayList<String>();
-		for (String line : config.getStringList("lore_fight")) {
+		for (String line : config.loreFight.toArrayString()) {
 			lore.add(line	
 				.replace("{stat}", stat)
 				.replace("{name_player1}", namePlayer1)
@@ -64,9 +84,9 @@ public class GuiListFight extends AbstractGui implements Runnable {
 			);
 		}
 		if (fightData.getFightType() == FightType.DUEL) {
-			return ItemBuild.buildItem(Material.IRON_SWORD, 1, (short) 0, (byte) 0, config.getString("duel"), lore, false);
+			return ItemBuild.buildItem(Material.IRON_SWORD, 1, (short) 0, (byte) 0, config.duel.value, lore, false);
 		} else {
-			return ItemBuild.buildSkull(SkullUrl.N_GRAY, 1, config.getString("unclassied"), lore, false);
+			return ItemBuild.buildSkull(SkullUrl.N_GRAY, 1, config.unclassied.value, lore, false);
 		}
 	}
 	
@@ -92,15 +112,15 @@ public class GuiListFight extends AbstractGui implements Runnable {
 		int no_classed = all-duel;
 		//duel
 		inv.setItem(8, ItemBuild.buildItem(Material.IRON_SWORD, 1, (short) 0, (byte) 0, 
-				config.getString("duel_number").replace("{number}", Integer.toString(duel))
+				config.duelNumber.value.replace("{number}", Integer.toString(duel))
 		, null, false));
 		//no classed
 		inv.setItem(17, ItemBuild.buildSkull(SkullUrl.N_GRAY, 1,
-				config.getString("no_classed_number").replace("{number}", Integer.toString(no_classed))
+				config.noClassedNumber.value.replace("{number}", Integer.toString(no_classed))
 		, null, false));
 		//all
 		inv.setItem(35, ItemBuild.buildItem(Material.FIREBALL, 1, (short) 0, (byte) 0,
-				config.getString("all_number").replace("{number}", Integer.toString(all))
+				config.allNumber.value.replace("{number}", Integer.toString(all))
 		, null, false));
 	}
 

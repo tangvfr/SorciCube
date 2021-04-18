@@ -27,7 +27,7 @@ public class GuiFightDeck extends GuiDecks {
 					case UNCLASSIFIED:
 						if (cf.getNoClassified() == null) {
 							cf.setNoClassified(player);
-							player.sendMessage(sorci.getMessage().getString("message_wait_fight"));
+							player.sendMessage(manager.getSorci().config().messages.waitFight.value);
 							break;
 						} else {
 							Player player1 = cf.getNoClassified();
@@ -44,7 +44,7 @@ public class GuiFightDeck extends GuiDecks {
 					case DUEL:
 						playerG.setInviteDuel(null);
 						cf.addInDuel(player);
-						player.sendMessage(sorci.getMessage().getString("message_wait_duel"));
+						player.sendMessage(manager.getSorci().config().messages.waitDuel.value);
 						break;
 						
 					default:
@@ -54,7 +54,7 @@ public class GuiFightDeck extends GuiDecks {
 				if (loc != null)
 					player.teleport(loc);
 			} else {
-				player.sendMessage(sorci.getMessage().getString("message_invalid_deck"));
+				player.sendMessage(sorci.config().messages.invalidDeck.value);
 				player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_SCREAM, 1.0F, 1.5F);
 			}
 		}

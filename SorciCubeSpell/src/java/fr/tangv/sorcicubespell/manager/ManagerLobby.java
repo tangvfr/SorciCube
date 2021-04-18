@@ -34,8 +34,8 @@ public class ManagerLobby implements Listener {
 	
 	public ManagerLobby(SorciCubeSpell sorci) {
 		this.sorci = sorci;
-		this.locationTuto = sorci.convertLocation(sorci.config().locations.locationTuto);
-		this.locationSpawn = sorci.convertLocation(sorci.config().locations.locationSpawn);
+		this.locationTuto = SorciCubeSpell.convertLocation(sorci.config().locations.locationTuto);
+		this.locationSpawn = SorciCubeSpell.convertLocation(sorci.config().locations.locationSpawn);
 		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
 	

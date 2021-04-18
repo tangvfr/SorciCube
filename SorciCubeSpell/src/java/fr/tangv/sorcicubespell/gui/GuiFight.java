@@ -7,29 +7,30 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import fr.tangv.sorcicubecore.configs.GuiFightGuiConfig;
 import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiFight extends AbstractGui {
+public class GuiFight extends AbstractGui<GuiFightGuiConfig> {
 
-	private ItemStack itemDeco;
-	private ItemStack itemClose;
-	private ItemStack itemNoClassified;
-	private ItemStack itemDuel;
+	private final ItemStack itemDeco;
+	private final ItemStack itemClose;
+	private final ItemStack itemNoClassified;
+	private final ItemStack itemDuel;
 	
 	public GuiFight(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_fight"));
+		super(manager, manager.getSorci().config().gui.guiFight);
 		itemDeco = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 14, " ", null, false);
-		itemClose = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("close"), null, false);
-		itemNoClassified = ItemBuild.buildSkull(SkullUrl.N_GRAY, 1, config.getString("unclassied"), null, false);
-		itemDuel = ItemBuild.buildItem(Material.IRON_SWORD, 1, (short) 0, (byte) 0, config.getString("duel"), null, false);
+		itemClose = ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.close.value, null, false);
+		itemNoClassified = ItemBuild.buildSkull(SkullUrl.N_GRAY, 1, config.unclassied.value, null, false);
+		itemDuel = ItemBuild.buildItem(Material.IRON_SWORD, 1, (short) 0, (byte) 0, config.duel.value, null, false);
 	}
 
 	@Override
 	public Inventory createInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(null, 27, this.name);
+		Inventory inv = Bukkit.createInventory(null, 27, config.name.value);
 		inv.setItem(0, itemDeco); inv.setItem(4, itemDeco); inv.setItem(8, itemDeco);
 		inv.setItem(9, itemDeco); inv.setItem(13, itemDeco); inv.setItem(17, itemDeco);
 		inv.setItem(18, itemDeco); inv.setItem(22, itemClose); inv.setItem(26, itemDeco);

@@ -37,7 +37,7 @@ public class EventGuiPlayer implements Listener {
 	public void onDrag(InventoryDragEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
 			PlayerGui player = this.manager.getPlayerGui((Player) e.getWhoClicked());
-			AbstractGui gui = player.getGui();
+			AbstractGui<?> gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onDrag(player.getPlayer(), e);
 		}
@@ -47,7 +47,7 @@ public class EventGuiPlayer implements Listener {
 	public void onClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() instanceof Player) {
 			PlayerGui player = this.manager.getPlayerGui((Player) e.getWhoClicked());
-			AbstractGui gui = player.getGui();
+			AbstractGui<?> gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onClick(player.getPlayer(), e);
 		}
@@ -57,7 +57,7 @@ public class EventGuiPlayer implements Listener {
 	public void onClose(InventoryCloseEvent e) {
 		if (e.getPlayer() instanceof Player) {
 			PlayerGui player = this.manager.getPlayerGui((Player) e.getPlayer());
-			AbstractGui gui = player.getGui();
+			AbstractGui<?> gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onClose(player.getPlayer(), e);
 		}
@@ -67,7 +67,7 @@ public class EventGuiPlayer implements Listener {
 	public void onOpen(InventoryOpenEvent e) {
 		if (e.getPlayer() instanceof Player) {
 			PlayerGui player = this.manager.getPlayerGui((Player) e.getPlayer());
-			AbstractGui gui = player.getGui();
+			AbstractGui<?> gui = player.getGui();
 			if (gui != null && e.getInventory().hashCode() == player.getInvOfGui().hashCode())
 				gui.onOpen(player.getPlayer(), e);
 		}

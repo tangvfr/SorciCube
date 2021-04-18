@@ -3,11 +3,13 @@ package fr.tangv.sorcicubespell.fight;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.util.Vector;
+
+import fr.tangv.sorcicubecore.configs.ArenaConfig;
+import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class FightArena {
 
+	private final String id;
 	private final String name;
 	private final World world;
 	private final int radiusSpectator;
@@ -16,24 +18,25 @@ public class FightArena {
 	private final Location secondBase;
 	private final Location[] secondEntity;
 	
-	public FightArena(String name, ConfigurationSection config) throws Exception {
-		this.name = name;
-		this.world = Bukkit.getWorld(config.getString("world"));
-		this.radiusSpectator = config.getInt("spectator_radius");
-		this.firstBase = ((Vector) config.get("first.base")).toLocation(world, 0, 0);
+	public FightArena(ArenaConfig arena) throws Exception {
+		this.id = arena.id.value;
+		this.name = arena.name.value;
+		this.world = Bukkit.getWorld(arena.world.value);
+		this.radiusSpectator = arena.spectatorRadius.value;
+		this.firstBase = SorciCubeSpell.convertLocation(arena.firstBase.base, world, 0, 0);
 		this.firstEntity = new Location[5];
-		this.firstEntity[0] = ((Vector) config.get("first.entity1")).toLocation(world, 0, 0);
-		this.firstEntity[1] = ((Vector) config.get("first.entity2")).toLocation(world, 0, 0);
-		this.firstEntity[2] = ((Vector) config.get("first.entity3")).toLocation(world, 0, 0);
-		this.firstEntity[3] = ((Vector) config.get("first.entity4")).toLocation(world, 0, 0);
-		this.firstEntity[4] = ((Vector) config.get("first.entity5")).toLocation(world, 0, 0);
-		this.secondBase = ((Vector) config.get("second.base")).toLocation(world, 180, 0);
+		this.firstEntity[0] = SorciCubeSpell.convertLocation(arena.firstBase.entity1, world, 0, 0);
+		this.firstEntity[1] = SorciCubeSpell.convertLocation(arena.firstBase.entity2, world, 0, 0);
+		this.firstEntity[2] = SorciCubeSpell.convertLocation(arena.firstBase.entity3, world, 0, 0);
+		this.firstEntity[3] = SorciCubeSpell.convertLocation(arena.firstBase.entity4, world, 0, 0);
+		this.firstEntity[4] = SorciCubeSpell.convertLocation(arena.firstBase.entity5, world, 0, 0);
+		this.secondBase = SorciCubeSpell.convertLocation(arena.secondBase.base, world, 180, 0);
 		this.secondEntity = new Location[5];
-		this.secondEntity[0] = ((Vector) config.get("second.entity1")).toLocation(world, 180, 0);
-		this.secondEntity[1] = ((Vector) config.get("second.entity2")).toLocation(world, 180, 0);
-		this.secondEntity[2] = ((Vector) config.get("second.entity3")).toLocation(world, 180, 0);
-		this.secondEntity[3] = ((Vector) config.get("second.entity4")).toLocation(world, 180, 0);
-		this.secondEntity[4] = ((Vector) config.get("second.entity5")).toLocation(world, 180, 0);
+		this.secondEntity[0] = SorciCubeSpell.convertLocation(arena.secondBase.entity1, world, 180, 0);
+		this.secondEntity[1] = SorciCubeSpell.convertLocation(arena.secondBase.entity2, world, 180, 0);
+		this.secondEntity[2] = SorciCubeSpell.convertLocation(arena.secondBase.entity3, world, 180, 0);
+		this.secondEntity[3] = SorciCubeSpell.convertLocation(arena.secondBase.entity4, world, 180, 0);
+		this.secondEntity[4] = SorciCubeSpell.convertLocation(arena.secondBase.entity5, world, 180, 0);
 		String errorNull = "";
 		if (this.name == null)
 			errorNull = "Name";
@@ -71,7 +74,11 @@ public class FightArena {
 			errorNull = "SecondEntity6";
 		//test
 		if (!errorNull.isEmpty())
-			throw new Exception("Value \""+errorNull+"\" is null, arena \""+name+"\" !");
+			throw new Exception("Value \""+errorNull+"\" is null, arena \""+id+"\" !");
+	}
+
+	public String getID() {
+		return id;
 	}
 	
 	public String getName() {

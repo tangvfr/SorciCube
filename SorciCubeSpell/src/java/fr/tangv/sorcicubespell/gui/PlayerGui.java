@@ -23,13 +23,13 @@ public class PlayerGui {
 	private final Player player;
 	private Card card;
 	private Inventory invOfGui;
-	private AbstractGui gui;
+	private AbstractGui<?> gui;
 	private CardComparator cardComparator;
 	private int pageViewGui;
 	private int deckEdit;
 	private int deckCardEdit;
 	private PlayerFeatures playerFeature;
-	private AbstractGui previousGui;
+	private AbstractGui<?> previousGui;
 	private FightType fightType;
 	private Player inviteDuel;
 	private boolean viewHideCards;
@@ -75,7 +75,7 @@ public class PlayerGui {
 		this.card = card;
 	}
 	
-	public AbstractGui getGui() {
+	public AbstractGui<?> getGui() {
 		return gui;
 	}
 	
@@ -87,7 +87,7 @@ public class PlayerGui {
 		this.viewHideCards = viewHideCards;
 	}
 
-	public void setGui(AbstractGui gui) {
+	public void setGui(AbstractGui<?> gui) {
 		this.gui = gui;
 		this.invOfGui = null;
 	}
@@ -175,11 +175,11 @@ public class PlayerGui {
 		));
 	}
 
-	public AbstractGui getPreviousGui() {
+	public AbstractGui<?> getPreviousGui() {
 		return previousGui;
 	}
 
-	public void setPreviousGui(AbstractGui previousGui) {
+	public void setPreviousGui(AbstractGui<?> previousGui) {
 		this.previousGui = previousGui;
 	}
 

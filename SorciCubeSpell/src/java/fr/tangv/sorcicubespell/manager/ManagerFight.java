@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import fr.tangv.sorcicubecore.configs.ArenaConfig;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.player.DeckException;
@@ -39,8 +40,9 @@ public class ManagerFight implements Runnable {
 		this.preFights = new ConcurrentHashMap<UUID, PreFight>();
 		this.fights = new ConcurrentHashMap<UUID, Fight>();
 		this.arena = new Vector<FightArena>();
-		for (String name : sorci.getArenaConfig().getKeys(false))
-			this.arena.add(new FightArena(name, sorci.getArenaConfig().getConfigurationSection(name)));
+		for (ArenaConfig arena : sorci.config().arenas)
+			if (arena.isEnable.value)
+				this.arena.add(new FightArena(arena));
 		if (arena.size() <= 0)
 			throw new Exception("Nothing arena !");
 		//event

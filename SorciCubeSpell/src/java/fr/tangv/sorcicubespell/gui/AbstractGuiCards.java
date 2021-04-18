@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -14,24 +13,25 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardComparator;
+import fr.tangv.sorcicubecore.configs.CardsBasicGuiConfig;
 import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public abstract class AbstractGuiCards extends AbstractGui {
+public abstract class AbstractGuiCards<T extends CardsBasicGuiConfig> extends AbstractGui<T> {
 	
-	private ItemStack sort;
-	private ItemStack previous;
-	private ItemStack next;
-	private ItemStack end;
-	private ItemStack deco;
+	private final ItemStack sort;
+	private final ItemStack previous;
+	private final ItemStack next;
+	private final ItemStack end;
+	private final ItemStack deco;
 	
-	public AbstractGuiCards(ManagerGui manager, ConfigurationSection config) {
+	public AbstractGuiCards(ManagerGui manager, T config) {
 		super(manager, config);
-		this.sort = ItemBuild.buildSkull(SkullUrl.HOPPER, 1, config.getString("item_name.sort"), null, false);
-		this.previous = ItemBuild.buildSkull(SkullUrl.BACK_GRAY, 1, config.getString("item_name.previous"), null, false);
-		this.next = ItemBuild.buildSkull(SkullUrl.FORWARD_GRAY, 1, config.getString("item_name.next"), null, false);
+		this.sort = ItemBuild.buildSkull(SkullUrl.HOPPER, 1, config.sort.value, null, false);
+		this.previous = ItemBuild.buildSkull(SkullUrl.BACK_GRAY, 1, config.previous.value, null, false);
+		this.next = ItemBuild.buildSkull(SkullUrl.FORWARD_GRAY, 1, config.next.value, null, false);
 		this.deco =  ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 0, " ", null, false);
 		this.end = createEndItem();
 	}
@@ -64,7 +64,7 @@ public abstract class AbstractGuiCards extends AbstractGui {
 				num = 45;
 			//init inv
 			Inventory inv = Bukkit.createInventory(null, 54, 
-					this.name
+					config.name.value
 					.replace("{page}", ""+(page+1))
 					.replace("{max}", ""+(max+1)));
 			//set inv
@@ -74,7 +74,7 @@ public abstract class AbstractGuiCards extends AbstractGui {
 				}
 			//init paper
 			ItemStack pageItem = ItemBuild.buildItem(Material.PAPER, page+1, (short) 0, (byte) 0, 
-					config.getString("item_name.page")
+					config.page.value
 						.replace("{page}", ""+(page+1))
 						.replace("{max}", ""+(max+1))
 					, null, false);

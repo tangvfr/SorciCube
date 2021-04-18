@@ -3,9 +3,9 @@ package fr.tangv.sorcicubecore.configs;
 import org.bson.Document;
 import fr.tangv.sorcicubecore.config.*;
 
-public class GuiViewCardsGuiConfig extends BasicGuiConfig {
+public class GuiViewCardsGuiConfig extends CardsBasicGuiConfig {
 
-	public ItemNameGuiViewCardsGuiConfig itemName;
+	public StringConfig back;
 
 	public GuiViewCardsGuiConfig(Document doc) throws ConfigParseException {
 		super(doc);

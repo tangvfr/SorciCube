@@ -7,19 +7,20 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFeatureType;
+import fr.tangv.sorcicubecore.configs.GuiAdminViewCardsGuiConfig;
 import fr.tangv.sorcicubespell.manager.ManagerGui;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
-public class GuiAdminViewCards extends AbstractGuiCards {
+public class GuiAdminViewCards extends AbstractGuiCards<GuiAdminViewCardsGuiConfig> {
 	
 	public GuiAdminViewCards(ManagerGui manager) {
-		super(manager, manager.getSorci().getGuiConfig().getConfigurationSection("gui_admin_view_cards"));
+		super(manager, manager.getSorci().config().gui.guiAdminViewCards);
 	}
 
 	@Override
 	protected ItemStack createEndItem() {
-		return ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.getString("item_name.close"), null, false);
+		return ItemBuild.buildSkull(SkullUrl.X_RED, 1, config.close.value, null, false);
 	}
 
 	@Override
