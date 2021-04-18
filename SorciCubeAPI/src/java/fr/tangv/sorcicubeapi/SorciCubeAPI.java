@@ -47,7 +47,6 @@ public class SorciCubeAPI extends ServerAbstract {
 		loadTokens();
 		this.handlerInit = new HandlerInit(this);
 		this.console = new Console(this);
-		this.start();
 		Console.logger.info("Server is start on: port "+properties.port+", bindIP "+properties.bindIP+", backLog "+properties.backLog);
 		Console.logger.info("Querry: enable "+properties.querryEnable+", port "+properties.querryPort+", bindIP "+properties.querryBindIP+", backLog "+properties.querryBackLog);
 	}
@@ -59,7 +58,7 @@ public class SorciCubeAPI extends ServerAbstract {
 	
 	@Override
 	public void stoped() {
-		System.exit(0);
+		this.console.stop();
 	}
 	
 	public String generatedTokens(String desc) {

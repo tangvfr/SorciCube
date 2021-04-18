@@ -1,6 +1,8 @@
 package fr.tangv.sorcicubeapi.console;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,13 +10,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.util.Format;
 
-public class Console extends Thread {
+public class Console {
 
 	public static Logger logger;
 	
@@ -25,14 +29,33 @@ public class Console extends Thread {
 			File file = new File("./logs");
 			if (!file.exists())
 				file.mkdirs();
-			FileHandler fh = new FileHandler("./logs/"+new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"_%g.log", 8*1024*1024, 20, true);
+			String start = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			FileHandler fh = new FileHandler("./logs/"+start+"_%g.log", 8*1024*1024, 20, true);
 			fh.setFormatter(new SimpleFormatter());
 			logger.addHandler(fh);
-			//zip old file.log
+			for (File f : file.listFiles()) {
+				String name = f.getName();
+				if (!name.startsWith(start) && name.endsWith(".log")) {
+					ZipOutputStream out = new ZipOutputStream(new FileOutputStream(new File("./logs/"+name+".zip")));
+					ZipEntry ze = new ZipEntry(name);
+					out.putNextEntry(ze);
+					FileInputStream in = new FileInputStream(f);
+					int len;
+					byte[] buf = new byte[1024];
+					while ((len = in.read(buf)) != -1)
+						out.write(buf, 0, len);
+					in.close();
+					out.closeEntry();
+					out.close();
+					f.delete();
+				} else if (name.endsWith(".lck")) {
+					f.delete();
+				}
+			}
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
-			System.exit(MAX_PRIORITY);
-		}		
+			System.exit(1);
+		}
 	}
 	
 	protected SorciCubeAPI sorci;
@@ -43,9 +66,13 @@ public class Console extends Thread {
 		this.querry = new QuerryServer(this);
 	}
 	
-	@Override
-	public void run() {
+	public void start() {
 		querry.start();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void stop() {
+		querry.stop();
 	}
 	
 	public String excute(String input) throws IOException {
