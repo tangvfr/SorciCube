@@ -88,7 +88,7 @@ public class FightEntity extends FightHead {
 	}
 	
 	private void repeatMove(int number) {
-		Bukkit.getScheduler().runTaskLaterAsynchronously(owner.getFight().getSorci(), new Runnable() {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(owner.fight.getSorci(), new Runnable() {
 			@Override
 			public void run() {
 				sendMovePlayer(loc.getDirection().clone().multiply(0.25));
@@ -291,8 +291,8 @@ public class FightEntity extends FightHead {
 				this.lastCard = card;
 				return;
 			} else {
-				owner.getFight().sendMessage(
-						fight.getSorci().getMessage().getString("message_dead")
+				owner.fight.sendMessage(
+						fight.config.messages.dead.value
 						.replace("{entity}", card.getCard().renderName())
 						.replace("{owner}", owner.getNamePlayer())
 				);
@@ -306,8 +306,8 @@ public class FightEntity extends FightHead {
 		if (this.card.hasActionSpawn()) {
 			card.excutingActionSpawn();
 		} else {
-			owner.getFight().sendMessage(
-					fight.getSorci().getMessage().getString("message_spawn")
+			owner.fight.sendMessage(
+					fight.config.messages.spawn.value
 					.replace("{entity}", card.getCard().renderName())
 					.replace("{owner}", owner.getNamePlayer())
 			);

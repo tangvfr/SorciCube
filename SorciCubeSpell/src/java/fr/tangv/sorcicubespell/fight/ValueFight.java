@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
 import org.bukkit.inventory.ItemStack;
 
-import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubecore.configs.Config;
 import fr.tangv.sorcicubespell.util.ItemBuild;
 import fr.tangv.sorcicubespell.util.SkullUrl;
 
@@ -30,27 +30,27 @@ public class ValueFight {
 	protected final BarColor titleEndColor;
 	protected final byte roundMaxAFK;
 	
-	public ValueFight(SorciCubeSpell sorci) {
-		this.priceCard = sorci.getParameter().getInt("price_card");
-		this.roundMaxAFK = (byte) sorci.getParameter().getInt("round_max_afk");
+	public ValueFight(Config config) {
+		this.priceCard = config.parameter.priceCard.value;
+		this.roundMaxAFK = (byte) config.parameter.roundMaxAfk.value;
 		//item
-		this.itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, sorci.getGuiConfig().getString("gui_player.none"), null, false);
-		this.itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, sorci.getGuiConfig().getString("gui_player.null"), null, false);
-		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, sorci.getGuiConfig().getString("gui_player.next"), Arrays.asList(sorci.getGuiConfig().getString("gui_player.next_desc")), false);
-		this.itemStickView = ItemBuild.buildItem(Material.BLAZE_ROD, 1, (short) 0, (byte) 0, sorci.getGuiConfig().getString("gui_player.stick_view"), Arrays.asList(sorci.getGuiConfig().getString("gui_player.stick_view_desc")), false);
+		this.itemNone = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 15, config.gui.guiPlayer.none.value, null, false);
+		this.itemNull = ItemBuild.buildItem(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 8, config.gui.guiPlayer.nul.value, null, false);
+		this.itemNextRound = ItemBuild.buildItem(Material.PAPER, 1, (short) 0, (byte) 0, config.gui.guiPlayer.next.value, Arrays.asList(config.gui.guiPlayer.nextDesc.value), false);
+		this.itemStickView = ItemBuild.buildItem(Material.BLAZE_ROD, 1, (short) 0, (byte) 0, config.gui.guiPlayer.stickView.value, Arrays.asList(config.gui.guiPlayer.stickViewDesc.value), false);
 		this.itemBuy = ItemBuild.buildSkull(SkullUrl.QUESTION, 1,
-				sorci.getGuiConfig().getString("gui_player.buy").replace("{price}", Integer.toString(priceCard))
-				, Arrays.asList(sorci.getGuiConfig().getString("gui_player.buy_desc").replace("{price}", Integer.toString(priceCard))), false);
-		this.itemSwap = ItemBuild.buildItem(Material.SHEARS, 1, (short) 0, (byte) 0, sorci.getGuiConfig().getString("gui_player.swap"), Arrays.asList(sorci.getGuiConfig().getString("gui_player.swap_desc")), false);
-		this.itemExit = ItemBuild.buildItem(Material.DARK_OAK_DOOR_ITEM, 1,  (short) 0, (byte) 0, sorci.getGuiConfig().getString("gui_player.back_lobby"), Arrays.asList(sorci.getGuiConfig().getString("gui_player.back_lobby_desc")), false);
+				config.gui.guiPlayer.buy.value.replace("{price}", Integer.toString(priceCard))
+				, Arrays.asList(config.gui.guiPlayer.buyDesc.value.replace("{price}", Integer.toString(priceCard))), false);
+		this.itemSwap = ItemBuild.buildItem(Material.SHEARS, 1, (short) 0, (byte) 0, config.gui.guiPlayer.swap.value, Arrays.asList(config.gui.guiPlayer.swapDesc.value), false);
+		this.itemExit = ItemBuild.buildItem(Material.DARK_OAK_DOOR_ITEM, 1,  (short) 0, (byte) 0, config.gui.guiPlayer.backLobby.value, Arrays.asList(config.gui.guiPlayer.backLobbyDesc.value), false);
 		//mana
-		this.maxMana = sorci.getParameter().getInt("max_mana");
-		this.startMana = sorci.getParameter().getInt("start_mana");
+		this.maxMana = config.parameter.maxMana.value;
+		this.startMana = config.parameter.startMana.value;
 		//boss bar
-		this.titleBossBar = sorci.getGuiConfig().getString("boss_bar.name");
-		this.titleBossBarColor = BarColor.valueOf(sorci.getGuiConfig().getString("boss_bar.color"));
-		this.titleEnd = sorci.getGuiConfig().getString("boss_bar.name_end");
-		this.titleEndColor = BarColor.valueOf(sorci.getGuiConfig().getString("boss_bar.color_end"));
+		this.titleBossBar = config.gui.bossBar.name.value;
+		this.titleBossBarColor = BarColor.valueOf(config.gui.bossBar.color.value);
+		this.titleEnd = config.gui.bossBar.nameEnd.value;
+		this.titleEndColor = BarColor.valueOf(config.gui.bossBar.colorEnd.value);
 	}
 	
 }

@@ -105,7 +105,7 @@ public class FightSpectator {
 	
 	//dynamic
 	
-	protected final Fight fight;
+	public final Fight fight;
 	private final Inventory invHistoric;
 	private final Inventory invViewEntity;
 	private Player player;
@@ -136,8 +136,8 @@ public class FightSpectator {
 		this.displayGroup = displayGroup;
 		this.level = level;
 		this.profile = ((CraftPlayer) player).getProfile();
-		this.invHistoric = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_historic.name"));
-		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.getSorci().getGuiConfig().getString("gui_view_entity.name"));
+		this.invHistoric = Bukkit.createInventory(player, 9, fight.config.gui.guiHistoric.name.value);
+		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.config.gui.guiViewEntity.name.value);
 		this.invAutorized = new Vector<Integer>();
 		addInventoryAutorized(invHistoric);
 		addInventoryAutorized(invViewEntity);
@@ -178,10 +178,6 @@ public class FightSpectator {
 		return invAutorized.contains(inventory.hashCode());
 	}
 	
-	public Fight getFight() {
-		return fight;
-	}
-	
 	public String getDisplayGroup() {
 		return displayGroup;
 	}
@@ -208,7 +204,7 @@ public class FightSpectator {
 	private void createScoreboard(String nameAlly, String nameEnemie, int healthAlly, int healthEnemie) {
 		this.sc = new Scoreboard();
 		this.scob = new ScoreboardObjective(sc, 
-				fight.getSorci().getGuiConfig().getString("scoreboard.name")/*displayName*/,
+				fight.config.gui.scoreboard.name.value/*displayName*/,
 				IScoreboardCriteria.b/*dummy*/
 			);
 		sendPacket(new PacketPlayOutScoreboardObjective(scob, 0/*0 create, 1 remmove, 2 update*/));
@@ -464,7 +460,7 @@ public class FightSpectator {
 	
 	public void sendMessageInsufficientMana() {
 		playSound(Sound.ENTITY_ENDERMEN_SCREAM, 1.0F, 1.5F);
-		sendMessage(fight.getSorci().getMessage().getString("message_mana_insufficient"));
+		sendMessage(fight.config.messages.manaInsufficient.value);
 	}
 	
 	public static IChatBaseComponent toIChatBaseComposent(String text) {

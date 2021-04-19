@@ -196,7 +196,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.GIVE_CARD, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card card = player.getFight().getSorci().getHandlerCards().get(feature.getValue().asUUID());
+				Card card = player.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 				if (card != null) {
 					player.giveCard(card, 1);
 				}
@@ -229,7 +229,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.INVOCATION, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getHandlerCards().get(feature.getValue().asUUID());
+				Card cardFeature = player.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					for (int i = 0; i < player.getMaxEntity(); i++) {
 						FightEntity entity = player.getEntity(i);
@@ -260,7 +260,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.METAMORPH_TO, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getHandlerCards().get(feature.getValue().asUUID());
+				Card cardFeature = player.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					for (FightHead head : heads)
 						if (head instanceof FightEntity && head.isSelectable()) {
@@ -293,7 +293,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.GIVE_FEATURE_CARD, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getHandlerCards().get(feature.getValue().asUUID());
+				Card cardFeature = player.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					for (FightHead head : heads)
 						if (head instanceof FightEntity) {
@@ -318,7 +318,7 @@ public class FightSpell {
 		actionsSpells.put(CardFeatureType.EXECUTE, new ActionSpell() {
 			@Override
 			public void actionSpell(PlayerFight player, CardFeature feature, Collection<FightHead> heads) {
-				Card cardFeature = player.getFight().getSorci().getHandlerCards().get(feature.getValue().asUUID());
+				Card cardFeature = player.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 				if (cardFeature != null) {
 					FightSpell.startActionSpell(player, cardFeature.getFeatures(), 
 							FightCibles.randomFightHeadsForCible(player, cardFeature.getCible(), cardFeature.getCibleFaction()));

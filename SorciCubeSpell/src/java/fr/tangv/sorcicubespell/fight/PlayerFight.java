@@ -67,7 +67,7 @@ public class PlayerFight extends FightSpectator {
 		this.cardHand = new Card[6];
 		this.pickCard(3);
 		//historiquez
-		this.invSwap = Bukkit.createInventory(player, 9, fight.getSorci().getGuiConfig().getString("gui_swap_fight.name"));
+		this.invSwap = Bukkit.createInventory(player, 9, fight.config.gui.guiSwapFight.name.value);
 		addInventoryAutorized(invSwap);
 		//init fightHead
 		this.entity = new FightEntity[entityLoc.length];
@@ -110,7 +110,7 @@ public class PlayerFight extends FightSpectator {
 			this.roundAFK++;
 			if (roundAFK >= ValueFight.V.roundMaxAFK && !fight.isEnd()) {
 				this.lossAFK = true;
-				fight.sendMessage(fight.getSorci().getMessage().getString("message_afk_fight").replace("{player}", getNamePlayer()));
+				fight.sendMessage(fight.config.messages.afkFight.value.replace("{player}", getNamePlayer()));
 				fight.end(this);
 			}
 		} else {

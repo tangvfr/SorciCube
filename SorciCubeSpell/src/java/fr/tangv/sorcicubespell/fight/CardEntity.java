@@ -9,6 +9,8 @@ import fr.tangv.sorcicubecore.card.CardFeatures;
 import fr.tangv.sorcicubecore.card.CardSkin;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.card.CardValue;
+import fr.tangv.sorcicubecore.config.StringConfig;
+import fr.tangv.sorcicubecore.configs.MessagesConfig;
 
 public class CardEntity {
 
@@ -43,43 +45,43 @@ public class CardEntity {
 		this.card.getFeatures().getFeature(CardFeatureType.DAMAGE).setValue(new CardValue(attack));
 	}
 	
-	private void sendMessageAction(PlayerFight owner, String nameEntity, String messageKey, String action) {
-		owner.getFight().sendMessage(
+	private void sendMessageAction(PlayerFight owner, String nameEntity, StringConfig message, String action) {
+		owner.fight.sendMessage(
 			(action == null) ?
-				owner.getFight().getSorci().getMessage().getString(messageKey)
+				message.value
 					.replace("{entity}", nameEntity)
 					.replace("{owner}", owner.getNamePlayer())
 			:
-				owner.getFight().getSorci().getMessage().getString(messageKey+"_action")
+				message.value
 					.replace("{entity}", nameEntity)
 					.replace("{action}", action)
 					.replace("{owner}", owner.getNamePlayer())
 		);
 	}
 	
-	private void actionCard(PlayerFight owner, String nameEntity, CardFeature feature, String messageKey) {
-		Card card = owner.getFight().getSorci().getHandlerCards().get(feature.getValue().asUUID());
+	private void actionCard(PlayerFight owner, String nameEntity, CardFeature feature, StringConfig message) {
+		Card card = owner.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 		if (card != null) {
 			Vector<FightHead> heads = FightCibles.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction());
-			if (messageKey != null) {
+			if (message != null) {
 				if(heads.isEmpty())
-					sendMessageAction(owner, nameEntity, messageKey, null);
+					sendMessageAction(owner, nameEntity, message, null);
 				else
-					sendMessageAction(owner, nameEntity, messageKey, card.renderName());
+					sendMessageAction(owner, nameEntity, message, card.renderName());
 			}
 			FightSpell.startActionSpell(owner, card.getFeatures(), heads);
-		} else if (messageKey != null) {
-			sendMessageAction(owner, nameEntity, messageKey, "nothing");
+		} else if (message!= null) {
+			sendMessageAction(owner, nameEntity, message, "nothing");
 		}
 	}
 	
-	private void giveCard(PlayerFight owner ,String nameEntity, FightEntity entity, CardFeature feature, String messageKey) {
-		Card card = owner.getFight().getSorci().getHandlerCards().get(feature.getValue().asUUID());
+	private void giveCard(PlayerFight owner ,String nameEntity, FightEntity entity, CardFeature feature, StringConfig message) {
+		Card card = owner.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 		if (card != null) {
-			sendMessageAction(owner, nameEntity, messageKey, card.renderName());
+			sendMessageAction(owner, nameEntity, message, card.renderName());
 			FightSpell.startActionFeature(owner, new CardFeature(CardFeatureType.GIVE_FEATURE_CARD, feature.getValue()), entity);
-		} else if (messageKey != null) {
-			sendMessageAction(owner, nameEntity, messageKey, "nothing");
+		} else if (message != null) {
+			sendMessageAction(owner, nameEntity, message, "nothing");
 		}
 	}
 	
@@ -136,7 +138,7 @@ public class CardEntity {
 		//Bukkit.broadcastMessage("§e[§aDebug§e] "+entity.getNameInChat()+" "+Arrays.toString(actions));
 		if (actions[0]) {
 			actions[0] = false;
-			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC_ONE), "message_is_attack_one");
+			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC_ONE), player.fight.config.messages.dead"message_is_attack_one");
 		}
 		if (actions[1] && !actions[5]) {
 			actions[1] = false;

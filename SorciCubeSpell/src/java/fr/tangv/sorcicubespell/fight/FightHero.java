@@ -17,19 +17,19 @@ public class FightHero extends FightHead {
 	public FightHero(PlayerFight owner) {
 		super(owner, owner.getLocBase(), 1.65D);
 		this.updateStat();
-		String name = owner.getFight().getSorci().getParameter().getString("format_level");
+		String name = owner.fight.config.parameter.formatLevel.value;
 		FightData data = owner.fight.getFightData();
 		name = (data.getPlayerUUID1().equals(owner.getUUID()))
 		?
 			name
 			.replace("{group}", owner.getDisplayGroup())
 			.replace("{level}", Byte.toString(owner.getLevel()))
-			.replace("{faction}", owner.getFight().getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer1()))
+			.replace("{faction}", owner.fight.getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer1()))
 		:
 			name
 			.replace("{group}", owner.getDisplayGroup())
 			.replace("{level}", Byte.toString(owner.getLevel()))
-			.replace("{faction}", owner.getFight().getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer2()))
+			.replace("{faction}", owner.fight.getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer2()))
 		;
 		this.armorFeaturesPlayer = createArmorStand(name, 0.4D);
 	}
@@ -44,7 +44,7 @@ public class FightHero extends FightHead {
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("  "+getName());
 		lore.add("");
-		lore.add("  "+owner.getFight().getSorci().getEnumConfig().getString("type.hero"));
+		lore.add("  "+owner.fight.config.enums.type.hero);
 		lore.add("");
 		return ItemBuild.buildSkull(
 				owner.getProfilePlayer(),

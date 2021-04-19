@@ -17,7 +17,6 @@ import net.minecraft.server.v1_9_R2.WorldServer;
 public abstract class FightHead {
 
 	protected final PlayerFight owner;
-	protected final Fight fight;
 	protected final Location loc;
 	protected final WorldServer world;
 	private final EntityArmorStand entityName;
@@ -25,7 +24,6 @@ public abstract class FightHead {
 	private net.minecraft.server.v1_9_R2.ItemStack headItem;
 	
 	public FightHead(PlayerFight owner, Location loc, double headHeight) {
-		this.fight = owner.getFight();
 		this.owner = owner;
 		this.loc = loc;
 		//create entity
@@ -52,12 +50,12 @@ public abstract class FightHead {
 	}
 	
 	private void sendHeadEntity(EntityArmorStand entity) {
-		fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, headItem));
+		owner.fight.sendPacket(new PacketPlayOutEntityEquipment(entity.getId(), EnumItemSlot.HEAD, headItem));
 	}
 	
 	protected void sendFightHead(EntityArmorStand entity, String name, boolean already) {
 		if (already)
-			fight.sendPacket(new PacketPlayOutEntityDestroy(entity.getId()));
+			owner.fight.sendPacket(new PacketPlayOutEntityDestroy(entity.getId()));
 		if (name.isEmpty()) {
 			entity.setCustomNameVisible(false);
 			entity.setCustomName(name);
@@ -65,7 +63,7 @@ public abstract class FightHead {
 			entity.setCustomNameVisible(true);
 			entity.setCustomName(name);
 		}
-		fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
+		owner.fight.sendPacket(new PacketPlayOutSpawnEntityLiving(entity));
 	}
 	
 	public void showHead(ItemStack item) {

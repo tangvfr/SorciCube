@@ -35,7 +35,7 @@ public class ManagerFight implements Runnable {
 	
 	public ManagerFight(SorciCubeSpell sorci) throws Exception {
 		this.sorci = sorci;
-		ValueFight.V = new ValueFight(sorci);
+		ValueFight.V = new ValueFight(sorci.config());
 		this.playerInstance = new ConcurrentHashMap<UUID, FightSpectator>();
 		this.preFights = new ConcurrentHashMap<UUID, PreFight>();
 		this.fights = new ConcurrentHashMap<UUID, Fight>();
@@ -76,7 +76,7 @@ public class ManagerFight implements Runnable {
 			FightSpectator spectator = playerInstance.get(uuid);
 			spectator.removeInBossBar();
 			if (!spectator.isFightPlayer()) {
-				spectator.getFight().removeSpectator(spectator);
+				spectator.fight.removeSpectator(spectator);
 				playerInstance.remove(uuid);
 			}
 		}
@@ -88,7 +88,7 @@ public class ManagerFight implements Runnable {
 		String groupDisplay = sorci.getManagerPermissions().applyPermission(player, features.isAdmin(), features.getGroup());
 		if (playerInstance.containsKey(player.getUniqueId())) {
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
-			if (spectator.isFightPlayer() && !spectator.getFight().isEnd()) {
+			if (spectator.isFightPlayer() && !spectator.fight.isEnd()) {
 				for (Player other : Bukkit.getOnlinePlayers()) {
 						other.hidePlayer(player);
 						player.hidePlayer(other);

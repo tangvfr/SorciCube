@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.tangv.sorcicubecore.card.Card;
+import fr.tangv.sorcicubecore.configs.Config;
 import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
@@ -25,7 +26,6 @@ import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.util.Cooldown;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.CardRender;
-import fr.tangv.sorcicubespell.util.Config;
 import net.minecraft.server.v1_9_R2.Packet;
 
 public class Fight {
@@ -36,6 +36,7 @@ public class Fight {
 	protected final static int MAX_HEALTH = 60;
 	protected final static int START_HEALTH = 30;
 	
+	public final Config config;
 	private final FightData fightData;
 	private final SorciCubeSpell sorci;
 	private final PlayerFight player1;
@@ -58,6 +59,7 @@ public class Fight {
 	public Fight(SorciCubeSpell sorci, PreFight preFight) throws Exception {
 		this.fightData = preFight.getFightData();
 		this.sorci = sorci;
+		this.config = sorci.config();
 		this.init = false;
 		this.firstPlay = true;
 		this.isStart = false;
@@ -65,14 +67,14 @@ public class Fight {
 		this.isEnd = false;
 		this.spectators = new Vector<FightSpectator>();
 		this.cooldown = new Cooldown(1_000);
-		this.cooldownRound = new Cooldown((long) sorci.getParameter().getInt("cooldown_one_round")*1000L);
-		this.cooldownEnd = new Cooldown((long) sorci.getParameter().getInt("cooldown_end")*1000L);
-		this.round = -sorci.getParameter().getInt("cooldown_before_fight")-1;
-		this.waitView = sorci.getParameter().getInt("wait_view_fight");
+		this.cooldownRound = new Cooldown(config.parameter.cooldownOneRound.value*1000L);
+		this.cooldownEnd = new Cooldown(config.parameter.cooldownEnd.value*1000L);
+		this.round = -config.parameter.cooldownBeforeFight.value-1;
+		this.waitView = config.parameter.waitViewFight.value;
 		this.arena = sorci.getManagerFight().pickArena();
 		this.bossBar = Bukkit.createBossBar(
-				sorci.getGuiConfig().getString("boss_bar.name_arena").replace("{arena}", this.arena.getName()),
-				BarColor.valueOf(sorci.getGuiConfig().getString("boss_bar.color_arena")),
+				config.gui.bossBar.nameArena.value.replace("{arena}", this.arena.getName()),
+				BarColor.valueOf(config.gui.bossBar.colorArena.value),
 				BarStyle.SOLID, new BarFlag[0]
 			);
 		//player1 start one
@@ -162,7 +164,7 @@ public class Fight {
 						/*if (headIsInit == false && round2Max <= round)
 							initHead();*/
 						alertMessage(
-								sorci.getMessage().getString("message_below_start_game")
+								config.messages.belowStartGame.value
 								.replace("{time}", Integer.toString(Math.abs(round+1)))
 							);
 						round += 1;
@@ -362,7 +364,7 @@ public class Fight {
 		player.getEnemie().nextRoundFightEntity();
 		//message
 		this.alertMessage(
-				sorci.getMessage().getString("message_round")
+				config.messages.round.value
 				.replace("{round}", Integer.toString(round+1))
 			);
 		//init inv
@@ -391,29 +393,30 @@ public class Fight {
 			end(player2, player1);
 	}
 	
-	private void endReward(Config lc, PlayerFight player, int money, int exp) throws IOException, ResponseRequestException, RequestException, DeckException {
+	private void endReward(PlayerFight player, int money, int exp) throws IOException, ResponseRequestException, RequestException, DeckException {
 		PlayerFeatures feature = sorci.getHandlerPlayers().getPlayer(player.getUUID(), player.getNamePlayer());
 		player.sendMessage(
-				sorci.getMessage().getString("message_reward_end_game")
+				config.messages.rewardEndGame.value
 				.replace("{money}", Integer.toString(money))
 				.replace("{experience}", Integer.toString(exp))
 		);
 		feature.addMoney(money);
 		feature.addExperience(exp);
-		if (!feature.isLevel((byte) lc.getInt("level_max"))) {
-			int expNextLevel = lc.getInt("level_experience."+(feature.getLevel()+1)+".experience");
+		while (!feature.isLevel((byte) config.level.maxLevel.value)) {
+			int expNextLevel = config.level.getExperience(feature.getLevel()+1);
 			if (feature.hasExperience(expNextLevel)) {
 				feature.removeExperience(expNextLevel);
 				feature.addLevel((byte) 1);
-				int reward = lc.getInt("level_experience."+feature.getLevel()+".reward");
+				int reward = config.level.getReward(feature.getLevel());
 				feature.addMoney(reward);
 				player.sendMessage(
-						sorci.getMessage().getString("message_change_level")
+						config.messages.changeLevel.value
 						.replace("{level}", Byte.toString(feature.getLevel()))
 						.replace("{money}", Integer.toString(reward))
 				);
 				player.playSound(Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
-			}
+			} else
+				break;
 		}
 		sorci.getHandlerPlayers().update(feature);
 	}
@@ -427,33 +430,31 @@ public class Fight {
 		bossBar.setProgress(cooldownEnd.getProgess());
 		this.isEnd = true;
 		if (losser.isDead() && winner.isDead()) {
-			winner.sendEndTitle(sorci.getMessage().getString("message_equality"));
-			losser.sendEndTitle(sorci.getMessage().getString("message_equality"));
-			Config lc = sorci.getLevelConfig();
+			winner.sendEndTitle(config.messages.equality.value);
+			losser.sendEndTitle(config.messages.equality.value);
 			if (winner.isOnline())
-				endReward(lc, winner, lc.getInt("money_equality"), lc.getInt("experience_equality"));
+				endReward(winner, config.level.moneyEquality.value, config.level.experienceEquality.value);
 			if (losser.isOnline() && !losser.hasLossAFK())
-				endReward(lc, losser, lc.getInt("money_equality"), lc.getInt("experience_equality"));
+				endReward(losser, config.level.moneyEquality.value, config.level.experienceEquality.value);
 			//spectator
 			forEachSpectator((FightSpectator spectator) -> {
 				spectator.sendMessage(
-						sorci.getMessage().getString("message_spectator_equality")
+						config.messages.spectatorEquality.value
 						.replace("{playerw}", winner.getNamePlayer())
 						.replace("{playerl}", losser.getNamePlayer())
 				);
 			});
 		} else {
-			winner.sendEndTitle(sorci.getMessage().getString("message_winner"));
-			losser.sendEndTitle(sorci.getMessage().getString("message_losser"));
-			Config lc = sorci.getLevelConfig();
+			winner.sendEndTitle(config.messages.winner.value);
+			losser.sendEndTitle(config.messages.losser.value);
 			if (winner.isOnline())
-				endReward(lc, winner, lc.getInt("money_win"), lc.getInt("experience_win"));
+				endReward(winner, config.level.moneyWin.value, config.level.experienceWin.value);
 			if (losser.isOnline() && !losser.hasLossAFK())
-				endReward(lc, losser, lc.getInt("money_loss"), lc.getInt("experience_loss"));
+				endReward(losser, config.level.moneyLoss.value, config.level.experienceLoss.value);
 			//spectator
 			forEachSpectator((FightSpectator spectator) -> {
 				spectator.sendMessage(
-						sorci.getMessage().getString("message_spectator")
+						config.messages.spectator.value
 						.replace("{playerw}", winner.getNamePlayer())
 						.replace("{playerl}", losser.getNamePlayer())
 				);
