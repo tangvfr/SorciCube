@@ -23,7 +23,13 @@ public class HandlerServerConfig implements RequestHandlerInterface {
 	public HandlerServerConfig() throws IOException, ConfigParseException {
 		this.file = new RamFile(new File("./config.json"));
 		file.loadData();
-		config = new Config(Document.parse(file.getData()));
+		String data = file.getData();
+		if (!data.isEmpty()) {
+			config = new Config(Document.parse(data));
+		} else {
+			config = new Config(null);
+			file.writeData(config.toDocument().toJson());
+		}
 	}
 
 	public Config getConfig() {
