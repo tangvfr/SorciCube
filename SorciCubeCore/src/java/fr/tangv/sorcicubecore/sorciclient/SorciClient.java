@@ -109,18 +109,4 @@ public abstract class SorciClient extends Client implements RequestHandlerInterf
 		this.connected();
 	}
 	
-	public static void main(String[] args) {
-		try {
-			String token = "8tW3cFg4xgrGoybGzcPcwKMhadJmBEOhCMexlctqD4yCJxk6j1oS6MDngpTyQJKn";
-			SorciClient sc = new SorciClient("sc://04:TestSorciClient:"+token+"@localhost:8367", 10_000) {
-				@Override public void connected() {}
-				@Override public void disconnected() {}
-				@Override public void handlingRequest(Client client, Request request) throws Exception {}
-			};
-			sc.start();
-		} catch (NumberFormatException | IOException | URISyntaxException | RequestHandlerException | RequestException e) {
-			e.printStackTrace();
-		}//:8367
-	}
-	
 }
