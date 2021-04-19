@@ -42,15 +42,9 @@ public class EventFight implements Listener {
 	private final static double TOLERANCE_MOVE = 3.5;
 	
 	private final ManagerFight manager;
-	private final String formatChat;
-	private final String spectatorChat;
-	private final String playerChat;
 	
 	public EventFight(ManagerFight manager) {
 		this.manager = manager;
-		this.formatChat = manager.getSorci().getParameter().getString("chat_format_fight");
-		this.spectatorChat = manager.getSorci().getParameter().getString("spectator_fight");
-		this.playerChat = manager.getSorci().getParameter().getString("player_fight");
 	}
 	
 	@EventHandler
@@ -60,21 +54,21 @@ public class EventFight implements Listener {
 			FightSpectator spectator = manager.getSpectator(e.getPlayer().getUniqueId());
 			String message;
 			if (spectator.isFightPlayer()) {
-				message = formatChat
-						.replace("{spectator}", playerChat)
+				message = spectator.fight.config.parameter.chatFormatFight.value
+						.replace("{spectator}", spectator.fight.config.parameter.playerFight.value)
 						.replace("{displayname}", e.getPlayer().getDisplayName())
 						.replace("{message}", e.getMessage())
 						.replace("{group}", spectator.getDisplayGroup())
 						.replace("{level}", Byte.toString(spectator.getLevel()));
-				spectator.getFight().sendMessage(message);
+				spectator.fight.sendMessage(message);
 			} else {
-				message = formatChat
-					.replace("{spectator}", spectatorChat)
+				message = spectator.fight.config.parameter.chatFormatFight.value
+					.replace("{spectator}", spectator.fight.config.parameter.spectatorFight.value)
 					.replace("{displayname}", e.getPlayer().getDisplayName())
 					.replace("{message}", e.getMessage())
 					.replace("{group}", spectator.getDisplayGroup())
 					.replace("{level}", Byte.toString(spectator.getLevel()));
-				spectator.getFight().sendMessageSpectator(message);
+				spectator.fight.sendMessageSpectator(message);
 			}
 			Bukkit.getConsoleSender().sendMessage(message);
 		}
@@ -96,10 +90,16 @@ public class EventFight implements Listener {
 		player.removeMana(card.getMana());
 		player.setCardHand(player.getCardSelect(), null);
 		player.setCardSelect(-1);
-		player.getFight().addHistoric(card, player.isFisrt());
-		player.getFight().sendMessage(
-				player.getFight().getSorci().getMessage().getString(
-						(card.getType() == CardType.ENTITY) ? "message_player_invoke_card" : "message_player_use_card")
+		player.fight.addHistoric(card, player.isFisrt());
+		player.fight.sendMessage(
+				(
+					card.getType() == CardType.ENTITY
+					?
+					player.fight.config.messages.playerInvokeCard
+					: 
+					player.fight.config.messages.playerUseCard
+				)
+				.value
 				.replace("{player}", player.getNamePlayer())
 				.replace("{card}", card.renderName())
 		);
@@ -122,7 +122,7 @@ public class EventFight implements Listener {
 		int attack = entity.getAttack();
 		//message in chat
 		fight.sendMessage(
-				fight.getSorci().getMessage().getString("message_attack_entity")
+				fight.config.messages.attackEntity.value
 				.replace("{damager_owner}", damagerOwner)
 				.replace("{damager}", damager)
 				.replace("{attack}", Integer.toString(attack))
@@ -208,7 +208,7 @@ public class EventFight implements Listener {
 										@Override
 										public boolean resultFightHead(ArrayList<FightHead> fightHeads, boolean incitement) {
 											for (FightHead head1 : fightHeads)
-												EventFight.this.fightWithEntityChoose(player.getFight(), entity, head1);
+												EventFight.this.fightWithEntityChoose(player.fight, entity, head1);
 											return true;
 										}
 									});
@@ -217,7 +217,7 @@ public class EventFight implements Listener {
 									FightEntity entity = player.getEntityAttack();
 									entity.setAttackPossible(false);
 									player.setEntityAttack(null);
-									this.fightWithEntityChoose(player.getFight(), entity, head);
+									this.fightWithEntityChoose(player.fight, entity, head);
 									player.showEntityAttackPossible();
 								}
 							} else {
@@ -351,7 +351,7 @@ public class EventFight implements Listener {
 									break;
 									
 								case FINISH_ROUND:
-									player.getFight().nextRound();
+									player.fight.nextRound();
 									break;
 									
 								case BUY_CARD:
@@ -396,7 +396,7 @@ public class EventFight implements Listener {
 				if (spectator.isFightPlayer())
 					((PlayerFight) spectator).noAFK();
 			}
-		} else if (!e.getPlayer().hasPermission(manager.getSorci().getParameter().getString("perm_admin"))) {
+		} else if (!e.getPlayer().hasPermission("sorcicubespell.join.fight")) {
 			e.setCancelled(true);
 		}
 	}
@@ -420,7 +420,7 @@ public class EventFight implements Listener {
 				}
 			} else {
 				if (!spectator.getLocBase().getWorld().equals(e.getTo().getWorld()) 
-						|| e.getTo().distance(spectator.getLocBase()) > spectator.getFight().getArena().getRadiusSpectator()) {
+						|| e.getTo().distance(spectator.getLocBase()) > spectator.fight.getArena().getRadiusSpectator()) {
 					e.setCancelled(true);
 				}
 			}

@@ -9,8 +9,7 @@ import fr.tangv.sorcicubecore.card.CardFeatures;
 import fr.tangv.sorcicubecore.card.CardSkin;
 import fr.tangv.sorcicubecore.card.CardType;
 import fr.tangv.sorcicubecore.card.CardValue;
-import fr.tangv.sorcicubecore.config.StringConfig;
-import fr.tangv.sorcicubecore.configs.MessagesConfig;
+import fr.tangv.sorcicubecore.configs.ActionMessageConfig;
 
 public class CardEntity {
 
@@ -45,21 +44,21 @@ public class CardEntity {
 		this.card.getFeatures().getFeature(CardFeatureType.DAMAGE).setValue(new CardValue(attack));
 	}
 	
-	private void sendMessageAction(PlayerFight owner, String nameEntity, StringConfig message, String action) {
+	private void sendMessageAction(PlayerFight owner, String nameEntity, ActionMessageConfig message, String action) {
 		owner.fight.sendMessage(
 			(action == null) ?
-				message.value
+				message.withoutAction.value
 					.replace("{entity}", nameEntity)
 					.replace("{owner}", owner.getNamePlayer())
 			:
-				message.value
+				message.withAction.value
 					.replace("{entity}", nameEntity)
 					.replace("{action}", action)
 					.replace("{owner}", owner.getNamePlayer())
 		);
 	}
 	
-	private void actionCard(PlayerFight owner, String nameEntity, CardFeature feature, StringConfig message) {
+	private void actionCard(PlayerFight owner, String nameEntity, CardFeature feature, ActionMessageConfig message) {
 		Card card = owner.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 		if (card != null) {
 			Vector<FightHead> heads = FightCibles.randomFightHeadsForCible(owner, card.getCible(), card.getCibleFaction());
@@ -75,7 +74,7 @@ public class CardEntity {
 		}
 	}
 	
-	private void giveCard(PlayerFight owner ,String nameEntity, FightEntity entity, CardFeature feature, StringConfig message) {
+	private void giveCard(PlayerFight owner ,String nameEntity, FightEntity entity, CardFeature feature, ActionMessageConfig message) {
 		Card card = owner.fight.getSorci().getHandlerCards().get(feature.getValue().asUUID());
 		if (card != null) {
 			sendMessageAction(owner, nameEntity, message, card.renderName());
@@ -138,27 +137,27 @@ public class CardEntity {
 		//Bukkit.broadcastMessage("§e[§aDebug§e] "+entity.getNameInChat()+" "+Arrays.toString(actions));
 		if (actions[0]) {
 			actions[0] = false;
-			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC_ONE), player.fight.config.messages.dead"message_is_attack_one");
+			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC_ONE), player.fight.config.messages.isAttackOne);
 		}
 		if (actions[1] && !actions[5]) {
 			actions[1] = false;
-			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC), "message_is_attack");
+			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_EXEC), player.fight.config.messages.isAttack);
 		}
 		if (actions[2]) {
 			actions[2] = false;
-			giveCard(player, card.renderName(), entity, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_GIVE_ONE), "message_is_attack_give_one");
+			giveCard(player, card.renderName(), entity, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_GIVE_ONE), player.fight.config.messages.isAttackGiveOne);
 		}
 		if (actions[3] && !actions[5]) {
 			actions[3] = false;
-			giveCard(player, card.renderName(), entity, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_GIVE), "message_is_attack_give");
+			giveCard(player, card.renderName(), entity, card.getFeatures().getFeature(CardFeatureType.IF_ATTACKED_GIVE), player.fight.config.messages.isAttackGive);
 		}
 		if (actions[4]) {
 			actions[4] = false;
-			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.ACTION_SPAWN), "message_spawn");
+			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.ACTION_SPAWN), player.fight.config.messages.spawn);
 		}
 		if (actions[5]) {
 			actions[5] = false;
-			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.ACTION_DEAD), "message_dead");
+			actionCard(player, card.renderName(), card.getFeatures().getFeature(CardFeatureType.ACTION_DEAD), player.fight.config.messages.dead);
 			actions[1] = false;
 			actions[3] = false;
 		}

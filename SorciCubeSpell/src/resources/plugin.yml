@@ -1,6 +1,6 @@
 name: SorciCubeSpell
 prefix: SorciCubeSpell
-softdepend: ["LuckPerms", "Multiverse-Core"]
+softdepend: ["Multiverse-Core"]
 description: "This is an plugin to implement the spell of server SorciCube."
 version: ${project.version}
 api-version: 1.9.4

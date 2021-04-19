@@ -82,8 +82,8 @@ public class FightEntity extends FightHead {
 	}
 	
 	private void removePlayer() {
-		fight.sendPacket(new PacketPlayOutEntityDestroy(entityPlayer.getId()));
-		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
+		owner.fight.sendPacket(new PacketPlayOutEntityDestroy(entityPlayer.getId()));
+		owner.fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer));
 		this.isSend = false;
 	}
 	
@@ -99,7 +99,7 @@ public class FightEntity extends FightHead {
 	}
 	
 	private void sendMovePlayer(Vector vec) {
-		fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(
+		owner.fight.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMove(
 				entityPlayer.getId(),
 				(long) (vec.getX()*32)*128,
 				(long) (vec.getY()*32)*128,
@@ -122,16 +122,16 @@ public class FightEntity extends FightHead {
 		ArrayList<String> playerToAdd = new ArrayList<String>();
 		playerToAdd.add(entityPlayer.getName());
 		//send player
-		fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
-		fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
-		fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
+		owner.fight.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, entityPlayer));
+		owner.fight.sendPacket(new PacketPlayOutNamedEntitySpawn(entityPlayer));
+		owner.fight.sendPacket(new PacketPlayOutEntityHeadRotation(entityPlayer, (byte) ((loc.getYaw()*256F)/360F)));
 		//move player
 		sendMovePlayer(loc.getDirection().clone().multiply(-1.5));
 		repeatMove(6);
 		//send team
-		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
-		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
-		fight.sendPacket(new PacketPlayOutScoreboardTeam(team, playerToAdd, 3));
+		owner.fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
+		owner.fight.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
+		owner.fight.sendPacket(new PacketPlayOutScoreboardTeam(team, playerToAdd, 3));
 		this.isSend = true;
 	}
 	
@@ -292,7 +292,7 @@ public class FightEntity extends FightHead {
 				return;
 			} else {
 				owner.fight.sendMessage(
-						fight.config.messages.dead.value
+						owner.fight.config.messages.dead.withoutAction.value
 						.replace("{entity}", card.getCard().renderName())
 						.replace("{owner}", owner.getNamePlayer())
 				);
@@ -307,7 +307,7 @@ public class FightEntity extends FightHead {
 			card.excutingActionSpawn();
 		} else {
 			owner.fight.sendMessage(
-					fight.config.messages.spawn.value
+					owner.fight.config.messages.spawn.withoutAction.value
 					.replace("{entity}", card.getCard().renderName())
 					.replace("{owner}", owner.getNamePlayer())
 			);
