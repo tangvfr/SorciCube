@@ -21,6 +21,7 @@ public abstract class ConfigPanel extends JPanel {
 	
 	private static final long serialVersionUID = 3820881949873208818L;
 	private static final String SEPARATOR = " \u21AA";
+	private int[] scroll;
 	protected final String name;
 	protected final  MainConfigPanel main;
 	protected final ConfigPanel parent;
@@ -93,5 +94,13 @@ public abstract class ConfigPanel extends JPanel {
 	}
 	
 	public abstract void back();
+	
+	public void setScroll(int[] scroll) {
+		this.scroll = scroll;
+	}
+	
+	public int[] getScroll() {
+		return scroll;
+	}
 	
 }

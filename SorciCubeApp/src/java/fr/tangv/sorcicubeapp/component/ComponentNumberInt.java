@@ -14,7 +14,7 @@ public class ComponentNumberInt extends ComponentCustom {
 		super(name);
 		this.min = min;
 		this.max = max;
-		this.number = new JSpinner(new SpinnerNumberModel(0, min, max, step));
+		this.number = new JSpinner(new SpinnerNumberModel(min, min, max, step));
 		this.add(number);
 	}
 	

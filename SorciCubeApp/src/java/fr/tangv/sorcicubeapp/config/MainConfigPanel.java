@@ -64,14 +64,27 @@ public abstract class MainConfigPanel extends JPanel {
 	
 	public void setView(ConfigPanel panel) {
 		this.selection = panel;
-		this.back.setEnabled(panel.parent != null);
+		if (panel.parent != null) {
+			panel.parent.setScroll(getScroll());
+			this.back.setEnabled(true);
+		} else
+			this.back.setEnabled(false);
 		this.title.setTitle(panel.getPath());
 		this.scroll.setViewportView(panel);
+		setScroll(panel.getScroll());
 		this.repaint();
 	}
 	
 	public abstract void save();
 	public abstract void cancel();
-		
+	
+	public int[] getScroll() {
+		return new int[]{scroll.getHorizontalScrollBar().getValue(), scroll.getVerticalScrollBar().getValue()};
+	}
+	
+	public void setScroll(int[] scrolls) {
+		scroll.getHorizontalScrollBar().setValue(scrolls[0]);
+		scroll.getVerticalScrollBar().setValue(scrolls[1]);
+	}
+	
 }
-
