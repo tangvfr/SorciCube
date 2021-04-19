@@ -39,7 +39,7 @@ public class HandlerServerConfig implements RequestHandlerInterface {
 	@Override
 	public void handlingRequest(Client client, Request request) throws Exception {}
 	
-	@RequestAnnotation(type=RequestType.CONFIG_GET)
+	@RequestAnnotation(type=RequestType.CONFIG_UPDATE)
 	public void update(Client client, Request request) throws IOException, RequestException {
 		try {
 			config = new Config(Document.parse(request.data));
