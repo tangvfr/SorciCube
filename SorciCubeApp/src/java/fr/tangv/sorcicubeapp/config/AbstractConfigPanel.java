@@ -24,9 +24,7 @@ public class AbstractConfigPanel extends ConfigPanel {
 	
 	@Override
 	public void back() {
-		AbstractConfigPanel p = new AbstractConfigPanel(main, parent, name, config);
-		p.setScroll(parent.getScroll());
-		main.setView(p);
+		main.setView(new AbstractConfigPanel(main, parent, name, config));
 	}
 	
 }

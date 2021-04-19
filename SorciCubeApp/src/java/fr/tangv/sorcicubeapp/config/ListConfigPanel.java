@@ -33,9 +33,7 @@ public class ListConfigPanel extends ConfigPanel {
 
 	@Override
 	public void back() {
-		ListConfigPanel p = new ListConfigPanel(main, parent, name, list);
-		p.setScroll(parent.getScroll());
-		main.setView(p);
+		main.setView(new ListConfigPanel(main, parent, name, list));
 	}
 
 }
