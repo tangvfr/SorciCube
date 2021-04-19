@@ -1,6 +1,6 @@
 package fr.tangv.sorcicubecore.config;
 
-import java.io.File;
+/*import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -15,19 +15,19 @@ import java.util.regex.Pattern;
 import org.bson.Document;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;*/
 
-public class Generate {
+public class Generate {/*
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, ConfigParseException {
-		/*boolean gClass = false;
+		boolean gClass = false;
 		String name = "None";
 		String file = "D:\\Data\\ShareFolder\\Bureau\\config\\"+name.toLowerCase()+".yml";
 		FeatureGenerate feature = new FeatureGenerate(name, new File(file));
 		if (gClass)
 			generateClass(feature);
 		else
-			generateJSON(feature);*/
+			generateJSON(feature);
 		//lowVariable(new File("D:\\Data\\ShareFolder\\Bureau\\configs\\"));
 		//test("");
 	}
@@ -228,5 +228,5 @@ public class Generate {
 		fw.append(main.toDocument().toJson());
 		fw.close();
 	}
-
+*/
 }
