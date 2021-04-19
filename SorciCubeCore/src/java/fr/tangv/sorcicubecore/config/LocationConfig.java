@@ -24,8 +24,8 @@ public class LocationConfig implements ElementConfig {
 			this.x = doc.get("x", 0.0);
 			this.y = doc.get("y", 0.0);
 			this.z = doc.get("z", 0.0);
-			this.pitch = doc.get("pitch", 0.0F);
-			this.yaw = doc.get("yaw", 0.0F);
+			this.pitch = doc.get("pitch", 0.0).floatValue();
+			this.yaw = doc.get("yaw", 0.0).floatValue();
 		}
 	}
 	
@@ -35,8 +35,8 @@ public class LocationConfig implements ElementConfig {
 				.append("x", x)
 				.append("y", y)
 				.append("z", z)
-				.append("pitch", pitch)
-				.append("yaw", yaw);
+				.append("pitch", (double) pitch)
+				.append("yaw", (double) yaw);
 		
 	}
 

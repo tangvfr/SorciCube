@@ -28,7 +28,7 @@ public class SorciCubeAPI extends ServerAbstract {
 
 	public static void main(String[] args) {
 		try {
-			new SorciCubeAPI();
+			new SorciCubeAPI().start();
 		} catch (IOException | RequestException | RequestHandlerException | DeckException | ConfigParseException e) {
 			e.printStackTrace();
 		}
