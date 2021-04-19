@@ -30,6 +30,7 @@ public abstract class ConfigPanel extends JPanel {
 		this.main = main;
 		this.parent = parent;
 		this.name = name;
+		this.scroll = new int[2];
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(Box.createRigidArea(new Dimension(5, 5)));
 	}
