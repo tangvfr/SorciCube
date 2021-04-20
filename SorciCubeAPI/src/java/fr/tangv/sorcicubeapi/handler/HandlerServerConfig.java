@@ -43,6 +43,8 @@ public class HandlerServerConfig implements RequestHandlerInterface {
 	public void update(Client client, Request request) throws IOException, RequestException {
 		try {
 			config = new Config(Document.parse(request.data));
+			if (config.level.hasCalculatingError())
+				throw new Exception("LevelConfig has CalculatingError !");
 			file.writeData(request.data);
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 		} catch (Exception e) {

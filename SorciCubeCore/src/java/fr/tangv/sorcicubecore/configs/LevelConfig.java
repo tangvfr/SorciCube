@@ -31,7 +31,6 @@ public class LevelConfig extends AbstractConfig {
 	}
 	
 	public void calculate() {
-		System.out.println(maxLevel);
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine script = manager.getEngineByName("JavaScript");
