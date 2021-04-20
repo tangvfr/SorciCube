@@ -59,6 +59,7 @@ public class SorciCubeAPI extends ServerAbstract {
 	@Override
 	public void stoped() {
 		this.console.stop();
+		System.exit(0);
 	}
 	
 	public String generatedTokens(String desc) {
