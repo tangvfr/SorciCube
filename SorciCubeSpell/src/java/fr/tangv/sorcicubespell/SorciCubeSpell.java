@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tangv.sorcicubecore.card.CardFaction;
+import fr.tangv.sorcicubecore.card.CardRarity;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.clients.ClientIdentification;
 import fr.tangv.sorcicubecore.clients.ClientType;
@@ -21,7 +22,7 @@ import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.config.LocationConfig;
 import fr.tangv.sorcicubecore.config.VectorConfig;
 import fr.tangv.sorcicubecore.configs.Config;
-import fr.tangv.sorcicubecore.configs.FactionColorEnumConfig;
+import fr.tangv.sorcicubecore.configs.EnumConfig;
 import fr.tangv.sorcicubecore.handler.HandlerCards;
 import fr.tangv.sorcicubecore.handler.HandlerConfig;
 import fr.tangv.sorcicubecore.handler.HandlerFightData;
@@ -143,8 +144,9 @@ public class SorciCubeSpell extends JavaPlugin {
 			if (config().level.hasCalculatingError())
 				throw new Exception("LevelConfig has CalculatingError !");
 			//init tool
-			FactionColorEnumConfig color = config().enums.factionColor;
-			CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
+			EnumConfig enums = config().enums;
+			CardFaction.initColors(enums.factionColor);
+			CardRarity.initColors(enums.rarityColor);
 			SorciCubeSpell.this.enumTool = new EnumTool(SorciCubeSpell.this);
 			this.items = new Items(config().items);
 			//init for change server
@@ -320,8 +322,9 @@ public class SorciCubeSpell extends JavaPlugin {
 		handlerConfig.refreshConfig();
 		if (config().level.hasCalculatingError())
 			throw new Exception("LevelConfig has CalculatingError !");
-		FactionColorEnumConfig color = config().enums.factionColor;
-		CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
+		EnumConfig enums = config().enums;
+		CardFaction.initColors(enums.factionColor);
+		CardRarity.initColors(enums.rarityColor);
 		handlerCards.refresh();
 		handlerGroups.refresh();
 		if (isLobby) {

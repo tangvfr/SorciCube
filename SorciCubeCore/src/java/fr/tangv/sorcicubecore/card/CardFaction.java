@@ -1,5 +1,7 @@
 package fr.tangv.sorcicubecore.card;
 
+import fr.tangv.sorcicubecore.configs.FactionEnumConfig;
+
 public enum CardFaction {
 
 	BASIC((byte) 0),
@@ -10,12 +12,12 @@ public enum CardFaction {
 		
 	private static String[] colors = new String[5];
 	
-	public static void initColors(String basic, String dark, String light, String nature, String toxic) {
-		colors[0] = basic;
-		colors[1] = dark;
-		colors[2] = light;
-		colors[3] = nature;
-		colors[4] = toxic;
+	public static void initColors(FactionEnumConfig colors) {
+		CardFaction.colors[0] = colors.basic.value;
+		CardFaction.colors[1] = colors.dark.value;
+		CardFaction.colors[2] = colors.light.value;
+		CardFaction.colors[3] = colors.nature.value;
+		CardFaction.colors[4] = colors.toxic.value;
 	}
 	
 	private byte number;

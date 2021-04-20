@@ -5,7 +5,7 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class RarityEnumConfig extends AbstractConfig {
 
-	public StringConfig commun;
+	public StringConfig common;
 	public StringConfig rare;
 	public StringConfig epic;
 	public StringConfig legendary;

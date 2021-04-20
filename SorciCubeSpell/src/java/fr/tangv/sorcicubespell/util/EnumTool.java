@@ -112,16 +112,16 @@ public class EnumTool {
 		RarityEnumConfig r = sorci.config().enums.rarity;
 		switch (rarity) {
 			case COMMUN:
-				return r.commun.value;
+				return CardRarity.COMMUN+r.common.value;
+				
+			case RARE:
+				return  CardRarity.RARE+r.rare.value;
 				
 			case EPIC:
-				return r.epic.value;
+				return  CardRarity.EPIC+r.epic.value;
 						
 			case LEGENDARY:
-				return r.legendary.value;
-						
-			case RARE:
-				return r.rare.value;
+				return  CardRarity.LEGENDARY+r.legendary.value;
 						
 			default:
 				return null;
