@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.ramfiles;
+package fr.tangv.sorcicubeapi.ramfiles;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class RamFilesManager {
 	
 	public RamFilesManager(String pathFolder) throws IOException {
 		this.files = new ConcurrentHashMap<String, RamFile>();
-		this.folder = new java.io.File("."+SEPARATOR+"data"+SEPARATOR+pathFolder);
+		this.folder = new java.io.File(pathFolder);
 		if (folder.exists()) {
 			if (folder.isDirectory()) {
 				for (java.io.File file : folder.listFiles())

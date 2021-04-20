@@ -1,4 +1,4 @@
-package fr.tangv.sorcicubecore.ramfiles;
+package fr.tangv.sorcicubeapi.ramfiles;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import fr.tangv.sorcicubeapi.SorciCubeAPI;
 import fr.tangv.sorcicubeapi.console.Console;
+import fr.tangv.sorcicubeapi.ramfiles.RamFilesManager;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardFaction;
 import fr.tangv.sorcicubecore.clients.Client;
@@ -13,7 +14,6 @@ import fr.tangv.sorcicubecore.clients.ClientType;
 import fr.tangv.sorcicubecore.player.DeckCards;
 import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
-import fr.tangv.sorcicubecore.ramfiles.RamFilesManager;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestAnnotation;
 import fr.tangv.sorcicubecore.requests.RequestException;

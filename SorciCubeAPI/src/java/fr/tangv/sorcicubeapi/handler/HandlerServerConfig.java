@@ -5,10 +5,10 @@ import java.io.IOException;
 
 import org.bson.Document;
 
+import fr.tangv.sorcicubeapi.ramfiles.RamFile;
 import fr.tangv.sorcicubecore.clients.Client;
 import fr.tangv.sorcicubecore.config.ConfigParseException;
 import fr.tangv.sorcicubecore.configs.Config;
-import fr.tangv.sorcicubecore.ramfiles.RamFile;
 import fr.tangv.sorcicubecore.requests.Request;
 import fr.tangv.sorcicubecore.requests.RequestAnnotation;
 import fr.tangv.sorcicubecore.requests.RequestException;
