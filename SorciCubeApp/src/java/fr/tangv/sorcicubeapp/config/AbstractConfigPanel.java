@@ -15,7 +15,7 @@ public class AbstractConfigPanel extends ConfigPanel {
 		this.config = config;
 		for (Field field : config.getClass().getFields())
 			try {
-				this.addComponent((ElementConfig) field.get(config), field.getName(), null);
+				this.addComponent((ElementConfig) field.get(config), field.getName(), new Runnable[0]);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 			}

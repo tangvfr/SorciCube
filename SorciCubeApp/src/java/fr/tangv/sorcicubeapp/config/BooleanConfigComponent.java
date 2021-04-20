@@ -11,7 +11,7 @@ public class BooleanConfigComponent extends ConfigComponent {
 
 	private static final long serialVersionUID = -6765183340444651119L;
 	
-	public BooleanConfigComponent(BooleanConfig bool, String name, Runnable run) {
+	public BooleanConfigComponent(BooleanConfig bool, String name, Runnable[] run) {
 		super(name);
 		JComboBox<String> combo = new JComboBox<String>(new String[] {"true", "false"});
 		combo.setSelectedItem(bool.value ? "true" : "false");

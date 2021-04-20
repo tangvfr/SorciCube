@@ -19,7 +19,7 @@ public class LocationConfigComponent extends ConfigComponent {
 
 	private static final long serialVersionUID = 7884360632625565772L;
 	
-	public LocationConfigComponent(LocationConfig loc, String name, Runnable run) {
+	public LocationConfigComponent(LocationConfig loc, String name, Runnable[] run) {
 		super(name);
 		JPanel pan = new JPanel();
 		pan.setLayout(new GridLayout(6, 2, 5, 5));

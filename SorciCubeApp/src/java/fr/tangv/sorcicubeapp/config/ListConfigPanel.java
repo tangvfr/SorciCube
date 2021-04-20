@@ -12,20 +12,33 @@ public class ListConfigPanel extends ConfigPanel {
 	public ListConfigPanel(MainConfigPanel main, ConfigPanel parent, String name, ListConfig<? extends ElementConfig> list) {
 		super(main, parent, name);
 		this.list = list;
-		addComponent(null, "Add New \uD83D\uDCC4", () -> {
-			try {
-				list.addNew(null);
-				main.setView(new ListConfigPanel(main, parent, name, list));
-			} catch (ConfigParseException e) {
-				e.printStackTrace();
-			}
+		addComponent(null, "Add New \uD83D\uDCC4", new Runnable[] {
+				() -> {
+					try {
+						list.addNew(null);
+						main.setView(new ListConfigPanel(main, parent, name, list));
+					} catch (ConfigParseException e) {
+						e.printStackTrace();
+					}
+				}
 		});
 		for (int i = 0; i < list.size(); i++) {
 			final int n = i;
 			final ElementConfig element = list.get(n);
-			this.addComponent(element, "["+n+"]"+element.nameString(), () -> {
-				list.remove(n);
-				main.setView(new ListConfigPanel(main, parent, name, list));
+			this.addComponent(element, "["+n+"]"+element.nameString(), new Runnable[] {
+					() -> {
+						try {
+							list.addNew(element.toDocument());
+							main.setView(new ListConfigPanel(main, parent, name, list));
+						} catch (ConfigParseException e) {
+							e.printStackTrace();
+						}
+					}
+					,
+					() -> {
+						list.remove(n);
+						main.setView(new ListConfigPanel(main, parent, name, list));
+					}
 			});
 		}
 		this.repaint();

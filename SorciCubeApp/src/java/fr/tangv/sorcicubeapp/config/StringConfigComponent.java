@@ -12,7 +12,7 @@ public class StringConfigComponent  extends ConfigComponent {
 
 	private static final long serialVersionUID = 5825619911390026882L;
 	
-	public StringConfigComponent(StringConfig string, String name, Runnable run) {
+	public StringConfigComponent(StringConfig string, String name, Runnable[] run) {
 		super(name);
 		JTextArea text = new JTextArea(string.value);
 		text.addCaretListener(new CaretListener() {

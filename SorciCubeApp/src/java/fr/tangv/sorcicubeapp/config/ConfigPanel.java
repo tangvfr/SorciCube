@@ -62,7 +62,7 @@ public abstract class ConfigPanel extends JPanel {
 		}
 	}
 	
-	public void addComponent(ElementConfig element, String name, Runnable run) {
+	public void addComponent(ElementConfig element, String name, Runnable[] run) {
 		JComponent comp;
 		if (element == null) {
 			comp = new ActionButtonConfigComponent(name, run);

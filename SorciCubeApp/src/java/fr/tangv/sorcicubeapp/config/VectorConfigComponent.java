@@ -16,7 +16,7 @@ public class VectorConfigComponent extends ConfigComponent {
 
 	private static final long serialVersionUID = -7884360632625565772L;
 	
-	public VectorConfigComponent(VectorConfig vector, String name, Runnable run) {
+	public VectorConfigComponent(VectorConfig vector, String name, Runnable[] run) {
 		super(name);
 		JPanel pan = new JPanel();
 		pan.setLayout(new GridLayout(3, 2, 5, 5));
