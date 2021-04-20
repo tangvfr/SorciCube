@@ -35,10 +35,9 @@ public class LevelConfig extends AbstractConfig {
 	
 	public void calculate() {
 		try {
-			ScriptEngineManager manager = new ScriptEngineManager();
-			ScriptEngine script = manager.getEngineByName("JavaScript");
+			ScriptEngine script = new ScriptEngineManager().getEngineByName("JavaScript");
 			if (script == null)
-				throw new NumberFormatException("ScriptEngine is null, install jdk");
+				throw new NumberFormatException("ScriptEngine is null !");
 			if (maxLevel.value < 1)
 				throw new NumberFormatException("MaxLevel < 1");
 			this.experiences = new int[maxLevel.value-1];
