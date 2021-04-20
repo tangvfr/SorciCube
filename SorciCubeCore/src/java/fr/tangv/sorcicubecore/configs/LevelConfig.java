@@ -37,7 +37,7 @@ public class LevelConfig extends AbstractConfig {
 		try {
 			ScriptEngine script = new ScriptEngineManager().getEngineByName("JavaScript");
 			if (script == null)
-				throw new NumberFormatException("ScriptEngine is null !");
+				throw new NumberFormatException("ScriptEngine is null ! You don't has nashorn in your Java !");
 			if (maxLevel.value < 1)
 				throw new NumberFormatException("MaxLevel < 1");
 			this.experiences = new int[maxLevel.value-1];
