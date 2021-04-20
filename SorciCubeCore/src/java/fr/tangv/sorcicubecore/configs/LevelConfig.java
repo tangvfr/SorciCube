@@ -2,10 +2,13 @@ package fr.tangv.sorcicubecore.configs;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 import org.bson.Document;
-import fr.tangv.sorcicubecore.config.*;
+
+import fr.tangv.sorcicubecore.config.AbstractConfig;
+import fr.tangv.sorcicubecore.config.ConfigParseException;
+import fr.tangv.sorcicubecore.config.IntegerConfig;
+import fr.tangv.sorcicubecore.config.StringConfig;
 
 public class LevelConfig extends AbstractConfig {
 
