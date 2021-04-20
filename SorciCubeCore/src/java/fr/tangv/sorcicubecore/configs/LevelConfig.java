@@ -27,11 +27,11 @@ public class LevelConfig extends AbstractConfig {
 	
 	public LevelConfig(Document doc) throws ConfigParseException {
 		super(doc);
+		calculate();
 	}
 	
 	public void calculate() {
 		try {
-			calculate();
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine script = manager.getEngineByName("JavaScript");
 			this.experiences = new int[maxLevel.value-1];
