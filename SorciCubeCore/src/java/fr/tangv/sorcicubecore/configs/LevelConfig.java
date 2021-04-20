@@ -11,7 +11,7 @@ import fr.tangv.sorcicubecore.config.IntegerConfig;
 import fr.tangv.sorcicubecore.config.StringConfig;
 
 public class LevelConfig extends AbstractConfig {
-
+	
 	public IntegerConfig numberDeckStart;
 	public IntegerConfig moneyStart;
 	public IntegerConfig experienceWin;
@@ -37,6 +37,8 @@ public class LevelConfig extends AbstractConfig {
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine script = manager.getEngineByName("JavaScript");
+			if (script == null)
+				throw new NumberFormatException("ScriptEngine is null, install jdk");
 			if (maxLevel.value < 1)
 				throw new NumberFormatException("MaxLevel < 1");
 			this.experiences = new int[maxLevel.value-1];

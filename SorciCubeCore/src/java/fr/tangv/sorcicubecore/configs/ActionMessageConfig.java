@@ -8,8 +8,8 @@ import fr.tangv.sorcicubecore.config.StringConfig;
 
 public class ActionMessageConfig extends AbstractConfig {
 
-	public StringConfig withAction;
 	public StringConfig withoutAction;
+	public StringConfig withAction;
 	
 	public ActionMessageConfig(Document doc) throws ConfigParseException {
 		super(doc);
