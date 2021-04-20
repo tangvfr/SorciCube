@@ -125,7 +125,11 @@ public class SorciCubeSpell extends JavaPlugin {
 						if (player != null)
 							((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a(request.data), (byte) 0));
 					} else if (request.requestType == RequestType.START_SERVERS_REFRESH) {
-						SorciCubeSpell.this.refresh();
+						try {
+							SorciCubeSpell.this.refresh();
+						} catch (Exception e) {
+							Bukkit.getPluginManager().disablePlugin(SorciCubeSpell.this);
+						}
 					} 
 				}
 				
@@ -136,6 +140,8 @@ public class SorciCubeSpell extends JavaPlugin {
 				throw new Exception("SorciClient is not connected !");
 			//handler for config
 			SorciCubeSpell.this.handlerConfig = new HandlerConfig(client);
+			if (config().level.hasCalculatingError())
+				throw new Exception("LevelConfig has CalculatingError !");
 			//init tool
 			FactionColorEnumConfig color = config().enums.factionColor;
 			CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
@@ -310,8 +316,10 @@ public class SorciCubeSpell extends JavaPlugin {
 	
 	//refresh
 	
-	public void refresh() throws IOException, ResponseRequestException, RequestException, DeckException, ConfigParseException {
+	public void refresh() throws IOException, ResponseRequestException, RequestException, DeckException, ConfigParseException, Exception {
 		handlerConfig.refreshConfig();
+		if (config().level.hasCalculatingError())
+			throw new Exception("LevelConfig has CalculatingError !");
 		FactionColorEnumConfig color = config().enums.factionColor;
 		CardFaction.initColors(color.basic.value, color.dark.value, color.light.value, color.nature.value, color.toxic.value);
 		handlerCards.refresh();

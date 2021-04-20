@@ -31,9 +31,12 @@ public class LevelConfig extends AbstractConfig {
 	}
 	
 	public void calculate() {
+		System.out.println(maxLevel);
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine script = manager.getEngineByName("JavaScript");
+			if (maxLevel.value < 1)
+				throw new NumberFormatException("MaxLevel < 1");
 			this.experiences = new int[maxLevel.value-1];
 			this.rewards = new int[maxLevel.value-1];
 			for (int i = 2; i <= maxLevel.value; i++) {

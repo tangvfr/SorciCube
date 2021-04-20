@@ -1,20 +1,15 @@
 package fr.tangv.sorcicubespell.command;
 
-import java.io.IOException;
-
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import fr.tangv.sorcicubecore.config.ConfigParseException;
-import fr.tangv.sorcicubecore.player.DeckException;
-import fr.tangv.sorcicubecore.requests.RequestException;
-import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 
 public class CommandRefresh implements CommandExecutor {
 
-	private SorciCubeSpell sorci;
+	private final SorciCubeSpell sorci;
 	
 	public CommandRefresh(SorciCubeSpell sorci) {
 		this.sorci = sorci;
@@ -24,11 +19,11 @@ public class CommandRefresh implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		try {
 			sorci.refresh();
-			sender.sendMessage(sorci.config().messages.refresh.value);
-		} catch (IOException | ResponseRequestException | RequestException | DeckException | ConfigParseException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			sender.sendMessage("§8[§4ERROR§8] §c"+e.getMessage());
+			Bukkit.getPluginManager().disablePlugin(sorci);
 		}
+		sender.sendMessage(sorci.config().messages.refresh.value);
 		return true;
 	}
 
