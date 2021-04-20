@@ -42,10 +42,11 @@ public class HandlerServerConfig implements RequestHandlerInterface {
 	@RequestAnnotation(type=RequestType.CONFIG_UPDATE)
 	public void update(Client client, Request request) throws IOException, RequestException {
 		try {
-			config = new Config(Document.parse(request.data));
+			Config config = new Config(Document.parse(request.data));
 			if (config.level.hasCalculatingError())
 				throw new Exception("LevelConfig has CalculatingError !");
 			file.writeData(request.data);
+			this.config = config;
 			client.sendRequest(request.createReponse(RequestType.SUCCESSFUL, null));
 		} catch (Exception e) {
 			client.sendRequest(request.createReponse(RequestType.ERROR, e.getMessage()));
