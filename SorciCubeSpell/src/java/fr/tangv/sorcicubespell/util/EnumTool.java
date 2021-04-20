@@ -89,19 +89,19 @@ public class EnumTool {
 		FactionEnumConfig f = sorci.config().enums.faction;
 		switch (faction) {
 			case BASIC:
-				return f.basic.value;
+				return CardFaction.BASIC.getColor()+f.basic.value;
 				
 			case DARK:
-				return f.dark.value;
+				return CardFaction.DARK.getColor()+f.dark.value;
 				
 			case LIGHT:
-				return f.light.value;
+				return CardFaction.LIGHT.getColor()+f.light.value;
 				
 			case NATURE:
-				return f.nature.value;
+				return CardFaction.NATURE.getColor()+f.nature.value;
 				
 			case TOXIC:
-				return f.toxic.value;
+				return CardFaction.TOXIC.getColor()+f.toxic.value;
 				
 			default:
 				return null;
