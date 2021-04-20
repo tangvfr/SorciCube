@@ -43,7 +43,8 @@ public class LevelConfig extends AbstractConfig {
 				rewards[i-2] = (int) Double.parseDouble(script.eval(rewardCalc.value.replace("{lvl}", Integer.toString(i))).toString());
 			}
 			this.calculatingError = false;
-		} catch (NumberFormatException | ScriptException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			this.calculatingError = true;
 		}
 	}
