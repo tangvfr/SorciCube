@@ -73,13 +73,14 @@ public class SellerPacketsNPC extends AbstractGui<GuiSellerPacketsGuiConfig> imp
 	private void updateInv(Inventory inv, Player player) {
 		for (int i = 0; i < 7; i ++) {
 			PCSell pcSell = pcSells[i];
-			if (pcSell != null && pcSell.isValid()) {
-				inv.setItem(i+1, pcSell.getItemSell(this.getPlayerGui(player)));
-				inv.setItem(i+10, pcSell.getItemView());
-			} else {
-				inv.setItem(i+1, this.itemError);
-				inv.setItem(i+10, pcSell.getItemView());
-			}
+			if (pcSell != null)
+				if(pcSell.isValid()) {
+					inv.setItem(i+1, pcSell.getItemSell(this.getPlayerGui(player)));
+					inv.setItem(i+10, pcSell.getItemView());
+				} else {
+					inv.setItem(i+1, this.itemError);
+					inv.setItem(i+10, pcSell.getItemView());
+				}
 		}
 	}
 

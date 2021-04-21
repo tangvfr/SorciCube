@@ -140,6 +140,9 @@ public class PlayerGui {
 		player.closeInventory();
 		this.playerFeature = playerFeature;
 		this.displayGroup = sorci.getManagerPermissions().applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
+		{//send pseudo
+			 	
+		}
 	}
 	
 	public void uploadPlayerFeatures(HandlerPlayers handler) {

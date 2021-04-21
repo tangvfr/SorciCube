@@ -44,7 +44,7 @@ public class FightHero extends FightHead {
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("  "+getName());
 		lore.add("");
-		lore.add("  "+owner.fight.config.enums.type.hero);
+		lore.add("  "+owner.fight.config.enums.type.hero.value);
 		lore.add("");
 		return ItemBuild.buildSkull(
 				owner.getProfilePlayer(),
