@@ -163,7 +163,7 @@ public class PlayerGui {
 		int expMax = 0;
 		if (!playerFeature.isLevel((byte) lc.maxLevel.value)) {
 			exp = playerFeature.getExperience();
-			expMax = lc.getExperience(level);
+			expMax = lc.getExperience(level+1);
 			player.setExp(playerFeature.getExperience()/(float) expMax);
 		} else {
 			player.setExp(1.0F);
