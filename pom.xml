@@ -6,8 +6,12 @@
 	
 	<groupId>fr.tangv.sorcicube</groupId>
 	<artifactId>SorciCube</artifactId>
-	<version>0.0.8</version>
+	<version>${global.version}</version>
 	<packaging>pom</packaging>
+	
+	<properties>
+	   <global.version>0.0.9-SNAPSHOT</global.version>
+	</properties>
 	
 	<modules>
 		<module>SorciCubeCore</module>

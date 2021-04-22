@@ -1,5 +1,6 @@
 @echo off
 set /p v="Version Sorcicube: "
+rmdir /s/q "./copy"
 md "./copy"
 cls
 echo "Version Copy %v%"

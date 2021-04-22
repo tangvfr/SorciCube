@@ -8,6 +8,7 @@ public class ParameterConfig extends AbstractConfig {
 	public StringConfig noneLvl;
 	public StringConfig noneGroup;
 	public StringConfig chatFormat;
+	public StringConfig nameTagFormat;
 	public StringConfig actionBarMessage;
 	public StringConfig formatTimeSec;
 	public StringConfig formatTimeMin;

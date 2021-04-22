@@ -5,11 +5,10 @@
   	<parent>
 		<groupId>fr.tangv.sorcicube</groupId>
 		<artifactId>SorciCube</artifactId>
-		<version>0.0.8</version>
+		<version>${global.version}</version>
 	</parent>
 	
 	<artifactId>SorciCubeApp</artifactId>
-	<version>0.0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<properties>
@@ -60,7 +59,7 @@
         <dependency>
         	<groupId>fr.tangv.sorcicube</groupId>
         	<artifactId>SorciCubeCore</artifactId>
-  			<version>0.0.8-SNAPSHOT</version>
+  			<version>${global.version}</version>
   			<scope>compile</scope>
         </dependency>
     </dependencies>
