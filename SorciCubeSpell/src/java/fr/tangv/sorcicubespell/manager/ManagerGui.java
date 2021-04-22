@@ -1,6 +1,7 @@
 package fr.tangv.sorcicubespell.manager;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -70,7 +71,11 @@ public class ManagerGui {
 		this.runnableActionBar = new RunnableActionBar(sorci, playerGuis);
 		Bukkit.getScheduler().runTaskTimerAsynchronously(sorci, runnableActionBar, 0, 20);
 	}
-
+	
+	public Collection<PlayerGui> valuesPlayerGui() {
+		return playerGuis.values();
+	}
+	
 	public SorciCubeSpell getSorci() {
 		return sorci;
 	}

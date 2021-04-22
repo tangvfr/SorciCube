@@ -133,6 +133,7 @@ public class Fight {
 	
 	public void addSpectator(FightSpectator spectator) {
 		spectators.add(spectator);
+		//--------
 	}
 	
 	public void removeSpectator(FightSpectator spectator) {

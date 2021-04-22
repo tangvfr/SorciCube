@@ -1,6 +1,8 @@
 package fr.tangv.sorcicubespell.manager;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -25,6 +27,7 @@ import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.gui.PlayerGui;
+import fr.tangv.sorcicubespell.util.NameTag;
 
 public class ManagerLobby implements Listener {
 
@@ -119,6 +122,10 @@ public class ManagerLobby implements Listener {
 							player.sendMessage(sorci.config().messages.welcomBack.value);
 							try {
 								PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
+								List<Player> pl = Arrays.asList(player);
+								for (PlayerGui playerGui : sorci.getManagerGui().valuesPlayerGui())
+									if (playerGui.getPlayerFeatures() != null)
+										NameTag.send(playerGui.getPlayer(), pl);
 								playerG.setPlayerFeatures(
 										sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName()),
 										sorci

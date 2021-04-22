@@ -2,7 +2,7 @@ package fr.tangv.sorcicubespell.util;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
 
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
@@ -29,7 +29,7 @@ public class NameTag {
         }
     }
     
-    private static void sendNameTag(String prefix, String displayName, String suffix, List<Player> players, String playerName) {
+    private static void sendNameTag(String prefix, String displayName, String suffix, Collection<? extends Player> players, String playerName) {
         String name = UUID.randomUUID().toString().substring(0, 16);
         net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardTeam packet = new net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardTeam();
         Class<? extends net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardTeam> clas = packet.getClass();
@@ -51,22 +51,16 @@ public class NameTag {
         	((CraftPlayer) ps).getHandle().playerConnection.sendPacket(packet);
     }
  
-    public static void send(Player player, String display, List<Player> players) {
-    	String prefix = "";
-    	String name = "";
-    	String suffix = "";
+    public static void send(Player player, Collection<? extends Player> collection) {
+    	String display = player.getDisplayName();
     	if (display.length() <= 16) {
-    		name = display;
+    		 sendNameTag("", display, "", collection, player.getName());
     	} else if (display.length() <= 32) {
-    		prefix = display.substring(0, 16);
-    		name = display.substring(16, display.length());
+    		sendNameTag(display.substring(0, 16), display.substring(16, display.length()), "", collection, player.getName());
     	} else if (display.length() <= 48) {
-    		prefix = display.substring(0, 16);
-    		name = display.substring(16, 32);
-    		suffix = display.substring(32, display.length());
+    		 sendNameTag(display.substring(0, 16), display.substring(16, 32), display.substring(32, display.length()), collection, player.getName());
     	} else
     		throw new IndexOutOfBoundsException("nametag "+display+" size > 48");
-        sendNameTag(prefix, name, suffix, players, player.getName());
     }
 
 }

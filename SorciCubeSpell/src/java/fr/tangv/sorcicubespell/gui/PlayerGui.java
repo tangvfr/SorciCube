@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.gui;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -15,6 +16,7 @@ import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.util.NameTag;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -140,13 +142,12 @@ public class PlayerGui {
 		player.closeInventory();
 		this.playerFeature = playerFeature;
 		this.displayGroup = sorci.getManagerPermissions().applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
-		{//send pseudo
-			player.setDisplayName(sorci.config().parameter.nameTagFormat.value
+		player.setDisplayName(sorci.config().parameter.nameTagFormat.value
 				.replace("{group}", playerFeature.getGroup().isEmpty() ? sorci.config().parameter.noneGroup.value : displayGroup)
-				.replace("{name}", player.getDisplayName())
-				.replace("{level}", Byte.toString(playerFeature.getLevel())));
-			
-		}
+				.replace("{name}", player.getName())
+				.replace("{level}", Byte.toString(playerFeature.getLevel()))
+		);
+		NameTag.send(player, Bukkit.getOnlinePlayers());
 	}
 	
 	public void uploadPlayerFeatures(HandlerPlayers handler) {
