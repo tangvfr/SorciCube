@@ -141,7 +141,11 @@ public class PlayerGui {
 		this.playerFeature = playerFeature;
 		this.displayGroup = sorci.getManagerPermissions().applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
 		{//send pseudo
-			 	
+			player.setDisplayName(sorci.config().parameter.nameTagFormat.value
+				.replace("{group}", playerFeature.getGroup().isEmpty() ? sorci.config().parameter.noneGroup.value : displayGroup)
+				.replace("{name}", player.getDisplayName())
+				.replace("{level}", Byte.toString(playerFeature.getLevel())));
+			
 		}
 	}
 	

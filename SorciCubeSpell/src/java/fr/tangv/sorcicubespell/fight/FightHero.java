@@ -17,7 +17,7 @@ public class FightHero extends FightHead {
 	public FightHero(PlayerFight owner) {
 		super(owner, owner.getLocBase(), 1.65D);
 		this.updateStat();
-		String name = owner.fight.config.parameter.formatLevel.value;
+		String name = owner.fight.config.parameter.formatSubName.value;
 		FightData data = owner.fight.getFightData();
 		name = (data.getPlayerUUID1().equals(owner.getUUID()))
 		?

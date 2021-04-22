@@ -50,14 +50,14 @@ public class ManagerLobby implements Listener {
 			PlayerFeatures feature = player.getPlayerFeatures();
 			e.setFormat(sorci.config().parameter.chatFormat.value
 					.replace("{group}", feature.getGroup().isEmpty() ? sorci.config().parameter.noneGroup.value : player.getDisplayGroup())
-					.replace("{displayname}", e.getPlayer().getDisplayName())
+					.replace("{name}", e.getPlayer().getName())
 					.replace("{message}", e.getMessage())
 					.replace("{level}", Byte.toString(feature.getLevel()))
 				);
 		} else {
 			e.setFormat(sorci.config().parameter.chatFormat.value
 					.replace("{group}", sorci.config().parameter.noneGroup.value)
-					.replace("{displayname}", e.getPlayer().getDisplayName())
+					.replace("{name}", e.getPlayer().getName())
 					.replace("{message}", e.getMessage())
 					.replace("{level}", sorci.config().parameter.noneLvl.value)
 				);

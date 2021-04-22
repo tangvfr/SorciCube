@@ -5,11 +5,12 @@
 	<parent>
 		<groupId>fr.tangv.sorcicube</groupId>
 		<artifactId>SorciCube</artifactId>
-		<version>${global.version}</version>
+		<version>0.0.9</version>
 	</parent>
   	
   	<artifactId>SorciCubeCore</artifactId>
   	<packaging>jar</packaging>
+	<version>0.0.9-SNAPSHOT</version>
 
   	<properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

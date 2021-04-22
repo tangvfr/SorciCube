@@ -56,7 +56,7 @@ public class EventFight implements Listener {
 			if (spectator.isFightPlayer()) {
 				message = spectator.fight.config.parameter.chatFormatFight.value
 						.replace("{spectator}", spectator.fight.config.parameter.playerFight.value)
-						.replace("{displayname}", e.getPlayer().getDisplayName())
+						.replace("{name}", e.getPlayer().getName())
 						.replace("{message}", e.getMessage())
 						.replace("{group}", spectator.getDisplayGroup())
 						.replace("{level}", Byte.toString(spectator.getLevel()));
@@ -64,7 +64,7 @@ public class EventFight implements Listener {
 			} else {
 				message = spectator.fight.config.parameter.chatFormatFight.value
 					.replace("{spectator}", spectator.fight.config.parameter.spectatorFight.value)
-					.replace("{displayname}", e.getPlayer().getDisplayName())
+					.replace("{name}", e.getPlayer().getName())
 					.replace("{message}", e.getMessage())
 					.replace("{group}", spectator.getDisplayGroup())
 					.replace("{level}", Byte.toString(spectator.getLevel()));

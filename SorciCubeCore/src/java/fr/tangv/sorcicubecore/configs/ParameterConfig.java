@@ -12,7 +12,7 @@ public class ParameterConfig extends AbstractConfig {
 	public StringConfig actionBarMessage;
 	public StringConfig formatTimeSec;
 	public StringConfig formatTimeMin;
-	public StringConfig formatLevel;
+	public StringConfig formatSubName;
 	public StringConfig chatFormatFight;
 	public StringConfig spectatorFight;
 	public StringConfig playerFight;
