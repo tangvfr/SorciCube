@@ -20,6 +20,7 @@ import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
+import fr.tangv.sorcicubespell.player.DataPlayer;
 import fr.tangv.sorcicubespell.util.ItemHead;
 
 public class PlayerFight extends FightSpectator {
@@ -43,8 +44,8 @@ public class PlayerFight extends FightSpectator {
 	private boolean lossAFK;
 	private boolean isDead;
 	
-	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first, String displayGroup, byte level) {
-		super(fight, player, first ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase(), first, displayGroup, level);
+	public PlayerFight(Fight fight, Player player, FightDeck deck, boolean first, DataPlayer dataPlayer) {
+		super(fight, player, first ? fight.getArena().getFirstBase() : fight.getArena().getSecondBase(), first, dataPlayer);
 		this.deck = deck;
 		this.mana = 0;
 		this.manaBoost = 0;

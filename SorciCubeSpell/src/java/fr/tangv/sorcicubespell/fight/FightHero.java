@@ -21,14 +21,10 @@ public class FightHero extends FightHead {
 		FightData data = owner.fight.getFightData();
 		name = (data.getPlayerUUID1().equals(owner.getUUID()))
 		?
-			name
-			.replace("{group}", owner.getDisplayGroup())
-			.replace("{level}", Byte.toString(owner.getLevel()))
+			owner.getDataPlayer().replace(name)
 			.replace("{faction}", owner.fight.getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer1()))
 		:
-			name
-			.replace("{group}", owner.getDisplayGroup())
-			.replace("{level}", Byte.toString(owner.getLevel()))
+			owner.getDataPlayer().replace(name)
 			.replace("{faction}", owner.fight.getSorci().getEnumTool().factionToString(data.getFactionDeckPlayer2()))
 		;
 		this.armorFeaturesPlayer = createArmorStand(name, 0.4D);

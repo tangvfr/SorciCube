@@ -65,8 +65,8 @@ public class ManagerCreatorFight {
 							player2.getPlayerFeatures().getDeck(player2.getDeckEdit()).getFaction(),
 							player1.getPlayerFeatures().getLevel(),
 							player2.getPlayerFeatures().getLevel(),
-							player1.getDisplayGroup(),
-							player2.getDisplayGroup(),
+							player1.getDataPlayer().getDisplayGroup(),
+							player2.getDataPlayer().getDisplayGroup(),
 							type,
 							FightStat.WAITING,
 							server

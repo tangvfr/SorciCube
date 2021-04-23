@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -22,7 +23,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
-import fr.tangv.sorcicubecore.player.PlayerFeatures;
+import fr.tangv.sorcicubecore.player.DeckException;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
@@ -49,22 +50,11 @@ public class ManagerLobby implements Listener {
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		PlayerGui player = sorci.getManagerGui().getPlayerGui(e.getPlayer());
-		if (player != null) {
-			PlayerFeatures feature = player.getPlayerFeatures();
-			e.setFormat(sorci.config().parameter.chatFormat.value
-					.replace("{group}", feature.getGroup().isEmpty() ? sorci.config().parameter.noneGroup.value : player.getDisplayGroup())
-					.replace("{name}", e.getPlayer().getName())
-					.replace("{message}", e.getMessage())
-					.replace("{level}", Byte.toString(feature.getLevel()))
-				);
-		} else {
-			e.setFormat(sorci.config().parameter.chatFormat.value
-					.replace("{group}", sorci.config().parameter.noneGroup.value)
-					.replace("{name}", e.getPlayer().getName())
-					.replace("{message}", e.getMessage())
-					.replace("{level}", sorci.config().parameter.noneLvl.value)
-				);
-		}
+		e.setFormat(
+				player.getDataPlayer()
+				.replace(sorci.config().parameter.chatFormat.value)
+				.replace("{message}", e.getMessage()
+			));
 	}
 	
 	@EventHandler
@@ -101,51 +91,49 @@ public class ManagerLobby implements Listener {
 		teleportPlayerToSpawn(e.getPlayer());
 	}
 	
-	@EventHandler
-	public void onJoin(PlayerJoinEvent e) {
+	@EventHandler(priority=EventPriority.HIGHEST)
+	public void onJoin(PlayerJoinEvent e) throws IOException, ResponseRequestException, RequestException, DeckException {
 		Player player = e.getPlayer();
-		e.setJoinMessage(sorci.config().parameter.joinMessage.value.replace("{player}", player.getDisplayName()));
 		player.setGameMode(GameMode.ADVENTURE);
 		player.setFoodLevel(19);
 		player.setMaxHealth(20);
 		player.setHealth(20);
 		player.setCollidable(false);
-		Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
+		FightData fightData = sorci.getHandlerFightData().getFightDataPlayer(player.getUniqueId());
+		if (fightData != null && fightData.getStat() == FightStat.START) {
+			sorci.sendPlayerToServer(player, fightData.getServer());
+		} else {
+			PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
+			if (sorci.getHandlerPlayers().existPlayer(player.getUniqueId())) {
+				player.sendMessage(sorci.config().messages.welcomBack.value);
+				playerG.setPlayerFeatures(
+						sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName()),
+						sorci
+				);
+				List<Player> pl = Arrays.asList(player);
+				for (PlayerGui playerGui : sorci.getManagerGui().valuesPlayerGui())
+					if (playerGui.getPlayerFeatures() != null)
+						NameTag.sendNameTag(playerGui.getDataPlayer(), pl);
+				sorci.getManagerGui().updateDisplayPlayer(playerG);
+			} else {
+				NameTag.sendNameTag(playerG.getDataPlayer(), Bukkit.getOnlinePlayers());
+				player.sendMessage(sorci.config().messages.welcom.value);
+				player.setLevel(0);
+				player.setExp(0F);
+			}
+			teleportPlayerToSpawn(player);
+		}
+		e.setJoinMessage(sorci.getManagerGui().getPlayerGui(player).getDataPlayer().replace(sorci.config().parameter.joinMessage.value));
+		/*Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
 			@Override
 			public void run() {
 				try {
-					FightData fightData = sorci.getHandlerFightData().getFightDataPlayer(player.getUniqueId());
-					if (fightData != null && fightData.getStat() == FightStat.START) {
-						sorci.sendPlayerToServer(player, fightData.getServer());
-					} else {
-						if (sorci.getHandlerPlayers().existPlayer(player.getUniqueId())) {
-							player.sendMessage(sorci.config().messages.welcomBack.value);
-							try {
-								PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
-								List<Player> pl = Arrays.asList(player);
-								for (PlayerGui playerGui : sorci.getManagerGui().valuesPlayerGui())
-									if (playerGui.getPlayerFeatures() != null)
-										NameTag.send(playerGui.getPlayer(), pl);
-								playerG.setPlayerFeatures(
-										sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName()),
-										sorci
-								);
-								sorci.getManagerGui().updateDisplayPlayer(playerG);
-							} catch (Exception e) {
-								Bukkit.getLogger().throwing("ManagerLobby", "onJoin", e);
-							}
-						} else {
-							player.sendMessage(sorci.config().messages.welcom.value);
-							player.setLevel(0);
-							player.setExp(0F);
-						}
-						teleportPlayerToSpawn(player);
-					}
+					
 				} catch (IOException | ResponseRequestException | RequestException e) {
 					e.printStackTrace();
 				}
 			}
-		}, 1);
+		}, 1);*/
 	}
 	
 	
@@ -159,7 +147,7 @@ public class ManagerLobby implements Listener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		Player player = e.getPlayer();
-		e.setQuitMessage(sorci.config().parameter.quitMessage.value.replace("{player}", player.getDisplayName()));
+		e.setQuitMessage(sorci.getManagerGui().getPlayerGui(player).getDataPlayer().replace(sorci.config().parameter.quitMessage.value));
 		sorci.getManagerCreatorFight().playerLeave(player, true);
 	}
 	

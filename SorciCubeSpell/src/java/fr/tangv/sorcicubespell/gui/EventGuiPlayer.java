@@ -3,6 +3,7 @@ package fr.tangv.sorcicubespell.gui;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -20,12 +21,12 @@ public class EventGuiPlayer implements Listener {
 	public EventGuiPlayer(ManagerGui manager) {
 		this.manager = manager;
 		for (Player player : Bukkit.getOnlinePlayers())
-			this.manager.putPlayerGui(player, new PlayerGui(player));
+			this.manager.putPlayerGui(player, new PlayerGui(player, manager.getSorci().config().parameter));
 	}
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.LOWEST)
 	public void onJoin(PlayerJoinEvent e) {
-		this.manager.putPlayerGui(e.getPlayer(), new PlayerGui(e.getPlayer()));
+		this.manager.putPlayerGui(e.getPlayer(), new PlayerGui(e.getPlayer(), manager.getSorci().config().parameter));
 	}
 	
 	@EventHandler

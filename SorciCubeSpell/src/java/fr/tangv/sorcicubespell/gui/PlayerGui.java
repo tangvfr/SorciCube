@@ -10,12 +10,15 @@ import org.bukkit.inventory.Inventory;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.card.CardComparator;
 import fr.tangv.sorcicubecore.configs.LevelConfig;
+import fr.tangv.sorcicubecore.configs.ParameterConfig;
 import fr.tangv.sorcicubecore.fight.FightType;
 import fr.tangv.sorcicubecore.handler.HandlerPlayers;
+import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.player.DataPlayer;
 import fr.tangv.sorcicubespell.util.NameTag;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -35,9 +38,9 @@ public class PlayerGui {
 	private FightType fightType;
 	private Player inviteDuel;
 	private boolean viewHideCards;
-	private String displayGroup;
+	private DataPlayer dataPlayer;
 	
-	public PlayerGui(Player player) {
+	public PlayerGui(Player player, ParameterConfig parameter) {
 		this.player = player;
 		this.card = null;
 		this.gui = null;
@@ -50,7 +53,7 @@ public class PlayerGui {
 		this.playerFeature = null;
 		this.setPreviousGui(null);
 		this.setViewHideCards(false);
-		this.displayGroup = "";
+		this.dataPlayer = new DataPlayer(player.getName(), parameter);
 	}
 	
 	public UUID getUUID() {
@@ -60,11 +63,7 @@ public class PlayerGui {
 	public String getName() {
 		return player.getName();
 	}
-	
-	public String getDisplayGroup() {
-		return displayGroup;
-	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}
@@ -141,13 +140,9 @@ public class PlayerGui {
 	public void setPlayerFeatures(PlayerFeatures playerFeature, SorciCubeSpell sorci) {
 		player.closeInventory();
 		this.playerFeature = playerFeature;
-		this.displayGroup = sorci.getManagerPermissions().applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
-		player.setDisplayName(sorci.config().parameter.nameTagFormat.value
-				.replace("{group}", playerFeature.getGroup().isEmpty() ? sorci.config().parameter.noneGroup.value : displayGroup)
-				.replace("{name}", player.getName())
-				.replace("{level}", Byte.toString(playerFeature.getLevel()))
-		);
-		NameTag.send(player, Bukkit.getOnlinePlayers());
+		Group group = sorci.getManagerPermissions().applyPermission(player, playerFeature.isAdmin(), playerFeature.getGroup());
+		dataPlayer = new DataPlayer(playerFeature, group, sorci.config().parameter);
+		NameTag.sendNameTag(dataPlayer, Bukkit.getOnlinePlayers());
 	}
 	
 	public void uploadPlayerFeatures(HandlerPlayers handler) {
@@ -174,9 +169,7 @@ public class PlayerGui {
 			player.setExp(1.0F);
 		}
 		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-				messageActionBar
-					.replace("{group}", displayGroup)
-					.replace("{level}", Integer.toString(level))
+				dataPlayer.replace(messageActionBar)
 					.replace("{exp}", Integer.toString(exp))
 					.replace("{exp_max}", Integer.toString(expMax))
 					.replace("{money}", Integer.toString(playerFeature.getMoney()))
@@ -205,6 +198,10 @@ public class PlayerGui {
 
 	public void setInviteDuel(Player inviteDuel) {
 		this.inviteDuel = inviteDuel;
+	}
+
+	public DataPlayer getDataPlayer() {
+		return dataPlayer;
 	}
 	
 }

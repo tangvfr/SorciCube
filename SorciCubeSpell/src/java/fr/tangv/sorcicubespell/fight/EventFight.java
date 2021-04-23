@@ -54,20 +54,14 @@ public class EventFight implements Listener {
 			FightSpectator spectator = manager.getSpectator(e.getPlayer().getUniqueId());
 			String message;
 			if (spectator.isFightPlayer()) {
-				message = spectator.fight.config.parameter.chatFormatFight.value
+				message = spectator.getDataPlayer().replace(spectator.fight.config.parameter.chatFormatFight.value)
 						.replace("{spectator}", spectator.fight.config.parameter.playerFight.value)
-						.replace("{name}", e.getPlayer().getName())
-						.replace("{message}", e.getMessage())
-						.replace("{group}", spectator.getDisplayGroup())
-						.replace("{level}", Byte.toString(spectator.getLevel()));
+						.replace("{message}", e.getMessage());
 				spectator.fight.sendMessage(message);
 			} else {
-				message = spectator.fight.config.parameter.chatFormatFight.value
+				message = spectator.getDataPlayer().replace(spectator.fight.config.parameter.chatFormatFight.value)
 					.replace("{spectator}", spectator.fight.config.parameter.spectatorFight.value)
-					.replace("{name}", e.getPlayer().getName())
-					.replace("{message}", e.getMessage())
-					.replace("{group}", spectator.getDisplayGroup())
-					.replace("{level}", Byte.toString(spectator.getLevel()));
+					.replace("{message}", e.getMessage());
 				spectator.fight.sendMessageSpectator(message);
 			}
 			Bukkit.getConsoleSender().sendMessage(message);

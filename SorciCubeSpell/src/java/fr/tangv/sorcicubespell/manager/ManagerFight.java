@@ -13,6 +13,7 @@ import fr.tangv.sorcicubecore.configs.ArenaConfig;
 import fr.tangv.sorcicubecore.fight.FightData;
 import fr.tangv.sorcicubecore.fight.FightStat;
 import fr.tangv.sorcicubecore.player.DeckException;
+import fr.tangv.sorcicubecore.player.Group;
 import fr.tangv.sorcicubecore.player.PlayerFeatures;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
@@ -24,6 +25,7 @@ import fr.tangv.sorcicubespell.fight.FightSpectator;
 import fr.tangv.sorcicubespell.fight.PlayerFight;
 import fr.tangv.sorcicubespell.fight.PreFight;
 import fr.tangv.sorcicubespell.fight.ValueFight;
+import fr.tangv.sorcicubespell.player.DataPlayer;
 
 public class ManagerFight implements Runnable {
 	
@@ -85,7 +87,8 @@ public class ManagerFight implements Runnable {
 	public void playerJoin(Player player) throws IOException, ResponseRequestException, RequestException, DeckException {
 		boolean kick = true;
 		PlayerFeatures features = sorci.getHandlerPlayers().getPlayer(player.getUniqueId(), player.getName());
-		String groupDisplay = sorci.getManagerPermissions().applyPermission(player, features.isAdmin(), features.getGroup());
+		Group group = sorci.getManagerPermissions().applyPermission(player, features.isAdmin(), features.getGroup());
+		DataPlayer dataPlayer = new DataPlayer(features, group, sorci.config().parameter);
 		if (playerInstance.containsKey(player.getUniqueId())) {
 			FightSpectator spectator = playerInstance.get(player.getUniqueId());
 			if (spectator.isFightPlayer() && !spectator.fight.isEnd()) {
@@ -98,12 +101,12 @@ public class ManagerFight implements Runnable {
 			}
 		} else if (preFights.containsKey(player.getUniqueId())) {
 			PreFight preFight = preFights.get(player.getUniqueId());
-			preFight.complet(player, features);
+			preFight.complet(player, dataPlayer, features);
 			kick = false;
 		} else {
 			FightData fightData = sorci.getHandlerFightData().getFightDataPlayer(player.getUniqueId());
 			if (fightData != null && fightData.getStat() == FightStat.WAITING) {
-				PreFight preFight = PreFight.createPreFight(player, features, fightData);
+				PreFight preFight = PreFight.createPreFight(player, dataPlayer, features, fightData);
 				preFights.put(preFight.getPlayerUUID2(), preFight);
 				fightData.setStat(FightStat.STARTING);
 				sorci.getHandlerFightData().updateFightData(fightData);
@@ -129,8 +132,7 @@ public class ManagerFight implements Runnable {
 						player,
 						fight.getPlayer1().getLocBase().clone().add(fight.getPlayer2().getLocBase()).multiply(0.5),
 						true,
-						groupDisplay,
-						features.getLevel()
+						dataPlayer
 				);
 				playerInstance.put(player.getUniqueId(), spectator);
 				player.setAllowFlight(true);

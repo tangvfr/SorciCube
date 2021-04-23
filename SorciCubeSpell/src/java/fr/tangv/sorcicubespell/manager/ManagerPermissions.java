@@ -29,7 +29,7 @@ public class ManagerPermissions implements Listener {
 	}
 	
 	//return display group
-	public String applyPermission(Player player, boolean isAdmin, String groupName) {
+	public Group applyPermission(Player player, boolean isAdmin, String groupName) {
 		PermissionAttachment attach = attachements.remove(player.getUniqueId());
 		if (attach != null)
 			player.removeAttachment(attach);
@@ -41,12 +41,12 @@ public class ManagerPermissions implements Listener {
 		//group
 		Group group = groups.get(groupName);
 		if (group == null)
-			return "";
+			return null;
 		for (Entry<String, Boolean> perm : group.getAllPerms().entrySet())
 			attach.setPermission(perm.getKey(), perm.getValue());
 		//end
 		player.recalculatePermissions();
-		return group.getDisplay();
+		return group;
 	}
 	
 	@EventHandler

@@ -21,6 +21,7 @@ import com.mojang.authlib.GameProfile;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.player.DataPlayer;
 import fr.tangv.sorcicubespell.util.NameTag;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent;
@@ -118,8 +119,7 @@ public class FightSpectator {
 	protected final boolean first;
 	private final Vector<Integer> invAutorized;
 	private long waitView;
-	private final String displayGroup;
-	private final byte level;
+	private final DataPlayer dataPlayer;
 	
 	//scoreboard
 	private String[] lastScoreMy;
@@ -127,7 +127,7 @@ public class FightSpectator {
 	private Scoreboard sc;
 	private ScoreboardObjective scob;
 	
-	public FightSpectator(Fight fight, Player player, Location locBase, boolean first, String displayGroup, byte level) {
+	public FightSpectator(Fight fight, Player player, Location locBase, boolean first, DataPlayer dataPlayer) {
 		this.player = player;
 		this.waitView = -1;
 		this.fight = fight;
@@ -135,8 +135,7 @@ public class FightSpectator {
 		this.first = first;
 		this.name = player.getName();
 		this.uuid = player.getUniqueId();
-		this.displayGroup = displayGroup;
-		this.level = level;
+		this.dataPlayer = dataPlayer;
 		this.profile = ((CraftPlayer) player).getProfile();
 		this.invHistoric = Bukkit.createInventory(player, 9, fight.config.gui.guiHistoric.name.value);
 		this.invViewEntity = Bukkit.createInventory(player, InventoryType.DISPENSER, fight.config.gui.guiViewEntity.name.value);
@@ -161,7 +160,7 @@ public class FightSpectator {
 	public void newPlayer(Player player) {
 		this.player = player;
 		initForViewFight();
-		NameTag.send(player, Arrays.asList(player));
+		NameTag.sendNameTag(dataPlayer, Arrays.asList(player));
 	}
 	
 	public void updatePacket() {
@@ -181,12 +180,8 @@ public class FightSpectator {
 		return invAutorized.contains(inventory.hashCode());
 	}
 	
-	public String getDisplayGroup() {
-		return displayGroup;
-	}
-
-	public byte getLevel() {
-		return level;
+	public DataPlayer getDataPlayer() {
+		return dataPlayer;
 	}
 
 	private void sendScore(String name, String lastName, int scoreNumber) {
@@ -315,7 +310,7 @@ public class FightSpectator {
 			public void run() {
 				if (player != spectator.player && player.isOnline() && spectator.player.isOnline()) {
 					player.showPlayer(spectator.player);
-					NameTag.send(spectator.player, Arrays.asList(player));
+					NameTag.sendNameTag(spectator.getDataPlayer(), Arrays.asList(player));
 				}
 			}
 		}, 1);

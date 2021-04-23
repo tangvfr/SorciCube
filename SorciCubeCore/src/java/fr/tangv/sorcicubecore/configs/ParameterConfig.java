@@ -9,8 +9,8 @@ public class ParameterConfig extends AbstractConfig {
 	public StringConfig footerList;
 	public StringConfig noneLvl;
 	public StringConfig noneGroup;
+	public StringConfig nonePrefix;
 	public StringConfig chatFormat;
-	public StringConfig nameTagFormat;
 	public StringConfig actionBarMessage;
 	public StringConfig formatTimeSec;
 	public StringConfig formatTimeMin;

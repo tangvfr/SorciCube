@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
@@ -40,7 +41,7 @@ public class ManagerSecurity implements Listener {
 		return player.getGameMode() == GameMode.CREATIVE && player.hasPermission("sorcicubespell.build");
 	}
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.LOWEST)
 	public void onJoin(PlayerJoinEvent e) {
 		try {
 			handler.playerJoin(e.getPlayer().getUniqueId());
@@ -50,7 +51,7 @@ public class ManagerSecurity implements Listener {
 		HeaderFooter.sendHeaderFooter(sorci.config().parameter, e.getPlayer());
 	}
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.LOWEST)
 	public void onLeave(PlayerQuitEvent e) {
 		try {
 			handler.playerLeave(e.getPlayer().getUniqueId());

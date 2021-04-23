@@ -26,6 +26,7 @@ import fr.tangv.sorcicubecore.sorciclient.ResponseRequestException;
 import fr.tangv.sorcicubecore.util.Cooldown;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.player.DataPlayer;
 import net.minecraft.server.v1_9_R2.Packet;
 
 public class Fight {
@@ -79,11 +80,11 @@ public class Fight {
 			);
 		//player1 start one
 		if (Math.random() < 0.5) {
-			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getFeatures1(), preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), true);
-			this.player2 = createPlayerFight(preFight.getPlayer2(), preFight.getFeatures2(), preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), false);
+			this.player1 = createPlayerFight(preFight.getPlayer1(), preFight.getFeatures1(), preFight.getPlayer1DeckUse(), preFight.getDataPlayer1(), true);
+			this.player2 = createPlayerFight(preFight.getPlayer2(), preFight.getFeatures2(), preFight.getPlayer2DeckUse(), preFight.getDataPlayer2(), false);
 		} else {
-			this.player2 = createPlayerFight(preFight.getPlayer1(), preFight.getFeatures1(), preFight.getPlayer1DeckUse(), preFight.getGroupPlayer1(), preFight.getLevelPlayer1(), false);
-			this.player1 = createPlayerFight(preFight.getPlayer2(), preFight.getFeatures2(), preFight.getPlayer2DeckUse(), preFight.getGroupPlayer2(), preFight.getLevelPlayer2(), true);
+			this.player2 = createPlayerFight(preFight.getPlayer1(), preFight.getFeatures1(), preFight.getPlayer1DeckUse(), preFight.getDataPlayer1(), false);
+			this.player1 = createPlayerFight(preFight.getPlayer2(), preFight.getFeatures2(), preFight.getPlayer2DeckUse(), preFight.getDataPlayer2(), true);
 		}
 		//init player
 		player1.setEnemie(player2);
@@ -140,14 +141,13 @@ public class Fight {
 		spectators.remove(spectator);
 	}
 	
-	private PlayerFight createPlayerFight(Player player, PlayerFeatures features, int deck, String group, byte level, boolean first) throws Exception {
+	private PlayerFight createPlayerFight(Player player, PlayerFeatures features, int deck, DataPlayer dataPlayer, boolean first) throws Exception {
 		return new PlayerFight(
 				this, 
 				player,
 				new FightDeck(features.getDeck(deck)),
 				first,
-				group,
-				level
+				dataPlayer
 			);
 	}
 	
