@@ -5,6 +5,8 @@ import fr.tangv.sorcicubecore.config.*;
 
 public class ParameterConfig extends AbstractConfig {
 
+	public StringConfig headerList;
+	public StringConfig footerList;
 	public StringConfig noneLvl;
 	public StringConfig noneGroup;
 	public StringConfig chatFormat;

@@ -23,12 +23,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import fr.tangv.sorcicubecore.handler.HandlerServer;
 import fr.tangv.sorcicubecore.requests.RequestException;
 import fr.tangv.sorcicubespell.SorciCubeSpell;
+import fr.tangv.sorcicubespell.util.HeaderFooter;
 
 public class ManagerSecurity implements Listener {
 
+	private final SorciCubeSpell sorci;
 	private final HandlerServer handler;
 	
 	public ManagerSecurity(SorciCubeSpell sorci) {
+		this.sorci = sorci;
 		this.handler = sorci.getHandlerServer();
 		Bukkit.getPluginManager().registerEvents(this, sorci);
 	}
@@ -44,6 +47,7 @@ public class ManagerSecurity implements Listener {
 		} catch (IOException | RequestException e1) {
 			e1.printStackTrace();
 		}
+		HeaderFooter.sendHeaderFooter(sorci.config().parameter, e.getPlayer());
 	}
 	
 	@EventHandler

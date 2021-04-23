@@ -1,5 +1,6 @@
 package fr.tangv.sorcicubespell.fight;
 
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -19,6 +20,7 @@ import com.mojang.authlib.GameProfile;
 import fr.tangv.sorcicubecore.card.Card;
 import fr.tangv.sorcicubecore.fight.FightCible;
 import fr.tangv.sorcicubespell.card.CardRender;
+import fr.tangv.sorcicubespell.util.NameTag;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
@@ -159,6 +161,7 @@ public class FightSpectator {
 	public void newPlayer(Player player) {
 		this.player = player;
 		initForViewFight();
+		NameTag.send(player, Arrays.asList(player));
 	}
 	
 	public void updatePacket() {
@@ -310,8 +313,10 @@ public class FightSpectator {
 		Bukkit.getScheduler().runTaskLater(fight.getSorci(), new Runnable() {
 			@Override
 			public void run() {
-				if (player != spectator.player && player.isOnline() && spectator.player.isOnline())
+				if (player != spectator.player && player.isOnline() && spectator.player.isOnline()) {
 					player.showPlayer(spectator.player);
+					NameTag.send(spectator.player, Arrays.asList(player));
+				}
 			}
 		}, 1);
 	}
