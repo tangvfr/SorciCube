@@ -50,6 +50,7 @@ import fr.tangv.sorcicubespell.manager.ManagerPakcetCards;
 import fr.tangv.sorcicubespell.manager.ManagerPermissions;
 import fr.tangv.sorcicubespell.manager.ManagerSecurity;
 import fr.tangv.sorcicubespell.util.EnumTool;
+import fr.tangv.sorcicubespell.util.HeaderFooter;
 import fr.tangv.sorcicubespell.util.Items;
 import fr.tangv.sorcicubespell.util.WaitObject;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
@@ -331,6 +332,7 @@ public class SorciCubeSpell extends JavaPlugin {
 			managerPakcetCards.refresh();
 			managerGui.refreshFeaturePlayers();
 		}
+		HeaderFooter.sendHeaderFooter(config().parameter, Bukkit.getOnlinePlayers());
 	}
 	
 }

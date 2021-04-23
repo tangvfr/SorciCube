@@ -6,7 +6,12 @@ import java.util.Collection;
 import java.util.UUID;
 
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R2.util.CraftChatMessage;
 import org.bukkit.entity.Player;
+
+import net.minecraft.server.v1_9_R2.EntityPlayer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_9_R2.PlayerConnection;
 
 public class NameTag {
     
@@ -28,9 +33,14 @@ public class NameTag {
         NMSTool.setField(packet, members, Arrays.asList(player.getName()));
         NMSTool.setField(packet, param_int, 0);
         NMSTool.setField(packet, pack_option, 1);
-        player.setPlayerListName(displayName);
-        for (Player ps : players)
-        	((CraftPlayer) ps).getHandle().playerConnection.sendPacket(packet);
+        EntityPlayer p = ((CraftPlayer) player).getHandle();
+        p.listName = CraftChatMessage.fromString(displayName)[0];
+        PacketPlayOutPlayerInfo pi = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, new EntityPlayer[] {p});
+        for (Player ps : players) {
+        	PlayerConnection co = ((CraftPlayer) ps).getHandle().playerConnection;
+        	co.sendPacket(pi);
+        	co.sendPacket(packet);
+        }
     }
  
     public static void send(Player player, Collection<? extends Player> collection) {

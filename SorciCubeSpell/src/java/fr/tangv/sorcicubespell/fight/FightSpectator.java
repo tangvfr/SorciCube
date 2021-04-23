@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R2.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -23,7 +24,6 @@ import fr.tangv.sorcicubespell.card.CardRender;
 import fr.tangv.sorcicubespell.util.NameTag;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.server.v1_9_R2.IChatBaseComponent;
-import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_9_R2.IScoreboardCriteria;
 import net.minecraft.server.v1_9_R2.Packet;
 import net.minecraft.server.v1_9_R2.PacketPlayOutChat;
@@ -468,16 +468,17 @@ public class FightSpectator {
 		sendMessage(fight.config.messages.manaInsufficient.value);
 	}
 	
-	public static IChatBaseComponent toIChatBaseComposent(String text) {
-		return ChatSerializer.a("{\"text\": \""+text+"\"}");
+	public static IChatBaseComponent[] toIChatBaseComposent(String text) {
+		return CraftChatMessage.fromString(text);
 	}
 	
 	public void sendMessage(String message) {
-		sendPacket(new PacketPlayOutChat(FightSpectator.toIChatBaseComposent(message), (byte) 0));
+		for (IChatBaseComponent chat : FightSpectator.toIChatBaseComposent(message))
+			sendPacket(new PacketPlayOutChat(chat, (byte) 0));
 	}
 	
 	public void sendMessageActionBar(String message) {
-		sendPacket(new PacketPlayOutChat(FightSpectator.toIChatBaseComposent(message), (byte) 2));
+		sendPacket(new PacketPlayOutChat(FightSpectator.toIChatBaseComposent(message)[0], (byte) 2));
 	}
 	
 	public void sendPacket(Packet<?> packet) {
@@ -488,10 +489,10 @@ public class FightSpectator {
 	public void alert(String message) {
 		sendMessage(message);
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
-				FightSpectator.toIChatBaseComposent(""),
+				FightSpectator.toIChatBaseComposent("")[0],
 				0, 6, 0));
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
-				FightSpectator.toIChatBaseComposent(message.replace("\n", "")),
+				FightSpectator.toIChatBaseComposent(message.replace("\n", ""))[0],
 				0, 6, 0));
 	}
 	

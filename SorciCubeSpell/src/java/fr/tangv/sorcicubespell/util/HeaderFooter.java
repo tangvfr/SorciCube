@@ -19,7 +19,7 @@ public class HeaderFooter {
 		sendHeaderFooter(config, Arrays.asList(player));
 	}
 	
-	public static void sendHeaderFooter(ParameterConfig config, Collection<Player> list) {
+	public static void sendHeaderFooter(ParameterConfig config, Collection<? extends Player> list) {
 		PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
 		Class<?> clazz = packet.getClass();
 		Field header = NMSTool.getField(clazz, "a");
