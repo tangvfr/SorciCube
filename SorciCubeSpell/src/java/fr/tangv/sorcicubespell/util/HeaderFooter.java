@@ -24,8 +24,8 @@ public class HeaderFooter {
 		Class<?> clazz = packet.getClass();
 		Field header = NMSTool.getField(clazz, "a");
 		Field footer = NMSTool.getField(clazz, "b");
-		NMSTool.setField(packet, header, config.headerList.value.isEmpty() ? ChatSerializer.a("{\"translate\":\"\"}") : CraftChatMessage.fromString(config.headerList.value));
-		NMSTool.setField(packet, footer, config.footerList.value.isEmpty() ? ChatSerializer.a("{\"translate\":\"\"}") : CraftChatMessage.fromString(config.footerList.value));
+		NMSTool.setField(packet, header, config.headerList.value.isEmpty() ? ChatSerializer.a("{\"translate\":\"\"}") : CraftChatMessage.fromString(config.headerList.value)[0]);
+		NMSTool.setField(packet, footer, config.footerList.value.isEmpty() ? ChatSerializer.a("{\"translate\":\"\"}") : CraftChatMessage.fromString(config.footerList.value)[0]);
 		for (Player p : list)
 			((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
 	}
