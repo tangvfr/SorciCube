@@ -94,7 +94,7 @@ public class Group {
 		return new Group(
 				doc.getString("name"),
 				doc.getString("display"),
-				doc.getString("prefix"),
+				doc.get("prefix", "§7Prefix "),
 				doc.getInteger("weight"),
 				new Vector<String>(doc.getList("perms", String.class))
 			);
