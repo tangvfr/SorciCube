@@ -101,7 +101,9 @@ public class ManagerLobby implements Listener {
 		player.setCollidable(false);
 		FightData fightData = sorci.getHandlerFightData().getFightDataPlayer(player.getUniqueId());
 		if (fightData != null && fightData.getStat() == FightStat.START) {
-			sorci.sendPlayerToServer(player, fightData.getServer());
+			//Bukkit.getScheduler().runTaskLater(sorci, () ->  {
+				sorci.sendPlayerToServer(player, fightData.getServer());
+			//}, 1);
 		} else {
 			PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 			if (sorci.getHandlerPlayers().existPlayer(player.getUniqueId())) {
@@ -124,16 +126,6 @@ public class ManagerLobby implements Listener {
 			teleportPlayerToSpawn(player);
 		}
 		e.setJoinMessage(sorci.getManagerGui().getPlayerGui(player).getDataPlayer().replace(sorci.config().parameter.joinMessage.value));
-		/*Bukkit.getScheduler().runTaskLater(sorci, new Runnable() {
-			@Override
-			public void run() {
-				try {
-					
-				} catch (IOException | ResponseRequestException | RequestException e) {
-					e.printStackTrace();
-				}
-			}
-		}, 1);*/
 	}
 	
 	

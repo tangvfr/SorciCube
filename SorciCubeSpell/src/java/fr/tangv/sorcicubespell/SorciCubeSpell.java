@@ -63,10 +63,6 @@ public class SorciCubeSpell extends JavaPlugin {
 	private boolean isLobby;
 	private String nameServer;
 	
-	//server
-	private String nameServerLobby;
-	private String nameServerFight;
-	
 	//handler
 	private ManagerPakcetCards managerPakcetCards;
 	private HandlerPlayers handlerPlayers;
@@ -199,7 +195,7 @@ public class SorciCubeSpell extends JavaPlugin {
 	}
 	
 	public void sendPlayerToServer(Player player, String server) {
-		if (player != null && player.isOnline()) {
+		if (player != null && player.isOnline() && server != null) {
 			ByteArrayOutputStream data = new ByteArrayOutputStream();
 			DataOutputStream out = new DataOutputStream(data);
 			try {
@@ -236,11 +232,11 @@ public class SorciCubeSpell extends JavaPlugin {
 	//server
 
 	public String getNameServerLobby() {
-		return nameServerLobby;
+		return config().parameter.serverLobby.value;
 	}
 	
 	public String getNameServerFight() {
-		return nameServerFight;
+		return config().parameter.serverFight.value;
 	}
 	
 	//handler
