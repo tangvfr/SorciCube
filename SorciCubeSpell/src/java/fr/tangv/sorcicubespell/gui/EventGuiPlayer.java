@@ -29,7 +29,7 @@ public class EventGuiPlayer implements Listener {
 		this.manager.putPlayerGui(e.getPlayer(), new PlayerGui(e.getPlayer(), manager.getSorci().config().parameter));
 	}
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onQuit(PlayerQuitEvent e) {
 		this.manager.removePlayerGui(e.getPlayer());
 	}

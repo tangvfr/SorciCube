@@ -51,7 +51,7 @@ public class ManagerSecurity implements Listener {
 		HeaderFooter.sendHeaderFooter(sorci.config().parameter, e.getPlayer());
 	}
 	
-	@EventHandler(priority=EventPriority.LOWEST)
+	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onLeave(PlayerQuitEvent e) {
 		try {
 			handler.playerLeave(e.getPlayer().getUniqueId());
