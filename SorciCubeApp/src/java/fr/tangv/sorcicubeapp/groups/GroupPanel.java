@@ -72,6 +72,7 @@ public class GroupPanel extends JScrollPane {
 		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS)); 
 		pan.add(name);
 		pan.add(display);
+		pan.add(prefix);
 		pan.add(weight);
 		pan.add(perms);
 		pan.add(btns);
