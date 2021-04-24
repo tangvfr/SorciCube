@@ -463,17 +463,13 @@ public class FightSpectator {
 		sendMessage(fight.config.messages.manaInsufficient.value);
 	}
 	
-	public static IChatBaseComponent[] toIChatBaseComposent(String text) {
-		return CraftChatMessage.fromString(text);
-	}
-	
 	public void sendMessage(String message) {
-		for (IChatBaseComponent chat : FightSpectator.toIChatBaseComposent(message))
+		for (IChatBaseComponent chat : CraftChatMessage.fromString(message))
 			sendPacket(new PacketPlayOutChat(chat, (byte) 0));
 	}
 	
 	public void sendMessageActionBar(String message) {
-		sendPacket(new PacketPlayOutChat(FightSpectator.toIChatBaseComposent(message)[0], (byte) 2));
+		sendPacket(new PacketPlayOutChat(CraftChatMessage.fromString(message)[0], (byte) 2));//throw
 	}
 	
 	public void sendPacket(Packet<?> packet) {
@@ -484,10 +480,10 @@ public class FightSpectator {
 	public void alert(String message) {
 		sendMessage(message);
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.TITLE,
-				FightSpectator.toIChatBaseComposent("")[0],
+				CraftChatMessage.fromString("")[0],
 				0, 6, 0));
 		sendPacket(new PacketPlayOutTitle(EnumTitleAction.SUBTITLE,
-				FightSpectator.toIChatBaseComposent(message.replace("\n", ""))[0],
+				CraftChatMessage.fromString(message.replace("\n", ""))[0],
 				0, 6, 0));
 	}
 	

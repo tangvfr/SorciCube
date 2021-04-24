@@ -101,9 +101,9 @@ public class ManagerLobby implements Listener {
 		player.setCollidable(false);
 		FightData fightData = sorci.getHandlerFightData().getFightDataPlayer(player.getUniqueId());
 		if (fightData != null && fightData.getStat() == FightStat.START) {
-			//Bukkit.getScheduler().runTaskLater(sorci, () ->  {
+			Bukkit.getScheduler().runTaskLater(sorci, () ->  {
 				sorci.sendPlayerToServer(player, fightData.getServer());
-			//}, 1);
+			}, 1);
 		} else {
 			PlayerGui playerG = sorci.getManagerGui().getPlayerGui(player);
 			if (sorci.getHandlerPlayers().existPlayer(player.getUniqueId())) {
