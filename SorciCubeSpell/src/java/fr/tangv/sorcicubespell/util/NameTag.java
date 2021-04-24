@@ -27,7 +27,7 @@ public class NameTag {
         NMSTool.setField(packet, team_name, rand);
         NMSTool.setField(packet, display_name, player.getName());
         NMSTool.setField(packet, prefix2, player.getPrefixGroup());
-        NMSTool.setField(packet, suffix2, "");
+        NMSTool.setField(packet, suffix2, player.getSuffixGroup());
         NMSTool.setField(packet, members, Arrays.asList(player.getName()));
         NMSTool.setField(packet, param_int, 0);
         NMSTool.setField(packet, pack_option, 1);

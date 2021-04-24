@@ -10,6 +10,7 @@ public class ParameterConfig extends AbstractConfig {
 	public StringConfig noneLvl;
 	public StringConfig noneGroup;
 	public StringConfig nonePrefix;
+	public StringConfig noneSuffix;
 	public StringConfig chatFormat;
 	public StringConfig actionBarMessage;
 	public StringConfig formatTimeSec;

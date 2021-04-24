@@ -11,6 +11,7 @@ public class Group {
 	private final String name;
 	private final String display;
 	private final String prefix;
+	private final String suffix;
 	private final int weight;
 	private final Vector<String> perms;
 	private final ConcurrentHashMap<String, Boolean> allPerms;
@@ -19,12 +20,14 @@ public class Group {
 				String name,
 				String display,
 				String prefix,
+				String suffix,
 				int weight,
 				Vector<String> perms
 				) {
 		this.name = name;
 		this.display = display;
 		this.prefix = prefix;
+		this.suffix = suffix;
 		this.weight = weight;
 		this.perms = perms;
 		this.allPerms = new ConcurrentHashMap<String, Boolean>();
@@ -64,6 +67,10 @@ public class Group {
 	public String getPrefix() {
 		return prefix;
 	}
+	
+	public String getSuffix() {
+		return suffix;
+	}
 
 	public int getWeight() {
 		return weight;
@@ -86,6 +93,7 @@ public class Group {
 				.append("name", name)
 				.append("display", display)
 				.append("prefix", prefix)
+				.append("suffix", suffix)
 				.append("weight", weight)
 				.append("perms", perms);
 	}
@@ -95,6 +103,7 @@ public class Group {
 				doc.getString("name"),
 				doc.getString("display"),
 				doc.get("prefix", "§7Prefix "),
+				doc.get("suffix", " §7Suffix"),
 				doc.getInteger("weight"),
 				new Vector<String>(doc.getList("perms", String.class))
 			);

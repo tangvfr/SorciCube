@@ -27,6 +27,7 @@ public class GroupPanel extends JScrollPane {
 	private final ComponentLabel name;
 	private final ComponentText display;
 	private final ComponentText prefix;
+	private final ComponentText suffix;
 	private final ComponentNumberInt weight;
 	private final ComponentAreaText perms;
 	private final JPanel empty;
@@ -41,6 +42,7 @@ public class GroupPanel extends JScrollPane {
 		this.name = new ComponentLabel("Name");
 		this.display = new ComponentText("Display");
 		this.prefix = new ComponentText("Prefix");
+		this.suffix = new ComponentText("Suffix");
 		this.weight = new ComponentNumberInt("Weight", Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
 		this.perms = new ComponentAreaText("Permissions");
 		perms.setToolTipText("[addgroupperms, -removeperm, addperm");
@@ -73,6 +75,7 @@ public class GroupPanel extends JScrollPane {
 		pan.add(name);
 		pan.add(display);
 		pan.add(prefix);
+		pan.add(suffix);
 		pan.add(weight);
 		pan.add(perms);
 		pan.add(btns);
@@ -126,12 +129,13 @@ public class GroupPanel extends JScrollPane {
 		this.name.setLabel(group.getName());
 		this.display.setText(group.getDisplay());
 		this.prefix.setText(group.getPrefix());
+		this.suffix.setText(group.getSuffix());
 		this.weight.setInt(group.getWeight());
 		this.perms.setArea(permsToString(group.getPerms()));
 	}
 	
 	public Group createGroup() {
-		return new Group(name.getLabel(), display.getText(), prefix.getText(), weight.getInt(), stringToPerms(perms.getArea()));
+		return new Group(name.getLabel(), display.getText(), prefix.getText(), suffix.getText(), weight.getInt(), stringToPerms(perms.getArea()));
 	}
 	
 }

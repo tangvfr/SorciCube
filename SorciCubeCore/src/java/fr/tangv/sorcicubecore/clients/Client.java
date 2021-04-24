@@ -16,7 +16,7 @@ import fr.tangv.sorcicubecore.requests.RequestType;
 public abstract class Client extends Thread {
 
 	public final static Charset CHARSET = StandardCharsets.UTF_8;
-	public static final String VERSION_PROTOCOL = "0.2.6";
+	public static final String VERSION_PROTOCOL = "0.2.7";
 	
 	//init
 	private volatile RequestHandlerInterface handler;
