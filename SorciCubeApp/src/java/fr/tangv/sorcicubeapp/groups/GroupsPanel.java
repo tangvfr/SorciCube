@@ -41,7 +41,7 @@ public class GroupsPanel extends SearchPanel<Group> {
 					String name = JOptionPane.showInputDialog(logi.getFramePanel(), "Name for group new", "Create Group", JOptionPane.QUESTION_MESSAGE);
 					if (name != null && !name.isEmpty())
 						try {
-							handler.put(new Group(name, "§8[§9"+name+"§8]", "§7N.{level} §8[§9"+name.charAt(0)+"§8]", 2, new Vector<String>()));
+							handler.put(new Group(name, "§8[§9"+name+"§8]", "§7{level} §8[§9"+name.charAt(0)+"§8]", 2, new Vector<String>()));
 							refresh();
 						} catch (IOException | ResponseRequestException | RequestException e1) {
 							JOptionPane.showMessageDialog(logi.getFramePanel(), "Error: "+e1.getMessage(), "Create Group", JOptionPane.ERROR_MESSAGE);
