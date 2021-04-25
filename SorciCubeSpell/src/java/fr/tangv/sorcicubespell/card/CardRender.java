@@ -67,7 +67,8 @@ public class CardRender {
 				for (String line : sorci.getEnumTool().featureToString(feature.getType(), feature.getValue())
 						.replace("{"+feature.getValue().getType().name().toLowerCase()+"}", featureToString(sorci, feature))
 						.replace("{cible}", cible)
-						.split("\\n")) {
+						.replace("{n}", "\n")
+						.split("\n")) {
 					lore.add(line);
 				}
 			}

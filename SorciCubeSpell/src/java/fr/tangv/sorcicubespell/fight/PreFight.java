@@ -47,7 +47,7 @@ public class PreFight {
 		this.player2DeckUse = player2DeckUse;
 		this.dataPlayer1 = dataPlayer1;
 		this.player2 = null;
-		this.cooldown = new Cooldown(1_000);
+		this.cooldown = new Cooldown(3_000);
 		cooldown.start();
 	}
 	
