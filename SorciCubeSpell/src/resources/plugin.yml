@@ -1,0 +1,88 @@
+name: SorciCubeSpell
+prefix: SorciCubeSpell
+softdepend: ["Multiverse-Core"]
+description: "This is an plugin to implement the spell of server SorciCube."
+version: ${project.version}
+api-version: 1.9.4
+author: Tangv
+website: www.tangv.fr
+main: fr.tangv.sorcicubespell.SorciCubeSpell
+commands:
+  viewcards:
+    usage: /viewcards <view hide cards, true or false>
+    description: "Open gui with the list of the cards."
+    permission: sorcicubespell.command.viewcards
+  packetgive:
+    usage: /packetgive <player> <name>
+    description: "Give packet card of a player."
+    permission: sorcicubespell.command.packetgive
+  refresh:
+    usage: /refresh
+    description: "Refresh the cards."
+    permission: sorcicubespell.command.refresh
+  givecard:
+    usage: /givecard <name> <uuid>
+    description: "Give card specify."
+    permission: sorcicubespell.command.givecard
+  givearrowhead:
+    usage: /givearrowhead
+    description: "Give Head Arrow Were In Fight."
+    permission: sorcicubespell.command.givearrowhead
+  money:
+    usage: /money <player> <action> <money>
+    description: "Manage the money of player."
+    permission: sorcicubespell.command.money
+  additeminlist:
+    usage: /additeminlist <name>
+    description: "Add item main hand to config itemlist"
+    permission: sorcicubespell.command.additeminlist
+permissions:
+  sorcicubespell.command.viewcards:
+    description: "Open gui with the list of the cards."
+    default: op
+  sorcicubespell.command.packetgive:
+    description: "Give packet card of a player."
+    default: op
+  sorcicubespell.command.refresh:
+    description: "Refresh the cards."
+    default: op
+  sorcicubespell.command.givecard:
+    description: "Give card specify."
+    default: op
+  sorcicubespell.command.givearrowhead:
+    description: "Give Head Arrow Were In Fight."
+    default: op
+  sorcicubespell.command.money:
+    description: "Manage the money of player."
+    default: op
+  sorcicubespell.command.additeminlist:
+    description: "Add item main hand to config itemlist"
+    default: op
+  sorcicubespell.command.*:
+    description: "All permissions command sorcicubespell"
+    default: op
+    children:
+    orcicubespell.command.viewcards: true
+    sorcicubespell.command.packetgive: true
+    sorcicubespell.command.refresh: true
+    sorcicubespell.command.givecard: true
+    sorcicubespell.command.givearrowhead: true
+    sorcicubespell.command.money: true
+    sorcicubespell.command.additeminlist: true
+  sorcicubespell.build:
+    description: "Authorization of built"
+    default: op
+  sorcicubespell.join.fight:
+    description: "Authorization of join fight server"
+    default: op
+  sorcicubespell.join.*:
+    description: "Authorization of join server"
+    default: op
+    children:
+      sorcicubespell.join.fight: true
+  sorcicubespell.*:
+   description: "All permissions sorcicubespell"
+   default: op
+   children:
+     sorcicubespell.command.*: true
+     sorcicubespell.join.*: true

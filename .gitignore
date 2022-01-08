@@ -1,7 +1,9 @@
 /.settings
 /target
-.classpath
-.project
+/copy
+
+*.classpath
+*.project
 
 # Compiled class file
 *.class

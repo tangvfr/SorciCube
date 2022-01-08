@@ -1,47 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>fr.tangv.sorcicubespell</groupId>
-  <artifactId>SorciCubeSpell</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>SorciCubeSpell</name>
-  <url>https://www.tangv.fr</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
-  </properties>
-
-  <build>
-        <defaultGoal>package</defaultGoal>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <directory>target</directory>
-        <resources>
-          <resource>
-            <directory>src/main/resources</directory>
-          </resource>
-        </resources>
-  </build>
-
-  <dependencies>
-      <!--MongoDB API-->
-      <dependency>
-          <groupId>org.mongodb</groupId>
-          <artifactId>mongodb-driver-sync</artifactId>
-          <version>4.0.3</version>
-      </dependency>
-      <!--Spigot API-->
-      <dependency>
-         <groupId>spigot</groupId>
-         <artifactId>spigot</artifactId>
-         <scope>system</scope>
-         <version>1.9.4</version>
-         <systemPath>${basedir}/src/lib/spigot-1.9.4.jar</systemPath>
-      </dependency>
-  </dependencies>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>fr.tangv.sorcicube</groupId>
+	<artifactId>SorciCube</artifactId>
+	<version>0.0.9</version>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>SorciCubeCore</module>
+		<module>SorciCubeAPI</module>
+		<module>SorciCubeSpell</module>
+		<module>SorciCubeApp</module>
+	</modules>
+	
 </project>
